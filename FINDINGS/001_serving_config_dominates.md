@@ -111,6 +111,60 @@ to the right configuration; it has to be measured and published.
 
 ---
 
+## Mechanism 3 — the context window is a silent belt-tax
+
+Discovered by chasing a discrepancy: the *same model at the same settings* produced **Yellow (3/9)**
+in one run and **Orange (6/9)** in another. That looked like nondeterminism. It was not.
+
+The answer was in `finish_reason` and the token accounting:
+
+```
+R1_fencing   0/3   finish={'length': 3}   maxctok=1888   ctx=2048
+R3_pitstop   0/3   finish={'length': 3}   maxctok=1767   ctx=2048
+```
+
+`completion_tokens ≈ 1888` against `ctx=2048` — **the model was hitting the CONTEXT WINDOW, not
+`max_tokens`.** Raising `max_tokens` would have changed nothing; the room simply wasn't there.
+Doubling the context, holding everything else fixed:
+
+| config | R1 fencing | R3 pit stop | belt | AGG |
+|---|---|---|---|---|
+| `--ctx 2048` | 0/3 — context-limited | 0/3 — context-limited | **Yellow** | 0.33 |
+| `--ctx 8192` | 0/3 — now max_tokens-limited | **3/3** | **Orange** | **0.67** |
+
+**A context-window flag moved a model from Yellow to Orange with no change to the weights.** A
+reasoning model pays for its thinking out of the same window as its answer, so a small `--ctx` is a
+**cap on how much a model is allowed to think before it is graded** — and it penalises precisely the
+models that think most.
+
+**And this produced a bug in our own diagnostic worth recording:** the first version of the truncation
+check said *"raise --max-tokens"* regardless of which limit bit. That advice was wrong here — it would
+have sent the operator to tune a parameter that was not binding. The harness now reports **which**
+limit was hit:
+
+```
+CONTEXT LIMIT hit (2048 tokens) before answering — not a capability result; raise --ctx
+TRUNCATED at max_tokens (3000) before answering — not a capability result; raise --max-tokens
+```
+
+**A diagnostic that names the wrong cause is worse than no diagnostic**, because it converts a
+measurement failure into confident, actionable, wrong advice.
+
+---
+
+## The three mechanisms together
+
+| # | mechanism | evidence |
+|---|---|---|
+| 1 | a **grammar** forbids the output the task requires | Qwen3.5-9B 0.33→0.00; LFM2-350M 0.33→0.00, Yellow→White |
+| 2 | a small **max_tokens** truncates a reasoning trace before the answer | Qwen3.5-2B pit stop 0/3 → 3/3 at 3000 |
+| 3 | a small **--ctx** caps how much the model may think | Qwen3.5-2B Yellow → Orange at 8192 |
+
+All three are **configuration**, all three are invisible in the final score, and all three bite hardest
+on the most capable reasoning models.
+
+---
+
 ## Reproduce
 
 ```bash

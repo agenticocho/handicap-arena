@@ -223,10 +223,12 @@ class LlamaServer:
         m = ch.get("message", {})
         content = m.get("content") or ""
         reasoning = m.get("reasoning_content") or ""
+        usage = r.get("usage") or {}
         return dict(text=content if content.strip() else reasoning,
                     from_reasoning=bool(reasoning) and not content.strip(),
                     finish=ch.get("finish_reason"),
-                    ctok=(r.get("usage") or {}).get("completion_tokens"),
+                    ctok=usage.get("completion_tokens"),
+                    ptok=usage.get("prompt_tokens"),
                     secs=dt)
 
 
@@ -418,6 +420,7 @@ def evaluate(gguf, args, tasks):
         npass = 0
         why = ""
         finishes, ctoks, truncated = {}, 0, False
+        ctx_hits = 0
         for i in range(args.trials):
             try:
                 r = srv.chat(t["prompt"], args.max_tokens, args.temperature)
@@ -429,8 +432,12 @@ def evaluate(gguf, args, tasks):
             reasons += 1 if r["from_reasoning"] else 0
             finishes[r.get("finish") or "?"] = finishes.get(r.get("finish") or "?", 0) + 1
             ctoks = max(ctoks, r.get("ctok") or 0)
-            if (r.get("finish") == "length") or ((r.get("ctok") or 0) >= args.max_tokens):
+            total = (r.get("ptok") or 0) + (r.get("ctok") or 0)
+            # WHICH limit bit? Confusing these two produces wrong advice.
+            if r.get("finish") == "length" or total >= args.ctx:
                 truncated = True
+                if total >= args.ctx:
+                    ctx_hits += 1
             ok, reason = SCORERS[t["scorer"]](t["spec"], r["text"])
             npass += 1 if ok else 0
             if not ok:
@@ -440,11 +447,17 @@ def evaluate(gguf, args, tasks):
         results[name] = dict(score=npass / args.trials, wins=npass, trials=args.trials,
                              kind=t.get("kind", ""), metaphor=t.get("metaphor", ""),
                              finish_reasons=finishes, max_completion_tokens=ctoks,
-                             truncated=truncated)
+                             truncated=truncated, ctx_limited_trials=ctx_hits)
         if npass == 0 and why:
-            # Distinguish "the model answered wrongly" from "we cut it off before it answered".
-            results[name]["why"] = ("TRUNCATED at max_tokens before answering — not a capability "
-                                    "result; raise --max-tokens") if truncated else why
+            # Distinguish four different things: a wrong answer, a cut-off answer, and WHICH cut-off.
+            if truncated and ctx_hits:
+                results[name]["why"] = (f"CONTEXT LIMIT hit ({args.ctx} tokens) before answering — "
+                                        f"not a capability result; raise --ctx")
+            elif truncated:
+                results[name]["why"] = (f"TRUNCATED at max_tokens ({args.max_tokens}) before "
+                                        f"answering — not a capability result; raise --max-tokens")
+            else:
+                results[name]["why"] = why
     srv.stop()
 
     agg = sum(v["score"] for v in results.values()) / max(len(results), 1)
