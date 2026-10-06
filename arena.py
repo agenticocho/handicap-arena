@@ -602,6 +602,146 @@ def biathlon(paths, k):
     print(f"  raise k to weight correctness, lower it to weight speed. The winner can flip.")
 
 
+def run_relay(paths, args, tasks):
+    """THE RELAY — does chaining models beat a single model?
+
+    THREE CONDITIONS PER TASK, because a relay score on its own is meaningless:
+      * ROUTER ALONE  -- is the planner any good? (usually not; that is expected)
+      * WORKER ALONE  -- THE CONTROL. Without it, "the relay scored 0.67" says nothing.
+      * RELAY         -- the router's plan handed to the worker VERBATIM, then scored.
+
+    LEGS RUN IN SEQUENCE, NOT IN PARALLEL. The plan is text, so both models never need to be
+    resident at once. This matters twice over:
+      * PEAK VRAM = max(member), not sum(member). A 350M+2B relay fits an 8 GB card even when a
+        cached model already occupies most of it. The first version of this function tried to hold
+        both resident and died on VRAM.
+      * COMPETITIVE DIVISION IS STILL THE SUM. Peak memory is what your machine must survive;
+        division is what the team is worth. Those are different numbers and conflating them would
+        let a relay smuggle size.
+
+    A DROPPED BATON IS A DNF. An empty plan means the relay scores zero. Passing garbage downstream
+    is a failure, not a recovery — and a plan that MISLEADS the worker is the most interesting thing
+    this event can reveal.
+    """
+    router_p, worker_p = paths[0], paths[-1]
+
+    def load(path, role):
+        s = LlamaServer(path, ctx=args.ctx, ngl=args.ngl, binary=args.llama_server,
+                        extra=shlex.split(args.extra_flags) if args.extra_flags else None)
+        print(f"\nWEIGH-IN [{role}] {os.path.basename(path)}", flush=True)
+        try:
+            s.start(timeout=args.load_timeout)
+        except Exception as e:
+            # SCRATCH, never crash. Same rule as the single-bout path: a model that cannot serve is
+            # not scored, and the reason is printed rather than thrown.
+            print(f"  *** SCRATCHED AT WEIGH-IN *** {e}")
+            for line in s.server_log_tail():
+                print(f"    {line}")
+            print("  A model that does not serve is not scored. Scoring it would publish a lie.")
+            s.stop()
+            return None
+        print(f"  footprint {s.footprint_gb():.2f} GB measured", flush=True)
+        return s
+
+    print("=" * 108)
+    print(f"RELAY — {len(paths)} legs, {len(tasks)} rounds, {args.trials} trials, ctx {args.ctx}")
+    print("  legs run in SEQUENCE: peak VRAM is the largest member, division is the SUM")
+    print("=" * 108)
+
+    plans, router_scores, worker_scores, relay_scores, dnfs = {}, {}, {}, {}, {}
+    router_fp = worker_fp = None
+
+    # ---- PHASE 1 — the router, alone ----
+    R = load(router_p, "router")
+    if R:
+        router_fp = R.footprint_gb()
+        for t in tasks:
+            passes, plist = [], []
+            for _ in range(args.trials):
+                try:
+                    a = R.chat(t["prompt"], min(300, args.max_tokens), args.temperature)
+                    passes.append(SCORERS[t["scorer"]](t["spec"], a["text"])[0])
+                except Exception:
+                    passes.append(False)
+                try:
+                    plist.append(R.chat(
+                        "You are a planner. Read the task below and write a brief plan, at most 120 "
+                        "words, for how to answer it correctly. Output ONLY the plan, no preamble, "
+                        "and do not answer the task itself.\n\nTASK:\n" + t["prompt"],
+                        300, args.temperature)["text"])
+                except Exception:
+                    plist.append("")
+            router_scores[t["id"]] = sum(passes) / args.trials
+            plans[t["id"]] = plist
+            print(f"    [router] {t['id']:16s} {sum(passes)}/{args.trials}  "
+                  f"(plans captured: {sum(1 for p in plist if p.strip())}/{args.trials})", flush=True)
+        R.stop()
+
+    # ---- PHASE 2 — the worker, alone and then with the plans ----
+    W = load(worker_p, "worker")
+    if W:
+        worker_fp = W.footprint_gb()
+        for t in tasks:
+            w_ok = rel_ok = 0
+            dnf = 0
+            for i in range(args.trials):
+                try:
+                    b = W.chat(t["prompt"], args.max_tokens, args.temperature)
+                    w_ok += 1 if SCORERS[t["scorer"]](t["spec"], b["text"])[0] else 0
+                except Exception:
+                    pass
+                plan = (plans.get(t["id"]) or [""] * args.trials)[i] if R else ""
+                if not plan or not plan.strip():
+                    dnf += 1                      # dropped baton
+                    continue
+                relay_prompt = (t["prompt"] + "\n\n---\nA planning model reviewed this task and "
+                                "suggested the following approach. Use it if it helps. The output "
+                                "format requirements above still apply.\nPLAN:\n" + plan.strip())
+                try:
+                    c = W.chat(relay_prompt, args.max_tokens, args.temperature)
+                    rel_ok += 1 if SCORERS[t["scorer"]](t["spec"], c["text"])[0] else 0
+                except Exception:
+                    pass
+            worker_scores[t["id"]] = w_ok / args.trials
+            relay_scores[t["id"]] = rel_ok / args.trials
+            dnfs[t["id"]] = dnf
+            print(f"    [worker] {t['id']:16s} alone {w_ok}/{args.trials}   "
+                  f"RELAY {rel_ok}/{args.trials}" + (f"   DNF {dnf}" if dnf else ""), flush=True)
+        W.stop()
+
+    if not worker_scores:
+        print("\n  The worker could not be weighed in — no relay can be run. Nothing was scored.")
+        return
+
+    sum_fp = (router_fp or 0) + (worker_fp or 0)
+    peak_fp = max(router_fp or 0, worker_fp or 0)
+    print(f"\n{'='*108}")
+    print(f"{'round':16s} {'router':>8s} {'WORKER(control)':>16s} {'RELAY':>8s} {'delta':>9s}  verdict")
+    print("-" * 108)
+    tw = tr = 0.0
+    for t in tasks:
+        n = t["id"]
+        w = worker_scores.get(n, 0.0)
+        r = relay_scores.get(n, 0.0)
+        rs = router_scores.get(n, 0.0)
+        tw += w
+        tr += r
+        d = r - w
+        verdict = ("relay HELPS" if d > 0.01 else "relay HURTS" if d < -0.01 else "no effect")
+        if dnfs.get(n):
+            verdict += f" ({dnfs[n]} DNF)"
+        print(f"{n:16s} {rs:8.2f} {w:16.2f} {r:8.2f} {d:+9.2f}  {verdict}")
+    k = len(tasks) or 1
+    print("-" * 108)
+    print(f"{'MEAN':16s} {'':8s} {tw/k:16.2f} {tr/k:8.2f} {(tr-tw)/k:+9.2f}")
+    print(f"\n  worker alone {tw/k:.2f}   relay {tr/k:.2f}")
+    print(f"  DIVISION footprint (sum of members) {sum_fp:.2f} GB -> {division_for(sum_fp)}")
+    print(f"  PEAK footprint (legs serialised)    {peak_fp:.2f} GB -> {division_for(peak_fp)}")
+    print("  A relay that merely matches the worker has added a model and gained nothing.")
+    print("  A relay that beats the worker has to justify a larger DIVISION footprint even though "
+          "its PEAK fits in the worker's class.")
+
+
 def grade_only(path):
     """Re-derive a belt from a stored result bundle — belts are computed, never assigned."""
     with open(path) as f:
@@ -652,12 +792,25 @@ def main():
                     help="re-derive belts from a stored result bundle (belts are computed, never assigned)")
     ap.add_argument("--biathlon", nargs="+", metavar="BUNDLE.json",
                     help="rank stored bundles as a biathlon: accuracy x throughput, misses cost time")
+    ap.add_argument("--relay", metavar="MODEL_A,MODEL_B[,MODEL_C]",
+                    help="THE RELAY: leg 1 plans, the last leg answers. Reports worker-alone as "
+                         "the control, because a relay score without a control means nothing.")
     ap.add_argument("--penalty-k", type=float, default=1.0, dest="penalty_k",
                     help="cost of one miss in units of that round's mean latency (default 1.0)")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
 
     LlamaServer.install_guards()
+
+    if args.relay:
+        legs = [os.path.expanduser(p.strip()) for p in args.relay.split(",") if p.strip()]
+        missing = [p for p in legs if not os.path.exists(p)]
+        if missing:
+            sys.exit("model file not found: " + ", ".join(missing))
+        if len(legs) < 2:
+            sys.exit("--relay needs at least two models: ROUTER,WORKER")
+        run_relay(legs, args, load_tasks())
+        return
 
     if args.biathlon:
         biathlon(args.biathlon, args.penalty_k)

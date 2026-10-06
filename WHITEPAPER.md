@@ -183,6 +183,9 @@ architecture, made measurable.**
 
 # PART III — THE GAMES
 
+> **This is the summary. The full catalogue — 42 events across nine leagues, each with a scorer, a
+> null baseline, and its own anti-gaming notes — is in [GAMES.md](GAMES.md).**
+
 Every event needs a scorer that is **deterministic or ground-truthed.** No language model judging a
 language model — that is a family member marking the exam, and it is the most common way a benchmark
 becomes worthless. Where generation must be judged, we use **deterministic specifications** (render
