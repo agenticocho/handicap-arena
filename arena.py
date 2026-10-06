@@ -152,6 +152,17 @@ class LlamaServer:
         self.proc = None
         self.vram_base = None
         self.vram_peak = None
+        self.logpath = os.path.join(tempfile.gettempdir(),
+                                    f"arena-server-{os.getpid()}-{self.port}.log")
+
+    def server_log_tail(self, lines=14):
+        """A weigh-in that cannot explain itself is a bad weigh-in. Capture the server's own words."""
+        try:
+            with open(self.logpath, errors="replace") as f:
+                tail = f.read().strip().splitlines()[-lines:]
+            return [l for l in tail if l.strip()]
+        except OSError:
+            return []
 
     @property
     def url(self):
@@ -161,12 +172,14 @@ class LlamaServer:
         if not self.binary:
             raise RuntimeError("llama-server not found. Pass --llama-server /path/to/bin.")
         self.vram_base = gpu_used_mb()
+        self._logfh = open(self.logpath, "w")
         self.proc = subprocess.Popen([self.binary] + self.flags,
-                                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                                     stdout=self._logfh, stderr=subprocess.STDOUT)
         t0 = time.time()
         while time.time() - t0 < timeout:
             if self.proc.poll() is not None:
-                raise RuntimeError(f"llama-server exited early rc={self.proc.returncode}")
+                raise RuntimeError(f"llama-server exited early rc={self.proc.returncode} "
+                                   f"(log: {self.logpath})")
             try:
                 urllib.request.urlopen(self.url + "/health", timeout=3).read()
                 time.sleep(1.0)
@@ -188,6 +201,10 @@ class LlamaServer:
                 self.proc.wait(timeout=20)
             except subprocess.TimeoutExpired:
                 self.proc.kill()
+        try:
+            self._logfh.close()
+        except Exception:
+            pass
 
     def footprint_gb(self):
         if self.vram_base is None or self.vram_peak is None:
@@ -375,7 +392,15 @@ def evaluate(gguf, args, tasks):
     except Exception as e:
         srv.stop()
         print(f"\n  *** SCRATCHED AT WEIGH-IN *** {e}")
+        tail = srv.server_log_tail()
+        if tail:
+            print("  --- server's last words ---")
+            for line in tail:
+                print(f"    {line}")
         print("  A model that does not serve is not scored. Scoring it would publish a lie.")
+        if any(("out of memory" in l.lower() or "oom" in l.lower() or "cuda" in l.lower())
+               for l in tail):
+            print("  Looks like a VRAM problem: free GPU memory (unload other models) and re-weigh.")
         return None
     fp = srv.footprint_gb()
     div = division_for(fp) if fp is not None else "UNKNOWN (no GPU telemetry)"
@@ -391,6 +416,7 @@ def evaluate(gguf, args, tasks):
         name = t["id"]
         npass = 0
         why = ""
+        finishes, ctoks, truncated = {}, 0, False
         for i in range(args.trials):
             try:
                 r = srv.chat(t["prompt"], args.max_tokens, args.temperature)
@@ -400,6 +426,10 @@ def evaluate(gguf, args, tasks):
             srv.sample_vram()
             lat.append(r["secs"])
             reasons += 1 if r["from_reasoning"] else 0
+            finishes[r.get("finish") or "?"] = finishes.get(r.get("finish") or "?", 0) + 1
+            ctoks = max(ctoks, r.get("ctok") or 0)
+            if (r.get("finish") == "length") or ((r.get("ctok") or 0) >= args.max_tokens):
+                truncated = True
             ok, reason = SCORERS[t["scorer"]](t["spec"], r["text"])
             npass += 1 if ok else 0
             if not ok:
@@ -407,9 +437,13 @@ def evaluate(gguf, args, tasks):
             print(f"    {name:16s} t{i+1}: {'PASS' if ok else 'fail'} ({r['secs']:5.1f}s)"
                   + ("" if ok else f"  [{reason}]"), flush=True)
         results[name] = dict(score=npass / args.trials, wins=npass, trials=args.trials,
-                             kind=t.get("kind", ""), metaphor=t.get("metaphor", ""))
+                             kind=t.get("kind", ""), metaphor=t.get("metaphor", ""),
+                             finish_reasons=finishes, max_completion_tokens=ctoks,
+                             truncated=truncated)
         if npass == 0 and why:
-            results[name]["why"] = why
+            # Distinguish "the model answered wrongly" from "we cut it off before it answered".
+            results[name]["why"] = ("TRUNCATED at max_tokens before answering — not a capability "
+                                    "result; raise --max-tokens") if truncated else why
     srv.stop()
 
     agg = sum(v["score"] for v in results.values()) / max(len(results), 1)
@@ -448,6 +482,60 @@ def print_card(res):
     if g.get("note"):
         print(f"  next: {g['note']}")
     print(f"  config: {json.dumps(res['config'])}")
+
+
+def biathlon(paths, k):
+    """BIATHLON: accuracy x throughput, where every miss costs a penalty loop.
+
+    The commercial event. Real biathlon ranks on total time INCLUDING penalties, which is exactly
+    the local-inference trade: a fast model that is sometimes wrong against a slow model that is
+    usually right. The penalty coefficient k is the declared cost of being wrong, for ONE trial
+    (in units of that round's mean latency). Different applications have different k; the arena
+    turns that argument into a number.
+
+    total = (mean_latency x trials) + (misses x k x mean_latency)
+    """
+    rows = []
+    for p in paths:
+        with open(p) as f:
+            b = json.load(f)
+        for r in b.get("results", []):
+            rounds = r.get("rounds", {})
+            if any("wins" not in v for v in rounds.values()):
+                print(f"  !! {os.path.basename(p)} predates per-round win counts — cannot score")
+                continue
+            trials = sum(v.get("trials", 0) for v in rounds.values())
+            hits = sum(v.get("wins", 0) for v in rounds.values())
+            misses = trials - hits
+            lat = r.get("mean_latency") or 0.0
+            ski = lat * trials
+            pen = misses * k * lat
+            rows.append(dict(name=os.path.basename(r["gguf"]), divisions=r["division"],
+                             fp=r.get("footprint_gb"), hits=hits, trials=trials, misses=misses,
+                             lat=lat, ski=ski, pen=pen, total=ski + pen,
+                             belt=(r.get("grade") or {}).get("belt", "?")))
+    if not rows:
+        print("  no gradeable bundles")
+        return
+    print(f"\n{'='*96}")
+    print(f"BIATHLON  (penalty k={k} — each miss costs {k}x the round's mean latency)")
+    print(f"{'-'*96}")
+    print(f"{'rank':>4s} {'entrant':34s} {'div':13s} {'footprint':>10s} {'hits':>6s} "
+          f"{'miss':>5s} {'lat':>7s} {'ski':>9s} {'penalty':>9s} {'TOTAL':>10s}")
+    for i, r in enumerate(sorted(rows, key=lambda x: x["total"]), 1):
+        fps = f"{r['fp']:.2f}GB" if r["fp"] is not None else "?"
+        print(f"{i:>4d} {r['name'][:34]:34s} {r['divisions']:13s} {fps:>10s} "
+              f"{r['hits']:>3d}/{r['trials']:<2d} {r['misses']:>5d} {r['lat']:6.2f}s "
+              f"{r['ski']:8.2f}s {r['pen']:8.2f}s {r['total']:9.2f}s")
+    print(f"{'-'*96}")
+    best = min(rows, key=lambda x: x["total"])
+    acc = max(rows, key=lambda x: x["hits"])
+    print(f"  biathlon winner (lowest total) : {best['name']}")
+    if acc["name"] != best["name"]:
+        print(f"  most accurate                  : {acc['name']}  "
+              f"({acc['hits']}/{acc['trials']} vs {best['hits']}/{best['trials']})")
+        print(f"  -> accuracy and value DISAGREE here. That is the entire reason this event exists.")
+    print(f"  raise k to weight correctness, lower it to weight speed. The winner can flip.")
 
 
 def grade_only(path):
@@ -494,8 +582,16 @@ def main():
     ap.add_argument("--out", help="write result bundle JSON here")
     ap.add_argument("--grade", metavar="BUNDLE.json",
                     help="re-derive belts from a stored result bundle (belts are computed, never assigned)")
+    ap.add_argument("--biathlon", nargs="+", metavar="BUNDLE.json",
+                    help="rank stored bundles as a biathlon: accuracy x throughput, misses cost time")
+    ap.add_argument("--penalty-k", type=float, default=1.0, dest="penalty_k",
+                    help="cost of one miss in units of that round's mean latency (default 1.0)")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
+
+    if args.biathlon:
+        biathlon(args.biathlon, args.penalty_k)
+        return
 
     if args.grade:
         grade_only(args.grade)
@@ -539,6 +635,8 @@ def main():
         print("  Belts shown are OPEN tier (self-reported). Certification re-runs the model from")
         print("  its sha256 on arena hardware; reproduce and it holds, fail and it is STRUCK.")
     if args.out:
+        outdir = os.path.dirname(os.path.abspath(args.out))
+        os.makedirs(outdir, exist_ok=True)
         with open(args.out, "w") as f:
             json.dump(dict(harness="handicap-arena", version="1.0",
                            generated=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
