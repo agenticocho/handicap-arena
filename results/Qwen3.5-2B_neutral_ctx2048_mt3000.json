@@ -1,0 +1,88 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-06T21:55:03Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/Qwen3.5-2B-UD-Q4_K_XL.gguf",
+      "sha256": "d21c6452a5423ed1358c41073748c83f594b794d86584903f1b7fc5db2c97bd2",
+      "footprint_gb": 1.5595703125,
+      "division": "Featherweight",
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 2048,
+        "n_gpu_layers": 99,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/Qwen3.5-2B-UD-Q4_K_XL.gguf",
+          "--ctx-size",
+          "2048",
+          "--n-gpu-layers",
+          "99",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "44057"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.0,
+          "wins": 0,
+          "trials": 3,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "finish_reasons": {
+            "length": 3
+          },
+          "max_completion_tokens": 1888,
+          "truncated": true,
+          "ctx_limited_trials": 3,
+          "why": "CONTEXT LIMIT hit (2048 tokens) before answering \u2014 not a capability result; raise --ctx"
+        },
+        "R2_chess": {
+          "score": 1.0,
+          "wins": 3,
+          "trials": 3,
+          "kind": "tool_selection",
+          "metaphor": "CHESS",
+          "finish_reasons": {
+            "stop": 3
+          },
+          "max_completion_tokens": 668,
+          "truncated": false,
+          "ctx_limited_trials": 0
+        },
+        "R3_pitstop": {
+          "score": 0.0,
+          "wins": 0,
+          "trials": 3,
+          "kind": "code_repair",
+          "metaphor": "PIT STOP",
+          "finish_reasons": {
+            "length": 3
+          },
+          "max_completion_tokens": 1767,
+          "truncated": true,
+          "ctx_limited_trials": 3,
+          "why": "CONTEXT LIMIT hit (2048 tokens) before answering \u2014 not a capability result; raise --ctx"
+        }
+      },
+      "aggregate": 0.3333333333333333,
+      "grade": {
+        "belt": "Yellow",
+        "rounds_won": 1,
+        "rounds": 3,
+        "stripes": 3,
+        "trials": 9,
+        "note": null
+      },
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 7.44,
+      "answers_from_reasoning": 6
+    }
+  ]
+}
