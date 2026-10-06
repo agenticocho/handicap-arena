@@ -12,6 +12,9 @@ executing code. Download it, point it at your GGUFs, and see where your models a
 Ranking every model on one global leaderboard means a 4B quant on a six-year-old GPU is placed
 417th and nobody ever looks at it. **That is not a worse GPT-5. That is a different sport.**
 
+**Read the full white paper: [WHITEPAPER.md](WHITEPAPER.md)** — the problem, the institution, the games,
+the measured evidence, and the plan.
+
 So the arena separates two things that leaderboards collapse into one meaningless number:
 
 - **Weight class** — *who you fight.* Assigned by **measuring peak VRAM on a scale**, not by the
