@@ -1,0 +1,17 @@
+{
+  "id": "R3_pitstop",
+  "kind": "code_repair",
+  "metaphor": "PIT STOP",
+  "scorer": "code_repair",
+  "prompt": "This function has a bug: it fails to merge intervals that TOUCH.\n\n```python\ndef merge_intervals(intervals):\n    \"\"\"Merge overlapping OR touching closed intervals. Return sorted list of tuples.\"\"\"\n    if not intervals:\n        return []\n    iv = sorted(intervals)\n    out = []\n    for s, e in iv:\n        if out and s < out[-1][1]:          # BUG: touched intervals must also merge\n            out[-1] = (out[-1][0], max(out[-1][1], e))\n        else:\n            out.append((s, e))\n    return out\n```\n\nIt must pass these cases:\n  merge_intervals([(1,3),(2,6),(8,10),(9,12)]) == [(1, 6), (8, 12)]\n  merge_intervals([(1,4),(4,5)])               == [(1, 5)]\n  merge_intervals([])                          == []\n  merge_intervals([(5,6)])                     == [(5, 6)]\n  merge_intervals([(1,2),(3,4)])               == [(1, 2), (3, 4)]\n\nReturn ONLY the corrected function in a single ```python code block. No explanation.",
+  "spec": {
+    "entry_point": "merge_intervals",
+    "cases": [
+      { "call": "merge_intervals([(1,3),(2,6),(8,10),(9,12)])", "expect": "[(1, 6), (8, 12)]" },
+      { "call": "merge_intervals([(1,4),(4,5)])", "expect": "[(1, 5)]" },
+      { "call": "merge_intervals([])", "expect": "[]" },
+      { "call": "merge_intervals([(5,6)])", "expect": "[(5, 6)]" },
+      { "call": "merge_intervals([(1,2),(3,4)])", "expect": "[(1, 2), (3, 4)]" }
+    ]
+  }
+}

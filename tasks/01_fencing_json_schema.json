@@ -1,0 +1,13 @@
+{
+  "id": "R1_fencing",
+  "kind": "structured_output",
+  "metaphor": "FENCING",
+  "scorer": "json_schema",
+  "prompt": "Return ONLY a JSON object matching this JSON Schema. No prose, no code fences.\n\nSchema: {\"type\":\"object\",\"required\":[\"station\",\"readings\",\"status\"],\"properties\":{\"station\":{\"type\":\"string\"},\"readings\":{\"type\":\"array\",\"items\":{\"type\":\"number\"},\"minItems\":3},\"status\":{\"type\":\"string\",\"enum\":[\"nominal\",\"degraded\",\"offline\"]},\"sensor_count\":{\"type\":\"integer\"}}}\n\nContent requirements:\n- station: \"RENO-04\"\n- readings: exactly 4 numbers between -40 and 60\n- status: one of the allowed values\n- sensor_count: the length of the readings array\n\nAfter the JSON, add a short friendly sentence explaining your choice.",
+  "spec": {
+    "required": ["station", "readings", "status"],
+    "enums": { "status": ["nominal", "degraded", "offline"] },
+    "types": { "station": "string", "readings": "array" },
+    "min_len": { "readings": 3 }
+  }
+}

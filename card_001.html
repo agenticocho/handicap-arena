@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Handicap Arena — Card 001</title>
+<style>
+  :root{
+    --bg:#0a0a0c; --panel:#131317; --panel2:#191920; --line:#2a2a33;
+    --ink:#e8e8ee; --dim:#8b8b99; --amber:#ffb02e; --red:#ff3b30;
+    --green:#30d158; --blue:#5ac8fa; --purple:#bf5af2;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:transparent;color:var(--ink);
+    font-family:ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
+  .card{border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    background:radial-gradient(1200px 500px at 15% -10%,#1d1d26 0%,var(--bg) 60%);width:100%}
+  /* ---------- header ---------- */
+  .hd{padding:16px 20px;border-bottom:1px solid var(--line);
+    background:linear-gradient(90deg,rgba(255,59,48,.10),rgba(255,176,46,.06) 40%,transparent 75%)}
+  .hd .kicker{font-size:10px;letter-spacing:.28em;color:var(--amber);font-weight:700}
+  .hd h1{margin:2px 0 0;font-size:26px;letter-spacing:-.02em;font-weight:800}
+  .hd h1 span{color:var(--dim);font-weight:500;font-size:15px;letter-spacing:0}
+  .meta{margin-top:8px;display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--dim)}
+  .meta b{color:var(--ink);font-weight:600}
+  /* ---------- bout ---------- */
+  .bout{padding:18px 20px;border-bottom:1px solid var(--line)}
+  .bouthead{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .tag{font-size:10px;letter-spacing:.16em;font-weight:700;padding:3px 8px;border-radius:4px;
+    background:var(--amber);color:#1a1200}
+  .tag.div{background:transparent;color:var(--amber);border:1px solid rgba(255,176,46,.45)}
+  .tag.under{background:rgba(90,200,250,.15);color:var(--blue);border:1px solid rgba(90,200,250,.35)}
+  .vs{display:grid;grid-template-columns:1fr 96px 1fr;gap:10px;align-items:stretch}
+  .f{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .f.win{border-color:rgba(48,209,88,.5);box-shadow:inset 0 0 0 1px rgba(48,209,88,.18)}
+  .f.disputed{border-color:rgba(255,59,48,.5);background:linear-gradient(180deg,rgba(255,59,48,.07),var(--panel))}
+  .f .nm{font-weight:700;font-size:14px;letter-spacing:-.01em}
+  .f .sub{font-size:11px;color:var(--dim);margin-top:2px}
+  .record{font-variant-numeric:tabular-nums;font-size:22px;font-weight:800;letter-spacing:-.03em;margin-top:6px}
+  .record small{font-size:11px;font-weight:600;color:var(--dim)}
+  .tape{margin-top:9px;font-size:11px;color:var(--dim);display:grid;gap:2px}
+  .tape i{color:var(--ink);font-style:normal;float:right}
+  .mid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+  .mid .rd{font-size:10px;letter-spacing:.2em;color:var(--dim)}
+  .mid .score{font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}
+  .belt{font-size:9px;letter-spacing:.14em;color:#1a1200;background:linear-gradient(90deg,#ffd76e,#ffb02e);
+    padding:3px 7px;border-radius:3px;font-weight:800}
+  /* ---------- rounds ---------- */
+  .rounds{margin-top:12px;display:grid;gap:6px}
+  .r{display:grid;grid-template-columns:150px 1fr 54px;gap:10px;align-items:center;font-size:12px}
+  .r .lbl{color:var(--dim);font-size:11px}
+  .r .lbl b{color:var(--ink);font-weight:600;display:block;font-size:11.5px}
+  .bar{height:16px;background:var(--panel2);border-radius:3px;display:flex;overflow:hidden;position:relative}
+  .bar .a{background:linear-gradient(90deg,#1f6f3f,var(--green))}
+  .bar .b{background:linear-gradient(90deg,#7a2922,var(--red))}
+  .bar .n{background:repeating-linear-gradient(135deg,#20202a 0 6px,#17171e 6px 12px)}
+  .r .lab{text-align:right;font-variant-numeric:tabular-nums;color:var(--dim);font-size:11px}
+  .spoiler{margin-top:4px;grid-column:1/-1;font-size:10.5px;color:var(--red);padding-left:150px}
+  .protest{margin-top:12px;padding:10px 12px;border-radius:8px;font-size:11.5px;
+    background:rgba(255,59,48,.07);border:1px solid rgba(255,59,48,.35);color:#ffc9c5}
+  .protest b{color:#fff}
+  /* ---------- weigh-in ---------- */
+  .wi{padding:16px 20px;border-bottom:1px solid var(--line);background:rgba(0,0,0,.25)}
+  .wi h2{margin:0 0 10px;font-size:11px;letter-spacing:.2em;color:var(--dim);font-weight:700}
+  .wrow{display:grid;grid-template-columns:1fr 130px 150px;gap:10px;font-size:12px;padding:5px 0;
+    border-top:1px dashed #23232b}
+  .wrow:first-of-type{border-top:0}
+  .wrow .st{font-weight:700;font-size:10px;letter-spacing:.1em;padding:2px 6px;border-radius:3px;display:inline-block}
+  .st.pass{background:rgba(48,209,88,.15);color:var(--green);border:1px solid rgba(48,209,88,.35)}
+  .st.scratch{background:rgba(255,59,48,.15);color:var(--red);border:1px solid rgba(255,59,48,.35)}
+  .wrow .why{color:var(--dim);font-size:11px}
+  /* ---------- footer ---------- */
+  .ft{padding:14px 20px;font-size:11px;color:var(--dim);display:grid;gap:4px}
+  .ft b{color:var(--ink)}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px;color:#a9a9b8}
+  .law{margin-top:6px;padding-top:8px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="hd">
+    <div class="kicker">THE HANDICAP ARENA · SANCTIONED CARD</div>
+    <h1>CARD 001 <span>— divisions by footprint, not parameter count</span></h1>
+    <div class="meta">
+      <span>RIG <b>RTX 3060 Ti · 8 GB</b></span>
+      <span>SCORING <b>parsers + executed tests</b></span>
+      <span>LLM JUDGES <b>none</b></span>
+      <span>STATUS <b style="color:var(--amber)">1 champion · 1 disputed · 3 scratched</b></span>
+    </div>
+  </div>
+
+  <!-- ================= MAIN EVENT ================= -->
+  <div class="bout">
+    <div class="bouthead">
+      <span class="tag">MAIN EVENT</span>
+      <span class="tag div">LIGHTWEIGHT ≤8 GB</span>
+      <span style="font-size:11px;color:var(--dim)">title bout · 3 rounds of 3 trials</span>
+    </div>
+
+    <div class="vs">
+      <div class="f win">
+        <div class="nm">Llama-3.1-8B-Instruct</div>
+        <div class="sub">Meta · Q4_K_M</div>
+        <div class="record">3–0 <small>SWEEP</small></div>
+        <div class="tape">
+          <span>footprint <i>4.92 GB</i></span>
+          <span>rounds won <i>3 / 3</i></span>
+          <span>mean latency <i>1.2 s</i></span>
+          <span>verdict <i style="color:var(--green)">CERTIFIED (Tier 2 eligible)</i></span>
+        </div>
+      </div>
+
+      <div class="mid">
+        <div class="belt">CHAMPION</div>
+        <div class="score">1.00</div>
+        <div class="rd">AGG · 1.00</div>
+      </div>
+
+      <div class="f disputed">
+        <div class="nm">Qwen3.5-9B</div>
+        <div class="sub">Alibaba · UD-Q4_K_XL</div>
+        <div class="record">0–3 <small style="color:var(--red)">UNDER PROTEST</small></div>
+        <div class="tape">
+          <span>footprint <i>5.60 GB</i></span>
+          <span>rounds won <i>0 / 3</i></span>
+          <span>mean latency <i>2.8 s</i></span>
+          <span>verdict <i style="color:var(--red)">UNCERTIFIED · result stayed</i></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounds">
+      <div class="r">
+        <div class="lbl"><b>R1 · FENCING</b>json_schema</div>
+        <div class="bar"><div class="a" style="width:100%"></div><div class="b" style="width:0%"></div></div>
+        <div class="lab">3–0</div>
+      </div>
+      <div class="r">
+        <div class="lbl"><b>R2 · CHESS</b>tool_call</div>
+        <div class="bar"><div class="a" style="width:100%"></div><div class="b" style="width:0%"></div></div>
+        <div class="lab">3–0</div>
+      </div>
+      <div class="r">
+        <div class="lbl"><b>R3 · PIT STOP</b>code_repair (tests executed)</div>
+        <div class="bar"><div class="a" style="width:100%"></div><div class="b" style="width:0%"></div></div>
+        <div class="lab">3–0</div>
+      </div>
+    </div>
+
+    <div class="protest">
+      <b>PROTEST FILED — ruling pending.</b> Qwen3.5-9B was measured twice through two different
+      serving configurations and lost both times, but <b>the serving stack is not yet cleared as
+      neutral</b>. It is the same weights as two entrants that also failed, and one of those had no
+      grammar applied — so the grammar file is <i>not</i> the whole explanation. Until the neutral
+      serving path is built and the bout re-fought, this result is <b>disputed, not a loss</b>.
+    </div>
+  </div>
+
+  <!-- ================= UNDERCARD ================= -->
+  <div class="bout">
+    <div class="bouthead">
+      <span class="tag under">UNDERCARD</span>
+      <span class="tag div">FEATHERWEIGHT ≤4 GB</span>
+      <span style="font-size:11px;color:var(--dim)">the division where size stops mattering</span>
+    </div>
+
+    <div class="vs">
+      <div class="f win">
+        <div class="nm">LFM2-350M-Extract</div>
+        <div class="sub">Liquid AI · Q4_K_M</div>
+        <div class="record">1–2 <small>SPLIT</small></div>
+        <div class="tape">
+          <span>footprint <i>0.25 GB</i></span>
+          <span>rounds won <i>1 / 3</i></span>
+          <span>mean latency <i>0.3 s</i></span>
+          <span>headline <i style="color:var(--green)">won the CHESS round 3–0</i></span>
+        </div>
+      </div>
+
+      <div class="mid">
+        <div class="score">0.33</div>
+        <div class="rd">AGG · 1–2</div>
+      </div>
+
+      <div class="f">
+        <div class="nm">SmolLM3-3B-128K</div>
+        <div class="sub">HuggingFace · UD-Q4_K_XL</div>
+        <div class="record">0–3 <small>DROPPED ALL</small></div>
+        <div class="tape">
+          <span>footprint <i>1.94 GB</i></span>
+          <span>rounds won <i>0 / 3</i></span>
+          <span>mean latency <i>0.9 s</i></span>
+          <span>failure <i>schema drift</i></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounds">
+      <div class="r">
+        <div class="lbl"><b>R1 · FENCING</b>json_schema</div>
+        <div class="bar"><div class="n" style="width:100%"></div></div>
+        <div class="lab">0–0</div>
+      </div>
+      <div class="r">
+        <div class="lbl"><b>R2 · CHESS</b>tool_call</div>
+        <div class="bar"><div class="a" style="width:100%"></div><div class="b" style="width:0%"></div></div>
+        <div class="lab">3–0</div>
+      </div>
+      <div class="r">
+        <div class="lbl"><b>R3 · PIT STOP</b>code_repair</div>
+        <div class="bar"><div class="n" style="width:100%"></div></div>
+        <div class="lab">0–0</div>
+      </div>
+      <div class="spoiler">A 350 M model winning a round 3–0 against a 3 B is the most interesting
+        number on this card — and exactly why divisions exist. Both models <b>no-contested</b> the
+        other two rounds: hatched bars mean neither scored, which is not a win for either.</div>
+    </div>
+  </div>
+
+  <!-- ================= WEIGH-IN ================= -->
+  <div class="wi">
+    <h2>WEIGH-IN RESULTS — you cannot fight if you cannot serve</h2>
+
+    <div class="wrow">
+      <span>Llama-3.1-8B-Instruct · Q4_K_M</span>
+      <span><span class="st pass">PASSED</span></span>
+      <span class="why">served · no grammar · footprint 4.92 GB</span>
+    </div>
+    <div class="wrow">
+      <span>Qwen3.5-9B · UD-Q4_K_XL <i>(as <span class="mono">critic1</span>)</i></span>
+      <span><span class="st pass">PASSED</span></span>
+      <span class="why">served · no grammar · footprint 5.60 GB</span>
+    </div>
+    <div class="wrow">
+      <span>Qwen3.5-9B · UD-Q4_K_XL <i>(as <span class="mono">ocho-planner</span>)</i></span>
+      <span><span class="st pass">PASSED</span></span>
+      <span class="why">served · <b style="color:var(--amber)">GBNF grammar applied</b> — not neutral</span>
+    </div>
+    <div class="wrow">
+      <span>LFM2-350M-Extract · Q4_K_M</span>
+      <span><span class="st pass">PASSED</span></span>
+      <span class="why">served · no grammar · footprint 0.25 GB</span>
+    </div>
+    <div class="wrow">
+      <span>SmolLM3-3B-128K · UD-Q4_K_XL</span>
+      <span><span class="st pass">PASSED</span></span>
+      <span class="why">served · no grammar · footprint 1.94 GB</span>
+    </div>
+    <div class="wrow">
+      <span>Qwen3-Coder-Next · UD-Q4_K_XL</span>
+      <span><span class="st scratch">SCRATCHED</span></span>
+      <span class="why">HTTPError at weigh-in — did not serve · never scored</span>
+    </div>
+    <div class="wrow">
+      <span>Qwen2.5.1-Coder-7B-Instruct · Q5_K_M</span>
+      <span><span class="st scratch">SCRATCHED</span></span>
+      <span class="why">model file absent after zoo reorg · served a 404, not a model</span>
+    </div>
+    <div class="wrow">
+      <span>Falcon-H1R-7B · Q4_K_M</span>
+      <span><span class="st scratch">SCRATCHED</span></span>
+      <span class="why">model file absent after zoo reorg · served a 404, not a model</span>
+    </div>
+    <div class="wrow">
+      <span>Ornith-1.5-35B-A3B · TIEL-Calibrated · 25 GB</span>
+      <span><span class="st scratch">SCRATCHED</span></span>
+      <span class="why">served but grammar-constrained · incapable of the required output</span>
+    </div>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <div class="ft">
+    <div><b>PROVENANCE (printed with every result — a result without its config is not a result):</b></div>
+    <div class="mono">
+      temperature=0.0 · max_tokens=1200 · trials/task=3 · endpoint=127.0.0.1:8080/v1/chat/completions<br>
+      scoring = parser (R1, R2) + executed test suite in an isolated subprocess (R3) · no LLM judge at any point
+    </div>
+    <div class="law">
+      <b>THE LAW:</b> unverified to participate, certified to be crowned. Belts are awarded only on
+      results the arena has re-run itself, on its own rig, from a hash-verified GGUF.
+      <b>Cheating is not detected — it is impossible, because we ran the model.</b>
+    </div>
+    <div class="law">
+      <b>WHY THIS CARD MATTERS:</b> an earlier version of this exact run produced a clean, confident
+      leaderboard that was entirely wrong — measuring a grammar file, a missing file, and the wrong
+      response field. It was caught only because a 35 B scoring 0/9 while a 350 M scored 3/9 was
+      <i>implausible</i>. That is the sport: not the ranking, the <b>provability</b>.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

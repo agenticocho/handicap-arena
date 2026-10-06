@@ -1,0 +1,11 @@
+{
+  "id": "R2_chess",
+  "kind": "tool_selection",
+  "metaphor": "CHESS",
+  "scorer": "tool_call",
+  "prompt": "You have these tools: [{\"name\": \"get_weather\", \"args\": {\"city\": \"string\", \"units\": \"celsius|fahrenheit\"}}, {\"name\": \"send_email\", \"args\": {\"to\": \"string\", \"subject\": \"string\", \"body\": \"string\"}}, {\"name\": \"db_query\", \"args\": {\"table\": \"string\", \"limit\": \"integer\"}}]\n\nUser request: \"What's the temperature in Reykjavik right now, in celsius?\"\n\nRespond with ONLY a JSON object of the form:\n{\"tool\": \"<tool name>\", \"arguments\": {...}}\nNo prose, no code fences.",
+  "spec": {
+    "expect_tool": "get_weather",
+    "expect_args": { "city": "reykjavik", "units": "celsius" }
+  }
+}
