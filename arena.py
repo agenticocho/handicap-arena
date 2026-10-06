@@ -30,7 +30,7 @@ leaderboard when we hit it ourselves):
        -> this harness takes a file path and reports its sha256
 """
 import argparse, json, os, re, shutil, socket, subprocess, sys, tempfile, time, hashlib, glob
-import urllib.request
+import urllib.request, shlex
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 TASKS_DIR = os.path.join(HERE, "tasks")
@@ -383,7 +383,8 @@ def evaluate(gguf, args, tasks):
     print(f"  sha256 : {digest[:32]}...")
     print(f"  size   : {os.path.getsize(gguf)/2**30:.2f} GB (on disk)")
 
-    srv = LlamaServer(gguf, ctx=args.ctx, ngl=args.ngl, binary=args.llama_server)
+    srv = LlamaServer(gguf, ctx=args.ctx, ngl=args.ngl, binary=args.llama_server,
+                      extra=shlex.split(args.extra_flags) if args.extra_flags else None)
     print(f"  server : {srv.binary}")
     print(f"  flags  : {' '.join(srv.flags)}")
     print("  loading...", end="", flush=True)
@@ -579,6 +580,10 @@ def main():
     ap.add_argument("--max-tokens", type=int, default=1200, dest="max_tokens")
     ap.add_argument("--load-timeout", type=int, default=600, dest="load_timeout")
     ap.add_argument("--llama-server", dest="llama_server")
+    ap.add_argument("--extra-flags", dest="extra_flags", default=None,
+                    help="extra llama-server flags, shell-split — e.g. "
+                         "'--grammar-file x.gbnf --flash-attn'. Use this to reproduce the "
+                         "serving-configuration experiment in FINDINGS/001.")
     ap.add_argument("--out", help="write result bundle JSON here")
     ap.add_argument("--grade", metavar="BUNDLE.json",
                     help="re-derive belts from a stored result bundle (belts are computed, never assigned)")
