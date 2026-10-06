@@ -30,7 +30,7 @@ leaderboard when we hit it ourselves):
        -> this harness takes a file path and reports its sha256
 """
 import argparse, json, os, re, shutil, socket, subprocess, sys, tempfile, time, hashlib, glob
-import urllib.request, shlex
+import urllib.request, shlex, atexit, signal
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 TASKS_DIR = os.path.join(HERE, "tasks")
@@ -141,6 +141,39 @@ def division_for(gb):
 class LlamaServer:
     """Launches a NEUTRAL llama-server. No grammar, no template, no alias. Just the weights."""
 
+    LIVE = []          # class-level registry so a killed run cannot leak VRAM
+
+    @classmethod
+    def kill_all(cls):
+        for s in list(cls.LIVE):
+            try:
+                s.stop()
+            except Exception:
+                pass
+
+    @classmethod
+    def install_guards(cls):
+        """A crashed or killed run must not leave a model resident holding VRAM.
+
+        atexit covers normal exits; SIGTERM/SIGINT cover Ctrl-C and a killed shell. SIGKILL cannot
+        be caught, so a hard kill can still leak one server — check with:
+            pgrep -af 'llama-server.*arena'
+        """
+        atexit.register(cls.kill_all)
+        for sig in (signal.SIGTERM, signal.SIGINT):
+            prev = signal.getsignal(sig)
+
+            def handler(signum, frame, _prev=prev):
+                cls.kill_all()
+                if callable(_prev):
+                    _prev(signum, frame)
+                else:
+                    sys.exit(128 + signum)
+            try:
+                signal.signal(sig, handler)
+            except (ValueError, OSError):
+                pass            # not on the main thread; atexit still applies
+
     def __init__(self, gguf, ctx, ngl, port=None, binary=None, extra=None):
         self.gguf, self.ctx, self.ngl = gguf, ctx, ngl
         self.binary = binary or find_llama_server()
@@ -175,6 +208,7 @@ class LlamaServer:
         self._logfh = open(self.logpath, "w")
         self.proc = subprocess.Popen([self.binary] + self.flags,
                                      stdout=self._logfh, stderr=subprocess.STDOUT)
+        LlamaServer.LIVE.append(self)
         t0 = time.time()
         while time.time() - t0 < timeout:
             if self.proc.poll() is not None:
@@ -195,6 +229,8 @@ class LlamaServer:
             self.vram_peak = v if self.vram_peak is None else max(self.vram_peak, v)
 
     def stop(self):
+        if self in LlamaServer.LIVE:
+            LlamaServer.LIVE.remove(self)
         if self.proc and self.proc.poll() is None:
             self.proc.terminate()
             try:
@@ -620,6 +656,8 @@ def main():
                     help="cost of one miss in units of that round's mean latency (default 1.0)")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
+
+    LlamaServer.install_guards()
 
     if args.biathlon:
         biathlon(args.biathlon, args.penalty_k)
