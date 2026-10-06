@@ -196,7 +196,7 @@ verification.**
 | event | measures | scorer |
 |---|---|---|
 | **Forecast Duel** | probability vs market price | Brier skill score vs market |
-| **Market Selection** | rank opportunities by reward-per-capital and duration | realised return |
+| **Market Selection** | rank opportunities under a capital budget and a holding period | realised return |
 | **Quote Placement** | choose bid/ask/size from book + tape | simulated markout P&L |
 | **Toxicity Detection** | which fills were adversely selected | AUC vs realised markout |
 | **Arbitrage Detection** | find and size cross-market mispricing | edge **net of costs** |
@@ -324,9 +324,9 @@ failures are documented instead of forgotten.
 
 | # | step | cost | stop condition |
 |---|---|---|---|
-| **0** | **Start the reward shadow-logger** — a daily snapshot of every incentivised market | free, but **time-gated** | pools are ad-hoc or withdrawn |
+| **0** | **Start a daily market-data logger** — a snapshot of every candidate market | free, but **time-gated** | the data turns out to be unstable or withdrawn |
 | **1** | **Pre-register and freeze the scoreboard** on forward outcomes | free | the metric can't be gamed by its own outcome |
-| **2** | **Complete the selection inventory** across all markets, with duration and capital | free | the good opportunities need more capital than exists |
+| **2** | **Complete the selection inventory** and test it against a null baseline | free | no selection rule beats picking at random |
 | **3** | **Install the training toolchain** | **the one expensive step** | won't fit in available video memory |
 | **4** | **One test adapter**, end to end: train, convert, serve | moderate | the adapter can't beat its base model |
 | **5** | **Open the league** — the games, the cards, the belts, remote challenges | ongoing | the scoreboard proves untrustworthy |
