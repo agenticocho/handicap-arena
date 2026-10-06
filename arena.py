@@ -511,7 +511,21 @@ def biathlon(paths, k):
             lat = r.get("mean_latency") or 0.0
             ski = lat * trials
             pen = misses * k * lat
-            rows.append(dict(name=os.path.basename(r["gguf"]), divisions=r["division"],
+            # Disambiguate the serving configuration IN THE NAME. Two entrants with identical
+            # names and different configs is exactly how a wrong leaderboard gets published.
+            flags = (r.get("config") or {}).get("server_flags") or []
+            tags = []
+            if any("grammar" in str(f).lower() for f in flags):
+                tags.append("GRAMMAR")
+            if any(str(f).lower().startswith("--template") for f in flags):
+                tags.append("TEMPLATE")
+            if not tags:
+                tags.append("neutral")
+            mt = (r.get("config") or {}).get("max_tokens")
+            if mt:
+                tags.append(f"mt{mt}")
+            rows.append(dict(name=os.path.basename(r["gguf"]), tag=" ".join(tags),
+                             divisions=r["division"],
                              fp=r.get("footprint_gb"), hits=hits, trials=trials, misses=misses,
                              lat=lat, ski=ski, pen=pen, total=ski + pen,
                              belt=(r.get("grade") or {}).get("belt", "?")))
@@ -521,11 +535,11 @@ def biathlon(paths, k):
     print(f"\n{'='*96}")
     print(f"BIATHLON  (penalty k={k} — each miss costs {k}x the round's mean latency)")
     print(f"{'-'*96}")
-    print(f"{'rank':>4s} {'entrant':34s} {'div':13s} {'footprint':>10s} {'hits':>6s} "
-          f"{'miss':>5s} {'lat':>7s} {'ski':>9s} {'penalty':>9s} {'TOTAL':>10s}")
+    print(f"{'rank':>4s} {'entrant':30s} {'serving':16s} {'div':13s} {'footprint':>10s} "
+          f"{'hits':>6s} {'miss':>5s} {'lat':>7s} {'ski':>9s} {'penalty':>9s} {'TOTAL':>10s}")
     for i, r in enumerate(sorted(rows, key=lambda x: x["total"]), 1):
         fps = f"{r['fp']:.2f}GB" if r["fp"] is not None else "?"
-        print(f"{i:>4d} {r['name'][:34]:34s} {r['divisions']:13s} {fps:>10s} "
+        print(f"{i:>4d} {r['name'][:30]:30s} {r['tag'][:16]:16s} {r['divisions']:13s} {fps:>10s} "
               f"{r['hits']:>3d}/{r['trials']:<2d} {r['misses']:>5d} {r['lat']:6.2f}s "
               f"{r['ski']:8.2f}s {r['pen']:8.2f}s {r['total']:9.2f}s")
     print(f"{'-'*96}")
