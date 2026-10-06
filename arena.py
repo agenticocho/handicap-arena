@@ -130,6 +130,20 @@ def gpu_used_mb():
         return None
 
 
+def gpu_free_mb():
+    """Free GPU memory in MB, or None. The complement of gpu_used_mb(), and the number that
+    decides how much of a model llama.cpp is willing to place."""
+    exe = shutil.which("nvidia-smi")
+    if not exe:
+        return None
+    try:
+        out = subprocess.run([exe, "--query-gpu=memory.free", "--format=csv,noheader,nounits"],
+                             capture_output=True, text=True, timeout=10).stdout.strip()
+        return int(out.splitlines()[0].strip())
+    except Exception:
+        return None
+
+
 def division_for(gb):
     for name, cap in DIVISIONS:
         if gb <= cap:
@@ -178,13 +192,24 @@ class LlamaServer:
         self.gguf, self.ctx, self.ngl = gguf, ctx, ngl
         self.binary = binary or find_llama_server()
         self.port = port or free_port()
-        self.flags = ["--model", gguf, "--ctx-size", str(ctx), "--n-gpu-layers", str(ngl),
-                      "--host", "127.0.0.1", "--port", str(self.port)]
+        self.flags = ["--model", gguf, "--ctx-size", str(ctx)]
+        # DO NOT pass --n-gpu-layers unless explicitly asked. llama.cpp probes free device memory
+        # and auto-fits the layer count when the user has not set it -- but if the flag IS set and
+        # the placement does not fit, it ABORTS instead ("failed to fit params to free device
+        # memory: n_gpu_layers already set by user to 99, abort"). An always-on --ngl 99 therefore
+        # converts a graceful partial offload into an out-of-memory failure on any contended GPU,
+        # which is the COMMON case on a machine that also serves other models.
+        # Omission = auto-fit = the model loads, partially offloaded, and the weigh-in reports the
+        # smaller footprint honestly. That is the Open/Offload division working as designed.
+        if ngl is not None:
+            self.flags += ["--n-gpu-layers", str(ngl)]
+        self.flags += ["--host", "127.0.0.1", "--port", str(self.port)]
         if extra:
             self.flags += extra
         self.proc = None
         self.vram_base = None
         self.vram_peak = None
+        self.vram_free_mb = None
         self.logpath = os.path.join(tempfile.gettempdir(),
                                     f"arena-server-{os.getpid()}-{self.port}.log")
 
@@ -205,6 +230,9 @@ class LlamaServer:
         if not self.binary:
             raise RuntimeError("llama-server not found. Pass --llama-server /path/to/bin.")
         self.vram_base = gpu_used_mb()
+        # FINDING 002: capture ambient free VRAM at load. Auto-fit places layers according to THIS
+        # number, so without it a footprint cannot be interpreted after the fact.
+        self.vram_free_mb = gpu_free_mb()
         self._logfh = open(self.logpath, "w")
         self.proc = subprocess.Popen([self.binary] + self.flags,
                                      stdout=self._logfh, stderr=subprocess.STDOUT)
@@ -246,6 +274,65 @@ class LlamaServer:
         if self.vram_base is None or self.vram_peak is None:
             return None
         return max(0.0, (self.vram_peak - self.vram_base) / 1024.0)
+
+    def weights_gb(self):
+        """The model's weights on disk. This is what the model IS, before any machine gets a say."""
+        try:
+            return os.path.getsize(self.gguf) / 1e9
+        except Exception:
+            return None
+
+    def weigh_in(self):
+        """A weigh-in that can tell the difference between a model and a machine.
+
+        FINDING 002: a footprint taken under auto-fit reports whatever ambient VRAM allowed. The
+        same checkpoint measured 1.55-1.64 GB fully offloaded and 0.20 GB when the GPU was
+        contended by another service -- an 8x spread that moves a model down a whole weight class.
+
+        The test needs no calibration:
+
+            resident < weights on disk  ==>  partial offload  ==>  we measured the MACHINE
+
+        A model cannot occupy less VRAM than its own weights occupy on disk. When it appears to,
+        the surplus is on CPU, and `division_from_resident` becomes a statement about what else was
+        running -- not about the entrant. `division_for_competition` therefore takes the division
+        from WEIGHTS in that case, and from the real resident footprint otherwise.
+        """
+        fp, wd = self.footprint_gb(), self.weights_gb()
+        partial = bool(fp is not None and wd is not None and fp < wd * 0.95)
+        d_res = None if fp is None else division_for(fp)
+        d_wts = None if wd is None else division_for(wd)
+        return dict(
+            ngl_requested=self.ngl,                     # null = auto-fit
+            placement="forced" if self.ngl is not None else "auto-fit",
+            footprint_gb=None if fp is None else round(fp, 2),
+            weights_gb=None if wd is None else round(wd, 2),
+            gpu_free_gb_at_weigh_in=(None if self.vram_free_mb is None
+                                     else round(self.vram_free_mb / 1024.0, 2)),
+            partial_offload=partial,
+            division_from_resident=d_res,
+            division_from_weights=d_wts,
+            # The one that counts. Partial offload means the resident number is the machine's.
+            division_for_competition=(d_wts if partial else (d_res or d_wts)),
+        )
+
+    def print_weigh_in(self):
+        w = self.weigh_in()
+        line = f"  footprint {w['footprint_gb']} GB measured ({w['placement']}"
+        if w["ngl_requested"] is not None:
+            line += f" ngl={w['ngl_requested']}"
+        line += f", gpu free {w['gpu_free_gb_at_weigh_in']} GB)"
+        print(line, flush=True)
+        if w["partial_offload"]:
+            print(f"  ** PARTIAL OFFLOAD — resident {w['footprint_gb']} GB is LESS than the "
+                  f"{w['weights_gb']} GB of weights on disk, so the surplus is on CPU.")
+            print(f"     That footprint is a measurement of THE MACHINE, not the model. "
+                  f"Division from resident would read {w['division_from_resident']}; from weights "
+                  f"it is {w['division_from_weights']}.")
+            print(f"     FINDING 002: weigh in with a declared placement, or do not weigh in. "
+                  f"Competition division is taken from WEIGHTS, and the CPU placement is a cost "
+                  f"the biathlon will charge for.")
+        return w
 
     def chat(self, prompt, max_tokens, temperature=0.0):
         body = json.dumps({"messages": [{"role": "user", "content": prompt}],
@@ -442,13 +529,15 @@ def evaluate(gguf, args, tasks):
             print("  Looks like a VRAM problem: free GPU memory (unload other models) and re-weigh.")
         return None
     fp = srv.footprint_gb()
-    div = division_for(fp) if fp is not None else "UNKNOWN (no GPU telemetry)"
+    winfo = srv.weigh_in()
+    div = winfo["division_for_competition"]
     print(" ready")
-    print(f"  MEASURED VRAM FOOTPRINT: {fp:.2f} GB" if fp is not None
-          else "  VRAM telemetry unavailable -> division UNKNOWN")
-    print(f"  DIVISION: {div}")
-    print("  NOTE: footprint is baseline-subtracted. Unload other GPU workloads first, "
-          "or a concurrent model's eviction will skew the scale.")
+    srv.print_weigh_in()
+    print(f"  DIVISION: {div}"
+          + ("  (taken from WEIGHTS — this model is partially offloaded, so its resident "
+             "footprint is a reading of the machine)" if winfo["partial_offload"] else ""))
+    print("  NOTE: resident footprint is baseline-subtracted. Unload other GPU workloads first, "
+          "or a concurrent model's eviction will skew the scale. See FINDINGS/002.")
 
     results, lat, reasons = {}, [], 0
     for t in tasks:
@@ -498,7 +587,7 @@ def evaluate(gguf, args, tasks):
 
     agg = sum(v["score"] for v in results.values()) / max(len(results), 1)
     grade = bout_grade(results, args.trials)
-    return dict(gguf=gguf, sha256=digest, footprint_gb=fp, division=div,
+    return dict(gguf=gguf, sha256=digest, footprint_gb=fp, division=div, weigh_in=winfo,
                 cord=CORDS.get(div, "slate"),
                 config=dict(temperature=args.temperature, max_tokens=args.max_tokens,
                             trials=args.trials, ctx=args.ctx, n_gpu_layers=args.ngl,
@@ -640,7 +729,7 @@ def run_relay(paths, args, tasks):
             print("  A model that does not serve is not scored. Scoring it would publish a lie.")
             s.stop()
             return None
-        print(f"  footprint {s.footprint_gb():.2f} GB measured", flush=True)
+        s.print_weigh_in()
         return s
 
     print("=" * 108)
@@ -649,6 +738,7 @@ def run_relay(paths, args, tasks):
     print("=" * 108)
 
     plans, router_scores, worker_scores, relay_scores, dnfs = {}, {}, {}, {}, {}
+    trunc = {}
     router_fp = worker_fp = None
 
     # ---- PHASE 1 — the router, alone ----
@@ -684,9 +774,16 @@ def run_relay(paths, args, tasks):
         for t in tasks:
             w_ok = rel_ok = 0
             dnf = 0
+            trunc_here = 0
             for i in range(args.trials):
                 try:
                     b = W.chat(t["prompt"], args.max_tokens, args.temperature)
+                    # A truncated answer is a MEASUREMENT FAILURE, not a capability result. The
+                    # single-bout path reports this; the relay must too, or a 0.00 here is
+                    # indistinguishable from a model that was cut off mid-thought.
+                    if (b.get("finish") == "length"
+                            or (int(b.get("ptok") or 0) + int(b.get("ctok") or 0)) >= args.ctx):
+                        trunc_here += 1
                     w_ok += 1 if SCORERS[t["scorer"]](t["spec"], b["text"])[0] else 0
                 except Exception:
                     pass
@@ -699,14 +796,22 @@ def run_relay(paths, args, tasks):
                                 "format requirements above still apply.\nPLAN:\n" + plan.strip())
                 try:
                     c = W.chat(relay_prompt, args.max_tokens, args.temperature)
+                    if (c.get("finish") == "length"
+                            or (int(c.get("ptok") or 0) + int(c.get("ctok") or 0)) >= args.ctx):
+                        trunc_here += 1
                     rel_ok += 1 if SCORERS[t["scorer"]](t["spec"], c["text"])[0] else 0
                 except Exception:
                     pass
             worker_scores[t["id"]] = w_ok / args.trials
             relay_scores[t["id"]] = rel_ok / args.trials
             dnfs[t["id"]] = dnf
+            trunc[t["id"]] = trunc_here
+            flag = ""
+            if trunc_here:
+                flag = f"   TRUNCATED {trunc_here} (not a capability result — raise --ctx/--max-tokens)"
             print(f"    [worker] {t['id']:16s} alone {w_ok}/{args.trials}   "
-                  f"RELAY {rel_ok}/{args.trials}" + (f"   DNF {dnf}" if dnf else ""), flush=True)
+                  f"RELAY {rel_ok}/{args.trials}" + (f"   DNF {dnf}" if dnf else "") + flag,
+                  flush=True)
         W.stop()
 
     if not worker_scores:
@@ -777,7 +882,11 @@ def main():
     ap.add_argument("--model-dir", help="directory of models")
     ap.add_argument("--pattern", default="*.gguf")
     ap.add_argument("--ctx", type=int, default=4096)
-    ap.add_argument("--ngl", type=int, default=99)
+    ap.add_argument("--ngl", type=int, default=None,
+                    help="layers to offload to GPU. OMIT IT (the default) to let llama.cpp auto-fit "
+                         "the layer count to free VRAM -- which is what you want on a GPU that is "
+                         "shared with other models. Setting it explicitly makes an over-large "
+                         "placement ABORT rather than fall back.")
     ap.add_argument("--trials", type=int, default=3)
     ap.add_argument("--temperature", type=float, default=0.0)
     ap.add_argument("--max-tokens", type=int, default=1200, dest="max_tokens")
