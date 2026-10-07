@@ -49,15 +49,48 @@ def has_state(rec):
     return False
 
 
+def staged_as(d):
+    """How an INSTRUMENT event is SHOWN.
+
+    Not optional, and this is the whole correction: an instrument that declares no staging will be
+    staged as nothing and read as boring -- which is what an earlier version of this rule got wrong.
+    A UFC weigh-in is an instrument and it draws a crowd, because it has a number, a threshold, a
+    moment, a legible way to miss, and a side-by-side.
+
+    Returns the declared value, or None.
+    """
+    v = d.get("staged_as")
+    return v if (isinstance(v, str) and v.strip()) else None
+
+
 def check_task_file(d):
-    """-> list of failure strings for one task definition."""
+    """-> list of failure strings for one task definition.
+
+    THE TEST CUTS BOTH WAYS, which is the correction Mike made to an earlier version of this rule:
+      * CONTEST    -- must declare a game AND the state that carries it.
+      * INSTRUMENT -- must NOT declare a game (a game name on an instrument is the referee in a
+                      costume -- the FAKE CONTEST, which is the actual defect), and MUST declare
+                      what it is staged as.
+    An INSTRUMENT event may absolutely be the most compelling thing on the card -- a UFC weigh-in is
+    an instrument and it draws a crowd. Being an instrument and being boring are different axes; the
+    offence is the costume, not the audience.
+    """
     fails = []
     gk, gv = declared_game(d)
-    if gk and not has_state(d):
-        fails.append(f"names the game {gv!r} via {gk!r} but declares no "
-                     f"{STATE_KEYS[0]} — the name is a costume")
-    if d.get("class") == "INSTRUMENT" and d.get("ranked"):
-        fails.append("classed INSTRUMENT but marked ranked — officials are not athletes")
+    cls = d.get("class")
+    if cls == "INSTRUMENT":
+        if gk:
+            fails.append(f"classed INSTRUMENT but declares the game {gv!r} via {gk!r} — an "
+                         f"instrument wearing a game is a FAKE CONTEST, not a contest")
+        if not staged_as(d):
+            fails.append("classed INSTRUMENT but declares no `staged_as` — an instrument must say "
+                         "what it is shown as, or it will be staged as nothing and read as boring")
+    else:
+        if gk and not has_state(d):
+            fails.append(f"names the game {gv!r} via {gk!r} but declares no "
+                         f"{STATE_KEYS[0]} — the name is a costume")
+    if cls == "INSTRUMENT" and d.get("ranked"):
+        fails.append("classed INSTRUMENT but marked ranked — a weigh-in does not decide the fight")
     return fails
 
 
@@ -95,13 +128,34 @@ def main():
 
     print(f"checked {checked} task file(s) and {len(bundles)} bundle(s)")
 
-    # POSITIVE CONTROL -- the test must fire on the defect it exists for.
-    control = {"id": "CONTROL", "metaphor": "CHESS", "items": []}
-    control_fired = bool(check_task_file(control))
-    print(f"positive control (a game name with no state): "
-          f"{'FIRES' if control_fired else 'DID NOT FIRE -- this test is decoration'}")
-    if not control_fired:
-        fails.append("positive control did not fire; the rule cannot detect its own defect")
+    # POSITIVE CONTROL -- and it must cover BOTH directions, because the rule cuts both ways.
+    # The last one matters most: an honest weigh-in must PASS. A rule that fails the thing it was
+    # written to permit is worse than no rule.
+    controls = [
+        ({"id": "C1", "metaphor": "CHESS", "items": []},
+         "CONTEST naming a game with no state"),
+        ({"id": "C2", "class": "INSTRUMENT", "staged_as": "weigh-in", "metaphor": "CHESS"},
+         "INSTRUMENT wearing a game -- a FAKE CONTEST"),
+        ({"id": "C3", "class": "INSTRUMENT", "items": []},
+         "INSTRUMENT declaring no staging"),
+        ({"id": "C5", "class": "INSTRUMENT", "staged_as": "weigh-in", "ranked": True},
+         "INSTRUMENT marked ranked"),
+    ]
+    print("positive controls (each MUST fire):")
+    for rec, label in controls:
+        fired = bool(check_task_file(rec))
+        print(f"  {'FIRES' if fired else 'DID NOT FIRE -- decoration'}  {label}")
+        if not fired:
+            fails.append(f"positive control did not fire: {label}")
+
+    # THE NEGATIVE CONTROL -- an honest instrument must be ALLOWED. If this fires, the rule has
+    # banned the very thing Mike's counterexample says is the best content on the card.
+    honest = {"id": "C4", "class": "INSTRUMENT", "staged_as": "weigh-in", "items": []}
+    if check_task_file(honest):
+        print("  FAIL  an honest weigh-in was REJECTED -- the rule bans what it must permit")
+        fails.append("negative control: an INSTRUMENT with staging and no game must pass")
+    else:
+        print("  ok    an honest weigh-in PASSES (staged, no game, unranked)")
 
     print()
     if fails:

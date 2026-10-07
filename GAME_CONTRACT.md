@@ -29,26 +29,70 @@ latency column does not reproduce a boxing result.
 
 ## The two event classes
 
-This split is not a concession to laziness. **It is forced by the standard above**: an INSTRUMENT
-event given a `game` name would fail the reconstruction test, so the class must exist.
+This split is **forced by the standard above**: an INSTRUMENT event given a `game` name would fail
+the reconstruction test, so the class must exist.
 
-| class | has a game? | watchable? | ranking? | bundle carries |
+| class | game? | bundle carries | may be watched? | ranked? |
 |---|---|---|---|---|
-| **CONTEST** | yes | yes | ranked, with belt and division | **the game's state** |
-| **INSTRUMENT** | **no** | **no, deliberately** | **never ranked** | its measurements |
+| **CONTEST** | **must** declare one | **the game's state** | yes — the audience watches the game | yes, with belt and division |
+| **INSTRUMENT** | **must NOT** declare one | **what it is staged as** | **yes, and often by more people** | **never** |
 
-**League I is INSTRUMENT and that is correct.** The catalogue already says those events *"don't exist
-to rank models; they exist entirely to expose flaws in the testing harness. A clean, boring,
-negative result here is a massive success."*
+### The correction that shaped this — being an instrument is not being boring
 
-> **Those are the officials, not the athletes.** Nobody watches the scales get calibrated. But a
-> sport without them is not a sport, it is a show.
+**An earlier version of this document said INSTRUMENT events are "deliberately unwatchable". That was
+wrong, and Mike caught it with a counterexample that costs nothing to understand:**
 
-**Dressing an INSTRUMENT event as a game is the worst version of the retrofit — the referee in a
-costume.** So INSTRUMENT events carry **no belt, no division and no rank**, and that exclusion is a
-**hard partition in the render path**, the same way `card_version` is. A front end that merely
-*labels* them will eventually rank a scale-calibration against a boxing match. (Credit: the class
-split and the officials framing are Chilly's.)
+> **A weigh-in for a UFC title fight is an instrument.** It validates the measurement, settles
+> nothing about the result — and it is one of the most-watched things on the card.
+
+**Two independent axes were bundled into one.** *What an event does* (validate a measurement) and
+*what the audience gets* (a show) are unrelated. **Not being staged makes something boring; being an
+instrument does not.**
+
+**And the precise form of the defect, because it changes the rule:**
+
+> ## The defect is not *instrument as spectacle*. It is *instrument as a FAKE CONTEST*.
+
+**A weigh-in is honest — it shows a weighing. It never pretends to be a fight.** That is the line.
+So an INSTRUMENT event **may be** the most compelling thing on the card; it simply **may not wear a
+game's clothes.** Dressing one as a game is still the referee in a costume — *the costume is the
+offence, not the audience.*
+
+### The recipe is already in the catalogue: five ingredients of a real weigh-in
+
+1. **a number everyone understands**
+2. **a hard threshold with a consequence**
+3. **a scheduled, public moment**
+4. **a legible way to fail — the miss IS the drama**
+5. **side-by-side comparison**
+
+**The Arena's weigh-in already has all five.** `gpu_free_gb_at_weigh_in`. Divisions assigned by
+**measured** footprint. A real threshold — exceed your VRAM and the model does not run. Side-by-side,
+because every entrant is weighed the same way.
+
+**And the miss is already documented**, which is the part worth sitting with:
+
+> **A 2B model swung 0.00 → 0.33 → 0.67 → 0.33 → 0.67 with its weights never changing once.** Every
+> movement came from a config flag.
+
+**That is a fighter missing weight because someone left a grammar file switched on.** It is
+FINDING 001, and this document has been filing it as an instrument result when it is **the best
+spectacle the project has produced.**
+
+### And the audience argument, which reverses the priority
+
+> **The fight answers "which model is better." The weigh-in answers "can this thing run on my desk
+> at all" — and that is the question everyone with a GPU actually has.**
+
+It is the project's own thesis, televised: **VRAM is the absolute bottleneck for the
+democratisation of AI.** So **the instrument league must not be written off as the boring half.** On
+the audience evidence it may be the half that speaks to the most people, and **League I may be a
+better lead product than League B.**
+
+**INSTRUMENT events are still never ranked** — a weigh-in does not decide the fight. That exclusion
+is a **hard partition in the render path**, the same way `card_version` is. A front end that merely
+*labels* the difference will eventually rank a scale-calibration against a boxing match.
+
 
 ## The rule
 
