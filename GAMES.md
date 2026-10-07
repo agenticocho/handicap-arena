@@ -559,6 +559,6 @@ Events are not equal in value-per-line-of-code.
 
 ---
 
-*Forty-nine events. Every one scored by parser, execution, or ground truth. Every one carrying a null
+*Fifty-five events. Every one scored by parser, execution, or ground truth. Every one carrying a null
 baseline. Nothing here is judged by a model — because a model grading its own family is not a
 measurement, it is a conflict of interest.*
