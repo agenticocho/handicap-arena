@@ -1,0 +1,123 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-07T20:44:03Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/Qwen3.5-4B-UD-Q4_K_XL.gguf",
+      "sha256": "e0f903b10d09d70127c5416c61df8390b1afbfa426f01f5107e3ec212d233227",
+      "footprint_gb": 3.3525390625,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 3.35,
+        "weights_gb": 2.91,
+        "gpu_free_gb_at_weigh_in": 7.03,
+        "partial_offload": false,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 1,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/Qwen3.5-4B-UD-Q4_K_XL.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "55085"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.8333,
+          "wins": 5.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_forbidden_key_must_be_absent": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"patient_id\": \"P-4401\", \"ward\": \"cardiology\"}"
+              ]
+            },
+            "R1.2_null_means_absent": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"sku\": \"X-9\"}"
+              ]
+            },
+            "R1.3_type_under_natural_language": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"quantity\": 3, \"unit_price\": 1.5, \"in_stock\": true, \"reference\": \"007\"}"
+              ]
+            },
+            "R1.4_ambiguous_nesting": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"shipment_id\": \"S-88\", \"destination\": {\"postcode\": \"44101\", \"country\": \"United States\"}, \"carrier\": \"Nordex\"}"
+              ]
+            },
+            "R1.5_enum_nearest_is_wrong": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"severity\": \"INFO\", \"code\": 12}"
+              ]
+            },
+            "R1.6_array_exact_and_ordered": {
+              "score": 0.0,
+              "reason": "TRUNCATED at max_tokens (3000) before answering \u2014 not a capability result; raise --max-tokens",
+              "truncated": true,
+              "raw": [
+                "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Output format: ONLY a JSON object `{\"legs\": [ ... ]}`.\n    *   `legs` must be an ARRAY of exactly 3 objects.\n    *   Each object must have exactly the keys `{\"seq\": integer, \"icao\": string}`.\n    *   Specific constraints for the legs:\n        *   First leg: LHR (Heathrow).\n        *   Second leg: Code 4 (connection where code was not recorded). The prompt says \"icao value must be omitted for that leg only\". Wait, the schema says \"each with exactly the keys {\"seq\": integer, \"icao\": string}\". This is a contradiction. If the icao value must be omitted, it violates the \"exactly the keys\" constraint.\n        *   Let's re-read carefully: \"each with exactly the keys {\"seq\": integer, \"icao\": string}... second 4 (a connection where the code was not recorded, so the icao value must be omitted for that leg only)\".\n        *   Interpretation 1: The JSON structure must strictly follow `{\"seq\": int, \"icao\": string}` for all legs. If the icao is omitted, it's not a string, it's missing.\n        *   Interpretation 2: The prompt is testing my ability to follow conflicting instructions. Usually, \"omit\" means don't include the key. But \"exactly the keys\" means include the key.\n        *   Interpretation 3: The prompt implies that for the second leg, the `icao` value should be empty string or null, or perhaps the instruction \"icao value must be omitted\" overrides the \"exactly the keys\" instruction regarding the *value* content, but the key must exist? Or does it mean the key itself should be omitted?\n        *   Let's look at the instruction again: \"each with exactly the keys {\"seq\": integer, \"icao\": string}\". This is a schema constraint. Then it says \"so the icao value must be omitted for that leg only\". This is a content constraint.\n        *   If I omit the key `icao`, I violate \"exactly the keys\". If I include the key `icao` but set it to null or empty, I satisfy \"exactly the keys\" but maybe not \"value must be omitted\".\n        *   However, usually in these types of constrained generation tasks, the \"omit\" instruction regarding the key itself is stronger when it conflicts with a schema description that might be generic. But here it explicitly says \"each with exactly the keys...\".\n        *   Let's consider the phrase \"icao value must be omitted\". In JSON, omitting a value usually means omitting the key. If I omit the key, I don't have \"exactly the keys\".\n        *   Let's try to find a middle ground or prioritize the explicit schema definition. \"each with exactly the keys\". This defines the structure. \"icao value must be omitted\" might mean the *value* is null or empty, or it might mean the key is missing.\n        *   Actually, looking at similar tasks, often \"omit\" means don't include the key. But the schema constraint \"exactly the keys\" is very specific.\n        *   Wait, if I output `{\"seq\": 1, \"icao\": \"LHR\"}`, that works.\n        *   If I output `{\"seq\": 2}`, that violates \"exactly the keys\".\n        *   If I output `{\"seq\": 2, \"icao\": \"\"}`, that satisfies keys, but omits the *value*?\n        *   Let's re-read: \"icao value must be omitted for that leg only\". This sounds like the key should not be present. But the first sentence says \"each with exactly the keys...\".\n        *   Hypothesis: The user wants me to follow the schema `{\"seq\": integer, \"icao\": string}` for all, but for the second leg, the `icao` should be empty string or null? Or does \"omit\" mean remove the key?\n        *   If I remove the key, I violate \"exactly the keys\".\n        *   If I keep the key, I violate \"omit\".\n        *   Which instruction is more specific? \"Emit ONLY a JSON object... where legs is an ARRAY of exactly 3 objects, each with exactly the keys...\". This is the structural definition. The parenthetical note \"(a connection where the code was not recorded, so the icao value must be omitted for that leg only)\" explains the content.\n        *   In JSON, if a value is omitted, the key is usually omitted. But if the schema requires the key, I must include the key.\n        *   However, often \"omit\" in natural language instructions regarding JSON keys implies the key shouldn't be there.\n        *   Let's look for a way to satisfy both. Maybe `null`? But the type says `string`.\n        *   Maybe I should prioritize the \"exactly the keys\" constraint because it defines the output structure explicitly. If I omit the key, I fail the \"exactly the keys\" constraint.\n        *   Wait, if I omit the key, I have 2 keys. If I keep the key, I have 2 keys.\n        *   Let's assume the instruction \"icao value must be omitted\" means the key should not be present in the JSON object for that specific leg, despite the general schema description. Why? Because the specific instruction overrides the general description.\n        *   BUT, the prompt says \"each with exactly the keys...\". This applies to \"each\" object.\n        *   Okay, let's look at the instruction again: \"each with exactly the keys {\"seq\": integer, \"icao\": string}\". This is a hard constraint on the keys.\n        *   Then: \"so the icao value must be omitted for that leg only\".\n        *   If I must have the key `icao`, I cannot omit the value (unless I use null/empty, but type is string).\n        *   If I omit the key, I violate \"exactly the keys\".\n        *   Decision: The \"exactly the keys\" constraint is part of the JSON schema definition requested. The \"omit\" instruction is likely a test of whether I can handle the conflict or if I should interpret \"omit\" as \"empty string\" or \"null\" (though type says string).\n        *   Actually, a common interpretation in these \"follow instructions\" tasks when there's a conflict is to prioritize the explicit schema definition if it's stated as \"each with exactly the keys\". However, \"omit\" is very specific.\n        *   Let's try to interpret \"omit\" as \"do not include the key\". If I do that, I violate \"exactly the keys\".\n        *   Let's try to interpret \"omit\" as \"leave it blank\".\n        *   Wait, I need to check if I can output `null`. The type says `string`.\n        *   Okay, let's look at the instruction \"icao value must be omitted\". In JSON, omitting a value usually means the key is absent.\n        *   If I make the key absent, I violate \"exactly the keys\".\n        *   If I make the key present with an empty string, I satisfy \"exactly the keys\" but arguably violate \"omit value\".\n        *   However, if I look at the instruction \"Emit ONLY a JSON object... where legs is an ARRAY of exactly 3 objects, each with exactly the keys...\". This is the primary constraint. The parenthetical is an explanation of the data.\n        *   If I strictly follow \"each with exactly the keys\", I must include `icao`.\n        *   If I strictly follow \"icao value must be omitted\", I must exclude `icao`.\n        *   Which one wins? Usually, the explicit schema definition (\"each with exactly the keys\") is the structural rule. The content rule (\"value must be omitted\") might be impossible to satisfy structurally.\n        *   Wait, maybe I can use an empty string `\"\"`? That is a string. It is not \"omitted\".\n        *   Maybe I should just follow the \"exactly the keys\" rule and put an empty string or null? No, type is string.\n        *   Let's consider the possibility that the prompt implies the key should be omitted. If I omit the key, I violate the \"exactly the keys\" rule.\n        *   Let's assume the \"exactly the keys\" rule is the dominant constraint for the structure. I will include the key `icao`. For the second leg, since the code was not recorded, I will set it to an empty string `\"\"` or perhaps the prompt implies I should just not include it.\n        *   Actually, looking at the instruction \"icao value must be omitted\", in the context of JSON generation tasks, this often means \"do not include the key\".\n        *   But \"each with exactly the keys\" is very strong.\n        *   Let's try to find a way to satisfy \"exactly the keys\". I will include the key. For the value, I will use an empty string `\"\"` to represent \"not recorded\" while keeping the key. Or I will use `null` (violating type).\n        *   Wait, if I omit the key, I violate \"exactly the keys\".\n        *   Okay, I will prioritize \"exactly the keys\" because it defines the object structure explicitly. I will set `icao` to an empty string for the second leg to represent the omission of the *value* while keeping the *key*.\n        *   Wait, re-reading: \"icao value must be omitted\". If I have the key, the value is present (even if empty).\n        *   Okay, let's step back. If I output `{\"seq\": 2}`, I violate \"exactly the keys\". If I output `{\"seq\": 2, \"icao\": \"\"}`, I satisfy \"exactly the keys\" but arguably not \"omit value\".\n        *   However, if I output `{\"seq\": 2}`, I violate the schema.\n        *   Let's assume the user wants me to follow the schema `{\"seq\": integer, \"icao\": string}`. The \"omit\" instruction might be a trick to see if I break the schema.\n        *   Actually, there is a possibility that \"omit\" means \"do not include the key\". If I do that, I violate the \"exactly the keys\" constraint.\n        *   Let's check the instruction again: \"each with exactly the keys {\"seq\": integer, \"icao\": string}\". This is a constraint on the keys.\n        *   \"so the icao value must be omitted for that leg only\". This is a constraint on the value.\n        *   If I omit the key, I don't have the key.\n        *   If I keep the key, I have the key.\n        *   I will prioritize the \"exactly the keys\" constraint as it defines the JSON structure required. I will use an empty string for the icao value to indicate it's missing/empty while keeping the key.\n        *   Wait, if I use an empty string, is the value \"omitted\"? No, it's an empty string.\n        *   Okay, what if I interpret \"omit\" as \"do not include the key\"? Then I violate \"exactly the keys\".\n        *   Let's try to follow the \"exactly the keys\" instruction strictly. I will include the key. I will set the value to `\"\"`.\n        *   Wait, I need to check if there's a way to interpret \"omit\" as \"null\". But type is string.\n        *   Okay, I'll go with the schema constraint being paramount. I will include the key `icao`. For the second leg, I will set it to `\"\"`.\n        *   Wait, actually, I should check if I can just not include the key. If I don't include the key, I violate \"exactly the keys\".\n        *   Okay, I'll stick to the schema. Keys: `seq`, `icao`.\n        *   Leg 1: LHR. `seq`: 1, `icao`: \"LHR\".\n        *   Leg 2: Code 4. `seq`: 2, `icao`: \"\" (to satisfy \"exactly the keys\" while acknowledging the \"not recorded\" status).\n        *   Leg 3: JFK. `seq`: 3, `icao`: \"JFK\".\n        *   Wait, the prompt says \"icao value must be omitted\". If I put `\"\"`, the value is there.\n        *   If I omit the key, I violate \"exactly the keys\".\n        *   This is a \"Simon Says\" conflict.\n        *   Usually, explicit schema constraints (\"exactly the keys\") override content instructions (\"omit value\") because the schema defines the valid output format.\n        *   However, \"omit\" is very specific.\n        *   Let's consider the possibility that the prompt wants me to fail the \"exactly the keys\" constraint to satisfy \"omit\".\n        *   No, \"Emit ONLY a JSON object... where legs is an ARRAY of exactly 3 objects, each with exactly the keys...\". This is the primary instruction.\n        *   I will include the key `icao` for all legs. For the second leg, I will use an empty string `\"\"`. This is the safest bet to satisfy the structural constraint while acknowledging the content constraint as best as possible (empty string = no value).\n        *   Wait, I should check if I can just output `null`. No, type is string.\n        *   Okay, I'll use `\"\"`.\n        *   Wait, one more thought: \"icao value must be omitted\". In JSON, omitting a value means the key is not there. If I put"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 5,
+            "length": 1
+          },
+          "truncated": true,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 3000,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.8333,
+      "grade": {
+        "belt": "Orange",
+        "rounds_won": 1,
+        "rounds": 1,
+        "stripes": 5.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 3,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 10.59,
+      "answers_from_reasoning": 1
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-07T20:42:13Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/Phi-3.5-mini-instruct-Q4_K_M.gguf",
+      "sha256": "a0462dacb5738bed38b39a92bd0d6ebe8059bb45948592abe0d9829f79bcedcd",
+      "footprint_gb": 5.404296875,
+      "division": "Lightweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 5.4,
+        "weights_gb": 2.39,
+        "gpu_free_gb_at_weigh_in": 6.93,
+        "partial_offload": false,
+        "division_from_resident": "Lightweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Lightweight"
+      },
+      "cord": "amber",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 1,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/Phi-3.5-mini-instruct-Q4_K_M.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "34021"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.8333,
+          "wins": 5.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_forbidden_key_must_be_absent": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "```json\n{\"patient_id\": \"P-4401\", \"ward\": \"cardiology\"}\n```"
+              ]
+            },
+            "R1.2_null_means_absent": {
+              "score": 0.0,
+              "reason": "emitted forbidden key(s): ['coupon', 'discount_pct']",
+              "truncated": false,
+              "raw": [
+                "```json\n{\n  \"sku\": \"X-9\",\n  \"discount_pct\": 0,\n  \"coupon\": \"\"\n}\n```\n"
+              ]
+            },
+            "R1.3_type_under_natural_language": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "```json\n{\n  \"quantity\": 4,\n  \"unit_price\": null,\n  \"in_stock\": true,\n  \"reference\": \"007\"\n}\n```\nNote: The \"unit_price\" key is set to null as the price was not provided in the instruction. If the unit price is necessary, please provide the value so it can be included in the JSON object."
+              ]
+            },
+            "R1.4_ambiguous_nesting": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "```json\n{\n  \"shipment_id\": \"S-88\",\n  \"destination\": {\n    \"postcode\": \"44101\",\n    \"country\": \"United States\"\n  },\n  \"carrier\": \"Nordex\"\n}\n```"
+              ]
+            },
+            "R1.5_enum_nearest_is_wrong": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "```json\n{\n  \"severity\": \"WARN\",\n  \"code\": 12\n}\n```"
+              ]
+            },
+            "R1.6_array_exact_and_ordered": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "```json\n{\n  \"legs\": [\n    {\"seq\": 1, \"icao\": \"LHR\"},\n    {\"seq\": 2},\n    {\"seq\": 3, \"icao\": \"JFK\"}\n  ]\n}\n```"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 6
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 90,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.8333,
+      "grade": {
+        "belt": "Orange",
+        "rounds_won": 1,
+        "rounds": 1,
+        "stripes": 5.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 3,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 0.42,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

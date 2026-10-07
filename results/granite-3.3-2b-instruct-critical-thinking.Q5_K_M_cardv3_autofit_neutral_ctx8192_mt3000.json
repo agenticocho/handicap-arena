@@ -1,0 +1,122 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-07T20:40:05Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/granite-3.3-2b-instruct-critical-thinking.Q5_K_M.gguf",
+      "sha256": "27748743090594ee75d8a8f85b81b98e697cc5968f8ced4a035e790513e50df1",
+      "footprint_gb": 2.533203125,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 2.53,
+        "weights_gb": 1.8,
+        "gpu_free_gb_at_weigh_in": 6.92,
+        "partial_offload": false,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 1,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/granite-3.3-2b-instruct-critical-thinking.Q5_K_M.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "59599"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.1667,
+          "wins": 1.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_forbidden_key_must_be_absent": {
+              "score": 0.0,
+              "reason": "0/2 fields",
+              "truncated": false,
+              "raw": [
+                " {\"claims\": [\"Patient P-4401 is in cardiology.\", \"The referring doctor is Dr. Reyes.\"], \"ambiguous_terms\": [\"\\\"Forbids any other key\\\"\"], \"assumptions\": [\"The schema strictly limits data output.\", \"The schema is unambiguous and unambiguously enforced.\"], \"premises\": [\"The schema specifies required keys.\", \"The schema explicitly forbids additional keys.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; schema explicitly defines data output\"}, \"additional_data\": \"Schema documentation, data validation tools.\", \"issues\": [\"Schema adherence may be challenging in practice.\"], \"competing_explanations\": [\"Schema adherence may be difficult to enforce in practice.\", \"Schema flexibility may be necessary for data integration.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Ensure schema adherence through automated tools.\", \"Consider schema flexibility for data integration.\"]}"
+              ]
+            },
+            "R1.2_null_means_absent": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "raw": [
+                " {\"claims\": [\"The SKU is X-9.\", \"No discount or coupon is applicable.\"], \"ambiguous_terms\": [\"SKU\", \"discount_pct\", \"coupon\"], \"assumptions\": [\"SKU and discount/coupon information are fixed.\", \"No additional data is needed for this response.\"], \"premises\": [\"SKU is explicitly stated.\", \"Discount and coupon information are absent.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"SKU database, discount/coupon policy documentation.\", \"issues\": [\"Assumes fixed SKU and information.\"], \"competing_explanations\": [\"SKU or information may change.\", \"Additional data may be needed for more complex responses.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Ensure SKU and information are up-to-date.\", \"Consider additional data for more complex responses.\"]}"
+              ]
+            },
+            "R1.3_type_under_natural_language": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                " {\"quantity\": 3, \"unit_price\": 1.5, \"in_stock\": true, \"reference\": \"007\"}"
+              ]
+            },
+            "R1.4_ambiguous_nesting": {
+              "score": 0.0,
+              "reason": "extra key(s) outside the schema: ['additional_data', 'ambiguous_terms', 'assumptions', 'claims', 'competing_explanations', 'evidence', 'issues', 'premises', 'recommendations', 'soundness', 'validity']",
+              "truncated": false,
+              "raw": [
+                " {\"claims\": [\"Shipment details are provided in a structured format.\", \"The carrier and destination are specified.\"], \"ambiguous_terms\": [\"Shipment S-88\", \"Nordex\"], \"assumptions\": [\"Structured data is essential for efficient communication.\", \"Carrier and destination information are crucial for tracking.\"], \"premises\": [\"JSON format ensures data consistency and readability.\", \"Carrier and destination details facilitate tracking and delivery.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; JSON format is widely used and understood.\"}, \"additional_data\": \"JSON specification, data exchange standards, and carrier tracking systems.\", \"issues\": [\"Assumes standardized data exchange formats.\"], \"competing_explanations\": [\"Alternative data formats may be more suitable for specific contexts.\", \"Data exchange standards may vary across industries.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Ensure data exchange standards are understood and adhered to.\", \"Consider alternative data formats for specific use cases.\"]}"
+              ]
+            },
+            "R1.5_enum_nearest_is_wrong": {
+              "score": 0.0,
+              "reason": "0/2 fields",
+              "truncated": false,
+              "raw": [
+                " {\"claims\": [\"A routine message was logged with code 12.\", \"The severity level is INFO.\"], \"ambiguous_terms\": [\"Routine message\", \"severity level\"], \"assumptions\": [\"Severity levels are standardized and consistent.\", \"Routine messages are non-critical and informational.\"], \"premises\": [\"The message was logged as routine.\", \"The severity level is INFO.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"System documentation, severity level definitions.\", \"issues\": [\"Assumes standardized severity levels without evidence.\"], \"competing_explanations\": [\"Severity levels may vary depending on context.\", \"Routine messages could be critical or informational.\"], \"validity\": \"Valid\", \"soundness\": \"Moderate to strong\", \"recommendations\": [\"Provide evidence for standardized severity levels.\", \"Clarify the nature of routine messages and their severity.\"]}"
+              ]
+            },
+            "R1.6_array_exact_and_ordered": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "raw": [
+                " {\"claims\": [\"The flight path includes three legs with specific ICAO codes.\", \"The flight path is recorded with ICAO codes for each leg.\"], \"ambiguous_terms\": [\"ICAO codes\", \"flight path\"], \"assumptions\": [\"ICAO codes are essential for flight path documentation.\", \"The flight path is accurately recorded with ICAO codes.\"], \"premises\": [\"The flight path includes three legs with distinct ICAO codes.\", \"The flight path is documented with ICAO codes for each leg.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; specific flight path details provided\"}, \"additional_data\": \"Flight path documentation standards, ICAO code usage in aviation.\", \"issues\": [\"Assumes ICAO codes are universally used and accurate.\"], \"competing_explanations\": [\"Other flight path documentation methods may be used.\", \"ICAO codes may not be universally applicable or accurate.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Verify ICAO code accuracy and applicability.\", \"Consider alternative flight path documentation methods.\"]}"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 6
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 255,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.1667,
+      "grade": {
+        "belt": "White",
+        "rounds_won": 0,
+        "rounds": 1,
+        "stripes": 1.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 3,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 1.22,
+      "answers_from_reasoning": 0
+    }
+  ]
+}
