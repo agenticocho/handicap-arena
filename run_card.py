@@ -39,11 +39,27 @@ SERVER = (os.environ.get("LLAMA_SERVER") or shutil.which("llama-server") or "lla
 
 CTX, MT, TRIALS = 8192, 3000, 3
 
-# WHICH CARD. v1 = the retired 3-round card. v2 = the 6-item battery. A v2 bundle carries
-# card_version 2 and a _cardv2_ filename marker, because a v1 score and a v2 score are different
-# measurements and must never be ranked together.
-CARD = "v2" if ("--card" in sys.argv and "v2" in sys.argv) else "v1"
-CARD_TAG = "_cardv2_" if CARD == "v2" else "_"
+# WHICH CARD. v1 = the retired 3-round card. v2 = the 6-item battery. v3 = R1 rebalanced,
+# 6 items, strict scorer. A bundle carries card_version and a _cardN_ filename marker, because
+# scores from different cards are different measurements and must never be ranked together.
+#
+# THIS USED TO BE:
+#     CARD = "v2" if ("--card" in sys.argv and "v2" in sys.argv) else "v1"
+# which recognises only v2 -- so `--card v3` silently ran **v1**, writing v1 bundles while the
+# operator believed it was measuring v3. A wrong-card run that reports success is the most
+# dangerous outcome this script can produce: the numbers look fine and measure something else.
+# An unrecognised card now ABORTS.
+KNOWN_CARDS = {"v1": 1, "v2": 2, "v3": 3}
+CARD = "v1"
+if "--card" in sys.argv:
+    _i = sys.argv.index("--card")
+    if _i + 1 >= len(sys.argv):
+        sys.exit(f"--card needs a value: one of {sorted(KNOWN_CARDS)}")
+    CARD = sys.argv[_i + 1]
+if CARD not in KNOWN_CARDS:
+    sys.exit(f"unknown card {CARD!r}; known: {sorted(KNOWN_CARDS)}")
+CARD_N = KNOWN_CARDS[CARD]
+CARD_TAG = "" if CARD == "v1" else f"_card{CARD}_"
 
 # Excluded because the standing card is TEXT: diffusion, audio, and bare projectors.
 EXCLUDE_PAT = ("qwen-image", "audio", "mmproj", "clip", "vae", "embed", "whisper")
@@ -82,7 +98,7 @@ def already_measured(path):
             c = r.get("config") or {}
             if (c.get("ctx") == CTX and c.get("max_tokens") == MT
                     and c.get("n_gpu_layers") is None
-                    and r.get("card_version", 1) == (2 if CARD == "v2" else 1)):
+                    and r.get("card_version", 1) == CARD_N):
                 return os.path.basename(bp)
     return None
 
@@ -92,7 +108,7 @@ def bundle_path(stem):
     # this repo's rule is: if it changes what the reader concludes, it belongs in the name.
     # The card version is in the name for the same reason -- a v1 score and a v2 score are
     # different measurements.
-    tag = "_cardv2" if CARD == "v2" else ""
+    tag = "" if CARD == "v1" else f"_card{CARD}"
     return os.path.join(RESULTS, f"{stem}{tag}_autofit_neutral_ctx{CTX}_mt{MT}.json")
 
 
