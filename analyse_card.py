@@ -14,7 +14,7 @@ Reports, per round:
 import glob, json, os, sys
 from collections import Counter, defaultdict
 
-RESULTS = "/home/chilly1/workspace/ocho_arena/results"
+RESULTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
 ROUNDS = ["R1_fencing", "R2_chess", "R3_pitstop"]
 
 

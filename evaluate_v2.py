@@ -9,7 +9,7 @@ gets reported as such rather than buried.
 import glob, json, os, sys
 from collections import Counter
 
-RESULTS = "/home/chilly1/workspace/ocho_arena/results"
+RESULTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
 TRAPS = {"R2_chess::R2.4_no_tool_correct": "no tool fits the request",
          "R3_pitstop::R3.6_already_correct": "the code is already correct"}
 ORDER = ["White", "Yellow", "Orange", "Green", "Blue", "Purple", "Brown", "Black"]

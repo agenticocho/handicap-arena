@@ -14,7 +14,7 @@ each one is re-derived here independently.
 import glob, json, os
 from collections import Counter, defaultdict
 
-RESULTS = "/home/chilly1/workspace/ocho_arena/results"
+RESULTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
 ORDER = ["White", "Yellow", "Orange", "Green", "Blue", "Purple", "Brown", "Black"]
 
 

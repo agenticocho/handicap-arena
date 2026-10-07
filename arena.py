@@ -135,7 +135,12 @@ def find_llama_server(explicit=None):
     c = shutil.which("llama-server")
     if c:
         return c
-    for p in ("/home/chilly1/llama.cpp/build/bin/llama-server",
+    # PORTABILITY: prefer an explicit override, then PATH, then this machine's build. A
+    # hardcoded absolute path first means the harness only runs on the machine that wrote it,
+    # which contradicts the README's "download it and point it at your GGUFs".
+    for p in (os.environ.get("LLAMA_SERVER", ""),
+              shutil.which("llama-server") or "",
+              "/home/chilly1/llama.cpp/build/bin/llama-server",
               "./llama.cpp/build/bin/llama-server",
               "/usr/local/bin/llama-server",
               os.path.expanduser("~/llama.cpp/build/bin/llama-server")):

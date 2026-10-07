@@ -27,12 +27,15 @@ DESIGN CONSTRAINTS, all from this project's own findings:
   * SCRATCH, NEVER ABORT. A model that cannot serve is recorded as scratched and the run
     continues. One bad entrant must not cost the field.
 """
-import glob, json, os, subprocess, sys, time
+import glob, json, os, shutil, subprocess, sys, time
 
-ARENA = "/home/chilly1/workspace/ocho_arena"
+# PORTABLE. Derived from this file, overridable by environment. The README says "download it,
+# point it at your GGUFs" -- with absolute paths baked in, it could only be downloaded by one
+# machine, which is the opposite of the point.
+ARENA = os.path.dirname(os.path.abspath(__file__))
 RESULTS = os.path.join(ARENA, "results")
-MODELS = "/home/chilly1/moltbook_pipeline/models"
-SERVER = "/home/chilly1/llama.cpp/build/bin/llama-server"
+MODELS = os.environ.get("ARENA_MODELS") or os.path.expanduser("~/moltbook_pipeline/models")
+SERVER = (os.environ.get("LLAMA_SERVER") or shutil.which("llama-server") or "llama-server")
 
 CTX, MT, TRIALS = 8192, 3000, 3
 

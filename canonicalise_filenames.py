@@ -25,11 +25,11 @@ repo's rule is: if it changes what the reader concludes, it belongs in the name.
 """
 import glob, json, os, shutil, sys
 
-RESULTS = "/home/chilly1/workspace/ocho_arena/results"
+RESULTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
 # The manifest lives OUTSIDE results/, because results/ holds result bundles and nothing else.
 # A manifest sitting among them is exactly the kind of file a reader counts as an entrant --
 # the same objection the Chair raised about the empty bundle.
-MANIFEST = "/home/chilly1/workspace/ocho_arena/RENAME_MANIFEST.json"
+MANIFEST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "RENAME_MANIFEST.json")
 
 
 def canonical(path):
