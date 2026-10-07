@@ -33,12 +33,20 @@ that fails it.
 **Requirement.** No view, table, ranking or default sort may order entries by belt. Where a belt is
 shown, the aggregate must be shown with it, and any sorted view must sort on the aggregate.
 
-**AND: compare aggregates only after normalising them.** The v2 bundles store the aggregate **two
-ways** — an older path wrote it rounded (`0.8889`), a newer one wrote the raw float
-(`0.8888666666666666`). Those are the same measurement, but `0.9444333 != 0.9444`, so a stable
-sort and any equality test break on two entries that scored identically. Raw distinct count for
-card v2 is 15; normalised it is 12. **Normalise on read (4dp), and fix the writer so it stops
-emitting two forms.**
+**AND: compare aggregates by signing the COUNTS, never the float.** `round(x,4)` is NOT sufficient,
+and this was measured: the v2 bundles store the aggregate two ways (an older path wrote it rounded
+— `0.8889`; a newer one wrote the raw float — `0.8888666666666666`), and rounding does not even
+recover the order, because **two entries are both exactly 10/18** — stored `0.5555666666666667` and
+`0.5555333333333333`, which round to `0.5556` and `0.5555` and stay **unequal**. Each round score
+had been rounded to 4dp *before* averaging, and rounding a float cannot recover a rational.
+
+- Stored aggregate, distinct: **15**
+- After `round(x,4)`: **12** ← still wrong
+- Exact `Fraction(sum(wins), sum(trials))`: **11** ← the truth
+
+**The rule: sign `Fraction(sum(wins), sum(trials))` — integer counts, not the float.** All 33 v2
+bundles carry per-item scores, so the exact value is recoverable. `0.9444333 != 0.9444` otherwise
+breaks a stable sort and any equality test on two entries that scored identically.
 
 **Measurement.** Under the original belt rule the belt was **not a function of the aggregate** —
 three aggregates each mapped to **two** different belts:

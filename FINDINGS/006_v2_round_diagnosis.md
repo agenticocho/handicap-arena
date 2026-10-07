@@ -20,18 +20,23 @@ Run partitioned by `card_version`, each round against its own denominator:
 | R3 pitstop | 65.1% | SATURATED | **75.8%** | **discriminates** |
 
 Aggregate spread: v1 had **6 distinct values across 42 entries**, 21 of them at exactly 1.0000
-(**50%**). v2 has **12 distinct after normalising** across 33, the largest bucket being 6 entries
-(**18%**). No value exceeds 40%.
+(**50%**). v2 has **11 distinct exact values** across 33 (the largest bucket has 7 entries, 21%).
+No value exceeds 40%.
 
-**CAVEAT ADDED AFTER CHECKING — the count was partly measuring the writer.** The raw aggregate is
-stored **two ways** in the v2 bundles: an older code path wrote it rounded (**0.8889**), a newer one
-wrote the raw float (**0.8888666666666666**). Those are the same measurement. Raw distinct count is
-**15**; normalised to 4dp it is **12**. So 3 of the 15 raw buckets are storage-form duplicates.
+**CORRECTED 2026-10-07 — "normalise before comparing" is not enough, and my own first fix was
+wrong.** I reported 12 distinct after `round(x,4)`. The exact figure is **11**, verified from the
+per-item scores in all 33 bundles: two entries are **both exactly 10/18**, stored as
+`0.5555666666666667` and `0.5555333333333333`, which round to `0.5556` and `0.5555` — **still
+unequal, because each round score was rounded to 4dp before it was averaged.** Rounding a float
+cannot recover a rational.
+
+**The correct rule is to sign the COUNTS, not the float: `Fraction(sum(wins), sum(trials))`.** All
+33 v2 bundles carry per-item scores, so the exact value is recoverable — 11 of them, not 12.
 
 This is not cosmetic. Clause 1 of the front-end criteria says *sort on the aggregate* — and
 `0.9444333 != 0.9444`, so a stable sort and any equality test break on two entries that scored
-identically. **Any aggregate comparison must normalise first, and the writer must stop emitting two
-forms.** Same shape as everything else today: a count that was really counting the storage format.
+identically. Same shape as everything else today: a count that was really counting the storage
+format, and then a *rounding* that was still counting it.
 
 ## Three conclusions
 
