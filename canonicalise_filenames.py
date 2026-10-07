@@ -33,8 +33,7 @@ def canonical(path):
     res = d.get("results") or []
     if not res:
         # No measurement. Say so in the name -- do not let it pass as an entrant.
-        stem = os.path.basename(path).replace(".json", "")
-        return None, stem
+        return None, os.path.basename(path)
     r = res[0]
     cfg = r.get("config") or {}
     flags = cfg.get("server_flags") or []
@@ -72,19 +71,29 @@ def main():
         print(f"  {have}\n    -> {want}{coll}")
     if dry:
         return
-    manifest = []
+    manifest, failed = [], []
     for have, want in moves:
+        # PER-ITEM ISOLATION. The first run of this script raised on one malformed name and
+        # killed the loop, leaving the directory half-renamed. That is the rule logger's own
+        # docs state -- "one dead endpoint cannot kill the sweep" -- which I wrote and then
+        # failed to apply to my own tooling. One bad item must not cost the rest.
         src, dst = os.path.join(RESULTS, have), os.path.join(RESULTS, want)
-        if os.path.exists(dst):
-            print(f"  SKIP (collision) {have}")
-            continue
-        os.rename(src, dst)
-        manifest.append({"was": have, "now": want})
+        try:
+            if os.path.exists(dst):
+                print(f"  SKIP (collision) {have}")
+                continue
+            if not os.path.exists(src):
+                raise FileNotFoundError(src)
+            os.rename(src, dst)
+            manifest.append({"was": have, "now": want})
+        except Exception as e:                                    # noqa: BLE001
+            failed.append({"was": have, "want": want, "error": f"{type(e).__name__}: {e}"})
+            print(f"  FAILED {have}: {type(e).__name__}: {e}")
     with open(os.path.join(RESULTS, "RENAME_MANIFEST.json"), "w") as fh:
         json.dump({"note": "rename so the filename cannot disagree with the content; "
                            "derived from each bundle's own gguf + config",
-                   "renames": manifest}, fh, indent=1)
-    print(f"  renamed {len(manifest)}; manifest written")
+                   "renames": manifest, "failed": failed}, fh, indent=1)
+    print(f"  renamed {len(manifest)}; failed {len(failed)}; manifest written")
 
 
 if __name__ == "__main__":

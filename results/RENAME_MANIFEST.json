@@ -1,0 +1,14 @@
+{
+ "note": "rename so the filename cannot disagree with the content; derived from each bundle's own gguf + config",
+ "renames": [
+  {
+   "was": "laya_english_f16_neutral_ctx8192_mt3000.json",
+   "now": "laya_english_f16_EMPTY_ctx8192_mt3000.json"
+  },
+  {
+   "was": "stablelm-2-zephyr-1_6b-Q4_K_M_neutral_ctx8192_mt3000.json",
+   "now": "stablelm-2-zephyr-1_6b-Q4_K_M_autofit_neutral_ctx8192_mt3000.json"
+  }
+ ],
+ "failed": []
+}
