@@ -21,6 +21,7 @@ EXPECTED IS FILTERED, NOT COUNTED FROM THE DIRECTORY. 53 GGUFs sit on disk; 46 a
 count would report 53 and a curated count would report whatever someone remembered -- so this reads
 the SAME filter the runner uses. 53 is a directory fact; 46 is a filtered fact.
 """
+import ast
 import glob
 import os
 import subprocess
@@ -29,14 +30,46 @@ import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 MODELS = os.environ.get("ARENA_MODELS") or os.path.expanduser("~/moltbook_pipeline/models")
-EXCLUDE_PAT = ("qwen-image", "audio", "mmproj", "clip", "vae", "embed", "whisper")
 STALE_SECONDS = int(os.environ.get("ARENA_STALE_SECONDS", "2700"))   # 45 min: slowest entrant seen
 
 
+def parse_exclude_pat(src):
+    """The parser, on SOURCE TEXT, so it can be probed without touching the real runner."""
+    for node in ast.parse(src).body:
+        if isinstance(node, ast.Assign):
+            for t in node.targets:
+                if getattr(t, "id", None) == "EXCLUDE_PAT":
+                    try:
+                        return tuple(ast.literal_eval(node.value))
+                    except ValueError as e:
+                        raise SystemExit(
+                            f"EXCLUDE_PAT is not a literal ({e}); this check cannot read it, and a "
+                            f"stale copy would report a field nobody is running.")
+    raise SystemExit("EXCLUDE_PAT not found in the source -- the runner's filter moved, so this "
+                     "check's expected-count is unsupported. Fix the reader, do not hardcode it.")
+
+
+def runner_exclude_pat():
+    """Read EXCLUDE_PAT OUT OF run_card.py. Do not copy it.
+
+    A copied constant drifts from the thing it copied: the runner's filter changes, this file's
+    doesn't, and the expected-count silently describes a field nobody is running. That is the
+    hand-maintained-count defect one level down -- and it is why Chilly's run-state check now reads
+    the filter out of the runner instead of restating it.
+
+    Parsed with ast, NOT imported: run_card.py parses argv and calls sys.exit at module level, so
+    importing it would run it. If the name moves or the value stops being a literal, this FAILS
+    LOUDLY rather than quietly falling back to a stale list.
+    """
+    with open(os.path.join(HERE, "run_card.py"), encoding="utf-8") as f:
+        return parse_exclude_pat(f.read())
+
+
 def expected_entrants():
-    """Same filter the runner applies. A different count here would be a different field."""
+    """Same filter the RUNNER applies, read from the runner itself."""
+    pat = runner_exclude_pat()
     return [os.path.basename(p) for p in glob.glob(os.path.join(MODELS, "*.gguf"))
-            if not any(k in os.path.basename(p).lower() for k in EXCLUDE_PAT)]
+            if not any(k in os.path.basename(p).lower() for k in pat)]
 
 
 def main(card="v3", pid=None):
