@@ -191,6 +191,12 @@ def load_bundles():
             continue
         harness = d.get("harness", harness)
         ver = d.get("version", ver)
+        # results/ holds result BUNDLES and nothing else. Any other JSON in there -- a manifest,
+        # a scratch file -- must not be read as evidence. Same guard as the canonicaliser: ask
+        # 'is this a bundle?' before asking 'what does it contain?'
+        if d.get("harness") != "handicap-arena" or "results" not in d:
+            print(f"  skip (not a result bundle): {os.path.basename(path)}")
+            continue
         for r in (d.get("results") or []):
             r["_file"] = os.path.basename(path)
             r["_mtime"] = os.path.getmtime(path)

@@ -26,6 +26,10 @@ repo's rule is: if it changes what the reader concludes, it belongs in the name.
 import glob, json, os, shutil, sys
 
 RESULTS = "/home/chilly1/workspace/ocho_arena/results"
+# The manifest lives OUTSIDE results/, because results/ holds result bundles and nothing else.
+# A manifest sitting among them is exactly the kind of file a reader counts as an entrant --
+# the same objection the Chair raised about the empty bundle.
+MANIFEST = "/home/chilly1/workspace/ocho_arena/RENAME_MANIFEST.json"
 
 
 def canonical(path):
@@ -45,10 +49,25 @@ def canonical(path):
     return want, os.path.basename(path)
 
 
+HANDICAP = "handicap-arena"
+
+
 def main():
     dry = "--apply" not in sys.argv
     moves = []
     for path in sorted(glob.glob(os.path.join(RESULTS, "*.json"))):
+        try:
+            d = json.load(open(path))
+        except Exception as e:                                    # noqa: BLE001
+            print(f"  SKIP (unreadable): {os.path.basename(path)} — {e}")
+            continue
+        # IS THIS A BUNDLE AT ALL? The first version treated ANY json without a `results` key
+        # as an empty measurement -- so it tried to rename its own RENAME_MANIFEST.json to
+        # RENAME_MANIFEST.EMPTY.json. That is the day's signature move once more: a test that
+        # answers 'is this empty?' without first asking 'is this a bundle?'.
+        if d.get("harness") != HANDICAP or "results" not in d:
+            print(f"  SKIP (not a result bundle): {os.path.basename(path)}")
+            continue
         try:
             want, have = canonical(path)
         except Exception as e:                                    # noqa: BLE001
@@ -89,11 +108,11 @@ def main():
         except Exception as e:                                    # noqa: BLE001
             failed.append({"was": have, "want": want, "error": f"{type(e).__name__}: {e}"})
             print(f"  FAILED {have}: {type(e).__name__}: {e}")
-    with open(os.path.join(RESULTS, "RENAME_MANIFEST.json"), "w") as fh:
+    with open(MANIFEST, "w") as fh:
         json.dump({"note": "rename so the filename cannot disagree with the content; "
                            "derived from each bundle's own gguf + config",
                    "renames": manifest, "failed": failed}, fh, indent=1)
-    print(f"  renamed {len(manifest)}; failed {len(failed)}; manifest written")
+    print(f"  renamed {len(manifest)}; failed {len(failed)}; manifest at {MANIFEST}")
 
 
 if __name__ == "__main__":
