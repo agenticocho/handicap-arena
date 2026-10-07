@@ -147,10 +147,10 @@ passes is not a scorer.
 
 ## Games
 
-Forty-two events across nine leagues: market and decision games, reasoning and code, agency,
-perception, creative under objective constraints, calibration, efficiency, team relays, and
-diagnostics. Each carries a deterministic or ground-truthed scorer, **a declared null baseline**,
-and an honest statement of how it can be gamed.
+Forty-nine events across ten leagues: market and decision games, reasoning and code, agency,
+perception, creative under objective constraints, calibration, efficiency, team relays,
+diagnostics, and strategy evaluation. Each carries a deterministic or ground-truthed scorer,
+**a declared null baseline**, and an honest statement of how it can be gamed.
 
 **Full catalogue: [GAMES.md](GAMES.md)**
 

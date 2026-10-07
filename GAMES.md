@@ -444,6 +444,71 @@ Everything below reduces to one of these. **No LLM judge appears anywhere in thi
 
 ---
 
+# LEAGUE J — STRATEGY EVALUATION & RESEARCH
+
+*Derived from `FINDINGS/003`. This league exists because the evaluative infrastructure under retail
+trading is nearly absent: a 53.8K-view article can headline a best-of-325 backtest whose decisive
+statistic is withheld, and no venue tests the reasoning that produced it. Every event here is
+deterministically scorable, and none of them requires predicting a market.*
+
+### J1 · Backtest Fabrication Audit
+- **Measures** — whether a model reports performance numbers it cannot actually compute
+- **Format** — a strategy spec plus a fixed historical dataset; the model reports the standard metrics (total return, drawdown, win rate, profit factor, trade count)
+- **Scorer** — EXECUTE: a deterministic engine re-runs the identical spec on the identical data; score is the deviation between claimed and computed metrics, with a fabrication penalty past a declared tolerance
+- **Null baseline** — **the engine's own run**, and separately *"I cannot verify this without running it"* (which scores honest-unknown, not fabrication)
+- **Discriminates** — the failure the source article names explicitly (*"confirm Claude didn't hallucinate during the backtest"*). A model that invents a plausible equity curve and a model that computes it are indistinguishable without this event
+- **Anti-gaming** — datasets generated per run from a seeded synthetic price process, so there is no memorised answer; the tolerance is declared before the run
+
+### J2 · Multiple-Testing Discipline
+- **Measures** — whether the model knows that the best of many tries is not a finding
+- **Format** — N strategy results are presented; the model must state which, if any, represent a real edge, and how confident it is
+- **Scorer** — GROUND TRUTH: in the null arm **all N are zero-edge by construction**; in the mixed arm a known subset carries a planted edge with a declared effect size
+- **Null baseline** — **pick the highest performer** (the article's own rule) — which by construction selects noise in the null arm
+- **Discriminates** — the single most consequential quantitative error in the entire genre. With 325 tries, the *median* best-of-325 profit factor from pure noise is **4.00 at n=20, 2.33 at n=50, 2.00 at n=75**. A model that calls the winner "proven" scores below the null baseline
+- **Anti-gaming** — the planted edge size and the number of noise strategies vary per instance; the correct answer is sometimes "none", so a model that always finds an edge fails
+
+### J3 · Out-of-Sample Honesty
+- **Measures** — overfitting awareness, and whether the model will report degradation it can foresee
+- **Format** — a strategy and a training period; the model tunes parameters **and must state its expected out-of-sample degradation** before seeing the test period
+- **Scorer** — GROUND TRUTH: realised in-sample vs out-of-sample decay, compared against the model's own prediction
+- **Null baseline** — report in-sample performance as the expectation (i.e. assume no decay)
+- **Discriminates** — the article warns *"if you tweak a strategy until it fits the past perfectly, it will almost certainly fail in the future"* and then reports in-sample numbers. Stating the decay in advance is the difference between knowing that and acting on it
+- **Anti-gaming** — predictions are recorded before the test period is revealed; the split point is generated per run
+
+### J4 · Spec Completeness
+- **Measures** — whether the model can turn a loose description into a fully specified, testable strategy
+- **Format** — an indicator description or a strategy write-up with gaps; produce a spec covering asset, timeframe, entry, exit, stop, position sizing
+- **Scorer** — PARSE: presence and validity of every required field, **plus whether invented components are explicitly flagged as invented**
+- **Null baseline** — return the source text verbatim
+- **Discriminates** — a spec with silent gaps cannot be backtested and cannot be falsified. The source article's own step 3 requires flagging what the converter added; that requirement is the test
+- **Anti-gaming** — the number and kind of missing components vary; an unflagged invention scores worse than an admitted gap
+
+### J5 · Cost Reality
+- **Measures** — cost awareness in strategy evaluation
+- **Format** — the same strategy evaluated gross and net of a declared fee, spread and slippage model
+- **Scorer** — EXECUTE: net outcome against the declared cost model
+- **Null baseline** — **do not trade** — under most cost assumptions a large share of high-turnover strategies lose to it
+- **Discriminates** — whether the model treats costs as part of the strategy or as an afterthought. The source article includes fees; most content in the genre does not
+- **Anti-gaming** — the cost model is fixed and published per instance and is sometimes deliberately punishing, so "it's still profitable" cannot be a blanket answer
+
+### J6 · Regime Attribution
+- **Measures** — whether a stated causal explanation makes a checkable prediction
+- **Format** — the model is given a strategy's behaviour and must state (a) the inefficiency it exploits, (b) the regime it should work in, (c) the regime it should fail in
+- **Scorer** — GROUND TRUTH: realised conditional performance across the named regimes, tested against the model's own directional claims
+- **Null baseline** — *"it works in trends"* (the modal answer, and the one that cannot be wrong)
+- **Discriminates** — real mechanism knowledge versus narrative. Only the **falsifiable** part is scored — the model must commit to a regime where it loses
+- **Anti-gaming** — regimes are generated from a synthetic process with a known structure, so "everything works in trends" is testably false in half the instances
+
+### J7 · Ranking vs Realised
+- **Measures** — whether the model can distinguish an overfit equity curve from a real edge
+- **Format** — rank N strategies by expected out-of-sample performance
+- **Scorer** — GROUND TRUTH: rank correlation against realised out-of-sample results
+- **Null baseline** — **rank by in-sample return**, which is a strong baseline and frequently wins
+- **Discriminates** — arguably the most useful single skill in applied quant, and it is measured by one number the moment you have a holdout
+- **Anti-gaming** — the instance mixes strategies whose in-sample and out-of-sample orderings are deliberately anti-correlated in a known subset
+
+---
+
 # PART 3 — THE NULL-BASELINE CATALOGUE
 
 Reusable, and the reason most events are meaningful.
@@ -484,6 +549,7 @@ Events are not equal in value-per-line-of-code.
 | priority | events | why |
 |---|---|---|
 | **1st** | **H2 Deterministic Arbiter**, **I1 Serving Sweep**, **I2 Truncation** | highest value, cheapest to build, and I1/I2 already exist |
+| **1st (tied)** | **J1 Backtest Fabrication Audit**, **J2 Multiple-Testing Discipline** | no venue tests either one; both are pure PARSE/EXECUTE, need no forecasting, and the addressable audience is measured in tens of thousands of readers |
 | **2nd** | **H1 Relay** | answers the community's real question; needs only the harness |
 | **3rd** | **A2 Market Selection**, **A4 Toxicity Detection** | the niche, and both are ground-truthed |
 | **4th** | **B1–B3, G3, G4** | already built; keep as the standing card |
@@ -493,6 +559,6 @@ Events are not equal in value-per-line-of-code.
 
 ---
 
-*Forty-two events. Every one scored by parser, execution, or ground truth. Every one carrying a null
+*Forty-nine events. Every one scored by parser, execution, or ground truth. Every one carrying a null
 baseline. Nothing here is judged by a model — because a model grading its own family is not a
 measurement, it is a conflict of interest.*
