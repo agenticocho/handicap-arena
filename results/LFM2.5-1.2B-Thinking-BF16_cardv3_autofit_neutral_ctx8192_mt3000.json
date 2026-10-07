@@ -1,0 +1,105 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-07T20:04:21Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/LFM2.5-1.2B-Thinking-BF16.gguf",
+      "sha256": "6152b3e2b6a4e6d5c3d8bfff3f7941d43a2e60b631aad290a26c150b7a2573bc",
+      "footprint_gb": 2.494140625,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 2.49,
+        "weights_gb": 2.34,
+        "gpu_free_gb_at_weigh_in": 7.22,
+        "partial_offload": false,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 1,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/LFM2.5-1.2B-Thinking-BF16.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "33685"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.0,
+          "wins": 0.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_forbidden_key_must_be_absent": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            },
+            "R1.2_null_means_absent": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            },
+            "R1.3_type_under_natural_language": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            },
+            "R1.4_ambiguous_nesting": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            },
+            "R1.5_enum_nearest_is_wrong": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            },
+            "R1.6_array_exact_and_ordered": {
+              "score": 0.0,
+              "reason": "TRUNCATED at max_tokens (3000) before answering \u2014 not a capability result; raise --max-tokens",
+              "truncated": true
+            }
+          },
+          "finish_reasons": {
+            "stop": 5,
+            "length": 1
+          },
+          "truncated": true,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 3000,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.0,
+      "grade": {
+        "belt": "White",
+        "rounds_won": 0,
+        "rounds": 1,
+        "stripes": 0.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 3,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 8.95,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

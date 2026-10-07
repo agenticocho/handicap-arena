@@ -1,0 +1,104 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-07T19:54:12Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/LFM2.5-VL-1.6B-Q8_0.gguf",
+      "sha256": "9e85c431d49f5776169baf4762590030d3e607c04c94f915ee0861618319bb8c",
+      "footprint_gb": 0.34765625,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 0.35,
+        "weights_gb": 1.25,
+        "gpu_free_gb_at_weigh_in": 1.53,
+        "partial_offload": true,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 1,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/LFM2.5-VL-1.6B-Q8_0.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "40769"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.6667,
+          "wins": 4.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_forbidden_key_must_be_absent": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.2_null_means_absent": {
+              "score": 0.0,
+              "reason": "emitted forbidden key(s): ['coupon', 'discount_pct']",
+              "truncated": false
+            },
+            "R1.3_type_under_natural_language": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.4_ambiguous_nesting": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.5_enum_nearest_is_wrong": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.6_array_exact_and_ordered": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false
+            }
+          },
+          "finish_reasons": {
+            "stop": 6
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 49,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.6667,
+      "grade": {
+        "belt": "Orange",
+        "rounds_won": 1,
+        "rounds": 1,
+        "stripes": 4.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 3,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 0.94,
+      "answers_from_reasoning": 0
+    }
+  ]
+}
