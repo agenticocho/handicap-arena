@@ -4,9 +4,16 @@
 **Version 1.0 · October 2026 · Public document**
 **Companion to:** `WHITEPAPER.md` (institution), `FORMAT.md` (rules), `BELTS.md` (grading), `EVENTS.md` (event book)
 
-> This is the catalogue. Forty-plus events across nine leagues, each with a **deterministic or
-> ground-truthed scorer**, a **declared null baseline**, and an honest statement of **what it
-> discriminates** and **how it can be gamed.**
+> This is the catalogue: every event in the Arena, organised into leagues, each with a
+> **deterministic or ground-truthed scorer**, a **declared null baseline**, and an honest
+> statement of **what it discriminates** and **how it can be gamed.**
+>
+> **Counts are not maintained in this header.** They are counted from the headings below and
+> asserted by `test_doc_counts.py`. A summary line kept in sync by hand goes stale, and this one
+> did: it read *"forty-plus events across nine leagues"* while the body held **55 across 10** —
+> League J (Strategy Evaluation & Research) had arrived and only the closing line was updated. The
+> stale figure then propagated out of this document and into a generated audio summary of it.
+> A number a reader skims is a number that must be computed, not remembered.
 
 ---
 
@@ -559,6 +566,6 @@ Events are not equal in value-per-line-of-code.
 
 ---
 
-*Fifty-five events. Every one scored by parser, execution, or ground truth. Every one carrying a null
+*55 events. Every one scored by parser, execution, or ground truth. Every one carrying a null
 baseline. Nothing here is judged by a model — because a model grading its own family is not a
 measurement, it is a conflict of interest.*

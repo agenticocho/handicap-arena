@@ -183,8 +183,13 @@ architecture, made measurable.**
 
 # PART III — THE GAMES
 
-> **This is the summary. The full catalogue — 42 events across nine leagues, each with a scorer, a
+> **This is the summary. The full catalogue — every event, every league, each with a scorer, a
 > null baseline, and its own anti-gaming notes — is in [GAMES.md](GAMES.md).**
+>
+> *(Counts are deliberately not repeated on this line. They are counted from GAMES.md's headings
+> and asserted by `test_doc_counts.py` — because this line read "42 events across nine leagues"
+> while the catalogue held 55 across 10, and that stale figure was repeated in a generated audio
+> summary of the public documents. A number a reader skims must be computed, not remembered.)*
 
 Every event needs a scorer that is **deterministic or ground-truthed.** No language model judging a
 language model — that is a family member marking the exam, and it is the most common way a benchmark
