@@ -1,0 +1,195 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-07T14:08:11Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/Spark-X2.5-4B-Q5_K_S.gguf",
+      "sha256": "b30f93d3d30412a79bf3201f7dc4fd64532ebada7c21e0377958f120145c96f0",
+      "footprint_gb": 2.6748046875,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 2.67,
+        "weights_gb": 2.88,
+        "gpu_free_gb_at_weigh_in": 3.72,
+        "partial_offload": true,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 1,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/Spark-X2.5-4B-Q5_K_S.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "34275"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 1.0,
+          "wins": 6.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_floor": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.2_field_name_nearmiss": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.3_enum_exactness": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.4_type_discipline": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.5_nested": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.6_array_shape": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            }
+          },
+          "finish_reasons": {
+            "stop": 6
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 305,
+          "perfect": true
+        },
+        "R2_chess": {
+          "score": 1.0,
+          "wins": 6.0,
+          "trials": 6.0,
+          "kind": "tool_selection",
+          "metaphor": "CHESS",
+          "items": {
+            "R2.1_floor": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R2.2_near_duplicate": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R2.3_constraint_violation": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R2.4_no_tool_correct": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R2.5_unit_transform": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R2.6_genuine_ambiguity": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            }
+          },
+          "finish_reasons": {
+            "stop": 6
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 2024,
+          "perfect": true
+        },
+        "R3_pitstop": {
+          "score": 1.0,
+          "wins": 6.0,
+          "trials": 6.0,
+          "kind": "code_repair",
+          "metaphor": "PIT STOP",
+          "items": {
+            "R3.1_floor": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R3.2_must_not_break_others": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R3.3_silent_mutation": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R3.4_empty_input": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R3.5_bug_is_in_the_caller": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R3.6_already_correct": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            }
+          },
+          "finish_reasons": {
+            "stop": 6
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 873,
+          "perfect": true
+        }
+      },
+      "aggregate": 1.0,
+      "grade": {
+        "belt": "Green",
+        "rounds_won": 3,
+        "rounds": 3,
+        "stripes": 18.0,
+        "trials": 18.0,
+        "note": "swept the bout \u2014 2 more consecutive sweeps earn Blue, then Purple (a challenger slot above)"
+      },
+      "card_version": 2,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 12.6,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

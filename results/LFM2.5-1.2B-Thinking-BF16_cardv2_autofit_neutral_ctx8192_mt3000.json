@@ -1,0 +1,195 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-07T14:00:54Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/LFM2.5-1.2B-Thinking-BF16.gguf",
+      "sha256": "3655ec3d76acdac5df779df351bcc715d612315fc1271b35acb489623c97655a",
+      "footprint_gb": 2.4931640625,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 2.49,
+        "weights_gb": 2.34,
+        "gpu_free_gb_at_weigh_in": 3.93,
+        "partial_offload": false,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 1,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/LFM2.5-1.2B-Thinking-BF16.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "45359"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.0,
+          "wins": 0.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_floor": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            },
+            "R1.2_field_name_nearmiss": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            },
+            "R1.3_enum_exactness": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            },
+            "R1.4_type_discipline": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            },
+            "R1.5_nested": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            },
+            "R1.6_array_shape": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            }
+          },
+          "finish_reasons": {
+            "stop": 6
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 1404,
+          "perfect": false
+        },
+        "R2_chess": {
+          "score": 0.0,
+          "wins": 0.0,
+          "trials": 6.0,
+          "kind": "tool_selection",
+          "metaphor": "CHESS",
+          "items": {
+            "R2.1_floor": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            },
+            "R2.2_near_duplicate": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            },
+            "R2.3_constraint_violation": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            },
+            "R2.4_no_tool_correct": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            },
+            "R2.5_unit_transform": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            },
+            "R2.6_genuine_ambiguity": {
+              "score": 0.0,
+              "reason": "unparseable",
+              "truncated": false
+            }
+          },
+          "finish_reasons": {
+            "stop": 6
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 1426,
+          "perfect": false
+        },
+        "R3_pitstop": {
+          "score": 0.1667,
+          "wins": 1.0,
+          "trials": 6.0,
+          "kind": "code_repair",
+          "metaphor": "PIT STOP",
+          "items": {
+            "R3.1_floor": {
+              "score": 0.0,
+              "reason": "SyntaxError: unterminated string literal (detected at line 11)",
+              "truncated": false
+            },
+            "R3.2_must_not_break_others": {
+              "score": 0.0,
+              "reason": "SyntaxError: invalid syntax",
+              "truncated": false
+            },
+            "R3.3_silent_mutation": {
+              "score": 0.0,
+              "reason": "SyntaxError: unterminated string literal (detected at line 4)",
+              "truncated": false
+            },
+            "R3.4_empty_input": {
+              "score": 0.0,
+              "reason": "SyntaxError: unterminated string literal (detected at line 3)",
+              "truncated": false
+            },
+            "R3.5_bug_is_in_the_caller": {
+              "score": 0.0,
+              "reason": "SyntaxError: unterminated string literal (detected at line 5)",
+              "truncated": false
+            },
+            "R3.6_already_correct": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            }
+          },
+          "finish_reasons": {
+            "stop": 6
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 1646,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.05556666666666666,
+      "grade": {
+        "belt": "White",
+        "rounds_won": 0,
+        "rounds": 3,
+        "stripes": 1.0,
+        "trials": 18.0,
+        "note": null
+      },
+      "card_version": 2,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 6.32,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

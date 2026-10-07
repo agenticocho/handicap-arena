@@ -1,0 +1,197 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-07T13:57:11Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/Qwen3.5-2B-UD-Q4_K_XL.gguf",
+      "sha256": "0af96165ea615bea39a04118d63f0b6d35908aea850ee4a51aa6151d851b8b35",
+      "footprint_gb": 0.2021484375,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 0.2,
+        "weights_gb": 1.34,
+        "gpu_free_gb_at_weigh_in": 1.54,
+        "partial_offload": true,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 1,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/Qwen3.5-2B-UD-Q4_K_XL.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "59397"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.8333,
+          "wins": 5.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_floor": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.2_field_name_nearmiss": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.3_enum_exactness": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.4_type_discipline": {
+              "score": 0.0,
+              "reason": "TRUNCATED at max_tokens (3000) before answering \u2014 not a capability result; raise --max-tokens",
+              "truncated": true
+            },
+            "R1.5_nested": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.6_array_shape": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            }
+          },
+          "finish_reasons": {
+            "stop": 5,
+            "length": 1
+          },
+          "truncated": true,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 3000,
+          "perfect": false
+        },
+        "R2_chess": {
+          "score": 0.5,
+          "wins": 3.0,
+          "trials": 6.0,
+          "kind": "tool_selection",
+          "metaphor": "CHESS",
+          "items": {
+            "R2.1_floor": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R2.2_near_duplicate": {
+              "score": 0.0,
+              "reason": "TRUNCATED at max_tokens (3000) before answering \u2014 not a capability result; raise --max-tokens",
+              "truncated": true
+            },
+            "R2.3_constraint_violation": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R2.4_no_tool_correct": {
+              "score": 0.0,
+              "reason": "TRUNCATED at max_tokens (3000) before answering \u2014 not a capability result; raise --max-tokens",
+              "truncated": true
+            },
+            "R2.5_unit_transform": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R2.6_genuine_ambiguity": {
+              "score": 0.0,
+              "reason": "TRUNCATED at max_tokens (3000) before answering \u2014 not a capability result; raise --max-tokens",
+              "truncated": true
+            }
+          },
+          "finish_reasons": {
+            "stop": 3,
+            "length": 3
+          },
+          "truncated": true,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 3000,
+          "perfect": false
+        },
+        "R3_pitstop": {
+          "score": 0.3333,
+          "wins": 2.0,
+          "trials": 6.0,
+          "kind": "code_repair",
+          "metaphor": "PIT STOP",
+          "items": {
+            "R3.1_floor": {
+              "score": 0.0,
+              "reason": "TRUNCATED at max_tokens (3000) before answering \u2014 not a capability result; raise --max-tokens",
+              "truncated": true
+            },
+            "R3.2_must_not_break_others": {
+              "score": 0.0,
+              "reason": "TRUNCATED at max_tokens (3000) before answering \u2014 not a capability result; raise --max-tokens",
+              "truncated": true
+            },
+            "R3.3_silent_mutation": {
+              "score": 0.0,
+              "reason": "TRUNCATED at max_tokens (3000) before answering \u2014 not a capability result; raise --max-tokens",
+              "truncated": true
+            },
+            "R3.4_empty_input": {
+              "score": 0.0,
+              "reason": "TRUNCATED at max_tokens (3000) before answering \u2014 not a capability result; raise --max-tokens",
+              "truncated": true
+            },
+            "R3.5_bug_is_in_the_caller": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": true
+            },
+            "R3.6_already_correct": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": true
+            }
+          },
+          "finish_reasons": {
+            "length": 6
+          },
+          "truncated": true,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 3000,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.5555333333333333,
+      "grade": {
+        "belt": "Yellow",
+        "rounds_won": 1,
+        "rounds": 3,
+        "stripes": 10.0,
+        "trials": 18.0,
+        "note": null
+      },
+      "card_version": 2,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 82.4,
+      "answers_from_reasoning": 10
+    }
+  ]
+}
