@@ -81,6 +81,33 @@ seeing the results is not a criterion.
 **If criterion 4 fails while 1–3 pass**, the honest reading is that the hardening worked by
 difficulty rather than by discrimination — and that gets reported as such, not buried.
 
+## 5b. POSTSCRIPT — the numbers did not move, but the rule did
+
+The belt under rule 1 was **not monotonic in the aggregate**: three aggregates each mapped to two
+different belts (0.7222, 0.7778 and 0.8333 were each both Green and Orange). `rounds_won` counted
+rounds won on a majority of items and discarded *how well* each was won, so 6/6+6/6+4/6 and
+5/6+5/6+4/6 landed on the same belt. A belt-sorted UI would have ranked a weaker model above a
+stronger one. Belt rule 2 bands the belt on the aggregate, which makes it monotonic by
+construction (verified: **0 inversions**).
+
+**That change moved Green from 19/33 (57.6%) to 8/33 (24.2%).**
+
+Criterion 1 in §5 says *"Green drops … to under 25%."* Under rule 2, the field would read under
+the threshold. **CRITERION 1 STANDS AS FAILED.**
+
+The instrument was changed *after* the run, and a bar frozen *before* the run does not move
+because its author later moved the measurement. This sentence is here so the temptation cannot be
+quietly indulged by a later reader:
+
+> **A re-derivation is not a re-scoring.** Rule 2 is a correction to a real defect — an inversion
+> that would have mis-ranked models — and it is reported as such. It is **not** a pass on
+> criterion 1, and any table that shows Green under 25% without this paragraph is misleading.
+
+The same rule the whole project runs on: agents propose, the operator applies, and **no agent
+certifies the gate that admits its own work** — including when the agent is correcting itself.
+
+---
+
 ## 6. Cost
 
 6 items × 3 rounds = 18 calls per model, one trial each, versus 9 today. Roughly double the wall
