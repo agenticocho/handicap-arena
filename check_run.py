@@ -90,22 +90,29 @@ def main(card="v3", pid=None):
     print(f"  last progress     : {age:.0f}s ago" if age >= 0 else "  last progress     : no log")
     print()
 
+    # CARRY THE BASIS INSIDE THE VERDICT. A verdict plus a separately-attached warning is a warning
+    # nobody reads -- and a warning appended to EVERY result is read as never, because its position
+    # carries no signal. "exit 1" is not a result; "exit 1, captured directly" is. So each verdict
+    # line below states what it counted and where the count came from.
     if len(done) >= len(exp):
-        print("  STATE: FINISHED")
+        print(f"  STATE: FINISHED — {len(done)} bundles on disk against {len(exp)} expected "
+              f"entrants, both counted from the runner's own filter.")
         return 0
     if alive is False:
-        print(f"  STATE: *** DIED ***  — completed {len(done)} of {len(exp)}, "
-              f"{len(exp) - len(done)} entrants never measured.")
+        print(f"  STATE: *** DIED *** — {len(done)} bundles on disk against {len(exp)} expected, "
+              f"and NO process alive. {len(exp) - len(done)} entrants were never measured.")
         print("  Report this as a FAILURE. Do not report it as a finish.")
         return 2
     if alive is None:
-        print("  STATE: UNKNOWN — pass a pid to get the three-valued answer.")
+        print(f"  STATE: UNKNOWN — {len(done)} of {len(exp)} bundles, process liveness not "
+              f"checked (no pid given).")
         return 1
     if age > STALE_SECONDS:
-        print(f"  STATE: RUNNING BUT STALE — no log progress for {age:.0f}s "
-              f"(threshold {STALE_SECONDS}s). Slowest entrant seen is ~30 min; suspect a hang.")
+        print(f"  STATE: RUNNING BUT STALE — {len(done)} of {len(exp)} bundles, process alive, "
+              f"no log progress for {age:.0f}s (threshold {STALE_SECONDS}s). Suspect a hang.")
         return 1
-    print(f"  STATE: RUNNING — {len(done)} of {len(exp)}, last progress {age:.0f}s ago.")
+    print(f"  STATE: RUNNING — {len(done)} of {len(exp)} bundles on disk, process {pid} alive, "
+          f"last log progress {age:.0f}s ago.")
     return 0
 
 
