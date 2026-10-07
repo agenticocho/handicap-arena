@@ -196,16 +196,19 @@ def load_bundles():
             r["_mtime"] = os.path.getmtime(path)
             entries.append(r)
 
-    # DEDUPE. An entry is identified by (sha256, ctx, max_tokens, n_gpu_layers) -- the tuple
-    # that determines the measurement. Two bundles measuring the same thing are ONE entry.
+    # DEDUPE. An entry is identified by (sha256, the FULL config) -- the tuple that determines
+    # the measurement. Two bundles measuring the same thing are ONE entry.
     #
-    # This exists because run_card.py's skip was FILENAME-based and therefore missed the
-    # hand-named bundles: it re-ran Qwen3.5-2B and produced a second bundle under the full
-    # stem. Rendering the same measurement twice would make the board look fuller than it is.
+    # THE KEY MUST BE THE WHOLE CONFIG, NOT A SUBSET. The first version keyed on
+    # (sha256, ctx, max_tokens, n_gpu_layers) and merged LFM2-350M's GRAMMAR and neutral arms at
+    # ctx2048 -- because the grammar lives in server_flags, which the key omitted. That
+    # collapsed White 0/9 and Yellow 3/9 into one entry and DELETED THE CONTROL ARM of the very
+    # pair FINDING 001 is built on. A dedupe key that omits a variable that changes the outcome
+    # deletes evidence -- which is results/README's own rule, "if a config can change the
+    # outcome, it belongs in the name", applied to the identity key.
     best = {}
     for r in entries:
-        cfg = r.get("config") or {}
-        key = (r.get("sha256"), cfg.get("ctx"), cfg.get("max_tokens"), cfg.get("n_gpu_layers"))
+        key = (r.get("sha256"), json.dumps(r.get("config") or {}, sort_keys=True))
         prev = best.get(key)
         if prev is None or r["_mtime"] > prev["_mtime"]:
             best[key] = r
