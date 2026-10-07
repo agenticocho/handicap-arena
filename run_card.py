@@ -78,7 +78,9 @@ def already_measured(path):
 
 
 def bundle_path(stem):
-    return os.path.join(RESULTS, f"{stem}_neutral_ctx{CTX}_mt{MT}.json")
+    # Placement is IN THE NAME because it changes the latency conclusion (FINDINGS/004), and
+    # this repo's rule is: if it changes what the reader concludes, it belongs in the name.
+    return os.path.join(RESULTS, f"{stem}_autofit_neutral_ctx{CTX}_mt{MT}.json")
 
 
 def main():
@@ -109,31 +111,59 @@ def main():
         try:
             r = subprocess.run(cmd, cwd=ARENA, capture_output=True, text=True, timeout=5400)
             dt = time.time() - t0
-            tail = (r.stdout or "").strip().splitlines()[-4:]
             well = [l for l in (r.stdout or "").splitlines()
                     if any(k in l for k in ("DIVISION", "AGG", "belt", "BELT", "SCRATCHED",
                                             "MEASURED", "PARTIAL", "wrote", "bundle"))]
             for l in well[-6:]:
                 print("      " + l.strip())
+
             # A bundle can EXIST and be EMPTY: the harness writes one even when the entrant is
-            # scratched at weigh-in. rc=0 with an empty results list is not a score, and counting
-            # it as one overstates the field. Verify the artifact, not the exit code.
-            scored_ok = False
+            # scratched at weigh-in. rc=0 with an empty results list is not a score.
+            #
+            # bundle=True used to test that a FILE EXISTS, which cannot detect the failure it
+            # most needs to catch -- a run that measured nothing reports success. The Chair
+            # found one: laya_english_f16, results: [], logged as `rc=0 2s bundle=True`. A
+            # 2-second "success" is the most dangerous row on a board: it looks like a result.
+            #
+            # So: a bundle only counts if it CONTAINS a measurement -- non-empty results, with a
+            # config and a sha256. This is the repo's own README contract, enforced rather than
+            # asserted.
+            scored_ok, why_empty = False, ""
             if r.returncode == 0 and os.path.exists(outp):
                 try:
-                    scored_ok = len(json.load(open(outp)).get("results") or []) > 0
-                except Exception:
-                    scored_ok = False
+                    d = json.load(open(outp))
+                    res = d.get("results") or []
+                    r0 = res[0] if res else {}
+                    if not res:
+                        why_empty = "results list is EMPTY (measured nothing)"
+                    elif not (r0.get("config") and r0.get("sha256")):
+                        why_empty = "entry lacks config and/or sha256 — violates results/README"
+                    else:
+                        scored_ok = True
+                except Exception as e:                            # noqa: BLE001
+                    why_empty = f"unreadable: {type(e).__name__}"
             if scored_ok:
                 done += 1
                 print(f"      -> scored in {dt/60:.1f} min", flush=True)
             else:
                 scratched += 1
-                why = [l for l in (r.stdout or "").splitlines() if "SCRATCH" in l or "not found" in l]
-                print(f"      -> NOT SCORED rc={r.returncode} {dt/60:.1f} min "
-                      f"{(why[-1].strip() if why else (r.stderr or '')[:120])}", flush=True)
+                # mark the artifact itself, so an `ls` cannot present it as an entrant
+                try:
+                    if os.path.exists(outp):
+                        stem = os.path.basename(outp).replace(".json", "")
+                        marked = os.path.join(RESULTS,
+                                              stem.replace("_neutral_", "_EMPTY_")
+                                              .replace("_GRAMMAR_", "_EMPTY_") + ".json")
+                        if marked != outp and not os.path.exists(marked):
+                            os.rename(outp, marked)
+                            print(f"      -> marked {os.path.basename(marked)}")
+                except Exception:                                 # noqa: BLE001
+                    pass
+                print(f"      -> NOT SCORED {why_empty or 'rc=' + str(r.returncode)} "
+                      f"({dt/60:.1f} min)", flush=True)
             with open(log, "a") as lf:
-                lf.write(f"{stem}\trc={r.returncode}\t{dt:.0f}s\tbundle={os.path.exists(outp)}\n")
+                lf.write(f"{stem}\trc={r.returncode}\tscored={scored_ok}\t{dt:.0f}s\t"
+                         f"{why_empty}\n")
         except subprocess.TimeoutExpired:
             scratched += 1
             print(f"      -> TIMEOUT after 90 min, moving on", flush=True)
