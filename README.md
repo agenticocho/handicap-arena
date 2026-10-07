@@ -156,10 +156,32 @@ diagnostics, and strategy evaluation. Each carries a deterministic or ground-tru
 
 ## Roadmap
 
-- **v1 (here)** — local harness, 3 rounds, weigh-in, belts, result bundles
-- **v2** — challenge flow: models issue and accept challenges remotely, asynchronously
-- **v3** — certification pipeline on arena hardware; public belts and cards
-- **v4** — sponsored bounty cards
+**FORMAT.md is normative for version numbers.** This section previously carried its own numbering,
+which disagreed with FORMAT §9: README's *"v1 (here)"* was FORMAT's **v0.1**, README's *"v2 challenge
+flow"* was FORMAT's **v1**, and so on down the list. A reader taking a version label from either doc
+got a different target — including the next one. **Reconciled 2026-10-07, in favour of FORMAT.**
+
+- **v0** — done. One rig, three parser/test-scored tasks, published config, `content`/reasoning
+  handling, pre-flight verification.
+- **v0.1 (here)** — done. Neutral serving, hash-verified identity, scored rounds, weigh-in, belts,
+  result bundles.
+- **v1** — **next.** Website, divisions, belts, challenge flow, Tier-1 submissions. **This is what
+  the front end is. A contract for it is a v1 contract.**
+- **v2** — Tier-2 certification pipeline (re-run queue on reference hardware).
+- **v3** — sponsored bounty cards.
+
+### Card versions are a SEPARATE AXIS
+
+A bundle's `card_version` identifies the **task suite**, and it does not track the project line:
+
+| `card_version` | what it is | graded |
+|---|---|---|
+| **1** | the retired 3-round card (3 trials of one prompt per round) | 42 |
+| **2** | the 18-item battery (6 distinct items per round) | 33 |
+
+**1 and 2 are different measurements and are never ranked together.** Read "card v2" as *the card
+axis*, never as the project line — today the state is **card v2 on project v0.1**, and the two
+numbers mean different things. That collision is why this note exists.
 
 ---
 

@@ -150,10 +150,21 @@ provenance discipline is not.
 
 ## 9. Roadmap
 
+**These numbers are the project line, and they are normative.** `README.md` previously carried a
+different numbering for the same items — its "v1 (here)" was this list's **v0.1**, and its "v2
+challenge flow" was this list's **v1**. Reconciled here on 2026-10-07; the README now points at
+this section rather than restating it differently.
+
+**Card versions are a separate axis and do not appear in this list.** A result bundle's
+`card_version` identifies the task suite (1 = the retired 3-round card, 2 = the 18-item battery).
+The current state is **card v2 on project v0.1** — two numbers, two axes, and conflating them is
+how the README/FORMAT divergence started.
+
 1. **v0** — one rig, three parser/test-scored tasks, published config, `content`/reasoning handling,
    pre-flight verification. *(done — and it caught all four confounds above)*
 2. **v0.1** — neutral serving (own llama-server instances, never app-configured aliases),
-   hash-verified model registry, 6 tasks, cross-division card.
-3. **v1** — website, divisions, belts, challenge flow, Tier-1 submissions.
+   hash-verified model registry, scored tasks, cross-division card. *(done)*
+3. **v1** — website, divisions, belts, challenge flow, Tier-1 submissions. *(next — this is the
+   front end)*
 4. **v2** — Tier-2 certification pipeline (re-run queue on reference hardware).
 5. **v3** — sponsored bounty cards. **This is where the money actually is.**
