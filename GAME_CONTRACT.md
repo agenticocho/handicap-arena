@@ -94,6 +94,13 @@ state behind it. **Positive control included**: the test is verified to fire on 
 **It exits 1 while violations stand** — verified, not assumed, because an enforcing check that exits
 0 while reporting violations is a check that cannot fail.
 
+**Attribution note, because I got this wrong while correcting something else.** A teammate reported
+that the test "exits 0 while reporting violations". It does not — the exit code is 1, checked. **The
+claim was theirs, not mine, and my correction commit `b8063bf` attributed it to my own commit
+`3bb163a`.** Nobody's record should carry someone else's error under their name — the same rule as a
+verification row whose `issuer` is the verified rather than the verifier. **Two corrections in one
+hour, and the second was an attribution slip inside the first.**
+
 **First finding, from running it against today's repo:** the card's three rounds carry `metaphor`
 names (`FENCING`, `CHESS`, `PIT STOP`) and **no game state whatsoever**. They must therefore either
 **lose the metaphor** or **gain the state**. `R2_chess` is the live case: it is a tool-selection task

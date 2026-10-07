@@ -1,0 +1,104 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-07T20:16:59Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/BTL-4-IQ2_XXS.gguf",
+      "sha256": "e8d1090b605f37a0059b38f9c724699560ff602385584dcfd56f79feb35233fe",
+      "footprint_gb": 5.6591796875,
+      "division": "Middleweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 5.66,
+        "weights_gb": 9.97,
+        "gpu_free_gb_at_weigh_in": 6.91,
+        "partial_offload": true,
+        "division_from_resident": "Lightweight",
+        "division_from_weights": "Middleweight",
+        "division_for_competition": "Middleweight"
+      },
+      "cord": "violet",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 1,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/BTL-4-IQ2_XXS.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "44721"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 1.0,
+          "wins": 6.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_forbidden_key_must_be_absent": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.2_null_means_absent": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.3_type_under_natural_language": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.4_ambiguous_nesting": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.5_enum_nearest_is_wrong": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            },
+            "R1.6_array_exact_and_ordered": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false
+            }
+          },
+          "finish_reasons": {
+            "stop": 6
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 2047,
+          "perfect": true
+        }
+      },
+      "aggregate": 1.0,
+      "grade": {
+        "belt": "Green",
+        "rounds_won": 1,
+        "rounds": 1,
+        "stripes": 6.0,
+        "trials": 6.0,
+        "note": "swept the bout \u2014 2 more consecutive sweeps earn Blue, then Purple (a challenger slot above)",
+        "belt_rule": 2
+      },
+      "card_version": 3,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 9.24,
+      "answers_from_reasoning": 0
+    }
+  ]
+}
