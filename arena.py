@@ -242,8 +242,20 @@ class LlamaServer:
         self.vram_base = None
         self.vram_peak = None
         self.vram_free_mb = None
-        self.logpath = os.path.join(tempfile.gettempdir(),
-                                    f"arena-server-{os.getpid()}-{self.port}.log")
+        # THE RUN'S OWN DIAGNOSTIC EVIDENCE MUST OUTLIVE THE RUN.
+        #
+        # This was tempfile.gettempdir(): a shared namespace with a half-life nobody controls. The
+        # server logs from a run still in flight were already gone when Chilly went looking, so the
+        # one artifact that could explain a failed load had deleted itself by design. **Discarding
+        # by where you put it is the quietest way to lose it.**
+        #
+        # Same rule as FINDING 007 -- no verdict may depend on data that was discarded at scoring
+        # time -- applied to diagnostics: where the data lives decides whether it is discarded.
+        # logs/ and not results/, because results/ holds result bundles and nothing else; a log
+        # sitting among them is the kind of file a reader counts as an entrant.
+        _logs = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
+        os.makedirs(_logs, exist_ok=True)
+        self.logpath = os.path.join(_logs, f"arena-server-{os.getpid()}-{self.port}.log")
 
     def server_log_tail(self, lines=14):
         """A weigh-in that cannot explain itself is a bad weigh-in. Capture the server's own words."""
