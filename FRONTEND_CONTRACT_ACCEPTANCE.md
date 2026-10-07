@@ -33,6 +33,13 @@ that fails it.
 **Requirement.** No view, table, ranking or default sort may order entries by belt. Where a belt is
 shown, the aggregate must be shown with it, and any sorted view must sort on the aggregate.
 
+**AND: compare aggregates only after normalising them.** The v2 bundles store the aggregate **two
+ways** — an older path wrote it rounded (`0.8889`), a newer one wrote the raw float
+(`0.8888666666666666`). Those are the same measurement, but `0.9444333 != 0.9444`, so a stable
+sort and any equality test break on two entries that scored identically. Raw distinct count for
+card v2 is 15; normalised it is 12. **Normalise on read (4dp), and fix the writer so it stops
+emitting two forms.**
+
 **Measurement.** Under the original belt rule the belt was **not a function of the aggregate** —
 three aggregates each mapped to **two** different belts:
 
@@ -82,6 +89,12 @@ and FORMAT's "v1". The front end is **v1**.
 
 **Check.** Search the UI copy for "v2". Every hit must be either the card version or provably not a
 release number. And no combined v1+v2 table may exist.
+
+**AND: "card_version absent" is NOT "card_version 1".** Measured: the field lives on the **entry
+row**, not the bundle. It is present on all **33** v2 rows and **absent on all 42** v1 rows. So a
+reader that defaults absent→1 is *inferring* v1 and cannot distinguish that from a row whose field
+was lost. Render it as "1 (inferred)" or carry the inference explicitly — do not let a default do
+the work invisibly. Same shape as `results: []`: an absence is a fact, not a value.
 
 ---
 

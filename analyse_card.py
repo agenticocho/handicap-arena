@@ -41,13 +41,23 @@ def load():
             continue
         for r in (d.get("results") or []):
             r["_file"] = os.path.basename(p)
-            by_card[r.get("card_version", 1)].append(r)
+            # `card_version` lives on the ENTRY row, not the bundle. It is PRESENT on all 33 v2
+            # rows and ABSENT on all 42 v1 rows. Defaulting absent -> 1 is how v1 is identified,
+            # but the two cases must stay distinguishable, so absent gets its OWN key rather
+            # than being silently folded into 1.
+            by_card[r.get("card_version", "ABSENT")].append(r)
     return by_card
 
 
 def analyse(card, entries):
     print("=" * 78)
-    print(f"CARD v{card} — {len(entries)} graded entries")
+    if card == "ABSENT":
+        print(f"CARD version ABSENT — {len(entries)} graded entries")
+        print("  These rows carry NO card_version field at all. They are the v1 bundles. Treating")
+        print("  'absent' as '1' is convenient but NOT the same claim -- a front end that does it")
+        print("  silently cannot tell a v1 row from a row whose field was lost.")
+    else:
+        print(f"CARD v{card} — {len(entries)} graded entries")
     print("=" * 78)
     belts = Counter((e.get("grade") or {}).get("belt", "?") for e in entries)
     print("  belts: " + "  ".join(f"{b} {belts.get(b,0)}" for b in ORDER if belts.get(b)))
@@ -93,11 +103,20 @@ def analyse(card, entries):
         other = max(0.0, tot - won - cap)
         print(f"    {rk:12s} token-cap {cap:6.1f}   other {other:6.1f}   (of {tot:.0f} trials)")
 
-    aggs = [round(e.get("aggregate") or 0, 4) for e in entries]
-    dist = Counter(aggs)
+    aggs_raw = [e.get("aggregate") or 0 for e in entries]
+    # The aggregate is stored TWO WAYS in the bundles: an older path wrote it rounded to 4dp
+    # (0.8889), a newer one wrote the raw float (0.8888666666666666). Those are the SAME
+    # measurement, so a raw distinct-count is partly counting the writer rather than the models.
+    # Report both, and treat the normalised figure as the real one.
+    norm = [round(a, 4) for a in aggs_raw]
+    dist_raw, dist_norm = Counter(aggs_raw), Counter(norm)
     print()
-    print(f"  aggregate: {len(dist)} distinct values across {len(entries)} entries")
-    for v, n in sorted(dist.items(), reverse=True)[:12]:
+    print(f"  aggregate: {len(dist_norm)} distinct (normalised) / {len(dist_raw)} raw, "
+          f"across {len(entries)} entries")
+    if len(dist_raw) != len(dist_norm):
+        print(f"    NOTE: {len(dist_raw) - len(dist_norm)} of the raw buckets are STORAGE-FORM "
+              f"duplicates -- the same value written rounded and unrounded.")
+    for v, n in sorted(dist_norm.items(), reverse=True)[:14]:
         print(f"    {v:6.4f}  {n:3d}  " + "#" * n)
 
 
@@ -106,7 +125,7 @@ def main():
     if not by_card:
         print("no graded bundles found")
         return
-    for card in sorted(by_card):
+    for card in sorted(by_card, key=str):
         analyse(card, by_card[card])
         print()
     if len(by_card) > 1:
