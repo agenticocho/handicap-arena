@@ -77,18 +77,26 @@ def main(card="v3", pid=None):
     exp = expected_entrants()
     pattern = os.path.join(HERE, "results", f"*card{card}*.json")
     done = sorted(glob.glob(pattern))
-    # FILES ARE NOT MEASUREMENTS. Chilly caught this in its own check -- "a count of FILES is not a
-    # count of MEASUREMENTS" -- and MY headline had the same defect: it reported 45 of 46 while more
-    # than half the field had measured nothing. A bundle with `results: []` is the record of a FAILURE
-    # TO SERVE, not an entrant that was measured, and reporting the two together made a half-broken
-    # field read as near-complete. Both numbers, always, and never summed into one.
-    measured = []
+    # FILES ARE NOT MEASUREMENTS, AND BUNDLES ARE NOT ENTRANTS.
+    #
+    # Chilly caught the first half in its own check -- "a count of FILES is not a count of
+    # MEASUREMENTS" -- and this tool had both halves wrong. It reported "45 of 46" while 26 of those
+    # bundles had measured nothing; then, when the resolver was fixed and the failures re-ran, the
+    # re-run wrote NEW filenames (`_EMPTY_` stays as the record of the failed attempt) so the file
+    # count crossed the expected count and it reported FINISHED while the run was alive and working.
+    #
+    # The unit is the ENTRANT and the only progress is a MEASUREMENT. A stem counts as measured if
+    # ANY of its bundles carries a result; a stem whose every bundle is empty has measured nothing.
+    by_stem = {}
     for p in done:
+        stem = os.path.basename(p).split("_cardv")[0]
         try:
-            if json.load(open(p, encoding="utf-8")).get("results") or []:
-                measured.append(p)
+            has = bool(json.load(open(p, encoding="utf-8")).get("results") or [])
         except Exception:
-            pass
+            has = False
+        by_stem[stem] = by_stem.get(stem, False) or has
+    measured = [s for s, has in by_stem.items() if has]
+    never_ran = [s for s, has in by_stem.items() if not has]
     # THE RUNNER MOVED ITS LOG, SO A READER THAT KEEPS THE OLD PATH LOOKS LIVE AND REPORTS NOTHING.
     # Read from both candidate locations and take the newest: the value is read from where it IS,
     # not remembered from where it was. Same rule as reading EXCLUDE_PAT out of the runner.
@@ -104,10 +112,10 @@ def main(card="v3", pid=None):
 
     print(f"  card              : {card}")
     print(f"  expected entrants : {len(exp)}   (same EXCLUDE_PAT the runner uses)")
-    print(f"  completed bundles : {len(done)}")
-    print(f"  CARRYING A RESULT : {len(measured)}   <- the only count that is progress")
-    if len(done) != len(measured):
-        print(f"  measured NOTHING  : {len(done) - len(measured)}   <- a serving failure, "
+    print(f"  bundle files       : {len(done)}")
+    print(f"  ENTRANTS MEASURED  : {len(measured)}   <- the only count that is progress")
+    if never_ran:
+        print(f"  entrants that never ran : {len(never_ran)}   <- a serving failure, "
               f"not a capability result")
     print(f"  process alive     : {alive if pid else 'unknown (no pid given)'}")
     print(f"  last progress     : {age:.0f}s ago" if age >= 0 else "  last progress     : no log")
@@ -117,32 +125,30 @@ def main(card="v3", pid=None):
     # nobody reads -- and a warning appended to EVERY result is read as never, because its position
     # carries no signal. "exit 1" is not a result; "exit 1, captured directly" is. So each verdict
     # line below states what it counted and where the count came from.
-    if len(done) >= len(exp):
-        print(f"  STATE: FINISHED — {len(done)} bundles on disk against {len(exp)} expected "
-              f"entrants, both counted from the runner's own filter.")
+    n_m, n_exp = len(measured), len(exp)
+    if n_m >= n_exp:
+        print(f"  STATE: FINISHED — {n_m} entrants MEASURED against {n_exp} expected, both counted "
+              f"from the runner's own filter.")
         return 0
     if alive is False:
-        if len(done) == 0:
-            # NOT STARTED and DIED are different facts, and they render identically otherwise --
-            # the same defect as "died" versus "finished", one level down. A run that never began
-            # is not a failed run.
-            print(f"  STATE: NOT STARTED — 0 bundles on disk against {len(exp)} expected, no process "
+        if n_m == 0:
+            print(f"  STATE: NOT STARTED — 0 entrants measured against {n_exp} expected, no process "
                   f"alive. Nothing has been measured yet.")
             return 1
-        print(f"  STATE: *** DIED *** — {len(done)} bundles on disk against {len(exp)} expected, "
-              f"and NO process alive. {len(exp) - len(done)} entrants were never measured.")
+        print(f"  STATE: *** DIED *** — {n_m} entrants MEASURED against {n_exp} expected, and NO "
+              f"process alive. {n_exp - n_m} entrants were never measured.")
         print("  Report this as a FAILURE. Do not report it as a finish.")
         return 2
     if alive is None:
-        print(f"  STATE: UNKNOWN — {len(done)} of {len(exp)} bundles, process liveness not "
-              f"checked (no pid given).")
+        print(f"  STATE: UNKNOWN — {n_m} of {n_exp} measured, process liveness not checked "
+              f"(no pid given).")
         return 1
     if age > STALE_SECONDS:
-        print(f"  STATE: RUNNING BUT STALE — {len(done)} of {len(exp)} bundles, process alive, "
-              f"no log progress for {age:.0f}s (threshold {STALE_SECONDS}s). Suspect a hang.")
+        print(f"  STATE: RUNNING BUT STALE — {n_m} of {n_exp} measured, process alive, no log "
+              f"progress for {age:.0f}s (threshold {STALE_SECONDS}s). Suspect a hang.")
         return 1
-    print(f"  STATE: RUNNING — {len(done)} of {len(exp)} bundles on disk, process {pid} alive, "
-          f"last log progress {age:.0f}s ago.")
+    print(f"  STATE: RUNNING — {n_m} of {n_exp} entrants MEASURED, process {pid} alive, last log "
+          f"progress {age:.0f}s ago.")
     return 0
 
 
