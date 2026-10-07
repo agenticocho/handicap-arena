@@ -1,0 +1,98 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-07T02:07:06Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/granite-3.3-2b-instruct-critical-thinking.Q5_K_M.gguf",
+      "sha256": "8d01860647a1d15d0d5ccef014dec4f37dbd9818ac02f6641e070b23711a08a4",
+      "footprint_gb": 0.587890625,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 0.59,
+        "weights_gb": 1.8,
+        "gpu_free_gb_at_weigh_in": 1.6,
+        "partial_offload": true,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/granite-3.3-2b-instruct-critical-thinking.Q5_K_M.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "42899"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.0,
+          "wins": 0,
+          "trials": 3,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "finish_reasons": {
+            "stop": 3
+          },
+          "max_completion_tokens": 230,
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "why": "missing station"
+        },
+        "R2_chess": {
+          "score": 0.0,
+          "wins": 0,
+          "trials": 3,
+          "kind": "tool_selection",
+          "metaphor": "CHESS",
+          "finish_reasons": {
+            "stop": 3
+          },
+          "max_completion_tokens": 227,
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "why": "wrong tool: None"
+        },
+        "R3_pitstop": {
+          "score": 0.0,
+          "wins": 0,
+          "trials": 3,
+          "kind": "code_repair",
+          "metaphor": "PIT STOP",
+          "finish_reasons": {
+            "stop": 3
+          },
+          "max_completion_tokens": 115,
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "why": "AssertionError: case 1"
+        }
+      },
+      "aggregate": 0.0,
+      "grade": {
+        "belt": "White",
+        "rounds_won": 0,
+        "rounds": 3,
+        "stripes": 0,
+        "trials": 9,
+        "note": null
+      },
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 8.93,
+      "answers_from_reasoning": 0
+    }
+  ]
+}
