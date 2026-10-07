@@ -390,6 +390,8 @@ class LlamaServer:
 # ---------------------------------------------------------------------------- tasks
 def load_tasks(card="v1"):
     """card='v2' returns one pseudo-task PER ITEM (see load_card_v2). v1 is untouched."""
+    if card == "v3":
+        return load_card_v3()
     if card == "v2":
         return load_card_v2()
     """Task definitions live in tasks/*.json so the suite can be extended without touching code."""
@@ -529,6 +531,55 @@ def score_json_schema_multi(spec, text):
     return got / len(exp), f"{got}/{len(exp)} fields"
 
 
+def score_json_schema_strict_multi(spec, text):
+    """CARD v3's R1 scorer. v2's counted REQUIRED FIELDS ONLY, so adding keys was free -- and
+    adding keys is the failure the v3 items are built to elicit. This one also scores the two
+    things a schema states and a field-count cannot see:
+
+      * a FORBIDDEN key present  -> 0.0. The schema said "exactly these keys"; an extra one is not
+        a deduction, it is the item. R1.1 gives the model a doctor to transcribe and forbids the
+        key. Omission is the task.
+      * an exact KEY SET violated (spec['forbid_all_other_keys']) -> 0.0.
+      * and the null case: a key the model filled with null where the schema said OMIT. That is
+        named separately in the reason because "absent" and "null" are different claims -- but it
+        costs the field, because the field was not emitted.
+
+    spec is a WRAPPER: {"expect": {...}, "forbid": [...], "forbid_all_other_keys": bool}. Passing
+    the expectation bare and adding these to it would make them look like required fields, which
+    is the same class of bug as v2's loader passing the whole item as the spec.
+    """
+    d, why = _first_json(text)
+    if d is None:
+        return 0.0, why
+    if not isinstance(d, dict):
+        return 0.0, "not an object"
+    exp = spec.get("expect") or {}
+    if not exp:
+        return 0.0, "no expectation"
+    forbid = set(spec.get("forbid") or [])
+    hit = sorted(k for k in forbid if k in d)
+    if hit:
+        return 0.0, f"emitted forbidden key(s): {hit}"
+    if spec.get("forbid_all_other_keys"):
+        extra = sorted(set(d) - set(exp))
+        if extra:
+            return 0.0, f"extra key(s) outside the schema: {extra}"
+
+    def _ok(k):
+        if k not in d:
+            return False
+        if d[k] is None:
+            return False          # null is not the value; absent was required
+        return _deep_eq(d[k], exp[k])
+
+    got = sum(1 for k in exp if _ok(k))
+    nulled = sorted(k for k in exp if k in d and d[k] is None)
+    note = f"{got}/{len(exp)} fields"
+    if nulled:
+        note += f" (null where OMIT was required: {nulled})"
+    return got / len(exp), note
+
+
 def score_tool_call_multi(spec, text):
     """Handles the null case: an item whose correct answer is 'no available tool' is won by
     emitting null, and lost by emitting any plausible tool."""
@@ -611,6 +662,7 @@ SCORERS = {"json_schema": score_json_schema,
            "code_repair": score_code_repair}
 
 SCORERS["json_schema_multi"] = score_json_schema_multi
+SCORERS["json_schema_strict_multi"] = score_json_schema_strict_multi
 SCORERS["tool_call_multi"] = score_tool_call_multi
 SCORERS["code_repair_multi"] = score_code_repair_multi
 
@@ -647,6 +699,42 @@ def load_card_v2():
                 "difficulty": it.get("difficulty", ""),
                 "trap": it.get("trap", ""),
                 "card_version": 2,
+            })
+    return out
+
+
+def load_card_v3():
+    """CARD v3. Same item-per-task expansion as v2; R1's scorer is stricter. The difference between
+    v2 and v3 R1 is exactly that the schema's FORBIDDEN cases are scored, so the item's conformance
+    rules have to travel with its expectation -- in a wrapper, not merged into it."""
+    out = []
+    for p in sorted(glob.glob(os.path.join(TASKS_DIR, "v3", "*.json"))):
+        d = json.load(open(p))
+        for it in (d.get("items") or []):
+            scorer = d["scorer"]
+            if scorer == "json_schema_strict_multi":
+                spec = {"expect": it.get("expect") or {},
+                        "forbid": it.get("forbid") or [],
+                        "forbid_all_other_keys": bool(it.get("forbid_all_other_keys"))}
+            elif scorer == "json_schema_multi":
+                spec = it.get("expect") or {}
+            elif scorer == "tool_call_multi":
+                spec = {"expect": it.get("expect") or {}}
+            else:
+                spec = {k: v for k, v in it.items()
+                        if k in ("cases", "expect_contains", "expect_unchanged",
+                                 "harness_prelude")}
+            out.append({
+                "id": f"{d['id']}::{it['id']}",
+                "round_id": d["id"],
+                "prompt": it["prompt"],
+                "scorer": scorer,
+                "kind": d.get("kind", ""),
+                "metaphor": d.get("metaphor", ""),
+                "spec": spec,
+                "difficulty": it.get("difficulty", ""),
+                "trap": it.get("trap", ""),
+                "card_version": 3,
             })
     return out
 
@@ -820,9 +908,10 @@ def evaluate(gguf, args, tasks):
     # CARD VERSION. A v2 score and a v1 score are different measurements and must never be
     # ranked together. Same rule as server_flags: if it changes the outcome, it belongs in the
     # record. v2 item results are folded back into rounds here.
-    card_version = 1
-    if tasks and tasks[0].get("card_version") == 2:
-        card_version = 2
+    card_version = tasks[0].get("card_version", 1) if tasks else 1
+    if card_version >= 2:
+        # v2 and v3 both run ONE TRIAL PER ITEM: the items are the source of variation, not
+        # sampling. At temperature 0, repeated trials of one prompt are copies of a measurement.
         results = regroup_v2(results)
 
     agg = sum(v["score"] for v in results.values()) / max(len(results), 1)
@@ -830,7 +919,7 @@ def evaluate(gguf, args, tasks):
     # new rule would silently rewrite what was measured. Rule 2 applies to the card it was
     # designed for.
     grade = bout_grade(results, args.trials, aggregate=agg,
-                       belt_rule=2 if card_version == 2 else 1)
+                       belt_rule=2 if card_version >= 2 else 1)
     return dict(gguf=gguf, sha256=digest, footprint_gb=fp, division=div, weigh_in=winfo,
                 cord=CORDS.get(div, "slate"),
                 config=dict(temperature=args.temperature, max_tokens=args.max_tokens,
@@ -1141,7 +1230,7 @@ def main():
                     help="extra llama-server flags, shell-split — e.g. "
                          "'--grammar-file x.gbnf --flash-attn'. Use this to reproduce the "
                          "serving-configuration experiment in FINDINGS/001.")
-    ap.add_argument("--card", default="v1", choices=["v1", "v2"],
+    ap.add_argument("--card", default="v1", choices=["v1", "v2", "v3"],
                     help="which card to run. v1 = 3 rounds x 3 trials of one prompt (retired). "
                          "v2 = 3 rounds x 6 distinct items, one trial each. Scores from "
                          "different cards are different measurements and are never mixed.")
@@ -1185,7 +1274,7 @@ def main():
     tasks = load_tasks(args.card)
     if not tasks:
         sys.exit(f"No task definitions found in {TASKS_DIR}")
-    if args.card == "v2":
+    if args.card in ("v2", "v3"):
         # ONE TRIAL PER ITEM. In v2 the items are the source of variation, not sampling --
         # at temperature 0 repeated trials of the same prompt are copies of one measurement.
         args.trials = 1
