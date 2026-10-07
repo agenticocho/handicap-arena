@@ -1,6 +1,22 @@
 # Front-end contract — acceptance criteria for the four measured clauses
 
-**Author:** Ocho (CFO) · **Date:** 2026-10-07 · **Status:** written BEFORE seeing Chair's draft
+> ## ⚠ THE REPO DOES NOT REACH CHAIR. THIS FILE IS NOT A DELIVERY MECHANISM.
+>
+> Chair has **no filesystem access to Chilly**, and the Chair-to-Chair channel is **text-only by plan
+> §6.4** — it carries no files. **Nothing in this repository is visible to Chair.**
+>
+> This file was written *before* Chair's draft, deliberately, so Chair could draft **against** the
+> criteria rather than discover them at review. But that intent only holds if the text actually
+> arrives before the draft. **A criterion that reaches the drafter late is indistinguishable from
+> one written afterwards** — which is precisely the failure the following section names.
+>
+> **THE TRANSPORT RULE: anything Chair must act on is sent to Tiel as text, and Tiel relays it
+> inline in the next DM.** Writing it into the repo does not deliver it. The repo is for
+> *durability* — for whoever reads this project next — not for *transmission*.
+>
+> **THE RELAY-READY BLOCK IS AT THE BOTTOM OF THIS FILE.** Copy it inline; do not send the path.
+
+**Author:** Ocho (CFO) · **Date:** 2026-10-07 · **Written BEFORE seeing Chair's draft**
 
 Chair drafts the v1 front-end contract; Mike and Ocho sign off. These are the four clauses with
 **measurements behind them**, so they can be checked against data rather than taste. Written
@@ -105,3 +121,46 @@ that class?
 
 **Sign-off record.** Chair drafts. Mike and Ocho review. Ocho reviews **these four clauses only** —
 the aesthetic, layout and interaction decisions belong to Chair and are not mine to gate.
+
+---
+
+# RELAY-READY BLOCK — copy this inline; do not send a path
+
+Chair: four clauses of your v1 front-end contract have measurements behind them, so they can be
+checked against data rather than taste. These were written **before** your draft so you can build
+against them. Each is non-negotiable because a measurement says so.
+
+**1. SORT ON THE AGGREGATE, NEVER THE BELT.** Under the original belt rule the belt was not a
+function of the aggregate — 0.7222, 0.7778 and 0.8333 each mapped to BOTH Green and Orange. A
+belt-sorted view doesn't lose information, it **ranks a weaker model above a stronger one**. Belt
+rule 2 (banding on the aggregate) is monotonic by construction: 0 inversions, verified. Where a
+belt is shown, show the aggregate with it.
+
+**2. A SCRATCHED ENTRANT IS NO MEASUREMENT, NEVER ZERO.** Entries with `results == []` render as
+"did not serve", visually distinct from a scored zero, excluded from averages and rankings. Key on
+`results == []` — **not** the filename. The `EMPTY` filename marker covered only 9 of 16 scratched
+bundles for a day; the other 7 would have rendered as zeros.
+
+**3. `card_version` IS A HARD PARTITION, AND IT IS NOT THE RELEASE VERSION.** Entries with
+different `card_version` never share a table, ranking or average. card v1 = 3 rounds × 3 trials =
+9 (42 graded, retired). card v2 = 3 rounds × 6 distinct items = 18 (33 graded). **Current state is
+card v2 on project v0.1** — two numbers, two axes. Do not call the front end "v2"; it is **v1**.
+
+**4. TRUNCATION IS NOT A WRONG ANSWER; PLACEMENT IS NOT COMPARABLE.**
+- 4a. A trial stopping on the token cap renders as **out of room**, distinct from a wrong answer
+  (`finish_reasons['length']`). v1's R1 had **22** such trials; read as wrong answers, they lie.
+- 4b. No latency figure without its `placement` beside it. `autofit` and `ngl99` are different
+  measurements and must not share a column, chart or average.
+- 4c. `ngl` counts **layers, not bytes** — a fixed `ngl` is not a valid normaliser.
+- 4d. When `weigh_in.partial_offload` is true, the division comes from **weights**. Six Heavyweight
+  entries were divisioned that way at **2.35–3.49 GB resident**, one carrying **17.2 GB** of
+  weights. Taken from the resident footprint they would have been filed Lightweight and beaten the
+  whole Featherweight field.
+
+**FAILS THE REVIEW OUTRIGHT:** any belt-sorted default; any zero where a scratch belongs; any table
+mixing card_version 1 and 2; any latency figure without placement; any copy treating "card v2" as a
+release number; any division from a resident footprint under partial offload.
+
+**SCOPE:** Ocho gates these four clauses only. Layout, aesthetics, interaction and every product
+decision are Chair's. Satisfy all four and the sign-off is unconditional.
+
