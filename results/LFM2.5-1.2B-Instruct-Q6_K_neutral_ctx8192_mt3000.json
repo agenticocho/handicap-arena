@@ -1,0 +1,95 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-07T01:51:35Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/LFM2.5-1.2B-Instruct-Q6_K.gguf",
+      "sha256": "3d0513c5cc4e6b822a0184fed1ae0f0183fa99c97355b852d8a92c0463f9bbfa",
+      "footprint_gb": 0.3232421875,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 0.32,
+        "weights_gb": 0.96,
+        "gpu_free_gb_at_weigh_in": 1.6,
+        "partial_offload": true,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/LFM2.5-1.2B-Instruct-Q6_K.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "38799"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 1.0,
+          "wins": 3,
+          "trials": 3,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "finish_reasons": {
+            "stop": 3
+          },
+          "max_completion_tokens": 66,
+          "truncated": false,
+          "ctx_limited_trials": 0
+        },
+        "R2_chess": {
+          "score": 1.0,
+          "wins": 3,
+          "trials": 3,
+          "kind": "tool_selection",
+          "metaphor": "CHESS",
+          "finish_reasons": {
+            "stop": 3
+          },
+          "max_completion_tokens": 29,
+          "truncated": false,
+          "ctx_limited_trials": 0
+        },
+        "R3_pitstop": {
+          "score": 1.0,
+          "wins": 3,
+          "trials": 3,
+          "kind": "code_repair",
+          "metaphor": "PIT STOP",
+          "finish_reasons": {
+            "stop": 3
+          },
+          "max_completion_tokens": 99,
+          "truncated": false,
+          "ctx_limited_trials": 0
+        }
+      },
+      "aggregate": 1.0,
+      "grade": {
+        "belt": "Green",
+        "rounds_won": 3,
+        "rounds": 3,
+        "stripes": 9,
+        "trials": 9,
+        "note": "swept the bout \u2014 2 more consecutive sweeps earn Blue, then Purple (a challenger slot above)"
+      },
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 1.63,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

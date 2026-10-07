@@ -105,19 +105,32 @@ TPL = r"""<!DOCTYPE html>
 <table>
   <thead><tr>
     <th>model</th><th>div</th><th>gb</th><th>belt</th><th>stripes</th>
-    <th>R1</th><th>R2</th><th>R3</th><th>agg</th><th>lat s</th><th>ctx</th><th>mt</th><th>cert</th>
+    <th>R1</th><th>R2</th><th>R3</th><th>agg</th><th>lat s</th><th>place</th><th>vram free</th><th>ctx</th><th>mt</th><th>cert</th>
   </tr></thead>
   <tbody id="tb"></tbody>
 </table>
 
 <h2>What this set cannot tell you</h2>
 <div class="notice">
+  <b>How to read the round columns.</b> <code>3/3</code> is wins over trials.
+  <span class="trunc">3/3&middot;cap3</span> means all three trials stopped on the
+  <b>token cap</b> rather than finishing &mdash; a different failure from answering wrongly, and
+  the distinction matters when choosing a model to put in service. A rambler and a wrong-answerer
+  are not the same thing.<br><br>
   <b>Four bundles is not a field.</b> These measure serving-configuration effects on three rounds;
   they do not establish which local model is best at anything. The divisions are
   <b>measured VRAM</b> and move with whatever else held the GPU at weigh-in time (see
   FINDINGS/002) &mdash; a footprint here is a property of the machine as much as the model.
   <b>CERTIFIED</b> requires the arena to re-run the entry itself; everything here is
-  <b>OPEN (self-reported)</b>.
+  <b>OPEN (self-reported)</b>.<br><br>
+  <b>Do not compare the latency column across rows.</b> Placement is <code>auto-fit</code> for
+  nearly every entry, which means each model got whatever VRAM the production stack left free at
+  its turn &mdash; 6,453 of 8,192 MiB were held by resident servers during this run. Accuracy
+  scores are unaffected (the 900&thinsp;s generation timeout never binds, and truncation is a
+  token cap, not a time cap), but <b>latency is the base unit of the biathlon score</b>, so no
+  biathlon total from this field may be quoted. A valid latency comparison needs a separate
+  all-CPU division (<code>--ngl 0</code>) &mdash; see FINDINGS/004. A fixed <code>ngl</code> is not
+  a valid substitute: it counts <i>layers</i>, not bytes.
 </div>
 
 <script>
@@ -156,6 +169,9 @@ document.getElementById('tb').innerHTML = ENTRIES.map(e => `
     <td class="${e.r3trunc ? 'trunc' : ''}">${e.r3}</td>
     <td>${e.agg}</td>
     <td class="dim">${e.lat}</td>
+    <td class="trunc">${esc(e.placement)}</td>
+    <td class="${e.partial ? 'trunc' : 'dim'}">${e.gpu_free == null ? '—' : e.gpu_free + ' GB'}${
+        e.partial === true ? ' &darr;partial' : (e.partial === false ? ' full' : '')}</td>
     <td class="dim">${e.ctx}</td>
     <td class="dim">${e.mt}</td>
     <td class="dim">${esc(e.cert)}</td>
@@ -194,7 +210,13 @@ def build(entries, harness, ver):
 
     def rec(r, k):
         rd = (r.get("rounds") or {}).get(k, {})
-        return f"{rd.get('wins',0)}/{rd.get('trials',0)}"
+        fr = rd.get("finish_reasons") or {}
+        cap = fr.get("length", 0)          # trials that hit the TOKEN cap
+        s = f"{rd.get('wins',0)}/{rd.get('trials',0)}"
+        # 'hit the token cap' and 'answered wrongly' are different failures. For someone
+        # choosing a model to put in service, a rambler and a wrong-answerer are not the same
+        # thing, and the bundle already records which is which.
+        return s + ("·cap" + str(cap) if cap else "")
 
     rows = []
     for r in entries:
@@ -216,6 +238,16 @@ def build(entries, harness, ver):
             "agg": "—" if agg is None else f"{agg:.2f}",
             "lat": round(r.get("mean_latency") or 0, 1),
             "ctx": cfg.get("ctx"), "mt": cfg.get("max_tokens"),
+            # Placement belongs on the board. FINDINGS/004: latency is the base unit of the
+            # biathlon score, so a latency figure is only meaningful alongside the placement it
+            # was measured at -- and placement here is set by the production stack, not the
+            # entrant.
+            "placement": ("auto-fit" if cfg.get("n_gpu_layers") is None
+                          else f"ngl {cfg.get('n_gpu_layers')}"),
+            # These live in the nested weigh_in block (FINDINGS/002's fix), and the pre-fix
+            # bundles simply do not have it -- shown as '—' rather than guessed.
+            "gpu_free": (r.get("weigh_in") or {}).get("gpu_free_gb_at_weigh_in"),
+            "partial": (r.get("weigh_in") or {}).get("partial_offload"),
             "cert": "OPEN" if "OPEN" in str(r.get("certification", "")) else str(r.get("certification", "?")),
         })
 
