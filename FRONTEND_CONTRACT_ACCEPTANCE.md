@@ -75,6 +75,26 @@ visually distinct from a scored zero, and excluded from any average or ranking.
 exactly the v1 counterparts. A UI that keyed "scratched" off the filename would have rendered those
 7 as ordinary bundles — and, by this same clause, as **zeros**.
 
+**AND BY 2026-10-07 THIS IS THE MAJORITY OF THE FIELD, NOT AN EDGE CASE.** The v3 field finished at
+**46 bundles of which 20 carried a result and 26 measured nothing** — 57%. The reason is a serving
+failure (`llama-server` dying at exec; 24 zero-byte server logs, 1:1 with the empty bundles), not a
+capability result.
+
+**So a render MUST distinguish three states, and the third is the one that matters:**
+
+| state | renders as |
+|---|---|
+| measured, scored | the score |
+| `results == []` | **a missed weight — a visible failure with a reason** |
+| **filters `_EMPTY_` out** | **the entrant silently vanishes** |
+
+**Emptiness is carried in the FILENAME, so the trap is sharper than it looks:** a render that
+iterates the directory shows `_EMPTY_` as part of an entrant's name, and a render that *filters it
+out* silently drops an entrant. **A model that could not be served must render as a missed weight,
+not an absent row.** That is the sharpest instance of the "legible way to fail" ingredient in the
+whole catalogue, and today it is legible only to `ls`.
+
+
 **Check.** Delete the filename convention entirely in your head and re-derive: does the view still
 treat those 16 correctly? It must, because it must key on `results == []`.
 
