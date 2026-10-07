@@ -2,12 +2,152 @@
  "note": "rename so the filename cannot disagree with the content; derived from each bundle's own gguf + config",
  "renames": [
   {
-   "was": "laya_english_f16_neutral_ctx8192_mt3000.json",
-   "now": "laya_english_f16_EMPTY_ctx8192_mt3000.json"
+   "was": "BTL-4-IQ2_XXS_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "BTL-4-IQ2_XXS_autofit_neutral_ctx8192_mt3000.json"
   },
   {
-   "was": "stablelm-2-zephyr-1_6b-Q4_K_M_neutral_ctx8192_mt3000.json",
-   "now": "stablelm-2-zephyr-1_6b-Q4_K_M_autofit_neutral_ctx8192_mt3000.json"
+   "was": "Cloudflare_clef-Q4_K_M_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Cloudflare_clef-Q4_K_M_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Cloudflare_clef-flash-IQ4_NL_neutral_ctx8192_mt3000.json",
+   "now": "Cloudflare_clef-flash-IQ4_NL_EMPTY_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Cloudflare_clef-flash-Q4_K_M_neutral_ctx8192_mt3000.json",
+   "now": "Cloudflare_clef-flash-Q4_K_M_EMPTY_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Cyber-Ornith-1.5-9B-OBLITERATED-Q4_K_M_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Cyber-Ornith-1.5-9B-OBLITERATED-Q4_K_M_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Cyber-Tiel-Coder-35B-A3B-MTP-UD-Q4_K_XL_neutral_ctx8192_mt3000.json",
+   "now": "Cyber-Tiel-Coder-35B-A3B-MTP-UD-Q4_K_XL_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Fastino-Nemotron-Finance-IQ4_NL-stream_neutral_ctx8192_mt3000.json",
+   "now": "Fastino-Nemotron-Finance-IQ4_NL-stream_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Kev-4B-Q4_K_M_neutral_ctx8192_mt3000.json",
+   "now": "Kev-4B-Q4_K_M_EMPTY_ctx8192_mt3000.json"
+  },
+  {
+   "was": "LFM2.5-1.2B-Thinking-BF16_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "LFM2.5-1.2B-Thinking-BF16_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "LFM2.5-VL-1.6B-UD-Q8_K_XL_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "LFM2.5-VL-1.6B-UD-Q8_K_XL_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Llama-3.2-3B-Instruct-Q4_K_M_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Llama-3.2-3B-Instruct-Q4_K_M_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Meta-Llama-3.1-8B-Instruct-Q4_K_M_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Meta-Llama-3.1-8B-Instruct-Q4_K_M_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "OrcaSAQ-2-27B-Uncensored_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "OrcaSAQ-2-27B-Uncensored_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Ornith-1.5-35B-A3B-Abliterated-TIEL_Calibrated-MTPv2-25G-ICE_neutral_ctx8192_mt3000.json",
+   "now": "Ornith-1.5-35B-A3B-Abliterated-TIEL_Calibrated-MTPv2-25G-ICE_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Ornith-1.5-9B-Q4_K_M_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Ornith-1.5-9B-Q4_K_M_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Phi-3.5-mini-instruct-Q4_K_M_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Phi-3.5-mini-instruct-Q4_K_M_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Qwen3-1.7B-Q8_0_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Qwen3-1.7B-Q8_0_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Qwen3.5-2B-UD-Q4_K_XL_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Qwen3.5-2B-UD-Q4_K_XL_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Qwen3.5-4B-UD-Q4_K_XL_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Qwen3.5-4B-UD-Q4_K_XL_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Qwen3.5-9B-Q4_K_M_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Qwen3.5-9B-Q4_K_M_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Qwen3.5-9B-UD-Q4_K_XL_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Qwen3.5-9B-UD-Q4_K_XL_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Qwythos-9B-Claude-Mythos-5-1M-MTP-Q4_K_M_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Qwythos-9B-Claude-Mythos-5-1M-MTP-Q4_K_M_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "SmolLM3-3B-128K-UD-Q4_K_XL_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "SmolLM3-3B-128K-UD-Q4_K_XL_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Spark-X2.5-4B-Q4_K_M_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Spark-X2.5-4B-Q4_K_M_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Spark-X2.5-4B-Q5_K_S_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Spark-X2.5-4B-Q5_K_S_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Ternary-Bonsai-2-27B-PQ2_0_neutral_ctx8192_mt3000.json",
+   "now": "Ternary-Bonsai-2-27B-PQ2_0_EMPTY_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Ternary-Bonsai-2-27B-PTQ1_0_neutral_ctx8192_mt3000.json",
+   "now": "Ternary-Bonsai-2-27B-PTQ1_0_EMPTY_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Ternary-Bonsai-2-27B-Uncensored-Heretic-PQ2_0_neutral_ctx8192_mt3000.json",
+   "now": "Ternary-Bonsai-2-27B-Uncensored-Heretic-PQ2_0_EMPTY_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Tiel-Coder-35B-A3B-MTP-UD-Q4_K_XL_neutral_ctx8192_mt3000.json",
+   "now": "Tiel-Coder-35B-A3B-MTP-UD-Q4_K_XL_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Tiel-Coder-35B-A3B-UD-Q4_K_XL_neutral_ctx8192_mt3000.json",
+   "now": "Tiel-Coder-35B-A3B-UD-Q4_K_XL_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Tiel-Inspired-Coder-9B-UD-Q4_K_M_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Tiel-Inspired-Coder-9B-UD-Q4_K_M_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Triumvirate-Qwopus-MiMo-Ornith-9B-Coder.i1-Q4_K_M_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "Triumvirate-Qwopus-MiMo-Ornith-9B-Coder.i1-Q4_K_M_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "Underdog-27B-PQ2_0_neutral_ctx8192_mt3000.json",
+   "now": "Underdog-27B-PQ2_0_EMPTY_ctx8192_mt3000.json"
+  },
+  {
+   "was": "apertus-8b-financial-reasoner-v1.Q4_K_M_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "apertus-8b-financial-reasoner-v1.Q4_K_M_autofit_neutral_ctx8192_mt3000.json"
+  },
+  {
+   "was": "granite-3.3-2b-instruct-critical-thinking.Q5_K_M_cardv2_autofit_neutral_ctx8192_mt3000.json",
+   "now": "granite-3.3-2b-instruct-critical-thinking.Q5_K_M_autofit_neutral_ctx8192_mt3000.json"
   }
  ],
  "failed": []

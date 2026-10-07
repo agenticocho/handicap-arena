@@ -48,11 +48,25 @@ BOUT_BELTS = ["White", "Yellow", "Orange", "Green"]
 BELT_ORDER = ["White", "Yellow", "Orange", "Green", "Blue", "Purple", "Brown", "Black"]
 
 
-def bout_grade(rounds, trials):
+def bout_grade(rounds, trials, aggregate=None, belt_rule=1):
     """Derive the earnable belt, stripes and round-wins from a completed bout.
 
-    A round is won on a STRICT MAJORITY of trials, so 1-1 of 2 is a draw, not a win.
-    A stripe is a single trial won. Stripes are the record; the belt is the rank.
+    BELT RULE v2 — MONOTONIC IN THE AGGREGATE. The Chair found what I missed: under the v1 rule
+    the belt is NOT monotonic. Cross-tabbing the v2 field gives pairs where a LOWER aggregate
+    earns a HIGHER belt:
+
+        0.5000 -> Orange   outranks   0.5555 -> Yellow
+        0.7222 -> Green    outranks   0.8333 -> Orange
+
+    `rounds_won` causes it: it counts rounds with a strict majority of items and DISCARDS how
+    well each was won, so 6/6+6/6+4/6 and 5/6+5/6+4/6 are the same belt. A belt-sorted UI would
+    therefore rank a weaker model above a stronger one — not lossy, WRONG. That is why the front
+    end must not be belt-sorted, and why this rule is fixed before one ships.
+
+    A round is still won on a strict majority of trials, and stripes are still the record. The
+    belt is now banded on the aggregate, which makes it monotonic by construction. The bands are
+    a DESIGN CHOICE, stated rather than derived, and the pass/fail criteria in CARD_v2.md were
+    evaluated against the OLD rule — they are not re-scored under this one.
     """
     rounds_won = 0
     stripes = 0
@@ -64,7 +78,19 @@ def bout_grade(rounds, trials):
         if w * 2 > t:                      # strict majority
             rounds_won += 1
     n = len(rounds)
-    if n == 0:
+
+    if belt_rule >= 2 and aggregate is not None:
+        if n == 0:
+            belt = "White"
+        elif aggregate >= 0.90:
+            belt = "Green"
+        elif aggregate >= 0.65:
+            belt = "Orange"
+        elif aggregate >= 0.30:
+            belt = "Yellow"
+        else:
+            belt = "White"
+    elif n == 0:
         belt = "White"
     elif rounds_won == n:
         belt = "Green"
@@ -78,7 +104,8 @@ def bout_grade(rounds, trials):
     if belt == "Green":
         note = "swept the bout — 2 more consecutive sweeps earn Blue, then Purple (a challenger slot above)"
     return dict(belt=belt, rounds_won=rounds_won, rounds=n,
-                stripes=stripes, trials=total_trials, note=note)
+                stripes=stripes, trials=total_trials, note=note,
+                belt_rule=belt_rule)
 
 
 
@@ -794,7 +821,11 @@ def evaluate(gguf, args, tasks):
         results = regroup_v2(results)
 
     agg = sum(v["score"] for v in results.values()) / max(len(results), 1)
-    grade = bout_grade(results, args.trials)
+    # BELT RULE 2 FOR v2 ONLY. v1's belts are historical measurements; re-deriving them under a
+    # new rule would silently rewrite what was measured. Rule 2 applies to the card it was
+    # designed for.
+    grade = bout_grade(results, args.trials, aggregate=agg,
+                       belt_rule=2 if card_version == 2 else 1)
     return dict(gguf=gguf, sha256=digest, footprint_gb=fp, division=div, weigh_in=winfo,
                 cord=CORDS.get(div, "slate"),
                 config=dict(temperature=args.temperature, max_tokens=args.max_tokens,
