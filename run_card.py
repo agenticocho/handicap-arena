@@ -116,11 +116,16 @@ def main():
     ents = entrants()
     print(f"entrants: {len(ents)}   config: ctx={CTX} mt={MT} trials={TRIALS} ngl=auto-fit")
     print("=" * 96, flush=True)
-    # THE RUN LOG LIVES WITH THE OTHER LOGS, not in results/. results/ holds result bundles and
-    # nothing else -- a .log among them is the kind of file a reader counts as an entrant, which is
-    # the Chair's objection about the empty bundle. I moved the SERVER log to logs/ and left this
-    # one behind, which is the rule applied to one of the two places it applies.
-    os.makedirs(os.path.join(ARENA, "logs"), exist_ok=True)
+    # REFUSE TO START IF results/ HOLDS A LOG. results/ holds result bundles and nothing else; a .log
+    # among them is the file a reader counts as an entrant (the Chair's objection about the empty
+    # bundle). The fix is a CHECK, not a migration -- a migration stops holding the moment someone
+    # adds the next log by hand, and then there are two eras and a reader has to know which.
+    _stray = glob.glob(os.path.join(RESULTS, "*.log"))
+    if _stray:
+        sys.exit(f"refusing to start: {len(_stray)} log file(s) in results/, which holds result "
+                 f"bundles and nothing else:\n  " + "\n  ".join(os.path.basename(p) for p in _stray)
+                 + "\nMove them to logs/ and re-run.")
+
     log = os.path.join(ARENA, "logs", "card_run.log")
     with open(log, "a") as lf:
         lf.write(f"\n=== card run started {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())} "

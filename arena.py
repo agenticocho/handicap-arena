@@ -751,6 +751,12 @@ def load_card_v3():
     return out
 
 
+# A raw that is cut says so IN ITS OWN CONTENTS, so a reader can always tell "the model wrote this"
+# from "the record stopped here". 20k chars is ~5x the largest legitimate answer seen at
+# max_tokens=3000; anything beyond it is a rambler, and the marker preserves that distinction.
+RAW_CAP = 20000
+
+
 def regroup_v2(results, trials_per_item=1):
     """Fold item-level results back into rounds. Round score = mean of its item scores."""
     rounds = {}
@@ -762,7 +768,11 @@ def regroup_v2(results, trials_per_item=1):
                                        "ctx_limited_trials": 0, "max_completion_tokens": 0})
         slot["items"][tid.split("::")[-1]] = dict(score=r.get("score", 0.0),
                                                   reason=r.get("why") or r.get("reason"),
-                                                  truncated=r.get("truncated", False))
+                                                  truncated=r.get("truncated", False),
+                                                  # FINDING 007: the model's own output travels with
+                                                  # the item score, so a verdict can be re-derived
+                                                  # instead of taken on trust.
+                                                  raw=r.get("raw"))
         slot["score"] += r.get("score", 0.0)
         slot["wins"] += r.get("score", 0.0)
         slot["trials"] += 1
@@ -878,6 +888,20 @@ def evaluate(gguf, args, tasks):
         why = ""
         finishes, ctoks, truncated = {}, 0, False
         ctx_hits = 0
+        # FINDING 007: THE MODEL'S OWN OUTPUT, PER ITEM.
+        #
+        # It was discarded at scoring time. The scorer needed only `text`, so the record kept only
+        # score/reason/truncated -- which made every verdict these bundles produce UNAUDITABLE: a
+        # model failure and a scoring bug became indistinguishable, permanently, and the reason
+        # string could never be checked against what the model actually emitted.
+        #
+        # The rule that fixes it: NO VERDICT MAY DEPEND ON DATA THAT WAS DISCARDED AT SCORING TIME.
+        # This is the same rule as the chess replay needing its move list, and the same rule as
+        # recording integer counts so a rational is recoverable. One rule, three sites.
+        #
+        # The cap is MARKED, not silent: a raw that was cut says so in its own contents, because a
+        # reader must be able to tell "the model wrote this" from "the record stopped here".
+        raws = []
         for i in range(args.trials):
             try:
                 r = srv.chat(t["prompt"], args.max_tokens, args.temperature)
@@ -895,6 +919,9 @@ def evaluate(gguf, args, tasks):
                 truncated = True
                 if total >= args.ctx:
                     ctx_hits += 1
+            _raw = r["text"] or ""
+            raws.append(_raw if len(_raw) <= RAW_CAP
+                        else _raw[:RAW_CAP] + f"\n[...TRUNCATED AT {RAW_CAP} CHARS]")
             ok, reason = SCORERS[t["scorer"]](t["spec"], r["text"])
             npass += 1 if ok else 0
             if not ok:
@@ -904,7 +931,9 @@ def evaluate(gguf, args, tasks):
         results[name] = dict(score=npass / args.trials, wins=npass, trials=args.trials,
                              kind=t.get("kind", ""), metaphor=t.get("metaphor", ""),
                              finish_reasons=finishes, max_completion_tokens=ctoks,
-                             truncated=truncated, ctx_limited_trials=ctx_hits)
+                             truncated=truncated, ctx_limited_trials=ctx_hits,
+                             # one entry per trial; v2/v3 run one trial per item
+                             raw=raws)
         if npass == 0 and why:
             # Distinguish four different things: a wrong answer, a cut-off answer, and WHICH cut-off.
             if truncated and ctx_hits:

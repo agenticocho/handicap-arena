@@ -76,7 +76,13 @@ def main(card="v3", pid=None):
     exp = expected_entrants()
     pattern = os.path.join(HERE, "results", f"*card{card}*.json")
     done = sorted(glob.glob(pattern))
-    log = os.path.join(HERE, "results", "card_run.log")
+    # THE RUNNER MOVED ITS LOG, SO A READER THAT KEEPS THE OLD PATH LOOKS LIVE AND REPORTS NOTHING.
+    # Read from both candidate locations and take the newest: the value is read from where it IS,
+    # not remembered from where it was. Same rule as reading EXCLUDE_PAT out of the runner.
+    _cands = [os.path.join(HERE, "logs", "card_run.log"),
+              os.path.join(HERE, "results", "card_run.log")]
+    _have = [p for p in _cands if os.path.exists(p)]
+    log = max(_have, key=os.path.getmtime) if _have else _cands[0]
     age = (time.time() - os.path.getmtime(log)) if os.path.exists(log) else -1
     alive = None
     if pid:
@@ -99,6 +105,13 @@ def main(card="v3", pid=None):
               f"entrants, both counted from the runner's own filter.")
         return 0
     if alive is False:
+        if len(done) == 0:
+            # NOT STARTED and DIED are different facts, and they render identically otherwise --
+            # the same defect as "died" versus "finished", one level down. A run that never began
+            # is not a failed run.
+            print(f"  STATE: NOT STARTED — 0 bundles on disk against {len(exp)} expected, no process "
+                  f"alive. Nothing has been measured yet.")
+            return 1
         print(f"  STATE: *** DIED *** — {len(done)} bundles on disk against {len(exp)} expected, "
               f"and NO process alive. {len(exp) - len(done)} entrants were never measured.")
         print("  Report this as a FAILURE. Do not report it as a finish.")

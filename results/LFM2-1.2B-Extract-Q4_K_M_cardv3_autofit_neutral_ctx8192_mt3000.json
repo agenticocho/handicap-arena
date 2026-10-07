@@ -1,20 +1,20 @@
 {
   "harness": "handicap-arena",
   "version": "1.0",
-  "generated": "2026-10-07T19:53:23Z",
+  "generated": "2026-10-07T20:38:13Z",
   "results": [
     {
       "gguf": "/home/chilly1/moltbook_pipeline/models/LFM2-1.2B-Extract-Q4_K_M.gguf",
       "sha256": "09b60b507ee7d1698b2b4dfce184c75083d7790c7701910ed60afa2801024702",
-      "footprint_gb": 0.3203125,
+      "footprint_gb": 0.99609375,
       "division": "Featherweight",
       "weigh_in": {
         "ngl_requested": null,
         "placement": "auto-fit",
-        "footprint_gb": 0.32,
+        "footprint_gb": 1.0,
         "weights_gb": 0.73,
-        "gpu_free_gb_at_weigh_in": 1.54,
-        "partial_offload": true,
+        "gpu_free_gb_at_weigh_in": 6.92,
+        "partial_offload": false,
         "division_from_resident": "Featherweight",
         "division_from_weights": "Featherweight",
         "division_for_competition": "Featherweight"
@@ -34,7 +34,7 @@
           "--host",
           "127.0.0.1",
           "--port",
-          "50991"
+          "49649"
         ]
       },
       "rounds": {
@@ -48,32 +48,50 @@
             "R1.1_forbidden_key_must_be_absent": {
               "score": 1.0,
               "reason": null,
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "{\n  \"patient_id\": \"P-4401\",\n  \"ward\": \"Dr. Reyes\"\n}"
+              ]
             },
             "R1.2_null_means_absent": {
               "score": 0.0,
               "reason": "emitted forbidden key(s): ['coupon', 'discount_pct']",
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "{\n  \"sku\": \"X-9\",\n  \"discount_pct\": 0,\n  \"coupon\": null\n}"
+              ]
             },
             "R1.3_type_under_natural_language": {
               "score": 1.0,
               "reason": null,
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "{\n  \"quantity\": 1,\n  \"unit_price\": 0,\n  \"in_stock\": true,\n  \"reference\": \"007\"\n}"
+              ]
             },
             "R1.4_ambiguous_nesting": {
               "score": 1.0,
               "reason": null,
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "{\n  \"shipment_id\": \"S-88\",\n  \"destination\": {\n    \"postcode\": \"44101\",\n    \"country\": \"United States\"\n  },\n  \"carrier\": \"Nordex\"\n}"
+              ]
             },
             "R1.5_enum_nearest_is_wrong": {
               "score": 0.0,
               "reason": "TRUNCATED at max_tokens (3000) before answering \u2014 not a capability result; raise --max-tokens",
-              "truncated": true
+              "truncated": true,
+              "raw": [
+                "{\n  \"log_level\": \"INFO\",\n  \"code\": 12,\n  \"message\": \"Routine message was logged\",\n  \"timestamp\": \"2024-01-01T00:00:00Z\",\n  \"environment\": \"INFO\",\n  \"error\": \"WARN\",\n  \"exit_code\": 12,\n  \"status\": \"OK\",\n  \"priority\": \"FATAL\",\n  \"component\": \"ERROR\",\n  \"details\": \"No prose, no code fences\",\n  \"level\": \"INFO\",\n  \"verbosity\": \"WARN\",\n  \"threshold\": 12,\n  \"threshold_type\": \"FATAL\",\n  \"threshold_value\": 12,\n  \"threshold_unit\": \"FATAL\",\n  \"threshold_description\": \"No prose, no code fences\",\n  \"threshold_unit_description\": \"No prose, no code fences\",\n  \"threshold_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description\": \"No prose, no code fences\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \"FATAL\",\n  \"threshold_description_unit_description_unit\": \""
+              ]
             },
             "R1.6_array_exact_and_ordered": {
               "score": 0.0,
               "reason": "0/1 fields",
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "{\n  \"legs\": [\n    {\n      \"seq\": 1,\n      \"icao\": \"LHR\"\n    },\n    {\n      \"seq\": 2,\n      \"icao\": \"4\"\n    },\n    {\n      \"seq\": 3,\n      \"icao\": \"JFK\"\n    }\n  ]\n}"
+              ]
             }
           },
           "finish_reasons": {
@@ -98,7 +116,7 @@
       },
       "card_version": 3,
       "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
-      "mean_latency": 9.6,
+      "mean_latency": 1.4,
       "answers_from_reasoning": 0
     }
   ]

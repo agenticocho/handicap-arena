@@ -1,20 +1,20 @@
 {
   "harness": "handicap-arena",
   "version": "1.0",
-  "generated": "2026-10-07T19:53:53Z",
+  "generated": "2026-10-07T20:38:25Z",
   "results": [
     {
       "gguf": "/home/chilly1/moltbook_pipeline/models/stablelm-2-zephyr-1_6b-Q4_K_M.gguf",
       "sha256": "4224a8a08417e34d5a224efb1291491c4f5762b46aa012021adaf0a0578848e2",
-      "footprint_gb": 0.513671875,
+      "footprint_gb": 2.5625,
       "division": "Featherweight",
       "weigh_in": {
         "ngl_requested": null,
         "placement": "auto-fit",
-        "footprint_gb": 0.51,
+        "footprint_gb": 2.56,
         "weights_gb": 1.03,
-        "gpu_free_gb_at_weigh_in": 1.52,
-        "partial_offload": true,
+        "gpu_free_gb_at_weigh_in": 6.92,
+        "partial_offload": false,
         "division_from_resident": "Featherweight",
         "division_from_weights": "Featherweight",
         "division_for_competition": "Featherweight"
@@ -34,7 +34,7 @@
           "--host",
           "127.0.0.1",
           "--port",
-          "39145"
+          "54381"
         ]
       },
       "rounds": {
@@ -48,32 +48,50 @@
             "R1.1_forbidden_key_must_be_absent": {
               "score": 1.0,
               "reason": null,
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "Here's the JSON object with the specified keys and the required values for Patient P-\u0635 1, who is in cardiology and the referring doctor was Dr. Reyes:\n```json\n{\n  \"patient_id\": \"P-\u06351\",\n  \"ward\": \"cardiology\"\n}\n```\nNote that the \"patient_id\" key is required and should be a string."
+              ]
             },
             "R1.2_null_means_absent": {
               "score": 0.0,
               "reason": "unparseable",
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "```json\n{\n  \"sku\": \"X-9\"\n}\n```\n```json\n{\n  \"sku\": \"X-9\",\n  \"discount_pct\": null\n}\n```\n```json\n{\n  \"sku\": \"X-9\",\n  \"coupon\": null\n}\n```"
+              ]
             },
             "R1.3_type_under_natural_language": {
               "score": 1.0,
               "reason": null,
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "The JSON object with the specified keys is as follows:\n\n```json\n{\n  \"quantity\": 3,\n  \"unit_price\": 1.5,\n  \"in_stock\": true,\n  \"reference\": \"PT-2021\"\n}\n```\n\nIn this object, the \"quantity\" key represents the number of units available, the \"unit_price\" key represents the price per unit, the \"in_stock\" key represents whether the item is currently in stock, and the \"reference\" key represents the unique identifier for the product."
+              ]
             },
             "R1.4_ambiguous_nesting": {
               "score": 0.0,
               "reason": "unparseable",
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "```json\n{\n  \"shipment_id\": \"string\",\n  \"destination\": {\n    \"postcode\": \"string\",\n    \"country\": \"string\"\n  },\n  \"carrier\": \"string\"\n}\n```\n```css\n.destination{.postcode, .country}\n.shipment_id,string\n```"
+              ]
             },
             "R1.5_enum_nearest_is_wrong": {
               "score": 0.0,
               "reason": "0/2 fields",
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "```json\n{\n  \"severity\": \"ERROR\",\n  \"code\": 42\n}\n```"
+              ]
             },
             "R1.6_array_exact_and_ordered": {
               "score": 0.0,
               "reason": "unparseable",
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "Here's the requested JSON object with the specified legs:\n```json\n{\n  \"legs\": [\n    {\n      \"seq\": 1,\n      \"icao\": null\n    },\n    {\n      \"seq\": 2,\n    },\n    {\n      \"seq\": 3,\n      \"icao\": \"JFK\"\n    },\n    {\n      \"seq\": 4,\n    }\n  ]\n}\n```\nIn this JSON object, the \"legs\" array contains exactly 3 objects, each with the specified keys and values. The first leg has a \"seq\" value of 1 and an omitted \"icao\" value, the second leg has a \"seq\" value of 2, and the third leg has a \"seq\" value of 3 and an \"icao\" value of \"JFK\"."
+              ]
             }
           },
           "finish_reasons": {
@@ -81,7 +99,7 @@
           },
           "truncated": false,
           "ctx_limited_trials": 0,
-          "max_completion_tokens": 224,
+          "max_completion_tokens": 165,
           "perfect": false
         }
       },
@@ -97,7 +115,7 @@
       },
       "card_version": 3,
       "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
-      "mean_latency": 2.29,
+      "mean_latency": 0.33,
       "answers_from_reasoning": 0
     }
   ]

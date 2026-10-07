@@ -1,20 +1,20 @@
 {
   "harness": "handicap-arena",
   "version": "1.0",
-  "generated": "2026-10-07T19:52:22Z",
+  "generated": "2026-10-07T20:38:01Z",
   "results": [
     {
       "gguf": "/home/chilly1/moltbook_pipeline/models/LFM2.5-VL-1.6B-Q4_0.gguf",
       "sha256": "8186364a4e7c3ad30f6dd3d3b7a4e0074c77dd91eed6cad5d8be9090ce285804",
-      "footprint_gb": 0.3193359375,
+      "footprint_gb": 0.962890625,
       "division": "Featherweight",
       "weigh_in": {
         "ngl_requested": null,
         "placement": "auto-fit",
-        "footprint_gb": 0.32,
+        "footprint_gb": 0.96,
         "weights_gb": 0.7,
-        "gpu_free_gb_at_weigh_in": 1.54,
-        "partial_offload": true,
+        "gpu_free_gb_at_weigh_in": 6.92,
+        "partial_offload": false,
         "division_from_resident": "Featherweight",
         "division_from_weights": "Featherweight",
         "division_for_competition": "Featherweight"
@@ -34,7 +34,7 @@
           "--host",
           "127.0.0.1",
           "--port",
-          "47043"
+          "42867"
         ]
       },
       "rounds": {
@@ -48,32 +48,50 @@
             "R1.1_forbidden_key_must_be_absent": {
               "score": 1.0,
               "reason": null,
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "{\"patient_id\": \"P-4401\", \"ward\": \"cardiology\"}"
+              ]
             },
             "R1.2_null_means_absent": {
               "score": 0.0,
               "reason": "emitted forbidden key(s): ['coupon', 'discount_pct']",
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "{\"sku\": \"X-9\", \"discount_pct\": 0, \"coupon\": \"none\"}"
+              ]
             },
             "R1.3_type_under_natural_language": {
               "score": 1.0,
               "reason": null,
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "{\"quantity\": 3, \"unit_price\": 1.5, \"in_stock\": true, \"reference\": \"007\"}"
+              ]
             },
             "R1.4_ambiguous_nesting": {
               "score": 1.0,
               "reason": null,
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "{\"shipment_id\": \"S-88\", \"destination\": {\"postcode\": \"44101\", \"country\": \"United States\"}, \"carrier\": \"Nordex\"}"
+              ]
             },
             "R1.5_enum_nearest_is_wrong": {
               "score": 1.0,
               "reason": null,
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "{\"severity\": \"ERROR\", \"code\": 12}"
+              ]
             },
             "R1.6_array_exact_and_ordered": {
               "score": 0.0,
               "reason": "0/1 fields",
-              "truncated": false
+              "truncated": false,
+              "raw": [
+                "{\"legs\": [{\"seq\": 1, \"icao\": \"LHR\"}, {\"seq\": 2, \"icao\": \"4\"}, {\"seq\": 3, \"icao\": \"JFK\"}]}"
+              ]
             }
           },
           "finish_reasons": {
@@ -97,7 +115,7 @@
       },
       "card_version": 3,
       "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
-      "mean_latency": 0.52,
+      "mean_latency": 0.09,
       "answers_from_reasoning": 0
     }
   ]
