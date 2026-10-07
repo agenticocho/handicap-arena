@@ -1186,10 +1186,23 @@ def main():
     if args.out:
         outdir = os.path.dirname(os.path.abspath(args.out))
         os.makedirs(outdir, exist_ok=True)
-        with open(args.out, "w") as f:
-            json.dump(dict(harness="handicap-arena", version="1.0",
-                           generated=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-                           results=out), f, indent=2)
+        # ATOMIC PROMOTION. The first version wrote straight to the final path, so a kill
+        # mid-write -- hard freeze, reboot, OOM -- could leave truncated JSON sitting under a
+        # name that says "this is a result". The 2026-10-07 hard reboot happened to hit BETWEEN
+        # writes and nothing was lost: that was luck, not design. All 56 bundles parsed cleanly
+        # afterwards, which tells you the write window was missed, not that it was small.
+        # The logger has done tmp+fsync+rename since the beginning (see LOGGER.md). Now so does
+        # the arena. A .part left behind is the signature of a killed write, and the survey
+        # script looks for them.
+        payload = dict(harness="handicap-arena", version="1.0",
+                       generated=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                       results=out)
+        tmp = args.out + ".part"
+        with open(tmp, "w") as f:
+            json.dump(payload, f, indent=2)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, args.out)     # atomic on POSIX: the old file or the new one, never half
         print(f"\nresult bundle -> {args.out}")
         print("Submit it. If it places, we re-run it on our rig from its sha256. "
               "Reproduce and it is CERTIFIED; fail and it is STRUCK.")

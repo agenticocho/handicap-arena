@@ -36,6 +36,12 @@ SERVER = "/home/chilly1/llama.cpp/build/bin/llama-server"
 
 CTX, MT, TRIALS = 8192, 3000, 3
 
+# WHICH CARD. v1 = the retired 3-round card. v2 = the 6-item battery. A v2 bundle carries
+# card_version 2 and a _cardv2_ filename marker, because a v1 score and a v2 score are different
+# measurements and must never be ranked together.
+CARD = "v2" if ("--card" in sys.argv and "v2" in sys.argv) else "v1"
+CARD_TAG = "_cardv2_" if CARD == "v2" else "_"
+
 # Excluded because the standing card is TEXT: diffusion, audio, and bare projectors.
 EXCLUDE_PAT = ("qwen-image", "audio", "mmproj", "clip", "vae", "embed", "whisper")
 
@@ -72,7 +78,8 @@ def already_measured(path):
                 continue
             c = r.get("config") or {}
             if (c.get("ctx") == CTX and c.get("max_tokens") == MT
-                    and c.get("n_gpu_layers") is None):
+                    and c.get("n_gpu_layers") is None
+                    and r.get("card_version", 1) == (2 if CARD == "v2" else 1)):
                 return os.path.basename(bp)
     return None
 
@@ -80,7 +87,10 @@ def already_measured(path):
 def bundle_path(stem):
     # Placement is IN THE NAME because it changes the latency conclusion (FINDINGS/004), and
     # this repo's rule is: if it changes what the reader concludes, it belongs in the name.
-    return os.path.join(RESULTS, f"{stem}_autofit_neutral_ctx{CTX}_mt{MT}.json")
+    # The card version is in the name for the same reason -- a v1 score and a v2 score are
+    # different measurements.
+    tag = "_cardv2" if CARD == "v2" else ""
+    return os.path.join(RESULTS, f"{stem}{tag}_autofit_neutral_ctx{CTX}_mt{MT}.json")
 
 
 def main():
@@ -107,7 +117,8 @@ def main():
         t0 = time.time()
         cmd = [sys.executable, "-u", os.path.join(ARENA, "arena.py"),
                "--model", path, "--ctx", str(CTX), "--max-tokens", str(MT),
-               "--trials", str(TRIALS), "--out", outp, "--llama-server", SERVER]
+               "--trials", str(TRIALS), "--card", CARD, "--out", outp,
+               "--llama-server", SERVER]
         try:
             r = subprocess.run(cmd, cwd=ARENA, capture_output=True, text=True, timeout=5400)
             dt = time.time() - t0
