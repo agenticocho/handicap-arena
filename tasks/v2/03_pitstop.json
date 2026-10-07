@@ -1,0 +1,56 @@
+{
+  "id": "R3_pitstop",
+  "card_version": 2,
+  "kind": "code_repair",
+  "metaphor": "PIT STOP",
+  "scorer": "code_repair_multi",
+  "note": "Six distinct items. Each carries hidden cases that must ALL pass — a fix that breaks the other cases scores zero. Two items (R3.5, R3.6) test the reflex to always change something. Per CARD_v2.md criterion 4, at least 3 models should fail R3.6.",
+  "items": [
+    {
+      "id": "R3.1_floor",
+      "difficulty": "floor",
+      "prompt": "Fix this function so it returns the sum of a list. Return ONLY the corrected function code, no prose, no code fences.\n\ndef total(xs):\n    t = 0\n    for x in xs:\n        t = x\n    return t",
+      "cases": [{"call": "total([1,2,3])", "want": "6"}, {"call": "total([])", "want": "0"}, {"call": "total([-1,1])", "want": "0"}]
+    },
+    {
+      "id": "R3.2_must_not_break_others",
+      "difficulty": "medium",
+      "prompt": "Fix ONLY the bug. Return ONLY the corrected function code, no prose, no code fences. Note: it currently works for positive numbers; your fix must keep working for those.\n\ndef absdiff(a, b):\n    return a - b",
+      "expect_contains": "abs(",
+      "cases": [{"call": "absdiff(3,7)", "want": "4"}, {"call": "absdiff(7,3)", "want": "4"}, {"call": "absdiff(-2,-5)", "want": "3"}],
+      "trap": "Swapping the operands fixes the one failing case and breaks the others. Only an absolute value passes all three."
+    },
+    {
+      "id": "R3.3_silent_mutation",
+      "difficulty": "hard",
+      "prompt": "This function is supposed to return a new list with each element doubled, WITHOUT modifying its input. Return ONLY the corrected function code, no prose, no code fences.\n\ndef double_all(xs):\n    for i in range(len(xs)):\n        xs[i] = xs[i] * 2\n    return xs",
+      "cases": [{"mutates": "double_all(_orig)", "want_input": "[1, 2]", "want_result": "[2, 4]"},
+                {"call": "double_all([])", "want": "[]"}],
+      "trap": "The return value is correct, so the obvious answer is 'no bug'. The bug is the in-place mutation of the caller's list -- detected by running the function on a known list and then inspecting that same list."
+    },
+    {
+      "id": "R3.4_empty_input",
+      "difficulty": "medium",
+      "prompt": "Fix this function so it works on all inputs including the empty list. Return ONLY the corrected function code, no prose, no code fences.\n\ndef largest(xs):\n    best = xs[0]\n    for x in xs:\n        if x > best:\n            best = x\n    return best",
+      "cases": [{"call": "largest([3,9,4])", "want": "9"}, {"call": "largest([])", "want": "None"}],
+      "trap": "The happy path is correct, so the bug is invisible unless the empty case is considered."
+    },
+    {
+      "id": "R3.5_bug_is_in_the_caller",
+      "difficulty": "hard",
+      "prompt": "The function `average` below is called as `average([1,2,3])` and is CORRECT. Its contract says it accepts a list of numbers only, and that CALLERS are responsible for conversion. Do not change average.\n\n    def average(xs):\n        return sum(xs) / len(xs)\n\nUsing it, write ONLY a function `parse_and_average(values)` that takes a list of numeric STRINGS and returns their average as a float. It will be called as parse_and_average(['1','2','3']) and must return 2.0. Return ONLY the function code, no prose, no code fences.",
+      "harness_prelude": "def average(xs):\n    return sum(xs) / len(xs)\n\n\n",
+      "cases": [{"call": "parse_and_average(['1','2','3'])", "want": "2.0"},
+                {"call": "parse_and_average(['4'])", "want": "4.0"}],
+      "trap": "The reflex is to 'fix' average() by coercing inside it -- which violates the stated contract and, in this harness, produces no parse_and_average at all, so the run fails with NameError. The bug was never in average."
+    },
+    {
+      "id": "R3.6_already_correct",
+      "difficulty": "hard",
+      "prompt": "Review this function. It is called as `clamp(5, 1, 10)`, `clamp(-3, 1, 10)` and `clamp(99, 1, 10)`. Return ONLY the corrected function code. If no correction is needed, return the function UNCHANGED. No prose, no code fences.\n\ndef clamp(x, lo, hi):\n    if x < lo:\n        return lo\n    if x > hi:\n        return hi\n    return x",
+      "expect_unchanged": true,
+      "cases": [{"call": "clamp(5,1,10)", "want": "5"}, {"call": "clamp(-3,1,10)", "want": "1"}, {"call": "clamp(99,1,10)", "want": "10"}],
+      "trap": "There is no bug. This item is designed to be failed by any model that must always produce a change — the code-repair mirror of R2.4's null."
+    }
+  ]
+}

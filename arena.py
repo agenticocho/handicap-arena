@@ -356,7 +356,10 @@ class LlamaServer:
 
 
 # ---------------------------------------------------------------------------- tasks
-def load_tasks():
+def load_tasks(card="v1"):
+    """card='v2' returns one pseudo-task PER ITEM (see load_card_v2). v1 is untouched."""
+    if card == "v2":
+        return load_card_v2()
     """Task definitions live in tasks/*.json so the suite can be extended without touching code."""
     out = []
     for p in sorted(glob.glob(os.path.join(TASKS_DIR, "*.json"))):
@@ -443,9 +446,194 @@ def score_code_repair(spec, text):
     return False, (err[-1][:80] if err else "failed")
 
 
+# ------------------------------------------------------------------ CARD v2 scorers
+# v2 runs a BATTERY of distinct items per round instead of repeated trials of one prompt.
+# Three trials at temperature 0 are three copies of one measurement, which is why the v1 field
+# was bimodal (0/3 or 3/3, nothing between). Items, not repetitions, are what create a gradient.
+#
+# Two v2 items are won by DOING NOTHING -- "no tool is correct" and "the code is already
+# correct". They exist to be failed by any model that must always produce output.
+
+def _first_json(text):
+    if not text:
+        return None, "empty"
+    m = re.search(r"\{.*\}", text, re.S)
+    if not m:
+        return None, "no json object"
+    try:
+        return json.loads(m.group(0)), "ok"
+    except Exception:
+        return None, "unparseable"
+
+
+def _deep_eq(a, b):
+    """Numeric-tolerant deep equality: 4250 == 4250.0, and 'Oslo' == 'oslo' for strings."""
+    if isinstance(a, dict) and isinstance(b, dict):
+        return set(a) == set(b) and all(_deep_eq(a[k], b[k]) for k in a)
+    if isinstance(a, list) and isinstance(b, list):
+        return len(a) == len(b) and all(_deep_eq(x, y) for x, y in zip(a, b))
+    if isinstance(a, str) and isinstance(b, str):
+        return a.strip().lower() == b.strip().lower()
+    if isinstance(a, bool) or isinstance(b, bool):
+        return a is b
+    if isinstance(a, (int, float)) and isinstance(b, (int, float)):
+        return abs(a - b) < 1e-9
+    return a == b
+
+
+def score_json_schema_multi(spec, text):
+    """PARTIAL CREDIT: fraction of required fields correct. A near-miss beats a blank, and a
+    blank beats nothing at all -- so the score carries how close the model got, not just
+    whether it got there."""
+    d, why = _first_json(text)
+    if d is None:
+        return 0.0, why
+    if not isinstance(d, dict):
+        return 0.0, "not an object"
+    exp = spec if isinstance(spec, dict) else {}
+    if not exp:
+        return 0.0, "no expectation"
+    got = sum(1 for k, v in exp.items() if k in d and _deep_eq(d[k], v))
+    return got / len(exp), f"{got}/{len(exp)} fields"
+
+
+def score_tool_call_multi(spec, text):
+    """Handles the null case: an item whose correct answer is 'no available tool' is won by
+    emitting null, and lost by emitting any plausible tool."""
+    d, why = _first_json(text)
+    if d is None:
+        return 0.0, why
+    exp = spec.get("expect", spec)
+    want_tool = exp.get("tool")
+    got_tool = d.get("tool")
+    if want_tool is None:
+        if got_tool in (None, "", "null"):
+            return 1.0, "ok (correctly declined)"
+        return 0.0, f"guessed {got_tool!r} where no tool fits"
+    if got_tool != want_tool:
+        return 0.0, f"wrong tool: {got_tool!r}"
+    want_args = exp.get("arguments") or {}
+    if not want_args:
+        return 1.0, "ok"
+    args = d.get("arguments")
+    if not isinstance(args, dict):
+        return 0.0, "arguments not an object"
+    got = sum(1 for k, v in want_args.items() if k in args and _deep_eq(args[k], v))
+    return (0.5 + 0.5 * got / len(want_args)), f"tool ok, {got}/{len(want_args)} args"
+
+
+def score_code_repair_multi(spec, text):
+    """Executed against cases in a subprocess. Two things v1 could not express:
+      * expect_unchanged -- the item is won by changing nothing;
+      * 'call' entries that are assertions rather than calls (e.g. checking the input list was
+        not mutated), which is how a silent-mutation bug becomes detectable."""
+    if not text:
+        return 0.0, "empty"
+    m = re.search(r"```(?:python)?\s*(.*?)```", text, re.S)
+    code = m.group(1) if m else text
+    if spec.get("expect_unchanged"):
+        # the model must return the function as given. Any invented "fix" is a failure.
+        if "def clamp" not in code:
+            return 0.0, "did not return the function"
+        body = code.split("def clamp", 1)[1]
+        invented = ("min(" in body or "max(" in body) and "if x < lo" not in body
+        if invented:
+            return 0.0, "changed correct code"
+        return 1.0, "ok (unchanged, correctly)"
+    if spec.get("expect_contains") and spec["expect_contains"] not in code:
+        return 0.0, f"missing {spec['expect_contains']!r}"
+    # Some items must be graded in a context: a correct function the model is NOT allowed to
+    # change (R3.5's whole point is that the bug is in the caller), or a list the mutation check
+    # has to inspect afterwards.
+    cases, prelude = [], spec.get("harness_prelude", "")
+    for i, c in enumerate(spec.get("cases") or []):
+        if "mutates" in c:
+            # A mutation check must run the function ON a known list and then inspect that SAME
+            # list. Asserting on a fresh literal proves nothing: the mutation lands on an object
+            # the assertion never saw, which is why the first version of this passed a function
+            # that mutated its input.
+            prelude += f"_orig = {c['want_input']}\n"
+            cases.append(f"assert {c['mutates']} == {c['want_result']}, 'wrong result'")
+            cases.append(f"assert _orig == {c['want_input']}, 'mutated its input'")
+            continue
+        call, want = c.get("call"), c.get("want")
+        cases.append(f"assert {call} == {want}, 'case {i}'")
+    harness = prelude + code + "\n\n" + "\n".join(cases) + "\nprint('ALLPASS')\n"
+    with tempfile.TemporaryDirectory() as d:
+        p = os.path.join(d, "harness.py")
+        with open(p, "w") as f:
+            f.write(harness)
+        try:
+            r = subprocess.run([sys.executable, "-I", p], cwd=d, capture_output=True,
+                               text=True, timeout=30)
+        except subprocess.TimeoutExpired:
+            return 0.0, "timeout"
+    if r.returncode == 0 and "ALLPASS" in r.stdout:
+        return 1.0, "ok"
+    err = (r.stderr or "").strip().splitlines()
+    return 0.0, (err[-1][:80] if err else "failed")
+
+
 SCORERS = {"json_schema": score_json_schema,
            "tool_call": score_tool_call,
            "code_repair": score_code_repair}
+
+SCORERS["json_schema_multi"] = score_json_schema_multi
+SCORERS["tool_call_multi"] = score_tool_call_multi
+SCORERS["code_repair_multi"] = score_code_repair_multi
+
+
+def load_card_v2():
+    """Expand each v2 round into one pseudo-task PER ITEM. The round loop then needs no new
+    concept: an item is a task with one trial. Rounds are regrouped afterwards."""
+    out = []
+    for p in sorted(glob.glob(os.path.join(TASKS_DIR, "v2", "*.json"))):
+        d = json.load(open(p))
+        for it in (d.get("items") or []):
+            spec = dict(it)
+            spec.pop("prompt", None)
+            out.append({
+                "id": f"{d['id']}::{it['id']}",
+                "round_id": d["id"],
+                "prompt": it["prompt"],
+                "scorer": d["scorer"],
+                "kind": d.get("kind", ""),
+                "metaphor": d.get("metaphor", ""),
+                "spec": spec,
+                "difficulty": it.get("difficulty", ""),
+                "trap": it.get("trap", ""),
+                "card_version": 2,
+            })
+    return out
+
+
+def regroup_v2(results, trials_per_item=1):
+    """Fold item-level results back into rounds. Round score = mean of its item scores."""
+    rounds = {}
+    for tid, r in results.items():
+        rid = tid.split("::")[0]
+        slot = rounds.setdefault(rid, {"score": 0.0, "wins": 0.0, "trials": 0.0,
+                                       "kind": r.get("kind", ""), "metaphor": r.get("metaphor", ""),
+                                       "items": {}, "finish_reasons": {}, "truncated": False,
+                                       "ctx_limited_trials": 0, "max_completion_tokens": 0})
+        slot["items"][tid.split("::")[-1]] = dict(score=r.get("score", 0.0),
+                                                  reason=r.get("why") or r.get("reason"),
+                                                  truncated=r.get("truncated", False))
+        slot["score"] += r.get("score", 0.0)
+        slot["wins"] += r.get("score", 0.0)
+        slot["trials"] += 1
+        slot["truncated"] = slot["truncated"] or bool(r.get("truncated"))
+        slot["ctx_limited_trials"] += r.get("ctx_limited_trials", 0)
+        slot["max_completion_tokens"] = max(slot["max_completion_tokens"],
+                                            r.get("max_completion_tokens", 0))
+        for k, v in (r.get("finish_reasons") or {}).items():
+            slot["finish_reasons"][k] = slot["finish_reasons"].get(k, 0) + v
+    for rid, slot in rounds.items():
+        n = max(slot["trials"], 1)
+        slot["score"] = round(slot["score"] / n, 4)
+        slot["perfect"] = slot["wins"] == n
+    return rounds
+
 
 
 # ---------------------------------------------------------------------------- self-test
@@ -585,6 +773,14 @@ def evaluate(gguf, args, tasks):
                 results[name]["why"] = why
     srv.stop()
 
+    # CARD VERSION. A v2 score and a v1 score are different measurements and must never be
+    # ranked together. Same rule as server_flags: if it changes the outcome, it belongs in the
+    # record. v2 item results are folded back into rounds here.
+    card_version = 1
+    if tasks and tasks[0].get("card_version") == 2:
+        card_version = 2
+        results = regroup_v2(results)
+
     agg = sum(v["score"] for v in results.values()) / max(len(results), 1)
     grade = bout_grade(results, args.trials)
     return dict(gguf=gguf, sha256=digest, footprint_gb=fp, division=div, weigh_in=winfo,
@@ -593,6 +789,7 @@ def evaluate(gguf, args, tasks):
                             trials=args.trials, ctx=args.ctx, n_gpu_layers=args.ngl,
                             server_flags=srv.flags),
                 rounds=results, aggregate=agg, grade=grade,
+                card_version=card_version,
                 certification="OPEN (self-reported) — re-run by the arena to become CERTIFIED",
                 mean_latency=round(sum(lat) / len(lat), 2) if lat else None,
                 answers_from_reasoning=reasons)
@@ -896,6 +1093,10 @@ def main():
                     help="extra llama-server flags, shell-split — e.g. "
                          "'--grammar-file x.gbnf --flash-attn'. Use this to reproduce the "
                          "serving-configuration experiment in FINDINGS/001.")
+    ap.add_argument("--card", default="v1", choices=["v1", "v2"],
+                    help="which card to run. v1 = 3 rounds x 3 trials of one prompt (retired). "
+                         "v2 = 3 rounds x 6 distinct items, one trial each. Scores from "
+                         "different cards are different measurements and are never mixed.")
     ap.add_argument("--out", help="write result bundle JSON here")
     ap.add_argument("--grade", metavar="BUNDLE.json",
                     help="re-derive belts from a stored result bundle (belts are computed, never assigned)")
@@ -933,9 +1134,13 @@ def main():
         print("HANDICAP ARENA self-test — validating the scorers before any score is trusted\n")
         sys.exit(0 if self_test() else 1)
 
-    tasks = load_tasks()
+    tasks = load_tasks(args.card)
     if not tasks:
         sys.exit(f"No task definitions found in {TASKS_DIR}")
+    if args.card == "v2":
+        # ONE TRIAL PER ITEM. In v2 the items are the source of variation, not sampling --
+        # at temperature 0 repeated trials of the same prompt are copies of one measurement.
+        args.trials = 1
 
     models = []
     if args.model:

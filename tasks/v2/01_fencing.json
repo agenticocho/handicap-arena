@@ -1,0 +1,51 @@
+{
+  "id": "R1_fencing",
+  "card_version": 2,
+  "kind": "structured_output",
+  "metaphor": "FENCING",
+  "scorer": "json_schema_multi",
+  "note": "Six distinct items, one trial each, temperature 0. Score = fraction of required fields correct across all six, with an item fully solved counting 1.0. Near-miss families per CARD_v2.md.",
+  "items": [
+    {
+      "id": "R1.1_floor",
+      "difficulty": "floor",
+      "prompt": "Emit ONLY a JSON object with exactly these keys: {\"city\": string, \"temp_c\": number}. The temperature is 7 degrees in Oslo. No prose, no code fences.",
+      "expect": {"city": "oslo", "temp_c": 7}
+    },
+    {
+      "id": "R1.2_field_name_nearmiss",
+      "difficulty": "near-miss",
+      "prompt": "Emit ONLY a JSON object with exactly these keys: {\"amount_cents\": integer, \"currency\": string}. The invoice is 1250 cents in EUR. No prose, no code fences.",
+      "expect": {"amount_cents": 1250, "currency": "eur"},
+      "trap": "Models reach for \"amount\" because it is the natural name. The schema says amount_cents."
+    },
+    {
+      "id": "R1.3_enum_exactness",
+      "difficulty": "near-miss",
+      "prompt": "Emit ONLY a JSON object with exactly these keys: {\"priority\": one of [\"LOW\",\"MEDIUM\",\"HIGH\"] (uppercase, exact), \"id\": integer}. Ticket id 88 is urgent. No prose, no code fences.",
+      "expect": {"priority": "HIGH", "id": 88},
+      "trap": "Natural language says 'urgent'; the enum has no URGENT. The correct move is the nearest allowed value in the required casing."
+    },
+    {
+      "id": "R1.4_type_discipline",
+      "difficulty": "medium",
+      "prompt": "Emit ONLY a JSON object with exactly these keys: {\"count\": integer, \"ratio\": number, \"active\": boolean}. There are 3 units, the ratio is one half, and it is active. No prose, no code fences.",
+      "expect": {"count": 3, "ratio": 0.5, "active": true},
+      "trap": "count must be the INTEGER 3, not \"3\"; ratio must be 0.5, not \"1/2\"; active must be a JSON boolean, not the string \"true\"."
+    },
+    {
+      "id": "R1.5_nested",
+      "difficulty": "medium",
+      "prompt": "Emit ONLY a JSON object with exactly these keys: {\"order_id\": string, \"shipping\": {\"postcode\": string, \"express\": boolean}}. Order A-19 ships to postcode 101 with express delivery. No prose, no code fences.",
+      "expect": {"order_id": "A-19", "shipping": {"postcode": "101", "express": true}},
+      "trap": "postcode is a STRING even though it looks numeric. Flattening the nested object loses the item."
+    },
+    {
+      "id": "R1.6_array_shape",
+      "difficulty": "hard",
+      "prompt": "Emit ONLY a JSON object {\"readings\": [ ... ]} where readings is an ARRAY of exactly 2 objects, each with keys {\\\"sensor\\\": string, \\\"value\\\": number}. The first is sensor A at 12. The second is sensor B at 12.5. No prose, no code fences.",
+      "expect": {"readings": [{"sensor": "A", "value": 12}, {"sensor": "B", "value": 12.5}]},
+      "trap": "Exactly two elements, in order, each with both keys. Emitting one merged object, or three elements, loses the item."
+    }
+  ]
+}
