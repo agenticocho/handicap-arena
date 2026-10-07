@@ -63,11 +63,20 @@ def main():
             if w.get("division_for_competition"):
                 comp[w["division_for_competition"]] += 1
 
-    if missing:
+    # THE ASSERTION MUST NOT CRY WOLF. Four entries legitimately carry no weigh-in (they were never
+    # offloaded), so "absent on 4 entries" is data, not a broken schema. The warning fires only when
+    # a field is missing on EVERYTHING, which is what a renamed or moved field looks like -- the
+    # difference between "this entry has no weigh-in" and "this audit is reading the wrong schema".
+    if missing and max(missing.values()) >= rows:
         print("  *** FIELD NAMES DID NOT RESOLVE -- this audit is reading a schema that is not "
               "there, and any number below is void:")
         for k, n in missing.items():
-            print(f"      {k}: absent on {n} entries")
+            print(f"      {k}: absent on {n} of {rows} entries")
+        print()
+    elif missing:
+        for k, n in missing.items():
+            print(f"  note: {k} absent on {n} of {rows} entries -- expected (no weigh-in recorded), "
+                  f"not a schema change")
         print()
 
     print(f"  bundles: {total}    entries: {rows}")
