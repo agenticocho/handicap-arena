@@ -130,21 +130,31 @@ def free_port():
 
 
 def find_llama_server(explicit=None):
+    """explicit -> env -> PATH -> known locations -> REFUSE. Never a bare name.
+
+    A resolver that cannot resolve must return None and let the caller refuse. The alternative --
+    falling back to a string literal -- is what produced 26 empty bundles: the literal is truthy, so
+    arena.py's call site `binary or find_llama_server()` skipped this function entirely, and the
+    absolute path three lines below was never reached. The guard that says "llama-server not found"
+    could not fire, because the failure path was pre-empted by a name.
+
+    Same trap as hermes-webui.service resolving a Python interpreter by PATH and silently taking
+    whatever it found; it now refuses unless exactly one match exists. Same day, different service.
+    """
     if explicit:
+        # An explicit path that does not exist is an ERROR, not a hint. Silently continuing to the
+        # next candidate is how a typo becomes a mystery -- and this line previously returned it
+        # unchecked, so `--llama-server /typo` would have been handed to exec.
+        if not os.path.exists(explicit):
+            raise SystemExit(f"llama-server {explicit!r} does not exist")
         return explicit
-    c = shutil.which("llama-server")
-    if c:
-        return c
-    # PORTABILITY: prefer an explicit override, then PATH, then this machine's build. A
-    # hardcoded absolute path first means the harness only runs on the machine that wrote it,
-    # which contradicts the README's "download it and point it at your GGUFs".
     for p in (os.environ.get("LLAMA_SERVER", ""),
               shutil.which("llama-server") or "",
               "/home/chilly1/llama.cpp/build/bin/llama-server",
               "./llama.cpp/build/bin/llama-server",
               "/usr/local/bin/llama-server",
               os.path.expanduser("~/llama.cpp/build/bin/llama-server")):
-        if os.path.exists(p):
+        if p and os.path.exists(p):
             return p
     return None
 

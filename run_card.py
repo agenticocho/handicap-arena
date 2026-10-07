@@ -35,7 +35,33 @@ import glob, json, os, shutil, subprocess, sys, time
 ARENA = os.path.dirname(os.path.abspath(__file__))
 RESULTS = os.path.join(ARENA, "results")
 MODELS = os.environ.get("ARENA_MODELS") or os.path.expanduser("~/moltbook_pipeline/models")
-SERVER = (os.environ.get("LLAMA_SERVER") or shutil.which("llama-server") or "llama-server")
+# THE RESOLVER IS arena.py's, AND THERE IS ONLY ONE OF IT.
+#
+# This used to be:
+#     SERVER = (os.environ.get("LLAMA_SERVER") or shutil.which("llama-server") or "llama-server")
+#
+# The bare string was the bug, and it cost 26 of 46 entrants. systemd's user-manager PATH does not
+# include /home/chilly1/llama.cpp/build/bin, so `which` returned None -- and the fallback to the
+# literal "llama-server" is TRUTHY. arena.py:225 is `self.binary = binary or find_llama_server()`,
+# so a truthy binary means the resolver is NEVER CALLED -- and its list at arena.py:143 contains the
+# correct absolute path. The guard at arena.py:275 ("llama-server not found") could never fire,
+# because the failure path was being pre-empted by a name.
+#
+# Every server spawned after that line took effect wrote ZERO BYTES. 26 empty bundles, 26 zero-byte
+# logs, GPU at 759 of 8192 MiB, and rc=0 reported for all of them -- a statement about the model
+# ("produced nothing") where the truth was a statement about the machine ("the server never existed").
+#
+# arena.py is importable (it has a __main__ guard), so the fix is not a second resolver -- it is
+# calling the one that already exists, and REFUSING when it fails.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import arena as _arena                                                    # noqa: E402
+
+SERVER = _arena.find_llama_server(os.environ.get("LLAMA_SERVER") or None)
+if not SERVER:
+    sys.exit("llama-server not found: set LLAMA_SERVER, put it on PATH, or install it under "
+             "llama.cpp/build/bin. REFUSING TO START -- a bare name here is truthy, and a truthy "
+             "name silently disables arena.py's own resolver. See "
+             "governance/rulings/2026-10-07-resolver-fell-back-to-a-bare-name.md")
 
 CTX, MT, TRIALS = 8192, 3000, 3
 
