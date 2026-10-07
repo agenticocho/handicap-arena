@@ -590,13 +590,25 @@ def load_card_v2():
     for p in sorted(glob.glob(os.path.join(TASKS_DIR, "v2", "*.json"))):
         d = json.load(open(p))
         for it in (d.get("items") or []):
-            spec = dict(it)
-            spec.pop("prompt", None)
+            # THE SCORER GETS THE EXPECTATION, NOT THE ITEM. My first version passed the whole
+            # item as the spec, so json_schema_multi compared the model's output against keys
+            # named 'id', 'difficulty' and 'expect' -- impossible for any model -- and R1 scored
+            # 0/6 for everyone, including a model that swept the v1 card. The pilot caught it;
+            # nothing downstream of it would have.
+            scorer = d["scorer"]
+            if scorer == "json_schema_multi":
+                spec = it.get("expect") or {}
+            elif scorer == "tool_call_multi":
+                spec = {"expect": it.get("expect") or {}}
+            else:                       # code_repair_multi reads case fields directly
+                spec = {k: v for k, v in it.items()
+                        if k in ("cases", "expect_contains", "expect_unchanged",
+                                 "harness_prelude")}
             out.append({
                 "id": f"{d['id']}::{it['id']}",
                 "round_id": d["id"],
                 "prompt": it["prompt"],
-                "scorer": d["scorer"],
+                "scorer": scorer,
                 "kind": d.get("kind", ""),
                 "metaphor": d.get("metaphor", ""),
                 "spec": spec,
