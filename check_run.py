@@ -23,6 +23,7 @@ the SAME filter the runner uses. 53 is a directory fact; 46 is a filtered fact.
 """
 import ast
 import glob
+import json
 import os
 import subprocess
 import sys
@@ -76,6 +77,18 @@ def main(card="v3", pid=None):
     exp = expected_entrants()
     pattern = os.path.join(HERE, "results", f"*card{card}*.json")
     done = sorted(glob.glob(pattern))
+    # FILES ARE NOT MEASUREMENTS. Chilly caught this in its own check -- "a count of FILES is not a
+    # count of MEASUREMENTS" -- and MY headline had the same defect: it reported 45 of 46 while more
+    # than half the field had measured nothing. A bundle with `results: []` is the record of a FAILURE
+    # TO SERVE, not an entrant that was measured, and reporting the two together made a half-broken
+    # field read as near-complete. Both numbers, always, and never summed into one.
+    measured = []
+    for p in done:
+        try:
+            if json.load(open(p, encoding="utf-8")).get("results") or []:
+                measured.append(p)
+        except Exception:
+            pass
     # THE RUNNER MOVED ITS LOG, SO A READER THAT KEEPS THE OLD PATH LOOKS LIVE AND REPORTS NOTHING.
     # Read from both candidate locations and take the newest: the value is read from where it IS,
     # not remembered from where it was. Same rule as reading EXCLUDE_PAT out of the runner.
@@ -92,6 +105,10 @@ def main(card="v3", pid=None):
     print(f"  card              : {card}")
     print(f"  expected entrants : {len(exp)}   (same EXCLUDE_PAT the runner uses)")
     print(f"  completed bundles : {len(done)}")
+    print(f"  CARRYING A RESULT : {len(measured)}   <- the only count that is progress")
+    if len(done) != len(measured):
+        print(f"  measured NOTHING  : {len(done) - len(measured)}   <- a serving failure, "
+              f"not a capability result")
     print(f"  process alive     : {alive if pid else 'unknown (no pid given)'}")
     print(f"  last progress     : {age:.0f}s ago" if age >= 0 else "  last progress     : no log")
     print()
