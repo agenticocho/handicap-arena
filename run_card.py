@@ -116,7 +116,12 @@ def main():
     ents = entrants()
     print(f"entrants: {len(ents)}   config: ctx={CTX} mt={MT} trials={TRIALS} ngl=auto-fit")
     print("=" * 96, flush=True)
-    log = os.path.join(RESULTS, "card_run.log")
+    # THE RUN LOG LIVES WITH THE OTHER LOGS, not in results/. results/ holds result bundles and
+    # nothing else -- a .log among them is the kind of file a reader counts as an entrant, which is
+    # the Chair's objection about the empty bundle. I moved the SERVER log to logs/ and left this
+    # one behind, which is the rule applied to one of the two places it applies.
+    os.makedirs(os.path.join(ARENA, "logs"), exist_ok=True)
+    log = os.path.join(ARENA, "logs", "card_run.log")
     with open(log, "a") as lf:
         lf.write(f"\n=== card run started {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())} "
                  f"ctx={CTX} mt={MT} trials={TRIALS} ===\n")
