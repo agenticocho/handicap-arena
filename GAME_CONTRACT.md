@@ -91,9 +91,43 @@ than named**, which is the whole of this document.
 `test_game_states.py` — reads every card task file and every bundle, and fails on a game name with no
 state behind it. **Positive control included**: the test is verified to fire on a reintroduced
 `metaphor`-without-state, so it cannot become a check that passes by being unable to fail.
+**It exits 1 while violations stand** — verified, not assumed, because an enforcing check that exits
+0 while reporting violations is a check that cannot fail.
 
 **First finding, from running it against today's repo:** the card's three rounds carry `metaphor`
 names (`FENCING`, `CHESS`, `PIT STOP`) and **no game state whatsoever**. They must therefore either
 **lose the metaphor** or **gain the state**. `R2_chess` is the live case: it is a tool-selection task
 named after a game it does not play, and the real chess event (R4, tactics puzzles scored by a
 reference engine) is the one that earns the name.
+
+---
+
+## Correction — the scope of the game-name claim, measured
+
+**I claimed in the accompanying message and commit that `metaphor` "occurs exactly ONCE in the whole
+project". That was false, and a teammate caught it.**
+
+I had swept **five documentation files** (`GAMES.md`, `EVENTS.md`, `BELTS.md`, `FORMAT.md`,
+`WHITEPAPER.md`) — where the answer is 0,0,0,1,0 — and then stated the result as a fact about the
+**project**. Measured properly:
+
+    files containing "metaphor" : 122
+    total occurrences           : 288
+    of which in the 5 doc files : 1   (FORMAT.md, defining it)
+    outside those five          : arena.py, README.md, all task files, ~107 result bundles
+
+**The conclusion survives on the evidence that actually supports it**, which is the narrower claim:
+**`GAMES.md` contains zero occurrences and its six declared fields carry no game name and no state
+field.** The catalogue is clean; the project is not.
+
+**The failure is mine and it is the one I had written a rule against an hour earlier.** The skill's
+third corollary says *a search supports only the claim it was scoped to — never let a bounded search
+support an unbounded "nowhere."* I wrote that, then generalised a five-file grep to "the whole
+project".
+
+**And the rule this document itself states is the reason it happened:** *a principle will not hold
+across 55 events; a check will.* I trusted care to hold a count across a 122-file sweep. Care is a
+principle. **The count needed a check, and the check — `test_doc_counts.py` — covers documents, not
+the project.** Two teammates' numbers also differ (280 vs 288) and **that is not a contradiction**:
+both were right for their moment, because a count of a growing record is a **timestamp**, not a fact.
+
