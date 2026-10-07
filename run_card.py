@@ -53,6 +53,30 @@ def entrants():
     return out
 
 
+def already_measured(path):
+    """Has this exact GGUF already been measured at this config, in ANY bundle?
+
+    Keyed on CONTENT, not filename. The first version keyed on the derived output name, which
+    only recognised bundles this script had itself created -- so it missed the hand-named
+    bundles (Qwen3.5-2B_neutral_ctx8192_mt3000.json) and re-ran a model whose measurement
+    already existed. A skip that only recognises your own filenames is not a skip.
+    """
+    base = os.path.basename(path)
+    for bp in glob.glob(os.path.join(RESULTS, "*.json")):
+        try:
+            d = json.load(open(bp))
+        except Exception:                                        # noqa: BLE001
+            continue
+        for r in (d.get("results") or []):
+            if os.path.basename(r.get("gguf") or "") != base:
+                continue
+            c = r.get("config") or {}
+            if (c.get("ctx") == CTX and c.get("max_tokens") == MT
+                    and c.get("n_gpu_layers") is None):
+                return os.path.basename(bp)
+    return None
+
+
 def bundle_path(stem):
     return os.path.join(RESULTS, f"{stem}_neutral_ctx{CTX}_mt{MT}.json")
 
@@ -71,8 +95,9 @@ def main():
     for i, (size, path, base) in enumerate(ents, 1):
         stem = base.replace(".gguf", "")
         outp = bundle_path(stem)
-        if os.path.exists(outp):
-            print(f"[{i:2d}/{len(ents)}] SKIP (bundle exists)  {stem}")
+        prior = already_measured(path)
+        if os.path.exists(outp) or prior:
+            print(f"[{i:2d}/{len(ents)}] SKIP (already measured in {prior or os.path.basename(outp)})")
             skipped += 1
             continue
 

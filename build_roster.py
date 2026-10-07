@@ -193,8 +193,26 @@ def load_bundles():
         ver = d.get("version", ver)
         for r in (d.get("results") or []):
             r["_file"] = os.path.basename(path)
+            r["_mtime"] = os.path.getmtime(path)
             entries.append(r)
-    return entries, harness, ver
+
+    # DEDUPE. An entry is identified by (sha256, ctx, max_tokens, n_gpu_layers) -- the tuple
+    # that determines the measurement. Two bundles measuring the same thing are ONE entry.
+    #
+    # This exists because run_card.py's skip was FILENAME-based and therefore missed the
+    # hand-named bundles: it re-ran Qwen3.5-2B and produced a second bundle under the full
+    # stem. Rendering the same measurement twice would make the board look fuller than it is.
+    best = {}
+    for r in entries:
+        cfg = r.get("config") or {}
+        key = (r.get("sha256"), cfg.get("ctx"), cfg.get("max_tokens"), cfg.get("n_gpu_layers"))
+        prev = best.get(key)
+        if prev is None or r["_mtime"] > prev["_mtime"]:
+            best[key] = r
+    collapsed = len(entries) - len(best)
+    if collapsed:
+        print(f"  dedupe: collapsed {collapsed} duplicate measurement(s) — same sha256+config")
+    return list(best.values()), harness, ver
 
 
 def label_for(r):
