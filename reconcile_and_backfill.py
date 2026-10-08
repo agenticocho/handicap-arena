@@ -91,9 +91,11 @@ def main():
     print()
     top, subs = scan(recursive=False)
     wr, emp, per = count(top)
-    print(f"  NON-RECURSIVE (my 62): {len(top)} bundles parse as arena bundles")
+    print(f"  {len(top)} bundles parse as arena bundles")
     print(f"      carrying a results list : {wr}")
-    print(f"      EMPTY, no failure record: {emp}      <-- MY NUMBER")
+    print(f"      EMPTY, no failure record: {emp}      <-- NON-RECURSIVE COUNT (this scope)")
+    print(f"  (this label used to read 'my 62', a literal that went stale the moment the field grew one")
+    print(f"   bundle. A hand-maintained count in a label is a claim with no check behind it.)")
     print()
     print("      by card version:")
     for v in sorted(per, key=lambda x: (x != "v1", x)):
