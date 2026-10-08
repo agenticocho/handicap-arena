@@ -109,6 +109,47 @@ alias naming a retired model, and as `_EMPTY_` in a filename.
 
 ---
 
+## TWO FORWARD-ONLY FIXES, AND THEIR STATUS IS **UNEXERCISED**
+
+C3's pre-scoring half (the `failure` record) and the per-item clock (`secs`, `gen_tokens`) are **in
+`arena.py` and have no instance on disk.** Measured, not assumed:
+
+```
+bundles carrying a failure record      :   0
+v4 item records                        : 174
+of those carrying secs or gen_tokens   :   0
+```
+
+The running v4 process **imported its code before both changes**, and no empty bundle has been produced
+since. **So these are statements about the code, not about any artifact, and they must not be presented as
+capabilities until a bundle carries them.** Chilly's wording is exact: *unexercised rather than wrong —
+and I would not put it in front of a builder as a capability until a bundle carries it.*
+
+**THE EXERCISE, planned rather than assumed.** When the field finishes, run **one entrant** under the
+current code and check two things: its item records carry `secs`/`gen_tokens`, and an empty bundle writes
+a `failure` record carrying `secs`. **One entrant is enough** — the claim is about whether the writer runs,
+not about any model. Running concurrently would contend for VRAM and slow the field, so it waits.
+
+**An unexercised claim is a claim with no carrier.**
+
+---
+
+## AND WHAT THE THREE RECORDS OF ONE EVENT CAN EACH DO
+
+Chilly's finding, and the distinction is one we had not drawn:
+
+| record | says | can it assign provenance? |
+|---|---|---|
+| the bundle's contents | `results: []` | **right, every time** |
+| the filename's label | `_EMPTY_` | **contradicts the log in 18 cases** |
+| the run log | `scored=True` | **cannot distinguish two runs** |
+
+**Earlier findings were labels with NOTHING behind them. These are labels with a DIFFERENT fact behind
+them. A gap invites a check; a contradiction invites a choice.** And the general rule: **a record that
+cannot distinguish its own cases is not a weaker source for provenance — it is not a source.**
+
+---
+
 ## What v4 does NOT change
 
 - **The round is still `R1_fencing`**, and the name still carries R1's meaning: near-miss
