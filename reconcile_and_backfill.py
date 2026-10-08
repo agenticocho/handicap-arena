@@ -39,6 +39,11 @@ def scan(recursive=False):
     rows, subdirs = [], {}
     for p in sorted(glob.glob(pat, recursive=recursive)):
         rel = os.path.relpath(p, RESULTS)
+        # An EXERCISE_ bundle is not an entrant -- see the note in test_no_silent_zero.py. This sweep is
+        # the WIDE one (`results/*.json` and `results/**`), and it is the glob that produced the
+        # 62-empty and 71-empty figures, so it is the one most likely to meet a mis-placed exercise.
+        if "EXERCISE_" in os.path.basename(p):
+            continue
         if os.sep in rel:
             subdirs.setdefault(rel.split(os.sep)[0], [0, 0])
         try:

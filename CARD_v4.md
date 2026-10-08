@@ -133,9 +133,23 @@ not about any model. Running concurrently would contend for VRAM and slow the fi
 **THE EXACT COMMAND, recorded so it is run rather than improvised:**
 
 ```
+mkdir -p exercise
 arena.py --card v4 --model /home/chilly1/moltbook_pipeline/models/LFM2-350M-Extract-Q4_K_M.gguf \
-         --trials 1 --out results/EXERCISE_fix2.json
+         --trials 1 --out exercise/EXERCISE_fix2.json
 ```
+
+**AND IT WRITES OUTSIDE `results/`, which is a deliberate correction.** The first version of this command
+wrote `results/EXERCISE_fix2.json` — which correctly does **not** match the card glob
+(`results/*cardv4*.json`), so it would not pollute the card's accounted/measured figures. **But the WIDER
+counts use `results/*.json`** — the same glob that produced the 62-empty and 71-empty figures — **and a
+one-record exercise bundle sitting there is indistinguishable from an entrant to any scan that does not
+know the difference.** Chilly flagged it while it cost nothing: *the same shape as the quarantine
+directories — an artifact that lands where a broader glob can reach it.*
+
+**Two defences, because the next reader may not know the name means something:**
+1. **it writes to `exercise/`, outside every `results/` glob;**
+2. **and the wide sweeps exclude `EXERCISE_` explicitly**, so even a mis-placed one cannot be counted as
+   an entrant.
 
 **Why this works and what each half exercises:**
 

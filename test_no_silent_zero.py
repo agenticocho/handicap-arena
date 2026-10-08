@@ -32,6 +32,12 @@ def main():
     silent_bundles = []
     total_bundles = 0
     for p in sorted(glob.glob(os.path.join(RESULTS, "*.json"))):
+        # An EXERCISE_ bundle is not an entrant. The exercise that proves Fix 2 writes one record, and a
+        # one-record bundle in this directory is indistinguishable from an entrant to any scan that does
+        # not know the name means something. It writes to exercise/ now, and this is the second defence:
+        # even a mis-placed one cannot be counted here.
+        if "EXERCISE_" in os.path.basename(p):
+            continue
         try:
             d = json.load(open(p, encoding="utf-8"))
         except Exception:
