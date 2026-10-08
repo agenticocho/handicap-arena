@@ -346,8 +346,10 @@ def print_protects():
     print("WHAT EACH ARGUMENT PROTECTS, AND WHETHER IT PROTECTS ONE OUTCOME OR BOTH")
     argues = [
         ("C2's count is a LOWER BOUND (empty bundles contribute zero)",
-         {"PASS"},
-         "a PASS it makes STRICTER; a FAIL it cannot touch"),
+         set(),
+         "protects NEITHER -- a bound is a statement about a NUMBER, not about a verdict. Whether the "
+         "omissions helped or hurt depends on what the missing entrants would have scored, and a "
+         "missing entrant has no score"),
         ("C1 gets no protection from the thinning argument (rates move either way)",
          {"PASS", "FAIL"},
          "genuine -- and it is why C1 is not excused by it"),
@@ -359,9 +361,15 @@ def print_protects():
          "about the INSTRUMENT's history, not a defence of any entrant"),
     ]
     for arg, protects, note in argues:
-        tag = "ONE OUTCOME" if len(protects) == 1 else "BOTH       "
+        if not protects:
+            tag = "NO DIRECTION"
+        elif len(protects) == 1:
+            tag = "ONE OUTCOME "
+        else:
+            tag = "BOTH        "
+        shown = "/".join(sorted(protects)) if protects else "neither"
         print(f"  [{tag}] {arg}")
-        print(f"      protects {'/'.join(sorted(protects))} -- {note}")
+        print(f"      protects {shown} -- {note}")
     print()
     print("  AN ARGUMENT THAT PROTECTS ONLY ONE OUTCOME IS THE ONE TO CHECK HARDEST, because it is the one")
     print("  that reads as rigour. Every entry tagged ONE OUTCOME above is either DECLARED BEFORE THE")
