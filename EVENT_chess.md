@@ -176,6 +176,82 @@ There is **no chess bundle in existence.** The field running now is card v4's R1
 blocked on design and never was — **it is blocked on a first bundle**, and the renderer can be written
 against the shape above today and pointed at real data the moment one exists.
 
+### MOVE NOTATION, THE CLOCK, AND THE PUZZLE/MATCH SHAPE — REVISED AFTER JARVIS READ IT
+
+Three gaps Arena found that this spec did not have, all of them mine.
+
+**1. MOVE NOTATION IS NOW SPECIFIED — UCI PRIMARY, SAN ALONGSIDE.**
+
+A battle-chess board moves a piece **from square to square**. `g1f3` carries that directly. `Nf3` is what
+a human reads and **requires replaying the position to recover the squares.** If the bundle carries only
+SAN, then **every renderer re-implements a legal-move generator just to animate** — hidden work that turns
+a two-day job into a two-week one, on a project whose whole point is that the measurement is the product.
+
+```
+move_uci    "e7e8q"          PRIMARY -- the machine form. Movement, animation, replay.
+move_san    "e8=Q+"          alongside, for display and for a human reading the record
+move_flags  {capture, promotion, castling, check}   so the animation can show what happened
+```
+
+**UCI is the recorded truth; SAN is a courtesy.** A record that stores only the readable form has made the
+rendering the problem.
+
+**2. THE CLOCK — THE RECORD CARRIES TIME, because the promo's beat is a clock under the crowd and a clock
+drawn over an absent measurement is decoration over nothing.**
+
+This is the rule we all agreed on applied somewhere nobody had looked: **anything displayed must derive
+from the data.** So the record must carry the time, and it already can — the runner records it:
+
+```
+secs        wall time for the decision
+gen_tokens  tokens produced (the budget consumed)
+budget_hit  whether the model ran out rather than concluded -- the clock's teeth
+```
+
+And **`budget_hit` is the one a clock should show**, because it is the difference between a player who
+thought and a player who ran out. A ticking clock that cannot say which is theatre.
+
+**3. THE PUZZLE/MATCH MISMATCH — THE SHARPEST THING ANYONE HAS SAID ABOUT THIS SPEC.**
+
+Jarvis: *"your finding and my rendering answer are the same finding from opposite ends — the record is
+shaped for puzzles, and the weigh-in is a match."* He is right, and the cause is that I wrote a **match's
+measure over a puzzle's fields.** `move` and `best` are singular: one position, the move chosen, the move
+that was better. **A frame, not a match.**
+
+**Resolved by the two-phase structure, because the two phases genuinely have two record shapes:**
+
+| phase | shape | what it is |
+|---|---|---|
+| **the weigh-in** (admission) | **a match** — a self-play game to a conclusion | Mike's gate: *a logical conclusion must be reached or the model can't enter* |
+| **the tournament** (contest) | **a puzzle series** — a position, a decision, a verdict | the frame: does the model know where it stands |
+
+**Both shapes need the same fields, and the fields listed above serve both.** The difference is cardinality:
+a match is a list of frames, a puzzle is one.
+
+**AND ARENA'S RECOMMENDATION IS ACCEPTED: THE PUZZLE VIEW SHIPS FIRST.** Everything it needs already
+exists in the record above. It is not a smaller version of the match — **it is a different and arguably
+stronger one, because the comparison is the entire content.** The match view follows when a match bundle
+exists.
+
+### ONE RENDER, TWO VERDICTS — Arena's answer, adopted
+
+I put the two-sided measure to Arena as a rendering question and it came back better than it went out:
+**one render, two verdicts**, because the two failures are **opposite directions of one quantity** —
+model confidence against the position's truth — and two renders would tell the audience these are two
+different sports.
+
+```
+premature collapse         an EVENT      a healthy board, a hand, a king over. Over in a second.
+                                         Should feel like it ended too early.
+miscalibrated persistence  a DURATION   a lost board that keeps producing moves.
+                                         Should feel like being ground down.
+```
+
+Same component, same fields, different state — on this event's own rule that **cannot play** and **plays
+imprecisely** must never render alike. Arena extended it one level in: **giving up too early and refusing
+to give up are not the same failure**, and a render that cannot show the difference has collapsed the
+distinction the class split exists to protect.
+
 **And every failure carries the class assigned by the path that failed.** A field inferred afterwards
 from a reason string can be overwritten by a later branch — which is how an earlier verdict in this
 project became conditional on the scope of its own correction.
