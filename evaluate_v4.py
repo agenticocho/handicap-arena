@@ -22,6 +22,7 @@ v4's scorer is arena.py's own strict_json_schema_multi, so unlike the v3 audit t
 apply and no second parser to choose between: the scores in the bundle ARE the scores, and re-parsing them
 would be re-deriving rather than verifying.
 """
+import datetime
 import glob
 import importlib.util
 import json
@@ -135,9 +136,11 @@ def main():
     accounted = len(rows)
     with_rd = [(p, d, e, rd) for p, d, e, rd in rows if rd]
     empty = [(p, d) for p, d, e, rd in rows if rd is None]
-    print(f"  accounted for : {accounted}")
+    print(f"  accounted for : {accounted}   (as of {datetime.datetime.now().astimezone().isoformat(timespec='seconds')})")
     print(f"  MEASURED      : {len(with_rd)}")
     print(f"  empty (no results) : {len(empty)}")
+    print("  NOTE: a count of a GROWING record is a timestamp, not a fact. The field may be running;")
+    print("  these numbers are true as of the time printed above and no later.")
 
     # ---- C4 BEFORE ANYTHING ELSE: the partition must hold ------------------
     cvs = defaultdict(int)
@@ -219,6 +222,31 @@ def main():
     print(f"  C2 floor: {below} entrants below {FLOOR} (need >= {C2_NEED})")
     ok2 = below >= C2_NEED
     print(f"     {'PASS' if ok2 else 'FAIL'}")
+    # ---- THE POPULATION ARGUMENT, AND ITS DIRECTION PER CRITERION -----------
+    #
+    # MONOTONICITY, which is the provable form of "the exclusions push against me": an empty bundle
+    # carries `results: []`, so it contributes ZERO aggregates to any count. Removing an entrant can
+    # only ever REDUCE the number below the floor. So the measured count is a LOWER BOUND, and that
+    # holds regardless of what the missing entrants would have scored -- no hunch required.
+    #
+    # AND IT ONLY HELPS ONE WAY. A thin field that PASSES a monotone criterion is a STRICTER result.
+    # A thin field that FAILS one is INDETERMINATE: the failure may belong to the CARD or to the
+    # POPULATION, and this subset cannot distinguish them. So the thinning argument is a DEFENCE OF A
+    # PASS, NOT A LICENCE FOR A FAIL -- and using it to excuse a failure would let the card off for a
+    # result the card may own.
+    if ok2:
+        print("     Population note: the count is a LOWER BOUND (empty bundles contribute zero), so this")
+        print("       PASS is stricter than it would be on a full field.")
+    else:
+        print("     Population note: this count is a LOWER BOUND, and it FAILS anyway. The failure may")
+        print("       belong to the CARD or to the POPULATION, and this subset cannot distinguish them.")
+        print("       The thinning argument does NOT excuse a failure -- it is a defence of a PASS.")
+    print()
+    print("  AND C1 GETS NO PROTECTION FROM THAT ARGUMENT. C1 is computed from RATES, which move in")
+    print("  EITHER direction as entrants are added -- measured: adding a single entrant moved R1.2")
+    print("  82.8->83.3 and R1.3 75.9->73.3, in OPPOSITE directions. EVERY EXCLUSION HAS A DIRECTION,")
+    print("  AND THE DIRECTION IS A PROPERTY OF THE CRITERION, NOT OF THE EXCLUSION: two criteria on")
+    print("  one card can be protected and exposed by the same removed entrants.")
 
     # ---- THE VERDICT, AND WHETHER IT MAY BE CALLED YET --------------------
     print()
@@ -230,6 +258,25 @@ def main():
         return 1
     verdict = {"C1": ok1, "C2": ok2, "C3": ok3, "C4": ok4}
     print("VERDICT: " + "  ".join(f"{k}={'PASS' if v else 'FAIL'}" for k, v in verdict.items()))
+    # ---- THE THIRD OUTCOME, DECLARED BEFORE THE NUMBERS LAND ----------------
+    #
+    # Chilly's point, and it is the sharpest thing said about this verdict: a thin field that PASSES a
+    # monotone criterion is a STRICTER result; a thin field that FAILS one is INDETERMINATE. So a FAIL
+    # needs a third outcome rather than a defence, because the failure may belong to the CARD or to the
+    # POPULATION and this subset cannot tell them apart.
+    #
+    # Declared here, before the field closes, so it cannot be read as a hedge added after a result.
+    if not ok2:
+        print()
+        print("  *** OUTCOME 3 APPLIES TO C2: FAILED ON THIS POPULATION, AND THE POPULATION IS A ***")
+        print("  *** CANDIDATE CAUSE THIS FIELD CANNOT RULE OUT.                                     ***")
+        print("  The twelve unmeasured entrants are all SERVING failures (size-correlated, failing at")
+        print("  load), and the count is a LOWER BOUND. So the card's C2 status is INDETERMINATE on this")
+        print("  population: the floor may be unpopulated because the card does not discriminate the low")
+        print("  end, or because the entrants that would have populated it could not run. This field")
+        print("  cannot distinguish those, and no re-reading of it will.")
+        print("  That is a SCOPE, not a hedge. The remedy is one small known-good entrant for the clock")
+        print("  exercise and, for C2, a population that can run -- not a relaxation of the bar.")
     print("  C3 is expected to FAIL on this field: the clock and failure-class fixes are forward-only,")
     print("  so artifacts written before them are silent by construction. It is a statement about the")
     print("  instrument's history, not about any entrant.")
