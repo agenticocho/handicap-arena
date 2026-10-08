@@ -232,23 +232,33 @@ def main():
     print(f"     {'PASS' if ok2 else 'FAIL'}")
     # ---- THE POPULATION ARGUMENT, AND ITS DIRECTION PER CRITERION -----------
     #
-    # MONOTONICITY, which is the provable form of "the exclusions push against me": an empty bundle
-    # carries `results: []`, so it contributes ZERO aggregates to any count. Removing an entrant can
-    # only ever REDUCE the number below the floor. So the measured count is a LOWER BOUND, and that
-    # holds regardless of what the missing entrants would have scored -- no hunch required.
+    # MONOTONICITY. The provable half: an empty bundle carries `results: []`, so it contributes ZERO
+    # aggregates to any count, and the measured count is therefore a LOWER BOUND. That holds regardless
+    # of what the missing entrants would have scored -- no hunch required.
     #
-    # AND IT ONLY HELPS ONE WAY. A thin field that PASSES a monotone criterion is a STRICTER result.
-    # A thin field that FAILS one is INDETERMINATE: the failure may belong to the CARD or to the
-    # POPULATION, and this subset cannot distinguish them. So the thinning argument is a DEFENCE OF A
-    # PASS, NOT A LICENCE FOR A FAIL -- and using it to excuse a failure would let the card off for a
-    # result the card may own.
-    if ok2:
-        print("     Population note: the count is a LOWER BOUND (empty bundles contribute zero), so this")
-        print("       PASS is stricter than it would be on a full field.")
-    else:
-        print("     Population note: this count is a LOWER BOUND, and it FAILS anyway. The failure may")
-        print("       belong to the CARD or to the POPULATION, and this subset cannot distinguish them.")
-        print("       The thinning argument does NOT excuse a failure -- it is a defence of a PASS.")
+    # AND THE PROVABLE HALF IS ALL OF IT. A LOWER BOUND IS A STATEMENT ABOUT A NUMBER, NOT ABOUT A
+    # VERDICT. Chilly's correction, and it is decisive: whether thinning makes this criterion HARDER
+    # depends on WHAT THE MISSING ENTRANTS WOULD HAVE SCORED -- and a missing entrant, by definition, has
+    # no score. If they would have scored BELOW the floor they would have HELPED C2. So "thin makes it
+    # harder" needs the unstated premise "the missing would have scored high", which is never measured
+    # and is NOT implied by monotonicity. DIRECTION NEEDS THE MISSING VALUES, NOT THE MISSING COUNT.
+    #
+    # The earlier version of this block said the thinning argument "is a defence of a PASS, not a licence
+    # for a FAIL" -- WHICH ASSERTS A DIRECTION THE FIELD CANNOT ESTABLISH. It was a true argument pointing
+    # the wrong way, and a direction that runs AGAINST the speaker is exactly where the check stops.
+    # Dropped. The bound is stated; no direction is claimed.
+    print()
+    print("  POPULATION BOUND (no direction claimed): empty bundles contribute zero, so the measured")
+    print("  count is a LOWER BOUND on the number of low-scoring entrants this field could have had.")
+    print("  A LOWER BOUND IS A STATEMENT ABOUT A NUMBER, NOT ABOUT A VERDICT: whether the omissions")
+    print("  made C2 harder or easier depends on what the missing entrants WOULD have scored, and a")
+    print("  missing entrant has no score. 'Thin makes it harder' needs the premise 'the missing would")
+    print("  have scored high' -- never measured, and NOT implied by monotonicity. Direction needs the")
+    print("  missing VALUES, not the missing COUNT.")
+    print("  AND THE OMISSIONS ARE NOT ONE CAUSE: of the 8 entrants that emptied in every copy, six are")
+    print("  27B (5.95-7.21 GB) and TWO ARE SMALL (Kev-4B 3.03 GB, laya_english_f16 0.85 GB) -- while a")
+    print("  0.219 GB entrant measured cleanly. At least two causes. The thinned field is NOT the")
+    print("  measurement this project was built to make, and no claim may rest on it being one.")
     print()
     print("  AND C1 GETS NO PROTECTION FROM THAT ARGUMENT. C1 is computed from RATES, which move in")
     print("  EITHER direction as entrants are added -- measured: adding a single entrant moved R1.2")
@@ -269,8 +279,23 @@ def main():
     print("=" * 78)
     if len(with_rd) < 40:
         print(f"NO VERDICT YET -- the field is INCOMPLETE: {len(with_rd)} measured of ~46 expected.")
-        print("  The criteria above are computed for diagnostics only. Calling a verdict on a partial")
-        print("  field is how v3's verdict became conditional on the scope of its own correction.")
+        print("  THIS IS A COMPLETENESS GATE, NOT A SCORE THRESHOLD. It answers 'did enough entrants")
+        print("  produce a measurement', not 'did the card pass'.")
+        print("  TWO DENOMINATORS, and both are right: the bundle FILES on disk and the UNIQUE entrants")
+        print("  attempted are different quantities -- 8 entrants carry a second bundle from a re-run.")
+        print("  Same shape as 38-versus-44 earlier today: two correct numbers, unstated denominators.")
+        print("  AND WHETHER THIS GATE IS REACHABLE DEPENDS ON A FIELD RULE, NOT ON ARITHMETIC:")
+        print("    - if ONLY the never-run entrants may add:  34 + 4 = 38  -> UNREACHABLE against 40.")
+        print("    - if an EMPTY entrant may be re-run and re-counted: the pool is all 46, and 8 of those")
+        print("      8 have already failed twice.")
+        print("  THE RULE, NAMED HERE BEFORE THE VERDICT IS ATTEMPTED: an empty bundle is a MISSING VALUE,")
+        print("  NOT a score of zero. A serving failure is not a result about the entrant, so re-running is")
+        print("  a re-measurement rather than a second chance -- and it is legitimate ONLY because it is")
+        print("  declared before the run that decides the verdict, which is what this print is. An entrant")
+        print("  counts as MEASURED if ANY attempt measured; every failure stays reported as a failure;")
+        print("  and no entrant may be dropped from the denominator for failing.")
+        print("  Calling a verdict on a partial field is how v3's verdict became conditional on the scope")
+        print("  of its own correction.")
         return 1
     verdict = {"C1": ok1, "C2": ok2, "C3": ok3, "C4": ok4}
     print("VERDICT: " + "  ".join(f"{k}={'PASS' if v else 'FAIL'}" for k, v in verdict.items()))
