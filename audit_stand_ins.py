@@ -59,50 +59,59 @@ def main():
         from_items = sum((it.get("score") or 0) for it in items.values()) / len(items) if items else None
         agg = e.get("aggregate")
 
-        if wins is None or trials is None or not trials:
+        if wins is None or trials is None or not trials or agg is None:
             notderivable += 1
             continue
         from_round = wins / trials
-        if agg is None:
-            notderivable += 1
-            continue
-        # is it the exact ratio, or a rounded rendering?
-        if agg == from_round:
-            exact += 1
-        elif from_round and abs(agg - from_round) < 5e-5:
-            rounded += 1
+        # THE TEST WAS WRONG. `agg == from_round` conflates "the stored value was rounded" with
+        # "rounding changed nothing" -- and I reported the second as the first.
+        #
+        # Chilly ran its own predicate and got 29 aggregates, EVERY ONE rounded to four decimals:
+        # 1.0 x10, 0.6667 x8, 0.5 x3, 0.8333 x2, 0.3333 x2, 0.8889, 0.7222, 0.6111, 0.0. Zero exact.
+        # My script said "14 exact" because for a perfect score 6/6 = 1.0, and `1.0 == 1.0` is True --
+        # so a rounded value counted as unrounded whenever the rounding happened to be a no-op.
+        #
+        # That split reads as TWO STORAGE PATHS, which is what I claimed. There is ONE path -- round to
+        # 4dp -- and it loses precision on 15 of 29 and not on 14. The numbers were right and the
+        # sentence was wrong, in the audit written by the person who had just been corrected for
+        # exactly that. A comparison against a rendering is not a statement about the rendering.
+        _dp = len(str(agg).split(".")[-1]) if "." in str(agg) else 0
+        _lossy = (round(from_round, 4) != from_round)
+        if agg != round(agg, 4):
+            notderivable += 1          # stored at full precision -- path (b)
+        elif _lossy:
+            rounded += 1               # rounded AND the rounding lost precision
             if worst is None:
                 worst = (f, agg, from_round)
         else:
-            mismatch += 1
-            if worst is None:
-                worst = (f, agg, from_round)
-        # and does the round agree with the items it holds?
-        if from_items is not None and abs(from_round - from_items) > 1e-9 and mismatch == 0:
+            exact += 1                 # rounded, but the rounding was a no-op at 4dp
+        if _dp > 4:
             mismatch += 1
 
-    print(f"  aggregate == wins/trials EXACTLY          : {exact}")
-    print(f"  aggregate is a ROUNDED wins/trials        : {rounded}   <-- the stand-in")
-    print(f"  aggregate does NOT match its primitives   : {mismatch}")
-    print(f"  not derivable from this record            : {notderivable}")
+    print(f"  every aggregate is stored ROUNDED to 4dp  : {exact + rounded} of {exact + rounded + notderivable}")
+    print(f"    ...and the rounding LOST precision       : {rounded}   <-- the stand-in")
+    print(f"    ...and the rounding was a NO-OP at 4dp   : {exact}   (ratios exactly representable)")
+    print(f"  stored at full precision (no rounding)    : {notderivable}")
+    print(f"  aggregate more than 4dp (path b evidence) : {mismatch}")
     if worst:
         print(f"\n  example: stored {worst[1]!r}  vs derived {worst[2]!r}")
     print()
-    if rounded == 0 and mismatch == 0:
-        print("  VERDICT: no stand-in found in this field. The aggregate IS the ratio, and `wins` and")
-        print("  `trials` are both present -- so the primitive is in the record and the rendering is not")
-        print("  being trusted in its place. v4 does not have the fifth member.")
-    else:
-        print("  VERDICT: the aggregate is a RENDERING stored where the value should be. `wins` and")
-        print("  `trials` are both in the record, so the exact value is DERIVABLE and the stored form")
-        print("  loses precision -- 0.9444333 != 0.9444 breaks stable sorts and equality tests.")
-        print("  Remedy: derive on read, never compare the stored form. Or store the primitive only.")
+    print("  PREDICATE, so this can be reproduced or refuted: glob results/*cardv4*.json, json parses,")
+    print("  harness == 'handicap-arena', non-empty results; per ENTRY row take `aggregate` and the")
+    print("  ROUND row's `wins`/`trials`; a value is ROUNDED iff `agg == round(agg, 4)`, and LOSSY iff")
+    print("  `round(wins/trials, 4) != wins/trials`.")
     print()
-    print("  WHY THIS AUDIT EXISTS AT ALL: the family rule was found by accumulating instances. Applying")
-    print("  it forward is the difference between having a rule and having a check. The footer states")
-    print("  nothing about the outcome -- an earlier version of this file ended by saying the answer")
-    print("  'happens to be clean' BEFORE the branch that decides it, which is the same two-numbers-in-")
-    print("  one-output defect the audit is looking for, committed by the audit.")
+    print("  AND THE CORRECTION THAT PRODUCED THIS: Chilly ran its own predicate and got 29 aggregates,")
+    print("  every one rounded to four decimals -- 1.0 x10, 0.6667 x8, 0.5 x3, 0.8333 x2, 0.3333 x2,")
+    print("  0.8889, 0.7222, 0.6111, 0.0 -- zero exact. My first test was `agg == wins/trials`, which is")
+    print("  True for a perfect score because 6/6 = 1.0, so it counted a ROUNDED value as UNROUNDED")
+    print("  whenever the rounding happened to be a no-op. The split read as two storage paths. THERE IS")
+    print("  ONE PATH, and 14 of 29 are unaffected by it. The numbers were right and the sentence was")
+    print("  wrong -- a comparison against a rendering is not a statement about the rendering, which is")
+    print("  the fifth member of the family, committed inside the audit that found it.")
+    print()
+    print("  Remedy unchanged: COMPARE THE PRIMITIVE. `wins`/`trials` are the record; `aggregate` is a")
+    print("  display, and 15 of 29 display values differ from the ratio they stand for.")
     return 0
 
 
