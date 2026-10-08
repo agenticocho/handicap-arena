@@ -27,6 +27,17 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 TASKS = os.path.join(HERE, "tasks")
 RESULTS = os.path.join(HERE, "results")
+# ONE RULE, ONE DEFINITION. The checker and the record generator must not re-implement the rule that maps
+# a bundle filename to its annotation filename: two implementations can drift, and they agreed by
+# COINCIDENTAL RE-IMPLEMENTATION -- which is the class this item was about. The generator's docstring
+# claimed "one import apart" before the code did it, and A CLAIM IN A CAPTION IS NOT A GUARANTEE. This
+# import is what makes the sentence true.
+#
+# NO FALLBACK. If this import fails the checker cannot know which record belongs to which bundle, and a
+# silent default would recreate the defect exactly: an annotation that stops matching the artifact while
+# reporting success.
+from annotate_superseded import stem_of
+
 GAME_KEYS = ("metaphor", "game")
 STATE_KEYS = ("game_state_in_bundle", "game_state")
 
@@ -131,9 +142,9 @@ def is_superseded(failure_line):
     # the `EXERCISE_` collision caught before creating it: 151 annotation files beside 151 bundles would
     # each look like an entrant to any sweep of `results/*.json`.
     #
-    # AND THE STEM, NOT THE FILENAME: the record for `X.json` is `X.json` in here, not `X.json.json`. The
-    # caller and the checker must agree on this or the annotation silently stops matching the artifact.
-    return os.path.exists(os.path.join(RESULTS, "supersessions", name[:-len(".json")] + ".json"))
+    # AND THE STEM, NOT THE FILENAME -- by the SAME FUNCTION the generator uses, imported above, rather
+    # than by a copy of its rule. A copy can drift; a function cannot disagree with itself.
+    return os.path.exists(os.path.join(RESULTS, "supersessions", stem_of(name) + ".json"))
 
 
 def main():
@@ -206,6 +217,24 @@ def main():
     else:
         print("  FIRES  the same framing WITH the name in `metaphor` -- THE NAME IS THE OFFENCE,")
         print("         not the presentation. Move the name out and the event is honest again.")
+
+    # THE RULE ITSELF, ASSERTED DIRECTLY -- and this is the ONLY CATCHER LEFT. Sharing the rule removed the
+    # disagreement that would have caught the naming defect, so the shared rule is now the single point of
+    # failure and nothing above tests it. Without this control the failure mode is not removed, it has
+    # MOVED: from "two components silently agree" to "one component is silently wrong".
+    #
+    # AND IT IS THE REASON THIS IS NOT A DOCSTRING. The generator asserted "one import apart" for a day
+    # while the checker re-implemented the rule by hand. A PROPERTY A CAPTION ASSERTS AND NOTHING EXECUTES
+    # IS THE CAPTION DEFECT; this is the execution.
+    rule_cases = [("X.json", "X"), ("X", "X"), ("a.b.json", "a.b"), (".json", "")]
+    bad = [(i, o, stem_of(i)) for i, o in rule_cases if stem_of(i) != o]
+    if bad:
+        for i, o, got in bad:
+            print(f"  FAIL  stem_of({i!r}) gave {got!r}, expected {o!r}")
+        fails.append("control: stem_of must map a bundle filename to its stem")
+    else:
+        print(f"  ok    stem_of ASSERTED DIRECTLY ({len(rule_cases)} cases, including a name not ending "
+              f"in .json passing through unchanged)")
 
     print()
     if fails:
