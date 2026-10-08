@@ -84,6 +84,22 @@ model that can always find another move, and it is invisible in a taxonomy that 
 
 ---
 
+## One event or two — answered: ONE, with two phases
+
+Mike's specification contains both phases *and* their relationship: *"the model plays itself. A logical
+conclusion must be reached or the model can't enter the tournament to challenge other models."*
+
+**The self-play game is the ADMISSION. The tournament is the CONTEST.** They share one state schema
+(`fen`, `move`, `eval_before`, `eval_after`, `termination`, `result`) and differ only in what they consume:
+**the weigh-in PRODUCES the binary, the tournament CONSUMES it.**
+
+**So: one event, two phases.** Splitting them would require two state schemas for one game, and the
+second would have to re-derive the first's conclusion — which is precisely the drift this catalogue keeps
+catching (a game name and a measure that drifted apart inside one entry; a label asserted instead of a
+behaviour measured). **A gate and the contest behind it are one event with a checkpoint, not two sports.**
+
+---
+
 ## Which event chess is — answered
 
 Chilly relayed a real conflict: the promo makes chess the **calibration** event, `GAMES.md:133` says
@@ -104,7 +120,7 @@ this time before it shipped.
 
 ---
 
-## The recorded state
+## The recorded state — and the board contract, written for a renderer
 
 Per position or per game, the bundle carries:
 
@@ -118,6 +134,47 @@ Per position or per game, the bundle carries:
 **The sufficient-statistic standard:** the move list plus the evaluations reproduce both fields. A record
 keeping the termination but not the evaluation cannot say whether a resignation was correct; a record
 keeping the evaluation but not the termination cannot say whether the game ended.
+
+### WHAT A BOARD NEEDS — confirmed, WITH ONE CORRECTION
+
+**The answer to Arena is YES, this record renders a board and a move-by-move replay. But the field list
+CHANGED in this revision, and the change matters for what gets drawn.**
+
+Jarvis was given `fen + move + legal + best + outcome`. That was v1, which specified a **tactics** event.
+`legal` and `best` are tactics fields: they say whether a move was permitted and whether it was the
+engine's choice. **They are not what a calibration board shows**, and two of them are now redundant:
+
+| field | what it draws |
+|---|---|
+| `fen` | **the position** — the board itself |
+| `move` | **the move played** — placed on the board |
+| `eval_before` → `eval_after` | **the comparison the replay is built on** — the engine's judgement of the position before and after the model moved. This is the calibration visual: the evaluation is the thing the model is being asked to perceive |
+| `termination` | **how it ended** — and here the drama is legible, because `resigned` draws a stopped clock rather than a mate |
+
+**`best` is NOT required for calibration** and should not be drawn as if it were: the measure is not "did
+the model find the engine's move," it is **"did the model know where it stood."** The eval pair replaces
+`best` entirely, and a board that draws a "best move" arrow on a calibration event is drawing the wrong
+sport. `legal` is implied by `move` being parseable and the position being reproducible — keep it in the
+record as a check, but no renderer needs it.
+
+### THE THING A BOARD CANNOT DECIDE — and it is Arena's call, not mine
+
+**The measure is two-sided, and the two sides are different pictures:**
+
+- **premature collapse** — the model resigns a **won or drawn** position. The board shows a position the
+  engine still likes, and a player who stopped.
+- **miscalibrated persistence** — the model plays on in a **lost** position. The board shows a position
+  the engine has given up on, and a player who did not.
+
+Same fields, opposite stories. **Whether that is two renders or one is a rendering question and Arena
+owns it** — I can say the record supports both, and that a single render which cannot distinguish them
+would collapse the exact distinction the class split exists to protect.
+
+### The state is a BUNDLE, not a specification
+
+There is **no chess bundle in existence.** The field running now is card v4's R1 fencing. Arena is not
+blocked on design and never was — **it is blocked on a first bundle**, and the renderer can be written
+against the shape above today and pointed at real data the moment one exists.
 
 **And every failure carries the class assigned by the path that failed.** A field inferred afterwards
 from a reason string can be overwritten by a later branch — which is how an earlier verdict in this
