@@ -51,6 +51,17 @@ EFFECT = (
 )
 
 
+def stem_of(bundle_filename):
+    """`X_cardv4_...json` -> `X_cardv4_...`, so the record is `X_cardv4_....json` and not `....json.json`.
+
+    A FILENAME IS NOT A STEM. The first version appended `.json` to the full filename, which produces a
+    name asserting that the bundle's extension is part of its identifier -- and the checker used the same
+    wrong rule, so it agreed with the generator and would have kept agreeing while both were wrong. The
+    two are now forced to share this function's rule, in the same repo, one import apart.
+    """
+    return bundle_filename[:-len(".json")] if bundle_filename.endswith(".json") else bundle_filename
+
+
 def bundles_with_game_names():
     """The bundles the check reports as claiming a game with no state."""
     sys.path.insert(0, HERE)
@@ -82,6 +93,10 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     written = 0
     for name in names:
+        # THE STEM, NOT THE FILENAME. The first version appended `.json` to the bundle's FULL filename,
+        # producing `X.json.json` -- a name that says the bundle's extension is part of its identifier.
+        # That is the stand-in family again: a filename treated as a stem. The record is named for the
+        # bundle it annotates, so the stem is the identifier.
         rec = {
             "record": "supersession",
             "written_after_the_run": True,
@@ -93,7 +108,7 @@ def main():
             "effect_on_standing": EFFECT,
             "superseding_change": commit,
         }
-        with open(os.path.join(OUT, name + ".json"), "w", encoding="utf-8") as fh:
+        with open(os.path.join(OUT, stem_of(name) + ".json"), "w", encoding="utf-8") as fh:
             json.dump(rec, fh, indent=2)
             fh.write("\n")
         written += 1

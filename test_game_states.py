@@ -128,9 +128,12 @@ def is_superseded(failure_line):
     if not name.endswith(".json"):
         return False
     # A SUBDIRECTORY, so the records never land where a broader glob would count them as bundles. This is
-    # the `EXERCISE_` collision caught before creating it: 301 annotation files beside 301 bundles would
+    # the `EXERCISE_` collision caught before creating it: 151 annotation files beside 151 bundles would
     # each look like an entrant to any sweep of `results/*.json`.
-    return os.path.exists(os.path.join(RESULTS, "supersessions", name + ".json"))
+    #
+    # AND THE STEM, NOT THE FILENAME: the record for `X.json` is `X.json` in here, not `X.json.json`. The
+    # caller and the checker must agree on this or the annotation silently stops matching the artifact.
+    return os.path.exists(os.path.join(RESULTS, "supersessions", name[:-len(".json")] + ".json"))
 
 
 def main():
