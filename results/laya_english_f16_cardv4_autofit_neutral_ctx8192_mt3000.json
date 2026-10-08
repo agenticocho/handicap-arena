@@ -1,13 +1,13 @@
 {
  "harness": "handicap-arena",
  "version": "1.0",
- "generated": "2026-10-08T21:11:16Z",
+ "generated": "2026-10-08T22:04:59Z",
  "results": [],
  "failure": {
   "class": "empty",
   "reason": "results list is EMPTY (measured nothing)",
   "rc": 0,
-  "secs": 2.4,
+  "secs": 2.3,
   "written_by": "run_card.py (pre-scoring failure: the run produced no bundle with a measurement, so no scoring path existed to record it)"
  }
 }

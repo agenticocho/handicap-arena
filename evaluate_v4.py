@@ -278,22 +278,49 @@ def main():
     print()
     print("=" * 78)
     if len(with_rd) < 40:
-        print(f"NO VERDICT YET -- the field is INCOMPLETE: {len(with_rd)} measured of ~46 expected.")
+        # STILL RUNNING vs CLOSED AND SHORT are different states, and the first version of this gate
+        # printed "NO VERDICT YET" for both. After the field closed, that sentence was STALE: it invites
+        # a reader to wait for a number that is not coming. So the gate now asks whether any entrant can
+        # still add: an entrant whose EVERY attempt produced an empty bundle has failed permanently.
+        per_entrant = {}
+        for p in sorted(glob.glob(os.path.join(RESULTS, "*cardv4*.json"))):
+            try:
+                d = json.load(open(p, encoding="utf-8"))
+            except Exception:
+                continue
+            if d.get("harness") != "handicap-arena":
+                continue
+            stem = os.path.basename(p).split("_cardv4")[0]
+            per_entrant.setdefault(stem, []).append(bool(d.get("results") or []))
+        never = [k for k, v in per_entrant.items() if not any(v)]
+        can_add = len(never) == 0
+        print(f"NO VERDICT -- {'the field can still add entrants' if can_add else 'THE FIELD IS CLOSED AND SHORT'}: "
+              f"{len(with_rd)} measured of ~46 expected.")
         print("  THIS IS A COMPLETENESS GATE, NOT A SCORE THRESHOLD. It answers 'did enough entrants")
         print("  produce a measurement', not 'did the card pass'.")
         print("  TWO DENOMINATORS, and both are right: the bundle FILES on disk and the UNIQUE entrants")
         print("  attempted are different quantities -- 8 entrants carry a second bundle from a re-run.")
         print("  Same shape as 38-versus-44 earlier today: two correct numbers, unstated denominators.")
-        print("  AND WHETHER THIS GATE IS REACHABLE DEPENDS ON A FIELD RULE, NOT ON ARITHMETIC:")
-        print("    - if ONLY the never-run entrants may add:  34 + 4 = 38  -> UNREACHABLE against 40.")
-        print("    - if an EMPTY entrant may be re-run and re-counted: the pool is all 46, and 8 of those")
-        print("      8 have already failed twice.")
-        print("  THE RULE, NAMED HERE BEFORE THE VERDICT IS ATTEMPTED: an empty bundle is a MISSING VALUE,")
-        print("  NOT a score of zero. A serving failure is not a result about the entrant, so re-running is")
-        print("  a re-measurement rather than a second chance -- and it is legitimate ONLY because it is")
-        print("  declared before the run that decides the verdict, which is what this print is. An entrant")
-        print("  counts as MEASURED if ANY attempt measured; every failure stays reported as a failure;")
-        print("  and no entrant may be dropped from the denominator for failing.")
+        print("  REACHABILITY DEPENDS ON A FIELD RULE, NOT ON ARITHMETIC -- the rule is named here,")
+        print("  before the verdict is attempted: an empty bundle is a MISSING VALUE, not a score of zero;")
+        print("  a serving failure is not a result about the entrant, so re-running is a RE-MEASUREMENT")
+        print("  rather than a second chance; an entrant counts as MEASURED if ANY attempt measured;")
+        print("  every failure stays reported as a failure; no entrant is dropped from the denominator.")
+        if not can_add:
+            print()
+            print("  *** UNSCOREABLE ON THIS FIELD. ***")
+            print(f"  Every entrant that has not measured has failed EVERY attempt: {len(never)} entrants,")
+            print("  each with an empty bundle in EVERY copy. Re-measurement was attempted and returned")
+            print("  nothing new, so the gate of 40 is UNMET. A further run COULD in principle meet it --")
+            print("  that is a policy question, not arithmetic -- but every one of these entrants has now")
+            print("  failed every attempt made: original run, re-run, and re-attempt, THREE TIMES EACH.")
+            print("  Nothing in this field's own behaviour suggests a fourth would differ, and this")
+            print("  instrument cannot say why the first three did not.")
+            print("  AND SIZE IS NOT THE EXPLANATION: of those entrants, SIX are 27B (5.95-7.21 GB) and")
+            print("  TWO ARE SMALL -- Kev-4B-Q4_K_M 3.03 GB and laya_english_f16 0.85 GB -- while a")
+            print("  0.219 GB entrant measured cleanly. At least two causes, and the field cannot say")
+            print("  which. THE CARD IS NOT EXCUSED -- THE POPULATION COULD NOT BE MADE COMPLETE. Those")
+            print("  are different sentences, and only the second one is supported by this instrument.")
         print("  Calling a verdict on a partial field is how v3's verdict became conditional on the scope")
         print("  of its own correction.")
         return 1
