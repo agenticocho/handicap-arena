@@ -104,6 +104,27 @@ artifact; `game` is derived from it. This is the day's own rule — *derive, don
 name kept alongside a schema drifts from it exactly the way a hand-maintained count drifts from what
 it counts.
 
+### The presentation boundary, made explicit because it WILL be tested
+
+**An INSTRUMENT may be FRAMED by the Arcade; it may not be NAMED as a game.** Two cases, one field apart:
+
+```
+{"class": "INSTRUMENT", "staged_as": "arcade cabinet -- PUNCH-OUT: which weigh-in gets up"}
+    -> PASSES. The framing is presentation, and presentation lives in `staged_as`.
+
+{"class": "INSTRUMENT", "staged_as": "arcade cabinet -- PUNCH-OUT: ...", "metaphor": "PUNCH-OUT"}
+    -> FAILS. THE NAME IS THE OFFENCE, not the presentation.
+```
+
+**Why this is written down rather than left to the rule.** The Arcade fronts every event, so an instrument
+**will** be shown as a cabinet. Without this passage, a presentation decision reads as a contract violation
+and the next reader *"fixes" the test* — which is the failure mode a rule about presentation invites.
+
+**Both cases are executed in `test_game_states.py`** — the framing case as a **negative control** (it must
+pass) and the same framing with the name as its **positive counterpart** (it must fire). So the boundary
+**fails loudly** if anyone moves it, rather than being a sentence nobody re-reads. That is the caption rule
+applied to the contract: a distinction stated once, in prose, is a distinction that drifts.
+
 **Scope, stated so the rule does not overreach:** the catalogue may name a game **as a
 specification** — that is a target, not a claim. **The check binds BUNDLES.** A bundle that claims a
 game and carries no state is a lie in the record; a catalogue entry that names one is a plan.

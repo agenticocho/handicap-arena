@@ -157,6 +157,31 @@ def main():
     else:
         print("  ok    an honest weigh-in PASSES (staged, no game, unranked)")
 
+    # THE BOUNDARY THAT LOOKS LIKE A VIOLATION, and the reason it is a CONTROL rather than a comment.
+    # The Arcade fronts every event, so an INSTRUMENT will eventually be SHOWN as a cabinet. That is
+    # PRESENTATION, it belongs in `staged_as`, and the forbidden thing is the game NAME
+    # (`metaphor`/`game`) -- the contract's own line: an instrument MAY be the most compelling thing on
+    # the card, it simply may not wear a game's clothes.
+    #
+    # Two cases ONE FIELD APART, because that is the entire boundary. Without the pair, a presentation
+    # decision reads as a contract violation and the next reader "fixes" the test -- which is the
+    # failure mode that a rule about presentation invites, and it is why this is a control.
+    arcade_ok = {"id": "C2b", "class": "INSTRUMENT", "items": [],
+                 "staged_as": "arcade cabinet -- PUNCH-OUT: which weigh-in gets up"}
+    if check_task_file(arcade_ok):
+        print("  FAIL  an ARCADE-FRAMED instrument was REJECTED -- the framing is presentation, not")
+        print("        a game claim, and it must be permitted")
+        fails.append("negative control: an INSTRUMENT staged as an arcade cabinet must pass")
+    else:
+        print("  ok    an ARCADE-FRAMED instrument PASSES (framing in `staged_as`, no game name)")
+    arcade_named = dict(arcade_ok, id="C2c", metaphor="PUNCH-OUT")
+    if not check_task_file(arcade_named):
+        print("  DID NOT FIRE  arcade framing WITH the game name in `metaphor`")
+        fails.append("positive control did not fire: arcade framing plus a game NAME must fail")
+    else:
+        print("  FIRES  the same framing WITH the name in `metaphor` -- THE NAME IS THE OFFENCE,")
+        print("         not the presentation. Move the name out and the event is honest again.")
+
     print()
     if fails:
         # SUMMARY BY CLASS, not one line per bundle. The first version printed 245 lines for what
