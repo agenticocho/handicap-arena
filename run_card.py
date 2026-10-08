@@ -173,6 +173,41 @@ def main():
         lf.write(f"\n=== card run started {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())} "
                  f"ctx={CTX} mt={MT} trials={TRIALS} ===\n")
 
+    # ============================================================================================
+    # THE GAME-CONTRACT GATE, AT ADMISSION -- it runs BEFORE ANY MODEL IS SPAWNED.
+    # ============================================================================================
+    #
+    # A SUBPROCESS, not an import. Two reasons: it reads the exit status cleanly, and it avoids coupling
+    # to the test_game_states <-> annotate_superseded import pair (the checker imports stem_of at module
+    # level; the generator imports the checker inside a function). A gate that shares a module with the
+    # thing it gates inherits its failure modes.
+    #
+    # HARD REFUSE. A warning is not a gate -- that is the whole reason this gate exists. And it runs at
+    # ADMISSION rather than during the run, the same shape as the weigh-in and as C4's partition: the
+    # field is checked before it starts, not while it is halfway through writing evidence.
+    #
+    # THE ESCAPE HATCH, and this sentence is why a hard refuse is safe:
+    #   IF A FUTURE CASE IS LEGITIMATE, AMEND GAME_CONTRACT.md -- a deliberate, recorded act -- AND NEVER
+    #   IGNORE THIS EXIT CODE. A gate with an override that is not written down is a gate nobody can audit.
+    # The person who hits this at 2am is the person who needs to read it, so it lives here, next to the
+    # call, not in a document they will not open.
+    gate = subprocess.run(
+        [sys.executable, os.path.join(ARENA, "test_game_states.py")],
+        capture_output=True, text=True,
+    )
+    if gate.returncode != 0:
+        tail = "\n".join((gate.stdout or "").strip().splitlines()[-14:])
+        print("REFUSED: the game contract is violated by a NEW round or task file.")
+        print("  test_game_states.py exited", gate.returncode, "-- no model was spawned.")
+        print()
+        print(tail)
+        print()
+        print("  THE REMEDY IS NOT TO IGNORE THIS. Amend GAME_CONTRACT.md -- a deliberate, recorded act --")
+        print("  or fix the task file / round that caused it. The historical violations are annotated and")
+        print("  do NOT trip this gate; only a NEW one does.")
+        return 1
+    print(f"game contract: OK ({gate.stdout.strip().splitlines()[-3] if gate.stdout else 'clean'})")
+
     done = scratched = skipped = 0
     t_start = time.time()
     for i, (size, path, base) in enumerate(ents, 1):
@@ -314,4 +349,11 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # THE REFUSE MUST BE HARD, AND THIS IS WHAT MAKES IT HARD. This called `main()` and discarded its
+    # return, so a REFUSED gate still exited 0 -- a warning wearing an exit code. **A WARNING IS NOT A
+    # GATE**, which is the whole reason the gate exists.
+    #
+    # Caught by the control, and caught in the right way: the planted violation produced the correct
+    # MESSAGE and the wrong STATUS. Reading the output would have called this fixed; reading the EXIT CODE
+    # showed it was not. That is the difference between a log line and a gate.
+    raise SystemExit(main())

@@ -39,6 +39,14 @@ RESULTS = os.path.join(HERE, "results")
 from annotate_superseded import stem_of
 
 GAME_KEYS = ("metaphor", "game")
+# THE DECLARED SLOT NAMESPACE. GAME_CONTRACT.md carries the prose table; this is the copy the check
+# enforces. The key check below is what makes a slot an OPAQUE ID rather than a residual claim -- and the
+# names are COSTUMES KEPT FOR KEY STABILITY, because renaming would rewrite keys inside recorded bundles.
+DECLARED_SLOTS = {
+    "R1_fencing": "structured-output conformance (schema strictness, scalar types, sequences)",
+    "R2_chess": "tool selection (the right call, and the reflex to abstain)",
+    "R3_pitstop": "code repair (a fix that breaks the other cases scores zero)",
+}
 STATE_KEYS = ("game_state_in_bundle", "game_state")
 
 
@@ -115,6 +123,12 @@ def check_bundle(p):
     if d.get("harness") != "handicap-arena":
         return fails
     for e in (d.get("results") or []):
+        # THE DECLARED SLOT NAMESPACE, ENFORCED. Every round key present in a bundle must appear in
+        # DECLARED_SLOTS. Without this, "declared namespace" is a CAPTION -- prose nobody checks -- and an
+        # undeclared key would arrive as a new slot, possibly wearing a game name, and no one would notice.
+        for rk in (e.get("rounds") or {}):
+            if rk not in DECLARED_SLOTS:
+                fails.append(f"{os.path.basename(p)} :: round key {rk!r} is NOT in the declared slot table")
         for rk, rd in (e.get("rounds") or {}).items():
             gk, gv = declared_game(rd)
             if gk and not has_state(rd):
@@ -235,6 +249,32 @@ def main():
     else:
         print(f"  ok    stem_of ASSERTED DIRECTLY ({len(rule_cases)} cases, including a name not ending "
               f"in .json passing through unchanged)")
+
+    # THE SLOT NAMESPACE, CONTROLLED IN BOTH DIRECTIONS. "Declared" is a caption until an UNDECLARED key
+    # fails, so the pair is one key apart: a bundle whose round key is in the table passes, and the same
+    # bundle with an invented key FIRES. Written to a temp file, never into results/, so the control cannot
+    # leave an artifact where a sweep would count it.
+    import tempfile
+    def _probe(rec):
+        fd, p = tempfile.mkstemp(suffix=".json")
+        try:
+            with os.fdopen(fd, "w") as fh:
+                json.dump(rec, fh)
+            return check_bundle(p)
+        finally:
+            os.remove(p)
+    if any("declared slot table" in f for f in _probe({"harness": "handicap-arena",
+                                                       "results": [{"rounds": {"R1_fencing": {}}}]})):
+        print("  FAIL  a DECLARED slot key was REJECTED -- the table overreaches its own purpose")
+        fails.append("control: a declared slot key must pass")
+    else:
+        print("  ok    a DECLARED slot key PASSES")
+    if not any("declared slot table" in f for f in _probe({"harness": "handicap-arena",
+                                                           "results": [{"rounds": {"R4_something_new": {}}}]})):
+        print("  DID NOT FIRE  an UNDECLARED slot key -- the namespace is a caption after all")
+        fails.append("control: an undeclared slot key must fire")
+    else:
+        print("  FIRES  an UNDECLARED slot key -- the namespace is a CHECK, not a caption")
 
     print()
     if fails:

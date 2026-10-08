@@ -187,6 +187,40 @@ by the same argument that made the caption and the filename defects a slot name 
 label whose referent has moved. **Renaming them touches the 301 round keys**, which is a migration rather
 than an edit — **so it is recorded here as a known label debt and deferred, not slipped in.**
 
+## THE SLOT NAMESPACE — DECLARED, NOT MIGRATED (operator-authorised 2026-10-08)
+
+**The round keys keep their names. The names are SLOTS, and this table is what makes them opaque IDs rather
+than residual claims.**
+
+| slot | what it MEASURES | historical name | status |
+|---|---|---|---|
+| `R1_fencing` | structured-output conformance — schema strictness, scalar types, sequences | `FENCING` | **costume, kept for key stability** |
+| `R2_chess`   | tool selection — the right call, and the reflex to abstain | `CHESS` | **costume, kept for key stability** |
+| `R3_pitstop` | code repair — a fix that breaks the other cases scores zero | `PIT STOP` | **costume, kept for key stability** |
+
+**WHY DECLARE RATHER THAN RENAME**, measured rather than asserted:
+
+- `evaluate_v4.py:35` is `ROUND = "R1_fencing"` and the evaluator **joins on that literal**;
+- `R1_fencing` appears **151 times across the 151 bundles** (`R2_chess` 75, `R3_pitstop` 75);
+- renaming therefore means **rewriting keys inside recorded bundles** — the overwrite of history refused
+  twice already today — and a forward-only rename would **split the join for nothing**, since every
+  cross-version comparison needs a mapping regardless. **That mapping is this table.**
+
+**THE JOIN PATH, stated so a reader does not have to invent it.** A round records its slot key; the
+**description** lives in the task file, which now carries `class` and `staged_as`:
+
+```
+bundle.results[i].rounds["R1_fencing"]   -> slot key      (historical, stable, OPAQUE)
+tasks/<card>/01_fencing.json             -> class=INSTRUMENT + staged_as   (the description)
+```
+
+**Forward, a round carries `class` and `staged_as` directly**, so new records need no join. **The existing
+151 recover theirs by the join above** — which is what declaring the table buys, at zero cost to the record.
+
+**AND IT IS ENFORCED, NOT JUST DECLARED.** `test_game_states.py` fails on any round key present in a bundle
+that is missing from this table, with **controls in both directions** — a declared key passes, an undeclared
+key FIRES. **Without that check, "declared namespace" is a caption.**
+
 **Attribution note, because I got this wrong while correcting something else.** A teammate reported
 that the test "exits 0 while reporting violations". It does not — the exit code is 1, checked. **The
 claim was theirs, not mine, and my correction commit `b8063bf` attributed it to my own commit
