@@ -130,6 +130,69 @@ current code and check two things: its item records carry `secs`/`gen_tokens`, a
 a `failure` record carrying `secs`. **One entrant is enough** — the claim is about whether the writer runs,
 not about any model. Running concurrently would contend for VRAM and slow the field, so it waits.
 
+**STATUS OF THE TWO, MEASURED (resume run `arena-v4b`):**
+
+```
+FIX 1  the failure record     EXERCISED -- 6 empty bundles under current code, all 6 carry
+                              {class: empty, rc: 0, secs: 19.2/15.9/21.3, written_by: pre-scoring path}
+FIX 2  the per-item clock     NOT YET -- 180 item records, zero carrying secs/gen_tokens
+```
+
+**FIX 2 CANNOT COMPLETE VIA THIS RUN, and the reason is structural rather than a bug: every entrant since
+the resume EMPTIED AT WEIGH-IN** — the tail of the field is large models failing to load (`llama-server
+exited early rc=1`). **An empty bundle has no item records, so no item record can carry the clock.** The
+exercise still owes one **small, known-good entrant**, which is the whole reason its own wording says *one
+entrant is enough — the claim is about whether the writer runs, not about any model.*
+
+---
+
+## THE POPULATION, STATED BEFORE THE VERDICT RATHER THAN DISCOVERED IN IT
+
+The field will close at roughly **30 measured of 46**, against v3's 38. **A materially thinner field, and
+the criteria are computed on it. That has to be stated rather than found.**
+
+**It is acceptable, and the reason is the shape of the missing twelve rather than their number.** They are
+**not a random twelve**: they are the **largest entrants**, failing **at load**. The field therefore
+systematically excludes the biggest models — **which is not noise, it is the Arena's own thesis measured
+on its own field.** `VRAM is the absolute bottleneck for the democratisation of AI`, and the entrants
+missing from this card are the evidence for it.
+
+**So the verdict is stated with three parts, and none of them is optional:**
+
+1. **the criteria, computed on the entrants that could run** — C1 and C2 as frozen;
+2. **the population, named** — 30 measured of 46, with the twelve identified as serving failures rather
+   than capability results;
+3. **the direction of the bias** — the exclusions are size-correlated, so the field's measured set is
+   biased *toward* models that fit, and a criterion computed on it is **noisier, not wrong.**
+
+**And a thinner field makes C2 harder, not easier** — the floor criterion needs five entrants below 0.34,
+and every entrant that fails to load is one that cannot land on the floor. **A serving limit pushes against
+the criterion rather than for it, which is the direction that does not need defending.**
+
+---
+
+## THE OOM PROTECTION: THE MECHANISM I DESCRIBED WAS WRONG
+
+I claimed *"oomd kills the largest cgroup that is above its limit"*. **That is not what the documentation
+says, and I asserted it without reading them** — the day's own class, in a resource decision.
+
+The documented form is a purpose-built property:
+
+```
+ManagedOOMPreference=none|avoid|omit
+    Allows deprioritizing or omitting this unit's cgroup as a candidate
+    when systemd-oomd needs to act.
+```
+
+**That removes the unit from the candidate set rather than leaving it under a number — strictly stronger
+than a ceiling above the peak.** Caveats, all of which hold here: it needs xattr support; for **swap**
+candidates oomd respects it only for root-owned cgroups; for **memory-pressure** candidates it is respected
+when the cgroup owner matches the monitored ancestor — **which holds, since this is a user unit under the
+same user slice** — and the trigger was pressure, not swap (swap peak 26.3M).
+
+**So the next launch carries `ManagedOOMPreference=omit` as well as the ceiling.** The three lines are not
+alternatives: the ceiling bounds the box, and the property excludes the arena from selection.
+
 **An unexercised claim is a claim with no carrier.**
 
 ---
