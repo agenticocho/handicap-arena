@@ -111,6 +111,28 @@ def check_bundle(p):
     return fails
 
 
+def is_superseded(failure_line):
+    """Is this round violation annotated by a supersession record beside its bundle?
+
+    A NOTE MAY ADD INFORMATION; IT MAY NOT CHANGE STANDING. A round annotated SUPERSEDED is still a
+    violation — this decides only which of two COUNTS it lands in, and the exit code is gated on the NEW
+    count alone. So the record can never make a violation disappear; it can only stop the check from
+    mistaking history for the present.
+
+    The record must exist for the SAME bundle named in the failure, so an annotation cannot be inherited
+    by a different artifact -- the same reason the `already_measured` check is keyed on content.
+    """
+    if "claims game" not in failure_line:
+        return False
+    name = failure_line.split(" ::")[0].strip()
+    if not name.endswith(".json"):
+        return False
+    # A SUBDIRECTORY, so the records never land where a broader glob would count them as bundles. This is
+    # the `EXERCISE_` collision caught before creating it: 301 annotation files beside 301 bundles would
+    # each look like an entrant to any sweep of `results/*.json`.
+    return os.path.exists(os.path.join(RESULTS, "supersessions", name + ".json"))
+
+
 def main():
     fails, checked = [], 0
 
@@ -188,31 +210,48 @@ def main():
         # is really 3 distinct defects -- the same 16:1 noise ratio I criticised in test_doc_counts
         # this morning. A report nobody reads protects nothing.
         from collections import defaultdict
-        groups = defaultdict(list)
+        # NEW vs HISTORICAL, and THE SPLIT IS THE ENFORCEMENT.
+        #
+        # A note beside an artifact may ADD information; it may not CHANGE the artifact's standing.
+        # Superseded is not the same as compliant. So the annotated rounds STAY COUNTED and STAY
+        # VIOLATIONS -- they are not excused by the note beside them, because the note cannot lend them
+        # a compliance they never had.
+        #
+        # And the number that gates the exit code is the NEW one, which must be 0. Skipping the annotated
+        # rounds instead would make "0" mean "none new" OR "none ever" with no way to tell which -- and
+        # A CHECK THAT CANNOT FAIL ON A CONDITION STILL PRESENT IN THE RECORD IS NOT A WEAKER CHECK, IT
+        # IS NOT A CHECK.
+        new, hist = [], []
         for f in fails:
+            (hist if is_superseded(f) else new).append(f)
+
+        groups = defaultdict(list)
+        for f in new:
             if "names the game" in f:
                 groups["task file names a game with no state"].append(f.split(": names")[0])
             elif "claims game" in f:
-                g = f.rsplit("claims game ", 1)[-1]
-                groups["recorded rounds claim a game with no state"].append(g)
+                groups["recorded rounds claim a game with no state"].append(f.rsplit("claims game ", 1)[-1])
             else:
                 groups["other"].append(f)
-        total = len(fails)
-        print(f"{total} GAME CONTRACT violation(s), in {len(groups)} class(es):")
-        for g, items in groups.items():
-            print(f"  - {g}: {len(items)}")
-            if "task file" in g:
-                for i in sorted(set(items)):
-                    print(f"        {i}")
-            else:
+        print(f"  NEW violations          : {len(new)}   <- MUST be 0. THIS is the enforcement.")
+        print(f"  HISTORICAL (superseded) : {len(hist)}   <- retained, unchanged, and still violations.")
+        print()
+        if new:
+            print(f"{len(new)} NEW GAME CONTRACT violation(s), in {len(groups)} class(es):")
+            for g, items in groups.items():
+                print(f"  - {g}: {len(items)}")
                 for i in sorted(set(items))[:6]:
                     print(f"        {i}")
                 if len(set(items)) > 6:
                     print(f"        ... and {len(set(items)) - 6} more (same shape)")
-        print()
-        print("  EVERY task file and EVERY recorded round names a game and carries no state.")
-        print("  Either the name goes, or the state arrives. See GAME_CONTRACT.md.")
-        return 1
+            print()
+            print("  A ROUND WRITTEN AFTER THE FIX CLAIMS A GAME AND CARRIES NO STATE.")
+            print("  Either the name goes, or the state arrives. See GAME_CONTRACT.md.")
+            return 1
+        print("  NO NEW violation. The 301 historical rounds stand AS RECORDED -- superseded, not")
+        print("  compliant, and the annotation does not upgrade them. A bundle written now claims no")
+        print("  game, which is what the fix was for.")
+        return 0
     print("every declared game has state behind it; no INSTRUMENT event is ranked")
     return 0
 

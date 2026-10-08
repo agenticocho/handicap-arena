@@ -1,0 +1,11 @@
+{
+  "record": "supersession",
+  "written_after_the_run": true,
+  "written_at": "2026-10-08T15:14:50-0700",
+  "written_from_commit": "2b70270",
+  "subject": "Triumvirate-Qwopus-MiMo-Ornith-9B-Coder.i1-Q4_K_M_autofit_neutral_ctx8192_mt3000.json",
+  "status": "SUPERSEDED -- NOT COMPLIANT",
+  "violation": "The round records in this bundle name a game and carry no state for it. That IS the violation GAME_CONTRACT.md names: a game name with no state behind it is a label with nothing behind it, and on an INSTRUMENT it is the referee in a costume. This bundle was written before the fix, when the task files declared `metaphor` and arena.py copied that field into every round record.",
+  "effect_on_standing": "NONE. This violation REMAINS COUNTED, as HISTORICAL. The record does not excuse it, downgrade it or upgrade the artifact -- it only stops a reader from mistaking history for the present.",
+  "superseding_change": "2b70270"
+}
