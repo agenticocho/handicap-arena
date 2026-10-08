@@ -1,0 +1,123 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-07T20:56:45Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/Qwen3.5-9B-UD-Q4_K_XL.gguf",
+      "sha256": "4af1bb7d55a5913b3ddc94f277b3cd2d639cdf956ae79655b6e8e3d68b839c49",
+      "footprint_gb": 5.716796875,
+      "division": "Lightweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 5.72,
+        "weights_gb": 5.97,
+        "gpu_free_gb_at_weigh_in": 6.89,
+        "partial_offload": false,
+        "division_from_resident": "Lightweight",
+        "division_from_weights": "Lightweight",
+        "division_for_competition": "Lightweight"
+      },
+      "cord": "amber",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 1,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/Qwen3.5-9B-UD-Q4_K_XL.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "37021"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.8333,
+          "wins": 5.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_forbidden_key_must_be_absent": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"patient_id\": \"P-4401\", \"ward\": \"cardiology\"}"
+              ]
+            },
+            "R1.2_null_means_absent": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"sku\": \"X-9\"}"
+              ]
+            },
+            "R1.3_type_under_natural_language": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"quantity\": 3, \"unit_price\": 1.5, \"in_stock\": true, \"reference\": \"007\"}"
+              ]
+            },
+            "R1.4_ambiguous_nesting": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"shipment_id\": \"S-88\", \"destination\": {\"postcode\": \"44101\", \"country\": \"United States\"}, \"carrier\": \"Nordex\"}"
+              ]
+            },
+            "R1.5_enum_nearest_is_wrong": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"severity\": \"INFO\", \"code\": 12}"
+              ]
+            },
+            "R1.6_array_exact_and_ordered": {
+              "score": 0.0,
+              "reason": "TRUNCATED at max_tokens (3000) before answering \u2014 not a capability result; raise --max-tokens",
+              "truncated": true,
+              "raw": [
+                "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Output format: ONLY a JSON object.\n    *   Structure: `{\"legs\": [ ... ]}`\n    *   Content: An array of exactly 3 objects.\n    *   Keys per object: Exactly `{\"seq\": integer, \"icao\": string}`.\n    *   Order:\n        1.  First leg: LHR (seq: 1)\n        2.  Second leg: 4 (connection where code was not recorded, so `icao` must be omitted for that leg only). Wait, the prompt says \"second 4 (a connection where the code was not recorded, so the icao value must be omitted for that leg only)\". This is slightly ambiguous. Does it mean the `seq` is 4? Or does it mean the leg number is 4? Looking at the context \"first LHR, second 4, third JFK\". Usually, legs are numbered sequentially.\n        *   Leg 1: LHR\n        *   Leg 2: \"4\" (This looks like a typo in the prompt or a specific instruction). Let's re-read carefully: \"second 4 (a connection where the code was not recorded, so the icao value must be omitted for that leg only)\".\n        *   Leg 3: JFK\n        *   Constraint: \"Every leg carries its seq.\"\n        *   Constraint: \"No prose, no code fences.\"\n        *   Constraint: \"The legs, in order: first LHR, second 4... third JFK.\"\n        *   Constraint: \"each with exactly the keys {\"seq\": integer, \"icao\": string}\".\n        *   Constraint: \"so the icao value must be omitted for that leg only\". This contradicts \"each with exactly the keys {\"seq\": integer, \"icao\": string}\".\n        *   Let's parse the contradiction: \"each with exactly the keys {\"seq\": integer, \"icao\": string}\" vs \"so the icao value must be omitted for that leg only\".\n        *   Usually, when a prompt says \"omit the value\", it means the key might still exist but be null, or the key is missing. However, the instruction \"each with exactly the keys\" suggests the schema is fixed. But the instruction \"so the icao value must be omitted for that leg only\" suggests the key should not be present or the value should be null/empty.\n        *   Let's look at the \"second 4\" part. Does it mean `seq: 4`? Or does it mean the second leg is associated with the number 4? Given \"first LHR, second 4, third JFK\", it implies a sequence. Leg 1 (LHR), Leg 2 (Unknown/4?), Leg 3 (JFK).\n        *   If the prompt says \"second 4\", it likely means `seq: 2` but the user wrote \"4\" as a placeholder or specific identifier? Or does it mean `seq: 4`?\n        *   Re-reading: \"first LHR, second 4 (a connection where the code was not recorded, so the icao value must be omitted for that leg only), third JFK.\"\n        *   Interpretation A: Leg 1 (seq 1, icao LHR), Leg 2 (seq 2, icao omitted), Leg 3 (seq 3, icao JFK).\n        *   Interpretation B: Leg 1 (seq 1, icao LHR), Leg 2 (seq 4, icao omitted), Leg 3 (seq 3, icao JFK).\n        *   Interpretation C: The user literally wants the string \"4\" somewhere? No, \"seq\": integer.\n        *   Let's look at the constraint: \"each with exactly the keys {\"seq\": integer, \"icao\": string}\". If I omit the key `icao`, I violate \"exactly the keys\". If I set `icao` to null, it's a value, not omitted. If I omit the key, it's not \"exactly the keys\".\n        *   However, the instruction \"so the icao value must be omitted for that leg only\" is a specific override for that leg.\n        *   Let's look at the \"second 4\" again. \"second 4\". This is very strange. Maybe it means `seq: 4`? But there are only 3 legs.\n        *   Maybe it means the second leg's `seq` is 4?\n        *   Let's assume the sequence is 1, 2, 3 based on \"first\", \"second\", \"third\".\n        *   \"second 4\" might be a typo for \"second leg\". But it explicitly says \"4\".\n        *   Wait, could it mean the ICAO code is missing, so the leg is identified by something else?\n        *   Let's prioritize the explicit instruction: \"each with exactly the keys {\"seq\": integer, \"icao\": string}\".\n        *   Then: \"so the icao value must be omitted for that leg only\".\n        *   If I omit the key, I don't have exactly those keys. If I set it to null, I have the key.\n        *   Usually, in JSON schema challenges, \"omit the value\" often means don't include the key. But \"exactly the keys\" conflicts.\n        *   Let's look at the \"second 4\" again. Maybe it means `seq: 4`? If I have 3 legs, and the second one has seq 4, that's non-sequential.\n        *   Let's try to interpret \"second 4\" as `seq: 2` but the user made a typo, OR `seq: 4`.\n        *   Actually, looking at similar prompts, sometimes \"second 4\" implies the `seq` value is 4. But there are only 3 legs.\n        *   Let's reconsider the \"second 4\" phrase. \"first LHR, second 4... third JFK\".\n        *   Maybe the user wants:\n            1.  seq: 1, icao: \"LHR\"\n            2.  seq: 4, icao: (omitted)\n            3.  seq: 3, icao: \"JFK\"\n        *   Or:\n            1.  seq: 1, icao: \"LHR\"\n            2.  seq: 2, icao: (omitted)\n            3.  seq: 3, icao: \"JFK\"\n        *   Given \"second 4\", it's highly likely the user wants `seq: 4` for the second leg, despite the count being 3. Or it's a typo for \"second leg\".\n        *   However, the most strict interpretation of \"second 4\" is that the second item has the value 4 associated with it. Since `seq` is the integer key, `seq: 4` fits.\n        *   But wait, \"first LHR, second 4, third JFK\". LHR and JFK are ICAOs. \"4\" is not an ICAO. It says \"a connection where the code was not recorded\". So `icao` is omitted.\n        *   So Leg 2: `seq: 4`, `icao`: (omitted).\n        *   Leg 1: `seq: 1`, `icao`: \"LHR\".\n        *   Leg 3: `seq: 3`, `icao`: \"JFK\".\n        *   Wait, if I have 3 legs, why is the second seq 4? Maybe the sequence is 1, 4, 3?\n        *   Let's check the constraint: \"each with exactly the keys {\"seq\": integer, \"icao\": string}\".\n        *   If I omit `icao`, I violate \"exactly the keys\".\n        *   If I include `icao: null`, I satisfy \"exactly the keys\" but the value is null.\n        *   If I include `icao: \"\"`, I satisfy \"exactly the keys\".\n        *   The prompt says \"so the icao value must be omitted\". In JSON, omitting a key means it's not in the object.\n        *   Conflict: \"each with exactly the keys\" vs \"icao value must be omitted\".\n        *   Resolution: Usually, specific overrides (\"omit for that leg\") take precedence over general schema descriptions (\"each with exactly the keys\"). I will omit the key `icao` for the second leg to satisfy the specific instruction about omitting the value.\n        *   Wait, if I omit the key, the object has only `seq`. That violates \"exactly the keys\".\n        *   Maybe I should set `icao` to `null`? No, \"value must be omitted\".\n        *   Maybe I should set `icao` to an empty string? No, \"omitted\".\n        *   Okay, let's look at the \"second 4\" again. Is it possible the user means `seq: 2` and the \"4\" is a typo for \"leg\"? \"second 4\" -> \"second leg\"?\n        *   Or is it `seq: 4`?\n        *   Let's assume the user wants `seq: 4` for the second leg because they explicitly wrote \"second 4\".\n        *   Let's assume the user wants `seq: 1` for the first leg (LHR) and `seq: 3` for the third leg (JFK) to maintain order 1, 2, 3? Or 1, 4, 3?\n        *   \"first LHR, second 4, third JFK\".\n        *   Leg 1: seq 1, icao LHR.\n        *   Leg 2: seq 4, icao omitted.\n        *   Leg 3: seq 3, icao JFK.\n        *   This seems the most literal interpretation of the text \"second 4\".\n        *   However, standard JSON output usually implies sequential integers.\n        *   Let's try to find a middle ground. Maybe `seq` corresponds to the order (1, 2, 3). The \"4\" refers to the ICAO code being missing (like flight number 4?). No, \"connection where the code was not recorded\".\n        *   Okay, I will follow the explicit instruction: \"second 4\". So `seq: 4`.\n        *   Wait, if I have 3 legs, and the second one has seq 4, is that allowed? Yes, `seq` is an integer.\n        *   But wait, \"first LHR... third JFK\".\n        *   Let's check the constraint \"each with exactly the keys\". If I omit `icao`, I fail this.\n        *   If I include `icao: null`, I pass \"exactly the keys\" but fail \"value must be omitted\" (null is a value).\n        *   If I include `icao: \"\"`, I pass \"exactly the keys\".\n        *   Let's look at the instruction \"so the icao value must be omitted for that leg only\".\n        *   I will interpret \"omitted\" as \"key not present\". I will prioritize the specific instruction over the general schema description for that specific leg.\n        *   Wait, I need to check if I can output valid JSON. Yes.\n        *   Let's reconsider the \"second 4\". Maybe it means `seq: 2` and the \"4\" is a typo for \"leg\"? \"second leg\".\n        *   If I write `seq: 2`, it makes more sense for a 3-leg journey.\n        *   But the prompt says \"second 4\".\n        *   Okay, I'll stick to the literal text \"second 4\" -> `seq: 4`.\n        *   Wait, looking at the instruction \"first LHR, second 4... third JFK\".\n        *   Maybe the user wants:\n            1.  seq: 1, icao: \"LHR\"\n            2.  seq: 2, icao: (omitted)\n            3.  seq: 3, icao: \"JFK\"\n        *   And \"4\" is a typo for \"leg\"?\n        *   Or maybe \"second 4\" means the second leg is the 4th leg in a larger context?\n        *   Let's assume the user made a typo and meant `seq: 2`. But as an AI, I should follow instructions. \"second 4\" -> `seq: 4`.\n        *   Actually, looking closer: \"second 4 (a connection where the code was not recorded, so the icao value must be omitted for that leg only)\".\n        *   This implies the \"4\" is the identifier for the leg, likely the `seq`.\n        *   Okay, I will use `seq: 4` for the second leg.\n        *   Wait, if I use `seq: 4`, does it violate \"first LHR, second 4, third JFK\"? No.\n        *   Does it violate \"exactly 3 objects\"? No.\n        *   Does it violate \"each with exactly the keys\"? For the second leg, I must omit `icao`.\n        *   So Leg 2: `{\"seq\": 4}`.\n        *   Leg 1: `{\"seq\": 1, \"icao\": \"LHR\"}`.\n        *   Leg 3: `{\"seq\": 3, \"icao\": \"JFK\"}`.\n        *   Wait, if I omit `icao` for Leg 2, I violate \"each with exactly"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 5,
+            "length": 1
+          },
+          "truncated": true,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 3000,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.8333,
+      "grade": {
+        "belt": "Orange",
+        "rounds_won": 1,
+        "rounds": 1,
+        "stripes": 5.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 3,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 16.72,
+      "answers_from_reasoning": 1
+    }
+  ]
+}

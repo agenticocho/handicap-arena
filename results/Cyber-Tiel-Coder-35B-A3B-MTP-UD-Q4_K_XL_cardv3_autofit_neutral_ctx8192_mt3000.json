@@ -1,0 +1,122 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-07T21:38:51Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/Cyber-Tiel-Coder-35B-A3B-MTP-UD-Q4_K_XL.gguf",
+      "sha256": "c88fb8f007358c7237a2af3c3988a6c851069e567fd12d29ae6e72827e412acf",
+      "footprint_gb": 5.1298828125,
+      "division": "Heavyweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 5.13,
+        "weights_gb": 22.75,
+        "gpu_free_gb_at_weigh_in": 6.37,
+        "partial_offload": true,
+        "division_from_resident": "Lightweight",
+        "division_from_weights": "Heavyweight",
+        "division_for_competition": "Heavyweight"
+      },
+      "cord": "crimson",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 1,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/Cyber-Tiel-Coder-35B-A3B-MTP-UD-Q4_K_XL.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "59703"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.8333,
+          "wins": 5.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_forbidden_key_must_be_absent": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"patient_id\": \"P-4401\", \"ward\": \"cardiology\"}"
+              ]
+            },
+            "R1.2_null_means_absent": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"sku\": \"X-9\"}"
+              ]
+            },
+            "R1.3_type_under_natural_language": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"quantity\": 3, \"unit_price\": 1.5, \"in_stock\": true, \"reference\": \"007\"}"
+              ]
+            },
+            "R1.4_ambiguous_nesting": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"shipment_id\": \"S-88\", \"destination\": {\"postcode\": \"44101\", \"country\": \"United States\"}, \"carrier\": \"Nordex\"}"
+              ]
+            },
+            "R1.5_enum_nearest_is_wrong": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"severity\": \"INFO\", \"code\": 12}"
+              ]
+            },
+            "R1.6_array_exact_and_ordered": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "raw": [
+                "{\"legs\": [{\"seq\": 1, \"icao\": \"EGLL\"}, {\"seq\": 2}, {\"seq\": 3, \"icao\": \"KJFK\"}]}"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 6
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 358,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.8333,
+      "grade": {
+        "belt": "Orange",
+        "rounds_won": 1,
+        "rounds": 1,
+        "stripes": 5.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 3,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 4.23,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

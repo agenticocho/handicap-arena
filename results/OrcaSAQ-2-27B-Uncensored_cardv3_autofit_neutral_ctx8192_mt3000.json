@@ -1,0 +1,123 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-07T21:16:35Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/OrcaSAQ-2-27B-Uncensored.gguf",
+      "sha256": "bca7a92b7656c6c6b67d4b02a7ae6b3a847682681f4aaf62702aa2f1508fca8c",
+      "footprint_gb": 5.3095703125,
+      "division": "Middleweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 5.31,
+        "weights_gb": 15.68,
+        "gpu_free_gb_at_weigh_in": 6.88,
+        "partial_offload": true,
+        "division_from_resident": "Lightweight",
+        "division_from_weights": "Middleweight",
+        "division_for_competition": "Middleweight"
+      },
+      "cord": "violet",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 1,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/OrcaSAQ-2-27B-Uncensored.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "38433"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.8333,
+          "wins": 5.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_forbidden_key_must_be_absent": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"patient_id\":\"P-4401\",\"ward\":\"cardiology\"}"
+              ]
+            },
+            "R1.2_null_means_absent": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"sku\":\"X-9\"}"
+              ]
+            },
+            "R1.3_type_under_natural_language": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"quantity\":3,\"unit_price\":1.5,\"in_stock\":true,\"reference\":\"007\"}"
+              ]
+            },
+            "R1.4_ambiguous_nesting": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"shipment_id\":\"S-88\",\"destination\":{\"postcode\":\"44101\",\"country\":\"United States\"},\"carrier\":\"Nordex\"}"
+              ]
+            },
+            "R1.5_enum_nearest_is_wrong": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"severity\":\"INFO\",\"code\":12}"
+              ]
+            },
+            "R1.6_array_exact_and_ordered": {
+              "score": 0.0,
+              "reason": "TRUNCATED at max_tokens (3000) before answering \u2014 not a capability result; raise --max-tokens",
+              "truncated": true,
+              "raw": [
+                "We need answer user's request. Need emit ONLY JSON object {\"legs\": [ ... ]} where legs array exactly 3 objects, each with exactly keys {\"seq\": integer, \"icao\": string}. But then says: first LHR, second 4 (a connection where the code was not recorded, so the icao value must be omitted for that leg only), third JFK. Every leg carries its seq. No prose, no code fences.\n\nContradiction: each with exactly keys {\"seq\": integer, \"icao\": string}, but second icao omitted. Need satisfy likely: legs: [{\"seq\":1,\"icao\":\"LHR\"},{\"seq\":2},{\"seq\":3,\"icao\":\"JFK\"}]. But \"each with exactly the keys\" conflicts with omitted icao. They explicitly says icao value must be omitted for that leg only. So second object only seq. Need output JSON only. Ensure seq integers. Could seq be 1,2,3? \"second 4\" maybe means second leg seq 4? Let's parse: \"The legs, in order: first LHR, second 4 (a connection where the code was not recorded, so the icao value must be omitted for that leg only), third JFK. Every leg carries its seq.\" It says second 4 maybe the seq is 4? \"second 4\" could mean second leg has seq 4? They say every leg carries its seq. Maybe they want seq values: first? Could be first LHR, second 4, third JFK. The phrase \"second 4\" likely means the second leg's seq is 4? Or \"second 4\" as in second item is 4? Let's inspect: \"The legs, in order: first LHR, second 4 (a connection where the code was not recorded, so the icao value must be omitted for that leg only), third JFK. Every leg carries its seq.\" It might be a puzzle: legs in order: first LHR, second 4, third JFK. Every leg carries its seq. So first leg seq? Maybe seq is 1? second seq 4? third seq? Could be seq values are 1,4,? But \"second 4\" could mean second leg's seq is 4. \"first LHR\" no seq specified, \"third JFK\" no seq specified. \"Every leg carries its seq\" means include seq for each. Need infer seqs. Maybe they want seq: 1 for first, 4 for second, 3 for third? But \"second 4\" explicitly gives 4. \"first\" and \"third\" maybe ordinal positions, not seq. Could be seq should be 1, 4, 3? Or 1,2,3? Let's reason.\n\nUser: \"Emit ONLY a JSON object {\"legs\": [ ... ]} where legs is an ARRAY of exactly 3 objects, each with exactly the keys {\"seq\": integer, \"icao\": string}. The legs, in order: first LHR, second 4 (a connection where the code was not recorded, so the icao value must be omitted for that leg only), third JFK. Every leg carries its seq. No prose, no code fences.\"\n\nThey say each with exactly keys seq and icao, but then omit icao for second. Maybe they intentionally test conflict: must omit icao for second only, so second has only seq. \"second 4\" likely means second leg's seq is 4? Because they say \"second 4\" not \"second LHR\". Could be \"second 4\" means the second leg is sequence number 4. They also say \"Every leg carries its seq.\" So first and third need seq too. What seq for first and third? Could be 1 and 3? If second is 4, maybe sequence numbers are not contiguous? Maybe first is 1, second is 4, third is 3? But \"in order: first LHR, second 4, third JFK\" could mean the legs' seq values are: first leg seq? maybe 1? second leg seq 4, third leg seq? maybe 3? Why would third be 3? If \"third\" is ordinal, not seq. Could be they want seq values equal to ordinal: 1,2,3, but \"second 4\" contradicts. Maybe \"second 4\" means second leg's icao is \"4\"? But icao is string, and code not recorded so omitted. Hmm.\n\nMaybe the phrase \"second 4\" is a typo or shorthand: \"second 4\" = second leg, seq 4. They want exactly 3 objects: first LHR, second 4, third JFK. Every leg carries its seq. So likely:\n{\"legs\":[{\"seq\":1,\"icao\":\"LHR\"},{\"seq\":4},{\"seq\":3,\"icao\":\"JFK\"}]}\nBut why third seq 3? If \"third\" means ordinal, seq could be 3. But if second seq is 4, sequence not monotonic. Could be first seq 1, second seq 4, third seq 5? No info.\n\nAlternative: \"second 4\" means the second leg's seq is 4, and first/third seq are their ordinal positions? first=1, third=3. That yields 1,4,3. But \"in order\" maybe array order, not seq order. Could be seq values are 1,4,3. Is that plausible? They say \"Every leg carries its seq.\" If they specify second 4, they expect seq 4 for second. For first and third, maybe use 1 and 3 because \"first\" and \"third\". But if seq is sequence number, third should be 3? Yet second being 4 breaks. Maybe they intentionally have non-contiguous seq: first leg seq 1, second leg seq 4, third leg seq 3? Could be from some data where seq values are 1,4,3.\n\nMaybe \"second 4\" means second leg's icao is \"4\"? But then says code not recorded, so icao omitted. Could be \"second 4\" means second leg's seq is 4. Yes.\n\nNeed decide final JSON. Need only JSON. Could include second without icao. Need exactly 3 objects. Keys: first and third have seq and icao; second only seq. But user said each with exactly keys seq and icao; conflict. We prioritize explicit omission.\n\nNeed maybe use seq values: 1,4,3? Let's examine wording: \"The legs, in order: first LHR, second 4 (a connection where the code was not recorded, so the icao value must be omitted for that leg only), third JFK. Every leg carries its seq.\" If they wanted seq 1,2,3 they'd say second (a connection...) not \"second 4\". The \"4\" likely is the seq for second. \"first LHR\" maybe first leg's icao LHR, seq? \"third JFK\" third leg's icao JFK, seq? They didn't specify first/third seq, but \"Every leg carries its seq\" maybe we should assign sequential integers 1,2,3? But then why \"second 4\"? Could be \"second 4\" means second leg is the 4th? Wait: \"second 4\" could be read as \"second [leg] 4\" where 4 is the seq. They might be specifying that the second object's seq is 4. For first and third, maybe seq should be 1 and 3? Or maybe seq should be 1 and 5? No.\n\nMaybe the intended answer is a trick: \"each with exactly the keys {\"seq\": integer, \"icao\": string}\" but second icao omitted, impossible. To satisfy both, could set icao to empty string? But says omitted. Could set \"icao\": null? No, omitted. Could include key with empty string? \"value must be omitted\" means no key. So exact keys impossible. They likely expect second object only seq.\n\nCould \"second 4\" mean the second leg's icao is \"4\" but code not recorded so omitted? No.\n\nMaybe they want:\n{\"legs\":[{\"seq\":1,\"icao\":\"LHR\"},{\"seq\":4,\"icao\":\"\"},{\"seq\":3,\"icao\":\"JFK\"}]}\nBut \"icao value must be omitted\" not empty.\n\nNeed output valid JSON. If second lacks icao, object keys not exactly as first sentence. But explicit.\n\nWhat about seq for third? If \"third JFK\" maybe seq 3. If \"second 4\" seq 4, then array order: seq 1, seq 4, seq 3. Is that weird but okay. Could also be seq 1,4,4? No.\n\nMaybe \"second 4\" means second leg's seq is 4, and \"third JFK\" means third leg's seq is 3? The word third could be both ordinal and seq. They might expect seq values: 1,4,3 because first=1, second=4, third=3. But if \"third\" is ordinal, not necessarily seq. However \"Every leg carries its seq\" and they only gave one seq (4). We need fill others. The safest is use ordinal positions for unspecified: 1 and 3. But if seq is supposed to be sequential, second should be 2, not 4. The explicit 4 overrides.\n\nCould \"second 4\" mean \"second [leg's seq is] 4\". Then first and third maybe seq 1 and 3? But if sequence numbers are unique, 1,4,3 okay. If they are in order, maybe seq should be 1,4,5? No basis.\n\nMaybe the user is testing instruction following: \"legs, in order: first LHR, second 4, third JFK\" could mean the icao values are LHR, 4, JFK? But then \"code was not recorded\" for second, so icao omitted. \"second 4\" maybe the second leg's seq is 4. They say \"Every leg carries its seq.\" So first and third need seq. Could be they want seq values 1,4,3? Let's think of possible source: Maybe a flight itinerary with legs: LHR, connection (code not recorded), JFK. The seq numbers might be 1, 4, 3? Why would connection be seq 4? Could be from a dataset where leg sequence numbers are not contiguous: first leg seq 1, second leg seq 4, third leg seq 3. The prompt: \"The legs, in order: first LHR, second 4 (a connection where the code was not recorded, so the icao value must be omitted for that leg only), third JFK.\" It might be asking to emit legs with seq: first? second 4? third? Maybe \"second 4\" is not seq but the second leg's icao is \"4\"? But icao code not recorded, so omitted. Hmm.\n\nMaybe \"second 4\" means the second leg's seq is 4, and the first and third seq are 1 and 3 because they are first and third. I lean to {\"legs\":[{\"seq\":1,\"icao\":\"LHR\"},{\"seq\":4},{\"seq\":3,\"icao\":\"JFK\"}]}.\n\nBut could they expect seq 1,2,3 and \"second 4\" means second leg's icao is \"4\"? Let's parse grammar: \"The legs, in order: first LHR, second 4 (a connection where the code was not recorded, so the icao value must be omitted for that leg only), third JFK.\" If listing legs: first [leg] LHR, second [leg] 4, third [leg] JFK. The item after second is 4. Since icao is a string, 4 could be icao? But then parenthetical says code not recorded, so icao omitted. That would be contradictory: second 4 (code not recorded). Maybe 4 is seq. They say \"Every leg carries its seq.\" So \"second 4\" likely means second leg's seq is 4. If they were listing icao values, they'd not say every leg carries seq.\n\nCould \"second 4\" mean \"second [leg's seq is] 4\". Then first and third seq? Maybe \"first\" and \"third\" are also seq? first=1, third=3. Yes.\n\nNeed ensure JSON only, no code fences. Final: {\"legs\":[{\"seq\":1,\"icao\":\"LHR\"},{\"seq\":4},{\"seq\":3,\"icao\":\"JFK\"}]}\n\nBut check \"each with exactly the keys {\"seq\": integer, \"icao\": string}\" If second lacks icao, not exactly. Could we include \"icao\": \"\"? They said omitted. If we include empty string, key present, value omitted? No. Could include \"icao\": null? Not omitted. The explicit \"icao value must be omitted for that leg only\" likely means key omitted. So second object has only seq. That violates first sentence but is necessary.\n\nCould we make second object have exactly keys seq and icao by setting icao to something like \"4\"? But parenthetical says code not recorded, so icao value must be omitted. If we set icao: \"4\", not omitted. If we set icao: \"\", value present but empty. \"omitted\" usually key absent.\n\nNeed maybe output with second: {\"seq\":4,\"icao\":\"\"}? The phrase \"icao value must be omitted\" could mean the value is omitted (empty) but key remains? In JSON, omitting a value is not standard; you can omit key. They say \"for that leg only\" likely key omitted. Also \"each with exactly the keys\" would be satisfied if key present with empty string? But \"icao value must be omitted\" not \"empty\". Hmm.\n\nIf we want satisfy \"each with exactly keys\" more, we could include \"icao\": \"\" for second. But then value not omitted? It is empty. The user specifically: \"second 4 (a connection where the code was"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 5,
+            "length": 1
+          },
+          "truncated": true,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 3000,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.8333,
+      "grade": {
+        "belt": "Orange",
+        "rounds_won": 1,
+        "rounds": 1,
+        "stripes": 5.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 3,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 173.42,
+      "answers_from_reasoning": 1
+    }
+  ]
+}

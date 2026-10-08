@@ -97,6 +97,14 @@ def main(card="v3", pid=None):
         by_stem[stem] = by_stem.get(stem, False) or has
     measured = [s for s, has in by_stem.items() if has]
     never_ran = [s for s, has in by_stem.items() if not has]
+    # ACCOUNTED-FOR IS THE COMPLETENESS TEST, NOT MEASURED.
+    #
+    # Fourth iteration of one class: files -> measurements -> entrants -> ACCOUNTED-FOR. A complete
+    # run reports `scored 18 · scratched 7 · skipped 21 = 46`: a SKIPPED entrant already has a bundle
+    # from an earlier pass, so it is done, and counting only fresh measurements made a finished field
+    # read as DIED. Every entrant this tool can see has a stem; completeness is whether every EXPECTED
+    # entrant has one.
+    accounted = len(by_stem)
     # THE RUNNER MOVED ITS LOG, SO A READER THAT KEEPS THE OLD PATH LOOKS LIVE AND REPORTS NOTHING.
     # Read from both candidate locations and take the newest: the value is read from where it IS,
     # not remembered from where it was. Same rule as reading EXCLUDE_PAT out of the runner.
@@ -126,29 +134,30 @@ def main(card="v3", pid=None):
     # carries no signal. "exit 1" is not a result; "exit 1, captured directly" is. So each verdict
     # line below states what it counted and where the count came from.
     n_m, n_exp = len(measured), len(exp)
-    if n_m >= n_exp:
-        print(f"  STATE: FINISHED — {n_m} entrants MEASURED against {n_exp} expected, both counted "
-              f"from the runner's own filter.")
+    if accounted >= n_exp:
+        print(f"  STATE: FINISHED — {accounted} entrants ACCOUNTED FOR against {n_exp} expected, of "
+              f"which {n_m} carry a measurement.")
         return 0
     if alive is False:
-        if n_m == 0:
-            print(f"  STATE: NOT STARTED — 0 entrants measured against {n_exp} expected, no process "
-                  f"alive. Nothing has been measured yet.")
+        if accounted == 0:
+            print(f"  STATE: NOT STARTED — 0 entrants accounted for against {n_exp} expected, no "
+                  f"process alive. Nothing has been measured yet.")
             return 1
-        print(f"  STATE: *** DIED *** — {n_m} entrants MEASURED against {n_exp} expected, and NO "
-              f"process alive. {n_exp - n_m} entrants were never measured.")
+        print(f"  STATE: *** DIED *** — {accounted} entrants ACCOUNTED FOR against {n_exp} expected, "
+              f"and NO process alive. {n_exp - accounted} entrants have no bundle at all.")
         print("  Report this as a FAILURE. Do not report it as a finish.")
         return 2
     if alive is None:
-        print(f"  STATE: UNKNOWN — {n_m} of {n_exp} measured, process liveness not checked "
-              f"(no pid given).")
+        print(f"  STATE: UNKNOWN — {accounted} of {n_exp} accounted for ({n_m} measured), process "
+              f"liveness not checked (no pid given).")
         return 1
     if age > STALE_SECONDS:
-        print(f"  STATE: RUNNING BUT STALE — {n_m} of {n_exp} measured, process alive, no log "
-              f"progress for {age:.0f}s (threshold {STALE_SECONDS}s). Suspect a hang.")
+        print(f"  STATE: RUNNING BUT STALE — {accounted} of {n_exp} accounted for ({n_m} measured), "
+              f"process alive, no log progress for {age:.0f}s (threshold {STALE_SECONDS}s). Suspect "
+              f"a hang.")
         return 1
-    print(f"  STATE: RUNNING — {n_m} of {n_exp} entrants MEASURED, process {pid} alive, last log "
-          f"progress {age:.0f}s ago.")
+    print(f"  STATE: RUNNING — {accounted} of {n_exp} entrants accounted for ({n_m} MEASURED), "
+          f"process {pid} alive, last log progress {age:.0f}s ago.")
     return 0
 
 
