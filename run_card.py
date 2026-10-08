@@ -154,6 +154,34 @@ def bundle_path(stem):
     return os.path.join(RESULTS, f"{stem}{tag}_autofit_neutral_ctx{CTX}_mt{MT}.json")
 
 
+def game_contract_gate():
+    """-> (ok, detail). READ THE DECISION, DO NOT RUN THE PROGRAM.
+
+    A SUBPROCESS, not an import: it reads the exit status cleanly and avoids coupling to the
+    test_game_states <-> annotate_superseded import pair (the checker imports stem_of at module level; the
+    generator imports the checker inside a function). A gate that shares a module with the thing it gates
+    inherits its failure modes.
+
+    ** AND THIS FUNCTION EXISTS SO THE GATE CAN BE TESTED WITHOUT RUNNING WHAT IT PERMITS. **
+    The first version of the control ran `run_card.py` whole to see the gate pass -- and passing the gate
+    STARTS THE WORK, so the control spawned servers, reached entrants, and wrote `results/` artifacts,
+    which then went into the commit whose own message claimed "0 control artifacts left behind."
+
+      A CONTROL FOR A GATE MUST NOT WRITE TO THE RECORD IT CONTROLS.
+      TESTING A REFUSAL IS FREE -- the refusal IS the short circuit.
+      TESTING A PERMISSION IS NOT FREE, BECAUSE THE PERMISSION'S ONLY OBSERVABLE EFFECT IS THE PERMITTED
+      WORK. Nobody prices in the cost of the thing being permitted.
+
+    Returning the decision makes both directions free, and the caller is the only thing that proceeds.
+    """
+    gate = subprocess.run(
+        [sys.executable, os.path.join(ARENA, "test_game_states.py")],
+        capture_output=True, text=True,
+    )
+    tail = "\n".join((gate.stdout or "").strip().splitlines()[-14:])
+    return gate.returncode == 0, tail
+
+
 def main():
     ents = entrants()
     print(f"entrants: {len(ents)}   config: ctx={CTX} mt={MT} trials={TRIALS} ngl=auto-fit")
@@ -173,40 +201,30 @@ def main():
         lf.write(f"\n=== card run started {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())} "
                  f"ctx={CTX} mt={MT} trials={TRIALS} ===\n")
 
-    # ============================================================================================
-    # THE GAME-CONTRACT GATE, AT ADMISSION -- it runs BEFORE ANY MODEL IS SPAWNED.
-    # ============================================================================================
+    # ---- THE GAME-CONTRACT GATE, AT ADMISSION -- BEFORE ANY MODEL IS SPAWNED ---------------
     #
-    # A SUBPROCESS, not an import. Two reasons: it reads the exit status cleanly, and it avoids coupling
-    # to the test_game_states <-> annotate_superseded import pair (the checker imports stem_of at module
-    # level; the generator imports the checker inside a function). A gate that shares a module with the
-    # thing it gates inherits its failure modes.
-    #
-    # HARD REFUSE. A warning is not a gate -- that is the whole reason this gate exists. And it runs at
-    # ADMISSION rather than during the run, the same shape as the weigh-in and as C4's partition: the
+    # At admission rather than during the run: the same shape as the weigh-in and as C4's partition. The
     # field is checked before it starts, not while it is halfway through writing evidence.
+    #
+    # HARD REFUSE. A warning is not a gate -- that is the whole reason this gate exists.
     #
     # THE ESCAPE HATCH, and this sentence is why a hard refuse is safe:
     #   IF A FUTURE CASE IS LEGITIMATE, AMEND GAME_CONTRACT.md -- a deliberate, recorded act -- AND NEVER
     #   IGNORE THIS EXIT CODE. A gate with an override that is not written down is a gate nobody can audit.
     # The person who hits this at 2am is the person who needs to read it, so it lives here, next to the
     # call, not in a document they will not open.
-    gate = subprocess.run(
-        [sys.executable, os.path.join(ARENA, "test_game_states.py")],
-        capture_output=True, text=True,
-    )
-    if gate.returncode != 0:
-        tail = "\n".join((gate.stdout or "").strip().splitlines()[-14:])
+    gate_ok, gate_detail = game_contract_gate()
+    if not gate_ok:
         print("REFUSED: the game contract is violated by a NEW round or task file.")
-        print("  test_game_states.py exited", gate.returncode, "-- no model was spawned.")
+        print("  test_game_states.py exited non-zero -- no model was spawned.")
         print()
-        print(tail)
+        print(gate_detail)
         print()
         print("  THE REMEDY IS NOT TO IGNORE THIS. Amend GAME_CONTRACT.md -- a deliberate, recorded act --")
         print("  or fix the task file / round that caused it. The historical violations are annotated and")
         print("  do NOT trip this gate; only a NEW one does.")
         return 1
-    print(f"game contract: OK ({gate.stdout.strip().splitlines()[-3] if gate.stdout else 'clean'})")
+    print(f"game contract: OK ({gate_detail.strip().splitlines()[-3] if gate_detail else 'clean'})")
 
     done = scratched = skipped = 0
     t_start = time.time()
