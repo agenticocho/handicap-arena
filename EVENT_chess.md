@@ -1,84 +1,139 @@
-# CHESS — the catalogue event, specified for a reader who has none of our context
+# CHESS — the calibration event: the resignation gate, not a tactics puzzle
 
-**Status:** design, ready for implementation. **Not** a card round. **No new card version.** CHESS is a
-standalone Arena event (R4 in the catalogue), separate from the R1_fencing card round, and it is
-deliberately not folded into any existing card.
+**Status:** design, **REVISED** after two questions from Chilly — a gap it found in my taxonomy, and
+which event chess actually becomes. **Not** a card round. **No** new card version.
 
-**One line:** a tactics puzzle with a unique best move, scored by a reference engine, where **the move
-list is carried in the bundle and the result is recomputed from it.**
+**The revision in one line:** v1 of this document specified chess as a **tactics puzzle** — near-miss
+discrimination under a hard rule set. That measure is **already occupied by R1_fencing**, which is what
+the card round measures and what discriminated at 39.5% while four of its siblings sat above 85%. So
+chess-as-tactics would have been a **second measurement wearing a second game** — the same defect as a
+game name with no state behind it, one level up.
+
+**Chess becomes the CALIBRATION event**, because that is what the strongest line anyone has written about
+this project actually describes: *"the hardest move on the board isn't a sacrifice, it's tipping your
+king."*
 
 ---
 
-## Why chess, and why it is not a metaphor
+## The measure
 
-Chess came out right in the catalogue review for a mechanical reason: the event's MEASURE was read
-first and the game followed from it. The measure is **near-miss discrimination under a hard rule set** —
-and a chess tactics puzzle is exactly that: a position where nearly every legal move is *playable* and
-only one is *best*, under rules that admit no opinion.
+**Does the model know when it has lost?**
 
-**CHESS is a CONTEST, not an INSTRUMENT.** It has a game, the bundle carries the game's state, and a
-spectator can watch the game. That is the test: **can a stranger reconstruct the outcome from the
-recorded bundle?** For a move list, yes — replay the moves. For a latency column, no.
+Two-sided, with a ground truth, and both sides are real failures:
 
-## The six fields the catalogue requires
+- **resigning a WON or DRAWN position** — premature collapse. The model gives up while the engine says
+  the game is holdable.
+- **playing on in a LOST position** — miscalibrated persistence. The engine says lost, the model keeps
+  generating moves, and the game consumes its budget to no purpose.
 
-| field | value |
-|---|---|
-| **Measures** | near-miss discrimination under a hard rule set: can the model find the unique best move rather than a plausible one? |
-| **Format** | N positions, one per trial, temperature 0. The model emits a move in SAN or a from/to pair. |
-| **Scorer** | a reference engine (Stockfish or equivalent) in a subprocess. The move is legal-or-not, then best-or-not. **Not an LLM judge.** |
-| **Null baseline** | the engine's own best move. A model scoring at the baseline has done nothing; a model scoring *at chance among legal moves* is the floor. |
-| **Discriminates** | if every model finds every best move, the positions are too easy. If none does, they are too hard. Target: a middle band. |
-| **Anti-gaming** | each puzzle has a UNIQUE best move verified by the engine at a fixed depth, so "any good move" cannot be claimed. And the model must not be given the engine's evaluation. |
+**Both are conformance failures with a stateable reason**, which is the standard every surviving item in
+this catalogue had to meet. And the measurement is objective: the engine's evaluation at a fixed depth
+is the ground truth, not an opinion.
 
-## The recorded state — the sufficient-statistic requirement
+## Why this is a gate and not a score
 
-**The bundle must carry, per puzzle:**
+The event's own framing carries the gate: *a logical conclusion must be reached or the model can't
+enter.* **A player who cannot recognise a lost position cannot be said to have played a game** — the game
+has no end. So this is not a round with a winner; **it is an admission test**, and its output is a binary
+that other events consume.
 
-- `fen` — the position, so the puzzle is reproducible from the record alone
-- `raw` — the model's own output, verbatim. **Non-negotiable**: see the failure below.
-- `move` — the move as extracted from `raw`, plus the extraction's own decision
-- `legal` — whether the move is legal in that position
-- `best` — the engine's best move, and the depth it was computed at
-- `outcome` — found / legal-but-not-best / illegal / unparseable / serving-failure
+Which means the event's own contract is the thing it measures: **if the outcome cannot be recorded, the
+gate does not exist.** That is the gap Chilly found, and it is fixed below.
 
-**The standard this event is held to, and it is the Arena's core standard applied to its own record:**
-**no verdict may depend on data discarded at scoring time.** A chess event whose bundle keeps the score
-but not the move list is unauditable — a reader cannot re-derive anything, and a scoring bug is
-indistinguishable from a model failure, permanently.
+---
 
-## The failure taxonomy, and why it is explicit
+## THE GAP CHILLY FOUND, AND THE FIX
 
-An earlier round in this project shipped items scored 0.0 with **no reason and no raw**, because a
-serving exception hit a `continue` that discarded both. One entry's zero was unexaminable forever. The
-vocabulary above exists so that "we never got an answer" and "it answered wrong" are different records:
+**v1's taxonomy was `found / legal-but-not-best / illegal / unparseable / serving-failure` — a FAILURE
+taxonomy pretending to be an OUTCOME taxonomy.**
 
-- **serving-failure** — the request raised. A MACHINE result, not a capability result. Must name the
-  exception type, because a timeout, a connection reset and an HTTP error are three different failures.
-- **unparseable** — no move could be extracted. The raw is kept so the extractor can be audited; an
-  extractor that cannot reproduce its own decision is the instrument deciding the verdict.
-- **illegal** — a move was extracted and the position does not permit it.
-- **legal-but-not-best** — the near-miss, and the interesting case.
-- **found** — the unique best move.
+There is no `concluded`, no `resigned`, no `abandoned`. So a self-play weigh-in that resolves by a
+**decision** has nowhere to land in the record. Chilly's sentence is exact: *a weigh-in whose outcome
+can't be recorded isn't yet a gate.* And worse in this specific case — **the promo makes the resignation
+the achievement, so the class that would collapse is the one the sport is about.**
 
-**A model reported as unable to play and a model reported as playing imprecisely are different claims.**
-Getting them confused is the most misleading thing a benchmark can say.
+**THE FIX: `outcome` becomes two independent fields, because a game ending is not a failure.**
 
-## What the audience watches
+```
+result       found | legal-but-not-best | illegal        -- the quality of the MOVE (unchanged)
 
-The game *is* the product. The move list replays: the puzzle position, the model's move placed on the
-board, the engine's answer beside it. A spectator sees, in one frame, **the move that was played and the
-move that was better** — which is precisely the measure rendered as a picture.
+termination  concluded | resigned | decisive | drawn
+             | abandoned | insufficient-material
+             | unparseable | serving-failure
+             | no-conclusion                          -- HOW THE GAME ENDED, or why it did not
+```
 
-That is why this event needs no decoration. The score and the spectacle are the same object.
+**`resigned` and `decisive` are RESULTS. `abandoned` and `no-conclusion` are failures.** They were the
+same field before, and that is what made the record unable to hold the sport.
+
+| termination | meaning | gate effect |
+|---|---|---|
+| `concluded` | a mate or a drawn result was reached | ADMIT |
+| `resigned` | the model declared the position lost and stopped | ADMIT **if** the engine agrees; REJECT if the position was holdable |
+| `decisive` | the engine adjudicated a finished line | ADMIT |
+| `drawn` | repetition, 50-move, or insufficient material | ADMIT |
+| `abandoned` | the model stopped emitting moves without declaring anything | REJECT — no conclusion |
+| `insufficient-material` | the game ran out of playable content | NOT A MODEL RESULT; flag it |
+| `unparseable` | no move could be extracted — the raw is kept | REJECT, and the extractor is on trial |
+| `serving-failure` | the request raised; **names the exception type** | MACHINE result, not a capability result |
+| `no-conclusion` | budget exhausted with the game unresolved | REJECT — the failure this gate exists for |
+
+**`no-conclusion` is the one that matters most and it did not exist at all.** It is the failure mode of a
+model that can always find another move, and it is invisible in a taxonomy that records only how a
+*scored item* went.
+
+---
+
+## Which event chess is — answered
+
+Chilly relayed a real conflict: the promo makes chess the **calibration** event, `GAMES.md:133` says
+**B2 · Chess — Tool Selection**, and the deep dive puts tool selection on **golf** (five clubs = the
+five-tool schema; the 7-iron through the oak = the hallucinated call).
+
+**Both derivations are correct. They named different measures under one game name.**
+
+- **TOOL SELECTION is golf's measure** — restraint over the hero play, and the punch-out when no club
+  fits. The deep dive's derivation is right and should stand.
+- **CALIBRATION is chess's measure** — knowing when to tip the king. The promo's line is right, and this
+  document now implements it.
+
+**So: `GAMES.md:133` B2 changes from "Chess · Tool Selection" to "Golf · Tool Selection", and CHESS
+becomes the calibration event.** The conflict was not between two documents but inside one entry: a game
+name and a measure that had drifted apart. Same defect as `metaphor: CHESS` on a weather API — caught
+this time before it shipped.
+
+---
+
+## The recorded state
+
+Per position or per game, the bundle carries:
+
+- `fen` — the position, so the record reproduces the board
+- `raw` — the model's own output, verbatim. **Non-negotiable** — see FINDING 007.
+- `move` — the move extracted from `raw`, plus the extraction's own decision
+- `eval_before`, `eval_after` — the engine's evaluation at a **frozen depth**, recorded
+- `termination` — from the table above, **written by the path that produced it, never inferred later**
+- `result` — the move quality, where a move exists
+
+**The sufficient-statistic standard:** the move list plus the evaluations reproduce both fields. A record
+keeping the termination but not the evaluation cannot say whether a resignation was correct; a record
+keeping the evaluation but not the termination cannot say whether the game ended.
+
+**And every failure carries the class assigned by the path that failed.** A field inferred afterwards
+from a reason string can be overwritten by a later branch — which is how an earlier verdict in this
+project became conditional on the scope of its own correction.
+
+---
 
 ## Open items, flagged rather than assumed
 
-1. **Which engine, and at what depth.** The depth is load-bearing: a shallow engine's "best" is not a
-   fact, and a deep one is slow. Depth must be frozen alongside the positions and recorded in the bundle.
-2. **Puzzle sourcing.** Puzzles must be pre-verified unique-best and frozen before any run, or the
-   criterion moves after the fact — which the project forbids.
-3. **The null baseline needs a number, not a sentence.** "Chance among legal moves" is stateable but not
-   yet measured; it must be computed for the chosen position set before the event's bar is written.
-4. **`raw` must be stored by the scoring path that fails, not reconstructed afterwards.** The failure
-   this document keeps describing is exactly a reconstruction that could not happen.
+1. **The engine and its depth must be frozen with the positions**, and both recorded. A shallow engine's
+   "lost" is not a fact, and the whole gate rests on that judgement.
+2. **The resignation threshold must be a number, not a phrase.** "Lost" is a centipawn range; it must be
+   chosen, justified, and frozen before any run — or the criterion moves after the fact.
+3. **Board state must come from a bundle, not from a spec.** Arena can build the board from `fen` and
+   `move` today; there is no chess bundle in existence, and the field running now is card v4's R1
+   fencing. **The renderer is not blocked on design — it is blocked on a first bundle.**
+4. **`abandoned` vs `no-conclusion` may be hard to separate in practice**, and the distinction is real:
+   one is a model that stops, the other a game that never resolves. The first bundle should be read to
+   see whether the separation holds or whether one class swallows the other.
