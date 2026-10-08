@@ -35,8 +35,20 @@ WHAT THE CHECK ENFORCES (each rule, and why it is state-side and not taste):
                                                                             fabrication with pixels
   R7  a cart is DATA: the key set is closed                              -- cart code is where an
                                                                             unbound element gets drawn
+  R9  every cue names an OUTCOME the record carries, and the vocabulary  -- a motif named after the
+      is derived per event, not declared by the cart                         drawing ("score", "miss")
+                                                                            is R3 one channel over --
+                                                                            the read rule with a sound
+                                                                            in place of a number -- and
+                                                                            a `resign` cue on an event
+                                                                            whose record cannot run out
+                                                                            is a claim nobody recorded
 
-POSITIVE CONTROLS: nine deliberately-bad carts, one per rule and one for the negative direction, so
+  Silence is the default (spec 5), so a cart may declare no cues at all. It may not declare one the
+  record cannot take. R9 is the transcript's own addition -- the room is built on win, loss and, IF IT
+  HAS ONE, resignation -- turned into the same kind of mechanical check the field bindings already are.
+
+POSITIVE CONTROLS: ten deliberately-bad carts, one per rule and one for the negative direction, so
 this cannot become a check that passes by being unable to fail. The last control is the one that
 matters most: an HONEST cart must PASS. A rule that rejects the thing it exists to permit is worse
 than no rule.
@@ -105,6 +117,7 @@ def derive():
     bundles = sorted(glob.glob(os.path.join(RESULTS, "*.json")))
     kinds = defaultdict(Counter)      # kind -> path -> count of rounds carrying it
     kind_rounds = Counter()           # kind -> rounds seen
+    kind_outcomes = defaultdict(set)  # kind -> the outcome vocabulary THE RECORD carries (R9)
     entrant_counts = Counter()
     entrant_types = {}
     n_ent = 0
@@ -127,6 +140,22 @@ def derive():
             for _rk, rd in (e.get("rounds") or {}).items():
                 kind = rd.get("kind") or "unknown"
                 kind_rounds[kind] += 1
+                # R9's vocabulary, DERIVED the same way the field list is: a round is won or lost
+                # wherever wins/trials are recorded, and a resignation exists only where the record
+                # carries a run that did not finish -- `truncated` on the round or on an item, or a
+                # `finish_reasons` key other than the machine's own `stop`. Nothing is asserted: if a
+                # future kind carries no such state, `resign` simply is not in its vocabulary.
+                if "wins" in rd and "trials" in rd:
+                    kind_outcomes[kind].update({"win", "loss"})
+                fr = rd.get("finish_reasons")
+                if isinstance(fr, dict):
+                    kind_outcomes[kind].update(fr.keys())
+                if rd.get("truncated"):
+                    kind_outcomes[kind].add("resign")
+                for _iid, it in (rd.get("items") or {}).items():
+                    if isinstance(it, dict) and it.get("truncated"):
+                        kind_outcomes[kind].add("resign")
+                        break
                 o = {}
                 walk(rd, "round", o)
                 for k, t in o.items():
@@ -149,6 +178,7 @@ def derive():
         "round": {
             kind: {
                 "observed_rounds": kind_rounds[kind],
+                "outcomes": sorted(kind_outcomes[kind]),
                 "fields": {p: {"type": entrant_types["__t_" + kind + "__" + p],
                                "present": c, "class": classify(p)}
                            for p, c in sorted(kinds[kind].items())},
@@ -298,6 +328,28 @@ def check_cart(cart, schema, kind_hint=None):
         if b.get("draw") == "gauge" and "range" not in b:
             fails.append("bindings[%d]: a gauge with no `range` -- an undeclared scale is a scale the "
                          "cart chose, not one the record states" % i)
+
+    # R9 -- THE CUE VOCABULARY IS THE RECORD'S, NOT THE CART'S. A cue name is an OUTCOME, and the
+    # outcomes available to a cart are the ones its event's record can take -- derived above, per
+    # kind, the same way the field list is. Two things this catches, and neither is taste:
+    #   * a motif named after the DRAWING ("score", "miss") rather than the outcome is R3 one channel
+    #     over -- the read rule with a sound where the number was;
+    #   * a `resign` cue on an event whose record carries no unfinished run is a sound fired on a
+    #     claim nobody recorded -- the audio twin of a plausible sprite where there is no field.
+    # Silence is the default (spec 5), so `cues` may be absent entirely. It may not be invented.
+    cues = cart.get("cues")
+    if cues is not None:
+        if not isinstance(cues, dict):
+            fails.append("R9 `cues` is not an object -- a cue map is `outcome -> motif`")
+        else:
+            vocab = set(schema["round"].get(kind, {}).get("outcomes") or [])
+            for name, motif in sorted(cues.items()):
+                if name not in vocab:
+                    fails.append("R9 cues: `%r` names no outcome this record carries for kind %r -- "
+                                 "a sound fired on a claim with no carrier. The record's outcomes "
+                                 "here are %s" % (name, kind, sorted(vocab)))
+                if not isinstance(motif, str) or not motif.strip():
+                    fails.append("R9 cues: `%r` declares no motif" % name)
     return fails
 
 
@@ -373,7 +425,13 @@ GOOD_CART = {
          "when": {"field": "round.finish_reasons.length"}, "if_absent": "blank"},
         {"field": "round.kind", "draw": "text_panel", "of": "event_label", "if_absent": "blank"},
     ],
-    "cues": {"score": "blip", "miss": "buzz"},
+    # THE CUE MAP IS `outcome -> motif`, and the outcome names are the record's (R9). The first
+    # version of this example said {"score": "blip", "miss": "buzz"} -- names for the DRAWING, not the
+    # outcome, which is the R3 defect with a sound where the number was. The honest three are the
+    # room's own three (spec 5): win, loss, and resignation -- and resignation is legal here only
+    # because structured_output's record carries runs that did not finish, which is derived, not
+    # asserted. A cart on a kind that cannot run out would fail on this `cues` line, and should.
+    "cues": {"win": "blip", "loss": "buzz", "resign": "descend"},
     "resolution": [320, 240],
 }
 
@@ -403,6 +461,8 @@ BAD_CARTS = [
     ({"name": "x", "bindings": [{"field": "round.wins", "draw": "gauge", "of": "g", "range": [0, 6],
                                  "if_absent": "blank"}]},
      "R8 kind-ambiguous: binds only fields every event carries", "declare `kind`"),
+    (dict(GOOD_CART, cues={"fanfare": "blip"}),
+     "R9 a cue naming an outcome the record cannot take", "R9 cues"),
 ]
 
 
@@ -424,6 +484,12 @@ def main(argv):
         print("  %-18s -> %s" % (k, v))
     print()
 
+    print()
+    print("THE OUTCOME VOCABULARY, DERIVED (what R9 lets a cart fire a cue on):")
+    for k, v in schema["round"].items():
+        print("  %-20s %s" % (k, ", ".join(v.get("outcomes") or []) or "(none)"))
+    print()
+
     fails = []
     print("POSITIVE CONTROLS (each must fire, and for its OWN reason):")
     for cart, label, marker in BAD_CARTS:
@@ -439,6 +505,22 @@ def main(argv):
             fails.append("positive control fired for the wrong reason: %s (wanted %r)" % (label, marker))
         else:
             print("  %-9s %s" % ("FIRES", label))
+    print()
+    # R9b -- the "and, if it has one" clause, EXERCISED rather than described. Every kind in THIS
+    # record carries an unfinished run, so the permissive branch is the live one and this control is
+    # the only way to prove the restrictive one exists: removing `resign` from the honest cart's kind
+    # is exactly what a future kind with no truncation state would look like, and the same cart must
+    # then FAIL -- and fail ON THE CUE, not on something else.
+    stripped = json.loads(json.dumps(schema))
+    stripped["round"][GOOD_CART["kind"]]["outcomes"] = [
+        o for o in stripped["round"][GOOD_CART["kind"]]["outcomes"] if o != "resign"]
+    got = check_cart(GOOD_CART, stripped)
+    if any("R9 cues" in g for g in got):
+        print("  %-9s R9b a `resign` cue on a kind whose record cannot run out" % "FIRES")
+    else:
+        print("  %-9s R9b a `resign` cue on a kind whose record cannot run out -- the clause is "
+              "described, not exercised" % "DID NOT FIRE")
+        fails.append("R9b control did not fire: the resign clause is unenforced")
     print()
     print("NEGATIVE CONTROL (an honest cart must PASS):")
     got = check_cart(GOOD_CART, schema)
@@ -463,7 +545,8 @@ def main(argv):
         print("\n%d violation(s)" % len(fails))
         return 1
     print("no violations: every draw target is bound, every field is in the derived schema, no "
-          "display value is read in place of its primitive")
+          "display value is read in place of its primitive, and every cue names an outcome the "
+          "record carries")
     return 0
 
 
