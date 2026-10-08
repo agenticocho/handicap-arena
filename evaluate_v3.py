@@ -94,7 +94,10 @@ def main():
             r1.append((e, rd))
     n = len(r1)
     full = sum(1 for _, rd in r1 if (rd.get("wins") or 0) >= (rd.get("trials") or 0))
-    below = sum(1 for e, _ in r1 if (e.get("aggregate") or 0) < SEVERE)
+    # COMPARE THE PRIMITIVE, NOT THE RENDERING. `aggregate` is stored rounded to 4dp, so a decision on
+    # it is a decision on a rendering. `wins`/`trials` live on the ROUND row, which is the second element
+    # of each tuple -- the first version of this line read `e["rd"]` off the ENTRY dict and was wrong.
+    below = sum(1 for _, rd in r1 if (rd.get("wins") or 0) / (rd.get("trials") or 1) < SEVERE)
     pct_full = full / n if n else 0
 
     print("=" * 78)

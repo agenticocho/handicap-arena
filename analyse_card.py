@@ -103,7 +103,15 @@ def analyse(card, entries):
         other = max(0.0, tot - won - cap)
         print(f"    {rk:12s} token-cap {cap:6.1f}   other {other:6.1f}   (of {tot:.0f} trials)")
 
-    aggs_raw = [e.get("aggregate") or 0 for e in entries]
+    # COMPARE THE PRIMITIVE, NOT THE RENDERING. `aggregate` is stored rounded to 4dp, so a decision
+    # taken on it is a decision taken on a rendering. Materiality, measured rather than assumed: the
+    # window in which a rounded value crosses a 0.34 bound is exact in [0.33995, 0.34) -- about 5e-5
+    # wide -- and with six items the aggregates are k/6, whose nearest neighbours to 0.34 are 0.3333 and
+    # 0.5. So this cannot bite today and would need roughly 20,000 trials before a representable value
+    # fell inside the window. FIXED ANYWAY: "it cannot bite at this size" is the argument that ships
+    # every latent defect, and the fix is one expression.
+    aggs_raw = [(e.get("rounds", {}).get("R1_fencing", {}).get("wins") or 0)
+                / (e.get("rounds", {}).get("R1_fencing", {}).get("trials") or 1) for e in entries]
     # The aggregate is stored TWO WAYS in the bundles: an older path wrote it rounded to 4dp
     # (0.8889), a newer one wrote the raw float (0.8888666666666666). Those are the SAME
     # measurement, so a raw distinct-count is partly counting the writer rather than the models.
