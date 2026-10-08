@@ -130,6 +130,29 @@ current code and check two things: its item records carry `secs`/`gen_tokens`, a
 a `failure` record carrying `secs`. **One entrant is enough** — the claim is about whether the writer runs,
 not about any model. Running concurrently would contend for VRAM and slow the field, so it waits.
 
+**THE EXACT COMMAND, recorded so it is run rather than improvised:**
+
+```
+arena.py --card v4 --model /home/chilly1/moltbook_pipeline/models/LFM2-350M-Extract-Q4_K_M.gguf \
+         --trials 1 --out results/EXERCISE_fix2.json
+```
+
+**Why this works and what each half exercises:**
+
+- **`run_card.py` has no single-entrant option** — it takes `--card` and nothing else — so the exercise
+  goes at `arena.py` directly, which is exactly how `run_card.py` invokes it internally.
+- **Fix 2 (the per-item clock) is written by `arena.py`**, so a direct run exercises it fully: the item
+  records must carry `secs` and `gen_tokens`.
+- **Fix 1 (the `failure` record) is written by `run_card.py`**, so a direct `arena.py` run does **not**
+  exercise it — and it does not need to, because **it is already EXERCISED**: six empty bundles under the
+  resume run, all six carrying `{class: empty, rc: 0, secs, written_by}`.
+- **A small known-good model** (`LFM2-350M-Extract`, a v1 9/9 sweeper) is chosen so the run **completes
+  and writes item records** — the failure mode of the tail is emptying at load, and an empty bundle has no
+  item records to carry a clock. **The choice of entrant is part of the exercise, not incidental to it.**
+- **`--trials 1`** because one trial is enough to prove the writer runs.
+
+**An unexercised claim is a claim with no carrier.**
+
 **STATUS OF THE TWO, MEASURED (resume run `arena-v4b`):**
 
 ```
