@@ -1,0 +1,134 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-08T16:08:32Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/LFM2-1.2B-Extract-Q4_K_M.gguf",
+      "sha256": "09b60b507ee7d1698b2b4dfce184c75083d7790c7701910ed60afa2801024702",
+      "footprint_gb": 0.99609375,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 1.0,
+        "weights_gb": 0.73,
+        "gpu_free_gb_at_weigh_in": 4.76,
+        "partial_offload": false,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/LFM2-1.2B-Extract-Q4_K_M.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "51621"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.5,
+          "wins": 3.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_ordered_sequence_with_a_gap": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "raw": [
+                "{\n  \"steps\": [\n    {\n      \"seq\": 1,\n      \"airport\": \"LHR\"\n    },\n    {\n      \"seq\": 2,\n      \"airport\": \"OMIT\"\n    },\n    {\n      \"seq\": 3,\n      \"airport\": \"JFK\"\n    }\n  ]\n}",
+                "{\n  \"steps\": [\n    {\n      \"seq\": 1,\n      \"airport\": \"LHR\"\n    },\n    {\n      \"seq\": 2,\n      \"airport\": \"OMIT\"\n    },\n    {\n      \"seq\": 3,\n      \"airport\": \"JFK\"\n    }\n  ]\n}",
+                "{\n  \"steps\": [\n    {\n      \"seq\": 1,\n      \"airport\": \"LHR\"\n    },\n    {\n      \"seq\": 2,\n      \"airport\": \"OMIT\"\n    },\n    {\n      \"seq\": 3,\n      \"airport\": \"JFK\"\n    }\n  ]\n}"
+              ]
+            },
+            "R1.2_order_is_the_content": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\n  \"ranking\": [\n    \"delphi\",\n    \"apollo\",\n    \"cinder\",\n    \"borealis\"\n  ],\n  \"apollo\": \"No prose, no code fences\",\n  \"borealis\": \"No prose, no code fences\",\n  \"cinder\": \"No prose, no code fences\",\n  \"delphi\": \"No prose, no code fences\"\n}",
+                "{\n  \"ranking\": [\n    \"delphi\",\n    \"apollo\",\n    \"cinder\",\n    \"borealis\"\n  ],\n  \"apollo\": \"No prose, no code fences\",\n  \"borealis\": \"No prose, no code fences\",\n  \"cinder\": \"No prose, no code fences\",\n  \"delphi\": \"No prose, no code fences\"\n}",
+                "{\n  \"ranking\": [\n    \"delphi\",\n    \"apollo\",\n    \"cinder\",\n    \"borealis\"\n  ],\n  \"apollo\": \"No prose, no code fences\",\n  \"borealis\": \"No prose, no code fences\",\n  \"cinder\": \"No prose, no code fences\",\n  \"delphi\": \"No prose, no code fences\"\n}"
+              ]
+            },
+            "R1.3_duplicates_are_significant": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\n  \"draw\": [\n    2,\n    2,\n    0,\n    7,\n    2\n  ]\n}",
+                "{\n  \"draw\": [\n    2,\n    2,\n    0,\n    7,\n    2\n  ]\n}",
+                "{\n  \"draw\": [\n    2,\n    2,\n    0,\n    7,\n    2\n  ]\n}"
+              ]
+            },
+            "R1.4_absence_is_the_answer": {
+              "score": 0.0,
+              "reason": "emitted forbidden key(s): ['backorder_qty']",
+              "truncated": false,
+              "raw": [
+                "{\n  \"sku\": \"X-9\",\n  \"warehouse\": \"RENO\",\n  \"backorder_qty\": 0\n}",
+                "{\n  \"sku\": \"X-9\",\n  \"warehouse\": \"RENO\",\n  \"backorder_qty\": 0\n}",
+                "{\n  \"sku\": \"X-9\",\n  \"warehouse\": \"RENO\",\n  \"backorder_qty\": 0\n}"
+              ]
+            },
+            "R1.5_exact_key_set_under_a_bribe": {
+              "score": 0.0,
+              "reason": "emitted forbidden key(s): ['instrument', 'station']",
+              "truncated": false,
+              "raw": [
+                "{\n  \"reading_id\": \"R-77\",\n  \"celsius\": 21.5,\n  \"station\": \"Halley\",\n  \"instrument\": \"Vaisala PTU300\",\n  \"context\": \"No additional context provided\"\n}",
+                "{\n  \"reading_id\": \"R-77\",\n  \"celsius\": 21.5,\n  \"station\": \"Halley\",\n  \"instrument\": \"Vaisala PTU300\",\n  \"context\": \"No additional context provided\"\n}",
+                "{\n  \"reading_id\": \"R-77\",\n  \"celsius\": 21.5,\n  \"station\": \"Halley\",\n  \"instrument\": \"Vaisala PTU300\",\n  \"context\": \"No additional context provided\"\n}"
+              ]
+            },
+            "R1.6_exact_scalar_types": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\n  \"batch\": \"0042\",\n  \"units\": 7,\n  \"unit_cost\": 1.5,\n  \"certified\": true\n}",
+                "{\n  \"batch\": \"0042\",\n  \"units\": 7,\n  \"unit_cost\": 1.5,\n  \"certified\": true\n}",
+                "{\n  \"batch\": \"0042\",\n  \"units\": 7,\n  \"unit_cost\": 1.5,\n  \"certified\": true\n}"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 18
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 89,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.5,
+      "grade": {
+        "belt": "Yellow",
+        "rounds_won": 0,
+        "rounds": 1,
+        "stripes": 3.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 4,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 0.15,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

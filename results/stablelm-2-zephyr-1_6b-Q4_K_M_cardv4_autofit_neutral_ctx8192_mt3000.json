@@ -1,0 +1,134 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-08T16:09:04Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/stablelm-2-zephyr-1_6b-Q4_K_M.gguf",
+      "sha256": "4224a8a08417e34d5a224efb1291491c4f5762b46aa012021adaf0a0578848e2",
+      "footprint_gb": 2.5625,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 2.56,
+        "weights_gb": 1.03,
+        "gpu_free_gb_at_weigh_in": 4.76,
+        "partial_offload": false,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/stablelm-2-zephyr-1_6b-Q4_K_M.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "45541"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.3333,
+          "wins": 2.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_ordered_sequence_with_a_gap": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "raw": [
+                "```json\n[\n  {\n    \"seq\": 1,\n    \"airport\": \"LHR\"\n  },\n  {\n    \"seq\": 2,\n    \"airport\": null\n  },\n  {\n    \"seq\": 3,\n    \"airport\": \"JFK\"\n  }\n]\n```",
+                "```json\n[\n  {\n    \"seq\": 1,\n    \"airport\": \"LHR\"\n  },\n  {\n    \"seq\": 2,\n    \"airport\": null\n  },\n  {\n    \"seq\": 3,\n    \"airport\": \"JFK\"\n  }\n]\n```",
+                "```json\n[\n  {\n    \"seq\": 1,\n    \"airport\": \"LHR\"\n  },\n  {\n    \"seq\": 2,\n    \"airport\": null\n  },\n  {\n    \"seq\": 3,\n    \"airport\": \"JFK\"\n  }\n]\n```"
+              ]
+            },
+            "R1.2_order_is_the_content": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "raw": [
+                "```json\n{\n  \"ranking\": [\n    \"apollo\",\n    \"borealis\",\n    \"cinder\",\n    \"delphi\"\n  ]\n}\n```\n```css\n/* CSS code for the JSON object example */\n.json {\n  border: 1px solid black;\n  padding: 10px;\n  background-color: white;\n}\n```\n```python\nimport json\n\n# Sample Python code for the JSON object example\nwith open('example.json', 'r') as file:\n    data = json.load(file)\n\nprint(data['ranking'])\n```\n```kotlin\n// Sample Kotlin code for the JSON object example\nval jsonString = \"\"\"\n{\n  \"ranking\": [\n    \"apollo\",\n    \"borealis\",\n    \"cinder\",\n    \"delphi\"\n  ]\n}\n\"\"\"\nval jsonObject = JSONObject(jsonString)\nval ranking = jsonObject.getJSONArray(\"ranking\")\nprintln(list(ranking).toString())\n```",
+                "```json\n{\n  \"ranking\": [\n    \"apollo\",\n    \"borealis\",\n    \"cinder\",\n    \"delphi\"\n  ]\n}\n```\n```css\n/* CSS code for the JSON object example */\n.json {\n  border: 1px solid black;\n  padding: 10px;\n  background-color: white;\n}\n```\n```python\nimport json\n\n# Python code for the JSON object example\nwith open('example.json', 'r') as f:\n    data = json.load(f)\n\nprint(json.dumps(data, indent=4))\n```\n```kotlin\nimport org.json4k\n\n// Kotlin code for the JSON object example\nval jsonString = \"\"\"\n{\n  \"ranking\": [\n    \"apollo\",\n    \"borealis\",\n    \"cinder\",\n    \"delphi\"\n  ]\n}\n\"\"\"\n\nval data = JsonElement().parseFrom(jsonString)\n\nval ranking = data[\"ranking\"] as JsonArray\nval order = ranking.indexOf { it.isInclusive(false) } + 1\nprintln(\"Order: $order\") // Output: Order: 1\n\nval values = data[\"ranking\"] as JsonArray\nprintln(values[0]) // Output: [\"apollo\", \"borealis\", \"cinder\", \"delphi\"]\n```",
+                "```json\n{\n  \"ranking\": [\n    \"apollo\",\n    \"borealis\",\n    \"cinder\",\n    \"delphi\"\n  ]\n}\n```\n```css\n/* CSS code for the JSON object example */\n.json {\n  border: 1px solid black;\n  padding: 10px;\n  background-color: white;\n}\n```\n```python\nimport json\n\n# Python code for the JSON object example\nwith open('example.json', 'r') as f:\n    data = json.load(f)\n\nprint(json.dumps(data, indent=4))\n```\n```kotlin\nimport org.json4k\n\n// Kotlin code for the JSON object example\nval jsonString = \"\"\"\n{\n  \"ranking\": [\n    \"apollo\",\n    \"borealis\",\n    \"cinder\",\n    \"delphi\"\n  ]\n}\n\"\"\"\n\nval data = JsonElement().parseFrom(jsonString)\n\nval ranking = data[\"ranking\"] as JsonArray\nval order = ranking.indexOf { it.isInclusive(false) } + 1\nprintln(\"Order: $order\") // Output: Order: 1\n\nval values = data[\"ranking\"] as JsonArray\nprintln(values[0]) // Output: [\"apollo\", \"borealis\", \"cinder\", \"delphi\"]\n```"
+              ]
+            },
+            "R1.3_duplicates_are_significant": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "```json\n[\n  {\n    \"draw\": [\n      2,\n      2,\n      0,\n      7,\n      2\n    ]\n  },\n  {\n    \"draw\": [\n      3,\n      3,\n      3,\n      3,\n      3\n    ]\n  },\n  {\n    \"draw\": [\n      4,\n      4,\n      4,\n      4,\n      4\n    ]\n  },\n  {\n    \"draw\": [\n      5,\n      5,\n      5,\n      5,\n      5\n    ]\n  },\n  {\n    \"draw\": [\n      6,\n      6,\n      6,\n      6,\n      6\n    ]\n  }\n]\n```",
+                "```json\n[\n  {\n    \"draw\": [\n      2,\n      2,\n      0,\n      7,\n      2\n    ]\n  },\n  {\n    \"draw\": [\n      3,\n      3,\n      3,\n      3,\n      3\n    ]\n  },\n  {\n    \"draw\": [\n      4,\n      4,\n      4,\n      4,\n      4\n    ]\n  },\n  {\n    \"draw\": [\n      5,\n      5,\n      5,\n      5,\n      5\n    ]\n  },\n  {\n    \"draw\": [\n      6,\n      6,\n      6,\n      6,\n      6\n    ]\n  }\n]\n```",
+                "```json\n[\n  {\n    \"draw\": [\n      2,\n      2,\n      0,\n      7,\n      2\n    ]\n  },\n  {\n    \"draw\": [\n      3,\n      3,\n      3,\n      3,\n      3\n    ]\n  },\n  {\n    \"draw\": [\n      4,\n      4,\n      4,\n      4,\n      4\n    ]\n  },\n  {\n    \"draw\": [\n      5,\n      5,\n      5,\n      5,\n      5\n    ]\n  },\n  {\n    \"draw\": [\n      6,\n      6,\n      6,\n      6,\n      6\n    ]\n  }\n]\n```"
+              ]
+            },
+            "R1.4_absence_is_the_answer": {
+              "score": 0.0,
+              "reason": "emitted forbidden key(s): ['backorder_qty']",
+              "truncated": false,
+              "raw": [
+                "```json\n{\n  \"sku\": \"X-9\",\n  \"warehouse\": \"RENO\",\n  \"backorder_qty\": 0\n}\n```\nExplanation:\n- The JSON object is created with exactly the specified keys: \"sku\", \"warehouse\", and \"backorder_qty\".\n- The value for the \"sku\" key is \"X-9\".\n- The value for the \"warehouse\" key is \"RENO\".\n- The value for the \"backorder_qty\" key is 0, indicating that there is no backorder.",
+                "```json\n{\n  \"sku\": \"X-9\",\n  \"warehouse\": \"RENO\",\n  \"backorder_qty\": 0\n}\n```\nExplanation:\n- The JSON object is created with exactly the specified keys: \"sku\", \"warehouse\", and \"backorder_qty\".\n- The value for the \"sku\" key is \"X-9\".\n- The value for the \"warehouse\" key is \"RENO\".\n- The value for the \"backorder_qty\" key is 0, indicating that there is no backorder.",
+                "```json\n{\n  \"sku\": \"X-9\",\n  \"warehouse\": \"RENO\",\n  \"backorder_qty\": 0\n}\n```\nExplanation:\n- The JSON object is created with exactly the specified keys: \"sku\", \"warehouse\", and \"backorder_qty\".\n- The value for the \"sku\" key is \"X-9\".\n- The value for the \"warehouse\" key is \"RENO\".\n- The value for the \"backorder_qty\" key is 0, indicating that there is no backorder."
+              ]
+            },
+            "R1.5_exact_key_set_under_a_bribe": {
+              "score": 0.0,
+              "reason": "0/2 fields",
+              "truncated": false,
+              "raw": [
+                "```json\n{\n  \"reading_id\": \"R-\u0635\u0648\u0631\",\n  \"celsius\": 29.5\n}\n```\n\nIn this JSON object, the two keys are \"reading_id\" and \"celsius\". The value for \"reading_id\" is \"R-\u0635\u0648\u0631\", and the value for \"celsius\" is 29.5 degrees Celsius. The station name is \"Halley\" and the instrument used is \"Vaisala PTU\u0635\u0648\u0644\". The temperature value is provided in the \"celsius\" key.",
+                "```json\n{\n  \"reading_id\": \"R-\u0635\u0648\u0631\",\n  \"celsius\": 29.5\n}\n```\n\nIn this JSON object, the two keys are \"reading_id\" and \"celsius\". The value for \"reading_id\" is \"R-\u0635\u0648\u0631\", and the value for \"celsius\" is 29.5 degrees Celsius. The station name is \"Halley\" and the instrument used is \"Vaisala PTU\u0635\u0648\u0644\". The provided context is sufficient to create this JSON object.",
+                "```json\n{\n  \"reading_id\": \"R-\u0635\u0648\u0631\",\n  \"celsius\": 29.5\n}\n```\n\nIn this JSON object, the two keys are \"reading_id\" and \"celsius\". The value for \"reading_id\" is \"R-\u0635\u0648\u0631\", and the value for \"celsius\" is 29.5 degrees Celsius. The station name is \"Halley\" and the instrument used is \"Vaisala PTU\u0635\u0648\u0644\". The provided context is sufficient to create this JSON object."
+              ]
+            },
+            "R1.6_exact_scalar_types": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "Here is the JSON object with the specified keys and values:\n\n```json\n{\n  \"batch\": \"Emit\",\n  \"units\": 7,\n  \"unit_cost\": 1.5,\n  \"certified\": true\n}\n```\n\nIn this JSON object, the \"batch\" key is set to \"Emit\", the \"units\" key is set to 7, the \"unit_cost\" key is set to 1.5, and the \"certified\" key is set to true.",
+                "Here is the JSON object with the specified keys and values:\n\n```json\n{\n  \"batch\": \"Emit\",\n  \"units\": 7,\n  \"unit_cost\": 1.5,\n  \"certified\": true\n}\n```\n\nIn this JSON object, the \"batch\" key is set to \"Emit\", the \"units\" key is set to 7, the \"unit_cost\" key is set to 1.5, and the \"certified\" key is set to true.",
+                "Here is the JSON object with the specified keys and values:\n\n```json\n{\n  \"batch\": \"Emit\",\n  \"units\": 7,\n  \"unit_cost\": 1.5,\n  \"certified\": true\n}\n```\n\nIn this JSON object, the \"batch\" key is set to \"Emit\", the \"units\" key is set to 7, the \"unit_cost\" key is set to 1.5, and the \"certified\" key is set to true."
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 18
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 263,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.3333,
+      "grade": {
+        "belt": "Yellow",
+        "rounds_won": 0,
+        "rounds": 1,
+        "stripes": 2.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 4,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 0.54,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

@@ -87,7 +87,52 @@ depend on data discarded at scoring time — applies to the REASON as much as to
 This is now criterion **C3** of CARD_v4.md, widened: an item scored `unparseable` whose raw yields an
 object fails the card, **and** every failure must carry the class assigned by the path that failed.
 
-## The verdict, and what it is conditional on
+## CORRECTION (second, and mine): "fixed twice over" was wrong
+
+I wrote that the fix was *"fixed twice over, because either alone leaves a hole."* **Measured, that is
+not right, and the error is the kind that survives into a refactor.**
+
+```
+Half-1 alone  (the exception path WRITES the marker + why; old guard)  ->  closes the defect
+Half-2 alone  (guard loosened to `if npass == 0`; silent continue kept) ->  STILL REPRODUCES IT
+```
+
+**The exception-path write is the load-bearing half.** The guard change and the `(no reason reported)`
+fallback are **defence-in-depth, not a second independent fix** — and the reason is structural: with the
+`continue` still skipping the raw append *and* the scorer call, **there is no reason in existence to
+write.** Loosening the guard only changes *nothing written* into *an empty string written*.
+
+**Why the distinction matters:** "either alone" implies both are necessary. A future change that kept
+the guard and dropped the write would read as safe, and would not be. **Half-1 is the fix; Half-2 is
+insurance against a *different* future bug — a scorer that returns an empty reason.**
+
+## The gap the cross-check named, and it is the next finding one level down
+
+**The exception `srv.chat` actually raised for `Cloudflare_clef :: R1.5` is not recorded anywhere.**
+Pre-fix, the message went only to stdout, and stdout was not kept. So the class is known — a serving
+exception — and **the kind is not: a timeout, a reset, and an HTTP error are three different machines
+failing and produce the same record.** The failure was recorded; *which* failure was not. That is
+FINDING 007's rule — no verdict may depend on data discarded at scoring time — applying to the
+**exception**, not just to the model's output. `serving_failures` and the `[SERVING FAILURE: <type>]`
+marker close it going forward.
+
+## The other 0.0 paths — reasoned, and one bound left open
+
+Every other route to a 0.0 item record was excluded, each with a reason rather than an assertion:
+
+- **a scorer returning 0.0** — always carries a non-empty reason (all seven scorers were driven over
+  empty / prose / malformed / array / null / partial inputs to confirm none returns an empty string),
+  **and the raw is appended at L1081 BEFORE the scorer call at L1083**, so this class cannot produce the
+  signature at all;
+- **a scorer raising** — propagates out of `evaluate()` because the `try/except` wraps only `srv.chat`,
+  so `run_card.py` marks the bundle `_EMPTY_` / NOT SCORED: a loud failure, not a silent zero;
+- **the relay / grade_only path** — a different record shape: it accumulates pass counts
+  (`SCORERS[...](...[0])` into counters) and does not write per-item `raw`/`reason` pairs, so the
+  three-field signature does not exist to be produced there.
+
+**Only the serving-exception `continue` fits.** That route is now closed, and the three above are closed
+by construction rather than by test — which is a **weaker** claim and is recorded as such. They were not
+driven end-to-end.
 
 **Criterion 2 FAILS: 3 below 0.34, bar is 4.** Under a NARROW scope it would pass at 4. The WIDE
 scope is applied because the direct test shows both excluded items are genuine parser failures and
