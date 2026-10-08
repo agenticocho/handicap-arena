@@ -412,6 +412,8 @@ class LlamaServer:
 # ---------------------------------------------------------------------------- tasks
 def load_tasks(card="v1"):
     """card='v2' returns one pseudo-task PER ITEM (see load_card_v2). v1 is untouched."""
+    if card == "v5":
+        return load_card_v5()
     if card == "v4":
         return load_card_v4()
     if card == "v3":
@@ -874,7 +876,7 @@ def strict_json_schema_multi(spec, text):
 SCORERS["strict_json_schema_multi"] = strict_json_schema_multi
 
 
-def load_card_v4():
+def load_card_v4(card_version=4):
     """CARD v4. Same item-per-task expansion as v3; R1 reads the model's output strictly.
 
     The difference between v3 and v4 R1 is NOT the conformance rules -- it is that a model which
@@ -882,6 +884,10 @@ def load_card_v4():
     in shape; v4's items are rebuilt around the two v3 items that actually discriminated (R1.6
     exact-and-ordered at 39.5%, R1.2 null-is-not-absent at 60.5%), because four of v3's six sat above
     85% and a round with no middle cannot populate the floor. See FINDING 008 and CARD_v4.md.
+
+    `card_version` IS A PARAMETER because v5 measures THESE SAME ITEMS on a different population with
+    the clock on. It must be stamped 5, not 4: `already_measured` keys on `card_version`, so a v5 bundle
+    stamped 4 would be skipped by its own run -- and the whole purpose of v5 is to re-measure.
     """
     out = []
     for p in sorted(glob.glob(os.path.join(TASKS_DIR, "v4", "*.json"))):
@@ -908,9 +914,19 @@ def load_card_v4():
                 "spec": spec,
                 "difficulty": it.get("difficulty", ""),
                 "trap": it.get("trap", ""),
-                "card_version": 4,
+                "card_version": card_version,
             })
     return out
+
+
+def load_card_v5():
+    """CARD v5. THE SAME ITEMS AS v4, deliberately -- only the RUN differs.
+
+    v5 measures v4's items on a population that can load, with the per-item clock on. The card version
+    bumps because the run differs (population, gate as a fraction, and a timed item record), NOT because
+    the measurement does. Stated here so no reader mistakes a carried item set for a re-chosen one.
+    """
+    return load_card_v4(card_version=5)
 
 
 # A raw that is cut says so IN ITS OWN CONTENTS, so a reader can always tell "the model wrote this"
@@ -1468,7 +1484,7 @@ def main():
                     help="extra llama-server flags, shell-split — e.g. "
                          "'--grammar-file x.gbnf --flash-attn'. Use this to reproduce the "
                          "serving-configuration experiment in FINDINGS/001.")
-    ap.add_argument("--card", default="v1", choices=["v1", "v2", "v3", "v4"],
+    ap.add_argument("--card", default="v1", choices=["v1", "v2", "v3", "v4", "v5"],
                     help="which card to run. v1 = 3 rounds x 3 trials of one prompt (retired). "
                          "v2 = 3 rounds x 6 distinct items, one trial each. Scores from "
                          "different cards are different measurements and are never mixed.")

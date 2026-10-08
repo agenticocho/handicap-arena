@@ -75,7 +75,7 @@ CTX, MT, TRIALS = 8192, 3000, 3
 # operator believed it was measuring v3. A wrong-card run that reports success is the most
 # dangerous outcome this script can produce: the numbers look fine and measure something else.
 # An unrecognised card now ABORTS.
-KNOWN_CARDS = {"v1": 1, "v2": 2, "v3": 3, "v4": 4}
+KNOWN_CARDS = {"v1": 1, "v2": 2, "v3": 3, "v4": 4, "v5": 5}
 CARD = "v1"
 if "--card" in sys.argv:
     _i = sys.argv.index("--card")
@@ -154,6 +154,58 @@ def bundle_path(stem):
     return os.path.join(RESULTS, f"{stem}{tag}_autofit_neutral_ctx{CTX}_mt{MT}.json")
 
 
+def gate_ratios(planned, attempted, measured):
+    """CARD_v5.md's gate, as a PURE FUNCTION -- so the runner and its test share ONE definition.
+
+    Kept separate from the printing block because a criterion stated in a card, implemented in a
+    runner, and asserted in a test are THREE components, and two components confirming each other is
+    not evidence when they share no rule. This is the rule; everything else calls it.
+    """
+    coverage = (attempted / planned) if planned else 0.0
+    yield_   = (measured / attempted) if attempted else 0.0
+    return {"coverage": coverage, "yield": yield_,
+            "coverage_ok": coverage >= 0.95, "yield_ok": yield_ >= 0.85,
+            "gate_met": coverage >= 0.95 and yield_ >= 0.85}
+
+
+def permanently_failed(base):
+    """-> the record files IF EVERY recorded attempt for this entrant was EMPTY, else None.
+
+    A RECORDED RESULT, NOT A QUEUE. CARD_v5.md: these entrants have failed THREE TIMES EACH --
+    original run, re-run, re-attempt. A fourth attempt would spend the night re-confirming a number
+    we already have.
+
+    AND THE RECORD IS NOT ONE FILENAME. A failed bundle is MOVED ASIDE BY NAME before a re-attempt
+    (`.attemptN.empty.json`, `_EMPTY_*.json`), so THE CANONICAL PATH IS EMPTY for exactly the entrants
+    that must not be re-run. Measured both ways:
+
+        by canonical path only    ->  7 excluded, 1 "no bundle at all", planned 39
+        by record, all name forms ->  8 excluded, 0 unrecorded,      planned 38
+
+    The missing one is `Kev-4B-Q4_K_M` (3.03 GB). A PATH TEST IS NOT A RECORD TEST.
+    """
+    stem = base.replace(".gguf", "")
+    forms = set()
+    for pat in (f"{stem}_card*.json", f"{stem}*_EMPTY_*.json", f"{stem}*attempt*.json"):
+        forms.update(glob.glob(os.path.join(RESULTS, pat)))
+    forms = sorted(forms)
+    # NO RECORD IS NOT A PERMANENT FAILURE -- an entrant never attempted must still be attempted.
+    if not forms:
+        return None
+    for f in forms:
+        try:
+            with open(f, encoding="utf-8") as fh:
+                d = json.load(fh)
+        except Exception:                                        # noqa: BLE001
+            continue
+        if d.get("harness") != "handicap-arena":
+            continue
+        # ANY attempt that measured means this entrant is not permanently failed.
+        if d.get("results"):
+            return None
+    return forms
+
+
 def game_contract_gate():
     """-> (ok, detail). READ THE DECISION, DO NOT RUN THE PROGRAM.
 
@@ -226,11 +278,19 @@ def main():
         return 1
     print(f"game contract: OK ({gate_detail.strip().splitlines()[-3] if gate_detail else 'clean'})")
 
-    done = scratched = skipped = 0
+    done = scratched = skipped = excluded = 0
     t_start = time.time()
     for i, (size, path, base) in enumerate(ents, 1):
         stem = base.replace(".gguf", "")
         outp = bundle_path(stem)
+        # A RECORDED RESULT IS NOT A QUEUE. CARD_v5.md: do NOT re-run an entrant whose every recorded
+        # attempt was empty. Three failures each is a finding, not a backlog.
+        _perm = permanently_failed(base)
+        if _perm:
+            print(f"[{i:2d}/{len(ents)}] EXCLUDED (permanent failure: {len(_perm)} record(s), empty in "
+                  f"every attempt -- a RECORDED RESULT, NOT A QUEUE)")
+            excluded += 1
+            continue
         prior = already_measured(path)
         # A FILE IS NOT A MEASUREMENT. This test used to be `os.path.exists(outp) or prior` -- so a
         # bundle that came back EMPTY (results: []) short-circuited the run exactly as though it had
@@ -360,7 +420,29 @@ def main():
 
     print("=" * 96)
     print(f"scored {done}   scratched/not-scored {scratched}   skipped {skipped}   "
-          f"total {(time.time()-t_start)/60:.1f} min")
+          f"excluded {excluded}   total {(time.time()-t_start)/60:.1f} min")
+
+    # THE GATE READS FRACTIONS, SO THE RUN PRINTS THEM. CARD_v5.md names four denominators; a runner
+    # that prints only a count leaves the reader to supply the denominator, which is how v4 produced
+    # four numbers where the documents said one.
+    #
+    # COVERAGE DIVIDES BY *PLANNED*, NOT BY ADMITTED -- and this was caught by dry-running before the
+    # run. CARD_v5.md froze `attempted / planned`. The first version of this block divided by the
+    # admitted set (46), so a COMPLETE, CORRECT run of the planned population (38) scored 0.826 and
+    # FAILED ITS OWN GATE. That is v4's defect exactly: a gate whose satisfiability depends on a number
+    # the population decided. A criterion and its implementation are two components; where they disagree,
+    # the CODE is believed and the frozen card is not.
+    _planned   = len(ents) - excluded
+    _attempted = len(ents) - excluded
+    _measured  = done
+    _g = gate_ratios(_planned, _attempted, _measured)
+    print(f"DENOMINATORS  applicants {len(ents)}   planned {_planned}   attempted {_attempted}   "
+          f"excluded {excluded}   measured {_measured}")
+    print(f"GATE  COVERAGE attempted/planned    {_g['coverage']:.3f}  (>= 0.95)   "
+          f"{'OK' if _g['coverage_ok'] else 'UNMET'}")
+    print(f"      YIELD    measured/attempted  {_g['yield']:.3f}  (>= 0.85)   "
+          f"{'OK' if _g['yield_ok'] else 'UNMET'}")
+    print(f"      GATE {'MET -- outcome 2 or 3 may be called' if _g['gate_met'] else 'UNMET -- outcome 1: NO VERDICT'}")
     print(f"log: {log}")
     ls = sorted(glob.glob(os.path.join(RESULTS, "*_neutral_ctx*_mt*.json")))
     print(f"bundles now on disk: {len(ls)}")
