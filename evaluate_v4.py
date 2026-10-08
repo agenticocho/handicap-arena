@@ -256,6 +256,14 @@ def main():
     print("  AND THE DIRECTION IS A PROPERTY OF THE CRITERION, NOT OF THE EXCLUSION: two criteria on")
     print("  one card can be protected and exposed by the same removed entrants.")
 
+    # ---- WHAT EACH ARGUMENT PROTECTS (Chilly's rule, applied to this evaluator) --------------
+    #
+    # Printed HERE, before the verdict gate, because the first version of this block sat after the
+    # `len(with_rd) < 40` early return -- so at 31 measured it would never have printed at all. The
+    # argument table belongs BESIDE the arguments, not after the verdict: it is most useful exactly when
+    # the verdict is still refused.
+    print_protects()
+
     # ---- THE VERDICT, AND WHETHER IT MAY BE CALLED YET --------------------
     print()
     print("=" * 78)
@@ -290,6 +298,51 @@ def main():
     print("  instrument's history, not about any entrant.")
     print("The bar does not move to accommodate the result.")
     return 0
+
+
+def print_protects():
+    """WHAT EACH ARGUMENT PROTECTS (Chilly's rule, applied to this evaluator).
+
+    On any argument that supports a conclusion, PRINT THE OUTCOME IT PROTECTS. If it protects only one,
+    say which. "This pushes against me" is a defence ONLY when it is true of the outcome that actually
+    obtained -- otherwise it is a conclusion-shaped argument, and that is the more dangerous form
+    BECAUSE IT IS CHECKABLE.
+
+    Why the direction check is the one that gets skipped: verifying an argument is satisfying, and it
+    feels like diligence. Asking which outcome it protects requires asking whose interest it serves, and
+    verification never asks that. The argument-level twin of the flattering measurement -- it survives
+    for the same reason, because nobody investigates good news.
+
+    Applied to THIS FILE'S arguments rather than described, because an argument protecting one outcome
+    is exactly the kind that reads as rigour.
+    """
+    print()
+    print("=" * 78)
+    print("WHAT EACH ARGUMENT PROTECTS, AND WHETHER IT PROTECTS ONE OUTCOME OR BOTH")
+    argues = [
+        ("C2's count is a LOWER BOUND (empty bundles contribute zero)",
+         {"PASS"},
+         "a PASS it makes STRICTER; a FAIL it cannot touch"),
+        ("C1 gets no protection from the thinning argument (rates move either way)",
+         {"PASS", "FAIL"},
+         "genuine -- and it is why C1 is not excused by it"),
+        ("OUTCOME 3: the failure may belong to the POPULATION",
+         {"FAIL"},
+         "declared BEFORE the numbers landed, which is what makes it a scope and not a hedge"),
+        ("C3 is expected to FAIL on this field (the fixes are forward-only)",
+         {"FAIL"},
+         "about the INSTRUMENT's history, not a defence of any entrant"),
+    ]
+    for arg, protects, note in argues:
+        tag = "ONE OUTCOME" if len(protects) == 1 else "BOTH       "
+        print(f"  [{tag}] {arg}")
+        print(f"      protects {'/'.join(sorted(protects))} -- {note}")
+    print()
+    print("  AN ARGUMENT THAT PROTECTS ONLY ONE OUTCOME IS THE ONE TO CHECK HARDEST, because it is the one")
+    print("  that reads as rigour. Every entry tagged ONE OUTCOME above is either DECLARED BEFORE THE")
+    print("  RESULT or a statement ABOUT THE INSTRUMENT rather than the entrants -- and those are the only")
+    print("  two forms that survive this check. An argument offered after a result, about the entrants, is")
+    print("  a conclusion-shaped argument no matter how true it is.")
 
 
 if __name__ == "__main__":
