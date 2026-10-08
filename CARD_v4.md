@@ -96,6 +96,15 @@ where every failure of the last two days has lived.
 comparable to v3's — different item set, different parser. A v4 number quoted beside a v3 number
 without both `card_version` and the parser identity is a number with no meaning.
 
+**AND THE NAMING RULE, which v3→v4 made necessary: an item's canonical citation is `<card>:<slot>
+<name>`, never the slot alone.** Every R1 label was rewritten between the two cards and **none refers to
+the same item** — `v3:R1.6 array_exact_and_ordered` (39.5%) and `v4:R1.6 exact_scalar_types` (96.6%) are
+unrelated, and the worst pair is `v3:R1.5 enum_nearest_is_wrong` (86.8%) against `v4:R1.5
+exact_key_set_under_a_bribe` (86.2%): **two unrelated items with near-identical rates, which is exactly
+the shape that survives review, because a change is visible and a coincidence is not.**
+A slot that survives a change keeps its authority and loses its referent — the same defect as a seat
+alias naming a retired model, and as `_EMPTY_` in a filename.
+
 **None of C1–C4 may be softened after the fact.** If v4 fails C1 or C2, the correct response is v5.
 
 ---

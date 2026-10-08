@@ -85,9 +85,34 @@ def main():
     # LIKE ONE ITEM HOLDING STEADY. A change is visible; a coincidence is not. So the mapping below is
     # BY NAME and never by slot, and any cross-version sentence must use the names.
     print("  *** LABEL HAZARD: v3 and v4 item IDs are NOT comparable. Same slot, different item. ***")
-    print("      v3 R1.6 array_exact_and_ordered (39.5%) is NOT v4 R1.6 exact_scalar_types (96.6%)")
-    print("      v3 R1.3 type_under_natural_language is the item v4 R1.6 replaces -- the cross-version")
-    print("      claim about type coercion must name BOTH, because the slot alone is a changed referent.")
+    print()
+    print("      THE FULL MAPPING. Any cross-version sentence must name BOTH sides; a slot alone is a")
+    print("      changed referent, and two unrelated items with near-identical rates (R1.5 below) look")
+    print("      exactly like one item holding steady -- a change is visible, a coincidence is not.")
+    print()
+    print("        v3 slot  v3 item name                       rate  |  v4 slot  v4 item name")
+    print("        -------  --------------------------------  ------- | -------  -------------------------")
+    for vs, vn, vr, us, un in (
+        ("R1.1", "forbidden_key_must_be_absent", "?", "R1.1", "ordered_sequence_with_a_gap"),
+        ("R1.2", "null_means_absent", "60.5%", "R1.2", "order_is_the_content"),
+        ("R1.3", "type_under_natural_language", "94.7%", "R1.3", "duplicates_are_significant"),
+        ("R1.4", "ambiguous_nesting", "89.5%", "R1.4", "absence_is_the_answer"),
+        ("R1.5", "enum_nearest_is_wrong", "86.8%", "R1.5", "exact_key_set_under_a_bribe"),
+        ("R1.6", "array_exact_and_ordered", "39.5%", "R1.6", "exact_scalar_types"),
+    ):
+        print(f"        {vs}     {vn:32} {vr:>6}  |  {us}     {un}")
+    print()
+    print("      THE COERCION CLAIM, stated the only way it is true:")
+    print("        v3's R1.3 type_under_natural_language and v4's R1.6 exact_scalar_types are both")
+    print("        about type coercion. The claim is that the FIRST was confounded by the greedy parser")
+    print("        -- a parse failure reads as a coercion failure -- while the SECOND is measured clean.")
+    print("        Two named items across two cards. The slot version would be a claim about one item")
+    print("        that does not exist.")
+    print()
+    print("      AND WHY THE SLOTS WERE NOT RENUMBERED: a rename would not remove this hazard, it would")
+    print("      MOVE it -- the 29 bundles already measured carry the old keys, so renaming the task file")
+    print("      creates a third naming era and a new cross-era mapping. The mapping is the honest fix;")
+    print("      a canonical citation is `<card>:<slot> <name>` and never the slot alone.")
     print()
 
     accounted = len(rows)
