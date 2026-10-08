@@ -75,7 +75,7 @@ CTX, MT, TRIALS = 8192, 3000, 3
 # operator believed it was measuring v3. A wrong-card run that reports success is the most
 # dangerous outcome this script can produce: the numbers look fine and measure something else.
 # An unrecognised card now ABORTS.
-KNOWN_CARDS = {"v1": 1, "v2": 2, "v3": 3}
+KNOWN_CARDS = {"v1": 1, "v2": 2, "v3": 3, "v4": 4}
 CARD = "v1"
 if "--card" in sys.argv:
     _i = sys.argv.index("--card")

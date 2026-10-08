@@ -1,0 +1,64 @@
+{
+  "id": "R1_fencing",
+  "card_version": 4,
+  "kind": "structured_output",
+  "metaphor": "FENCING",
+  "scorer": "strict_json_schema_multi",
+  "note": "CARD v4 R1. Six items, one trial each, temperature 0. v3's R1 fixed saturation (79% -> 31.6% at 6/6) but FAILED criterion 2: only 3 entrants below 0.34 against a bar of 4, and the corrected per-item pass rates show WHY -- four of six items sat above 85%, so the round had no middle. v4 builds the item set FROM the two items that discriminated: R1.6 exact-and-ordered array (39.5%) and R1.2 null-is-not-absent (60.5%). Every item here is a CONFORMANCE task: a near-miss is wrong for a stateable reason. There is deliberately no capability item, because 90% of the field passes those and an item 90% of the field passes tells you nothing.",
+  "criteria_frozen_before_run": {
+    "C1_item_set_discriminates": "at least 4 of 6 items fall in the 15%-85% corrected pass-rate band",
+    "C2_floor_populated": "at least 5 entrants score below 0.34 aggregate",
+    "C3_parser_and_class_honest": "no item scored `unparseable` has a stored raw containing a balanced JSON object; every failure carries a failure class written by the path that failed, never overwritten",
+    "C4_no_pooling": "v3's criterion 2 STANDS FAILED and is not re-scored; a v4 aggregate is never pooled with v1, v2 or v3"
+  },
+  "items": [
+    {
+      "id": "R1.1_ordered_sequence_with_a_gap",
+      "difficulty": "near-miss",
+      "prompt": "Emit ONLY a JSON object with exactly one key, \"steps\". Its value is an array of exactly three objects in flight order, each with keys \"seq\" (integer) and \"airport\" (string). The itinerary is: step 1 is LHR, step 2 has no airport assigned, step 3 is JFK. Where an airport is not assigned, OMIT the \"airport\" key from that object entirely -- do not emit null and do not invent a value. No prose, no code fences.",
+      "expect": {"steps": [{"seq": 1, "airport": "LHR"}, {"seq": 2}, {"seq": 3, "airport": "JFK"}]},
+      "forbid": [],
+      "trap": "THE GAP MUST STAY A GAP. R1.6 measured 39.5% -- the hardest item in v3 -- and its failure mode is visible: a model that reasons about an itinerary wants every step to have a destination, so it fills step 2 with a value, a null, or a blank string. All three lose, and the third is the nastiest because it looks like omission. This is the item that separated the field, kept as the first item of the set that is built from it."
+    },
+    {
+      "id": "R1.2_order_is_the_content",
+      "difficulty": "near-miss",
+      "prompt": "Emit ONLY a JSON object with exactly one key, \"ranking\". Its value is an array of exactly four strings, ordered best to worst. The four entrants are: apollo, borealis, cinder, delphi. The ranking is: delphi first, apollo second, cinder third, borealis last. No prose, no code fences.",
+      "expect": {"ranking": ["delphi", "apollo", "cinder", "borealis"]},
+      "forbid": [],
+      "trap": "Every element is correct and only the ORDER carries the answer, so a set-equality scorer would pass a model that got it backwards -- and a per-element scorer would report 4/4. The failure is a model that transcribes the entrants in the order they were introduced (alphabetical, or as listed) instead of applying the ranking. Order is not decoration here; it IS the measurement."
+    },
+    {
+      "id": "R1.3_duplicates_are_significant",
+      "difficulty": "near-miss",
+      "prompt": "Emit ONLY a JSON object with exactly one key, \"draw\". Its value is an array of exactly five integers, ordered by round. The rounds are: 2, 2, 0, 7, 2. A value may repeat and every repetition is a separate round. No prose, no code fences.",
+      "expect": {"draw": [2, 2, 0, 7, 2]},
+      "forbid": [],
+      "trap": "DEDUPLICATION IS THE TRAP. A model that treats the array as a set returns [2, 0, 7] or [2, 0, 7, 2] and loses -- and the instinct to dedupe is strong because the prompt's own list has a repeated value. The correct answer has the same value at three different positions. This is a conformance claim a reader can state in one sentence: the array is a SEQUENCE, not a SET."
+    },
+    {
+      "id": "R1.4_absence_is_the_answer",
+      "difficulty": "near-miss",
+      "prompt": "Emit ONLY a JSON object with exactly these keys: {\"sku\": string, \"warehouse\": string, \"backorder_qty\": integer}. The SKU is X-9 and the warehouse is RENO. There is no backorder. Where a value does not exist, OMIT the key entirely -- do not emit null and do not emit zero. No prose, no code fences.",
+      "expect": {"sku": "X-9", "warehouse": "RENO"},
+      "forbid": ["backorder_qty"],
+      "trap": "R1.2 at 60.5% was v3's second-best discriminator and this is its structure, tightened. Two natural failures and they are different claims: emitting \"backorder_qty\": null (the key exists) or emitting \"backorder_qty\": 0 (a value was invented for a quantity that was never given). The schema says omit, and zero is the more seductive error because it is a NUMBER and the type was integer."
+    },
+    {
+      "id": "R1.5_exact_key_set_under_a_bribe",
+      "difficulty": "near-miss",
+      "prompt": "Emit ONLY a JSON object with exactly these two keys: {\"reading_id\": string, \"celsius\": number}. The reading is R-77 and the temperature was 21.5 degrees Celsius. The station is named Halley and the instrument was a Vaisala PTU300. Additional context is given but the schema permits exactly two keys. No prose, no code fences.",
+      "expect": {"reading_id": "R-77", "celsius": 21.5},
+      "forbid": ["station", "instrument", "sensor", "fahrenheit", "notes"],
+      "trap": "OMISSION IS THE TASK, and the model is GIVEN the things to drop. Transcribing everything is the natural behaviour and it is the failure. Note the two directed near-misses: a model may convert to fahrenheit (answering a question that was not asked), or add a provenance key because the sensor model was supplied. The schema is a filter, not a template."
+    },
+    {
+      "id": "R1.6_exact_scalar_types",
+      "difficulty": "medium",
+      "prompt": "Emit ONLY a JSON object with exactly these keys: {\"batch\": string, \"units\": integer, \"unit_cost\": number, \"certified\": boolean}. The batch code is 0042; there are seven units at one and a half each; and it is certified. No prose, no code fences.",
+      "expect": {"batch": "0042", "units": 7, "unit_cost": 1.5, "certified": true},
+      "forbid": [],
+      "trap": "Four coercions in one item, each with its own failure: batch is the STRING \"0042\" and parsing it to the integer 42 destroys the leading zeros that carry the batch's meaning; units is the INTEGER 7, not \"seven\"; unit_cost is 1.5, not \"1 1/2\"; certified is a JSON boolean, not the string \"true\". This is the v3 R1.3 structure, kept because type coercion is a genuine conformance claim, but it is placed LAST and is the only item in the set whose failures are mostly at the top of the field."
+    }
+  ]
+}

@@ -412,6 +412,8 @@ class LlamaServer:
 # ---------------------------------------------------------------------------- tasks
 def load_tasks(card="v1"):
     """card='v2' returns one pseudo-task PER ITEM (see load_card_v2). v1 is untouched."""
+    if card == "v4":
+        return load_card_v4()
     if card == "v3":
         return load_card_v3()
     if card == "v2":
@@ -757,6 +759,135 @@ def load_card_v3():
                 "difficulty": it.get("difficulty", ""),
                 "trap": it.get("trap", ""),
                 "card_version": 3,
+            })
+    return out
+
+
+def _strict_first_json(text):
+    """Find the FIRST BALANCED JSON object, not the first brace to the last.
+
+    The greedy `\\{.*\\}` this replaces could not see an object inside a model's reasoning, so a model
+    that thought first and answered second was scored `unparseable` when it was not. Measured on the v3
+    field: 15 items scored unparseable, 14 of their raws contain an object, and on two entrants the
+    parser accounted for the ENTIRE score (0.0000 recorded, 0.5833 actual). See FINDING 008.
+
+    Code fences are stripped first -- a fence is presentation, not a parse failure. Then the scan walks
+    candidate `{` positions and tracks depth with string and escape awareness, so a brace inside a
+    string literal cannot close the object early. Returns (obj, reason); obj is None if nothing parsed.
+    """
+    if not text:
+        return None, "empty response"
+    t = text.strip()
+    m = re.search(r"```(?:json)?\s*(.*?)```", t, re.S)
+    if m:
+        t = m.group(1).strip()
+    start = t.find("{")
+    last_err = "no json object found"
+    while start != -1:
+        depth, in_str, esc = 0, False, False
+        for i in range(start, len(t)):
+            ch = t[i]
+            if in_str:
+                if esc:
+                    esc = False
+                elif ch == "\\":
+                    esc = True
+                elif ch == '"':
+                    in_str = False
+                continue
+            if ch == '"':
+                in_str = True
+            elif ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    try:
+                        return json.loads(t[start:i + 1]), "ok"
+                    except Exception as e:
+                        # BREAK, DO NOT RETURN. A reasoning trace can contain a BALANCED but invalid
+                        # brace group -- e.g. it quotes the schema back as `{"sku": string}` with
+                        # unquoted values. Returning here gave up on the whole response because the
+                        # model's first brace was in its prose, which is the same class of failure as
+                        # the greedy parser: the extractor decides the verdict instead of the answer.
+                        # Try the next candidate opening brace.
+                        last_err = f"unparseable: {type(e).__name__}: {e}"
+                        break
+        start = t.find("{", start + 1)
+    return None, last_err
+
+
+def strict_json_schema_multi(spec, text):
+    """CARD v4's R1 scorer: v3's conformance rules with the STRICT extractor.
+
+    v3 scored the same rules through the greedy extractor, which understated models whose answer
+    followed their reasoning. The rules are unchanged -- forbidden key, exact key set, null-is-not-
+    absent, partial credit on the expectation -- because the RULES were never the defect. Only the
+    reading of the model's output changed.
+    """
+    d, why = _strict_first_json(text)
+    if d is None:
+        return 0.0, why
+    if not isinstance(d, dict):
+        return 0.0, "not an object"
+    exp = spec.get("expect") or {}
+    if not exp:
+        return 0.0, "no expectation"
+    forbid = set(spec.get("forbid") or [])
+    hit = sorted(k for k in forbid if k in d)
+    if hit:
+        return 0.0, f"emitted forbidden key(s): {hit}"
+    if spec.get("forbid_all_other_keys"):
+        extra = sorted(set(d) - set(exp))
+        if extra:
+            return 0.0, f"extra key(s) outside the schema: {extra}"
+
+    def _ok(k):
+        if k not in d:
+            return False
+        if d[k] is None:
+            return False          # null is not the value; absent was required
+        return _deep_eq(d[k], exp[k])
+
+    got = sum(1 for k in exp if _ok(k))
+    nulled = sorted(k for k in exp if k in d and d[k] is None)
+    note = f"{got}/{len(exp)} fields"
+    if nulled:
+        note += f" (null where OMIT was required: {nulled})"
+    return got / len(exp), note
+
+
+SCORERS["strict_json_schema_multi"] = strict_json_schema_multi
+
+
+def load_card_v4():
+    """CARD v4. Same item-per-task expansion as v3; R1 reads the model's output strictly.
+
+    The difference between v3 and v4 R1 is NOT the conformance rules -- it is that a model which
+    reasons first and answers second is now scored on its answer. v3's item set is otherwise identical
+    in shape; v4's items are rebuilt around the two v3 items that actually discriminated (R1.6
+    exact-and-ordered at 39.5%, R1.2 null-is-not-absent at 60.5%), because four of v3's six sat above
+    85% and a round with no middle cannot populate the floor. See FINDING 008 and CARD_v4.md.
+    """
+    out = []
+    for p in sorted(glob.glob(os.path.join(TASKS_DIR, "v4", "*.json"))):
+        d = json.load(open(p))
+        for it in (d.get("items") or []):
+            scorer = d["scorer"]
+            spec = {"expect": it.get("expect") or {},
+                    "forbid": it.get("forbid") or [],
+                    "forbid_all_other_keys": bool(it.get("forbid_all_other_keys"))}
+            out.append({
+                "id": f"{d['id']}::{it['id']}",
+                "round_id": d["id"],
+                "prompt": it["prompt"],
+                "scorer": scorer,
+                "kind": d.get("kind", ""),
+                "metaphor": d.get("metaphor", ""),
+                "spec": spec,
+                "difficulty": it.get("difficulty", ""),
+                "trap": it.get("trap", ""),
+                "card_version": 4,
             })
     return out
 
@@ -1302,7 +1433,7 @@ def main():
                     help="extra llama-server flags, shell-split — e.g. "
                          "'--grammar-file x.gbnf --flash-attn'. Use this to reproduce the "
                          "serving-configuration experiment in FINDINGS/001.")
-    ap.add_argument("--card", default="v1", choices=["v1", "v2", "v3"],
+    ap.add_argument("--card", default="v1", choices=["v1", "v2", "v3", "v4"],
                     help="which card to run. v1 = 3 rounds x 3 trials of one prompt (retired). "
                          "v2 = 3 rounds x 6 distinct items, one trial each. Scores from "
                          "different cards are different measurements and are never mixed.")
