@@ -90,17 +90,31 @@ def main():
     print("      changed referent, and two unrelated items with near-identical rates (R1.5 below) look")
     print("      exactly like one item holding steady -- a change is visible, a coincidence is not.")
     print()
-    print("        v3 slot  v3 item name                       rate  |  v4 slot  v4 item name")
-    print("        -------  --------------------------------  ------- | -------  -------------------------")
-    for vs, vn, vr, us, un in (
-        ("R1.1", "forbidden_key_must_be_absent", "?", "R1.1", "ordered_sequence_with_a_gap"),
-        ("R1.2", "null_means_absent", "60.5%", "R1.2", "order_is_the_content"),
-        ("R1.3", "type_under_natural_language", "94.7%", "R1.3", "duplicates_are_significant"),
-        ("R1.4", "ambiguous_nesting", "89.5%", "R1.4", "absence_is_the_answer"),
-        ("R1.5", "enum_nearest_is_wrong", "86.8%", "R1.5", "exact_key_set_under_a_bribe"),
-        ("R1.6", "array_exact_and_ordered", "39.5%", "R1.6", "exact_scalar_types"),
+    print("      AND THE v3 COLUMN CARRIES *TWO* READINGS, LABELLED, because it must never mix them.")
+    print("      `recorded` is what the bundle says, written by the greedy parser. `corrected` is the")
+    print("      same raws through the strict parser. Quoting a recorded rate beside a corrected one")
+    print("      inside one column, in a table whose purpose is stopping readers mixing things, is the")
+    print("      defect the table exists to prevent -- Chilly caught exactly that in the first version.")
+    print()
+    print("        item                                  recorded  corrected   delta | v4 item")
+    print("        ------------------------------------  --------  ---------  ------ | ------------------------")
+    for vn, rr, rc, un in (
+        ("R1.1 forbidden_key_must_be_absent", "86.8%", "89.5%", "ordered_sequence_with_a_gap"),
+        ("R1.2 null_means_absent", "57.9%", "60.5%", "order_is_the_content"),
+        ("R1.3 type_under_natural_language", "92.1%", "94.7%", "duplicates_are_significant"),
+        ("R1.4 ambiguous_nesting", "86.8%", "89.5%", "absence_is_the_answer"),
+        ("R1.5 enum_nearest_is_wrong", "78.9%", "86.8%", "exact_key_set_under_a_bribe"),
+        ("R1.6 array_exact_and_ordered", "39.5%", "39.5%", "exact_scalar_types"),
     ):
-        print(f"        {vs}     {vn:32} {vr:>6}  |  {us}     {un}")
+        d = float(rc.rstrip("%")) - float(rr.rstrip("%"))
+        print(f"        {vn:36}  {rr:>8}  {rc:>9}  {d:+5.1f}% | {un}")
+    print()
+    print("      THE DELTA IS THE PARSER'S FINGERPRINT: zero on R1.6, whose raws parsed cleanly, and")
+    print("      positive everywhere the greedy `{.*}` failed on a model that reasoned before it")
+    print("      answered -- largest on R1.5 (+7.9). Chilly derived the same asymmetry independently")
+    print("      from the on-disk scores, so the correction is corroborated from two sides rather than")
+    print("      repeated. Derive both columns with `v3_rates_both_readings.py`; never quote one as the")
+    print("      other, and never fill a rate from memory.")
     print()
     print("      THE COERCION CLAIM, stated the only way it is true:")
     print("        v3's R1.3 type_under_natural_language and v4's R1.6 exact_scalar_types are both")

@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+"""v3's item rates BOTH WAYS, so the cross-card table never mixes readings in one column.
+
+Chilly measured the v3 column from the bundles as written on disk and found my table carrying a MIXTURE:
+three rates were the CORRECTED reading (strict re-parse), one was the RECORDED reading, and R1.1 was "?".
+Putting a recorded 86.8% beside corrected values inside one column, in a table whose purpose is stopping
+readers mixing things, is the same defect the table exists to prevent.
+
+So: derive both readings for all six v3 items and print them as two labelled columns. R1.1's raws survive,
+so it is derivable -- and it does not get guessed.
+"""
+import glob
+import importlib.util
+import json
+import os
+import re
+import sys
+from collections import defaultdict
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+_spec = importlib.util.spec_from_file_location("_a", os.path.join(HERE, "arena.py"))
+A = importlib.util.module_from_spec(_spec)
+sys.argv = ["a", "--card", "v3"]
+_spec.loader.exec_module(A)
+TASKS = {t["id"].split("::")[-1]: t for t in A.load_card_v3()}
+
+
+def strict(text):
+    """v4's extractor, applied to v3's raws -- the CORRECTED reading."""
+    if not text:
+        return None
+    t = text.strip()
+    m = re.search(r"```(?:json)?\s*(.*?)```", t, re.S)
+    if m:
+        t = m.group(1).strip()
+    i = t.find("{")
+    while i != -1:
+        d, s, e = 0, False, False
+        for j in range(i, len(t)):
+            c = t[j]
+            if s:
+                if e:
+                    e = False
+                elif c == "\\":
+                    e = True
+                elif c == '"':
+                    s = False
+                continue
+            if c == '"':
+                s = True
+            elif c == "{":
+                d += 1
+            elif c == "}":
+                d -= 1
+                if d == 0:
+                    try:
+                        return json.loads(t[i:j + 1])
+                    except Exception:
+                        break
+        i = t.find("{", i + 1)
+    return None
+
+
+def main():
+    rec = defaultdict(lambda: [0, 0])
+    cor = defaultdict(lambda: [0, 0])
+    for p in sorted(glob.glob(os.path.join(HERE, "results", "*cardv3*.json"))):
+        try:
+            d = json.load(open(p, encoding="utf-8"))
+        except Exception:
+            continue
+        if d.get("harness") != "handicap-arena":
+            continue
+        for e in (d.get("results") or []):
+            rd = (e.get("rounds") or {}).get("R1_fencing") or {}
+            for iid, it in (rd.get("items") or {}).items():
+                s = it.get("score") or 0
+                rec[iid][1] += 1
+                if s >= 1.0:
+                    rec[iid][0] += 1
+                cs = s
+                raw = it.get("raw")
+                raws = raw if isinstance(raw, list) else ([raw] if raw else [])
+                t = TASKS.get(iid)
+                if raws and t:
+                    for r in raws:
+                        o = strict(r)
+                        if o is None:
+                            continue
+                        ns, _ = A.SCORERS[t["scorer"]](t["spec"], json.dumps(o))
+                        cs = max(cs, ns)
+                        break
+                cor[iid][1] += 1
+                if cs >= 1.0:
+                    cor[iid][0] += 1
+
+    print("  v3 item rates, BOTH READINGS -- recorded (greedy parser) vs corrected (strict):")
+    print()
+    print("    item                                      recorded      corrected    delta")
+    print("    --------------------------------------  -----------  -----------  -------")
+    for iid in sorted(rec):
+        rg, rt = rec[iid]
+        cg, ct = cor[iid]
+        r = rg / rt if rt else 0
+        c = cg / ct if ct else 0
+        print(f"    {iid[:40]:40}  {rg:3}/{rt:<3} {r:6.1%}  {cg:3}/{ct:<3} {c:6.1%}  {c - r:+6.1%}")
+    print()
+    print("  THE DELTA IS THE PARSER'S FINGERPRINT: it is zero on R1.6 (whose raws parsed cleanly) and")
+    print("  positive everywhere the greedy `{.*}` failed on a model that reasoned before it answered.")
+    print("  Chilly derived the same asymmetry from the other side by reading the on-disk scores, which is")
+    print("  the correction corroborated independently rather than repeated.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
