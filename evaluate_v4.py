@@ -98,16 +98,19 @@ def main():
     print()
     print("        item                                  recorded  corrected   delta | v4 item")
     print("        ------------------------------------  --------  ---------  ------ | ------------------------")
-    for vn, rr, rc, un in (
-        ("R1.1 forbidden_key_must_be_absent", "86.8%", "89.5%", "ordered_sequence_with_a_gap"),
-        ("R1.2 null_means_absent", "57.9%", "60.5%", "order_is_the_content"),
-        ("R1.3 type_under_natural_language", "92.1%", "94.7%", "duplicates_are_significant"),
-        ("R1.4 ambiguous_nesting", "86.8%", "89.5%", "absence_is_the_answer"),
-        ("R1.5 enum_nearest_is_wrong", "78.9%", "86.8%", "exact_key_set_under_a_bribe"),
-        ("R1.6 array_exact_and_ordered", "39.5%", "39.5%", "exact_scalar_types"),
+    # DERIVED FROM THE COUNTS, NOT FROM THE DISPLAYED PERCENTAGES. Subtracting the rounded strings gave
+    # +2.7 on two rows where the counts give +2.63 -- a number computed from a display instead of from
+    # the data, which is the same defect as filling a rate from memory. The counts are the primitive.
+    for vn, rg, rt, cg, ct, un in (
+        ("R1.1 forbidden_key_must_be_absent", 33, 38, 34, 38, "ordered_sequence_with_a_gap"),
+        ("R1.2 null_means_absent", 22, 38, 23, 38, "order_is_the_content"),
+        ("R1.3 type_under_natural_language", 35, 38, 36, 38, "duplicates_are_significant"),
+        ("R1.4 ambiguous_nesting", 33, 38, 34, 38, "absence_is_the_answer"),
+        ("R1.5 enum_nearest_is_wrong", 30, 38, 33, 38, "exact_key_set_under_a_bribe"),
+        ("R1.6 array_exact_and_ordered", 15, 38, 15, 38, "exact_scalar_types"),
     ):
-        d = float(rc.rstrip("%")) - float(rr.rstrip("%"))
-        print(f"        {vn:36}  {rr:>8}  {rc:>9}  {d:+5.1f}% | {un}")
+        r, c = rg / rt, cg / ct
+        print(f"        {vn:36}  {r:>7.1%}  {c:>8.1%}  {(c - r) * 100:+5.1f}% | {un}")
     print()
     print("      THE DELTA IS THE PARSER'S FINGERPRINT: zero on R1.6, whose raws parsed cleanly, and")
     print("      positive everywhere the greedy `{.*}` failed on a model that reasoned before it")
