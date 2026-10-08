@@ -718,7 +718,14 @@ def load_card_v2():
                 "prompt": it["prompt"],
                 "scorer": scorer,
                 "kind": d.get("kind", ""),
-                "metaphor": d.get("metaphor", ""),
+                # THE NAME GOES, NOT THE STATE ARRIVES. A task that is an INSTRUMENT is measured by a
+                # scorer -- no game supplies an oracle -- so the round carries the STAGING and not a
+                # game name. `metaphor` is written ONLY for a task that declares a game AND the bundle
+                # fields carrying that game's state; otherwise the record would claim a game with
+                # nothing behind it, which is the defect GAME_CONTRACT.md exists to catch.
+                "class": d.get("class", ""),
+                "staged_as": d.get("staged_as", ""),
+                "metaphor": d.get("metaphor", "") if d.get("class") == "CONTEST" else "",
                 "spec": spec,
                 "difficulty": it.get("difficulty", ""),
                 "trap": it.get("trap", ""),
@@ -754,7 +761,14 @@ def load_card_v3():
                 "prompt": it["prompt"],
                 "scorer": scorer,
                 "kind": d.get("kind", ""),
-                "metaphor": d.get("metaphor", ""),
+                # THE NAME GOES, NOT THE STATE ARRIVES. A task that is an INSTRUMENT is measured by a
+                # scorer -- no game supplies an oracle -- so the round carries the STAGING and not a
+                # game name. `metaphor` is written ONLY for a task that declares a game AND the bundle
+                # fields carrying that game's state; otherwise the record would claim a game with
+                # nothing behind it, which is the defect GAME_CONTRACT.md exists to catch.
+                "class": d.get("class", ""),
+                "staged_as": d.get("staged_as", ""),
+                "metaphor": d.get("metaphor", "") if d.get("class") == "CONTEST" else "",
                 "spec": spec,
                 "difficulty": it.get("difficulty", ""),
                 "trap": it.get("trap", ""),
@@ -883,7 +897,14 @@ def load_card_v4():
                 "prompt": it["prompt"],
                 "scorer": scorer,
                 "kind": d.get("kind", ""),
-                "metaphor": d.get("metaphor", ""),
+                # THE NAME GOES, NOT THE STATE ARRIVES. A task that is an INSTRUMENT is measured by a
+                # scorer -- no game supplies an oracle -- so the round carries the STAGING and not a
+                # game name. `metaphor` is written ONLY for a task that declares a game AND the bundle
+                # fields carrying that game's state; otherwise the record would claim a game with
+                # nothing behind it, which is the defect GAME_CONTRACT.md exists to catch.
+                "class": d.get("class", ""),
+                "staged_as": d.get("staged_as", ""),
+                "metaphor": d.get("metaphor", "") if d.get("class") == "CONTEST" else "",
                 "spec": spec,
                 "difficulty": it.get("difficulty", ""),
                 "trap": it.get("trap", ""),

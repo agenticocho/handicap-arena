@@ -2,7 +2,8 @@
   "id": "R1_fencing",
   "card_version": 3,
   "kind": "structured_output",
-  "metaphor": "FENCING",
+  "class": "INSTRUMENT",
+  "staged_as": "arcade cabinet -- a weigh-in: strict schema conformance, six items",
   "scorer": "json_schema_strict_multi",
   "note": "CARD v3 R1. Six distinct items, one trial each, temperature 0. Replaces v2's R1, which was 89.9% SATURATED (26 of 33 entries at 6/6) -- the only saturated round in the card. v2's R1 failed for a structural reason visible in its own items: R1.1 was a FLOOR item (\"7 degrees in Oslo\") and the other five handed over the exact schema, so a competent model did all six. The lever that fixed R2 -- distinct items with near-misses rather than repeated trials -- is applied here, plus the three conformance traps named in the v3 tasking: a field that must be ABSENT, a type-coercion trap, and ambiguous nesting. There is deliberately NO floor item.",
   "criteria_frozen_before_run": {
@@ -16,30 +17,55 @@
       "id": "R1.1_forbidden_key_must_be_absent",
       "difficulty": "near-miss",
       "prompt": "Emit ONLY a JSON object with exactly these keys: {\"patient_id\": string, \"ward\": string}. The schema FORBIDS any other key. Patient P-4401 is in cardiology; the referring doctor was Dr. Reyes. No prose, no code fences.",
-      "expect": {"patient_id": "P-4401", "ward": "cardiology"},
-      "forbid": ["doctor", "referring_doctor", "referrer", "notes"],
+      "expect": {
+        "patient_id": "P-4401",
+        "ward": "cardiology"
+      },
+      "forbid": [
+        "doctor",
+        "referring_doctor",
+        "referrer",
+        "notes"
+      ],
       "trap": "The input volunteers the doctor, and a model that transcribes everything adds a key. The schema permits exactly two keys, so the correct move is to DROP information that was given. Omission is the task."
     },
     {
       "id": "R1.2_null_means_absent",
       "difficulty": "near-miss",
       "prompt": "Emit ONLY a JSON object with exactly these keys: {\"sku\": string, \"discount_pct\": number, \"coupon\": string}. The SKU is X-9. There is no discount and no coupon. Where a value does not exist, OMIT the key entirely -- do not emit null. No prose, no code fences.",
-      "expect": {"sku": "X-9"},
-      "forbid": ["discount_pct", "coupon"],
+      "expect": {
+        "sku": "X-9"
+      },
+      "forbid": [
+        "discount_pct",
+        "coupon"
+      ],
       "trap": "Two failure modes, both natural: emitting `\"discount_pct\": null` (the key exists but the rule says omit), or inventing `0` for the discount. \"Absent\" and \"null\" are different claims and the schema distinguishes them."
     },
     {
       "id": "R1.3_type_under_natural_language",
       "difficulty": "medium",
       "prompt": "Emit ONLY a JSON object with exactly these keys: {\"quantity\": integer, \"unit_price\": number, \"in_stock\": boolean, \"reference\": string}. There are three units at one and a half each, it is in stock, and the reference is 007. No prose, no code fences.",
-      "expect": {"quantity": 3, "unit_price": 1.5, "in_stock": true, "reference": "007"},
+      "expect": {
+        "quantity": 3,
+        "unit_price": 1.5,
+        "in_stock": true,
+        "reference": "007"
+      },
       "trap": "Four separate coercions. quantity: the INTEGER 3, not the string \"three\" or \"3\". unit_price: 1.5, not \"1 1/2\". in_stock: a JSON boolean, not the string \"true\". reference: the STRING \"007\" -- parsing it to the integer 7 destroys the leading zeros, and the schema says string."
     },
     {
       "id": "R1.4_ambiguous_nesting",
       "difficulty": "medium",
       "prompt": "Emit ONLY a JSON object with exactly these keys: {\"shipment_id\": string, \"destination\": {\"postcode\": string, \"country\": string}, \"carrier\": string}. Shipment S-88 goes to postcode 44101 in the United States via Nordex. No prose, no code fences.",
-      "expect": {"shipment_id": "S-88", "destination": {"postcode": "44101", "country": "united states"}, "carrier": "nordex"},
+      "expect": {
+        "shipment_id": "S-88",
+        "destination": {
+          "postcode": "44101",
+          "country": "united states"
+        },
+        "carrier": "nordex"
+      },
       "forbid_all_other_keys": true,
       "trap": "The two location facts belong together under `destination`, and a model that flattens them puts postcode at the top level. postcode is a STRING though it looks numeric; country is normalised to lower case; carrier is lower case and is a TOP-level key, not a sibling of postcode. Getting the nesting right and the casing right are separate requirements."
     },
@@ -47,14 +73,31 @@
       "id": "R1.5_enum_nearest_is_wrong",
       "difficulty": "hard",
       "prompt": "Emit ONLY a JSON object with exactly these keys: {\"severity\": one of [\"INFO\",\"WARN\",\"ERROR\",\"FATAL\"] (uppercase, exact), \"code\": integer}. A routine message was logged, code 12. No prose, no code fences.",
-      "expect": {"severity": "INFO", "code": 12},
+      "expect": {
+        "severity": "INFO",
+        "code": 12
+      },
       "trap": "v2's version of this item had the naive nearest value be CORRECT. Here the naive move is wrong: 'routine' sounds closest to WARN in casual reading and to INFO in the severity ladder, and a model that does not resolve the ordering picks WARN. The enum defines the ladder; the ladder decides."
     },
     {
       "id": "R1.6_array_exact_and_ordered",
       "difficulty": "hard",
       "prompt": "Emit ONLY a JSON object {\"legs\": [ ... ]} where legs is an ARRAY of exactly 3 objects, each with exactly the keys {\"seq\": integer, \"icao\": string}. The legs, in order: first LHR, second 4 (a connection where the code was not recorded, so the icao value must be omitted for that leg only), third JFK. Every leg carries its seq. No prose, no code fences.",
-      "expect": {"legs": [{"seq": 1, "icao": "LHR"}, {"seq": 2}, {"seq": 3, "icao": "JFK"}]},
+      "expect": {
+        "legs": [
+          {
+            "seq": 1,
+            "icao": "LHR"
+          },
+          {
+            "seq": 2
+          },
+          {
+            "seq": 3,
+            "icao": "JFK"
+          }
+        ]
+      },
       "trap": "Three elements, in order, each with `seq`. The middle leg must have `icao` ABSENT -- not null, not \"\", not the literal \"4\" printed as if it were a code. Exactly one element of the array is shaped differently from its siblings, which punishes both copy-the-shape and fill-everything instincts."
     }
   ]

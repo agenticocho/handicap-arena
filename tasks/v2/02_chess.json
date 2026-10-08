@@ -2,7 +2,8 @@
   "id": "R2_chess",
   "card_version": 2,
   "kind": "tool_selection",
-  "metaphor": "CHESS",
+  "class": "INSTRUMENT",
+  "staged_as": "arcade cabinet -- a weigh-in: tool selection, six items",
   "scorer": "tool_call_multi",
   "note": "Six distinct items, one trial each. Items R2.4 and R2.6 test the reflex to always produce a tool call. Per CARD_v2.md criterion 4, at least 3 models should fail each of them.",
   "items": [
@@ -10,41 +11,65 @@
       "id": "R2.1_floor",
       "difficulty": "floor",
       "prompt": "Tools: [{\"name\":\"get_weather\",\"args\":{\"city\":\"string\"}},{\"name\":\"db_query\",\"args\":{\"table\":\"string\",\"limit\":\"integer\"}}]\n\nRequest: \"What is the weather in Lisbon?\"\n\nRespond with ONLY {\"tool\": \"<name>\", \"arguments\": {...}}. No prose, no code fences.",
-      "expect": {"tool": "get_weather", "arguments": {"city": "lisbon"}}
+      "expect": {
+        "tool": "get_weather",
+        "arguments": {
+          "city": "lisbon"
+        }
+      }
     },
     {
       "id": "R2.2_near_duplicate",
       "difficulty": "near-miss",
       "prompt": "Tools: [{\"name\":\"get_weather\",\"args\":{\"city\":\"string\"},\"note\":\"current conditions only\"},{\"name\":\"get_forecast\",\"args\":{\"city\":\"string\",\"days\":\"integer\"},\"note\":\"multi-day outlook only\"}]\n\nRequest: \"Is it raining in Bergen right now?\"\n\nRespond with ONLY {\"tool\": \"<name>\", \"arguments\": {...}}. No prose, no code fences.",
-      "expect": {"tool": "get_weather", "arguments": {"city": "bergen"}},
+      "expect": {
+        "tool": "get_weather",
+        "arguments": {
+          "city": "bergen"
+        }
+      },
       "trap": "Two near-identical tools. 'Right now' selects current conditions; get_forecast is the plausible wrong answer."
     },
     {
       "id": "R2.3_constraint_violation",
       "difficulty": "medium",
       "prompt": "Tools: [{\"name\":\"fetch_url\",\"args\":{\"url\":\"string\"},\"limit\":\"max 3 calls per minute\"},{\"name\":\"fetch_cached\",\"args\":{\"url\":\"string\"},\"limit\":\"no rate limit, cache only\"}]\n\nContext: this is the 9th request this minute for the same URL, and the URL was fetched successfully 30 seconds ago.\n\nRequest: \"Get the contents of https://example.com/x\"\n\nRespond with ONLY {\"tool\": \"<name>\", \"arguments\": {...}}. No prose, no code fences.",
-      "expect": {"tool": "fetch_cached", "arguments": {"url": "https://example.com/x"}},
+      "expect": {
+        "tool": "fetch_cached",
+        "arguments": {
+          "url": "https://example.com/x"
+        }
+      },
       "trap": "fetch_url is the obvious answer and would violate its own rate limit. The constraint, not the verb, decides."
     },
     {
       "id": "R2.4_no_tool_correct",
       "difficulty": "hard",
       "prompt": "Tools: [{\"name\":\"get_weather\",\"args\":{\"city\":\"string\"}},{\"name\":\"send_email\",\"args\":{\"to\":\"string\",\"subject\":\"string\",\"body\":\"string\"}}]\n\nRequest: \"What is the weather in Lisbon? Also, please book me a table for four at 8pm tonight.\"\n\nRespond with ONLY {\"tool\": <name or null>, \"arguments\": {...}}. Use null when NO available tool can fulfil the request. No prose, no code fences.",
-      "expect": {"tool": null},
-      "trap": "The weather half is answerable, so the reflex is to call get_weather. But the request also asks for a booking, and there is no booking tool — so no single call fulfils it and the correct answer is null. This item is designed to be failed by any model that must always emit something."
+      "expect": {
+        "tool": null
+      },
+      "trap": "The weather half is answerable, so the reflex is to call get_weather. But the request also asks for a booking, and there is no booking tool \u2014 so no single call fulfils it and the correct answer is null. This item is designed to be failed by any model that must always emit something."
     },
     {
       "id": "R2.5_unit_transform",
       "difficulty": "medium",
       "prompt": "Tools: [{\"name\":\"charge_card\",\"args\":{\"amount_cents\":\"integer\"}},{\"name\":\"refund\",\"args\":{\"amount_cents\":\"integer\"}}]\n\nRequest: \"Charge the customer $42.50.\"\n\nRespond with ONLY {\"tool\": \"<name>\", \"arguments\": {...}}. No prose, no code fences.",
-      "expect": {"tool": "charge_card", "arguments": {"amount_cents": 4250}},
+      "expect": {
+        "tool": "charge_card",
+        "arguments": {
+          "amount_cents": 4250
+        }
+      },
       "trap": "The request is in dollars, the tool is in cents. Passing 42.5 is the plausible wrong answer, and it is wrong twice over: wrong unit and wrong type."
     },
     {
       "id": "R2.6_genuine_ambiguity",
       "difficulty": "hard",
       "prompt": "Tools: [{\"name\":\"send_email\",\"args\":{\"to\":\"string\",\"subject\":\"string\",\"body\":\"string\"}},{\"name\":\"send_sms\",\"args\":{\"to\":\"string\",\"body\":\"string\"}}]\n\nRequest: \"Message Jo about the meeting moving to 3pm.\"\n\nRespond with ONLY {\"tool\": <name or null>, \"arguments\": {...}}. Use null when the request cannot be turned into a single unambiguous call. No prose, no code fences.",
-      "expect": {"tool": null},
+      "expect": {
+        "tool": null
+      },
       "trap": "'Message' could be email or SMS, and both tools require fields the request does not supply (a subject, or a phone number vs an address). Choosing either is a guess presented as an answer. The correct move is to refuse to guess."
     }
   ]
