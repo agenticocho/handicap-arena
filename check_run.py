@@ -112,7 +112,20 @@ def main(card="v3", pid=None):
               os.path.join(HERE, "results", "card_run.log")]
     _have = [p for p in _cands if os.path.exists(p)]
     log = max(_have, key=os.path.getmtime) if _have else _cands[0]
-    age = (time.time() - os.path.getmtime(log)) if os.path.exists(log) else -1
+    # AND THE SERVER LOG, BECAUSE THE RUNNER'S LOG IS COARSER THAN THE WORK.
+    #
+    # `card_run.log` is written when an ENTRANT FINISHES; the server log is written per TOKENS. Watching
+    # only the runner means a long entrant is indistinguishable from a hang -- MEASURED: 2727s of runner
+    # silence while the server was emitting ~22 tokens every 3 seconds, on an entrant at 6.6 t/s with a
+    # 3000-token cap and six items. The check reported STALE and was wrong; the work was progressing the
+    # whole time in a file it was not reading.
+    #
+    # A check with a ceiling on what it can see reports a number that looks like a measurement. The
+    # newest evidence is the evidence, and the newest evidence includes the server.
+    _srv = sorted(glob.glob(os.path.join(HERE, "logs", "arena-server-*.log")),
+                  key=os.path.getmtime, reverse=True)
+    _live = _have + ([_srv[0]] if _srv else [])
+    age = (time.time() - max(os.path.getmtime(p) for p in _live)) if _live else -1
     alive = None
     if pid:
         alive = subprocess.run(["ps", "-p", str(pid)],
