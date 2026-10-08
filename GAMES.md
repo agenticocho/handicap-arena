@@ -130,13 +130,45 @@ Everything below reduces to one of these. **No LLM judge appears anywhere in thi
 - **Discriminates** — whether output discipline survives pressure. **This is the round that caught a grammar file silently making a model incapable** (see FINDINGS/001)
 - **Anti-gaming** — schema generated per run, so it cannot be memorised
 
-### B2 · Chess — Tool Selection
-- **Measures** — choosing the right tool and arguments from a spec
+### B2 · Golf — Tool Selection
+- **Measures** — choosing the right tool and arguments from a spec, **and knowing when no tool fits**
 - **Format** — a tool list and a natural request
 - **Scorer** — PARSE: exact match on parsed tool name and required arguments
 - **Null baseline** — pick the first tool
-- **Discriminates** — the difference between a model that *can* call tools and one that *will*
+- **Discriminates** — the difference between a model that *can* call tools and one that *will*, and
+  between a hero play and the punch-out when no club fits
 - **Anti-gaming** — the correct tool is varied; distractor tools share surface words with the request
+
+> **RENAMED 2026-10-08, from "Chess" to "Golf".** The entry's MEASURE never changed — tool selection,
+> restraint, the punch-out when no club fits. What had drifted was the game named beside it. The deep
+> dive's derivation put the five clubs on the five-tool schema and the 7-iron through the oak on the
+> hallucinated call, and it was right; chess had been attached to this measure without carrying its
+> state. **A game name and a measure had drifted apart inside one entry** — the same defect as
+> `metaphor: CHESS` on a weather API, caught before it shipped. Chess is now its own event, below.
+
+### B2c · Chess — Calibration
+- **Measures** — **does the model know when it has lost?** Two-sided, with a ground truth
+- **Format** — a position and a budget. The model plays until it concludes, resigns, or runs out.
+- **Scorer** — a reference engine at a **FROZEN depth** in a subprocess. The engine's evaluation is the
+  ground truth, not an opinion
+- **Null baseline** — always play on, never resign (loses the "premature collapse" half entirely); and
+  always resign at the first sign of trouble (loses the other half)
+- **Discriminates** — **resigning a WON or DRAWN position** is premature collapse; **playing on in a
+  LOST one** is miscalibrated persistence. Both are conformance failures with stateable reasons
+- **Anti-gaming** — the engine's evaluation is never shown to the model, and the threshold for "lost" is
+  a frozen centipawn number, not a phrase
+- **Gate, not a round** — *a logical conclusion must be reached or the model can't enter.* A player who
+  cannot recognise a lost position cannot be said to have played a game, because the game has no end.
+  **Its output is a binary other events consume.**
+
+> **The strongest sentence ever written about this project is this event's specification:** *the hardest
+> move on the board isn't a sacrifice, it's tipping your king.*
+>
+> **And its own contract is what makes it checkable: if the outcome cannot be recorded, the gate does not
+> exist.** `EVENT_chess.md` carries the state (`fen`, `raw`, `move`, `eval_before`, `eval_after`,
+> `termination`, `result`) and the two-field outcome split — `result` is the quality of the MOVE,
+> `termination` is HOW THE GAME ENDED. They are separate fields because **a game ending is not a failure**,
+> and a taxonomy that could not record a resignation could not hold the sport.
 
 ### B3 · Pit Stop — Code Repair
 - **Measures** — fixing a defect against a test suite
@@ -566,6 +598,6 @@ Events are not equal in value-per-line-of-code.
 
 ---
 
-*55 events. Every one scored by parser, execution, or ground truth. Every one carrying a null
+*56 events. Every one scored by parser, execution, or ground truth. Every one carrying a null
 baseline. Nothing here is judged by a model — because a model grading its own family is not a
 measurement, it is a conflict of interest.*
