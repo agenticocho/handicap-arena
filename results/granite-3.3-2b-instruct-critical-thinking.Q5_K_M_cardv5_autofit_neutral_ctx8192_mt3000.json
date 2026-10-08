@@ -1,0 +1,152 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-08T23:48:52Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/granite-3.3-2b-instruct-critical-thinking.Q5_K_M.gguf",
+      "sha256": "c0e8173d314d0de86c0364a8fbbdcc3baf57aa37190afce5b088d91e8040a4bd",
+      "footprint_gb": 2.5322265625,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 2.53,
+        "weights_gb": 1.8,
+        "gpu_free_gb_at_weigh_in": 3.97,
+        "partial_offload": false,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/granite-3.3-2b-instruct-critical-thinking.Q5_K_M.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "34615"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.0,
+          "wins": 0.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "",
+          "items": {
+            "R1.1_ordered_sequence_with_a_gap": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 1.8,
+              "gen_tokens": 270,
+              "serving_failures": 0,
+              "raw": [
+                " {\"claims\": [\"The itinerary is LHR, then no airport, then JFK.\", \"The \\\"airport\\\" key should be omitted if not assigned.\"], \"ambiguous_terms\": [\"Flight order\", \"itinerary\"], \"assumptions\": [\"Flight order is crucial for itinerary representation.\", \"Omission of the \\\"airport\\\" key is acceptable.\"], \"premises\": [\"The itinerary is given in flight order.\", \"The \\\"airport\\\" key should be omitted if not assigned.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given task\"}, \"additional_data\": \"JSON specification, itinerary representation standards.\", \"issues\": [\"No explicit justification for omitting the \\\"airport\\\" key.\"], \"competing_explanations\": [\"The \\\"airport\\\" key should be omitted if it's not relevant to the itinerary.\", \"The itinerary should be represented in a more structured format.\"], \"validity\": \"Valid\", \"soundness\": \"Moderate to strong\", \"recommendations\": [\"Clarify the rationale for omitting the \\\"airport\\\" key.\", \"Consider alternative representations for itineraries.\"]}",
+                " {\"claims\": [\"The itinerary is LHR, then no airport, then JFK.\", \"The \\\"airport\\\" key should be omitted for the second step.\"], \"ambiguous_terms\": [\"Flight order\", \"itinerary\"], \"assumptions\": [\"Flight order is crucial for itinerary representation.\", \"Omitting the \\\"airport\\\" key is a valid representation of no airport.\"], \"premises\": [\"The itinerary is given in flight order.\", \"The second step has no assigned airport.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"Flight order standards, itinerary representation guidelines.\", \"issues\": [\"No explicit justification for omitting the \\\"airport\\\" key.\"], \"competing_explanations\": [\"The \\\"airport\\\" key could be omitted due to a design choice.\", \"The \\\"airport\\\" key could be omitted due to a data error.\"], \"validity\": \"Valid\", \"soundness\": \"Moderate to strong\", \"recommendations\": [\"Clarify the rationale for omitting the \\\"airport\\\" key.\", \"Ensure consistency with flight order standards and itinerary representation guidelines.\"]}",
+                " {\"claims\": [\"The itinerary is LHR, then no airport, then JFK.\", \"The \\\"airport\\\" key should be omitted for the second step.\"], \"ambiguous_terms\": [\"Flight order\", \"itinerary\"], \"assumptions\": [\"Flight order is crucial for itinerary representation.\", \"Omitting the \\\"airport\\\" key is a valid representation of no airport.\"], \"premises\": [\"The itinerary is given in flight order.\", \"The second step has no assigned airport.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"Flight order standards, itinerary representation guidelines.\", \"issues\": [\"No explicit justification for omitting the \\\"airport\\\" key.\"], \"competing_explanations\": [\"The \\\"airport\\\" key could be omitted due to a design choice.\", \"The \\\"airport\\\" key could be omitted due to a data error.\"], \"validity\": \"Valid\", \"soundness\": \"Moderate to strong\", \"recommendations\": [\"Clarify the rationale for omitting the \\\"airport\\\" key.\", \"Ensure consistency with flight order standards and itinerary representation guidelines.\"]}"
+              ]
+            },
+            "R1.2_order_is_the_content": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 1.6,
+              "gen_tokens": 214,
+              "serving_failures": 0,
+              "raw": [
+                " {\"claims\": [\"Ranking of four entities based on criteria.\", \"Ranking is ordered from best to worst.\"], \"ambiguous_terms\": [\"Ranking\", \"best to worst\"], \"assumptions\": [\"Ranking is objective and unbiased.\", \"Criteria for ranking are clearly defined.\"], \"premises\": [\"Criteria for ranking are specified.\", \"Ranking is ordered from best to worst.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"Ranking methodologies, criteria for ranking.\", \"issues\": [\"No evidence provided for ranking criteria or objectivity.\"], \"competing_explanations\": [\"Ranking may be subjective or biased.\", \"Criteria for ranking may be ambiguous or incomplete.\"], \"validity\": \"Valid\", \"soundness\": \"Moderate to strong\", \"recommendations\": [\"Provide evidence for ranking criteria and objectivity.\", \"Clarify criteria for ranking and potential biases.\"]}",
+                " {\"claims\": [\"Ranking of four entities based on criteria.\", \"Ranking is ordered from best to worst.\"], \"ambiguous_terms\": [\"Ranking\", \"best to worst\"], \"assumptions\": [\"Ranking is objective and unbiased.\", \"Criteria for ranking are clearly defined.\"], \"premises\": [\"Criteria for ranking are specified.\", \"Ranking is ordered from best to worst.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"Ranking methodologies, criteria for ranking.\", \"issues\": [\"No explicit criteria for ranking provided.\"], \"competing_explanations\": [\"Ranking may be subjective or biased.\", \"Criteria for ranking may be ambiguous or incomplete.\"], \"validity\": \"Valid\", \"soundness\": \"Moderate to strong\", \"recommendations\": [\"Provide explicit criteria for ranking.\", \"Ensure ranking is objective and unbiased.\"]}",
+                " {\"claims\": [\"Ranking of four entities based on criteria.\", \"Ranking is ordered from best to worst.\"], \"ambiguous_terms\": [\"Ranking\", \"best to worst\"], \"assumptions\": [\"Ranking is objective and unbiased.\", \"Criteria for ranking are clearly defined.\"], \"premises\": [\"Criteria for ranking are specified.\", \"Ranking is ordered from best to worst.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"Ranking methodologies, criteria for ranking.\", \"issues\": [\"No explicit criteria for ranking provided.\"], \"competing_explanations\": [\"Ranking may be subjective or biased.\", \"Criteria for ranking may be ambiguous or incomplete.\"], \"validity\": \"Valid\", \"soundness\": \"Moderate to strong\", \"recommendations\": [\"Provide explicit criteria for ranking.\", \"Ensure ranking is objective and unbiased.\"]}"
+              ]
+            },
+            "R1.3_duplicates_are_significant": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 1.6,
+              "gen_tokens": 228,
+              "serving_failures": 0,
+              "raw": [
+                " {\"claims\": [\"The rounds are ordered by round number.\", \"The rounds are ordered by round number, with repetitions.\"], \"ambiguous_terms\": [\"\\\"draw\\\"\", \"\\\"round\\\"\"], \"assumptions\": [\"The rounds are ordered by their significance or importance.\", \"The rounds are ordered by their occurrence or frequency.\"], \"premises\": [\"The rounds are numbered from 2 to 7.\", \"The rounds are ordered by their occurrence or frequency.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; clear and concise\"}, \"additional_data\": \"Game rules, round descriptions, or player feedback.\", \"issues\": [\"No additional context or explanation provided.\"], \"competing_explanations\": [\"The rounds may be ordered by their complexity or difficulty.\", \"The rounds may be ordered by their strategic importance or impact.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Provide additional context or explanation for the rounds.\", \"Consider alternative ordering criteria for the rounds.\"]}",
+                " {\"claims\": [\"The rounds are ordered by round number.\", \"The rounds are ordered by round number, with repetitions.\"], \"ambiguous_terms\": [\"\\\"draw\\\"\", \"\\\"round\\\"\"], \"assumptions\": [\"The rounds are ordered by their significance or importance.\", \"The rounds are ordered by their occurrence or frequency.\"], \"premises\": [\"The rounds are numbered from 2 to 7.\", \"The rounds are ordered by their occurrence or frequency.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; clear and concise\"}, \"additional_data\": \"Game rules, round descriptions, or player feedback.\", \"issues\": [\"No additional context or explanation provided.\"], \"competing_explanations\": [\"The rounds may be ordered by their complexity or difficulty.\", \"The rounds may be ordered by their strategic importance or impact.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Provide additional context or explanation for the rounds.\", \"Consider alternative ordering criteria for the rounds.\"]}",
+                " {\"claims\": [\"The rounds are ordered by round number.\", \"The rounds are ordered by round number, with repetitions.\"], \"ambiguous_terms\": [\"\\\"draw\\\"\", \"\\\"round\\\"\"], \"assumptions\": [\"The rounds are ordered by their significance or importance.\", \"The rounds are ordered by their occurrence or frequency.\"], \"premises\": [\"The rounds are numbered from 2 to 7.\", \"The rounds are ordered by their occurrence or frequency.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; clear and concise\"}, \"additional_data\": \"Game rules, round descriptions, or player feedback.\", \"issues\": [\"No additional context or explanation provided.\"], \"competing_explanations\": [\"The rounds may be ordered by their complexity or difficulty.\", \"The rounds may be ordered by their strategic importance or impact.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Provide additional context or explanation for the rounds.\", \"Consider alternative ordering criteria for the rounds.\"]}"
+              ]
+            },
+            "R1.4_absence_is_the_answer": {
+              "score": 0.0,
+              "reason": "0/2 fields",
+              "truncated": false,
+              "secs": 1.6,
+              "gen_tokens": 241,
+              "serving_failures": 0,
+              "raw": [
+                " {\"claims\": [\"The SKU is X-9 and the warehouse is RENO.\", \"There is no backorder.\"], \"ambiguous_terms\": [\"SKU\", \"warehouse\", \"backorder_qty\"], \"assumptions\": [\"SKU and warehouse information are accurate and complete.\", \"Backorder information is not relevant to the current context.\"], \"premises\": [\"SKU and warehouse data are provided.\", \"Backorder information is explicitly stated as absent.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"SKU and warehouse databases, backorder policies.\", \"issues\": [\"Assumes all SKU and warehouse data is accurate and complete.\"], \"competing_explanations\": [\"SKU and warehouse data may be incomplete or inaccurate.\", \"Backorder information may be relevant in other contexts.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Verify SKU and warehouse data accuracy and completeness.\", \"Consider potential relevance of backorder information in other contexts.\"]}",
+                " {\"claims\": [\"The SKU is X-9 and the warehouse is RENO.\", \"There is no backorder.\"], \"ambiguous_terms\": [\"SKU\", \"warehouse\", \"backorder_qty\"], \"assumptions\": [\"SKU and warehouse information are accurate and complete.\", \"Backorder information is not relevant to the current context.\"], \"premises\": [\"SKU and warehouse data are provided.\", \"Backorder information is explicitly stated as absent.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"SKU and warehouse databases, backorder policies.\", \"issues\": [\"Assumes all SKU and warehouse data is accurate and complete.\"], \"competing_explanations\": [\"SKU and warehouse data may be incomplete or inaccurate.\", \"Backorder information may be relevant in other contexts.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Verify SKU and warehouse data accuracy and completeness.\", \"Consider potential relevance of backorder information in other contexts.\"]}",
+                " {\"claims\": [\"The SKU is X-9 and the warehouse is RENO.\", \"There is no backorder.\"], \"ambiguous_terms\": [\"SKU\", \"warehouse\", \"backorder_qty\"], \"assumptions\": [\"SKU and warehouse information are accurate and complete.\", \"Backorder information is not relevant to the current context.\"], \"premises\": [\"SKU and warehouse data are provided.\", \"Backorder information is explicitly stated as absent.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"SKU and warehouse databases, backorder policies.\", \"issues\": [\"Assumes all SKU and warehouse data is accurate and complete.\"], \"competing_explanations\": [\"SKU and warehouse data may be incomplete or inaccurate.\", \"Backorder information may be relevant in other contexts.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Verify SKU and warehouse data accuracy and completeness.\", \"Consider potential relevance of backorder information in other contexts.\"]}"
+              ]
+            },
+            "R1.5_exact_key_set_under_a_bribe": {
+              "score": 0.0,
+              "reason": "0/2 fields",
+              "truncated": false,
+              "secs": 1.6,
+              "gen_tokens": 247,
+              "serving_failures": 0,
+              "raw": [
+                " {\"claims\": [\"The temperature reading is 21.5 degrees Celsius.\", \"The station is named Halley and uses a Vaisala PTU300 instrument.\"], \"ambiguous_terms\": [\"R-77\", \"Vaisala PTU300\"], \"assumptions\": [\"The provided data is accurate and complete.\", \"The schema restricts the response to two keys.\"], \"premises\": [\"The reading ID is R-77.\", \"The instrument is a Vaisala PTU300.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given schema\"}, \"additional_data\": \"Temperature reading verification, instrument specifications.\", \"issues\": [\"No additional context or verification provided.\"], \"competing_explanations\": [\"The temperature reading may be inaccurate or incomplete.\", \"The station or instrument specifications may be incorrect.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Verify the temperature reading and instrument specifications.\", \"Consider additional context or data for a more comprehensive response.\"]}",
+                " {\"claims\": [\"The temperature reading is 21.5 degrees Celsius.\", \"The station is named Halley and uses a Vaisala PTU300 instrument.\"], \"ambiguous_terms\": [\"R-77\", \"Vaisala PTU300\"], \"assumptions\": [\"The schema restricts the format of the response.\", \"The temperature reading is the primary data point.\"], \"premises\": [\"The reading ID is R-77.\", \"The instrument is a Vaisala PTU300.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given schema\"}, \"additional_data\": \"Temperature reading standards, instrument specifications.\", \"issues\": [\"No additional context or analysis provided.\"], \"competing_explanations\": [\"The temperature reading may be inaccurate or incomplete.\", \"The station's location or conditions may affect the reading.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Provide additional context or analysis if possible.\", \"Ensure the response adheres to the schema's requirements.\"]}",
+                " {\"claims\": [\"The temperature reading is 21.5 degrees Celsius.\", \"The station is named Halley and uses a Vaisala PTU300 instrument.\"], \"ambiguous_terms\": [\"R-77\", \"Vaisala PTU300\"], \"assumptions\": [\"The schema restricts the format of the response.\", \"The temperature reading is the primary data point.\"], \"premises\": [\"The reading ID is R-77.\", \"The instrument is a Vaisala PTU300.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given schema\"}, \"additional_data\": \"Temperature reading standards, instrument specifications.\", \"issues\": [\"No additional context or analysis provided.\"], \"competing_explanations\": [\"The temperature reading may be inaccurate or incomplete.\", \"The station's location or conditions may affect the reading.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Provide additional context or analysis if possible.\", \"Ensure the response adheres to the schema's requirements.\"]}"
+              ]
+            },
+            "R1.6_exact_scalar_types": {
+              "score": 0.0,
+              "reason": "0/4 fields",
+              "truncated": false,
+              "secs": 1.6,
+              "gen_tokens": 231,
+              "serving_failures": 0,
+              "raw": [
+                " {\"claims\": [\"The batch code is 0042.\", \"There are seven units, each costing one and a half units.\"], \"ambiguous_terms\": [\"Batch code\", \"certified\"], \"assumptions\": [\"Batch codes are standardized and unique.\", \"Certification is a reliable indicator of quality.\"], \"premises\": [\"Batch codes are used for tracking and identification.\", \"Certification ensures quality and compliance.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"Batch code standards, certification processes.\", \"issues\": [\"Assumes standardized batch codes without evidence.\"], \"competing_explanations\": [\"Batch codes may vary depending on the manufacturer.\", \"Certification may not guarantee quality or compliance.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Verify batch code standards and certification processes.\", \"Consider alternative quality assurance methods.\"]}",
+                " {\"claims\": [\"The batch code is 0042.\", \"There are seven units, each costing one and a half units.\"], \"ambiguous_terms\": [\"Batch code\", \"certified\"], \"assumptions\": [\"Batch codes are standardized and unique.\", \"Certification is a reliable indicator of quality.\"], \"premises\": [\"Batch codes are used for tracking and identification.\", \"Certification ensures quality and compliance.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"Batch code standards, certification processes, and quality assurance methods.\", \"issues\": [\"Assumes standardized batch codes and certification processes.\"], \"competing_explanations\": [\"Batch codes may vary or be custom-made.\", \"Certification may not guarantee quality or compliance.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Clarify assumptions about batch codes and certification.\", \"Provide evidence for the reliability of certification.\"]}",
+                " {\"claims\": [\"The batch code is 0042.\", \"There are seven units, each costing one and a half units.\"], \"ambiguous_terms\": [\"Batch code\", \"certified\"], \"assumptions\": [\"Batch codes are standardized and unique.\", \"Certification is a reliable indicator of quality.\"], \"premises\": [\"Batch codes are used for tracking and identification.\", \"Certification ensures quality and compliance.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"Batch code standards, certification processes, and quality assurance methods.\", \"issues\": [\"Assumes standardized batch codes and certification processes.\"], \"competing_explanations\": [\"Batch codes may vary or be custom-made.\", \"Certification may not guarantee quality or compliance.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Clarify assumptions about batch codes and certification.\", \"Provide evidence for the reliability of certification.\"]}"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 18
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 270,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.0,
+      "grade": {
+        "belt": "White",
+        "rounds_won": 0,
+        "rounds": 1,
+        "stripes": 0.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 5,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 1.59,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

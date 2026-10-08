@@ -1,0 +1,152 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-08T23:48:14Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/LFM2.5-VL-1.6B-UD-Q8_K_XL.gguf",
+      "sha256": "39c1685b1fb91ea0eb12d889578794602a0283b399e49d0b0c51fbc9a9e0bbf1",
+      "footprint_gb": 1.5927734375,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 1.59,
+        "weights_gb": 1.37,
+        "gpu_free_gb_at_weigh_in": 3.97,
+        "partial_offload": false,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/LFM2.5-VL-1.6B-UD-Q8_K_XL.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "54851"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.5,
+          "wins": 3.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "",
+          "items": {
+            "R1.1_ordered_sequence_with_a_gap": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 0.3,
+              "gen_tokens": 72,
+              "serving_failures": 0,
+              "raw": [
+                "```json\n{\n  \"steps\": [\n    {\n      \"seq\": 1,\n      \"airport\": \"LHR\"\n    },\n    {\n      \"seq\": 2,\n      \"airport\": null\n    },\n    {\n      \"seq\": 3,\n      \"airport\": \"JFK\"\n    }\n  ]\n}\n```",
+                "```json\n{\n  \"steps\": [\n    {\n      \"seq\": 1,\n      \"airport\": \"LHR\"\n    },\n    {\n      \"seq\": 2,\n      \"airport\": null\n    },\n    {\n      \"seq\": 3,\n      \"airport\": \"JFK\"\n    }\n  ]\n}\n```",
+                "```json\n{\n  \"steps\": [\n    {\n      \"seq\": 1,\n      \"airport\": \"LHR\"\n    },\n    {\n      \"seq\": 2,\n      \"airport\": null\n    },\n    {\n      \"seq\": 3,\n      \"airport\": \"JFK\"\n    }\n  ]\n}\n```"
+              ]
+            },
+            "R1.2_order_is_the_content": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 0.2,
+              "gen_tokens": 23,
+              "serving_failures": 0,
+              "raw": [
+                "{\"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"]}",
+                "{\"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"]}",
+                "{\"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"]}"
+              ]
+            },
+            "R1.3_duplicates_are_significant": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 0.2,
+              "gen_tokens": 34,
+              "serving_failures": 0,
+              "raw": [
+                "```json\n{\n  \"draw\": [\n    0,\n    2,\n    2,\n    7,\n    2\n  ]\n}\n```",
+                "```json\n{\n  \"draw\": [\n    0,\n    2,\n    2,\n    7,\n    2\n  ]\n}\n```",
+                "```json\n{\n  \"draw\": [\n    0,\n    2,\n    2,\n    7,\n    2\n  ]\n}\n```"
+              ]
+            },
+            "R1.4_absence_is_the_answer": {
+              "score": 0.0,
+              "reason": "emitted forbidden key(s): ['backorder_qty']",
+              "truncated": false,
+              "secs": 0.2,
+              "gen_tokens": 27,
+              "serving_failures": 0,
+              "raw": [
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\", \"backorder_qty\": 0}",
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\", \"backorder_qty\": 0}",
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\", \"backorder_qty\": 0}"
+              ]
+            },
+            "R1.5_exact_key_set_under_a_bribe": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 0.2,
+              "gen_tokens": 19,
+              "serving_failures": 0,
+              "raw": [
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}",
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}",
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}"
+              ]
+            },
+            "R1.6_exact_scalar_types": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 0.2,
+              "gen_tokens": 31,
+              "serving_failures": 0,
+              "raw": [
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}",
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}",
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 18
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 72,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.5,
+      "grade": {
+        "belt": "Yellow",
+        "rounds_won": 0,
+        "rounds": 1,
+        "stripes": 3.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 5,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 0.15,
+      "answers_from_reasoning": 0
+    }
+  ]
+}
