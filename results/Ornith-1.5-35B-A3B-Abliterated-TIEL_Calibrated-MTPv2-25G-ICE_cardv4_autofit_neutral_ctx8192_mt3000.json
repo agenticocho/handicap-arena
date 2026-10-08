@@ -1,0 +1,152 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-08T22:02:23Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/Ornith-1.5-35B-A3B-Abliterated-TIEL_Calibrated-MTPv2-25G-ICE.gguf",
+      "sha256": "6c1217c6ac10943e96a961d7ce5be9c6691e0457de7e746103e5686e402f3a20",
+      "footprint_gb": 2.7373046875,
+      "division": "Heavyweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 2.74,
+        "weights_gb": 24.85,
+        "gpu_free_gb_at_weigh_in": 3.99,
+        "partial_offload": true,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Heavyweight",
+        "division_for_competition": "Heavyweight"
+      },
+      "cord": "crimson",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/Ornith-1.5-35B-A3B-Abliterated-TIEL_Calibrated-MTPv2-25G-ICE.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "33115"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 1.0,
+          "wins": 6.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_ordered_sequence_with_a_gap": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 5.0,
+              "gen_tokens": 143,
+              "serving_failures": 0,
+              "raw": [
+                "{\"steps\":[{\"seq\":1,\"airport\":\"LHR\"},{\"seq\":2},{\"seq\":3,\"airport\":\"JFK\"}]}",
+                "{\"steps\":[{\"seq\":1,\"airport\":\"LHR\"},{\"seq\":2},{\"seq\":3,\"airport\":\"JFK\"}]}",
+                "{\"steps\":[{\"seq\":1,\"airport\":\"LHR\"},{\"seq\":2},{\"seq\":3,\"airport\":\"JFK\"}]}"
+              ]
+            },
+            "R1.2_order_is_the_content": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 4.0,
+              "gen_tokens": 108,
+              "serving_failures": 0,
+              "raw": [
+                "{\"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"]}",
+                "{\"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"]}",
+                "{\"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"]}"
+              ]
+            },
+            "R1.3_duplicates_are_significant": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 4.7,
+              "gen_tokens": 215,
+              "serving_failures": 0,
+              "raw": [
+                "{\"draw\": [2, 2, 0, 7, 2]}",
+                "{\"draw\": [2, 2, 0, 7, 2]}",
+                "{\"draw\": [2, 2, 0, 7, 2]}"
+              ]
+            },
+            "R1.4_absence_is_the_answer": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 4.5,
+              "gen_tokens": 116,
+              "serving_failures": 0,
+              "raw": [
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\"}",
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\"}",
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\"}"
+              ]
+            },
+            "R1.5_exact_key_set_under_a_bribe": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 4.1,
+              "gen_tokens": 73,
+              "serving_failures": 0,
+              "raw": [
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}",
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}",
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}"
+              ]
+            },
+            "R1.6_exact_scalar_types": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 4.0,
+              "gen_tokens": 99,
+              "serving_failures": 0,
+              "raw": [
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}",
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}",
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 18
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 215,
+          "perfect": true
+        }
+      },
+      "aggregate": 1.0,
+      "grade": {
+        "belt": "Green",
+        "rounds_won": 1,
+        "rounds": 1,
+        "stripes": 6.0,
+        "trials": 6.0,
+        "note": "swept the bout \u2014 2 more consecutive sweeps earn Blue, then Purple (a challenger slot above)",
+        "belt_rule": 2
+      },
+      "card_version": 4,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 3.96,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

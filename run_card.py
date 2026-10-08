@@ -104,6 +104,22 @@ def entrants():
     return out
 
 
+def bundle_has_measurement(path):
+    """True only if the bundle at `path` CARRIES A MEASUREMENT.
+
+    A FILE IS NOT A MEASUREMENT. An empty bundle (results: []) is a MISSING VALUE, not a score of zero --
+    the rule named in CARD_v4.md before the verdict was attempted. A file that holds no measurement must
+    not skip a re-measurement, and a skip whose message says "measured" when it means "a file exists" is
+    the same stand-in this repo has found in a filename, a label, and a caption.
+    """
+    try:
+        with open(path, encoding="utf-8") as f:
+            d = json.load(f)
+    except Exception:
+        return False
+    return d.get("harness") == "handicap-arena" and bool(d.get("results") or [])
+
+
 def already_measured(path):
     """Has this exact GGUF already been measured at this config, in ANY bundle?
 
@@ -163,10 +179,27 @@ def main():
         stem = base.replace(".gguf", "")
         outp = bundle_path(stem)
         prior = already_measured(path)
-        if os.path.exists(outp) or prior:
-            print(f"[{i:2d}/{len(ents)}] SKIP (already measured in {prior or os.path.basename(outp)})")
+        # A FILE IS NOT A MEASUREMENT. This test used to be `os.path.exists(outp) or prior` -- so a
+        # bundle that came back EMPTY (results: []) short-circuited the run exactly as though it had
+        # been measured, AND THE SKIP MESSAGE SAID "already measured" WHILE MEANING "a file is there".
+        # That is the rule this repo has applied everywhere else, unimplemented one level up in the
+        # runner: bundle=True must mean "contains a measurement".
+        #
+        # The empty is NOT discarded -- it is evidence, and it is moved aside by name before the
+        # re-attempt, so the failure survives and the re-measurement is not an overwrite of history.
+        carries = bundle_has_measurement(outp)
+        if carries or prior:
+            src = prior or os.path.basename(outp)
+            print(f"[{i:2d}/{len(ents)}] SKIP (MEASURED -- {src})")
             skipped += 1
             continue
+        if os.path.exists(outp):
+            n = 1
+            while os.path.exists(f"{outp}.attempt{n}.empty.json"):
+                n += 1
+            os.rename(outp, f"{outp}.attempt{n}.empty.json")
+            print(f"[{i:2d}/{len(ents)}] RE-ATTEMPT (prior bundle held no measurement; "
+                  f"preserved as {os.path.basename(outp)}.attempt{n}.empty.json)")
 
         print(f"[{i:2d}/{len(ents)}] {size/2**30:5.2f} GB  {stem}", flush=True)
         t0 = time.time()
