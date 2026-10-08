@@ -1,0 +1,152 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-08T21:54:57Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/Tiel-Coder-35B-A3B-UD-Q4_K_XL.gguf",
+      "sha256": "53764c34cc138feff4b63db03f2974322105f08a1cd9ee2bdb72093a2a0ac0d2",
+      "footprint_gb": 2.6884765625,
+      "division": "Heavyweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 2.69,
+        "weights_gb": 22.36,
+        "gpu_free_gb_at_weigh_in": 3.99,
+        "partial_offload": true,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Heavyweight",
+        "division_for_competition": "Heavyweight"
+      },
+      "cord": "crimson",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/Tiel-Coder-35B-A3B-UD-Q4_K_XL.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "37389"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 1.0,
+          "wins": 6.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_ordered_sequence_with_a_gap": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 6.9,
+              "gen_tokens": 173,
+              "serving_failures": 0,
+              "raw": [
+                "{\n  \"steps\": [\n    { \"seq\": 1, \"airport\": \"LHR\" },\n    { \"seq\": 2 },\n    { \"seq\": 3, \"airport\": \"JFK\" }\n  ]\n}",
+                "{\"steps\":[{\"seq\":1,\"airport\":\"LHR\"},{\"seq\":2},{\"seq\":3,\"airport\":\"JFK\"}]}",
+                "{\"steps\":[{\"seq\":1,\"airport\":\"LHR\"},{\"seq\":2},{\"seq\":3,\"airport\":\"JFK\"}]}"
+              ]
+            },
+            "R1.2_order_is_the_content": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 5.5,
+              "gen_tokens": 107,
+              "serving_failures": 0,
+              "raw": [
+                "{\"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"]}",
+                "{\"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"]}",
+                "{\"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"]}"
+              ]
+            },
+            "R1.3_duplicates_are_significant": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 6.5,
+              "gen_tokens": 242,
+              "serving_failures": 0,
+              "raw": [
+                "{\"draw\":[2,2,0,7,2]}",
+                "{\"draw\": [2, 2, 0, 7, 2]}",
+                "{\"draw\":[2,2,0,7,2]}"
+              ]
+            },
+            "R1.4_absence_is_the_answer": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 5.9,
+              "gen_tokens": 93,
+              "serving_failures": 0,
+              "raw": [
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\"}",
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\"}",
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\"}"
+              ]
+            },
+            "R1.5_exact_key_set_under_a_bribe": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 5.4,
+              "gen_tokens": 68,
+              "serving_failures": 0,
+              "raw": [
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}",
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}",
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}"
+              ]
+            },
+            "R1.6_exact_scalar_types": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 5.2,
+              "gen_tokens": 99,
+              "serving_failures": 0,
+              "raw": [
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}",
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}",
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 18
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 242,
+          "perfect": true
+        }
+      },
+      "aggregate": 1.0,
+      "grade": {
+        "belt": "Green",
+        "rounds_won": 1,
+        "rounds": 1,
+        "stripes": 6.0,
+        "trials": 6.0,
+        "note": "swept the bout \u2014 2 more consecutive sweeps earn Blue, then Purple (a challenger slot above)",
+        "belt_rule": 2
+      },
+      "card_version": 4,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 5.16,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

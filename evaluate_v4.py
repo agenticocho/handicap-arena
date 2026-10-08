@@ -343,7 +343,13 @@ def print_protects():
     """
     print()
     print("=" * 78)
-    print("WHAT EACH ARGUMENT PROTECTS, AND WHETHER IT PROTECTS ONE OUTCOME OR BOTH")
+    print("WHAT EACH ARGUMENT PROTECTS -- ONE OUTCOME, BOTH OUTCOMES, OR NEITHER")
+    # THE CAPTION IS PART OF THE TAXONOMY, and it is the copy nobody re-reads. This line said
+    # "ONE OUTCOME OR BOTH" for a table that already had a NO DIRECTION row -- the fix for the missing
+    # slot had introduced the same missing slot, ten lines from the body it contradicted. Chilly's rule:
+    # a taxonomy is stated at least twice, in the labels and in the caption, and the fix is not complete
+    # until the sentence describing the categories has changed too. THE TELL: a value the prose cannot
+    # name means one of the two is wrong -- AND THE PROSE IS THE ONE THAT WILL BE BELIEVED.
     argues = [
         ("C2's count is a LOWER BOUND (empty bundles contribute zero)",
          set(),
