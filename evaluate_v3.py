@@ -212,11 +212,70 @@ def main():
         print("    -> the parser found objects the scorer still rejects: those failures are REAL,")
         print("       and the earlier 'greedy parser was the failure' line was too strong.")
 
+    # THE CORRECTED VERDICT, ON CORRECTED INPUTS.
+    #
+    # A correction that RAISES scores can push entries back to 6/6 (criterion 1) and lift them off the
+    # floor (criterion 2) -- so the verdict above, computed on the RECORDED scores, is not final. The
+    # bar does not move; the INPUTS are corrected and the same bar is applied to them. Reporting only
+    # the recorded verdict would be choosing the number that reads better, which is the whole thing
+    # this record keeps catching.
+    fixed = {}
+    for e, rd in r1:
+        for iid, it in (rd.get("items") or {}).items():
+            raw = it.get("raw")
+            raws = raw if isinstance(raw, list) else ([raw] if raw else [])
+            t = tasks.get(iid)
+            if not raws or not t:
+                continue
+            for r in raws:
+                obj = strict_first_json(r)
+                if obj is None:
+                    continue
+                new, _why = A.SCORERS[t["scorer"]](t["spec"], json.dumps(obj))
+                if new > (it.get("score") or 0):
+                    fixed[(e["_file"], iid)] = new
+                break
+
+    def corrected(rd, fname):
+        wins, trials = 0.0, 0
+        for iid, it in (rd.get("items") or {}).items():
+            trials += 1
+            wins += fixed.get((fname, iid), it.get("score") or 0)
+        return wins, trials
+
+    c_full = c_below = 0
+    for e, rd in r1:
+        w, t_ = corrected(rd, e["_file"])
+        if t_ and w >= t_:
+            c_full += 1
+        agg = (w / t_) if t_ else 0
+        if agg < SEVERE:
+            c_below += 1
+    print()
+    print("--- THE VERDICT ON CORRECTED INPUTS (the bar, unmoved) ---")
+    print(f"    1. saturation : {c_full}/{n} = {c_full / n:.1%} at 6/6   "
+          f"{'PASS' if c_full / n < 0.60 else 'FAIL'}   (recorded: {pct_full:.1%})")
+    print(f"    2. low end    : {c_below} below {SEVERE}            "
+          f"{'PASS' if c_below >= 4 else 'FAIL'}   (recorded: {below})")
+    if (c_full / n < 0.60) != ok1 or (c_below >= 4) != ok2:
+        print()
+        print("    *** THE CORRECTION CHANGES THE VERDICT. The recorded scores were understated by a")
+        print("        measured amount, and the bar is the bar. The corrected result is the result. ***")
+
     print()
     print("=" * 78)
-    verd = {"1 saturation": ok1, "2 low end": ok2, "4 partition": ok4}
-    print("VERDICT: " + "  ".join(f"{k}={'PASS' if v else 'FAIL'}" for k, v in verd.items()))
-    print("The bar does not move to accommodate the result. A re-derivation is not a re-scoring.")
+    # THE SUMMARY REPORTS THE CORRECTED RESULT, because the corrected result IS the result. Printing
+    # the recorded verdict here while the block above showed it flipping would be two numbers for one
+    # question -- the defect this whole day keeps finding.
+    ok1c = (c_full / n) < 0.60
+    ok2c = c_below >= 4
+    verd = {"1 saturation": ok1c, "2 low end": ok2c, "4 partition": ok4}
+    print("VERDICT (on corrected inputs): "
+          + "  ".join(f"{k}={'PASS' if v else 'FAIL'}" for k, v in verd.items()))
+    print(f"  recorded scores would have said: 1={'PASS' if ok1 else 'FAIL'} "
+          f"2={'PASS' if ok2 else 'FAIL'} 4={'PASS' if ok4 else 'FAIL'}")
+    print("The bar does not move to accommodate the result. A re-derivation is not a re-scoring --")
+    print("and a corrected INPUT is not a moved bar.")
     return 0
 
 
