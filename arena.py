@@ -898,6 +898,7 @@ def evaluate(gguf, args, tasks):
         why = ""
         finishes, ctoks, truncated = {}, 0, False
         ctx_hits = 0
+        serve_failures = 0
         # FINDING 007: THE MODEL'S OWN OUTPUT, PER ITEM.
         #
         # It was discarded at scoring time. The scorer needed only `text`, so the record kept only
@@ -916,7 +917,23 @@ def evaluate(gguf, args, tasks):
             try:
                 r = srv.chat(t["prompt"], args.max_tokens, args.temperature)
             except Exception as e:
-                print(f"    {name} t{i+1}: ERR {type(e).__name__}")
+                # A SERVING FAILURE IS NOT A CAPABILITY RESULT, AND IT USED TO BE INDISTINGUISHABLE
+                # FROM ONE.
+                #
+                # This used to `continue` -- which discarded the raw slot AND left `why` at its
+                # initial "". The item then recorded score 0.0 with no reason and no raw, and the
+                # guard below (`if npass == 0 and why`) skipped, so no reason key was written at all.
+                # `Cloudflare_clef :: R1.5` in the v3 field is exactly that triple, with nothing left
+                # to examine -- the FINDING 007 hole, one level down.
+                #
+                # Same class as the 26 zero-byte bundles: a machine failure reported as a model's
+                # result. The class now travels in the record.
+                kind = type(e).__name__
+                print(f"    {name} t{i+1}: ERR {kind}", flush=True)
+                raws.append(f"[SERVING FAILURE: {kind} -- the request never completed]")
+                if not why:
+                    why = f"SERVING FAILURE: {kind} (request raised; not a capability result)"
+                serve_failures += 1
                 continue
             srv.sample_vram()
             lat.append(r["secs"])
@@ -942,9 +959,13 @@ def evaluate(gguf, args, tasks):
                              kind=t.get("kind", ""), metaphor=t.get("metaphor", ""),
                              finish_reasons=finishes, max_completion_tokens=ctoks,
                              truncated=truncated, ctx_limited_trials=ctx_hits,
+                             serving_failures=serve_failures,
                              # one entry per trial; v2/v3 run one trial per item
                              raw=raws)
-        if npass == 0 and why:
+        # `if npass == 0:` and NOT `if npass == 0 and why:`. With `and why`, a falsy reason skipped
+        # the block entirely and the item shipped with no reason at all -- a zero that cannot be
+        # explained is worse than a wrong answer, because it cannot even be argued with.
+        if npass == 0:
             # Distinguish four different things: a wrong answer, a cut-off answer, and WHICH cut-off.
             if truncated and ctx_hits:
                 results[name]["why"] = (f"CONTEXT LIMIT hit ({args.ctx} tokens) before answering — "
@@ -953,7 +974,7 @@ def evaluate(gguf, args, tasks):
                 results[name]["why"] = (f"TRUNCATED at max_tokens ({args.max_tokens}) before "
                                         f"answering — not a capability result; raise --max-tokens")
             else:
-                results[name]["why"] = why
+                results[name]["why"] = why or "(no reason reported by the scorer)"
     srv.stop()
 
     # CARD VERSION. A v2 score and a v1 score are different measurements and must never be
