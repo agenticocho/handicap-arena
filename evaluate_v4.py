@@ -139,8 +139,16 @@ def main():
     print(f"  accounted for : {accounted}   (as of {datetime.datetime.now().astimezone().isoformat(timespec='seconds')})")
     print(f"  MEASURED      : {len(with_rd)}")
     print(f"  empty (no results) : {len(empty)}")
-    print("  NOTE: a count of a GROWING record is a timestamp, not a fact. The field may be running;")
-    print("  these numbers are true as of the time printed above and no later.")
+    print("  TWO DIFFERENT QUANTITIES, AND THEY MUST NOT BE COMPARED:")
+    print("    this 'accounted for' counts BUNDLE FILES on disk.")
+    print("    the runner's own '[N/46]' counts ENTRANTS ATTEMPTED, and it is a DIFFERENT number --")
+    print("    a resumed run's index starts from where it left off, so a runner index of 39 alongside")
+    print("    44 files is CONSISTENT, not a discrepancy.")
+    print("  An earlier version of this note attributed that difference to TIMING. It was not timing:")
+    print("  it was two counts with different denominators, compared before either was established --")
+    print("  the repo's own recurring class, committed by the check that was watching for it.")
+    print("  The timestamp above is kept because a count of a GROWING record is still a timestamp rather")
+    print("  than a fact; it is not an explanation of that difference.")
 
     # ---- C4 BEFORE ANYTHING ELSE: the partition must hold ------------------
     cvs = defaultdict(int)
