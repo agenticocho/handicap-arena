@@ -29,6 +29,8 @@ RESULTS = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "results")
 def main():
     silent = []
     total_items = 0
+    silent_bundles = []
+    total_bundles = 0
     for p in sorted(glob.glob(os.path.join(RESULTS, "*.json"))):
         try:
             d = json.load(open(p, encoding="utf-8"))
@@ -36,6 +38,15 @@ def main():
             continue
         if d.get("harness") != "handicap-arena":
             continue
+        total_bundles += 1
+        # BUNDLE-LEVEL SILENCE, the level above the item. A bundle whose results list is empty never
+        # reached a scoring path, so the item-level fix cannot apply to it and the RUNNER must write the
+        # class. Chilly measured four of the first 33 v4 bundles shipping `results: []` with the reason
+        # present in the LOG and absent from the ARTIFACT -- a label with nothing behind it, and a
+        # consumer counting files reads it as a completed entrant.
+        if not (d.get("results") or []):
+            if not any(k in d for k in ("failure", "empty_reason", "failure_class")):
+                silent_bundles.append((os.path.basename(p), d.get("version")))
         for e in (d.get("results") or []):
             cv = e.get("card_version")
             for rid, rd in (e.get("rounds") or {}).items():
@@ -51,11 +62,23 @@ def main():
                     if not reason and not has_raw:
                         silent.append((os.path.basename(p), cv, rid, iid, it.get("truncated")))
 
-    print(f"scanned {total_items} item records in {RESULTS}")
+    print(f"scanned {total_items} item records in {total_bundles} bundles, {RESULTS}")
+    print()
+    rc = 0
+    if silent_bundles:
+        print(f"FAIL -- {len(silent_bundles)} bundle(s) with an EMPTY results list and NO failure record.")
+        print("  The reason exists (run_card.py computes it) and went to stdout and the log. Neither is")
+        print("  the artifact. A bundle that never reached scoring has no scoring path to write the")
+        print("  class, so the RUNNER writes it -- pre-scoring failures are C3's job too.")
+        for f, v in silent_bundles[:12]:
+            print(f"    version={v}  {f}")
+        rc = 1
+    else:
+        print("PASS -- no bundle ships an empty results list without saying why.")
     print()
     if not silent:
-        print("PASS -- every 0.0 carries a reason or a raw. No silent zero.")
-        return 0
+        print("PASS -- every 0.0 item carries a reason or a raw. No silent zero.")
+        return rc
     print(f"FAIL -- {len(silent)} item(s) scored 0.0 with NO reason and NO raw.")
     print("  A zero that cannot be explained cannot be argued with, and this is the pair of fields")
     print("  that make it explainable. Pre-fix bundles are expected to appear here.")
@@ -64,8 +87,8 @@ def main():
         print(f"  card_version={cv}  {rid:14} {iid:34} truncated={tr}")
         print(f"      {f}")
     print()
-    print("This check is RED BY DESIGN on the current field. It is the conformance test for C3 of")
-    print("CARD_v4.md and it must be green before a v4 field is treated as auditable.")
+    print("This check is RED BY DESIGN on the pre-fix field. It is the conformance test for C3 of")
+    print("CARD_v4.md and it must be green before a field is treated as auditable.")
     return 1
 
 

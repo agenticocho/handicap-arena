@@ -1,0 +1,134 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-08T16:25:38Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/Ornith-1.5-9B-Q4_K_M.gguf",
+      "sha256": "5701d55d55103d65f1ccf90428f09427c352625b4b7c45766eedb7a7856c412c",
+      "footprint_gb": 5.4033203125,
+      "division": "Lightweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 5.4,
+        "weights_gb": 5.63,
+        "gpu_free_gb_at_weigh_in": 7.38,
+        "partial_offload": false,
+        "division_from_resident": "Lightweight",
+        "division_from_weights": "Lightweight",
+        "division_for_competition": "Lightweight"
+      },
+      "cord": "amber",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/Ornith-1.5-9B-Q4_K_M.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "54315"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 1.0,
+          "wins": 6.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_ordered_sequence_with_a_gap": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"steps\":[{\"seq\":1,\"airport\":\"LHR\"},{\"seq\":2},{\"seq\":3,\"airport\":\"JFK\"}]}",
+                "{\"steps\":[{\"seq\":1,\"airport\":\"LHR\"},{\"seq\":2},{\"seq\":3,\"airport\":\"JFK\"}]}",
+                "{\"steps\":[{\"seq\":1,\"airport\":\"LHR\"},{\"seq\":2},{\"seq\":3,\"airport\":\"JFK\"}]}"
+              ]
+            },
+            "R1.2_order_is_the_content": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"]}",
+                "{\"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"]}",
+                "{\"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"]}"
+              ]
+            },
+            "R1.3_duplicates_are_significant": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"draw\": [2, 2, 0, 7, 2]}",
+                "{\"draw\":[2,2,0,7,2]}",
+                "{\"draw\":[2,2,0,7,2]}"
+              ]
+            },
+            "R1.4_absence_is_the_answer": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\"}",
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\"}",
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\"}"
+              ]
+            },
+            "R1.5_exact_key_set_under_a_bribe": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}",
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}",
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}"
+              ]
+            },
+            "R1.6_exact_scalar_types": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}",
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}",
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 18
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 764,
+          "perfect": true
+        }
+      },
+      "aggregate": 1.0,
+      "grade": {
+        "belt": "Green",
+        "rounds_won": 1,
+        "rounds": 1,
+        "stripes": 6.0,
+        "trials": 6.0,
+        "note": "swept the bout \u2014 2 more consecutive sweeps earn Blue, then Purple (a challenger slot above)",
+        "belt_rule": 2
+      },
+      "card_version": 4,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 3.56,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

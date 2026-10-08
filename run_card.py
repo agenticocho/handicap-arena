@@ -213,6 +213,42 @@ def main():
                 print(f"      -> scored in {dt/60:.1f} min", flush=True)
             else:
                 scratched += 1
+                # THE REASON MUST TRAVEL WITH THE ARTIFACT, NOT JUST THE LOG.
+                #
+                # `why_empty` was computed here and written to stdout and to the log -- both of which
+                # are NOT the bundle. The only mark that reached the file was the filename rewrite
+                # below, so `X_cardv4_autofit_EMPTY_ctx8192_mt3000.json` was A LABEL WITH NOTHING
+                # BEHIND IT: a reader could see the entrant failed and not why, and a consumer counting
+                # files read it as a completed entrant. Four of the first 33 v4 bundles shipped that
+                # way, and the same four shipped that way in v3 -- so it is systematic, not a hiccup.
+                #
+                # This is FINDING 007's rule one level ABOVE the item: no verdict may depend on data
+                # discarded at scoring time, and a log is discarded relative to the artifact.
+                #
+                # A bundle that never reaches scoring has no scoring path to write a failure class, so
+                # the class is written by the path that DID run -- the runner -- and C3 of CARD_v4.md
+                # is widened to cover pre-scoring failures.
+                failure = {"class": "empty" if "EMPTY" in why_empty.upper()
+                           else ("rc" if r.returncode != 0 else "unreadable-or-unscored"),
+                           "reason": why_empty or f"rc={r.returncode}",
+                           "rc": r.returncode,
+                           "secs": round(dt, 1),
+                           "written_by": "run_card.py (pre-scoring failure: the run produced no bundle "
+                                         "with a measurement, so no scoring path existed to record it)"}
+                if os.path.exists(outp):
+                    try:
+                        _d = json.load(open(outp))
+                        _d["failure"] = failure
+                        with open(outp, "w") as _f:
+                            json.dump(_d, _f, indent=1)
+                    except Exception:                             # noqa: BLE001
+                        # last resort: write a standalone record beside the bundle rather than lose
+                        # the reason. A reason in the wrong place beats no reason at all.
+                        try:
+                            with open(outp + ".failure.json", "w") as _f:
+                                json.dump(failure, _f, indent=1)
+                        except Exception:                         # noqa: BLE001
+                            pass
                 # mark the artifact itself, so an `ls` cannot present it as an entrant
                 try:
                     if os.path.exists(outp):

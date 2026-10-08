@@ -1,0 +1,134 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-08T16:18:00Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/Phi-3.5-mini-instruct-Q4_K_M.gguf",
+      "sha256": "7a1697f3a06ed5bd68ae89f398b4c599e0074144acb986bc22f7f418f5cf886c",
+      "footprint_gb": 5.4033203125,
+      "division": "Lightweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 5.4,
+        "weights_gb": 2.39,
+        "gpu_free_gb_at_weigh_in": 7.38,
+        "partial_offload": false,
+        "division_from_resident": "Lightweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Lightweight"
+      },
+      "cord": "amber",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/Phi-3.5-mini-instruct-Q4_K_M.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "54025"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.5,
+          "wins": 3.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "FENCING",
+          "items": {
+            "R1.1_ordered_sequence_with_a_gap": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "raw": [
+                "```json\n[\n  {\"seq\": 1, \"airport\": \"LHR\"},\n  {\"seq\": 2},\n  {\"seq\": 3, \"airport\": \"JFK\"}\n]\n```",
+                "```json\n[\n  {\"seq\": 1, \"airport\": \"LHR\"},\n  {\"seq\": 2},\n  {\"seq\": 3, \"airport\": \"JFK\"}\n]\n```",
+                "```json\n[\n  {\"seq\": 1, \"airport\": \"LHR\"},\n  {\"seq\": 2},\n  {\"seq\": 3, \"airport\": \"JFK\"}\n]\n```"
+              ]
+            },
+            "R1.2_order_is_the_content": {
+              "score": 0.0,
+              "reason": "unparseable: JSONDecodeError: Expecting ',' delimiter: line 3 column 1 (char 57)",
+              "truncated": false,
+              "raw": [
+                "```json\n{\n  \"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"\n}\n```",
+                "```json\n{\n  \"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"\n}\n```",
+                "```json\n{\n  \"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"\n}\n```"
+              ]
+            },
+            "R1.3_duplicates_are_significant": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "```json\n{\n  \"draw\": [2, 2, 0, 7, 2]\n}\n```",
+                "```json\n{\n  \"draw\": [2, 2, 0, 7, 2]\n}\n```",
+                "```json\n{\n  \"draw\": [2, 2, 0, 7, 2]\n}\n```"
+              ]
+            },
+            "R1.4_absence_is_the_answer": {
+              "score": 0.0,
+              "reason": "emitted forbidden key(s): ['backorder_qty']",
+              "truncated": false,
+              "raw": [
+                "```json\n{\n  \"sku\": \"X-9\",\n  \"warehouse\": \"RENO\",\n  \"backorder_qty\": 0\n}\n```",
+                "```json\n{\n  \"sku\": \"X-9\",\n  \"warehouse\": \"RENO\",\n  \"backorder_qty\": 0\n}\n```",
+                "```json\n{\n  \"sku\": \"X-9\",\n  \"warehouse\": \"RENO\",\n  \"backorder_qty\": 0\n}\n```"
+              ]
+            },
+            "R1.5_exact_key_set_under_a_bribe": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "```json\n{\n  \"reading_id\": \"R-77\",\n  \"celsius\": 21.5\n}\n```",
+                "```json\n{\n  \"reading_id\": \"R-77\",\n  \"celsius\": 21.5\n}\n```",
+                "```json\n{\n  \"reading_id\": \"R-77\",\n  \"celsius\": 21.5\n}\n```"
+              ]
+            },
+            "R1.6_exact_scalar_types": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "raw": [
+                "```json\n{\n  \"batch\": \"0042\",\n  \"units\": 7,\n  \"unit_cost\": 1.5,\n  \"certified\": true\n}\n```",
+                "```json\n{\n  \"batch\": \"0042\",\n  \"units\": 7,\n  \"unit_cost\": 1.5,\n  \"certified\": true\n}\n```",
+                "```json\n{\n  \"batch\": \"0042\",\n  \"units\": 7,\n  \"unit_cost\": 1.5,\n  \"certified\": true\n}\n```"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 18
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 50,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.5,
+      "grade": {
+        "belt": "Yellow",
+        "rounds_won": 0,
+        "rounds": 1,
+        "stripes": 3.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 4,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 0.32,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

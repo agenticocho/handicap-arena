@@ -77,16 +77,20 @@ pass-rate band. *(v3 corrected: 2 of 6. FAIL.)*
 **C2 — the floor is populated.** At least **5** entrants score below **0.34** aggregate. *(v3
 corrected: 3 of 38. FAIL.)*
 
-**C3 — the parser is honest, and the failure class is STORED.** For every item scored `unparseable`,
-its stored raw contains **no** balanced JSON object. Any item whose raw yields an object must not be
-scored `unparseable`, and any item scored `unparseable` must carry the raw that justifies it. **And
-every failure carries a `failure_class` written by the path that actually failed** — never inferred
-afterwards from `reason`, which a later branch can overwrite. *(FINDING 009: the v3 verdict was
-conditional on the scope of its own correction precisely because the class had to be inferred from a
-reason string that had been overwritten. `Cloudflare_clef :: R1.5` also stands at 0.0 with no raw and
-no reason at all — the requirement is not universally met today.)* **This criterion is a conformance
-test, not a capability test** — it measures the instrument, which is where every failure of the last
-two days has lived.
+**C3 — the parser is honest, and EVERY failure class is STORED — including failures that never reached
+scoring.** For every item scored `unparseable`, its stored raw contains **no** balanced JSON object. Any
+item whose raw yields an object must not be scored `unparseable`, and any item scored `unparseable` must
+carry the raw that justifies it. **And every failure carries a `failure_class` written by the path that
+actually failed** — never inferred afterwards from `reason`, which a later branch can overwrite.
+*(FINDING 009: the v3 verdict was conditional on the scope of its own correction precisely because the
+class had to be inferred from a reason string that had been overwritten. `Cloudflare_clef :: R1.5` also
+stands at 0.0 with no raw and no reason at all.)* **AND WIDENED — this covers PRE-SCORING failures too:**
+a bundle whose `results` list is empty never reached a scoring path, so the item-level fix cannot apply
+to it and the runner writes the class instead. Chilly measured four of the first 33 v4 bundles shipping
+`results: []` with the reason present in the **log** and absent from the **artifact**, and the same four
+in v3 — so the version built to fix the class would otherwise have shipped the class one level up.
+**This criterion is a conformance test, not a capability test** — it measures the instrument, which is
+where every failure of the last two days has lived.
 
 **C4 — no pooling, no re-scoring of v3.** v3's criterion 2 stands failed. v4's aggregate is not
 comparable to v3's — different item set, different parser. A v4 number quoted beside a v3 number
