@@ -159,6 +159,34 @@ state behind it. **Positive control included**: the test is verified to fire on 
 **It exits 1 while violations stand** — verified, not assumed, because an enforcing check that exits
 0 while reporting violations is a check that cannot fail.
 
+## STATUS: ENFORCEABLE, NOT YET BINDING — the operator's call, and it is a one-line flip
+
+**What is true today, all of it verified by mutation rather than asserted:**
+
+```
+the 5 task files declare class=INSTRUMENT + staged_as   · the game name is gone
+the 301 historical rounds carry SUPERSESSION records    · annotated, NOT excused, still counted
+the check counts NEW and HISTORICAL separately          · NEW: 0 / HISTORICAL: 301
+the check exits 1 on a NEW violation                    · proven by planting one
+the rule (bundle filename -> record filename) exists once and is asserted  · proven by mutation
+```
+
+**What is NOT true: no arena workflow consumes that exit code.** The check can fail, and does; nothing
+stops on it yet. **Making it gate is a policy decision, and it is deliberately not an agent's** — the same
+rule that says an agent may not certify the gate that admits its own work. **So it is recorded here, where
+a human will find it, rather than decided in a chat message that will be stale by morning.**
+
+**THE FLIP, when the operator makes it:** treat a non-zero exit from `test_game_states.py` as a gate on
+arena work — the way C4's partition gates the cards. **Nothing else changes**, because the discriminating
+half already exists and already fails: **the historical 301 must NOT block** (they are superseded and
+annotated), and `NEW: 0` is the condition that is already computed and already enforced at exit.
+
+**A LOOSE END, FLAGGED AND DELIBERATELY NOT CHANGED.** The task ids still name games — `R1_fencing`,
+`R2_chess`, `R3_pitstop`. The check inspects the `metaphor`/`game` **fields**, so the ids are legal, and
+by the same argument that made the caption and the filename defects a slot name that names a game is a
+label whose referent has moved. **Renaming them touches the 301 round keys**, which is a migration rather
+than an edit — **so it is recorded here as a known label debt and deferred, not slipped in.**
+
 **Attribution note, because I got this wrong while correcting something else.** A teammate reported
 that the test "exits 0 while reporting violations". It does not — the exit code is 1, checked. **The
 claim was theirs, not mine, and my correction commit `b8063bf` attributed it to my own commit
