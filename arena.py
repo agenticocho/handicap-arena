@@ -910,6 +910,12 @@ def regroup_v2(results, trials_per_item=1):
         slot["items"][tid.split("::")[-1]] = dict(score=r.get("score", 0.0),
                                                   reason=r.get("why") or r.get("reason"),
                                                   truncated=r.get("truncated", False),
+                                                  # THE CLOCK, PER ITEM -- see the note where these are
+                                                  # measured. Without them a slow item and a truncated
+                                                  # item land in the record looking the same.
+                                                  secs=r.get("secs"),
+                                                  gen_tokens=r.get("gen_tokens"),
+                                                  serving_failures=r.get("serving_failures"),
                                                   # FINDING 007: the model's own output travels with
                                                   # the item score, so a verdict can be re-derived
                                                   # instead of taken on trust.
@@ -1091,6 +1097,14 @@ def evaluate(gguf, args, tasks):
                              finish_reasons=finishes, max_completion_tokens=ctoks,
                              truncated=truncated, ctx_limited_trials=ctx_hits,
                              serving_failures=serve_failures,
+                             # THE CLOCK, PER ITEM. Same finding as the chess event's: a reader must be
+                             # able to tell "this item took 8 minutes because the model was reasoning"
+                             # from "this item took 8 minutes because it ran to the cap." `truncated`
+                             # answers whether it was CUT OFF; only the elapsed time and the token count
+                             # answer HOW HARD IT WORKED. The runner measured both and wrote elapsed
+                             # seconds to its LOG -- and a log is discarded relative to the artifact.
+                             secs=round(sum(lat) / len(lat), 1) if lat else None,
+                             gen_tokens=ctoks,
                              # one entry per trial; v2/v3 run one trial per item
                              raw=raws)
         # `if npass == 0:` and NOT `if npass == 0 and why:`. With `and why`, a falsy reason skipped
