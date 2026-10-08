@@ -158,14 +158,31 @@ arena.py --card v4 --model /home/chilly1/moltbook_pipeline/models/LFM2-350M-Extr
 ```
 FIX 1  the failure record     EXERCISED -- 6 empty bundles under current code, all 6 carry
                               {class: empty, rc: 0, secs: 19.2/15.9/21.3, written_by: pre-scoring path}
-FIX 2  the per-item clock     NOT YET -- 180 item records, zero carrying secs/gen_tokens
+FIX 2  the per-item clock     EXERCISED -- BTL-4-IQ2_XXS (written by the resume process) carries
+                              `secs` on ALL 6 item records; every pre-fix bundle carries 0 of 6
 ```
 
-**FIX 2 CANNOT COMPLETE VIA THIS RUN, and the reason is structural rather than a bug: every entrant since
-the resume EMPTIED AT WEIGH-IN** — the tail of the field is large models failing to load (`llama-server
-exited early rc=1`). **An empty bundle has no item records, so no item record can carry the clock.** The
-exercise still owes one **small, known-good entrant**, which is the whole reason its own wording says *one
-entrant is enough — the claim is about whether the writer runs, not about any model.*
+**BOTH FIXES NOW HAVE CARRIERS, AND FIX 2'S CAME FROM THE FIELD RATHER THAN FROM THE PLANNED EXTRA RUN.**
+The pre-registered exercise said *one entrant is enough — the claim is about whether the writer runs, not
+about any model.* **The field produced one: `BTL-4-IQ2_XXS` scored under the resume process, so its item
+records carry the clock.** The distinction that made it recognisable is the same one that made it
+necessary — **the boundary is exactly the process boundary**, and it shows in the data:
+
+```
+BTL-4-IQ2_XXS    (resume process)   items=6   carrying secs=6
+Qwen3.5-9B       (pre-fix)          items=6   carrying secs=0
+Qwythos-9B       (pre-fix)          items=6   carrying secs=0
+MiMo-V2.6-9B     (pre-fix)          items=6   carrying secs=0
+```
+
+**So the extra run is NOT owed, and the exercise is closed by an artifact instead of by a plan.** The
+recorded command remains above because it is still the way to exercise the writer in isolation if a future
+change needs it — an exercise is retired by its carrier arriving, not by deleting its instructions.
+
+**AND THE REASON IT WAS WORTH PRE-REGISTERING RATHER THAN ASSUMING:** an exercise whose conditions nobody
+checks gets marked done when the CODE ships. This one was checked twice — once when the resume produced no
+item records at all (so it read NOT YET), and again when the field produced a scored bundle (so it read
+EXERCISED). **Both readings came from the artifact.**
 
 ---
 
