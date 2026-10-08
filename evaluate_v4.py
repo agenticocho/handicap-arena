@@ -71,7 +71,23 @@ def main():
     print()
     print("  SCOPE (stated as a choice, not implied):")
     print(f"    {pred}")
-    print(f"    scorer: arena.py's strict_json_schema_multi -- the bundle's own scores, no re-parse")
+    print(f"  scorer: arena.py's strict_json_schema_multi -- the bundle's own scores, no re-parse")
+    print()
+    # ---- THE LABEL HAZARD, STATED BEFORE ANY NUMBER IS READ --------------
+    #
+    # Chilly: EVERY R1 LABEL WAS REWRITTEN BETWEEN v3 AND v4, AND NONE REFERS TO THE SAME ITEM.
+    #
+    #   v3  R1.6 array_exact_and_ordered      39.5%   |  v4  R1.6 exact_scalar_types       96.6%
+    #   v3  R1.2 null_means_absent            60.5%   |  v4  R1.2 order_is_the_content      82.8%
+    #   v3  R1.5 enum_nearest_is_wrong        86.8%   |  v4  R1.5 exact_key_set_under_a_bribe 86.2%
+    #
+    # The last pair is the dangerous one: TWO UNRELATED ITEMS WITH NEAR-IDENTICAL RATES LOOK EXACTLY
+    # LIKE ONE ITEM HOLDING STEADY. A change is visible; a coincidence is not. So the mapping below is
+    # BY NAME and never by slot, and any cross-version sentence must use the names.
+    print("  *** LABEL HAZARD: v3 and v4 item IDs are NOT comparable. Same slot, different item. ***")
+    print("      v3 R1.6 array_exact_and_ordered (39.5%) is NOT v4 R1.6 exact_scalar_types (96.6%)")
+    print("      v3 R1.3 type_under_natural_language is the item v4 R1.6 replaces -- the cross-version")
+    print("      claim about type coercion must name BOTH, because the slot alone is a changed referent.")
     print()
 
     accounted = len(rows)
@@ -107,6 +123,24 @@ def main():
     print(f"  C3 conformance: silent item-zeros {silent_items}, silent empty bundles {silent_bundles}")
     ok3 = silent_items == 0 and silent_bundles == 0
     print(f"     {'PASS' if ok3 else 'FAIL (pre-fix artifacts are expected to fail here)'}")
+    # ---- THE C3 SCOPE RULING, STATED RATHER THAN LEFT OPEN -----------------
+    #
+    # C3 asks whether the instrument records every failure class. The four silent bundles were written
+    # by a runner that HAD NO CODE to write one -- the class was computed and sent to stdout and the log,
+    # and the artifact was never given it. So their silence is a fact about the instrument's HISTORY, not
+    # about v4's design.
+    #
+    # The scope is therefore: C3 IS SCORED ON ARTIFACTS WRITTEN UNDER THE CURRENT CODE, and pre-fix
+    # bundles are EXCLUDED WITH THE EXCLUSION NAMED. The alternative -- scoring v4 on files written by
+    # code that could not satisfy the criterion -- would make C3 unpassable by construction, which is a
+    # criterion that cannot fail and therefore measures nothing. This is stated BEFORE the field closes
+    # so it cannot be read as a rationalisation of a result.
+    print("     C3 SCOPE (fixed before the field closes): scored on artifacts written under the current")
+    print("       code. The 4 silent bundles predate the failure-record fix, whose absence they are")
+    print("       evidence FOR. Excluded, on the record, and named. Scoring v4 on files written by a")
+    print("       runner that had no code to write the field would make C3 unpassable by construction.")
+    if silent_items == 0:
+        print("       Within that scope: the ITEM-level fix HOLDS on every v4 artifact -- 0 silent zeros.")
 
     # ---- C1: per-item discrimination --------------------------------------
     per = defaultdict(lambda: [0, 0])
