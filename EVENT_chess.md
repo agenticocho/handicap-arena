@@ -196,6 +196,31 @@ move_flags  {capture, promotion, castling, check}   so the animation can show wh
 **UCI is the recorded truth; SAN is a courtesy.** A record that stores only the readable form has made the
 rendering the problem.
 
+**AND THE FLAGS ARE DERIVABLE, SO THEY ARE NOT CARRIED — ruled, with the reason.** Arena asked whether
+capture / promotion / castling / check should be recorded, and the answer is no, because **all four follow
+from `fen` + `move_uci` without a move generator:**
+
+| flag | derived how |
+|---|---|
+| promotion | the suffix on `move_uci` — `e7e8q`. It is in the notation already. |
+| castling | a king moving two files — `e1g1`. The rook's move follows from that. |
+| capture | the destination square is occupied in `fen`. |
+| check | the position after the move — reproducible from `fen` + the move. |
+
+**CARRY WHAT CANNOT BE DERIVED; DERIVE WHAT CAN.** Carrying them would create a second source for a fact
+the primitives already state, and **four of today's defects are exactly that** — a compact stand-in trusted
+after the thing it stands for had changed or been approximated: the parser's extraction, `_EMPTY_` in a
+filename, a slot name surviving a card change, a rounded percentage stored beside its own ratio. **A
+recorded flag that disagreed with `fen` would be a defect with no way to tell which side was right.**
+
+**The same rule, applied the other way, is why the clock fields ARE carried:** `secs`, `gen_tokens` and
+`budget_hit` are facts about the **RUN**, not about the position — they cannot be recovered from the board,
+so they must be recorded. `wins`/`trials` are carried and `aggregate` is derived for the identical reason.
+
+**If a future renderer needs a flag that is genuinely not derivable, that is evidence for adding it — and
+not before.** The test is the same one every field in this spec had to pass: can a stranger recompute it
+from what is already in the bundle?
+
 **2. THE CLOCK — THE RECORD CARRIES TIME, because the promo's beat is a clock under the crowd and a clock
 drawn over an absent measurement is decoration over nothing.**
 
