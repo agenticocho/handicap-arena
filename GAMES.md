@@ -157,6 +157,10 @@ Everything below reduces to one of these. **No LLM judge appears anywhere in thi
   LOST one** is miscalibrated persistence. Both are conformance failures with stateable reasons
 - **Anti-gaming** — the engine's evaluation is never shown to the model, and the threshold for "lost" is
   a frozen centipawn number, not a phrase
+- **AND THIS EVENT IS A CANDIDATE FOR RETIREMENT — see `ARCADE.md`.** Mike has settled the frame as THE
+  ARCADE, and **calibration moves to PUNCH-OUT**: the count, the getting up, knowing when you are beaten.
+  Chess as a cabinet may survive; chess as *this* event may not. Nothing is deleted — a rule change is
+  recorded where the rule lives.
 - **Gate, not a round** — *a logical conclusion must be reached or the model can't enter.* A player who
   cannot recognise a lost position cannot be said to have played a game, because the game has no end.
   **Its output is a binary other events consume.**

@@ -204,8 +204,21 @@ from `fen` + `move_uci` without a move generator:**
 |---|---|
 | promotion | the suffix on `move_uci` — `e7e8q`. It is in the notation already. |
 | castling | a king moving two files — `e1g1`. The rook's move follows from that. |
-| capture | the destination square is occupied in `fen`. |
-| check | the position after the move — reproducible from `fen` + the move. |
+| capture | **the destination is occupied in `fen` — OR, for EN PASSANT, the moving piece is a pawn and the destination is the `fen`'s en-passant target square.** The second clause is not optional: `8/8/8/3pP3/8/8/8/4K2k w - d6 0 1` with `e5d6` is a capture onto an EMPTY square, and the victim leaves from `d5`. |
+| check | the position **after** the move — applying it means moving the piece, moving the castling rook, removing the en-passant victim, and applying the promotion. **Less than a legal-move generator; more than zero.** Shared work for every reader of a bundle. |
+
+**AND THE EN-PASSANT CLAUSE WAS MISSING FROM THE FIRST VERSION OF THIS TABLE, which is worth recording
+because of WHERE the failure lived.** The flag is wrong for **exactly one move in the game**, silently, in
+a flag we agreed **not to carry because it is derivable** — so the defect was inside the derivation rather
+than inside the record. **A derived field is not safer than a stored one; it is a stored one with the
+defect moved into shared code.** Found by Arena reading a position, which is the only way it would have
+been found.
+
+**AND THE CONTRAST THAT VALIDATES THE TEST:** SAN is **NOT** derivable from `fen` + `move_uci`, because
+disambiguation (`Nbd2` vs `Nfd2`) needs the *other* candidate movers — so **SAN is carried for exactly the
+right reason, and `move_flags` would have been carried for the wrong one.** One field is in the bundle
+because a stranger cannot recompute it; the other is out because a stranger can, given one more clause
+than I wrote the first time.
 
 **CARRY WHAT CANNOT BE DERIVED; DERIVE WHAT CAN.** Carrying them would create a second source for a fact
 the primitives already state, and **four of today's defects are exactly that** — a compact stand-in trusted
