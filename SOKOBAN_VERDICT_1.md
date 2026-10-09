@@ -78,9 +78,13 @@ that otherwise could not act at all.**
 
 ## AND A RATE OVER ATTEMPTED CAN BE GAMED BY EXITING EARLY — A6 ONE TURN FURTHER OUT
 
+> **COUNTS ARE THE RESULT. RATES ARE THE INDEX.**
+
 **`not_an_action / attempted` is A6-compliant for the answer the ruling asked about, and it carries the same
 defect one level up: an entrant that gives up after three commands has a denominator of three.** An early
-exit can therefore *improve* a rate.
+exit can therefore *improve* a rate. **That is the same defect A6 removed from `planned`, arriving in the
+other denominator — and the fix is the same: the quantity that cannot be improved by leaving is the one that
+reports.**
 
 **So the counts are printed beside the rates and are the load-bearing numbers.** `give_up` is 0 everywhere,
 **which is itself informative and not an absence: no entrant resigned, because none of the failing entrants

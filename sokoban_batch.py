@@ -17,8 +17,10 @@ claims and they are counted separately.
     python3 sokoban_batch.py --n 5
 """
 import glob
+import hashlib
 import json
 import os
+import platform
 import sys
 import time
 
@@ -109,6 +111,21 @@ def main():
 
     with open(out_path, "w") as fh:
         json.dump({"run_id": run_id, "legend": R.legend(), "legend_digest": R.legend_digest(),
+                   # §6 FROZEN IDENTITY, CARRIED IN THE RECORD RATHER THAN ASSUMED. "levels ... sha256 with
+                   # the run" -- a level is an INPUT, and an input that does not travel with the result
+                   # makes the result unattributable. Same rule as the legend digest, and the same lesson
+                   # as FINDING 020: THE IDENTITY OF A RUN IS THE INPUTS IT WAS PRODUCED UNDER.
+                   "levels": {os.path.basename(lv): (
+                       hashlib.sha256(open(os.path.join(HERE, lv), "rb").read()).hexdigest()[:16]
+                       if os.path.exists(os.path.join(HERE, lv)) else None) for lv in LEVELS},
+                   "simulator_digest": hashlib.sha256(open(os.path.join(HERE, "sokoban.py"), "rb")
+                                                      .read()).hexdigest()[:16],
+                   # "host recorded per bundle, WITH the host's hardware state" -- §6. A score taken on one
+                   # box is not a score taken on another, and the same reasoning as FINDING 002: the
+                   # machine gets a say unless the record can tell it apart from the model.
+                   "host": {"node": platform.node(), "platform": platform.platform(),
+                            "cpu_count": os.cpu_count(),
+                            "nvidia_smi": bool(__import__("shutil").which("nvidia-smi"))},
                    "cells": []}, fh, indent=1)
 
     rows, reasons = [], {}
@@ -125,8 +142,9 @@ def main():
             if not r.get("loaded"):
                 # NOT AN ENTRANT FAILURE. A model that never loaded has not played, and counting it either
                 # way is the defect: as a failure it libels the model, as a success it libels the run.
-                reasons["did_not_load"] = reasons.get("did_not_load", 0) + 1
-                print(f"      DID NOT LOAD -- {r['why']}")
+                # NAME: `never_started`, the grammar's word (§4). Must match the format field exactly.
+                reasons["never_started"] = reasons.get("never_started", 0) + 1
+                print(f"      NEVER_STARTED -- {r['why']}")
             else:
                 reasons["played"] = reasons.get("played", 0) + 1
                 print(f"      ended={r['ended']:18s} solved={str(r['solved']):5s} moves={r['moves']:3d}  "
@@ -140,8 +158,19 @@ def main():
     print("THE RATES")
     print("=" * 96)
     played = [r for r in rows if r.get("loaded")]
+    # THE GRAMMAR'S ZERO RULE (§4) USED TO BE DESCRIBED HERE RATHER THAN ENFORCED: this function returned 0
+    # whatever happened. A run that measured NOTHING must exit NON-ZERO -- "zero rule: enforced, not
+    # described" is the grammar's own line, and a described rule is a resolution.
+    if not played:
+        print(f"  ERROR -- NO ENTRANT WAS MEASURED. This is not a verdict about the population.")
+        print(f"  cells attempted {len(rows)}   never_started {len(rows) - len(played)}   measured 0")
+        print(f"  A run whose measured count is zero exits non-zero: COVERAGE CANNOT TELL 'ATTEMPTED' FROM")
+        print(f"  'STARTED', AND TOTAL FAILURE IS ITS PASSING CASE.")
+        return 3
     print(f"  cells attempted      {len(rows)}")
-    print(f"  PLAYED               {len(played)}      DID NOT LOAD  {len(rows) - len(played)}")
+    # `never_started` IS THE GRAMMAR'S NAME FOR IT (§4), and the grammar is the instrument. The runner
+    # called it `did_not_load`; two names for one state is how a format field and its reader drift apart.
+    print(f"  PLAYED               {len(played)}      NEVER_STARTED  {len(rows) - len(played)}")
     print(f"  REASON COUNTS        {reasons}   <- never only a total: a population that never ran is not "
           f"evidence about the population")
     if played:
