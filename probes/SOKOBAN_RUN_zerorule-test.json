@@ -1,0 +1,17 @@
+{
+ "run_id": "zerorule-test",
+ "legend": "new",
+ "legend_digest": "0d86057c46d4c83b",
+ "levels": {
+  "01_one_push.txt": "db6ca59655f0d7d1",
+  "02_two_boxes.txt": "7549657f1768607c"
+ },
+ "simulator_digest": "186f561facd44916",
+ "host": {
+  "node": "chilly",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "cpu_count": 12,
+  "nvidia_smi": true
+ },
+ "cells": []
+}
