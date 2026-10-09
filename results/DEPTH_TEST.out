@@ -1,0 +1,45 @@
+  candidates drawn from a legal-move walk: 30
+    [1] d18    -60  HOLDABLE
+    [2] d18    414  HOLDABLE
+    [3] d18    917  HOLDABLE
+    [4] d18    240  HOLDABLE
+    [5] d18     62  HOLDABLE
+    [6] d18     87  HOLDABLE
+    [7] d18     79  HOLDABLE
+    [8] d18   -110  GREY
+    [9] d18   -198  GREY
+    [10] d18    386  HOLDABLE
+    [11] d18   -198  GREY
+    [12] d18   -122  GREY
+    [13] d18    894  HOLDABLE
+    [14] d18   1059  HOLDABLE
+    [15] d18   1014  HOLDABLE
+    [16] d18   1069  HOLDABLE
+    [17] d18   1200  HOLDABLE
+    [18] d18   1252  HOLDABLE
+    [19] d18   1172  HOLDABLE
+    [20] d18   1010  HOLDABLE
+    [21] d18    907  HOLDABLE
+    [22] d18    915  HOLDABLE
+    [23] d18   1238  HOLDABLE
+    [26] d18   1167  HOLDABLE
+    [27] d18   1143  HOLDABLE
+    [28] d18   1888  HOLDABLE
+    [29] d18   1381  HOLDABLE
+    [30] d18   1600  HOLDABLE
+  reproducible at d18: 28
+
+  AT RISK (within 60 cp of either threshold): 3
+  FAR from both edges: 25
+
+  CROSSINGS among AT-RISK : 0 of 3
+  CROSSINGS among FAR     : 0 of 25
+
+  the at-risk set:
+    d18    -60 HOLDABLE  -> d12    -87 HOLDABLE  shift   +27
+    d18   -110 GREY      -> d12   -114 GREY      shift    +4
+    d18   -122 GREY      -> d12   -215 GREY      shift   +93
+
+  SHIFT d12->d18 across ALL 28 candidates: min -135  median +52  max +646
+
+  written: /home/chilly1/workspace/ocho_arena/results/DEPTH_TEST.json

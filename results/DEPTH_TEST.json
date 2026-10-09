@@ -1,0 +1,268 @@
+{
+ "config": {
+  "engine": "Stockfish 19",
+  "threads": 1,
+  "hash": 64,
+  "d_ref": 18,
+  "d_alt": 12,
+  "window": 60
+ },
+ "rows": [
+  {
+   "fen": "rnbqkbnr/2pp2p1/1p2p2p/p4p2/1PP4P/N2P1P2/P3P1P1/R1BQKBNR w KQkq - 0 7",
+   "d18": -60,
+   "side18": "HOLDABLE",
+   "d12": -87,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 27
+  },
+  {
+   "fen": "1nbqkbnr/r1pp2p1/1p2p2p/p4pB1/1PP4P/N2P1P2/P3P1P1/R2QKBNR w KQk - 2 8",
+   "d18": 414,
+   "side18": "HOLDABLE",
+   "d12": 499,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": -85
+  },
+  {
+   "fen": "1nbqkbnr/r1pp2p1/1p2p2p/5pB1/pPP4P/N2P1P2/P2QP1P1/R3KBNR w KQk - 0 9",
+   "d18": 917,
+   "side18": "HOLDABLE",
+   "d12": 683,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 234
+  },
+  {
+   "fen": "2bqkbnr/r1pp2p1/1pn1p2p/5pB1/pPP4P/N2P1P2/P3P1P1/R2QKBNR w KQk - 2 10",
+   "d18": 240,
+   "side18": "HOLDABLE",
+   "d12": 304,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": -64
+  },
+  {
+   "fen": "2bqkb1r/r1ppn1p1/1pn1p2p/5p2/pPP4P/N2P1P2/P2BP1P1/R2QKBNR w KQk - 4 11",
+   "d18": 62,
+   "side18": "HOLDABLE",
+   "d12": 63,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": -1
+  },
+  {
+   "fen": "2bqkb1r/r1pp2p1/1pn1p1np/5p2/pPP4P/N2P1P1N/P2BP1P1/R2QKB1R w KQk - 6 12",
+   "d18": 87,
+   "side18": "HOLDABLE",
+   "d12": 101,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": -14
+  },
+  {
+   "fen": "2bqkb1r/r1pp2p1/1pn1p2p/5p2/pPP2P1n/N2P3N/P2BP1P1/R2QKB1R w KQk - 0 13",
+   "d18": 79,
+   "side18": "HOLDABLE",
+   "d12": 46,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 33
+  },
+  {
+   "fen": "2bqk2r/r1pp2p1/1pn1p2p/5p2/pbPP1P1n/N6N/P2BP1P1/R2QKB1R w KQk - 0 14",
+   "d18": -110,
+   "side18": "GREY",
+   "d12": -114,
+   "side12": "GREY",
+   "crossed": false,
+   "shift": 4
+  },
+  {
+   "fen": "2bqk2r/2pp2p1/1pn1p2p/r4p2/pbPP1P1n/N6N/P2BP1P1/R1Q1KB1R w KQk - 2 15",
+   "d18": -198,
+   "side18": "GREY",
+   "d12": -195,
+   "side12": "GREY",
+   "crossed": false,
+   "shift": -3
+  },
+  {
+   "fen": "2bqk2r/r1pp2p1/1pn1p2p/5p2/pbPP1P1n/N6N/P2BP1P1/1RQ1KB1R w Kk - 4 16",
+   "d18": 386,
+   "side18": "HOLDABLE",
+   "d12": 372,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 14
+  },
+  {
+   "fen": "2bqk2r/r1p3p1/1pnpp2p/5p2/pbPP1P1n/N6N/P2BP1P1/R1Q1KB1R w Kk - 0 17",
+   "d18": -198,
+   "side18": "GREY",
+   "d12": -178,
+   "side12": "GREY",
+   "crossed": false,
+   "shift": -20
+  },
+  {
+   "fen": "2bqk2r/2p3p1/1pnpp2p/r4p2/pbPP1P1n/N3P2N/P2B2P1/R1Q1KB1R w Kk - 1 18",
+   "d18": -122,
+   "side18": "GREY",
+   "d12": -215,
+   "side12": "GREY",
+   "crossed": false,
+   "shift": 93
+  },
+  {
+   "fen": "2b1k2r/2p3p1/1pnpp2p/r1P2pq1/pb1P1P1n/N3P2N/P2B2P1/R1Q1KB1R w Kk - 1 19",
+   "d18": 894,
+   "side18": "HOLDABLE",
+   "d12": 1029,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": -135
+  },
+  {
+   "fen": "2b1k2r/2p3p1/1pnpp2p/r1b2pP1/p2P3n/N3P2N/P2B2P1/R1Q1KB1R w Kk - 0 20",
+   "d18": 1059,
+   "side18": "HOLDABLE",
+   "d12": 1007,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 52
+  },
+  {
+   "fen": "2b1k2r/2p3p1/1pnpp3/r1b2pPp/p2P3n/N3P2N/P2BK1P1/R1Q2B1R w k - 0 21",
+   "d18": 1014,
+   "side18": "HOLDABLE",
+   "d12": 969,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 45
+  },
+  {
+   "fen": "2b1k2r/2p3p1/1p1pp3/r1b2pPp/pn1P3n/N3P2N/P2BK1P1/RQ3B1R w k - 2 22",
+   "d18": 1069,
+   "side18": "HOLDABLE",
+   "d12": 1014,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 55
+  },
+  {
+   "fen": "2b1k2r/6p1/1pppp3/r1b2pPp/pn1P1N1n/N3P3/P2BK1P1/RQ3B1R w k - 0 23",
+   "d18": 1200,
+   "side18": "HOLDABLE",
+   "d12": 1052,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 148
+  },
+  {
+   "fen": "2b1k2r/6p1/1pppp3/r1P2pPp/p4N1n/N3P3/P1nBK1P1/RQ3B1R w k - 1 24",
+   "d18": 1252,
+   "side18": "HOLDABLE",
+   "d12": 1133,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 119
+  },
+  {
+   "fen": "2b1k2r/6p1/1pppp3/r1P2pPp/pB3N2/N3P3/P1n1K1n1/RQ3B1R w k - 0 25",
+   "d18": 1172,
+   "side18": "HOLDABLE",
+   "d12": 1107,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 65
+  },
+  {
+   "fen": "2b1k2r/6p1/1pppp3/r1P2pPp/p4N2/N3n3/P2BK1n1/RQ3B1R w k - 0 26",
+   "d18": 1010,
+   "side18": "HOLDABLE",
+   "d12": 1022,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": -12
+  },
+  {
+   "fen": "4k2r/6p1/bpppp3/rNP2pPp/p4N2/4n3/P2BK1n1/RQ3B1R w k - 2 27",
+   "d18": 907,
+   "side18": "HOLDABLE",
+   "d12": 912,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": -5
+  },
+  {
+   "fen": "4k2r/6p1/b1ppp3/rNp2pPp/p4N2/P3n3/3BK1n1/RQ3B1R w k - 0 28",
+   "d18": 915,
+   "side18": "HOLDABLE",
+   "d12": 817,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 98
+  },
+  {
+   "fen": "4k2r/6p1/b1ppN3/rN3pPp/p1p5/P3n3/3BK1n1/RQ3B1R w k - 0 29",
+   "d18": 1238,
+   "side18": "HOLDABLE",
+   "d12": 1135,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 103
+  },
+  {
+   "fen": "7r/5kp1/b2pN3/r1p2pPp/p1p5/P1N3Q1/2nBK1n1/R4B1R w - - 2 32",
+   "d18": 1167,
+   "side18": "HOLDABLE",
+   "d12": 862,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 305
+  },
+  {
+   "fen": "7r/5kp1/b2pN3/r1p2pPp/p1p5/P1N2KQ1/3B2n1/R3nB1R w - - 4 33",
+   "d18": 1143,
+   "side18": "HOLDABLE",
+   "d12": 929,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 214
+  },
+  {
+   "fen": "7r/6p1/b2pN1k1/r1p2pPp/p1p5/P1N3Q1/3BK1n1/R3nB1R w - - 6 34",
+   "d18": 1888,
+   "side18": "HOLDABLE",
+   "d12": 1242,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 646
+  },
+  {
+   "fen": "7r/6p1/b2pN1k1/r1pN2Pp/p1p2p2/P5Q1/3BK1n1/R3nB1R w - - 0 35",
+   "d18": 1381,
+   "side18": "HOLDABLE",
+   "d12": 1290,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 91
+  },
+  {
+   "fen": "7r/6p1/b2pN1k1/r1pN2Pp/p1p2p2/P5Q1/R1nBK1n1/5B1R w - - 2 36",
+   "d18": 1600,
+   "side18": "HOLDABLE",
+   "d12": 1119,
+   "side12": "HOLDABLE",
+   "crossed": false,
+   "shift": 481
+  }
+ ],
+ "crossings_at_risk": 0,
+ "crossings_far": 0,
+ "n_at_risk": 3,
+ "n_far": 25
+}
