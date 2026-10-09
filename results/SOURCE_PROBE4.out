@@ -4,3 +4,10 @@ TEST 3 SOURCE -- DENSE REACH PROBE, early stop on both edges
 
   target: >= 6 at-risk per edge   budget 1500s
 
+    -100 hit  pawn               mv19  d18   -119
+    -100 hit  pawn               mv21  d18    -81
+    -100 hit  pawn               mv23  d18    -64
+    -100 hit  pawn               mv25  d18    -68
+    -100 hit  pawn               mv27  d18    -56
+    -100 hit  pawn               mv29  d18    -81
+  ...pawn done  (59 evaluated, 0 near -300, 6 near -100)

@@ -1,0 +1,15 @@
+{
+  "_what": "THE FOUR CONSTANTS THAT DEFINE THE DEPTH TESTS. A change to any of them is THE drift signal, and nothing else in the sequence matters.",
+  "_why": "Chilly's audit: a unidirectional sequence of individually-justified changes is still biased, and the per-step audit cannot see it -- because a competent agent's changes ARE justified by construction. So the monitor watches the CRITERIA, not the justifications. That makes it cheap, mechanical and reproducible, which attention is not.",
+  "_frozen_at": "49ef665 (PREREG_depth_sensitivity.md)",
+  "LOST_CP": -300,
+  "HOLD_CP": -100,
+  "WINDOW": 60,
+  "MIN_PER_EDGE": 5,
+  "_source_rule": "The SOURCE may change, and did -- test 1's legal-move walk reached no LOST position in 30 candidates, which is a measured structural failure of the generator, not of the criterion. A source change is not a criterion change, and the admissibility rule still refuses below the floor either way.",
+  "_not_frozen_because_they_are_not_criteria": [
+    "the candidate count and the ply grid (they affect PRECISION, not whether the question is answerable)",
+    "which generators are pooled (a SOURCE property, changed in response to a measurement)",
+    "the walk length (same)"
+  ]
+}
