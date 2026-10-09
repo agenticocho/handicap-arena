@@ -20,12 +20,17 @@ Reporting one number under the label "FREEZE" is how a check and the document it
 contradicting each other (the first version of this file did exactly that: it printed the
 AGREEMENT depth, 8, while the document froze 12).
 
+The BOX is one of the four fields the freeze must record, so the header prints it: a result pasted
+without it is not comparable with a result from another machine.  The score series is machine-specific
+until parity is held field by field -- see FREEZE_chess.md section 2b.
+
 Needs python-chess -- the box's PATH python3 may not have it:
     python3 -m venv .venv && .venv/bin/pip install python-chess
 Engine: $STOCKFISH, else argv[1], else PATH, else the macOS default.
 Run:    .venv/bin/python freeze_check.py [/path/to/stockfish]
 """
 import os
+import platform
 import shutil
 import sys
 
@@ -75,6 +80,8 @@ def main():
         sys.exit(f"engine not found: {ENGINE}\n  set $STOCKFISH, or pass the path as argv[1]")
 
     print(f"oracle: {ENGINE}")
+    print(f"box   : {platform.system()} {platform.release()} {platform.machine()}"
+          f" · node {platform.node()} · {os.cpu_count()} logical cores")
     print("id    : ", end="", flush=True)
     e = chess.engine.SimpleEngine.popen_uci(ENGINE)
     print(e.id.get("name"))

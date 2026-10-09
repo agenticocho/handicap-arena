@@ -68,11 +68,51 @@ were never competing.
 **FREEZE: `depth 12`** — the first depth at which the oracle's *verdict* (the move) is stable, and the
 cheapest such depth (0.12s against 0.56s at d16). **Going deeper buys a moving number, not a better one.**
 
+### 2b. CROSS-MACHINE — this series is CONFIG-specific, and both boxes agree to the centipawn
+
+The table above is **Jarvis, `Threads=1, Hash=16`** — a measurement, not a property of chess, and not to be
+quoted as one. Ocho re-measured kiwipete on **Chilly** (same engine asset, Stockfish 19) and reported a
+different *shape*, which is what prompted this section. It does not survive the parity rule:
+
+    Chilly, reported as "Threads=1, depths 8..20":  -172  -196  -213  -255  -274   reported MONOTONE
+    Jarvis, Threads=1, Hash=64, same five depths:   -172  -196  -213  -255  -274   identical
+    Jarvis, Threads=1, Hash=16, same five depths:   -172  -196  -213  -228  -215   NOT monotone
+
+**Every one of Chilly's five numbers is Jarvis's number, under `Hash=64`.** Measured here — same engine,
+one field at a time, kiwipete at depth 18, two runs per arm (spread 0 unless stated):
+
+    declared default (no configure)   ('d5e6', -228) x2     = Chilly's "default Threads"     -228
+    Threads=1, Hash=16                ('d5e6', -228) x2
+    Threads=1, Hash=64                ('d5e6', -255) x2     = Chilly's Threads=1 + Hash=64   -255
+    Threads=8, Hash=16                ('e2a6', -301) ('e2a6', -312)   spread 11 cp
+    Threads=8, Hash=64                ('e2a6', -263) ('e2a6', -313)   spread 50 cp
+
+So:
+
+- **The oracle does NOT differ across the two boxes.** At matched configuration it agrees to the
+  centipawn — on *both* of Chilly's arms. The 27 cp was attributed to `Threads` and it is **`Hash`'s**:
+  the two arms in that message differed in two fields at once, and the field that moved was `Hash` (16 to 64).
+- **"Depth-monotonicity is a property of the machine" is therefore not supported.** It is a property of the
+  *configuration*, and it reproduces machine-independently.
+- **The MONOTONE reading is a sampling artifact.** The five sampled depths (8/12/16/18/20) skip d14 and d22.
+  With `Hash=64` on Jarvis the full series is `-172, -188, -196, -244, -213, -255, -274, -270` — **not
+  monotone**: `+31` at d14->d16 and `+4` at d20->d22, and the same `-48` dip at d14 the §2 table shows at
+  `Hash=16`. The verdict still converges by d12; the score still never settles. **That was a fact about the
+  engine and the depth, not about this machine.**
+
+**What stands is sharper than either of us had it:** the score is moved by *both* undeclared settings —
+`Hash` 16->64 shifts it 27 cp deterministically (13.5% of the card's 200 cp grey band, and decisive at the
+edge: -290 is grey under one and -317 is LOST under the other), while `Threads` 1->8 both shifts it
+(44-84 cp) AND destroys reproducibility (spread 11-50 cp, best move flipping to `e2a6`). The four-field
+record, and comparison **only at matched fields**, is exactly what the cross-machine run needs.
+
 ## 3. Why this bites chess specifically
 
 Chess was kept as the calibration event because *calibration is a GRADIENT — confidence against the truth —
 and only chess can measure a gradient.* **The yardstick is itself depth-dependent: the score never settles
-and the drift reverses sign. An undeclared depth is therefore a gradient measured against a moving stick.**
+and the drift reverses sign (§2b: re-measured across two configurations and two boxes — that shape is the
+engine's and the depth's, not one machine's; the *score* moves with `Hash` as well, the *verdict* does not).
+An undeclared depth is therefore a gradient measured against a moving stick.**
 
 Where the oracle is a fact, and where it is not:
 - **"was this the best move?"** — a FACT from depth 12. Stable, reproducible, cheap.
@@ -83,10 +123,14 @@ Where the oracle is a fact, and where it is not:
 ## WHAT THE FREEZE MUST RECORD — all four, or the event is not placeable
 
     engine identity    Stockfish 19                 a different version is a different oracle
-    config             Threads=1, Hash pinned      without this the answer is not reproducible
+    config             Threads=1, Hash=16          without this the answer is not reproducible --
+                                                     and BOTH settings move the score (§2b): Hash
+                                                     by 27 cp, Threads by 44-84 cp plus the spread
     depth              DECLARED -- and carried in the record, not in a document
     the box            the freeze is a HARDWARE fact, so Jarvis's and Chilly's are comparable only
-                       if all four fields match
+                       if all four fields match -- and §2b shows what that buys: at matched
+                       fields the two boxes agree to the centipawn, and every apparent
+                       disagreement so far was an undeclared field, not a different machine
 
 `freeze_check.py` is the check, and it lives beside this file. Run it against any proposed configuration
 **before** freezing a depth: the point is that the freeze is measured, so nobody has to take this
