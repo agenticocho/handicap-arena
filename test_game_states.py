@@ -20,6 +20,7 @@ rule fires on it. A check that cannot fail is decoration; this one is verified t
 the defect it exists for.
 """
 import glob
+import hashlib
 import json
 import os
 import sys
@@ -39,14 +40,60 @@ RESULTS = os.path.join(HERE, "results")
 from annotate_superseded import stem_of
 
 GAME_KEYS = ("metaphor", "game")
-# THE DECLARED SLOT NAMESPACE. GAME_CONTRACT.md carries the prose table; this is the copy the check
-# enforces. The key check below is what makes a slot an OPAQUE ID rather than a residual claim -- and the
-# names are COSTUMES KEPT FOR KEY STABILITY, because renaming would rewrite keys inside recorded bundles.
-DECLARED_SLOTS = {
-    "R1_fencing": "structured-output conformance (schema strictness, scalar types, sequences)",
-    "R2_chess": "tool selection (the right call, and the reflex to abstain)",
-    "R3_pitstop": "code repair (a fix that breaks the other cases scores zero)",
-}
+# THE DECLARED SLOT NAMESPACE IS PARSED FROM GAME_CONTRACT.md, WHICH IS NOW ITS ONLY COPY.
+#
+# It used to be written twice -- as prose in the contract and as a literal here -- and the check read the
+# literal while the gate's own error message said "Amend GAME_CONTRACT.md". A reader who complied with the
+# instruction changed nothing. FOUR ONE-DEFINITION FAILURES LANDED IN ONE DAY, and this was the only one
+# that ACTIVELY MISDIRECTED THE PERSON TRYING TO COMPLY: a value that drifts is a bug, a gate that sends
+# its reader to the wrong file spends their trust and then their time. AN ERROR MESSAGE IS PART OF THE
+# INSTRUMENT.
+#
+# A FLAT LINE FORMAT BETWEEN EXACT MARKERS, NOT A PARSED ENGLISH TABLE -- a regex over a markdown table is
+# the greedy `{.*}` class this project has already paid for once. Nothing is read outside the markers and
+# nothing is inferred from what is inside them: each line is `<key><whitespace><description>`.
+SLOT_MARKER_BEGIN = "=== DECLARED_SLOTS BEGIN ==="
+SLOT_MARKER_END = "=== DECLARED_SLOTS END ==="
+
+
+def parse_declared_slots(path=None, text=None):
+    """-> {key: description}. Raises on anything it cannot read, because a parser that returns an empty
+    dict for a file it failed to understand is the empty-list rule pointed at the parser:
+
+        ZERO SLOTS IS AN ERROR, NOT AN EMPTY DECLARATION. Zero slots means EVERY round key is undeclared,
+        so a run gets refused for a reason nobody stated -- and the reason would look like the run's fault.
+    """
+    p = path or os.path.join(HERE, "GAME_CONTRACT.md")
+    if text is None:
+        if not os.path.exists(p):
+            raise ValueError(f"declared-slot source ABSENT: {p}")
+        text = open(p, encoding="utf-8").read()
+    if SLOT_MARKER_BEGIN not in text or SLOT_MARKER_END not in text:
+        raise ValueError(f"declared-slot markers not found in {p}: expected {SLOT_MARKER_BEGIN!r} and "
+                         f"{SLOT_MARKER_END!r}. No slots were parsed and that is an ERROR, not an empty "
+                         f"declaration.")
+    body = text.split(SLOT_MARKER_BEGIN, 1)[1].split(SLOT_MARKER_END, 1)[0]
+    slots = {}
+    for line in body.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        parts = line.split(None, 1)
+        if len(parts) != 2:
+            raise ValueError(f"malformed declared-slot line {line!r} -- expected '<key> <description>'")
+        slots[parts[0]] = parts[1]
+    if not slots:
+        raise ValueError(f"ZERO slots parsed from {p} between the markers. Every round key would be "
+                         f"undeclared, so a run would be refused for a reason nobody stated.")
+    return slots
+
+
+DECLARED_SLOTS = parse_declared_slots()
+# THE GATE REVISION THAT ADMITTED A RUN. A digest of the contract, carried into every run's record, so a
+# run and the gate that admitted it are linked by more than a timestamp -- v5 taught us that lesson and it
+# was paid for.
+GATE_REVISION = hashlib.sha256(open(os.path.join(HERE, "GAME_CONTRACT.md"), "rb").read()).hexdigest()[:16]
+
 STATE_KEYS = ("game_state_in_bundle", "game_state")
 
 
@@ -249,6 +296,25 @@ def main():
     else:
         print(f"  ok    stem_of ASSERTED DIRECTLY ({len(rule_cases)} cases, including a name not ending "
               f"in .json passing through unchanged)")
+
+    # THE PARSER FOR THE DECLARED NAMESPACE, CONTROLLED. A parser is an instrument and gets the same
+    # treatment as every other one on this project: a control that it CAN FIRE, and a control that it
+    # READS CORRECTLY -- because a parser returning an empty dict for a file it failed to understand would
+    # refuse every run for a reason nobody stated.
+    _real = parse_declared_slots()
+    if len(_real) < 1:
+        fails.append("control: the real contract must parse at least one slot")
+    if "R1_conformance" not in _real:
+        fails.append("control: the neutral key must parse out of the contract")
+    for _txt, _why in ((f"{SLOT_MARKER_BEGIN}\n{SLOT_MARKER_END}\n", "ZERO slots between the markers"),
+                       ("no markers here at all\n", "the markers are ABSENT"),
+                       (f"{SLOT_MARKER_BEGIN}\njustoneword\n{SLOT_MARKER_END}\n",
+                        "a slot line with no description")):
+        try:
+            parse_declared_slots(text=_txt)
+            fails.append(f"control: the slot parser must FAIL on {_why}")
+        except ValueError:
+            pass
 
     # THE SLOT NAMESPACE, CONTROLLED IN BOTH DIRECTIONS. "Declared" is a caption until an UNDECLARED key
     # fails, so the pair is one key apart: a bundle whose round key is in the table passes, and the same

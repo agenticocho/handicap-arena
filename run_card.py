@@ -55,6 +55,9 @@ MODELS = os.environ.get("ARENA_MODELS") or os.path.expanduser("~/moltbook_pipeli
 # calling the one that already exists, and REFUSING when it fails.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import arena as _arena                                                    # noqa: E402
+# THE GATE'S OWN REVISION, TAKEN FROM THE GATE. Not recomputed here -- a second digest computation would
+# be a fifth one-definition failure, and the point of the revision is that it names the instrument.
+import test_game_states as _gate                                         # noqa: E402
 
 SERVER = _arena.find_llama_server(os.environ.get("LLAMA_SERVER") or None)
 if not SERVER:
@@ -278,7 +281,12 @@ def main():
         print("  or fix the task file / round that caused it. The historical violations are annotated and")
         print("  do NOT trip this gate; only a NEW one does.")
         return 1
+    # AND THE RUN RECORDS THE GATE REVISION THAT ADMITTED IT. A digest of GAME_CONTRACT.md travels into
+    # the run's own log, so a run and the gate that admitted it are linked by more than a timestamp --
+    # v5 taught us that a card and its criteria linked only by file timestamps is not a link, and that
+    # lesson was paid for once already.
     print(f"game contract: OK ({gate_detail.strip().splitlines()[-3] if gate_detail else 'clean'})")
+    print(f"GATE REVISION  {_gate.GATE_REVISION}   (sha256 of GAME_CONTRACT.md, first 16)")
 
     done = scratched = skipped = excluded = 0
     # AN ENTRANT THAT RETURNED IN ~ZERO SECONDS WITH A NONZERO CODE WAS NEVER STARTED.

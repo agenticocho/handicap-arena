@@ -220,6 +220,34 @@ than residual claims.**
 | `R3_pitstop` | code repair — a fix that breaks the other cases scores zero | `PIT STOP` | **costume, kept for key stability** |
 | `R1_conformance` | structured-output conformance — the representation of absence, six items (v6) | — | **NEUTRAL KEY. The label debt retires FORWARD here: new rounds do not name a game.** |
 
+### THE DECLARED NAMESPACE, MACHINE-READABLE
+
+**The table above is the PROSE. What follows is the SINGLE SOURCE `test_game_states.py` parses, and the
+reason is a filed defect: the namespace used to be declared in two places, and THE COPY THE ERROR MESSAGE
+NAMED WAS NOT THE COPY THE CHECK READ** — so a reader who complied with the instruction changed nothing.
+*An error message is part of the instrument.*
+
+**IT IS A FLAT LINE FORMAT BETWEEN EXACT MARKERS, NOT A PARSED ENGLISH TABLE.** A regex over a markdown
+table is the greedy `{.*}` class this project has already paid for once. Each line is `<key><whitespace>
+<description>`; nothing else is read, and nothing is inferred.
+
+```
+=== DECLARED_SLOTS BEGIN ===
+R1_fencing       structured-output conformance (schema strictness, scalar types, sequences)
+R2_chess         tool selection (the right call, and the reflex to abstain)
+R3_pitstop       code repair (a fix that breaks the other cases scores zero)
+R1_conformance   structured-output conformance -- the representation of absence (v6, neutral key)
+=== DECLARED_SLOTS END ===
+```
+
+**AND ZERO SLOTS PARSED IS AN ERROR, NOT AN EMPTY DECLARATION.** Zero slots means every round key is
+undeclared, so a run is refused for a reason nobody stated — **the empty-list rule pointed at the parser
+instead of at the model.** The parser asserts a non-zero count and names the file and markers it read.
+
+**AND EVERY RUN RECORDS THE GATE REVISION THAT ADMITTED IT**, the same discipline as a card carrying its
+own commit hash: the gate digest travels in the record, so a run and the gate that admitted it are linked
+by more than a timestamp. **v5 taught us that lesson once and it was paid for.**
+
 **AND `R1_conformance` WAS ADDED ONLY AFTER THE CHECK CAUGHT ITS ABSENCE.** The v6 run wrote 13 bundles
 under that key and `test_game_states.py` failed 13 NEW violations —
 
