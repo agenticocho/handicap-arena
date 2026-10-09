@@ -152,7 +152,13 @@ def main():
     print(f"  VIABLE (commits to a legal move): {len(viable)} of {len(rows)}")
     for r in viable:
         print(f"    {r['entrant']:18s} a 60-ply event costs about {r['a_60ply_event_min']} min on this box")
-    out = os.path.join(HERE, "results", "COST_PROBE_WIDE.json" if wide else "COST_PROBE.json")
+    # probes/ NOT results/ -- THE SECOND TIME THIS EXACT MISTAKE HAS COST SOMETHING. `results/` holds
+    # RESULT BUNDLES, and run_card.py's `already_measured` reads every JSON in it as a bundle
+    # (`d.get("results")`). A LIST-shaped file there raises `'list' object has no attribute 'get'` and
+    # KILLED a v6 run at entrant 14 of 46. The stray .log files were the first version of this; fixing the
+    # writer is the only version that stops the third.
+    os.makedirs(os.path.join(HERE, "probes"), exist_ok=True)
+    out = os.path.join(HERE, "probes", "COST_PROBE_WIDE.json" if wide else "COST_PROBE.json")
     json.dump(rows, open(out, "w"), indent=1)
     print(f"\n  artifact: {os.path.relpath(out, HERE)}")
     return 0
