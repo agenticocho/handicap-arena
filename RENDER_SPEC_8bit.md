@@ -3,6 +3,14 @@
 **For:** Arena (Jarvis). **From:** Chilly. **Status:** design, ready to build against.
 **Reads with:** `GAME_CONTRACT.md` (the game/measurement rule) and `PRECEDENCE.md`.
 
+
+---
+**REVISION 2 -- 2026-10-09 · THE ARCADE PIVOT.** Sections 0-3 and 5-8 are unchanged and were already
+pivot-proof: *one engine, many cartridges* is exactly the shape an arcade needs. **Section 4's event table
+was written for the Arena and listed SPORTS. It now lists CABINETS.** The engine did not change. The
+cartridges did. Nothing below was renumbered, so any binding or constraint a reader already cited still
+points at the same place.
+
 ---
 
 ## 0. The four principles, and then everything else is detail
@@ -81,20 +89,19 @@ cart otherwise. This is the same rule the bundles are held to, enforced on the p
 **A cart with an empty binding for an element must not draw that element.** Draw less. **A blank where a
 number would be is honest; a plausible sprite where there is no field is a fabrication with pixels.**
 
-## 4. Field → element bindings for the known events
+## 4. Field -> element bindings for the known CABINETS
 
-| event | drawn | fields consumed |
+**A cartridge exists only where a record has fields.** Each row below names the cabinet, what the record
+carries, and what a spectator actually learns from it.
+
+| cabinet | drawn from the record | what the audience learns |
 |---|---|---|
-| **weigh-in** | a needle, a number, a threshold bar, a division label | `footprint_gb`, `gpu_free_gb_at_weigh_in`, `division_from_resident`, `division_from_weights` |
-| **chess** | 8×8 tile board, piece sprites, move tween, eval gauge, clock that stops on resignation | `fen`, `move_uci`, `eval_before`, `eval_after`, `termination`, `secs`, `budget_hit` |
-| **maze (Lode Runner)** | tile maze, runner sprite, dead ends, a time bar | position list, per-step legality, `termination`, `secs` |
-| **biathlon** | a track line, two dots, a penalty loop counter, a hit/miss tally | per-shot correctness, `secs`, `gen_tokens` |
-| **fencing** | two figures, one thrust per exchange, a form-break flash | per-exchange schema validity, `raw` on failure |
-| **pit stop** | a countdown ring, an iteration counter, a text panel of the failing case | iteration count, pass/fail per iteration, `budget_hit` |
-| **jenga (Zaxxon-style iso)** | per-block state, a scripted collapse | per-block result, dependency-break flags |
-| **darts** | a board, a dart path, an exact-score panel | the exact answer, correctness per dart |
-| **drag race / relay** | dots or bars on a lane, a baton indicator | `secs`, tokens/sec, handoff success |
-| **boxing (calibration)** | two figures, a towel, a count | the two-sided measure, `termination` |
+| **SOKOBAN** | `tile_layer`: the grid (`# . $ @ * +`); `sprite_tween`: the player's one-cell slide; `gauge`: `moves` beside `attempted`; `state`: `solved` / `give_up` | **the push that cannot be undone — and, beside it, the attempts that never moved anything** |
+| **MISSILE COMMAND** | `sprite_layer`: incoming trajectories; `gauge`: interceptors remaining, cities standing; `state`: each `spared` decoy marked **SPARED**, never as a miss | **what was NOT spent.** The faculty is the decoy correctly ignored, and it must be visible rather than inferred from a good score |
+| **ZORK / THE LONG CRAWL** | `text_panel` at 480x270 (**the §1 exception, named here**); `state`: room, inventory, and the item required much later | **long-horizon state**: the key found in room two, needed in room forty |
+| **DARTS** | a board, a dart path, an exact-score panel | the exact answer, and correctness per dart |
+| **THE WEIGH-IN** | `gauge`: load seconds, tokens/second; `state`: loaded / did-not-load | **admission is itself an event and it has fields.** The field's first result is who never reached the grid — and it is drawn, not narrated |
+| **BOXING (calibration)** — deferred, not scheduled | two figures, a towel, a count | the two-sided measure, `termination` |
 
 **Note what is absent from every row: nothing.** No crowd, no weather, no camera moves, no ambient
 particles. **Those are cinematic-layer inventions and they must not leak into the live board** — they have
@@ -116,6 +123,12 @@ cues        one short motif per event type; never a loop longer than 4 bars
 2. **The failure cue is the important one, and it must be unmistakable.** A flat buzz for an illegal move,
    a descending arpeggio for a resignation, a hard gate for a disqualification. **The audience should know
    the outcome by ear before the panel updates** — the same reason a pinfall has a sound.
+
+**THE DEAD-END RULE — and it is the one exception to rule 2 above.** In Sokoban a crate pushed into a
+corner kills the level **silently**: the game does not announce it, and neither may the board. So a dead
+end gets **NO CUE**. It gets a change in the room -- the board drops two shades, the chiptune loses an
+octave or drops to nothing, and nothing else happens. **The audience should FEEL the level die, not be
+told it did.** A cue there would be the renderer explaining the exact thing the cabinet exists to test.
 
 ## 6. CRT post — the shared look between live and cinematic
 
