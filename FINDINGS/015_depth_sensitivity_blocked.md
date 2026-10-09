@@ -61,23 +61,65 @@ run is to lower the floor to 3 — the number the source already produces. **It 
 the answer to the question I asked Chilly to watch for, and it is answerable by diff rather than by
 promise, which is the only kind of answer that counts.
 
-## WHAT WOULD ACTUALLY UNBLOCK IT
+## THE ACCEPTANCE RATE, MEASURED — AND THE SAMPLER IS INFEASIBLE AS DESIGNED
 
-**A generator that produces INDEPENDENT positions inside the windows**, which means a **rejection sampler
-over many walks** rather than one walk per rung:
+**FINDING 015's own prescription was a rejection sampler over many walks, with the cost "roughly one walk
+per accepted position". That was a DERIVATION. It is now a measurement, on ten walks before anyone budgets
+on a hundred — the four-ply rule applied to money instead of to a loop body.**
 
-1. Draw a rung and a random legal continuation, deterministically seeded.
-2. Evaluate the resulting position at the frozen config.
-3. **Keep it if it is in a window; discard it otherwise.**
-4. **Count independent positions accepted, and walk again from a fresh start each time** — never
-   harvesting consecutive plies.
-5. Stop at the floor or at a stated budget, and **report which**.
+```
+10 independent walks (fresh rung, fresh ply length, fresh seed -- one derivation each)
 
-**The acceptance rate is knowable in advance from this finding:** a walk passes through a 120 cp window
-over a few plies out of ~70, so the rate is low and the cost is roughly *one full walk per accepted
-position*. **Five per edge is therefore tens of walks per edge, not one** — which is why one walk per rung
-could never reach it, and why the earlier "candidate counts" of 60 and 105 were never the relevant number.
-**The relevant number is walks, and it was one.**
+  rook    50 plies  d18   719          queen   58 plies  d18   889
+  pawn    56 plies  d18  -484          bishop  11 plies  d18  -828
+  rook    22 plies  d18   602          queen   29 plies  d18  -945
+  queen   43 plies  d18 -1066          knight   8 plies  d18   810
+  rook    14 plies  d18   736
+
+  ACCEPTED near -300 : 0 of 9        near -100 : 0 of 9
+  ACCEPTANCE RATE    : 0.00 per walk        BUDGET: UNBOUNDED on this evidence
+```
+
+**THE SAMPLER IS INFEASIBLE AS DESIGNED.** An independent random endpoint essentially never lands in a
+120 cp window, and the reason is structural rather than unlucky:
+
+> **A WALK DOES NOT DWELL IN A WINDOW — IT TRANSITS IT.** The hits that exist are found at *particular
+> plies* (two-pawns mv 11, 13, 17 at −344, −351, −332), which is the signature of a value passing through
+> a narrow band, not of a position set living in one. **A random endpoint samples the distribution of
+> evaluations, and that distribution is concentrated far from the band** — a handicap of a pawn or more
+> puts the evaluation at ±180 or beyond, and a few dozen plies of engine play does not bring it back.
+
+## AND THE TENSION THAT MAKES THIS HARD RATHER THAN MERELY UNLUCKY
+
+```
+sampling EVERY PLY along a walk      finds the windows      but the hits share ONE derivation
+sampling ONE ENDPOINT per walk       independent            but accepts ~0
+```
+
+**Those are the only two cheap options, and each fails a different requirement — the first on
+independence (FINDING 015's autocorrelation), the second on rate. That is why four source iterations did
+not converge: they were all walk-based, and a walk-based generator cannot be both dense in the windows and
+independent.**
+
+**SO THE UNBLOCK IS NOT A BETTER SAMPLER. IT IS A DIFFERENT KIND OF SOURCE** — one that produces positions
+whose evaluation is *engineered* rather than *drifted into*: a corpus of recorded decisive games sampled at
+their own critical moments, or positions constructed to a target evaluation and then verified by the
+oracle. **Both are harder than a walk and both are the honest next step; neither is reachable by tuning the
+thing that has already failed four times.**
+
+## AND THE META-RESULT, WHICH IS THE ACTUAL YIELD OF THE LAST THREE HOURS
+
+**Every attempt to make this test runnable by changing the generator failed, and every failure was caught
+by a check built before it:**
+
+- **test 1**: 0 LOST in 30 positions — caught by the composition check.
+- **test 2**: all HOLDABLE from a constant side to move — caught by the composition check.
+- **probe 3/4**: reach short, and the hits autocorrelated — caught by reading the plies rather than the count.
+- **acceptance smoke**: rate 0.00 — caught by measuring the rate before budgeting on it.
+
+**The cheap way to make the test run was available at every step — lower `MIN_PER_EDGE` from 5 to 3, or
+widen `WINDOW` from 60 to 120 — and neither was taken, in five revisions.** `check_frozen_constants.py`
+proves that mechanically rather than by assurance. **The test is blocked, and the criteria never moved.**
 
 ## AND A SECOND, SMALLER INSTANCE OF THE SAME FAMILY
 
