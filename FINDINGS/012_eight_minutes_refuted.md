@@ -45,12 +45,14 @@ is wrong, but because it answers a different question than the one it was attach
 
 ## AND A SECOND THING THE CLOCK SHOWS, WHICH NOBODY ASKED FOR
 
-**The two longest items both stopped at exactly `3000 tok` — the `max_tokens` budget.**
+**Every item that ran long ran into the token budget.** Of the 11 items that reached exactly `3000 tok`,
+**all four items over 120 s are among them** — and the four longest items in the field (145.6, 139.5,
+128.2, 122.6 s) **each stopped at exactly the cap.**
 
 So the ceiling on item duration in this field is **not deliberation, it is truncation**: the slowest items
-are the ones that ran out of budget rather than the ones that thought longest. **An item that reaches the
-cap is a CUT answer, and `budget_hit` is the field that says so** — which means the longest-duration item
-and the least-reliable answer are, in this field, the same record.
+are the ones that ran out of budget, not the ones that thought longest. **An item that reaches the cap is a
+CUT answer, and `budget_hit` is the field that says so** — which means **the longest-duration item and the
+least-reliable answer are, in this field, the same record.**
 
 **Practical consequence for any future card:** `secs` and `budget_hit` must be read together. **A duration
 max taken without checking `budget_hit` measures the cap, not the model.**
