@@ -218,6 +218,20 @@ than residual claims.**
 | `R1_fencing` | structured-output conformance — schema strictness, scalar types, sequences | `FENCING` | **costume, kept for key stability** |
 | `R2_chess`   | tool selection — the right call, and the reflex to abstain | `CHESS` | **costume, kept for key stability** |
 | `R3_pitstop` | code repair — a fix that breaks the other cases scores zero | `PIT STOP` | **costume, kept for key stability** |
+| `R1_conformance` | structured-output conformance — the representation of absence, six items (v6) | — | **NEUTRAL KEY. The label debt retires FORWARD here: new rounds do not name a game.** |
+
+**AND `R1_conformance` WAS ADDED ONLY AFTER THE CHECK CAUGHT ITS ABSENCE.** The v6 run wrote 13 bundles
+under that key and `test_game_states.py` failed 13 NEW violations —
+
+```
+round key 'R1_conformance' is NOT in the declared slot table
+```
+
+— **which is the namespace behaving as a CHECK rather than a caption, and it is the whole reason the table
+exists.** Retiring a label forward is not the same act as declaring the slot that replaces it: **the debt
+was retired, the slot was not declared, and the contract refused a run at admission until it was.**
+*Declare, do not migrate* has a second half — **the declaration is the fix, and a rename without one is a
+violation with good intentions.**
 
 **WHY DECLARE RATHER THAN RENAME**, measured rather than asserted:
 

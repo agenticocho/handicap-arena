@@ -199,3 +199,26 @@ Traceback (most recent call last):
     for r in (d.get("results") or []):
               ^^^^^
 AttributeError: 'list' object has no attribute 'get'
+entrants: 46   config: ctx=8192 mt=3000 trials=3 ngl=auto-fit
+================================================================================================
+REFUSED: the game contract is violated by a NEW round or task file.
+  test_game_states.py exited non-zero -- no model was spawned.
+
+  HISTORICAL (superseded) : 301   <- retained, unchanged, and still violations.
+
+13 NEW GAME CONTRACT violation(s), in 1 class(es):
+  - other: 13
+        LFM2-1.2B-Extract-Q4_K_M_cardv6_autofit_neutral_ctx8192_mt3000.json :: round key 'R1_conformance' is NOT in the declared slot table
+        LFM2-350M-Extract-Q4_K_M_cardv6_autofit_neutral_ctx8192_mt3000.json :: round key 'R1_conformance' is NOT in the declared slot table
+        LFM2-350M-Math-Q4_K_M_cardv6_autofit_neutral_ctx8192_mt3000.json :: round key 'R1_conformance' is NOT in the declared slot table
+        LFM2.5-1.2B-Instruct-Q6_K_cardv6_autofit_neutral_ctx8192_mt3000.json :: round key 'R1_conformance' is NOT in the declared slot table
+        LFM2.5-VL-1.6B-Q4_0_cardv6_autofit_neutral_ctx8192_mt3000.json :: round key 'R1_conformance' is NOT in the declared slot table
+        LFM2.5-VL-1.6B-Q8_0_cardv6_autofit_neutral_ctx8192_mt3000.json :: round key 'R1_conformance' is NOT in the declared slot table
+        ... and 7 more (same shape)
+
+  A ROUND WRITTEN AFTER THE FIX CLAIMS A GAME AND CARRIES NO STATE.
+  Either the name goes, or the state arrives. See GAME_CONTRACT.md.
+
+  THE REMEDY IS NOT TO IGNORE THIS. Amend GAME_CONTRACT.md -- a deliberate, recorded act --
+  or fix the task file / round that caused it. The historical violations are annotated and
+  do NOT trip this gate; only a NEW one does.
