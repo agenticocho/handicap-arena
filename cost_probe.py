@@ -10,6 +10,7 @@ on the axis that matters (many candidates to derive), so a model that clears it 
 
     python3 cost_probe.py
 """
+import glob
 import json
 import os
 import subprocess
@@ -23,7 +24,11 @@ import chess_game as g                                                # noqa: E4
 HERE = os.path.dirname(os.path.abspath(__file__))
 FEN = "rnbqkbnr/ppp2ppp/8/3pp3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 3"
 LLAMA = "/home/chilly1/llama.cpp/build/bin/llama-server"
-MODELS = "/home/chilly1/.hermes/models"
+MODELS = os.environ.get("ARENA_MODELS") or os.path.expanduser("~/moltbook_pipeline/models")
+# THE SAME RESOLUTION AS run_card.py, DELIBERATELY. The first version hardcoded ~/.hermes/models, which
+# holds EIGHT models rather than the arena's fifty-three -- so a widened probe reported five entrants as
+# ABSENT and would have reported a finding about a population it never looked at. A population named twice
+# is a population that can disagree with itself; this reads ARENA_MODELS exactly as the runner does.
 PORT = 8741
 
 # smallest first, so the table fills in cheaply and a slow entrant is the only long wait
@@ -32,6 +37,29 @@ CANDIDATES = [
     ("Tiel-Inspired-Coder-9B-UD-Q4_K_M.gguf", "Tiel-Inspired-9B"),
     ("Ornith-1.5-9B-Q4_K_M.gguf", "Ornith-9B"),
 ]
+
+# THE WIDENED POPULATION, DERIVED FROM THE DIRECTORY RATHER THAN TYPED. Chilly's call: DO NOT RESCOPE THE
+# EVENT, WIDEN THE POPULATION -- and if no entrant can play unaided, that IS the finding ("no model on this
+# box can play chess without being handed its moves"), reported with the population named and the rates
+# attached.
+#
+# THE FIRST WIDENED LIST WAS TYPED AND FIVE OF ITS NINE ENTRIES WERE ABSENT -- invented filenames, against
+# a directory that was itself the wrong one. A population has to be DERIVED from the field it claims to
+# describe, at a spread across the size range, or the result is about the list instead of about the box.
+def wide_population(n=9):
+    # mmproj* ARE VISION PROJECTORS, NOT MODELS -- they load as weights for a separate .gguf and cannot be
+    # an entrant. DERIVING A POPULATION ALSO INHERITS THE DIRECTORY'S NON-MEMBERS, so the exclusion is
+    # explicit here rather than discovered as an unexplained load failure.
+    files = sorted((p for p in glob.glob(os.path.join(MODELS, "*.gguf"))
+                    if not os.path.basename(p).startswith("mmproj")), key=os.path.getsize)
+    if not files:
+        return []
+    step = max(1, len(files) // n)
+    return [(os.path.basename(p), os.path.basename(p).replace(".gguf", "")[:24])
+            for p in files[::step][:n]]
+
+
+WIDE = wide_population()
 
 
 def probe(path, label):
@@ -91,15 +119,18 @@ def probe(path, label):
 
 
 def main():
+    wide = "--wide" in sys.argv
+    selected = WIDE if wide else CANDIDATES
     print("=" * 96)
     print("COST OF AN ENTRANT THAT CAN COMPLETE A GAME HERE -- one move, the hard position, frozen prompt")
     print("=" * 96)
+    print(f"  population: {'WIDENED (' + str(len(selected)) + ' entrants, untried)' if wide else 'the first three'}")
     print(f"  position: {FEN}")
     print(f"  {len(g.legal_moves(FEN))} legal moves, none of them supplied")
     print(f"  prompt digest {g.PROMPT_DIGEST}, max_tokens {g.MAX_TOKENS}, all-CPU (ngl=0)")
     print()
     rows = []
-    for fn, label in CANDIDATES:
+    for fn, label in selected:
         p = os.path.join(MODELS, fn)
         if not os.path.exists(p):
             print(f"  {label:18s} ABSENT")
@@ -121,7 +152,7 @@ def main():
     print(f"  VIABLE (commits to a legal move): {len(viable)} of {len(rows)}")
     for r in viable:
         print(f"    {r['entrant']:18s} a 60-ply event costs about {r['a_60ply_event_min']} min on this box")
-    out = os.path.join(HERE, "results", "COST_PROBE.json")
+    out = os.path.join(HERE, "results", "COST_PROBE_WIDE.json" if wide else "COST_PROBE.json")
     json.dump(rows, open(out, "w"), indent=1)
     print(f"\n  artifact: {os.path.relpath(out, HERE)}")
     return 0

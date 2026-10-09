@@ -133,3 +133,24 @@ game contract: OK (  NO NEW violation. The 301 historical rounds stand AS RECORD
       result bundle -> /home/chilly1/workspace/ocho_arena/results/LFM2.5-1.2B-Instruct-Q6_K_cardv6_autofit_neutral_ctx8192_mt3000.json
       -> scored in 0.1 min
 [ 7/46]  0.96 GB  stablelm-2-zephyr-1_6b-Q4_K_M
+      DIVISION: Featherweight
+      DIVISION Featherweight (cord: teal)   footprint 2.52 GB measured
+      BELT: WHITE   stripes 0.0/6.0   rounds won 0/1   AGG 0.00
+      0.00    White belt  0.0/6.0 stripes  [Featherweight]  stablelm-2-zephyr-1_6b-Q4_K_M.gguf
+      result bundle -> /home/chilly1/workspace/ocho_arena/results/stablelm-2-zephyr-1_6b-Q4_K_M_cardv6_autofit_neutral_ctx8192_mt3000.json
+      -> scored in 0.9 min
+[ 8/46]  1.05 GB  Qwen3-VL-2B-Instruct-1M-UD-Q4_K_XL
+      DIVISION: Featherweight
+      DIVISION Featherweight (cord: teal)   footprint 2.15 GB measured
+      BELT: WHITE   stripes 1.0/6.0   rounds won 0/1   AGG 0.17
+      0.17    White belt  1.0/6.0 stripes  [Featherweight]  Qwen3-VL-2B-Instruct-1M-UD-Q4_K_XL.gguf
+      result bundle -> /home/chilly1/workspace/ocho_arena/results/Qwen3-VL-2B-Instruct-1M-UD-Q4_K_XL_cardv6_autofit_neutral_ctx8192_mt3000.json
+      -> scored in 0.1 min
+[ 9/46]  1.16 GB  LFM2.5-VL-1.6B-Q8_0
+      DIVISION: Featherweight
+      DIVISION Featherweight (cord: teal)   footprint 1.48 GB measured
+      BELT: WHITE   stripes 1.0/6.0   rounds won 0/1   AGG 0.17
+      0.17    White belt  1.0/6.0 stripes  [Featherweight]  LFM2.5-VL-1.6B-Q8_0.gguf
+      result bundle -> /home/chilly1/workspace/ocho_arena/results/LFM2.5-VL-1.6B-Q8_0_cardv6_autofit_neutral_ctx8192_mt3000.json
+      -> scored in 0.1 min
+[10/46]  1.25 GB  Qwen3.5-2B-UD-Q4_K_XL
