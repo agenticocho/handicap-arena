@@ -45,7 +45,7 @@ no scoring design at all.** Rubrics are where gaming gets in.
 
 | document | what it says now | what it needs |
 |---|---|---|
-| **`GAMES.md` B2c** | chess as the calibration event | **RETIRES.** Calibration moves to **PUNCH-OUT** — the count, the getting up, knowing when you are beaten. 8-bit, and literally about the thing the measure measures. |
+| **`GAMES.md` B2c** | chess as the calibration event | **SETTLED — chess keeps it.** Mike: chess keeps calibration, chess is game 1, no rush on Punch-Out. The axis is the one where scoring needs an oracle, and chess holds the only third-party one — and the only **continuous** one (a gradient of confidence against the truth; Sokoban's solver is a boundary, asked once). **PUNCH-OUT takes PERSISTENCE/RECOVERY; SOKOBAN takes IRREVERSIBLE PLANNING.** |
 | **`EVENT_chess.md`** | a standalone catalogue event with its own measure | **becomes a CABINET, or drops.** Its state schema is still correct and still reusable; its *event* status is what is in question. |
 | **`GAMES.md` / `README.md` framing** | ten leagues, 56 events, board games and sports | **moves to the Arcade**, with the three sourcing classes above and the per-event play format. |
 

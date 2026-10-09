@@ -6,6 +6,89 @@ bundles exist; the 75 that carry an `R2_chess` key are historical labels with no
 
 ---
 
+## AMENDMENT 1 — THE FREEZE RECORD GAINS TWO FIELDS. NO CHESS MEASUREMENT HAS BEEN TAKEN.
+
+**Dated 2026-10-08, before any position has been evaluated and before any chess bundle exists.** Recorded
+here rather than as a new card version, because **versioning protects a RECORD and there is no record
+yet** — a version bump would imply a prior measurement that never happened. What the first chess bundle
+must carry, it must carry from the start.
+
+**AND THE DATE IS THE POINT.** `a criterion change after the numbers is a file, not a criterion` — so this
+amendment states, in its own text, that it precedes every number. If a later reader finds an amended card
+beside a result, this paragraph is what tells them which came first.
+
+### The gap, and it was empty
+
+`grep -niE 'thread|hash|multipv|pinning' CARD_chess.md` returned **zero hits.** The card froze the engine
+*identity* and the *depth* and said nothing about the engine's **configuration** — and Stockfish defaults
+`Threads` to the machine's core count. **As it stood, the oracle's answer depended on a setting nobody
+wrote down, and the record could not show that it had been one.**
+
+### Measured on this box, rather than assumed
+
+The claim arrived as a finding from another box, so it was reproduced here first — and it came out
+**differently**, which is itself the finding:
+
+```
+A. DEFAULT Threads (Stockfish picks the core count), depth 18, FOUR runs
+     all four: ('cp', -228)  bestmove=d5e6        spread 0 cp, 1 distinct move
+B. Threads=1, Hash pinned, depth 18, TWO runs
+     both:     ('cp', -255)  bestmove=d5e6        identical
+C. Threads=1, the same position across depths
+     d8 -172 (e2a6)   d12 -196   d16 -213   d18 -255   d20 -274     MONOTONE
+```
+
+**Three conclusions, and the first two are corrections:**
+
+1. **The instability did NOT reproduce here at depth 18.** Four default-thread runs returned one value and
+   one best move. So "the oracle is a coin toss at the default" is **not true on this box at this depth**,
+   and this card does not claim it.
+2. **The config field matters anyway, for a reason sufficient on its own — a 27-CENTIPAWNSHIFT FROM AN
+   UNDECLARED SETTING** (`-228` multi-threaded versus `-255` single-threaded). That is 13.5% of this
+   card's 200 cp grey band, and **at the band's edge it is decisive**: a position reading `-290` under one
+   config and `-317` under the other is GREY in one and LOST in the other. **A threshold is only a number
+   if the configuration behind it is a number too.**
+3. **Monotonicity in depth is NOT a property of chess.** It held here and failed on the other box
+   (`d18 -228` improving to `d20 -215`). So **this card does not carry "deeper is better" as a fact** —
+   it carries the per-position measurement and the conditions under which it was taken. **A claim about
+   the engine's behaviour that changes with the machine is a claim about the machine.**
+
+### What the freeze record now holds, per position
+
+```
+engine        Stockfish 19, linux-x86-64-universal, 81,388,977 bytes, official sf_19 asset
+config        Threads=1   Hash=64 MB   MultiPV=1        <- FROZEN, carried per position
+depth         18                                        <- FROZEN, carried per position
+box           AMD Ryzen 5 5600, 12 logical CPUs, 60.7 GiB RAM, RTX 3060 Ti / driver 580.178.04
+eval_before / eval_after / termination / move_uci / raw / secs / gen_tokens / budget_hit
+```
+
+**`Threads=1` is frozen for a specific reason beyond stability:** the engine must be **one oracle, not a
+race between its own threads.** A search whose result depends on scheduling is a search whose result is a
+property of the box's load — and this box's load is not part of the measurement.
+
+**THE BOX FIELD IS NOT NEEDED TO SCORE EVENT 1 HERE.** It is needed the moment a second box scores the
+same event, because **the freeze is a hardware fact** and two boxes' results are comparable only when all
+four fields match. Recording it costs one line now and cannot be reconstructed later.
+
+### The satisfiability note, symmetric with the band's
+
+**This card must REFUSE rather than score if the frozen configuration has not been shown reproducible on
+the box about to run it.** Concretely, at admission:
+
+> **Run the frozen position set twice at the frozen config. If ANY position returns a different
+> `eval_before` or a different best move between the two runs, the card does NOT score — it reports
+> `ORACLE NOT FROZEN ON THIS BOX` and names the positions that disagreed.**
+
+**A depth or config that has not been shown reproducible is not a criterion, it is a hope.** This is the
+same shape as `test_gate_satisfiable.py`: **verify the instrument can hold still before trusting what it
+says**, and prove it by measurement rather than by declaration.
+
+**AND THE INSTRUMENT FOR IT TRAVELS WITH THE CARD** — `chess_freeze_check.py` in this repo runs exactly
+the three measurements above. **Nobody has to take this card's word for its own oracle.**
+
+---
+
 ## WHAT THIS EVENT MEASURES
 
 **The stop decision.** *Does the model know when it has lost?* — the axis calibration, awarded to chess

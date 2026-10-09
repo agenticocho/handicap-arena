@@ -157,10 +157,13 @@ Everything below reduces to one of these. **No LLM judge appears anywhere in thi
   LOST one** is miscalibrated persistence. Both are conformance failures with stateable reasons
 - **Anti-gaming** — the engine's evaluation is never shown to the model, and the threshold for "lost" is
   a frozen centipawn number, not a phrase
-- **AND THIS EVENT IS A CANDIDATE FOR RETIREMENT — see `ARCADE.md`.** Mike has settled the frame as THE
-  ARCADE, and **calibration moves to PUNCH-OUT**: the count, the getting up, knowing when you are beaten.
-  Chess as a cabinet may survive; chess as *this* event may not. Nothing is deleted — a rule change is
-  recorded where the rule lives.
+- **SETTLED — CHESS KEEPS CALIBRATION.** Mike: *"Chess keeps it. And chess first sounds good. No rush for
+  punch-out."* Chess is **event 1 of `THE ORDER`**, because a model that cannot stop will run up the move
+  counter in every event after it. **PUNCH-OUT takes PERSISTENCE/RECOVERY (the count)**, and **SOKOBAN takes
+  IRREVERSIBLE PLANNING** — the same faculty tested where nothing tells you the answer. Three claimants, one
+  each, and **calibration is not re-homed.** The tie-break is not "which cabinet is about being beaten" but
+  **which cabinet's oracle can decide it**: chess's engine is third-party and **continuous** (a gradient of
+  confidence against the truth), Sokoban's solver is **binary** (a boundary, asked once).
 - **Gate, not a round** — *a logical conclusion must be reached or the model can't enter.* A player who
   cannot recognise a lost position cannot be said to have played a game, because the game has no end.
   **Its output is a binary other events consume.**
