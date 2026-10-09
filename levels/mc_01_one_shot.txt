@@ -1,0 +1,7 @@
+# STATE 01 -- ONE THREAT, ONE ROUND, NO CHOICE.
+# The floor of the scale: a population that cannot engage a single threat cannot play this event at all.
+# Everything is aimed at city A and the only round is in range, so the correct play is unambiguous.
+tick 0
+city A at 2
+silo 1 at 2 ammo 1
+threat P impact 2 tick 2

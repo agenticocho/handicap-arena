@@ -182,3 +182,20 @@ game contract: OK (  NO NEW violation. The 301 historical rounds stand AS RECORD
       result bundle -> /home/chilly1/workspace/ocho_arena/results/Qwen3-1.7B-Q8_0_cardv6_autofit_neutral_ctx8192_mt3000.json
       -> scored in 1.7 min
 [14/46]  1.81 GB  SmolLM3-3B-128K-UD-Q4_K_XL
+      DIVISION: Featherweight
+      DIVISION Featherweight (cord: teal)   footprint 2.56 GB measured
+      BELT: ORANGE   stripes 5.0/6.0   rounds won 1/1   AGG 0.83
+      0.83   Orange belt  5.0/6.0 stripes  [Featherweight]  SmolLM3-3B-128K-UD-Q4_K_XL.gguf
+      result bundle -> /home/chilly1/workspace/ocho_arena/results/SmolLM3-3B-128K-UD-Q4_K_XL_cardv6_autofit_neutral_ctx8192_mt3000.json
+      -> scored in 2.8 min
+Traceback (most recent call last):
+  File "/home/chilly1/workspace/ocho_arena/run_card.py", line 475, in <module>
+    print(f"GATE  COVERAGE attempted/planned    {_g['coverage']:.3f}  (>= 0.95)   "
+                     ^^^^^^
+  File "/home/chilly1/workspace/ocho_arena/run_card.py", line 296, in main
+    for i, (size, path, base) in enumerate(ents, 1):
+                ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chilly1/workspace/ocho_arena/run_card.py", line 139, in already_measured
+    for r in (d.get("results") or []):
+              ^^^^^
+AttributeError: 'list' object has no attribute 'get'

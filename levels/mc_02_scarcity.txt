@@ -1,0 +1,32 @@
+# STATE 02 -- ALLOCATION UNDER SCARCITY. THE FACULTY, AND THE REASON THE SCORE IS A NUMBER.
+#
+# SEVEN THREATS, FOUR ROUNDS. It is IMPOSSIBLE to stop everything, and that is deliberate: the event
+# measures the CHOICE, not the reflexes. Four cities and seven incoming means the entrant must decide
+# which ground to lose.
+#
+# AND THE DECOYS ARE THE INSTRUMENT. Three threats (X, Y, Z) impact EMPTY GROUND at 7, 8 and 9. Nine is
+# outside every silo's reach, so Z cannot be engaged by anyone even if the entrant wants to. A model that
+# fires at everything runs out of ammo and loses cities it could have saved; a model that reads the impact
+# coordinates spends only on what matters and finishes with more cities alive.
+#
+# The ground line is 0..9. Cities sit at 2, 3, 5 and 6.
+#   P -> 2  city      Q -> 3  city      R -> 5  city      S -> 6  city      T -> 4  city
+#   X -> 7  EMPTY     Y -> 8  EMPTY     Z -> 9  EMPTY and OUT OF RANGE
+#
+# Silo 1 reaches 0..4, silo 2 reaches 5..9. So there is no silo that can cover the whole board, which is
+# what forces the routing decision on top of the ammo decision.
+tick 0
+city A at 2
+city B at 3
+city C at 5
+city D at 6
+silo 1 at 0 ammo 2
+silo 2 at 9 ammo 2
+threat P impact 2 tick 4
+threat Q impact 3 tick 3
+threat R impact 5 tick 3
+threat S impact 6 tick 4
+threat T impact 4 tick 5
+threat X impact 7 tick 2
+threat Y impact 8 tick 2
+threat Z impact 9 tick 2
