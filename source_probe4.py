@@ -54,7 +54,10 @@ def main():
     for label, squares in rungs:
         if stop:
             break
-        for n, fen in walk_rung(label, squares, MAX_PLIES):
+        # walk_rung yields (label, ply, fen) -- THREE values. Unpacking two raised
+        # "too many values to unpack" and the probe died on its first rung before evaluating anything,
+        # while its output file held only the header. A header and no error is NOT evidence of running.
+        for _lbl, n, fen in walk_rung(label, squares, MAX_PLIES):
             if time.time() - t0 > BUDGET_SECS:
                 print("  BUDGET REACHED")
                 stop = True
