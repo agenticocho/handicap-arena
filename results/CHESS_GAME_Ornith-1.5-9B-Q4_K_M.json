@@ -1,0 +1,27 @@
+{
+ "card": "CARD_chess.md",
+ "entrant": "Ornith-1.5-9B-Q4_K_M",
+ "gguf": "/home/chilly1/.hermes/models/Ornith-1.5-9B-Q4_K_M.gguf",
+ "staged_as": "INSTRUMENT",
+ "frozen": {
+  "threads": 1,
+  "hash_mb": 64,
+  "multipv": 1,
+  "depth": 18,
+  "lost_cp": -300,
+  "hold_cp": -100,
+  "cap": 60
+ },
+ "termination": "illegal-move",
+ "why": "no legal move in '' -- distinguishable, not a parse artifact",
+ "measures": {
+  "plies": 0,
+  "premature_collapse": 0,
+  "miscalibrated_persistence": 0,
+  "plies_in_lost_positions": 0,
+  "unreadable_evaluations": 0,
+  "calibrated": false
+ },
+ "wall_s": 9.7,
+ "rows": []
+}

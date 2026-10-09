@@ -1,0 +1,56 @@
+{
+ "card": "CARD_chess.md",
+ "entrant": "SMOKE_LFM16",
+ "gguf": "/home/chilly1/.hermes/models/LFM2.5-VL-1.6B-UD-Q8_K_XL.gguf",
+ "staged_as": "INSTRUMENT",
+ "frozen": {
+  "threads": 1,
+  "hash_mb": 64,
+  "multipv": 1,
+  "depth": 18,
+  "lost_cp": -300,
+  "hold_cp": -100,
+  "cap": 8
+ },
+ "termination": "illegal-move",
+ "why": "no legal move in 'e4' -- distinguishable, not a parse artifact",
+ "measures": {
+  "plies": 2,
+  "premature_collapse": 0,
+  "miscalibrated_persistence": 0,
+  "plies_in_lost_positions": 0,
+  "unreadable_evaluations": 0,
+  "calibrated": false
+ },
+ "wall_s": 3.3,
+ "rows": [
+  {
+   "ply": 0,
+   "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+   "raw": "e4",
+   "move_uci": "e2e4",
+   "move_san": "e4",
+   "eval_before": 0,
+   "eval_after": 0,
+   "termination": null,
+   "result": "HOLDABLE",
+   "secs": 0.2281506061553955,
+   "gen_tokens": 3,
+   "budget_hit": false
+  },
+  {
+   "ply": 1,
+   "fen": "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1",
+   "raw": "e7e6",
+   "move_uci": "e7e6",
+   "move_san": "e7e6",
+   "eval_before": 0,
+   "eval_after": 0,
+   "termination": null,
+   "result": "HOLDABLE",
+   "secs": 0.27878594398498535,
+   "gen_tokens": 5,
+   "budget_hit": false
+  }
+ ]
+}

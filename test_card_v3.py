@@ -19,7 +19,7 @@ A = importlib.util.module_from_spec(spec)
 sys.argv = ["arena.py", "--card", "v3"]
 spec.loader.exec_module(A)
 
-ITEMS = json.load(open(os.path.join(HERE, "tasks", "v3", "01_fencing.json")))["items"]
+ITEMS = json.load(open(os.path.join(HERE, "tasks", "v3", "01_conformance.json")))["items"]
 BY_ID = {i["id"]: i for i in ITEMS}
 
 # (item id, answer, expect_pass)
