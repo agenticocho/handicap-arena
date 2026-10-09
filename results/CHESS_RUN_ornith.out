@@ -7,3 +7,4 @@ CHESS -- SELF-PLAY, ONE ENTRANT BOTH SIDES  ·  Ornith-1.5-9B-Q4_K_M
 
   weigh-in: LOADED in 3s  (log CHESS_GAME_Ornith-1.5-9B-Q4_K_M.log)
     ply  0  20 legal  raw='e2e4'  -> e2e4
+    ply  1  20 legal  raw='d7d5'  -> d7d5

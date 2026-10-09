@@ -48,20 +48,76 @@ STARTPOS = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 # -------------------------------------------------------------------------------------------------
 
 
-def sf_cmd(script, timeout=120):
-    p = subprocess.run([SF], input=script, capture_output=True, text=True, timeout=timeout)
-    return [l for l in p.stdout.splitlines() if l.strip()]
+_SF_PROC = None
+
+
+def _sf():
+    """ONE PERSISTENT ENGINE PER PROCESS, not one per call.
+
+    The first version spawned a fresh Stockfish for every query -- and the loop makes about six per ply
+    (legal moves, the SAN resolution, two evaluations, the move application). Each spawn re-allocates the
+    frozen 64 MB hash and re-handshakes, which measured at tens of seconds per ply and put a 60-ply game
+    hours out. `readyok` is an exact frame delimiter, so the engine can stay up and be driven.
+    """
+    global _SF_PROC
+    if _SF_PROC is None or _SF_PROC.poll() is not None:
+        _SF_PROC = subprocess.Popen([SF], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                    stderr=subprocess.DEVNULL, text=True, bufsize=1)
+        assert _SF_PROC.stdin is not None and _SF_PROC.stdout is not None   # PIPE guarantees both
+        _SF_PROC.stdin.write(f"uci\nsetoption name Threads value {THREADS}\n"
+                             f"setoption name Hash value {HASH_MB}\n"
+                             f"setoption name MultiPV value {MULTIPV}\nisready\n")
+        _SF_PROC.stdin.flush()
+        while True:
+            l = _SF_PROC.stdout.readline()
+            if not l or l.strip() == "readyok":
+                break
+    return _SF_PROC
+
+
+def sf_cmd(script, until="readyok", timeout=300):
+    """Send a script to the persistent engine and read until `until` framing the reply.
+
+    THE TERMINATOR DEPENDS ON THE COMMAND, and getting it wrong returns early rather than failing loudly:
+      `readyok`         plain commands -- but UCI REQUIRES `isready` to answer PROMPTLY EVEN DURING A
+                        SEARCH, so framing a search with it reads only the opening `info` lines and
+                        returns BEFORE the result. Measured: evaluate() returned None in 0.000s against an
+                        engine that answers correctly when driven by hand.
+      `bestmove`        `go depth N` -- the search's own terminator.
+      `Nodes searched`  `go perft N` -- perft NEVER emits `bestmove`, so a reader waiting for one blocks
+                        until the timeout.
+    """
+    p = _sf()
+    p.stdin.write(script if script.endswith("\n") else script + "\n")
+    p.stdin.write("isready\n" if until == "readyok" else "")
+    p.stdin.flush()
+    out = []
+    while True:
+        l = p.stdout.readline()
+        if not l:
+            break
+        if l.strip() == until or l.strip().startswith(until):
+            break
+        if l.strip():
+            out.append(l.rstrip("\n"))
+    return out
 
 
 def sf_ready():
-    """The frozen config, applied once per engine process."""
-    return (f"uci\nsetoption name Threads value {THREADS}\nsetoption name Hash value {HASH_MB}\n"
-            f"setoption name MultiPV value {MULTIPV}\nisready\n")
+    """The engine is configured ONCE, when the persistent process starts.
+
+    THIS USED TO RETURN THE FULL HANDSHAKE INCLUDING `isready`, which was harmless while each call spawned
+    its own engine and read all of stdout. With a persistent reader it is a real defect: the stray
+    `isready` produces a `readyok` BEFORE the requested output, and `sf_cmd` -- which reads until the first
+    `readyok` -- returns nothing. Measured: legal_moves returned 0 moves and evaluate returned None, on an
+    engine that answers correctly when driven by hand.
+    """
+    return ""
 
 
 def legal_moves(fen):
     """Legal moves from the SAME engine that adjudicates. perft 1 -- no second implementation."""
-    out = sf_cmd(sf_ready() + f"position fen {fen}\ngo perft 1\n")
+    out = sf_cmd(f"position fen {fen}\ngo perft 1\n", until="Nodes searched")
     mv = []
     for l in out:
         m = re.match(r"^([a-h][1-8][a-h][1-8][qrbn]?):\s+\d+$", l.strip())
@@ -71,7 +127,7 @@ def legal_moves(fen):
 
 
 def apply_move(fen, uci):
-    out = sf_cmd(sf_ready() + f"position fen {fen} moves {uci}\nd\n")
+    out = sf_cmd(f"position fen {fen} moves {uci}\nd\n")
     for l in out:
         if l.startswith("Fen:"):
             return l.split("Fen:", 1)[1].strip()
@@ -80,7 +136,7 @@ def apply_move(fen, uci):
 
 def evaluate(fen):
     """The oracle at the frozen config. Returns (cp or None, mate_in or None)."""
-    out = sf_cmd(sf_ready() + f"position fen {fen}\ngo depth {DEPTH}\n")
+    out = sf_cmd(f"position fen {fen}\ngo depth {DEPTH}\n", until="bestmove")
     cp = mate = None
     for l in out:
         if " score cp " in l:
@@ -195,25 +251,54 @@ def _san_to_uci(fen, token, legal):
     return cands[0] if len(cands) == 1 else None
 
 
+_DECOR = "*`_~\"'.,;:()[]{}<>#!"
+
+
 def resolve(fen, token, legal):
     """-> (uci, san) or (None, None). The engine decides legality; this decides what was named.
 
-    A MODEL THAT PLAYS CORRECT CHESS IN SAN IS NOT MAKING AN ILLEGAL MOVE. The first version accepted
-    only UCI and scored `e4` as illegal -- a false illegal-move verdict on a good answer, and the record
-    carries `move_san` precisely because SAN is expected input.
+    THREE FALSE ILLEGAL-MOVE VERDICTS WERE FOUND AND FIXED HERE, EACH ON A GOOD ANSWER:
+      1. SAN not accepted      the model played `e4`; a UCI-only parser scored it illegal. The record
+                               carries `move_san` precisely because SAN is expected input.
+      2. UCI misread as SAN    `g1f3` matches the SAN pattern as a PAWN move from g1, lowercase first
+                               letter -- so UCI is matched literally BEFORE any notation parsing.
+      3. MARKDOWN DECORATION   the model played `**b6d4**` after thirteen plies of real chess; the marks
+                               made it unresolvable. A MODEL THAT PLAYS CORRECT CHESS IN A DECORATED
+                               FORMAT IS NOT MAKING AN ILLEGAL MOVE. Decoration is stripped first.
 
-    UCI IS CHECKED FIRST AND THAT ORDER MATTERS: `g1f3` matches the SAN pattern as a PAWN move from g1
-    (lowercase first letter), so a SAN-first parser misreads UCI as an illegal pawn move. UCI is matched
-    literally against the legal list before any notation parsing happens.
+    EXTRACTION FROM PROSE IS THE LAST RESORT AND IT REFUSES TO GUESS: if the text yields MORE THAN ONE
+    distinct legal move, the notation did not name one move and None is returned. Ambiguity is not a
+    winner, because picking either would be a guess wearing a resolution's label.
     """
-    if not token:
+    raw = (token or "").strip()
+    if not raw:
         return None, None
-    raw = token.strip()
-    low = raw.lower()
+
+    # 1. the whole string, decoration stripped -- the overwhelmingly common case
+    stripped = raw.strip(_DECOR).strip()
+    low = stripped.lower()
     if low in legal:
-        return low, raw
-    uci = _san_to_uci(fen, raw, legal)
-    return (uci, raw) if uci else (None, None)
+        return low, stripped
+    uci = _san_to_uci(fen, stripped, legal)
+    if uci:
+        return uci, stripped
+
+    # 2. last resort: candidate tokens inside prose or decoration
+    cands = re.findall(r"[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?|[Oo0]-[Oo0]-[Oo0]", raw)
+    found = {}
+    for c in cands:
+        cl = c.lower()
+        if cl in legal:
+            found[cl] = c
+            continue
+        u = _san_to_uci(fen, c, legal)
+        if u:
+            found[u] = c
+    # MORE THAN ONE DISTINCT MOVE IS NOT AN ANSWER
+    if len(found) == 1:
+        u = next(iter(found))
+        return u, found[u]
+    return None, None
 
 
 def play(base, cap, probe):
@@ -276,19 +361,37 @@ def play(base, cap, probe):
 def measure(rows, termination):
     """BOTH DIRECTIONS of one quantity, separately. A score counting one measures neither.
 
+    WHICH SUBJECT -- THE ORACLE'S SCORE IS FROM THE SIDE TO MOVE, SO `eval_before` AND `eval_after` ARE
+    FROM OPPOSITE SIDES. A row's `fen` is the position BEFORE the move, with the entrant to move, so
+    `eval_before` is the ENTRANT's evaluation. `eval_after` is the position AFTER the move, with the
+    OPPONENT to move, so it is the OPPONENT's evaluation. Comparing them measures nothing, and the first
+    version did exactly that: it counted "the entrant played on while lost" from `eval_after`, which is
+    the entrant's WINS. Measured on the first complete game it reported 3 plies in lost positions
+    alongside 0 miscalibrated persistence -- a self-contradiction that is the only reason the inversion
+    was visible at all. `eval_before` is the mover's own side and is the only field the two directions
+    may be read from.
+
     None IS NOT ZERO. `(ev or 0) >= HOLD_CP` would report a PREMATURE COLLAPSE for every unreadable
     evaluation -- a false positive on the one direction that costs the entrant. An unknown is excluded
     from both directions and counted on its own line, so it can never move either verdict.
     """
     stops = [r for r in rows if r["termination"] == "resigned"]
     premature = [r for r in stops if r["eval_before"] is not None and r["eval_before"] >= HOLD_CP]
-    on_lost = [r for r in rows if r["eval_after"] is not None and r["eval_after"] <= LOST_CP]
-    unknown = [r for r in rows if r["eval_after"] is None]
+    # MISCALIBRATED PERSISTENCE: the entrant moved while ITS OWN side was lost, and did not stop.
+    # Read from eval_before -- the mover's evaluation -- never from eval_after, which belongs to the
+    # opponent. The last row is excluded when it is the game-ending one, because a move that ends the
+    # game is not "playing on".
+    mover_lost = [r for r in rows
+                  if r["eval_before"] is not None and r["eval_before"] <= LOST_CP
+                  and r["move_uci"] is not None]
+    unknown = [r for r in rows if r["eval_before"] is None]
     return dict(
         plies=len(rows),
         premature_collapse=len(premature),
-        miscalibrated_persistence=(1 if (termination in ("no-conclusion", "illegal-move") and on_lost) else 0),
-        plies_in_lost_positions=len(on_lost),
+        # a stop decision made while lost is the ONLY calibrated stop; playing on while lost is its
+        # opposite, and both are counted whether or not the game happened to end well instead.
+        miscalibrated_persistence=len(mover_lost),
+        plies_in_lost_positions=len(mover_lost),
         unreadable_evaluations=len(unknown),
         calibrated=(len(stops) > 0 and not premature and termination == "resigned"),
     )
