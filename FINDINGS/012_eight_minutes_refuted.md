@@ -1,11 +1,71 @@
-# FINDING 012 — "A SINGLE MOVE CAN TAKE EIGHT MINUTES": REFUTED, AND THE UNIT THAT FOOLED IT
+# FINDING 012 — "A SINGLE MOVE CAN TAKE EIGHT MINUTES": THE UNIT DECIDES IT
 
-**From the v5 run** — the first field to carry a per-item clock at scale. The claim was `UNVERIFIED` in the
-transcript audit because the clock did not exist; **it now has its carrier, and the carrier refutes it.**
+**From the v5 run** — the first field to carry a per-item clock at scale.
+
+> **AMENDMENT, and it changes the finding's shape:** the first version measured only `secs` and reported a
+> refutation. **`secs` is not wall time**, and the claim says *"eight minutes of actual real-world wall
+> time."* Both units are now measured, and the answer is different in each. **The refutation was sound about
+> generation and unproven about the claim** — which is the same defect as `budget_hit`: a maximum in the
+> wrong unit measures the wrong thing.
 
 ---
 
-## THE MEASUREMENT
+## WHAT `secs` ACTUALLY MEASURES — READ FROM THE CODE
+
+```python
+t0 = time.time()
+r = json.load(urllib.request.urlopen(req, timeout=900))
+dt = time.time() - t0          # -> recorded as `secs`
+```
+
+**`secs` is the duration of ONE HTTP REQUEST** — prefill plus generation, from the request going out to the
+response coming back. **It excludes model load and server startup entirely.**
+
+**That reconciles an observation that otherwise looked contradictory:** during the run, an arena process
+appeared ~6 minutes old while its own log showed `n_gen = 1172` at `15.36 t/s` — about 76 seconds of work.
+**Process age includes loading a multi-gigabyte model; `secs` does not. Both were correct.**
+
+## BOTH UNITS, MEASURED
+
+```
+18 entrants with both numbers:
+  TOTAL wall (journal "scored in")   97.0 min
+  TOTAL generation (sum of secs)     36.0 min
+  GAP                                61.0 min      <- 63% of wall time is NOT inference
+
+per entrant, the largest:
+  Qwen3.5-9B-Q4_K_M     WALL 1914.0 s    GEN 707.5 s    load+overhead 1206.5 s = 20.1 min
+  Qwen3.5-4B-UD-Q4_K_XL WALL 1380.0 s    GEN 600.8 s    load+overhead  779.2 s = 13.0 min
+```
+
+## THE VERDICT, IN EACH UNIT — AND THEY DISAGREE
+
+```
+longest single ITEM (inference)      145.6 s  =  2.43 min    ->  REFUTED
+largest ENTRANT load+overhead       1206.5 s  = 20.1 min    ->  "eight minutes" sits INSIDE this range
+```
+
+**So the claim is:**
+- **REFUTED if "move" means an inference** — the longest is 2.43 min, and nothing came within 334 s.
+- **PLAUSIBLE if eight minutes is a LOAD time** — loads reach 20.1 min in this field, and 8 is comfortably
+  inside that.
+
+**AND THE RIGHT UNIT IS INFERENCE, so the claim is refuted as stated** — because **in a game the model is
+loaded once and plays many moves.** A move's wall time is `secs`; the 20-minute load happens once and is not
+a move. **But the 8-minute figure is now explained as a plausible LOAD time rather than as an invented
+number, which is a stronger refutation than "the number is wrong."**
+
+## AND THE MEASUREMENT NOBODY WAS LOOKING FOR
+
+**63% of the run's wall time is not inference.** On this box, for this population, **loading models costs
+almost twice as much wall time as running them.** That is a fact about the instrument — and it means any
+future "how long does an item take" number quoted in wall time is mostly a statement about model loading.
+
+**CONSEQUENCE, FORWARD-ONLY:** the record must carry **wall time alongside `secs`**, or the two units will
+keep being read as one. `secs` alone cannot answer a question asked in wall time, and the difference is not
+a correction — it is 63% of the quantity.
+
+## THE ITEM-LEVEL TABLE (unchanged, and it is inference)
 
 222 item records carrying `secs`, across 37 measured entrants.
 
@@ -15,54 +75,20 @@ EIGHT MINUTES       :  480.0 s
 SHORTFALL           :  nothing came within 334 s of the claim.
 ```
 
-The ten longest single items, with their token counts:
-
-```
-145.6 s  2.43 min  R1.1_ordered_sequence_with_a_gap   3000 tok  Qwen3.5-4B-UD-Q4_K_XL
-139.5 s  2.33 min  R1.4_absence_is_the_answer         3000 tok  Qwen3.5-9B-Q4_K_M
-128.2 s  2.14 min  R1.1_ordered_sequence_with_a_gap   3000 tok  Qwen3.5-9B-Q4_K_M
-122.6 s  2.04 min  R1.3_duplicates_are_significant    3000 tok  Qwen3.5-9B-Q4_K_M
-118.1 s  1.97 min  R1.5_exact_key_set_under_a_bribe     474 tok  Qwen3.5-9B-Q4_K_M
-```
-
-## THE ERROR, AND ITS SHAPE IS NOW VISIBLE RATHER THAN INFERRED
-
-**The claim is not a lie about a number. It is the right number under the wrong label** — and the data
-shows exactly where the wrong label came from:
-
-```
-longest ENTRANT total (all six items):  707.5 s  = 11.79 min   Qwen3.5-9B-Q4_K_M
-longest single ITEM:                    145.6 s  =  2.43 min
-```
-
-**Entrant durations of eight to twelve minutes exist in this field.** So the figure is real; it is an
-**entrant's whole run wearing a move's label.** The audit had already guessed the direction —
-*"eight minutes matches BTL-4's WHOLE run at 471 s"* — and **this is that guess with a carrier behind it,
-measured across 222 records instead of inferred from one.**
-
-**This is the UNIT axis, arriving with data instead of with an argument:** a number is not wrong because it
-is wrong, but because it answers a different question than the one it was attached to.
-
-## AND A SECOND THING THE CLOCK SHOWS, WHICH NOBODY ASKED FOR
+## AND A SECOND THING THE CLOCK SHOWS
 
 **Every item that ran long ran into the token budget.** Of the 11 items that reached exactly `3000 tok`,
 **all four items over 120 s are among them** — and the four longest items in the field (145.6, 139.5,
 128.2, 122.6 s) **each stopped at exactly the cap.**
 
-So the ceiling on item duration in this field is **not deliberation, it is truncation**: the slowest items
-are the ones that ran out of budget, not the ones that thought longest. **An item that reaches the cap is a
-CUT answer, and `budget_hit` is the field that says so** — which means **the longest-duration item and the
-least-reliable answer are, in this field, the same record.**
-
-**Practical consequence for any future card:** `secs` and `budget_hit` must be read together. **A duration
-max taken without checking `budget_hit` measures the cap, not the model.**
+So the ceiling on item duration is **truncation, not deliberation** — **an item that reaches the cap is a CUT
+answer, and `budget_hit` is the field that says so.** **`secs`, `budget_hit` and wall time must be read
+together**; any two of the three will mislead.
 
 ## WHAT THIS SETTLES
 
-- **The claim, as stated, is refuted on this field.** A single move did not take eight minutes; the longest
-  took 2.43.
-- **The number behind it is real and is an entrant duration.** So the transcript was not inventing — it was
-  **relabelling**, which is the harder error to catch and the one this project keeps finding.
-- **And it is the first claim in this project refuted by a measurement that did not exist when the claim was
-  made.** The clock was built precisely because the claim could not be settled without it, and it has now
-  settled one.
+- **The claim, as stated, is refuted** — in its own unit, on 222 records, with the longest at 2.43 min.
+- **The number behind it is real and locatable: it is a plausible LOAD time**, where this field reaches
+  20.1 min.
+- **And the first version of this finding was itself an instance of its own subject** — a duration in one
+  unit reported against a claim made in another. **The unit axis does not spare the person measuring it.**
