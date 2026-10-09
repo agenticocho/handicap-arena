@@ -104,8 +104,9 @@ So:
 **What stands is sharper than either of us had it:** the score is moved by *both* undeclared settings —
 `Hash` 16->64 shifts it 27 cp deterministically (13.5% of the card's 200 cp grey band, and decisive at the
 edge: -290 is grey under one and -317 is LOST under the other), while `Threads` 1->8 both shifts it
-(44-84 cp) AND destroys reproducibility (spread 11-50 cp, best move flipping to `e2a6`). The four-field
-record, and comparison **only at matched fields**, is exactly what the cross-machine run needs.
+(44-84 cp) AND destroys reproducibility (spread 11-50 cp, best move flipping to `e2a6`). The five-field
+record (§ below: engine, config, depth, box, **and the prompt**), and comparison **only at matched
+fields**, is exactly what the cross-machine run needs.
 
 ## 3. Why this bites chess specifically
 
@@ -121,7 +122,7 @@ Where the oracle is a fact, and where it is not:
   what makes it comparable. **That is not a defect; it is the definition.** An *undeclared* one is the
   defect: a model graded at d8 and one graded at d22 differ by 78 cp with nothing recording it.
 
-## WHAT THE FREEZE MUST RECORD — all four, or the event is not placeable
+## WHAT THE FREEZE MUST RECORD — all five, or the event is not placeable
 
     engine identity    Stockfish 19                 a different version is a different oracle
     config             Threads=1, Hash=16          without this the answer is not reproducible --
@@ -129,9 +130,26 @@ Where the oracle is a fact, and where it is not:
                                                      by 27 cp, Threads by 44-84 cp plus the spread
     depth              DECLARED -- and carried in the record, not in a document
     the box            the freeze is a HARDWARE fact, so Jarvis's and Chilly's are comparable only
-                       if all four fields match -- and §2b shows what that buys: at matched
+                       if all five fields match -- and §2b shows what that buys: at matched
                        fields the two boxes agree to the centipawn, and every apparent
                        disagreement so far was an undeclared field, not a different machine
+    the prompt         FROZEN, and carried with   the instrument most likely to be tuned, because
+                       the record                 it is the easiest thing to change and the
+                                                  hardest to remember changing -- and it must
+                                                  not hand the entrant the move list
+
+**The prompt is the fifth field, and it was added on CHILLY'S argument rather than on a
+failure.** The record froze engine, depth, threads, hash and thresholds — and not the prompt.
+*The prompt is the instrument most likely to be tuned, because it is the easiest thing to change
+and the hardest to remember changing.* If it does not ride with the record, two entrants served
+by different prompts are compared as though they were served by the same event.
+
+**And a position that arrives with its legal moves listed is a MENU, not a position** — it
+removes the derivation of candidates and invites enumeration. Changed on that argument, not
+because an entrant failed, and the same reasoning governs here. Note the asymmetry, because it
+is easy to get backwards: **the gate NEEDS the move list and the entrant must NOT have it.**
+`legal_gate.py` will not read a verdict off an unlisted position, and the same list in the
+prompt hands the entrant the answer the gate is about to measure.
 
 `freeze_check.py` is the check, and it lives beside this file. Run it against any proposed configuration
 **before** freezing a depth: the point is that the freeze is measured, so nobody has to take this
@@ -168,3 +186,32 @@ document declares `12` — a check contradicting the document it exists to check
 labels, no ambiguity. (Re-measured with it, 2026-10-08: kiwipete `d18 -228 / d20 -215 / d22 -250`
 reproduces the table above exactly, and move-convergence is `d12` on kiwipete and `d10` on the Italian
 position — the freeze is declared per position, not pooled.)
+
+## THE BOX FIELD IS NOT CURRENTLY CERTIFIABLE — so the COMPARISON is held, and the PORT is not
+
+**Chilly's box failed three times in seventeen hours, and they are two different failure modes:**
+
+    freezes 1-2   GPU GSP FIRMWARE HANG -- 6,370,000 bad register reads, `RmInitAdapter` failed,
+                  nvidia-smi reported no devices. Cleared only by a FULL POWER CYCLE: a warm
+                  reboot cannot reset device firmware, which is why two reboots failed first.
+    freeze 3      KERNEL MEMORY CORRUPTION -- three oopses, non-canonical addresses, a garbage
+                  RIP, the kernel unable to read its own opcode bytes. GPU healthy throughout.
+
+    RAM           a userspace sweep over 20 GiB PASSED, and that is weaker than it reads: a
+                  uniform-fill test cannot reach adjacent-cell or address-line faults, and it
+                  cannot touch kernel pages at all. **RAM is NOT exonerated.**
+    BIOS          MSI PRO B550M-VC WIFI (MS-7C95), H.D0, dated 2025-03-21 -- and fwupd does not
+                  manage this board, so nothing has ever checked it.
+    GPU VBIOS     not updatable -- NVIDIA publishes no consumer VBIOS updates.
+    kernel        tainted by an unsigned out-of-tree NVIDIA module.
+
+**The box field names a hardware fact, and on that box it is not a fact right now.** If a machine is
+corrupting memory, the numbers coming off it are corrupted in a way *neither side could detect from the
+bundles* — the records would look clean, and the cross-machine run would look like a result. So:
+
+- **HOLD the cross-machine comparison.** It was already sequenced second (Ornith self-play, one entrant,
+  both sides of the board, on Chilly); it now waits on the hardware rather than only on the harness.
+- **DO NOT hold the port.** Resolving the oracle binary portably, the realized offload in the record,
+  `pair_parity.py`, the preflight — none of it touches the failing box and all of it is still worth doing.
+- The sequencing rule Chilly states is the honest one: *sequence your work behind ours rather than beside
+  it* — better to say this now than to hand over a comparison in a week and have to retract it.
