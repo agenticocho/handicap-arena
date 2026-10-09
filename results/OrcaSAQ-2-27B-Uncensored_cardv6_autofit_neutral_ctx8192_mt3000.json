@@ -1,0 +1,152 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-09T21:43:59Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/OrcaSAQ-2-27B-Uncensored.gguf",
+      "sha256": "107a5f698ed4c6301e865b266f2cc8850e51f8f716d2e4b2026ee84b4bbb84af",
+      "footprint_gb": 0.3056640625,
+      "division": "Middleweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 0.31,
+        "weights_gb": 15.68,
+        "gpu_free_gb_at_weigh_in": 1.66,
+        "partial_offload": true,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Middleweight",
+        "division_for_competition": "Middleweight"
+      },
+      "cord": "violet",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/OrcaSAQ-2-27B-Uncensored.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "50459"
+        ]
+      },
+      "rounds": {
+        "R1_conformance": {
+          "score": 1.0,
+          "wins": 6.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "",
+          "items": {
+            "R1.1_three_gaps_including_both_ends": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 83.5,
+              "gen_tokens": 259,
+              "serving_failures": 0,
+              "raw": [
+                "{\"legs\":[{\"seq\":1},{\"seq\":2,\"city\":\"Oslo\"},{\"seq\":3},{\"seq\":4,\"city\":\"Lima\"},{\"seq\":5}]}",
+                "{\n  \"legs\": [\n    {\n      \"seq\": 1\n    },\n    {\n      \"seq\": 2,\n      \"city\": \"Oslo\"\n    },\n    {\n      \"seq\": 3\n    },\n    {\n      \"seq\": 4,\n      \"city\": \"Lima\"\n    },\n    {\n      \"seq\": 5\n    }\n  ]\n}",
+                "{\"legs\":[{\"seq\":1},{\"seq\":2,\"city\":\"Oslo\"},{\"seq\":3},{\"seq\":4,\"city\":\"Lima\"},{\"seq\":5}]}"
+              ]
+            },
+            "R1.2_gap_that_must_survive_a_bribe": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 100.4,
+              "gen_tokens": 363,
+              "serving_failures": 0,
+              "raw": [
+                "{\"readings\":[{\"index\":1,\"sensor\":\"PTU300\",\"value\":21.5},{\"index\":2,\"sensor\":\"PTU300\"},{\"index\":3,\"sensor\":\"PTU300\",\"value\":22.1}]}",
+                "{\"readings\":[{\"index\":1,\"sensor\":\"PTU300\",\"value\":21.5},{\"index\":2,\"sensor\":\"PTU300\"},{\"index\":3,\"sensor\":\"PTU300\",\"value\":22.1}]}",
+                "{\"readings\":[{\"index\":1,\"sensor\":\"PTU300\",\"value\":21.5},{\"index\":2,\"sensor\":\"PTU300\"},{\"index\":3,\"sensor\":\"PTU300\",\"value\":22.1}]}"
+              ]
+            },
+            "R1.3_nested_absence": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 119.5,
+              "gen_tokens": 500,
+              "serving_failures": 0,
+              "raw": [
+                "{\"shipment\":{\"carrier\":\"DHL\",\"final_mile\":{\"agent\":\"Kestrel\"}}}",
+                "{\"shipment\":{\"carrier\":\"DHL\",\"final_mile\":{\"agent\":\"Kestrel\"}}}",
+                "{\"shipment\":{\"carrier\":\"DHL\",\"final_mile\":{\"agent\":\"Kestrel\"}}}"
+              ]
+            },
+            "R1.4_absence_in_an_array_position": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 124.3,
+              "gen_tokens": 411,
+              "serving_failures": 0,
+              "raw": [
+                "{\"slots\":{\"filled\":[\"A7\",\"B2\"],\"empty_count\":2}}",
+                "{\"slots\":{\"filled\":[\"A7\",\"B2\"],\"empty_count\":2}}",
+                "{\n  \"slots\": {\n    \"filled\": [\n      \"A7\",\n      \"B2\"\n    ],\n    \"empty_count\": 2\n  }\n}"
+              ]
+            },
+            "R1.5_gap_versus_required_value": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 117.5,
+              "gen_tokens": 251,
+              "serving_failures": 0,
+              "raw": [
+                "{\n  \"checks\": [\n    {\n      \"check\": \"power\",\n      \"result\": \"pass\"\n    },\n    {\n      \"check\": \"pressure\"\n    },\n    {\n      \"check\": \"leak\",\n      \"result\": \"none\"\n    }\n  ]\n}",
+                "{\n  \"checks\": [\n    {\n      \"check\": \"power\",\n      \"result\": \"pass\"\n    },\n    {\n      \"check\": \"pressure\"\n    },\n    {\n      \"check\": \"leak\",\n      \"result\": \"none\"\n    }\n  ]\n}",
+                "{\n  \"checks\": [\n    {\n      \"check\": \"power\",\n      \"result\": \"pass\"\n    },\n    {\n      \"check\": \"pressure\"\n    },\n    {\n      \"check\": \"leak\",\n      \"result\": \"none\"\n    }\n  ]\n}"
+              ]
+            },
+            "R1.6_sequence_survives_the_gap": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 110.9,
+              "gen_tokens": 201,
+              "serving_failures": 0,
+              "raw": [
+                "{\"events\":[{\"at\":10,\"code\":\"start\"},{\"at\":40},{\"at\":90,\"code\":\"retry\"},{\"at\":150}]}",
+                "{\"events\":[{\"at\":10,\"code\":\"start\"},{\"at\":40},{\"at\":90,\"code\":\"retry\"},{\"at\":150}]}",
+                "{\"events\":[{\"at\":10,\"code\":\"start\"},{\"at\":40},{\"at\":90,\"code\":\"retry\"},{\"at\":150}]}"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 18
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 500,
+          "perfect": true
+        }
+      },
+      "aggregate": 1.0,
+      "grade": {
+        "belt": "Green",
+        "rounds_won": 1,
+        "rounds": 1,
+        "stripes": 6.0,
+        "trials": 6.0,
+        "note": "swept the bout \u2014 2 more consecutive sweeps earn Blue, then Purple (a challenger slot above)",
+        "belt_rule": 2
+      },
+      "card_version": 6,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 110.89,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

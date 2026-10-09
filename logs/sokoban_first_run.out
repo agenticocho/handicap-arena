@@ -10,3 +10,33 @@ SOKOBAN -- FIRST RUN
   LFM2-350M-Extract-Q4_K_M       02_two_boxes.txt       ...
       ended=commands_exhausted solved=False moves=  0  blocked=  0 not_an_action= 40 give_up=0
   granite-3.3-2b-instruct-crit   01_one_push.txt        ...
+      ended=commands_exhausted solved=False moves=  0  blocked= 40 not_an_action=  0 give_up=0
+  granite-3.3-2b-instruct-crit   02_two_boxes.txt       ...
+      ended=commands_exhausted solved=False moves=  0  blocked= 13 not_an_action=  1 give_up=0
+  Qwen3.5-4B-UD-Q4_K_XL          01_one_push.txt        ...
+      DID NOT LOAD -- server exited rc=1
+  Qwen3.5-4B-UD-Q4_K_XL          02_two_boxes.txt       ...
+      ended=commands_exhausted solved=False moves=  0  blocked=  0 not_an_action= 40 give_up=0
+  Qwen3.5-9B-Q4_K_M              01_one_push.txt        ...
+      ended=commands_exhausted solved=False moves=  0  blocked=  0 not_an_action= 40 give_up=0
+  Qwen3.5-9B-Q4_K_M              02_two_boxes.txt       ...
+      ended=commands_exhausted solved=False moves=  0  blocked=  0 not_an_action= 40 give_up=0
+  Ternary-Bonsai-2-27B-PQ2_0     01_one_push.txt        ...
+      DID NOT LOAD -- server exited rc=1
+  Ternary-Bonsai-2-27B-PQ2_0     02_two_boxes.txt       ...
+      DID NOT LOAD -- server exited rc=1
+
+================================================================================================
+THE RATES
+================================================================================================
+  cells attempted      10
+  PLAYED               7      DID NOT LOAD  3
+  REASON COUNTS        {'played': 7, 'did_not_load': 3}   <- never only a total: a population that never ran is not evidence about the population
+  01_one_push.txt        played  3  solved  0  gave_up  0  not_an_action  2
+  02_two_boxes.txt       played  4  solved  0  gave_up  0  not_an_action  4
+
+  LEVEL SET: 2 of 3. The third level is ABSENT and is reported as ABSENT -- a level nobody can
+  solve needs a solver to PROVE it, and a level that merely LOOKS lost is a trap for the reader,
+  not a control for the entrant. C1 is scored on the levels that exist, per outcome row 6.
+
+  artifact: probes/SOKOBAN_FIRST_RUN.json
