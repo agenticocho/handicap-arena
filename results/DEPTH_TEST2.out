@@ -1,3 +1,15 @@
 ================================================================================================
 TEST 2 -- DEPTH SENSITIVITY. Source: a handicap ladder plus engine-directed moves.
 ================================================================================================
+
+  candidates generated: 64  (target >= 60)
+  reproducible at d18: 64
+  d18 side distribution: {'HOLDABLE': 64}
+
+  ADMISSIBILITY CHECK (before any crossing is read)
+    at-risk near -300 :   0   need >= 5
+    at-risk near -100 :   0   need >= 5
+
+  *** INADMISSIBLE -- NOT ADMISSIBLE. ***
+  Per the pre-registration: no sensitivity is reported, and NO conclusion about the
+  unreached edge follows, in either direction.

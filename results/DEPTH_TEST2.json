@@ -1,0 +1,520 @@
+{
+ "admissible": false,
+ "which": "INADMISSIBLE",
+ "near_lost": 0,
+ "near_hold": 0,
+ "rows": [
+  {
+   "ladder": "pawn",
+   "moves": 0,
+   "fen": "rnbqkbnr/p1pppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+   "side_to_move": "w",
+   "d18": 181,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "pawn",
+   "moves": 2,
+   "fen": "rnbqkbnr/p1pp1ppp/8/4p3/2P5/8/PP1PPPPP/RNBQKBNR w KQkq - 0 2",
+   "side_to_move": "w",
+   "d18": 167,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "pawn",
+   "moves": 4,
+   "fen": "r1bqkbnr/p1pp1ppp/2n5/4p3/2P5/2N5/PP1PPPPP/R1BQKBNR w KQkq - 2 3",
+   "side_to_move": "w",
+   "d18": 173,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "pawn",
+   "moves": 6,
+   "fen": "r1bqkbnr/p1pp1p1p/2n3p1/4p3/2P5/P1N5/1P1PPPPP/R1BQKBNR w KQkq - 0 4",
+   "side_to_move": "w",
+   "d18": 183,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "pawn",
+   "moves": 8,
+   "fen": "r1bqk1nr/p1pp1pbp/2n3p1/4p3/2P5/P1N1P3/1P1P1PPP/R1BQKBNR w KQkq - 1 5",
+   "side_to_move": "w",
+   "d18": 165,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "pawn",
+   "moves": 10,
+   "fen": "r1bqk1nr/2pp1pbp/2n3p1/p3p3/2P5/P1N1P3/1P1PBPPP/R1BQK1NR w KQkq - 0 6",
+   "side_to_move": "w",
+   "d18": 172,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "pawn",
+   "moves": 12,
+   "fen": "r1bqk2r/2ppnpbp/2n3p1/p3p3/2P5/P1N1PN2/1P1PBPPP/R1BQK2R w KQkq - 2 7",
+   "side_to_move": "w",
+   "d18": 184,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "pawn",
+   "moves": 14,
+   "fen": "r1bqk2r/2ppnpbp/2n3p1/p7/2Pp4/P1N1PN2/1P2BPPP/R1BQK2R w KQkq - 0 8",
+   "side_to_move": "w",
+   "d18": 174,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "two-pawns",
+   "moves": 0,
+   "fen": "rnbqkbnr/p1pppp1p/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+   "side_to_move": "w",
+   "d18": 459,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "two-pawns",
+   "moves": 2,
+   "fen": "rnbqkbnr/p2ppp1p/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+   "side_to_move": "w",
+   "d18": 415,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "two-pawns",
+   "moves": 4,
+   "fen": "rn1qkbnr/pb1ppp1p/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+   "side_to_move": "w",
+   "d18": 446,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "two-pawns",
+   "moves": 6,
+   "fen": "rn1qkb1r/pb1ppp1p/5n2/2p5/4P3/2N2N2/PPPP1PPP/R1BQKB1R w KQkq - 4 4",
+   "side_to_move": "w",
+   "d18": 443,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "two-pawns",
+   "moves": 8,
+   "fen": "rn1qkb1r/pb2pp1p/5n2/2pp4/4P3/2NP1N2/PPP2PPP/R1BQKB1R w KQkq - 0 5",
+   "side_to_move": "w",
+   "d18": 528,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "two-pawns",
+   "moves": 10,
+   "fen": "rn1qk2r/pb2ppbp/5n2/2pP4/8/2NP1N2/PPP2PPP/R1BQKB1R w KQkq - 1 6",
+   "side_to_move": "w",
+   "d18": 459,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "two-pawns",
+   "moves": 12,
+   "fen": "rn1qk2r/pb2ppbp/8/2pn4/8/2NP1N2/PPP1BPPP/R1BQK2R w KQkq - 0 7",
+   "side_to_move": "w",
+   "d18": 352,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "two-pawns",
+   "moves": 14,
+   "fen": "rn2k2r/pb2ppbp/8/2pq4/8/3P1N2/PPP1BPPP/R1BQK2R w KQkq - 0 8",
+   "side_to_move": "w",
+   "d18": 322,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "knight",
+   "moves": 0,
+   "fen": "r1bqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+   "side_to_move": "w",
+   "d18": 764,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "knight",
+   "moves": 2,
+   "fen": "r1bqkbnr/ppppp1pp/5p2/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+   "side_to_move": "w",
+   "d18": 820,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "knight",
+   "moves": 4,
+   "fen": "r1bqkbnr/pp1pp1pp/2p2p2/8/3PP3/8/PPP2PPP/RNBQKBNR w KQkq - 0 3",
+   "side_to_move": "w",
+   "d18": 821,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "knight",
+   "moves": 6,
+   "fen": "r1bqkbnr/1p1pp1pp/2p2p2/p7/3PP3/8/PPP1QPPP/RNB1KBNR w KQkq - 0 4",
+   "side_to_move": "w",
+   "d18": 797,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "knight",
+   "moves": 8,
+   "fen": "r1bqkbnr/1p1p2pp/2p1pp2/p7/P2PP3/8/1PP1QPPP/RNB1KBNR w KQkq - 0 5",
+   "side_to_move": "w",
+   "d18": 810,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "knight",
+   "moves": 10,
+   "fen": "r1bqkbnr/1p4pp/2p1pp2/p2p4/P2PP3/2P5/1P2QPPP/RNB1KBNR w KQkq - 0 6",
+   "side_to_move": "w",
+   "d18": 809,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "knight",
+   "moves": 12,
+   "fen": "r1b1kbnr/1p4pp/1qp1pp2/p2p4/P2PP3/2P5/1P1NQPPP/R1B1KBNR w KQkq - 2 7",
+   "side_to_move": "w",
+   "d18": 770,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "knight",
+   "moves": 14,
+   "fen": "r1b1kbnr/1p5p/1qp1ppp1/p2p3Q/P2PP3/2P5/1P1N1PPP/R1B1KBNR w KQkq - 0 8",
+   "side_to_move": "w",
+   "d18": 773,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "two-knights",
+   "moves": 0,
+   "fen": "r1bqkb1r/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+   "side_to_move": "w",
+   "d18": 1022,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "two-knights",
+   "moves": 2,
+   "fen": "r1bqkb1r/ppppp1pp/5p2/8/8/4P3/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+   "side_to_move": "w",
+   "d18": 1056,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "two-knights",
+   "moves": 4,
+   "fen": "r1bqkb1r/p1ppp1pp/1p3p2/8/8/2P1P3/PP1P1PPP/RNBQKBNR w KQkq - 0 3",
+   "side_to_move": "w",
+   "d18": 1065,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "two-knights",
+   "moves": 6,
+   "fen": "r1bqkb1r/2ppp1pp/1p3p2/p7/1P6/2P1P3/P2P1PPP/RNBQKBNR w KQkq - 0 4",
+   "side_to_move": "w",
+   "d18": 1021,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "two-knights",
+   "moves": 8,
+   "fen": "r1bqkb1r/2ppp2p/1p3pp1/p6Q/1P6/2P1P3/P2P1PPP/RNB1KBNR w KQkq - 0 5",
+   "side_to_move": "w",
+   "d18": 1009,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "two-knights",
+   "moves": 10,
+   "fen": "r1bqk2r/2ppp2p/1p3ppb/p7/1P6/2P1P3/P2P1PPP/RNBQKBNR w KQkq - 2 6",
+   "side_to_move": "w",
+   "d18": 1026,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "two-knights",
+   "moves": 12,
+   "fen": "r1bqk2r/2ppp2p/1p3pp1/p5b1/QP6/2P1P3/P2P1PPP/RNB1KBNR w KQkq - 4 7",
+   "side_to_move": "w",
+   "d18": 1057,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "two-knights",
+   "moves": 14,
+   "fen": "r1bqk2r/2ppp2p/5pp1/pp4b1/QP6/2P1P2P/P2P1PP1/RNB1KBNR w KQkq - 0 8",
+   "side_to_move": "w",
+   "d18": 1051,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "knight-plus-pawn",
+   "moves": 0,
+   "fen": "r1bqkbnr/pppppp1p/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+   "side_to_move": "w",
+   "d18": 860,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "knight-plus-pawn",
+   "moves": 2,
+   "fen": "r1bqkbnr/pppp1p1p/4p3/8/8/4P3/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+   "side_to_move": "w",
+   "d18": 833,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "knight-plus-pawn",
+   "moves": 4,
+   "fen": "r1bqk1nr/pppp1p1p/3bp3/8/8/2P1P3/PP1P1PPP/RNBQKBNR w KQkq - 1 3",
+   "side_to_move": "w",
+   "d18": 840,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "knight-plus-pawn",
+   "moves": 6,
+   "fen": "r1bqk2r/ppppnp1p/3bp3/8/1P6/2P1P3/P2P1PPP/RNBQKBNR w KQkq - 1 4",
+   "side_to_move": "w",
+   "d18": 823,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "knight-plus-pawn",
+   "moves": 8,
+   "fen": "r1bqk1r1/ppppnp1p/3bp3/8/1P6/B1P1P3/P2P1PPP/RN1QKBNR w KQq - 3 5",
+   "side_to_move": "w",
+   "d18": 796,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "knight-plus-pawn",
+   "moves": 10,
+   "fen": "r1bqk1r1/pp1pnp1p/2pbp3/8/1P6/B1P1P1P1/P2P1P1P/RN1QKBNR w KQq - 0 6",
+   "side_to_move": "w",
+   "d18": 829,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "knight-plus-pawn",
+   "moves": 12,
+   "fen": "r1bqk1r1/pp1p1p1p/2pbp1n1/8/1P6/2P1P1P1/PB1P1P1P/RN1QKBNR w KQq - 2 7",
+   "side_to_move": "w",
+   "d18": 832,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "knight-plus-pawn",
+   "moves": 14,
+   "fen": "r1b1k1r1/pp1p1p1p/2pbpqn1/8/1P5P/2P1P1P1/PB1P1P2/RN1QKBNR w KQq - 1 8",
+   "side_to_move": "w",
+   "d18": 827,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "bishop",
+   "moves": 0,
+   "fen": "rn1qkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+   "side_to_move": "w",
+   "d18": 803,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "bishop",
+   "moves": 2,
+   "fen": "r2qkbnr/pppppppp/n7/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 1 2",
+   "side_to_move": "w",
+   "d18": 861,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "bishop",
+   "moves": 4,
+   "fen": "r2qkbnr/pppp1ppp/n7/4p3/4P3/7N/PPPP1PPP/RNBQKB1R w KQkq - 0 3",
+   "side_to_move": "w",
+   "d18": 868,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "bishop",
+   "moves": 6,
+   "fen": "r3kbnr/pppp1ppp/n7/4p3/4P2q/2P4N/PP1P1PPP/RNBQKB1R w KQkq - 1 4",
+   "side_to_move": "w",
+   "d18": 837,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "bishop",
+   "moves": 8,
+   "fen": "r3kb1r/pppp1ppp/n4n2/4p3/4P2q/2PP3N/PP3PPP/RNBQKB1R w KQkq - 1 5",
+   "side_to_move": "w",
+   "d18": 881,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "bishop",
+   "moves": 10,
+   "fen": "r3kb1r/pppp1ppp/n4n2/4p1Bq/4P3/2PP3N/PP3PPP/RN1QKB1R w KQkq - 3 6",
+   "side_to_move": "w",
+   "d18": 828,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "bishop",
+   "moves": 12,
+   "fen": "r3kb1r/pppp1ppp/n4nq1/4p1B1/4P3/2PP3N/PP2BPPP/RN1QK2R w KQkq - 5 7",
+   "side_to_move": "w",
+   "d18": 811,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "bishop",
+   "moves": 14,
+   "fen": "r3kb1r/pppp1ppp/5nq1/2n1p1B1/4P3/2PP1B1N/PP3PPP/RN1QK2R w KQkq - 7 8",
+   "side_to_move": "w",
+   "d18": 750,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "rook",
+   "moves": 0,
+   "fen": "1nbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+   "side_to_move": "w",
+   "d18": 820,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "rook",
+   "moves": 2,
+   "fen": "1nbqkbnr/pp1ppppp/2p5/8/8/4P3/PPPP1PPP/RNBQKBNR w KQk - 0 2",
+   "side_to_move": "w",
+   "d18": 828,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "rook",
+   "moves": 4,
+   "fen": "1nbqkbnr/pp1p1ppp/2p5/4p3/1P6/4P3/P1PP1PPP/RNBQKBNR w KQk - 0 3",
+   "side_to_move": "w",
+   "d18": 834,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "rook",
+   "moves": 6,
+   "fen": "1nbqkbnr/1p1p1ppp/2p5/p3p3/1P6/B3P3/P1PP1PPP/RN1QKBNR w KQk - 0 4",
+   "side_to_move": "w",
+   "d18": 831,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "rook",
+   "moves": 8,
+   "fen": "1nbqkbnr/1p1p1ppp/2p5/4p3/1p6/B1P1P3/P2P1PPP/RN1QKBNR w KQk - 0 5",
+   "side_to_move": "w",
+   "d18": 766,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "rook",
+   "moves": 10,
+   "fen": "1nbqkb1r/1p1p1ppp/2p2n2/4p3/1P6/B3P3/P2P1PPP/RN1QKBNR w KQk - 1 6",
+   "side_to_move": "w",
+   "d18": 755,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "rook",
+   "moves": 12,
+   "fen": "1nbqkb1r/1p3ppp/2p2n2/3pp3/1P6/B3P3/P1QP1PPP/RN2KBNR w KQk - 0 7",
+   "side_to_move": "w",
+   "d18": 703,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "rook",
+   "moves": 14,
+   "fen": "1nbqkb1r/1p3ppp/2p5/3pp3/1P2n3/B3P3/PQ1P1PPP/RN2KBNR w KQk - 2 8",
+   "side_to_move": "w",
+   "d18": 736,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "queen",
+   "moves": 0,
+   "fen": "rnb1kbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+   "side_to_move": "w",
+   "d18": 949,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "queen",
+   "moves": 2,
+   "fen": "rnb1kbnr/ppppp1pp/8/5p2/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+   "side_to_move": "w",
+   "d18": 1023,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "queen",
+   "moves": 4,
+   "fen": "rnb1kb1r/ppppp1pp/5n2/5P2/8/8/PPPP1PPP/RNBQKBNR w KQkq - 1 3",
+   "side_to_move": "w",
+   "d18": 1019,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "queen",
+   "moves": 6,
+   "fen": "rnb1kb1r/ppp1p1pp/3p1n2/5P2/8/8/PPPPQPPP/RNB1KBNR w KQkq - 0 4",
+   "side_to_move": "w",
+   "d18": 999,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "queen",
+   "moves": 8,
+   "fen": "r1b1kb1r/pppnp1pp/3p1n2/5P2/8/2N5/PPPPQPPP/R1B1KBNR w KQkq - 2 5",
+   "side_to_move": "w",
+   "d18": 1032,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "queen",
+   "moves": 10,
+   "fen": "r1b1kb1r/pppnp1pp/5n2/3p1P2/1P6/2N5/P1PPQPPP/R1B1KBNR w KQkq - 0 6",
+   "side_to_move": "w",
+   "d18": 1046,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "queen",
+   "moves": 12,
+   "fen": "r1bk1b1r/pppnp1pp/5n2/3N1P2/1P6/8/P1PPQPPP/R1B1KBNR w KQ - 1 7",
+   "side_to_move": "w",
+   "d18": 1063,
+   "side18": "HOLDABLE"
+  },
+  {
+   "ladder": "queen",
+   "moves": 14,
+   "fen": "r1bk1b1r/ppp1p1pp/1n3n2/5P2/1P3N2/8/P1PPQPPP/R1B1KBNR w KQ - 3 8",
+   "side_to_move": "w",
+   "d18": 1078,
+   "side18": "HOLDABLE"
+  }
+ ]
+}
