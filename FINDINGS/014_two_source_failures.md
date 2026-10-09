@@ -49,7 +49,7 @@ the material ladder's rungs   pawn       ~181      two-pawns  ~459
 window tops out at −160; two pawns gives −400, the window starts at −360. **A material ladder cannot
 populate a 120 cp window when its spacing is 200 cp.**
 
-## AND A LONGER WALK REACHES *ONE* EDGE, MEASURED RATHER THAN CLAIMED
+## AND A LONGER WALK REACHES *ONE* EDGE — AND A LONGER ONE STILL REACHES BOTH
 
 Walking each rung further, evaluating every position:
 
@@ -62,22 +62,38 @@ pawn       moves  3  d18 -177   outside
 pawn       moves 15  d18 -176   outside
 ```
 
-**So extended walking reaches the `-300` edge and does NOT reach `-100`.** The smallest material deficit
-this ladder can make is ~180 cp, and the `-100` window ends at 160. **Material alone cannot get there.**
+**On that evidence this section first concluded that material alone cannot reach `-100`** — the smallest
+deficit the ladder makes is ~180 cp and the window ends at 160.
 
-## THE RESOLUTION, AND IT IS THE TWO SOURCES COMBINED
+> **AND THAT CONCLUSION WAS WRONG, REFUTED BY THE VERY NEXT PROBE.** Extending the walk past move 15:
+>
+> ```
+> pawn  moves 19  d18 -119   NEAR -100
+> pawn  moves 21  d18  -81   NEAR -100
+> ```
+>
+> **The window is reachable by material after all. The walk was too short, not the ladder too coarse.**
+> **Recorded rather than quietly corrected, because it is the SAME ERROR THIS FINDING IS ABOUT — a claim
+> about reach drawn from a sample that had not reached far enough.** Third instance tonight of a
+> reach-claim outrunning its probe.
 
-**Test 1's source and test 2's source fail in OPPOSITE directions, and each reaches the edge the other
-misses:**
+## THE RESOLUTION — AND IT IS *DENSITY*, NOT POOLING TWO KINDS
+
+The first version of this section argued that the two sources fail in opposite directions and must be
+pooled. **The next probe showed that was half right and half wrong:**
 
 ```
-test 1  balanced legal-move walk       reached -100 (3 at-risk: -60, -110, -122)      NOT -300
-test 2  material handicap ladder       reaches -300 (-344, -351 measured)             NOT -100
+probe 2 (dense material sampling)   3 near -300   AND   2 near -100
 ```
 
-**A balanced walk sits near zero, so it drifts through the `-100` window; a material ladder sits far from
-zero, so its walk drifts through the `-300` window.** Neither reaches both. **Test 3's source is both
-generators, pooled — and the reach is verified per edge before the crossing count is read.**
+**Both edges, from the material source alone.** So pooling is not the fix — **the fix is sampling every
+ply instead of a sparse grid**, because a 120 cp window is *passed through* over a few moves and a coarse
+grid steps over it. **The balanced walk from test 1 is kept anyway** (it costs little and it is the only
+source that sits near zero naturally), but it is not carrying the `-100` edge on its own.
+
+**And the deficiency is quantity, not kind.** `source_probe4.py` samples every ply along every rung and
+stops early once both edges hold ≥6 — **so the cost is proportional to what is needed rather than to a
+fixed grid, and the run reports what it reached if it hits its budget instead of silently under-reaching.**
 
 ## THE META-FINDING, AND IT IS THE ONE WORTH KEEPING
 

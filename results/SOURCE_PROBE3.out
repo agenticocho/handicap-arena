@@ -1,3 +1,17 @@
 ================================================================================================
 TEST 3 SOURCE -- REACH PROBE. Measured, not asserted.
 ================================================================================================
+
+  candidates generated: 105   (A balanced 41, B material 64)
+  evaluated: 103
+  side distribution: {'HOLDABLE': 36, 'LOST': 60, 'GREY': 7}
+
+  AT-RISK near -300  [-360, -240] : 3
+      B two-pawns          mv11  d18   -344
+      B two-pawns          mv13  d18   -351
+      B two-pawns          mv17  d18   -332
+  AT-RISK near -100  [-160, -40] : 2
+      B pawn               mv19  d18   -119
+      B pawn               mv21  d18    -81
+
+  REACH: STILL SHORT -- REFINE BEFORE TEST 3
