@@ -1,0 +1,110 @@
+{
+ "run_id": "20261009-1247",
+ "legend": "new",
+ "legend_digest": "0d86057c46d4c83b",
+ "held": "THIS RECORD WAS RECOVERED FROM logs/sokoban_rerun.out. The run's own artifact was overwritten by the still-live FIRST run, which shared its path -- see FINDING 020. The per-cell counters are exactly as the run printed them; the per-turn traces are LOST, because a log is not a record format. A record that does not say where it came from is the thing this week has been about, so this one says.",
+ "cells": [
+  {
+   "entrant": "LFM2-350M-Extract-Q4_K_M",
+   "level": "01_one_push",
+   "loaded": true,
+   "ended": "commands_exhausted",
+   "solved": false,
+   "moves": 0,
+   "blocked": 0,
+   "not_an_action": 40,
+   "give_up": 0,
+   "attempted": 40
+  },
+  {
+   "entrant": "LFM2-350M-Extract-Q4_K_M",
+   "level": "02_two_boxes",
+   "loaded": true,
+   "ended": "commands_exhausted",
+   "solved": false,
+   "moves": 0,
+   "blocked": 0,
+   "not_an_action": 40,
+   "give_up": 0,
+   "attempted": 40
+  },
+  {
+   "entrant": "granite-3.3-2b-instruct-crit",
+   "level": "01_one_push",
+   "loaded": true,
+   "ended": "solved",
+   "solved": true,
+   "moves": 1,
+   "blocked": 1,
+   "not_an_action": 0,
+   "give_up": 0,
+   "attempted": 2
+  },
+  {
+   "entrant": "granite-3.3-2b-instruct-crit",
+   "level": "02_two_boxes",
+   "loaded": true,
+   "ended": "commands_exhausted",
+   "solved": false,
+   "moves": 4,
+   "blocked": 36,
+   "not_an_action": 0,
+   "give_up": 0,
+   "attempted": 40
+  },
+  {
+   "entrant": "Qwen3.5-4B-UD-Q4_K_XL",
+   "level": "01_one_push",
+   "loaded": true,
+   "ended": "commands_exhausted",
+   "solved": false,
+   "moves": 0,
+   "blocked": 0,
+   "not_an_action": 40,
+   "give_up": 0,
+   "attempted": 40
+  },
+  {
+   "entrant": "Qwen3.5-4B-UD-Q4_K_XL",
+   "level": "02_two_boxes",
+   "loaded": true,
+   "ended": "commands_exhausted",
+   "solved": false,
+   "moves": 0,
+   "blocked": 0,
+   "not_an_action": 3,
+   "give_up": 0,
+   "attempted": 3
+  },
+  {
+   "entrant": "Qwen3.5-9B-Q4_K_M",
+   "level": "01_one_push",
+   "loaded": false,
+   "why": "server exited rc=1"
+  },
+  {
+   "entrant": "Qwen3.5-9B-Q4_K_M",
+   "level": "02_two_boxes",
+   "loaded": true,
+   "ended": "commands_exhausted",
+   "solved": false,
+   "moves": 0,
+   "blocked": 0,
+   "not_an_action": 40,
+   "give_up": 0,
+   "attempted": 40
+  },
+  {
+   "entrant": "Ternary-Bonsai-2-27B-PQ2_0",
+   "level": "01_one_push",
+   "loaded": false,
+   "why": "server exited rc=1"
+  },
+  {
+   "entrant": "Ternary-Bonsai-2-27B-PQ2_0",
+   "level": "02_two_boxes",
+   "loaded": false,
+   "why": "server exited rc=1"
+  }
+ ]
+}

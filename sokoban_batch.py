@@ -20,6 +20,7 @@ import glob
 import json
 import os
 import sys
+import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -75,13 +76,40 @@ def main():
         n = int(sys.argv[sys.argv.index("--n") + 1])
     port = 8751
     pop = population(n)
+
+    # =============================================================================================
+    # ONE RUN, ONE PATH. Mechanised, because the alternative is a rule I state and then forget.
+    #
+    # Two runs shared `probes/SOKOBAN_FIRST_RUN.json` and the LAST WRITER WON: the re-run finished first,
+    # the still-live first run finished second, and the re-run's record was destroyed. Its numbers survived
+    # only because its STDOUT went to a different file. SEE FINDING 020.
+    #
+    # SO THE PATH CARRIES THE RUN, and the run refuses to start if its own path already exists -- a second
+    # launch against a live path is not a retry, it is an OVERWRITE, and it should fail loudly rather than
+    # silently decide which run is the record.
+    # =============================================================================================
+    run_id = os.environ.get("SOKOBAN_RUN_ID") or time.strftime("%Y%m%d-%H%M%S")
+    out_path = os.path.join(HERE, "probes", f"SOKOBAN_RUN_{run_id}.json")
+    if os.path.exists(out_path):
+        print(f"  REFUSING: {os.path.relpath(out_path, HERE)} already exists.")
+        print("  A second run against a live path is an OVERWRITE, not a retry. Set SOKOBAN_RUN_ID to a")
+        print("  new value if this is a genuinely new run.")
+        return 4
+
     print("=" * 96)
-    print("SOKOBAN -- FIRST RUN")
+    print("SOKOBAN -- POPULATION RUN")
     print("=" * 96)
+    print(f"  RUN ID      {run_id}")
+    print(f"  ARTIFACT    {os.path.relpath(out_path, HERE)}   <- owned by this run alone")
+    print(f"  legend      {R.legend()}   digest {R.legend_digest()}   <- travels in every cell")
     print(f"  population DERIVED from {R.MODELS}: {len(pop)} entrants at a spread across the size range")
     print(f"  levels: {len(LEVELS)} (verified set -- the third level is REPORTED AS ABSENT, not faked)")
     print(f"  criteria frozen in PREREG_sokoban.md BEFORE this run. No time limit; the cap is the budget.")
     print()
+
+    with open(out_path, "w") as fh:
+        json.dump({"run_id": run_id, "legend": R.legend(), "legend_digest": R.legend_digest(),
+                   "cells": []}, fh, indent=1)
 
     rows, reasons = [], {}
     for ent in pop:
@@ -104,7 +132,8 @@ def main():
                 print(f"      ended={r['ended']:18s} solved={str(r['solved']):5s} moves={r['moves']:3d}  "
                       f"blocked={r['blocked']:3d} not_an_action={r['not_an_action']:3d} "
                       f"give_up={r['give_up']}")
-            json.dump(rows, open(os.path.join(HERE, "probes", "SOKOBAN_FIRST_RUN.json"), "w"), indent=1)
+            json.dump({"run_id": run_id, "legend": R.legend(), "legend_digest": R.legend_digest(),
+                       "cells": rows}, open(out_path, "w"), indent=1)
 
     print()
     print("=" * 96)

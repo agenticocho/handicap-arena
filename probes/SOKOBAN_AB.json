@@ -1,0 +1,2077 @@
+{
+ "entrant": "granite-3.3-2b-instruct-critical-thinking.Q5_K_M.gguf",
+ "cap": 40,
+ "max_tokens": 64,
+ "order": [
+  "01_one_push.txt/old",
+  "01_one_push.txt/new",
+  "02_two_boxes.txt/old",
+  "02_two_boxes.txt/new"
+ ],
+ "cells": [
+  {
+   "solved": false,
+   "moves": 0,
+   "attempted": 40,
+   "blocked": 40,
+   "not_an_action": 0,
+   "give_up": 0,
+   "gave_up_at": null,
+   "ended": "commands_exhausted",
+   "final_board": "#####\n#@$.#\n#####",
+   "trace": [
+    {
+     "ply": 0,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 1,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 2,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 3,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 4,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 5,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 6,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 7,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 8,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 9,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 10,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 11,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 12,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 13,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 14,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 15,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 16,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 17,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 18,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 19,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 20,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 21,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 22,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 23,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 24,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 25,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 26,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 27,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 28,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 29,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 30,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 31,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 32,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 33,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 34,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 35,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 36,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 37,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 38,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 39,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    }
+   ],
+   "entrant": "granite-3.3-2b-instruct-critical-thinking.Q5_K_M",
+   "level": "01_one_push",
+   "loaded": true,
+   "load_s": 3.0,
+   "turns": [
+    {
+     "ply": 0,
+     "raw": "U\n\nReasoning: The crate on the target is blocking the path to the target. To reach the target, I need to move the crate to a different location. The crate can be pushed, but not pulled, so I need to push it to a safe location.\n\nNext steps:\n1.",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 1,
+     "raw": "U\n\nReasoning: The player is currently on the top row, with a crate on the target. The player can move up to the second row, where there is a crate on the target. The player can push the crate on the second row to the first row, where it can be removed. The player",
+     "token": "U",
+     "secs": 4.0,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 2,
+     "raw": "U\n\nReasoning: The crate on the target is currently on the same level as the target. To move the crate, I need to push it to the target. The crate on the target is blocking the path to the target.\n\nI can push the crate to the target by moving to the adjacent square",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 3,
+     "raw": "U\n\nReasoning: The crate on the target is in the way of the next target. I need to move the crate to the adjacent empty space to access the target. The crate can be pushed, but not pulled, so I need to push it to the left.",
+     "token": "U",
+     "secs": 3.5,
+     "gen_tokens": 57,
+     "budget_hit": false,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 4,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up three times (UUUU), which means they are now on the top row. The target is in the middle column, and there is a crate in the middle column",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 5,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up three times, reaching the top row. The next move should be to move left, as this is the only direction available to reach the target.\n\nThe",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 6,
+     "raw": "U\n\nReasoning: The player is currently on the top row, with the target in the second row. The player has already moved up to the second row, and the only available move is to move right. Moving right will place the player on the target row, but it will also place a crate on the",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 7,
+     "raw": "U\n\nReasoning: The player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column. This move will allow the player to reach the target",
+     "token": "U",
+     "secs": 4.2,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 8,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right.\n\nThe player's goal is to move the crate from the target to",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 9,
+     "raw": "U\n\nReasoning: The player is currently on the top row, with the target in the second row. The player has already moved up to the top row, and there are no obstacles or crates in the way. The player can move right to reach the target.\n\n<|repo_name",
+     "token": "U",
+     "secs": 3.9,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 10,
+     "raw": "U\n\nReasoning: The player is currently on the target and has moved all the crates to the target area. The next crate to be moved is the one on the target. Moving the crate to the target area will complete the level. The player has already moved all other crates to the target area,",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 11,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.9,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 12,
+     "raw": "U\n\nReasoning: The player has already moved up to the top row, and there are no more targets or crates to move. The level is complete, and the player can resign.",
+     "token": "U",
+     "secs": 2.7,
+     "gen_tokens": 42,
+     "budget_hit": false,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 13,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 14,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 15,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.9,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 16,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 4.3,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 17,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.9,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 18,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 19,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.6,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 20,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 21,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 22,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.6,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 23,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 24,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.6,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 25,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 26,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 27,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.6,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 28,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 29,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.9,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 30,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 31,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 32,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 33,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.6,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 34,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.5,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 35,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 36,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 37,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 38,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 4.0,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 39,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and the only available move is to move right to the second row, second column.\n\nThe player's goal is to",
+     "token": "U",
+     "secs": 3.6,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "#####\n#@$.#\n#####"
+    }
+   ],
+   "cap": 40,
+   "final_screen": "#####\n#@$.#\n#####",
+   "legend": "old",
+   "legend_digest": "a9eb82dd2694ac9a",
+   "order": 0
+  },
+  {
+   "solved": true,
+   "moves": 1,
+   "attempted": 3,
+   "blocked": 2,
+   "not_an_action": 0,
+   "give_up": 0,
+   "gave_up_at": null,
+   "ended": "solved",
+   "final_board": "#####\n# @*#\n#####",
+   "trace": [
+    {
+     "ply": 0,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 1,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 2,
+     "token": "R",
+     "action": "R",
+     "outcome": "pushed",
+     "board": "#####\n# @*#\n#####"
+    }
+   ],
+   "entrant": "granite-3.3-2b-instruct-critical-thinking.Q5_K_M",
+   "level": "01_one_push",
+   "loaded": true,
+   "load_s": 3.0,
+   "turns": [
+    {
+     "ply": 0,
+     "raw": "U\n\nExplanation: The player should move up to reach the crate at the top-right corner. This is the first crate to be pushed, and it's the only one visible from the starting position. Moving up allows the player to access the crate and begin the process of pushing it onto a target.",
+     "token": "U",
+     "secs": 3.9,
+     "gen_tokens": 63,
+     "budget_hit": false,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 1,
+     "raw": "U",
+     "token": "U",
+     "secs": 0.3,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 2,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.3,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "#####\n#@$.#\n#####"
+    }
+   ],
+   "cap": 40,
+   "final_screen": "#####\n# @*#\n#####",
+   "legend": "new",
+   "legend_digest": "0d86057c46d4c83b",
+   "order": 1
+  },
+  {
+   "solved": false,
+   "moves": 0,
+   "attempted": 40,
+   "blocked": 40,
+   "not_an_action": 0,
+   "give_up": 0,
+   "gave_up_at": null,
+   "ended": "commands_exhausted",
+   "final_board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+   "trace": [
+    {
+     "ply": 0,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 1,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 2,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 3,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 4,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 5,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 6,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 7,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 8,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 9,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 10,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 11,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 12,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 13,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 14,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 15,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 16,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 17,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 18,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 19,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 20,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 21,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 22,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 23,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 24,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 25,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 26,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 27,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 28,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 29,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 30,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 31,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 32,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 33,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 34,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 35,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 36,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 37,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 38,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 39,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    }
+   ],
+   "entrant": "granite-3.3-2b-instruct-critical-thinking.Q5_K_M",
+   "level": "02_two_boxes",
+   "loaded": true,
+   "load_s": 3.0,
+   "turns": [
+    {
+     "ply": 0,
+     "raw": "U\n\nReasoning:\n\nThe goal of Sokoban is to move crates to designated target areas while avoiding obstacles. The board layout indicates that the player starts at the bottom-left corner, with a crate on the target area. The player must navigate through the board, avoiding",
+     "token": "U",
+     "secs": 3.9,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 1,
+     "raw": "U\n\nReasoning: The player is currently on the top row, with a crate on the target. The player can move up to the second row, where there is a crate on the target. The player can push the crate on the second row to the first row, where it will be on the target.",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 2,
+     "raw": "U\n\nReasoning: The player is currently on the top row, with a crate on the target. The player can move up to the second row, where there is a crate on the target. The player can push the crate on the second row to the first row, where it will be on the target.",
+     "token": "U",
+     "secs": 3.9,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 3,
+     "raw": "U\n\nReasoning: The player is currently on the top row, with the target in the middle row. The player has already moved up three times, reaching the top row. The next logical move is to move right, as this will allow the player to access the target in the middle row. The crate",
+     "token": "U",
+     "secs": 3.9,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 4,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up three times, reaching the top row. The next move should be to move left, as this is the only direction available to reach the target.\n\nThe",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 5,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up three times, reaching the top row. The next logical move is to move right, as this would allow the player to reach the target in the middle column.",
+     "token": "U",
+     "secs": 3.9,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 6,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next move should be to move left to reach the target.\n\nThe board layout is as follows:\n\n```\n#",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 7,
+     "raw": "U\n\nReasoning: The player is currently on the top row, with the target in the middle column. The player has already moved up four times, reaching the top row. The next move should be to move right, as this is the only direction available to reach the target.\n\n<|repo",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 8,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the second row, but the target remains unreachable due to the crate blocking the path.\n\nThe player's next move should be to move left, as it",
+     "token": "U",
+     "secs": 4.0,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 9,
+     "raw": "U\n\nReasoning: The player is currently on the top row, with the target in the middle row. The player has already moved up to the top row, and there are no obstacles in the way. The player can move right to reach the target.\n\n<|repo_name|>jim",
+     "token": "U",
+     "secs": 4.0,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 10,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the second row, first column. The player has already moved up to the second row, and now needs to move to the target's column.\n\nThe player's next move should be to move right, as",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 11,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe board layout indicates that the target is in the middle column",
+     "token": "U",
+     "secs": 3.9,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 12,
+     "raw": "U\n\nReasoning: The player is currently on the top row, with the target in the middle row. The player has already moved up to the top row, and there are no obstacles or crates in the way. The player can move right to reach the target.\n\n<|repo_name",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 13,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.6,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 14,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 15,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 16,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe board layout indicates that the target is in the middle column",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 17,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe board layout indicates that the target is in the middle column",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 18,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe board layout indicates that the target is in the middle column",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 19,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 20,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 21,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 22,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 23,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 24,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 25,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe board layout indicates that the target is in the middle column",
+     "token": "U",
+     "secs": 3.6,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 26,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 27,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.6,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 28,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 29,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 30,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 31,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 32,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.7,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 33,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 34,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe board layout indicates that the target is in the middle column",
+     "token": "U",
+     "secs": 4.0,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 35,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.9,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 36,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe board layout indicates that the target is in the middle column",
+     "token": "U",
+     "secs": 4.0,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 37,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.6,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 38,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.8,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 39,
+     "raw": "U\n\nReasoning:\n\nThe player is currently on the top row, with the target in the middle column. The player has already moved up to the top row, and the next logical move is to move right to reach the target.\n\nThe player's goal is to push the crate onto the target",
+     "token": "U",
+     "secs": 3.6,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    }
+   ],
+   "cap": 40,
+   "final_screen": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+   "legend": "old",
+   "legend_digest": "a9eb82dd2694ac9a",
+   "order": 2
+  },
+  {
+   "solved": false,
+   "moves": 4,
+   "attempted": 40,
+   "blocked": 36,
+   "not_an_action": 0,
+   "give_up": 0,
+   "gave_up_at": null,
+   "ended": "commands_exhausted",
+   "final_board": "########\n#    @*#\n#      #\n#  $  .#\n########",
+   "trace": [
+    {
+     "ply": 0,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 1,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 2,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 3,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 4,
+     "token": "R",
+     "action": "R",
+     "outcome": "pushed",
+     "board": "########\n#   @$.#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 5,
+     "token": "R",
+     "action": "R",
+     "outcome": "pushed",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 6,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 7,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 8,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 9,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 10,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 11,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 12,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 13,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 14,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 15,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 16,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 17,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 18,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 19,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 20,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 21,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 22,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 23,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 24,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 25,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 26,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 27,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 28,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 29,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 30,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 31,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 32,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 33,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 34,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 35,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 36,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 37,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 38,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 39,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    }
+   ],
+   "entrant": "granite-3.3-2b-instruct-critical-thinking.Q5_K_M",
+   "level": "02_two_boxes",
+   "loaded": true,
+   "load_s": 3.0,
+   "turns": [
+    {
+     "ply": 0,
+     "raw": "U\n\nExplanation: The player should move up to reach the crate at the top-right corner. From there, they can push the crate onto the target. The path to victory is clear, and no immediate dead ends are present.",
+     "token": "U",
+     "secs": 3.0,
+     "gen_tokens": 50,
+     "budget_hit": false,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 1,
+     "raw": "U\n\nExplanation: The player is currently on a target and can move up to the next row. This is a safe move that maintains progress towards the goal.",
+     "token": "U",
+     "secs": 2.0,
+     "gen_tokens": 34,
+     "budget_hit": false,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 2,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.3,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 3,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.3,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 4,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.3,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 5,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.3,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#   @$.#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 6,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.3,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 7,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.3,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 8,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.3,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 9,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 10,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.3,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 11,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.3,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 12,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.3,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 13,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.3,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 14,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.3,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 15,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 16,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 17,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 18,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 19,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 20,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 21,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 22,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 23,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 24,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 25,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 26,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 27,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 28,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 29,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 30,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 31,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 32,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 33,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 34,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 35,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 36,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 37,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 38,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 39,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.1,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    }
+   ],
+   "cap": 40,
+   "final_screen": "########\n#    @*#\n#      #\n#  $  .#\n########",
+   "legend": "new",
+   "legend_digest": "0d86057c46d4c83b",
+   "order": 3
+  }
+ ]
+}

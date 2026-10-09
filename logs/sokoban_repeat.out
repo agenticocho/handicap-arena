@@ -1,0 +1,19 @@
+================================================================================================
+REPEAT TEST -- granite-3.3-2b-instruct-critical-thinking.Q5_K_M.gguf
+  level levels/01_one_push.txt   reps 3   cap 40   temperature 0.0   same binary, same box
+================================================================================================
+  IF EVERY REP VARIES, the population run saw the OLD prompt.
+  IF ANY REP LOCKS ON U, granite is variable and the A/B's n=1 solve was a sample.
+
+  rep 1 arm=new  ended=solved             moves=  1 blocked=  1 distinct tokens=['R', 'U']  -> VARIED
+  rep 1 arm=old  ended=commands_exhausted moves=  0 blocked= 40 distinct tokens=['U']  -> LOCKED
+  rep 2 arm=new  ended=solved             moves=  1 blocked=  2 distinct tokens=['R', 'U']  -> VARIED
+  rep 2 arm=old  ended=commands_exhausted moves=  0 blocked= 40 distinct tokens=['U']  -> LOCKED
+  rep 3 arm=new  ended=solved             moves=  1 blocked=  2 distinct tokens=['R', 'U']  -> VARIED
+  rep 3 arm=old  ended=commands_exhausted moves=  0 blocked= 40 distinct tokens=['U']  -> LOCKED
+
+  DERIVED FROM THE ARTIFACT:
+    arm new   n=3  varied 3/3  solved 3/3
+    arm old   n=3  varied 0/3  solved 0/3
+
+  VERDICT: new-arm varied in EVERY rep -> (a) the population run saw the OLD prompt
