@@ -1,0 +1,22 @@
+# THE FLOOR -- the smallest world the faculty fits in.
+#
+# The key is in the room you start in and the gate is ONE MOVE NORTH. If an entrant cannot
+# take an item it is standing on and then walk north, it cannot play this game at all, and
+# that is the floor of the scale rather than an insult.
+#
+# Verified solvable:  take key ; north      (2 commands, simulator-confirmed)
+
+start hall
+
+room hall Dusty Hall
+desc hall A dust-choked hall. Something small glints on the floor by your foot.
+room vault The Vault
+desc vault A vault door with no handle, only a keyhole.
+
+exit hall north vault
+exit vault south hall
+
+item key hall
+alias key brasskey
+
+gate vault key

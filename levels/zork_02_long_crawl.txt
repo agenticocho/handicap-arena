@@ -1,0 +1,51 @@
+# THE LONG CRAWL -- the retention world. This is the one the event is named for.
+#
+# THE KEY IS ONE ROOM FROM THE START AND THE GATE IS FOUR ROOMS AWAY, and the route to the
+# gate does NOT pass back through the key's room. So the requirement has to be carried, not
+# re-encountered:
+#
+#     hall --north--> cellar        the key is here, early, and easy to take
+#     cellar --south--> hall        back out
+#     hall --east--> corridor
+#     corridor --north--> study
+#     study --east--> vault         THE GATE
+#
+# An entrant that walks that route without the key arrives at a locked gate carrying nothing.
+# THE FAILURE IS IN THE LOG, not in a score: the last trace row is `gate_locked` with an
+# empty inventory, and `took_item_at_step` is null.
+#
+# The torch is a distractor: it is takeable, it is carried, and it opens nothing. Taking it is
+# not an error and not a penalty -- it simply is not the item the gate wants.
+#
+# Verified solvable:  north ; take key ; south ; east ; north ; east      (6 commands)
+# Verified UNSOLVABLE without taking the key: the same route minus the take ends `gate_locked`.
+
+start hall
+
+room hall Dusty Hall
+desc hall A dust-choked hall. A cold draught comes from the north.
+room cellar Root Cellar
+desc cellar A root cellar. Damp brick, and something metal on a shelf.
+room corridor Long Corridor
+desc corridor A corridor running east to west, longer than the house should allow.
+room study Abandoned Study
+desc study An abandoned study. A vault door is set into the east wall.
+room vault The Vault
+desc vault The vault. The door has no handle, only a keyhole.
+
+exit hall north cellar
+exit cellar south hall
+exit hall east corridor
+exit corridor west hall
+exit corridor north study
+exit study south corridor
+exit study east vault
+exit vault west study
+
+item brasskey cellar
+alias brasskey key
+
+item torch hall
+alias torch lantern
+
+gate vault brasskey
