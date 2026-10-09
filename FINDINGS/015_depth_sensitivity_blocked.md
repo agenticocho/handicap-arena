@@ -121,6 +121,19 @@ by a check built before it:**
 widen `WINDOW` from 60 to 120 — and neither was taken, in five revisions.** `check_frozen_constants.py`
 proves that mechanically rather than by assurance. **The test is blocked, and the criteria never moved.**
 
+**AND THE GENERAL FORM OF THAT META-RESULT, filed because it is worth more than the test:**
+
+> **A research programme is not exonerated by the honesty of its intent. It is exonerated when its
+> changes FAIL, and the failures are caught by controls that predate them.**
+>
+> **AND DRIFT IS CHECKED BY WHAT YOU REFUSED, NOT BY WHAT YOU JUSTIFIED.** Lowering `MIN_PER_EDGE` from 5
+> to 3, or widening `WINDOW` from 60 to 120, would have made the test run at every step. **Neither was
+> taken, in five revisions, and that is checkable by diff.** A constants check proves the criteria did not
+> move; **a refused shortcut proves they were not moved when moving them would have paid.**
+
+**The next source is chosen under exactly those rules — `PREREG_source_selection.md`, written before either
+candidate exists.**
+
 ## AND A SECOND, SMALLER INSTANCE OF THE SAME FAMILY
 
 **The dense probe stopped after one rung and I could not tell why.** Its output shows the pawn rung
