@@ -80,5 +80,6 @@
    "gen_tokens": 1698,
    "budget_hit": false
   }
- ]
+ ],
+ "ANNOTATION": "A REAL MEASUREMENT, NOT A FALSE POSITIVE -- and its `why` is INCOMPLETE because it predates the diagnosis. The termination `serving-failure` is correct and the taxonomy held. What the `why` field cannot say is WHY the content was empty, because the reader at that time only opened message['content'] and never opened message['reasoning_content'] -- the field where this model's output actually lives.\n\nMEASURED AFTER THIS RUN, on the exact position it died at (ply 4, 28 legal moves):\n    message['content']           = ''\n    message['reasoning_content'] = 'The position is: ... Let me analyze this. White to move. ...'\n    finish_reason                = length\n\nSo Ornith 9B emitted 2314 tokens of DELIBERATION and never committed to a move. The deliberation ESCALATES with the position -- 509, 474, 1153, 1969, 2314 tokens across plies 0-4 -- so raising the cap only moves the failure, and the answer-first prompt was tested on this exact position and did NOT change the behaviour: the model deliberated past the cap regardless.\n\nESTABLISHED: on this box, Ornith 9B cannot commit to a move on a 28-legal-move position within a 2048-token budget, at roughly 10 tokens/second. THAT IS A FINDING ABOUT THE ENTRANT -- and it is what chess-as-a-gate exists to expose. A re-run would reproduce it, so none was made.\n\nThe four rows above are TRUE and were all resolved from the HEAD. Mechanism in full: FINDINGS/016_first_chess_record.md, AMENDMENT 1."
 }
