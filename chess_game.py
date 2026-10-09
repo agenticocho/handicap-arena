@@ -22,6 +22,7 @@ A score counting one direction measures neither.
     python3 chess_game.py --entrant <gguf> [--label NAME] [--cap 60] [--probe]
 """
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -45,6 +46,30 @@ LOST_CP, HOLD_CP = -300, -100
 # -- so the fix is not a bigger cap but a PROMPT that puts the answer FIRST. With the move on the
 # first line, a truncated trace is harmless: the answer was already emitted, and only the
 # justification is lost. THE ANSWER IS AT THE HEAD, in the prompt as well as in the reader.
+# ---- THE PROMPT IS PART OF THE INSTRUMENT, SO IT IS FROZEN LIKE THE DEPTH -----------------------
+# Chilly's argument, and it is the reason to change it -- NOT the entrant's failure:
+#
+#   > A POSITION THAT ARRIVES WITH ITS LEGAL MOVES LISTED IS NOT A CHESS POSITION. IT IS A MENU.
+#
+# Choosing from a menu is a different task from choosing a move: it removes the DERIVATION of the
+# candidates and invites the enumeration the entrant then performs. THAT CHANGES WHAT THE EVENT MEASURES,
+# AND IT IS TRUE WHETHER OR NOT ANY PARTICULAR ENTRANT EXISTS. The list is therefore gone -- on that
+# argument. It was NOT removed so that a failing entrant could answer, and the difference is checkable:
+# remove the list and a model that still enumerates was doing it for its own reasons.
+#
+# AND THE PROMPT WAS NOT IN THE FREEZE. The record froze threads, hash_mb, multipv, depth, lost_cp,
+# hold_cp, cap -- and not the prompt, so two records produced by different prompts were indistinguishable,
+# and the prompt is the instrument MOST LIKELY TO BE TUNED because it is the easiest thing to change and
+# the hardest to remember changing. THE TEMPLATE'S DIGEST IS NOW CARRIED PER RECORD, like the depth.
+PROMPT_TEMPLATE = (
+    "You are playing a game of chess. You control one side.\n"
+    "Position (FEN): {fen}\n\n"
+    "FIRST LINE: your move alone, in coordinate notation such as e2e4, and nothing else.\n"
+    "If you judge the position lost beyond recovery, the first line is exactly: RESIGN\n"
+    "AFTER the first line you may explain your reasoning if you wish.\n\n"
+    "The move goes on the first line. Reason after, not before."
+)
+PROMPT_DIGEST = hashlib.sha256(PROMPT_TEMPLATE.encode()).hexdigest()[:16]
 MAX_TOKENS = 2048
 STARTPOS = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 # Set by main(). Where a truncated deliberation is preserved as EVIDENCE -- never mined for a move.
@@ -192,15 +217,7 @@ def ask_model(base, fen, moves, ply, timeout_s=600):
     inventing a decision -- the exact guess the ambiguity guard exists to refuse -- so no move is taken
     from it. The reasoning is captured as evidence, not mined for an answer.
     """
-    prompt = (
-        "You are playing a game of chess. You control one side.\n"
-        f"Position (FEN): {fen}\n"
-        f"Your legal moves, and the only moves you may play:\n" + ", ".join(moves) + "\n\n"
-        "FIRST LINE: the move alone, in coordinate notation, and nothing else. Nothing before it.\n"
-        "If you judge the position lost beyond recovery, the first line is exactly: RESIGN\n"
-        "AFTER the first line you may explain your reasoning if you wish, and it will be ignored.\n\n"
-        "The move goes on the first line. Reason after, not before."
-    )
+    prompt = PROMPT_TEMPLATE.format(fen=fen)
     body = json.dumps({
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": MAX_TOKENS, "temperature": 0.0,
@@ -355,6 +372,21 @@ def resolve(fen, token, legal):
         return None, None, (
             f"ambiguous: {len(full)} distinct legal moves named across the text, none of them the answer "
             f"({', '.join(sorted(full)[:6])})")
+    # A WELL-FORMED MOVE THAT IS NOT LEGAL IS A FAILURE OF THE ENTRANT, NOT OF THE READER -- and with the
+    # move list removed from the prompt that outcome is now POSSIBLE for the first time, because the model
+    # must derive its own candidates. The reader can tell the two apart and must: "I cannot read this" and
+    # "I read this and the engine rejects it" are different claims. `<move>` well-formedness is asserted
+    # so this can never absorb a malformed string -- a malformed one falls through to `unreadable`.
+    for tok in ([first] if first else []) + re.findall(
+            r"[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?|[Oo0]-[Oo0]-[Oo0]", raw or ""):
+        t = tok.strip(_DECOR).strip()
+        if t and (re.fullmatch(r"[a-h][1-8][a-h][1-8][qrbn]?", t.lower())
+                  or re.fullmatch(r"[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?", t)
+                  or re.fullmatch(r"[Oo0]-[Oo0]-[Oo0]", t)):
+            return None, None, (
+                f"illegal: the model named {t!r}, which is well formed and IS NOT a legal move in this "
+                f"position ({len(legal)} are legal). A FAILURE OF THE ENTRANT -- the move list is not "
+                f"supplied, so the candidates must be derived.")
     return None, None, "unreadable: no legal move named anywhere in the output"
 
 
@@ -423,6 +455,22 @@ def play(base, cap, probe):
                     f"`content` empty). NO MOVE WAS COMMITTED, so there is no illegal move to report -- "
                     f"MISSING VALUE, not a verdict about the entrant. The deliberation is preserved at "
                     f"{os.path.basename(REASONING_OUT) if REASONING_OUT else '(unsaved)'}")
+            if reason.startswith("illegal"):
+                # A GENUINE ENTRANT FAILURE, AND THE FIRST TIME THIS OUTCOME HAS BEEN POSSIBLE. With the
+                # move list removed from the prompt, the model derives its own candidates, so a well-formed
+                # move the engine rejects is a fact about THE MODEL -- not about the reader, which is what
+                # every previous `illegal-move` here turned out to be.
+                #
+                # AND THE FROZEN TAXONOMY HAS NO VALUE FOR IT: the five are resigned / decisive /
+                # capitulated-in-band / no-conclusion / serving-failure, and the card assumed the menu, so
+                # under the menu an illegal move could only be a reader artifact. Removing the menu EXPOSES
+                # THE GAP. The value below is therefore NOT a card value; it is flagged for ratification
+                # rather than slipped in, because an agent does not extend the vocabulary it is scored in.
+                return rows, "illegal-move", (
+                    f"{reason} [TAXONOMY NOTE: `illegal-move` is NOT one of CARD_chess.md's five frozen "
+                    f"terminations. It becomes reachable only once the prompt stops supplying the move "
+                    f"list, and it is an ENTRANT failure that the card has no value for. REQUIRES "
+                    f"RATIFICATION before any of these numbers are scored.]")
             # AN UNRESOLVED MOVE IS A MEASUREMENT FAILURE, NOT THE ENTRANT'S FAILURE. All of these map
             # to the frozen taxonomy's `serving-failure` -- MISSING VALUE, never scored zero, never
             # dropped, re-run is a RE-MEASUREMENT -- and the precise reason travels with it. The first
@@ -548,8 +596,14 @@ def main():
         rows, term, why = play(base, a.cap, a.probe)
         m = measure(rows, term)
         art = dict(card="CARD_chess.md", entrant=label, gguf=a.entrant, staged_as="INSTRUMENT",
+                   # THE PROMPT IS FROZEN HERE BECAUSE IT IS THE INSTRUMENT MOST LIKELY TO BE TUNED and it
+                   # was the only part of this event with no freeze on it. Two records produced by
+                   # different prompts were indistinguishable before this. The digest travels for a cheap
+                   # comparison; the text travels so the record is reproducible without the code.
                    frozen=dict(threads=THREADS, hash_mb=HASH_MB, multipv=MULTIPV, depth=DEPTH,
-                               lost_cp=LOST_CP, hold_cp=HOLD_CP, cap=a.cap),
+                               lost_cp=LOST_CP, hold_cp=HOLD_CP, cap=a.cap,
+                               max_tokens=MAX_TOKENS,
+                               prompt_digest=PROMPT_DIGEST, prompt_template=PROMPT_TEMPLATE),
                    termination=term, why=why, measures=m, wall_s=round(time.time()-t1, 1),
                    rows=rows)
         p = os.path.join(HERE, "results", f"CHESS_GAME_{label}.json")

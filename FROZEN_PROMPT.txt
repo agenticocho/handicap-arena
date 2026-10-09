@@ -1,0 +1,17 @@
+# THE FROZEN PROMPT DIGEST -- change the prompt, and you must change this file too.
+#
+# WHY THIS EXISTS. The prompt was the only part of this event with no freeze on it, and it is the
+# instrument most likely to be tuned, because it is the easiest thing to change and the hardest to
+# remember changing. Two records produced by different prompts were indistinguishable.
+#
+# The rule is the same one the four numeric constants follow (LOST_CP / HOLD_CP / WINDOW / MIN_PER_EDGE,
+# watched by check_frozen_constants.py): A CRITERION THAT CAN MOVE SILENTLY IS NOT FROZEN. If the digest
+# below stops matching chess_game.PROMPT_DIGEST, test_chess_resolve.py FAILS -- so a prompt change is a
+# deliberate, visible act with a diff, not an adjustment nobody records.
+#
+# CURRENT PROMPT (digest below): position by FEN only. NO MOVE LIST -- a position that arrives with its
+# legal moves listed is a menu, not a chess position, and choosing from a menu removes the derivation of
+# the candidates. That argument is about what the event measures and holds whether or not any particular
+# entrant exists; it was NOT made so that a failing entrant could answer.
+#
+prompt_digest 76fa8848e9adf514

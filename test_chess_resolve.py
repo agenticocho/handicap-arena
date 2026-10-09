@@ -26,9 +26,12 @@ import chess_game as g                                                # noqa: E4
 
 POS = "rnbqkbnr/ppp2ppp/8/3pp3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 3"
 fails = []
+TOTAL = 0
 
 
 def ck(name, got, want):
+    global TOTAL
+    TOTAL += 1
     ok = got == want
     print(f"  {'PASS' if ok else 'FAIL'}  {name}")
     if not ok:
@@ -93,9 +96,30 @@ ck("promotion names its piece", g.resolve("8/P7/8/8/8/8/8/k6K w - - 0 1", "a8=Q"
 ck("a bare pawn push to the last rank is refused (promotion is mandatory)",
    g.resolve("8/P7/8/8/8/8/8/k6K w - - 0 1", "a7a8", g.legal_moves("8/P7/8/8/8/8/8/k6K w - - 0 1"))[0], None)
 
+# --- 6. THE PROMPT IS FROZEN, AND CHANGING IT IS A VISIBLE ACT --------------------------------------
+print("\n[6] the frozen prompt -- the instrument most likely to be tuned, and the only one with no freeze")
+_fp = os.path.join(os.path.dirname(os.path.abspath(__file__)), "FROZEN_PROMPT.txt")
+_frozen_digest = ""
+for _l in open(_fp, encoding="utf-8"):
+    if _l.startswith("prompt_digest"):
+        _frozen_digest = _l.split()[1]
+ck("chess_game.PROMPT_DIGEST matches FROZEN_PROMPT.txt (change one, change both)",
+   g.PROMPT_DIGEST, _frozen_digest)
+ck("the prompt supplies NO move list -- a position with its moves listed is a MENU, not a position",
+   ("legal" in g.PROMPT_TEMPLATE.lower() and "moves:" in g.PROMPT_TEMPLATE.lower()), False)
+
+# --- 7. ILLEGAL vs UNREADABLE -- two different claims, now that the model derives its own candidates ---
+print("\n[7] illegal and unreadable are different claims and the record must not merge them")
+ck("a well-formed move the engine rejects is ILLEGAL (an entrant failure)",
+   g.resolve(g.STARTPOS, "e2e5", g.legal_moves(g.STARTPOS))[2].split(":")[0], "illegal")
+ck("a malformed string is UNREADABLE (an instrument failure)",
+   g.resolve(g.STARTPOS, "qwerty", g.legal_moves(g.STARTPOS))[2].split(":")[0], "unreadable")
+ck("and a legal move is neither", g.resolve(g.STARTPOS, "e2e4", g.legal_moves(g.STARTPOS))[2],
+   "resolved-head")
+
 print("\n" + "=" * 94)
-n = 20 - len(fails)
-print(f"{'ALL CONTROLS PASS' if not fails else str(len(fails)) + ' FAILED'}   --  {n}/20")
+n = TOTAL - len(fails)
+print(f"{'ALL CONTROLS PASS' if not fails else str(len(fails)) + ' FAILED'}   --  {n}/{TOTAL}")
 if fails:
     for f in fails:
         print(f"  FAILED: {f}")
