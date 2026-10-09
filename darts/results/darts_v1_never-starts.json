@@ -1,0 +1,86 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-09T19:28:54Z",
+  "event": "DARTS",
+  "card_version": "darts_v1",
+  "results": [
+    {
+      "entrant": "never-starts",
+      "kind": "never-started-reference",
+      "entrant_is_a_model": false,
+      "weights_sha256": null,
+      "weights_note": "no weights: this entrant is code, not a GGUF. The oracle is arithmetic and the entrant played no model.",
+      "solver_source_sha256": null,
+      "division": null,
+      "division_note": "NOT MEASURED -- a footprint is a property of weights; this entrant has none. Never 0.00.",
+      "cord": null,
+      "config": {
+        "temperature": null,
+        "max_tokens": null,
+        "trials": 1,
+        "ctx": null,
+        "n_gpu_layers": null,
+        "server_flags": null,
+        "config_note": "RUN_FACTS that do not exist for a solver are null, not omitted and not zeroed. [A2]"
+      },
+      "admission": {
+        "rc": 2,
+        "secs": 0.0,
+        "started": false,
+        "never_started": true
+      },
+      "rounds": {
+        "R_darts_checkouts": {
+          "score": null,
+          "wins": 0,
+          "trials": 0,
+          "kind": "exact_arithmetic",
+          "class": "CONTEST",
+          "oracle": "arithmetic",
+          "staged_as": "arcade cabinet -- DARTS: 501 checkouts, the oracle is the sum",
+          "items": {
+            "D1.1_easy_checkout": {
+              "remaining": 40,
+              "expect": "checkout",
+              "raw": [],
+              "answer": null,
+              "verified_sum": null,
+              "state": "NOT_STARTED",
+              "reason": "entrant never started (rc=2 in 0.0s)"
+            },
+            "D1.2_two_dart_checkout": {
+              "remaining": 100,
+              "expect": "checkout",
+              "raw": [],
+              "answer": null,
+              "verified_sum": null,
+              "state": "NOT_STARTED",
+              "reason": "entrant never started (rc=2 in 0.0s)"
+            },
+            "D1.3_impossible_control": {
+              "remaining": 169,
+              "expect": "impossible",
+              "raw": [],
+              "answer": null,
+              "verified_sum": null,
+              "state": "NOT_STARTED",
+              "reason": "entrant never started (rc=2 in 0.0s)"
+            }
+          },
+          "started": 0,
+          "unreadable": 0,
+          "never_started": 3,
+          "coverage": 0.0
+        }
+      },
+      "aggregate": null,
+      "coverage": 0.0,
+      "verdict": "ERROR: POPULATION NEVER STARTED",
+      "certification": "REFERENCE RUN -- not an entrant, not for the board.",
+      "on_board": false,
+      "tasks": "/Users/mikebird/arena/handicap-arena/darts/tasks/darts_v1.json",
+      "ambiguities": "darts/DARTS_AMBIGUITIES.md"
+    }
+  ]
+}
