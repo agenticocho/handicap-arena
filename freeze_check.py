@@ -21,22 +21,26 @@ contradicting each other (the first version of this file did exactly that: it pr
 AGREEMENT depth, 8, while the document froze 12).
 
 The BOX is one of the four fields the freeze must record, so the header prints it: a result pasted
-without it is not comparable with a result from another machine.  The score series is machine-specific
+without it is not comparable with a result from another machine.  The score series is config-specific
 until parity is held field by field -- see FREEZE_chess.md section 2b.
 
-Needs python-chess -- the box's PATH python3 may not have it:
-    python3 -m venv .venv && .venv/bin/pip install python-chess
-Engine: $STOCKFISH, else argv[1], else PATH, else the macOS default.
-Run:    .venv/bin/python freeze_check.py [/path/to/stockfish]
+NO THIRD-PARTY IMPORTS -- standard library only.  This file speaks UCI to the engine directly.
+Earlier revisions needed the `python-chess` module, and a check that needs a package only installed
+on the box that wrote it is a caption, not a check: it would not start on Chilly's Linux box, and it
+would not start on Jarvis either until a venv existed here.  UCI is a text protocol on stdin/stdout
+and the FEN is handed to the engine verbatim, so the module was never load-bearing -- it was a
+dependency you could not see.  There is now nothing to install.
+Engine: $STOCKFISH, else argv[1], else PATH, else the platform default.
+Run:    python3 freeze_check.py [/path/to/stockfish]
 """
 import os
 import platform
+import re
 import shutil
+import subprocess
 import sys
 
-import chess
-import chess.engine
-
+MATE_SCORE = 100000                     # matches python-chess Score.score(mate_score=100000)
 DEFAULT_ENGINE = {"darwin": "/opt/homebrew/bin/stockfish",
                   "linux": "/usr/games/stockfish"}.get(sys.platform, "stockfish")
 ENGINE = (os.environ.get("STOCKFISH") or (sys.argv[1] if len(sys.argv) > 1 else "")
@@ -52,19 +56,98 @@ HAZARD = {"Threads": 8, "Hash": 16}        # a config that must not be left unde
 RUNS = 4                                   # runs per arm in section B
 HAZARD_DEPTH = 20                          # the depth FREEZE_chess.md's config finding cites
 
+OPTION_RE = re.compile(r"^option name (\S+) type spin default (-?\d+)")
+
+
+def spawn():
+    """A fresh engine process: no hash and no state carries between runs."""
+    return subprocess.Popen([ENGINE], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                            stderr=subprocess.DEVNULL, text=True, bufsize=1)
+
+
+def send(p, line):
+    p.stdin.write(line + "\n")
+    p.stdin.flush()
+
+
+def read_until(p, token):
+    lines = []
+    while True:
+        line = p.stdout.readline()
+        if not line:
+            break
+        line = line.strip()
+        lines.append(line)
+        if line == token or line.startswith(token + " "):
+            break
+    return lines
+
+
+def handshake(p):
+    """uci handshake; returns (id name, {spin option: declared default})."""
+    send(p, "uci")
+    name, defaults = None, {}
+    for line in read_until(p, "uciok"):
+        if line.startswith("id name "):
+            name = line[len("id name "):]
+        m = OPTION_RE.match(line)
+        if m:
+            defaults[m.group(1)] = int(m.group(2))
+    return name, defaults
+
 
 def one(fen, depth, cfg):
-    """One independent run: fresh process, so no hash or state carries between runs."""
-    eng = chess.engine.SimpleEngine.popen_uci(ENGINE)
+    """One independent run: fresh process, so no hash or state carries between runs.
+
+    Returns (uci move, score) with the score in WHITE's point of view, cp -- the convention
+    python-chess's `info['score'].pov(chess.WHITE).score(mate_score=100000)` produced, so this
+    file's numbers are directly comparable with every result already in the record.
+    """
+    p = spawn()
     try:
-        if cfg:
-            eng.configure(cfg)
-        info = eng.analyse(chess.Board(fen), chess.engine.Limit(depth=depth))
+        handshake(p)
+        for k, v in (cfg or {}).items():
+            send(p, f"setoption name {k} value {v}")
+        send(p, "isready")
+        read_until(p, "readyok")
+        send(p, f"position fen {fen}")
+        send(p, f"go depth {depth}")
+        move, cp = None, None
+        while True:
+            line = p.stdout.readline()
+            if not line:
+                break
+            line = line.strip()
+            if line.startswith("bestmove"):
+                break
+            if not line.startswith("info"):
+                continue
+            toks = line.split()
+            if "score" in toks:
+                i = toks.index("score")
+                kind, val = toks[i + 1], int(toks[i + 2])
+                if kind == "cp":
+                    cp = val
+                elif kind == "mate":            # UCI, side-to-move POV; python-chess convention
+                    cp = MATE_SCORE - abs(val) + 1
+                    if val < 0:
+                        cp = -cp
+            if "pv" in toks:
+                j = toks.index("pv")
+                if j + 1 < len(toks):
+                    move = toks[j + 1]
     finally:
-        eng.quit()
-    pv = info.get("pv") or []
-    return (pv[0].uci() if pv else None,
-            info["score"].pov(chess.WHITE).score(mate_score=100000))
+        try:
+            send(p, "quit")
+        except Exception:
+            pass
+        try:
+            p.wait(timeout=10)
+        except Exception:
+            p.kill()
+    if cp is not None and fen.split()[1] == "b":
+        cp = -cp                                 # to White's point of view
+    return (move, cp)
 
 
 def move_convergence(moves):
@@ -82,14 +165,17 @@ def main():
     print(f"oracle: {ENGINE}")
     print(f"box   : {platform.system()} {platform.release()} {platform.machine()}"
           f" · node {platform.node()} · {os.cpu_count()} logical cores")
-    print("id    : ", end="", flush=True)
-    e = chess.engine.SimpleEngine.popen_uci(ENGINE)
-    print(e.id.get("name"))
+    p = spawn()
+    try:
+        name, defaults = handshake(p)
+    finally:
+        send(p, "quit")
+        p.wait(timeout=10)
+    print(f"id    : {name}")
     print("declared defaults -- read from the engine, not assumed:")
     for opt in ("Threads", "Hash", "MultiPV"):
-        if opt in e.options:
-            print(f"      {opt:8} = {e.options[opt].default}")
-    e.quit()
+        if opt in defaults:
+            print(f"      {opt:8} = {defaults[opt]}")
     print()
 
     print(f"A. PINNED config {PINNED}  -- two independent runs per depth")

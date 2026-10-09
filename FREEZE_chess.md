@@ -9,8 +9,9 @@ had no oracle: `stockfish`, `lc0`, `crafty`, `gnuchess` all absent from `PATH`, 
 installed, no vendored engine anywhere on the box. Now present:
 
     engine        /opt/homebrew/bin/stockfish   (Stockfish 19)
-    bridge        python-chess + chess.engine   (pip resolves 1.999, the current release; the
-                  "1.11.2" first written here does not exist on PyPI -- see HOW TO RUN)
+    bridge        NONE -- `freeze_check.py` speaks UCI to the engine directly (standard library
+                  only). Earlier revisions required the `python-chess` module, which was on
+                  neither box, so the "portable" check could not start on either one. See HOW TO RUN.
 
 ## THE MEASUREMENT — it found TWO things to freeze, and the rule names only one
 
@@ -138,12 +139,21 @@ document's word for it.
 
 ## HOW TO RUN IT
 
-    python3 -m venv .venv && .venv/bin/pip install python-chess
-    .venv/bin/python freeze_check.py                      # or: STOCKFISH=/usr/games/stockfish ...
+    python3 freeze_check.py                               # or: STOCKFISH=/usr/games/stockfish ...
 
-The venv is **not optional**: `python-chess` is not installed on this box, and the `python3` first on
-`PATH` here (miniforge) cannot import it. Engine resolution is `$STOCKFISH`, then `argv[1]`, then `PATH`,
-then the macOS default — so the same file runs on Linux without an edit.
+**No install step, and no venv.** The check imports nothing outside the standard library: it speaks UCI
+to the engine on stdin/stdout and hands the FEN to the engine verbatim, so `python-chess` was never
+load-bearing — it was a dependency you could not see. Earlier revisions did `import chess`, and that
+import failed on Chilly's Linux box *and* on this one: neither has the module, so a check made portable
+in the *engine path* was still a caption in the *module*. Engine resolution is `$STOCKFISH`, then
+`argv[1]`, then `PATH`, then the platform default — so the same file runs on Linux without an edit.
+
+**Verified 2026-10-09 on Jarvis with no `python-chess` installed** (`python3 freeze_check.py` — the old
+revision dies here with the same `ModuleNotFoundError` Chilly reported): the §2 table reproduces
+centipawn for centipawn (`-172 -188 -196 -244 -213 -228 -215 -250`, kiwipete), the two criteria come out
+`AGREEMENT 8 · MOVE-CONVERGENCE 12` (kiwipete) and `… 10` (Italian), the declared-default arm returns
+`('d5e6', -215)` four times with spread 0, and the §2b `Hash=64` series reproduces as
+`-172 -188 -196 -244 -213 -255 -274 -270`.
 
 **It prints TWO depths, and only one of them is the freeze:**
 
