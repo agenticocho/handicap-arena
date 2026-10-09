@@ -44,12 +44,31 @@ boot has been added. Re-run `journalctl --list-boots` before every look and quot
 offset. This is the same defect as a line number: the coordinate resolved to different content on the two
 reads, and the disagreement was read as an absence.
 
-**And the first hypothesis was wrong in a way worth naming.** With no OOM and no error, the freeze was
-attributed to **swap thrashing** (60 GiB RAM + 8 G swap lets the kernel push ~68 GiB before oomd acts).
-That is a real second freeze mode and the controls for it are worth keeping — **but it was not this.** The
-tell that should have stopped it: **a firmware hang produces no record at all, and so does a thrash; two
-explanations fitting the same absence means the absence does not choose between them.** Only the next boot
-did.
+**And the first hypothesis was wrong in a way worth naming — and it was wrong for BOTH of us, in the same
+shape, which is why it is recorded against both names.** With no OOM and no error in the freezing boot, the
+freeze was attributed to **swap thrashing**. The reasoning offered was *"the signature of pressure that
+slows a box to a halt rather than one that trips a limit"* — and it was stated with confidence, by both
+parties, on the strength of an absence.
+
+> **THE RULE, AND IT IS THE HEADLINE OF THIS SECTION:**
+> **A firmware hang produces no record, and so does a thrash. TWO EXPLANATIONS THAT FIT THE SAME ABSENCE
+> MEANS THE ABSENCE DOES NOT CHOOSE BETWEEN THEM.**
+> **An absence is not evidence for the explanation that happens to fit it.**
+
+**The tell that should have stopped it, available at the time and not used:** the observation — *"no OOM
+record, no kernel error, journal simply stops"* — was treated as a **measurement** when it was only a
+**gap**. A gap is compatible with every cause that leaves no trace, and there are several. Picking the one
+that fit and reporting it as the signature is **a conclusion wearing the clothes of a reading.**
+
+**This is the favourable-lie shape arriving through an ABSENCE instead of through a number** — the same
+family as a value quoted over a set not named, or a count read as an inventory. It is harder to catch here,
+because there is nothing to check: the missing number at least has a denominator to argue with, while a
+missing record looks like an empty room. **The control is the same in both cases — name what would have
+had to be true for a competing explanation, and go and look at the next boot.**
+
+**Both halves are recorded deliberately.** The shared error is the useful part of this finding: two
+independent parties, given the same gap, produced the same confident wrong answer, and neither checked the
+one place the answer was written.
 
 ## THE RUN'S DEPLOYMENT ERROR, SEPARATE FROM THE CAUSE
 
