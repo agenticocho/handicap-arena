@@ -39,19 +39,41 @@ MAX_TOKENS = 64                     # ONE LETTER NEEDS A FEW TOKENS, and a cap t
 
 
 def prompt_for(board, history):
-    """THE SCREEN, not the answers. Board, the four controls, and the offer to resign."""
-    recent = "".join(history[-12:]) if history else "(none yet)"
+    """THE SCREEN, not the answers -- and NOT A FORM.
+
+    INSTRUMENT CHANGE, PRE-REGISTERED BEFORE THE RE-RUN. The first version's legend was a line of
+    key-value PAIRS:
+
+        "# wall   . target   $ crate   @ you   * crate on target   + you on target"
+        "FIRST LINE: your next move as ONE letter and nothing else."
+        "  U = up    D = down    L = left    R = right"
+
+    and the measured consequence was that an entrant FILLED IT IN. It emitted
+        {"wall": "", "first_line": "U = up", "second_line": "D = down", ...}
+    -- it keyed on `wall`, `crate` and `FIRST LINE` and treated the prompt as a SCHEMA. Forty commands,
+    zero moves, every turn capped.
+
+    A MODEL THAT TRANSCRIBES THE LEGEND AS A SCHEMA IS NOT FAILING TO PLAY SOKOBAN. IT IS PLAYING A GAME
+    CALLED FILL IN THE FORM, AND PLAYING IT CORRECTLY. So the symbols are described in PROSE SENTENCES
+    rather than pairs, and every pseudo-field LABEL is gone -- `FIRST LINE:` and `U = up` are exactly the
+    tokens the model echoed as keys.
+
+    THE PREDICTION, RECORDED IN ADVANCE: a legend that does not look like a schema should move
+    `not_an_action` DOWN. IF IT DOES NOT MOVE, THE SCHEMA-FILLING EXPLANATION IS WRONG and the echo has
+    another cause -- and the re-run is what distinguishes a repaired instrument from a luckier sample.
+    """
+    recent = "".join(history[-12:]) if history else "none yet"
     return (
-        "You are playing Sokoban. One crate per target; a crate can be PUSHED but never pulled, so a "
-        "wrong push can end the level permanently.\n\n"
-        "Board:\n"
-        "# wall   . target   $ crate   @ you   * crate on target   + you on target\n\n"
+        "You are playing Sokoban. The goal is to push every crate onto a target. A crate can be pushed "
+        "but never pulled, so one wrong push can end the level permanently.\n\n"
+        "The board below uses these symbols. A hash mark is a wall. A dot is a target. A dollar sign is "
+        "a crate. An at sign is you. A star is a crate that is already sitting on a target, and a plus "
+        "is you standing on a target.\n\n"
         f"{board}\n\n"
-        f"Moves so far: {recent}\n\n"
-        "FIRST LINE: your next move as ONE letter and nothing else.\n"
-        "  U = up    D = down    L = left    R = right\n"
-        "If you judge the level unwinnable from here, the first line is exactly: RESIGN\n"
-        "AFTER the first line you may explain your reasoning if you wish."
+        f"The moves you have already made are: {recent}\n\n"
+        "Answer with a single letter. Use U to move up, D to move down, L to move left, or R to move "
+        "right. If you judge the level unwinnable from here, answer with the single word RESIGN. You may "
+        "add an explanation after your answer, and it will be ignored."
     )
 
 

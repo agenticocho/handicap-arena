@@ -278,3 +278,10 @@ GATE REVISION  d95ecb40997726ef   (sha256 of GAME_CONTRACT.md, first 16)
       result bundle -> /home/chilly1/workspace/ocho_arena/results/Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_cardv6_autofit_neutral_ctx8192_mt3000.json
       -> scored in 0.2 min
 [17/46]  2.18 GB  LFM2.5-1.2B-Thinking-BF16
+      DIVISION: Featherweight
+      DIVISION Featherweight (cord: teal)   footprint 2.49 GB measured
+      BELT: WHITE   stripes 1.0/6.0   rounds won 0/1   AGG 0.17
+      0.17    White belt  1.0/6.0 stripes  [Featherweight]  LFM2.5-1.2B-Thinking-BF16.gguf
+      result bundle -> /home/chilly1/workspace/ocho_arena/results/LFM2.5-1.2B-Thinking-BF16_cardv6_autofit_neutral_ctx8192_mt3000.json
+      -> scored in 4.1 min
+[18/46]  2.23 GB  Phi-3.5-mini-instruct-Q4_K_M
