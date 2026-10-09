@@ -16,12 +16,20 @@ signal, and nothing else in the sequence matters.
 import ast
 import json
 import os
-import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FROZEN = os.path.join(HERE, "FROZEN_CONSTANTS.json")
-SOURCES = ["depth_test.py", "depth_test2.py", "source_probe3.py", "source_probe4.py"]
+SOURCES = [
+    # EACH SOURCE DECLARES WHICH CONSTANTS IT IS EXPECTED TO BIND. Requiring all four of every file
+    # would fail depth_test.py, which binds three -- a FALSE POSITIVE, the exact failure this file
+    # exists to avoid. The expectation is stated per file so an empty or partial read is a signal
+    # rather than a guess.
+    ("depth_test.py",    ["LOST_CP", "HOLD_CP", "WINDOW"]),
+    ("depth_test2.py",   ["LOST_CP", "HOLD_CP", "WINDOW", "MIN_PER_EDGE"]),
+    ("source_probe3.py", ["LOST_CP", "HOLD_CP", "WINDOW"]),
+    ("source_probe4.py", ["LOST_CP", "HOLD_CP", "WINDOW"]),
+]
 CONST_NAMES = ("LOST_CP", "HOLD_CP", "WINDOW", "MIN_PER_EDGE")
 
 # ================================================================================================
@@ -35,6 +43,17 @@ CONST_NAMES = ("LOST_CP", "HOLD_CP", "WINDOW", "MIN_PER_EDGE")
 # "A false positive on a drift check is worse than no check" -- it does not remove truth, it spends the
 # MONITOR'S CREDIBILITY, which is a slower and worse loss, because THE NEXT REAL DRIFT GETS READ AS
 # ANOTHER FALSE POSITIVE. That is how a monitor dies.
+#
+# AND THE READ-CONTROL IS NOT A ONE-TIME CHECK -- IT MUST BE RE-RUN WHENEVER THE INSTRUMENT CHANGES.
+# The regex handled `-300` BY ACCIDENT, matching text without understanding it. The ast parser understood
+# the expression and correctly refused a form it had not been taught, so it read EVERY THRESHOLD AS
+# UNREADABLE -- a LARGER failure than the regex it replaced, produced BECAUSE IT WAS MORE CORRECT.
+# A better instrument does not merely fail differently; it fails WORSE on the forms it newly handles.
+#
+# THE MONITOR'S BOUND, STATED BECAUSE A BASELINE IS PART OF THE CLAIM: its reference is
+# FROZEN_CONSTANTS.json, frozen at 49ef665. CRITERION MOVEMENT BEFORE THAT COMMIT IS INVISIBLE TO IT.
+# The window was independently confirmed at 60 in test 1's own freeze (f14e905), so it cannot have moved
+# between the two freezes -- but the pre-test-1 period is outside this monitor's reach BY CONSTRUCTION.
 # ================================================================================================
 
 
@@ -109,17 +128,32 @@ def check():
     print(f"  frozen at {json.load(open(FROZEN, encoding='utf-8'))['_frozen_at']}")
     print(f"  {fr}\n")
     fails = []
-    for s in SOURCES:
+    for s, expected in SOURCES:
         p = os.path.join(HERE, s)
+        # A MISSING SOURCE IS A FAILURE, NOT A SKIP. Every name in SOURCES is a file this check claims
+        # to monitor; if one is gone, the check no longer covers what it says it covers. The first
+        # version `continue`d here, so a deleted or renamed source silently left the monitored set --
+        # the check would narrow its own scope and keep reporting NO DRIFT.
         if not os.path.exists(p):
+            fails.append((s, {"MISSING": "listed in SOURCES but not on disk"}))
+            print(f"  {s:22s} MISSING -- listed in SOURCES but not on disk")
             continue
         got, unread = extract(p)
         if unread:
             fails.append((s, {"UNREADABLE": unread}))
             print(f"  {s:22s} UNREADABLE BINDING: {unread}")
             continue
+        # AND "I READ NOTHING" IS NOT "THERE IS NOTHING TO READ". This was a silent skip: a source
+        # binding the constants in a form the extractor did not recognise printed "no constants bound"
+        # and PASSED. Every file in SOURCES binds all four, so an empty read here is a FAILURE.
         if not got:
-            print(f"  {s:22s} no constants bound (uses the shared module's values)")
+            fails.append((s, {"UNREAD": "no constants extracted, but this source is known to bind them"}))
+            print(f"  {s:22s} UNREAD -- no constants extracted, and this source is known to bind them")
+            continue
+        missing = [n for n in expected if n not in got]
+        if missing:
+            fails.append((s, {"NOT FOUND": missing}))
+            print(f"  {s:22s} NOT FOUND: {missing} -- declared for this source, not read")
             continue
         bad = {k: (got[k], fr[k]) for k in got if k in fr and got[k] != fr[k]}
         if bad:
@@ -169,11 +203,31 @@ def self_test():
     os.unlink(tmp)
     ck("skip control: a non-literal binding is UNREADABLE, not skipped", len(un), 1)
 
+    # --- CONTROL 4: "I READ NOTHING" IS NOT "THERE IS NOTHING TO READ" ---
+    tmp2 = os.path.join(HERE, ".tmp_binds_nothing.py")
+    open(tmp2, "w").write("x = 1\n")
+    g2, u2 = extract(tmp2)
+    os.unlink(tmp2)
+    ck("empty-read control: a file binding no constant extracts nothing",
+       (g2, u2), ({}, []))
+    # ...and the check must FAIL on it rather than print a reassurance.
+    saved = SOURCES[:]
+    SOURCES[:] = [(".tmp_empty.py", ["LOST_CP"])]
+    open(os.path.join(HERE, ".tmp_empty.py"), "w").write("x = 1\n")
+    f_empty = check()
+    os.unlink(os.path.join(HERE, ".tmp_empty.py"))
+    # --- CONTROL 5: A MISSING SOURCE FAILS, so the check cannot narrow its own scope ---
+    SOURCES[:] = [("does_not_exist.py", ["LOST_CP"])]
+    f_missing = check()
+    SOURCES[:] = saved
+    ck("empty-read control: the check FAILS on a source that binds nothing", len(f_empty), 1)
+    ck("missing-source control: the check FAILS on a source not on disk", len(f_missing), 1)
+
     real = check()
     ck("no source currently drifts", real, [])
 
     print("\n" + "=" * 92)
-    print(f"{'ALL CONTROLS PASS' if not fails else str(len(fails))+' FAILED'}   -- {10-len(fails)}/10")
+    print(f"{'ALL CONTROLS PASS' if not fails else str(len(fails))+' FAILED'}   -- {14-len(fails)}/14")
     print("=" * 92)
     return 1 if fails else 0
 

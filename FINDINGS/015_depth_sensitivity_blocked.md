@@ -25,6 +25,13 @@ ONE walk.** A walk that enters a window *stays in it for several plies* — that
 > **SIX HITS ALONG ONE WALK ARE NOT SIX INDEPENDENT OBSERVATIONS.** They are one crossing, sampled six
 > times. **The effective sample is closer to ONE PER EDGE than to six and three.**
 
+**AND THIS IS A RULE THIS PROJECT ALREADY HAS, ARRIVING ON A NEW AXIS.** It filed: *"agreement under a
+shared rule is not confirmation — independence is a property of the DERIVATION, not of the executables."*
+That was about two checkers sharing a wrong `.json.json` naming rule. **This is the same rule on SAMPLES
+rather than on CHECKS:** the six hits share a derivation — the walk — so they are **one observation
+wearing six indices.** *The count was never the sample size.* **The relevant number is walks, and it was
+one.** *(Chilly's sentence, adopted verbatim because it is the finding in one line.)*
+
 **So the reach is not marginally short. It is short by the ratio between "hits" and "independent walks",
 which the count does not show.** A reach statistic that counts plies inherits exactly the defect this
 project keeps finding: **a count quoted over a set that is not the set the reader assumes.**
