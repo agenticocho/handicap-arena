@@ -35,7 +35,8 @@ CANDIDATES = [
 
 
 def probe(path, label):
-    log = os.path.join(HERE, "results", f"COST_PROBE_{label}.log")
+    os.makedirs(os.path.join(HERE, "logs"), exist_ok=True)
+    log = os.path.join(HERE, "logs", f"COST_PROBE_{label}.log")
     srv = subprocess.Popen([LLAMA, "-m", path, "-c", "8192", "-ngl", "0", "--port", str(PORT),
                             "--no-webui"], stdout=open(log, "w"), stderr=subprocess.STDOUT)
     row: dict = dict(entrant=label, loaded_s=None, committed=None, tokens=None, secs=None, move=None,

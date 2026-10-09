@@ -409,9 +409,20 @@ class LlamaServer:
                     secs=dt)
 
 
+# THE CARD REGISTRY, DEFINED ONCE. It used to be written twice -- here in the argparse `choices` and
+# again as KNOWN_CARDS in run_card.py -- and adding v6 to one and not the other produced a run in which
+# EVERY ENTRANT RETURNED rc=2 IN 0.0 SECONDS: run_card spawned `arena.py --card v6`, argparse rejected the
+# value, and the gate dutifully reported COVERAGE 1.000 / YIELD 0.000 and refused a verdict. The gate was
+# right; the registry was split. run_card.py now IMPORTS this rather than re-implementing it, because a
+# rule stated twice is a rule that can disagree with itself.
+KNOWN_CARDS = {"v1": 1, "v2": 2, "v3": 3, "v4": 4, "v5": 5, "v6": 6}
+
+
 # ---------------------------------------------------------------------------- tasks
 def load_tasks(card="v1"):
     """card='v2' returns one pseudo-task PER ITEM (see load_card_v2). v1 is untouched."""
+    if card == "v6":
+        return load_card_v6()
     if card == "v5":
         return load_card_v5()
     if card == "v4":
@@ -876,7 +887,7 @@ def strict_json_schema_multi(spec, text):
 SCORERS["strict_json_schema_multi"] = strict_json_schema_multi
 
 
-def load_card_v4(card_version=4):
+def load_card_v4(card_version=4, tasks_dir="v4"):
     """CARD v4. Same item-per-task expansion as v3; R1 reads the model's output strictly.
 
     The difference between v3 and v4 R1 is NOT the conformance rules -- it is that a model which
@@ -890,7 +901,7 @@ def load_card_v4(card_version=4):
     stamped 4 would be skipped by its own run -- and the whole purpose of v5 is to re-measure.
     """
     out = []
-    for p in sorted(glob.glob(os.path.join(TASKS_DIR, "v4", "*.json"))):
+    for p in sorted(glob.glob(os.path.join(TASKS_DIR, tasks_dir, "*.json"))):
         d = json.load(open(p))
         for it in (d.get("items") or []):
             scorer = d["scorer"]
@@ -917,6 +928,21 @@ def load_card_v4(card_version=4):
                 "card_version": card_version,
             })
     return out
+
+
+def load_card_v6():
+    """CARD v6. NEW ITEMS, on the axis v5's two survivors defined.
+
+    v5's four saturated items (0.856-0.973) all test FORMAT COERCION -- types, key sets, order, dedup --
+    which is exactly what instruction tuning optimises. The two that survived both test THE
+    REPRESENTATION OF ABSENCE. v6 builds six harder items on that axis and introduces no new faculty, so
+    that difficulty and capability stay separable.
+
+    `tasks_dir="v6"` because the ITEMS differ, not the population -- v5 was `load_card_v4(card_version=5)`
+    for the opposite reason (same items, different run). And the round id is neutral, so this is where the
+    label debt retires forward rather than by rewriting recorded bundles.
+    """
+    return load_card_v4(card_version=6, tasks_dir="v6")
 
 
 def load_card_v5():
@@ -1484,7 +1510,7 @@ def main():
                     help="extra llama-server flags, shell-split — e.g. "
                          "'--grammar-file x.gbnf --flash-attn'. Use this to reproduce the "
                          "serving-configuration experiment in FINDINGS/001.")
-    ap.add_argument("--card", default="v1", choices=["v1", "v2", "v3", "v4", "v5"],
+    ap.add_argument("--card", default="v1", choices=sorted(KNOWN_CARDS),
                     help="which card to run. v1 = 3 rounds x 3 trials of one prompt (retired). "
                          "v2 = 3 rounds x 6 distinct items, one trial each. Scores from "
                          "different cards are different measurements and are never mixed.")

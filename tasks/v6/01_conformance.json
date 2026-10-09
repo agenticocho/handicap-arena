@@ -1,7 +1,19 @@
 {
+  "id": "R1_conformance",
   "card_version": 6,
-  "round": "R1_conformance",
-  "note": "Built from the SHAPE of the two items that still discriminated in v5, at higher difficulty. Difficulty first, new faculties later. Filenames neutral from the start -- the label debt is retired forward, not rewritten backward.",
+  "kind": "structured_output",
+  "class": "INSTRUMENT",
+  "staged_as": "arcade cabinet -- a weigh-in: the representation of absence, six items",
+  "scorer": "strict_json_schema_multi",
+  "note": "CARD v6. Built from the SHAPE of the two items that still discriminated in v5 (R1.1 0.577 and R1.4 0.568), at higher difficulty. Difficulty first, new faculties later -- a new faculty confounds difficulty with capability and would leave the next verdict unreadable for the same reason v5's was. The four saturated items in v5 all tested FORMAT COERCION (types, key sets, order, dedup), which is what instruction tuning optimises; the two survivors both tested THE REPRESENTATION OF ABSENCE, so every v6 item is on that axis. The round id is NEUTRAL (R1_conformance, not R1_fencing): the label debt retires FORWARD here rather than by rewriting 151 recorded bundles.",
+  "criteria_frozen_before_run": {
+    "C1_item_set_discriminates": "at least 4 of 6 items fall in the 15%-85% corrected pass-rate band",
+    "C2_floor_populated": "at least 5 entrants score below 0.34 aggregate",
+    "C3_no_saturation": "no item above 0.85; a v6 that saturates is the THIRD data point about the suite and is reported as one",
+    "C4_no_flooring": "no item below 0.15; an item everything fails is difficulty OVERSHOOT and is reported as one",
+    "prediction_recorded_before_the_run": "at least four of six IN BAND, and R1.5 the hardest -- it is the only item whose failure mode requires holding two representations of nothing apart, which no item in four prior cards asked for",
+    "population_note": "a uniformly competent field cannot be ranked by any suite; that is a fact about the FIELD, not the card"
+  },
   "items": [
     {
       "id": "R1.1_three_gaps_including_both_ends",

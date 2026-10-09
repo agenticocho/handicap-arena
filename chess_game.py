@@ -586,7 +586,12 @@ def main():
     print(f"  legal moves from the SAME engine (go perft 1) -- no python-chess, one implementation\n")
 
     # WEIGH-IN, Mike's rule and CARD_chess's Stage 0: an entrant is not a result until it can load.
-    log = os.path.join(HERE, "results", f"CHESS_GAME_{label}.log")
+    # THE LOG GOES TO logs/, NOT results/. results/ holds RESULT BUNDLES AND NOTHING ELSE, and
+    # run_card.py REFUSES TO START if it finds a .log there -- a check that caught this script's own four
+    # stray logs when v6 was first launched. A .log among bundles is the file a reader counts as an
+    # entrant, which is the empty-bundle defect. Fixing the writer, not just the strays.
+    os.makedirs(os.path.join(HERE, "logs"), exist_ok=True)
+    log = os.path.join(HERE, "logs", f"CHESS_GAME_{label}.log")
     os.makedirs(os.path.join(HERE, "results"), exist_ok=True)
     srv = subprocess.Popen(
         [LLAMA, "-m", a.entrant, "-c", "4096", "-ngl", "0", "--port", str(a.port), "--no-webui"],
