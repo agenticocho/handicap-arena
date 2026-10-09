@@ -65,22 +65,37 @@ def main():
     print("PROOF -- could parsing the namespace from GAME_CONTRACT.md clear the v6 refusal?")
     print("=" * 98)
 
-    parsed = parse_declared_slots(CONTRACT)
-    tgs = load_checker()
-    frozen = tgs.DECLARED_SLOTS
+    # A DIAGNOSTIC THAT TRACEBACKS IS LESS USEFUL THAN ONE THAT REPORTS. Every failure path below produces a
+    # STATE line and a non-zero exit, because the one thing this script must never do is fail silently and
+    # let a reader take its absence for agreement.
+    try:
+        parsed = parse_declared_slots(CONTRACT)
+    except (ValueError, OSError) as e:
+        print(f"\nSTATE: BLOCKED. The contract's declared-slot block cannot be read:\n       {e}")
+        print("=" * 98)
+        return 1
+    try:
+        tgs = load_checker()
+    except Exception as e:                                        # noqa: BLE001
+        print(f"\n      NOTE: the check does not even IMPORT: {type(e).__name__}: {e}")
+        tgs = None
+    exports_parser = hasattr(tgs, "parse_declared_slots") if tgs is not None else False
+    # THE VALUE THE CHECK USES, NOT THE VALUE ITS PARSER WOULD PRODUCE.
+    governing = getattr(tgs, "DECLARED_SLOTS", None) if tgs is not None else None
 
     print(f"\n[1] GAME_CONTRACT.md's machine-readable block  ({len(parsed)} slots)")
     for k in sorted(parsed):
         print(f"      {k:18s} {parsed[k][:66]}")
-    print(f"\n[2] test_game_states.py DECLARED_SLOTS -- THE FROZEN COPY THE CHECK READS  ({len(frozen)})")
-    for k in sorted(frozen):
-        print(f"      {k:18s} {frozen[k][:66]}")
+    print(f"\n[2] the value the check ENFORCES -- DECLARED_SLOTS  "
+          f"({len(governing) if governing else 0})")
+    for k in sorted(governing or {}):
+        print(f"      {k:18s} {governing[k][:66]}")
 
-    only_contract = sorted(set(parsed) - set(frozen))
-    only_frozen = sorted(set(frozen) - set(parsed))
+    only_contract = sorted(set(parsed) - set(governing or {}))
+    only_check = sorted(set(governing or {}) - set(parsed))
     print(f"\n[3] the disagreement")
     print(f"      declared in the contract but NOT enforced : {only_contract}")
-    print(f"      enforced but not in the contract          : {only_frozen}")
+    print(f"      enforced but not in the contract          : {only_check}")
 
     print(f"\n[4] round keys actually present in the v6 bundles")
     rdir = os.path.join(HERE, "results")
@@ -100,44 +115,46 @@ def main():
     print(f"      {bundles} v6 bundles; round keys: " +
           ", ".join(f"{k} x{v}" for k, v in sorted(keys.items())))
 
-    print(f"\n[5] WHERE DOES THE CHECKER GET ITS NAMESPACE?")
-    parses = hasattr(tgs, "parse_declared_slots")
-    print(f"      test_game_states.py exposes parse_declared_slots() : {parses}")
-    if parses:
-        try:
-            live = tgs.parse_declared_slots()
-            print(f"      ...and it parses {len(live)} slots from the contract")
-        except Exception as e:                                    # noqa: BLE001
-            print(f"      ...and it RAISED: {e}")
-            live = {}
-    else:
-        live = frozen
+    print(f"\n[5] WHAT THE CHECK ACTUALLY ENFORCES, AND WHETHER IT IS PARSED")
+    print(f"      exposes parse_declared_slots()            : {exports_parser}")
+    print(f"      DECLARED_SLOTS -- the value the check uses: "
+          f"{sorted(governing) if governing is not None else 'ABSENT'}")
 
     print(f"\n[6] the two copies, and the one that governs")
     print(f"      contract declares      : {sorted(parsed)}")
-    print(f"      checker enforces       : {sorted(live)}")
-    print(f"      disagree               : {sorted(set(parsed) ^ set(live)) or 'no -- they agree'}")
+    print(f"      checker enforces       : "
+          f"{sorted(governing) if governing is not None else 'ABSENT'}")
+    diff = sorted(set(parsed) ^ set(governing)) if governing is not None else sorted(parsed)
+    print(f"      disagree               : {diff or 'no -- they agree'}")
 
     print(f"\n[7] verdict under the GOVERNING copy")
-    bad = sorted(k for k in keys if k not in live)
+    bad = sorted(k for k in keys if governing is None or k not in governing)
     print(f"      v6 round keys          : {sorted(keys)}")
     print(f"      refused                : {bad if bad else 'none -- every bundle is admitted'}")
 
     print("\n" + "=" * 98)
-    # THE VERDICT IS DERIVED FROM THE MEASUREMENT, NOT PRESUPPOSED. The first version of this script asserted
-    # a disagreement it had been written against; the repository moved and the assertion became false about
-    # the code while the script kept printing it. A script whose conclusion is written into its own source is
-    # the same defect as a caption nobody checks.
-    if set(parsed) == set(live) and not bad:
-        print("STATE: SINGLE SOURCE. The checker parses the contract and every v6 bundle is admitted.")
-        rc = 0
+    # THE VERDICT IS DERIVED FROM THE MEASUREMENT, NOT PRESUPPOSED. The first version asserted a disagreement
+    # it had been written against; the repository moved and the assertion became false about the code while
+    # the script kept printing it. A script whose conclusion is written into its own source is the same defect
+    # as a caption nobody checks.
+    if governing is None:
+        print("STATE: BLOCKED. The check declares no DECLARED_SLOTS at all -- nothing governs, so every")
+        print("       round key would be refused for a reason nobody stated.")
+        rc = 1
+    elif diff:
+        print(f"STATE: BLOCKED. The contract and the check disagree on {diff}. A reader who amends the")
+        print("       contract changes nothing if the check enforces the other copy.")
+        rc = 1
     elif bad:
-        print(f"STATE: BLOCKED. {bad} is declared in the contract and refused by the checker -- the remedy")
-        print("       message sends its reader to a file the check does not read.")
+        print(f"STATE: BLOCKED. {bad} is declared in the contract and refused by the check.")
+        rc = 1
+    elif not exports_parser:
+        print("STATE: DRIFTABLE. The copies agree TODAY but the check does not parse the contract --")
+        print("       a hardcoded copy is a copy that can drift again, unwatched.")
         rc = 1
     else:
-        print("STATE: the copies agree but the checker does not parse the contract -- they can drift again.")
-        rc = 1
+        print("STATE: SINGLE SOURCE. The check parses the contract and every v6 bundle is admitted.")
+        rc = 0
     print("=" * 98)
     return rc
 
