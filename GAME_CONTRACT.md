@@ -159,7 +159,7 @@ state behind it. **Positive control included**: the test is verified to fire on 
 **It exits 1 while violations stand** — verified, not assumed, because an enforcing check that exits
 0 while reporting violations is a check that cannot fail.
 
-## STATUS: ENFORCEABLE, NOT YET BINDING — the operator's call, and it is a one-line flip
+## STATUS: ENFORCEABLE, AND BINDING AT ADMISSION — with the residual gap named
 
 **What is true today, all of it verified by mutation rather than asserted:**
 
@@ -169,17 +169,38 @@ the 301 historical rounds carry SUPERSESSION records    · annotated, NOT excuse
 the check counts NEW and HISTORICAL separately          · NEW: 0 / HISTORICAL: 301
 the check exits 1 on a NEW violation                    · proven by planting one
 the rule (bundle filename -> record filename) exists once and is asserted  · proven by mutation
+THE ARENA CONSUMES THE EXIT CODE AT ADMISSION           · run_card.py:268, before any model is spawned
 ```
 
-**What is NOT true: no arena workflow consumes that exit code.** The check can fail, and does; nothing
-stops on it yet. **Making it gate is a policy decision, and it is deliberately not an agent's** — the same
-rule that says an agent may not certify the gate that admits its own work. **So it is recorded here, where
-a human will find it, rather than decided in a chat message that will be stale by morning.**
+**THIS SECTION PREVIOUSLY SAID *"no arena workflow consumes that exit code."* THAT IS FALSE**, and the
+evidence is the v5 run's own journal at admission, the moment before any model was spawned:
 
-**THE FLIP, when the operator makes it:** treat a non-zero exit from `test_game_states.py` as a gate on
-arena work — the way C4's partition gates the cards. **Nothing else changes**, because the discriminating
-half already exists and already fails: **the historical 301 must NOT block** (they are superseded and
-annotated), and `NEW: 0` is the condition that is already computed and already enforced at exit.
+```
+game contract: OK (  NO NEW violation. The 301 historical rounds stand AS RECORDED -- superseded, not)
+```
+
+**`run_card.py:268` calls `game_contract_gate()` before the entrant loop; a non-zero exit REFUSES and no
+model is spawned — proven in both directions by `test_bind_control.py`, which reads the DECISION rather
+than running the permitted work. So the arena stopped on it last night.** *A stale status line is the
+stand-in-outliving-its-thing defect, and this is that defect sitting on the document whose subject is
+exactly that.*
+
+**AND THE RECORD OF THE FLIP, because it happened and the file should say so:** the gate was a policy
+decision and deliberately not an agent's — *an agent may not certify the gate that admits its own work* —
+and the operator made it. The historical 301 do not block, because they are superseded and annotated;
+`NEW: 0` is the condition that is computed and enforced at exit.
+
+### THE RESIDUAL GAP, NAMED RATHER THAN LEFT AS A BLANKET "NOT YET BINDING"
+
+- **BINDING at ADMISSION.** ✓ `run_card.py` refuses before spawning anything.
+- **NOT bound to a COMMIT.** **There is no git hook** — `.git/hooks/` holds only the shipped samples and
+  there is no global hooks directory. A violation can be committed.
+- **NOT bound to a SUITE RUN.** The check runs when `run_card.py` runs, not when the suite does.
+
+**So the contract blocks the thing it was built to block — an unmeasured run — and does not block the thing
+it was never asked to block — a commit.** Named here so a reader learns *which*, instead of being told "not
+binding" about a gate that refused a run twelve hours ago. **If a commit-time hook is wanted, it is a
+separate decision and a separate line, and it is not implied by this one.**
 
 **A LOOSE END, FLAGGED AND DELIBERATELY NOT CHANGED.** The task ids still name games — `R1_fencing`,
 `R2_chess`, `R3_pitstop`. The check inspects the `metaphor`/`game` **fields**, so the ids are legal, and
