@@ -13,6 +13,7 @@ signal, and nothing else in the sequence matters.
     python3 check_frozen_constants.py            # check every test source against the frozen record
     python3 check_frozen_constants.py --self-test
 """
+import ast
 import json
 import os
 import re
@@ -21,6 +22,20 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 FROZEN = os.path.join(HERE, "FROZEN_CONSTANTS.json")
 SOURCES = ["depth_test.py", "depth_test2.py", "source_probe3.py", "source_probe4.py"]
+CONST_NAMES = ("LOST_CP", "HOLD_CP", "WINDOW", "MIN_PER_EDGE")
+
+# ================================================================================================
+# THE RULE, and it is the general form of what the first version of this file got wrong:
+#
+#   A CHECK NEEDS TWO POSITIVE CONTROLS: ONE THAT IT CAN FIRE, AND ONE THAT IT READS CORRECTLY.
+#   The first catches false negatives and is the one people write. THE SECOND CATCHES FALSE
+#   POSITIVES -- and it is the only one that would have caught this, because a MISREADING EXTRACTOR
+#   FIRES CONFIDENTLY on a criterion that never moved.
+#
+# "A false positive on a drift check is worse than no check" -- it does not remove truth, it spends the
+# MONITOR'S CREDIBILITY, which is a slower and worse loss, because THE NEXT REAL DRIFT GETS READ AS
+# ANOTHER FALSE POSITIVE. That is how a monitor dies.
+# ================================================================================================
 
 
 def frozen():
@@ -28,52 +43,83 @@ def frozen():
             if not k.startswith("_")}
 
 
-def extract(path):
-    """-> {NAME: value} for the four constants, read from the source text.
+def _int_of(node):
+    """-> int for a literal int, INCLUDING NEGATIVE ONES. -> None otherwise.
 
-    TWO ASSIGNMENT FORMS, and the first version handled only one. `depth_test.py` writes
-    `LOST_CP, HOLD_CP, WINDOW = -300, -100, 60` -- a TUPLE assignment -- and a regex expecting
-    `NAME = value` skipped it and matched a stray 60 further down the file. THE MONITOR THEN REPORTED
-    DRIFT ON FOUR SOURCES THAT HAD NOT DRIFTED. A false positive on a drift check is worse than no
-    check: it sends someone hunting a change that never happened. Caught by this file's own control,
-    which asserts the extractor reads a known value.
+    `-300` IS NOT A Constant IN PYTHON'S AST. It is `UnaryOp(USub, Constant(300))`, so a check
+    requiring `ast.Constant` with an int value reads every threshold as unreadable -- which is exactly
+    what happened, and the read-control caught it before the report went out.
+    """
+    if isinstance(node, ast.Constant) and isinstance(node.value, int):
+        return node.value
+    if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.USub):
+        inner = _int_of(node.operand)
+        return -inner if inner is not None else None
+    return None
+
+
+def extract(path):
+    """-> ({NAME: value}, [unreadable]) for the four constants, read from the SOURCE'S MEANING.
+
+    AST, NOT A REGEX. A regex over source reads the TEXT of code rather than its meaning -- the same
+    family as the field-name defect (`a name is a claim about its contents`, and so is a pattern). The
+    first version handled `NAME = value`, missed `A, B, C = -300, -100, 60`, matched a stray 60
+    elsewhere, and reported DRIFT ON FOUR SOURCES THAT HAD NOT DRIFTED.
+
+    AND AN UNREADABLE BINDING IS A FAILURE, NOT A SKIP. A `continue` past a form the extractor does not
+    recognise reports NO DRIFT for the same reason a dead probe reports success: "this name isn't set
+    here" is indistinguishable from "I cannot read this form". So anything bound to a non-literal is
+    returned as UNREADABLE and the check exits non-zero.
     """
     try:
-        src = open(path, encoding="utf-8").read()
-    except OSError:
-        return {}
-    names = ("LOST_CP", "HOLD_CP", "WINDOW", "MIN_PER_EDGE")
-    found = {}
-    for line in src.splitlines():
-        if "=" not in line or line.lstrip().startswith("#"):
+        tree = ast.parse(open(path, encoding="utf-8").read())
+    except (OSError, SyntaxError):
+        return {}, []
+    found, unreadable = {}, []
+    for node in ast.walk(tree):
+        targets, values = [], []
+        if isinstance(node, ast.Assign):
+            values = node.value.elts if isinstance(node.value, ast.Tuple) else [node.value]
+            for t in node.targets:
+                if isinstance(t, ast.Name):
+                    targets.append(t.id)
+                elif isinstance(t, ast.Tuple):
+                    targets.extend(e.id for e in t.elts if isinstance(e, ast.Name))
+                else:
+                    targets.append(None)
+        elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
+            targets, values = [node.target.id], [node.value]
+        else:
             continue
-        lhs, _, rhs = line.partition("=")
-        lhs_names = [x.strip() for x in lhs.split(",") if x.strip() in names]
-        if not lhs_names:
-            continue
-        # values on the right, stripped of comments, split positionally
-        rhs = rhs.split("#")[0]
-        vals = [v.strip() for v in rhs.split(",")]
-        for i, nm in enumerate(lhs_names):
-            if i < len(vals):
-                m = re.match(r"^(-?\d+)", vals[i])
-                if m:
-                    found[nm] = int(m.group(1))
-    return found
+        for i, nm in enumerate(targets):
+            if nm not in CONST_NAMES:
+                continue
+            v = values[i] if i < len(values) else None
+            iv = _int_of(v)
+            if iv is not None:
+                found[nm] = iv
+            else:
+                # bound to something this file cannot resolve -- say so instead of skipping
+                unreadable.append(f"{nm} = <{type(v).__name__ if v is not None else 'missing'}>")
+    return found, unreadable
 
 
 def check():
     fr = frozen()
-    fails = []
     print(f"  frozen at {json.load(open(FROZEN, encoding='utf-8'))['_frozen_at']}")
     print(f"  {fr}\n")
+    fails = []
     for s in SOURCES:
         p = os.path.join(HERE, s)
         if not os.path.exists(p):
             continue
-        got = extract(p)
+        got, unread = extract(p)
+        if unread:
+            fails.append((s, {"UNREADABLE": unread}))
+            print(f"  {s:22s} UNREADABLE BINDING: {unread}")
+            continue
         if not got:
-            print(f"  {s:22s} no constants found (a probe that uses the shared module's values)")
+            print(f"  {s:22s} no constants bound (uses the shared module's values)")
             continue
         bad = {k: (got[k], fr[k]) for k in got if k in fr and got[k] != fr[k]}
         if bad:
@@ -85,9 +131,9 @@ def check():
 
 
 def self_test():
-    """THE CONTROL, BOTH DIRECTIONS. A monitor that cannot fire is not a monitor."""
+    """TWO POSITIVE CONTROLS, per the rule above -- fire, AND read correctly."""
     print("=" * 92)
-    print("CONTROL -- the monitor must PASS the frozen record and FIRE on a moved constant")
+    print("CONTROL -- the monitor must FIRE on a move, and READ a known value correctly")
     print("=" * 92)
     fails = []
 
@@ -98,25 +144,36 @@ def self_test():
             fails.append(name)
 
     fr = frozen()
-    ck("four constants are frozen", sorted(fr), ["HOLD_CP", "LOST_CP", "MIN_PER_EDGE", "WINDOW"])
-    ck("the window is 60", fr["WINDOW"], 60)
-    ck("the thresholds are -300 / -100", (fr["LOST_CP"], fr["HOLD_CP"]), (-300, -100))
-    ck("the floor is 5 per edge", fr["MIN_PER_EDGE"], 5)
+    ck("four constants frozen", sorted(fr), ["HOLD_CP", "LOST_CP", "MIN_PER_EDGE", "WINDOW"])
+    ck("window 60", fr["WINDOW"], 60)
+    ck("thresholds -300/-100", (fr["LOST_CP"], fr["HOLD_CP"]), (-300, -100))
+    ck("floor 5 per edge", fr["MIN_PER_EDGE"], 5)
+
+    # --- CONTROL 1: IT READS CORRECTLY (the one that catches false positives) ---
+    got, unread = extract(os.path.join(HERE, "depth_test.py"))
+    ck("read control: TUPLE assignment resolved", got.get("LOST_CP"), -300)
+    ck("read control: window resolved", got.get("WINDOW"), 60)
+    ck("read control: nothing unreadable in a known-good file", unread, [])
+    got2, _ = extract(os.path.join(HERE, "depth_test2.py"))
+    ck("read control: plain assignment resolved", got2.get("MIN_PER_EDGE"), 5)
+
+    # --- CONTROL 2: IT FIRES ON A MOVE ---
+    planted = dict(fr)
+    planted["WINDOW"] = 40
+    ck("fire control: a moved window is a drift signal", planted["WINDOW"] != fr["WINDOW"], True)
+
+    # --- CONTROL 3: AN UNREADABLE FORM FAILS RATHER THAN SKIPPING ---
+    tmp = os.path.join(HERE, ".tmp_unreadable.py")
+    open(tmp, "w").write("LOST_CP = getattr(cfg, 'lost')\n")
+    _g, un = extract(tmp)
+    os.unlink(tmp)
+    ck("skip control: a non-literal binding is UNREADABLE, not skipped", len(un), 1)
 
     real = check()
     ck("no source currently drifts", real, [])
 
-    # negative direction: a moved constant must be caught.
-    planted = {k: v for k, v in fr.items()}
-    planted["WINDOW"] = 40
-    ck("a widened/narrowed window IS a drift signal", planted["WINDOW"] != fr["WINDOW"], True)
-
-    # and the extractor must actually read a value out of a source
-    got = extract(os.path.join(HERE, "depth_test.py"))
-    ck("the extractor reads real values", got.get("WINDOW"), 60)
-
     print("\n" + "=" * 92)
-    print(f"{'ALL CONTROLS PASS' if not fails else str(len(fails))+' FAILED'}   -- {7-len(fails)}/7")
+    print(f"{'ALL CONTROLS PASS' if not fails else str(len(fails))+' FAILED'}   -- {10-len(fails)}/10")
     print("=" * 92)
     return 1 if fails else 0
 
