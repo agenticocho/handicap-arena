@@ -307,6 +307,18 @@ def _fail(reason):
     return None, None, reason
 
 
+def _move_shaped(t):
+    """Is this token a WELL-FORMED move, whatever its legality? Asserted so the illegal verdict can never
+    absorb a malformed string -- a malformed one has to fall through to `unreadable`, which is a claim
+    about the READER, while `illegal` is a claim about the ENTRANT."""
+    t = (t or "").strip(_DECOR).strip()
+    if not t:
+        return False
+    return bool(re.fullmatch(r"[a-h][1-8][a-h][1-8][qrbn]?", t.lower())
+                or re.fullmatch(r"[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?", t)
+                or re.fullmatch(r"[Oo0]-[Oo0]-[Oo0]", t))
+
+
 def resolve(fen, token, legal):
     """-> (uci, san, reason). The engine decides legality; this decides what was named.
 
@@ -356,7 +368,21 @@ def resolve(fen, token, legal):
         if u:
             return u, stripped, "resolved-head" if cand is first else "resolved-full"
 
-    # 2. the head yielded nothing at all -- only now is the rest of the text consulted
+    # 2. THE HEAD IS THE ANSWER, SO AN ILLEGAL HEAD IS THE VERDICT -- THE PROSE DOES NOT GET A VOTE.
+    # This is the same principle as the reasoning-is-not-alternative-moves fix, one layer further down,
+    # and it was still wrong after that fix: measured, a 3B entrant answered `e3` -- a move that is not
+    # legal in that position -- and then justified it with a hallucinated board ("The pawn on e3 opens
+    # the e-file"). The reader mined that justification, found c4 and d4 (both legal), and reported
+    # AMBIGUOUS. THE MODEL HAD COMMITTED TO e3. An illegal answer was about to be recorded as a reader
+    # problem for the second time in two days.
+    head_first = first.strip(_DECOR).strip()
+    if _move_shaped(head_first):
+        return None, None, (
+            f"illegal: the model's first line is {head_first!r}, which is well formed and IS NOT a legal "
+            f"move in this position ({len(legal)} are legal). A FAILURE OF THE ENTRANT -- the move list "
+            f"is not supplied, so the candidates must be derived.")
+
+    # 3. only now, with the head neither legal nor a well-formed move, is the rest of the text consulted
     head_found = _extract(fen, first, legal)
     if len(head_found) == 1:
         u = next(iter(head_found))
@@ -372,21 +398,6 @@ def resolve(fen, token, legal):
         return None, None, (
             f"ambiguous: {len(full)} distinct legal moves named across the text, none of them the answer "
             f"({', '.join(sorted(full)[:6])})")
-    # A WELL-FORMED MOVE THAT IS NOT LEGAL IS A FAILURE OF THE ENTRANT, NOT OF THE READER -- and with the
-    # move list removed from the prompt that outcome is now POSSIBLE for the first time, because the model
-    # must derive its own candidates. The reader can tell the two apart and must: "I cannot read this" and
-    # "I read this and the engine rejects it" are different claims. `<move>` well-formedness is asserted
-    # so this can never absorb a malformed string -- a malformed one falls through to `unreadable`.
-    for tok in ([first] if first else []) + re.findall(
-            r"[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?|[Oo0]-[Oo0]-[Oo0]", raw or ""):
-        t = tok.strip(_DECOR).strip()
-        if t and (re.fullmatch(r"[a-h][1-8][a-h][1-8][qrbn]?", t.lower())
-                  or re.fullmatch(r"[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?", t)
-                  or re.fullmatch(r"[Oo0]-[Oo0]-[Oo0]", t)):
-            return None, None, (
-                f"illegal: the model named {t!r}, which is well formed and IS NOT a legal move in this "
-                f"position ({len(legal)} are legal). A FAILURE OF THE ENTRANT -- the move list is not "
-                f"supplied, so the candidates must be derived.")
     return None, None, "unreadable: no legal move named anywhere in the output"
 
 
@@ -490,7 +501,12 @@ def play(base, cap, probe):
             pass
         rows.append(dict(ply=ply, fen=fen, raw=raw, move_uci=choice, move_san=san,
                          eval_before=prev_ev, eval_after=ev_a,
-                         termination=None, result=side_of(ev_a),
+                         # WHICH SUBJECT, AGAIN, AND THIS FIELD WAS LEFT INVERTED WHEN `measure()` WAS
+                         # FIXED. `ev_a` is the position AFTER the move, evaluated FROM THE OPPONENT'S
+                         # side because Stockfish scores the side to move -- so labelling the row from
+                         # `ev_a` reported the entrant's WINS as LOST (ply 12 at +547 was labelled LOST).
+                         # `result` is the MOVER's read of the position it left, hence the negation.
+                         termination=None, result=side_of(-ev_a) if ev_a is not None else "UNKNOWN",
                          secs=secs, gen_tokens=nt, budget_hit=hit))
         if mate is not None:
             return rows, "decisive", f"engine adjudicated mate in {mate} after {choice}"

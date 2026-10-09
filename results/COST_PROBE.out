@@ -1,0 +1,12 @@
+================================================================================================
+COST OF AN ENTRANT THAT CAN COMPLETE A GAME HERE -- one move, the hard position, frozen prompt
+================================================================================================
+  position: rnbqkbnr/ppp2ppp/8/3pp3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 3
+  28 legal moves, none of them supplied
+  prompt digest 76fa8848e9adf514, max_tokens 2048, all-CPU (ngl=0)
+
+  Ministral-3B       probing ...
+  Ministral-3B       load 3.0s | 8.7s | 143 tok | committed=False | None | ambiguous
+  Tiel-Inspired-9B   probing ...
+  Tiel-Inspired-9B   load 6.0s | 276.9s | 2048 tok | committed=False | None | unreadable
+  Ornith-9B          probing ...

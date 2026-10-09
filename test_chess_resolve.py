@@ -116,6 +116,14 @@ ck("a malformed string is UNREADABLE (an instrument failure)",
    g.resolve(g.STARTPOS, "qwerty", g.legal_moves(g.STARTPOS))[2].split(":")[0], "unreadable")
 ck("and a legal move is neither", g.resolve(g.STARTPOS, "e2e4", g.legal_moves(g.STARTPOS))[2],
    "resolved-head")
+# THE CASE THAT GOT THROUGH: an ILLEGAL head with LEGAL moves named in its own justification. The head is
+# the answer, so the justification must not be allowed to reclassify a committed illegal move as a reader
+# problem -- which is what happened (reported `ambiguous`) before the order was fixed.
+_HALL = ("e3\n\n**Reasoning:**\nThe pawn on e3 opens the e-file, and c4 or d4 would also be reasonable.")
+ck("an ILLEGAL head with legal moves in its own justification is still ILLEGAL, not ambiguous",
+   g.resolve(POS, _HALL, LEG)[2].split(":")[0], "illegal")
+ck("...and the legal moves it mentions do not rescue it",
+   g.resolve(POS, _HALL, LEG)[0], None)
 
 print("\n" + "=" * 94)
 n = TOTAL - len(fails)
