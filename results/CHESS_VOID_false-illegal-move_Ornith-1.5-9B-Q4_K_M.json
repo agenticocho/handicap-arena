@@ -1,0 +1,86 @@
+{
+ "card": "CARD_chess.md",
+ "entrant": "Ornith-1.5-9B-Q4_K_M",
+ "gguf": "/home/chilly1/.hermes/models/Ornith-1.5-9B-Q4_K_M.gguf",
+ "staged_as": "INSTRUMENT",
+ "frozen": {
+  "threads": 1,
+  "hash_mb": 64,
+  "multipv": 1,
+  "depth": 18,
+  "lost_cp": -300,
+  "hold_cp": -100,
+  "cap": 60
+ },
+ "termination": "illegal-move",
+ "why": "no legal move in '**f3e5**\\n\\nThe black pawn on e5 is undefended (the d5 pawn de' -- distinguishable, not a parse artifact",
+ "measures": {
+  "plies": 4,
+  "premature_collapse": 0,
+  "miscalibrated_persistence": 0,
+  "plies_in_lost_positions": 0,
+  "unreadable_evaluations": 0,
+  "calibrated": false
+ },
+ "wall_s": 625.0,
+ "rows": [
+  {
+   "ply": 0,
+   "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+   "raw": "e2e4",
+   "move_uci": "e2e4",
+   "move_san": "e2e4",
+   "eval_before": 37,
+   "eval_after": -28,
+   "termination": null,
+   "result": "HOLDABLE",
+   "secs": 111.04257559776306,
+   "gen_tokens": 816,
+   "budget_hit": false
+  },
+  {
+   "ply": 1,
+   "fen": "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1",
+   "raw": "e7e5",
+   "move_uci": "e7e5",
+   "move_san": "e7e5",
+   "eval_before": -28,
+   "eval_after": 31,
+   "termination": null,
+   "result": "HOLDABLE",
+   "secs": 32.80763220787048,
+   "gen_tokens": 246,
+   "budget_hit": false
+  },
+  {
+   "ply": 2,
+   "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+   "raw": "g1f3",
+   "move_uci": "g1f3",
+   "move_san": "g1f3",
+   "eval_before": 31,
+   "eval_after": -38,
+   "termination": null,
+   "result": "HOLDABLE",
+   "secs": 73.22222256660461,
+   "gen_tokens": 553,
+   "budget_hit": false
+  },
+  {
+   "ply": 3,
+   "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+   "raw": "d7d5",
+   "move_uci": "d7d5",
+   "move_san": "d7d5",
+   "eval_before": -38,
+   "eval_after": 101,
+   "termination": null,
+   "result": "HOLDABLE",
+   "secs": 140.5567011833191,
+   "gen_tokens": 1057,
+   "budget_hit": false
+  }
+ ],
+ "VOID": "NOT A RESULT -- DO NOT RELAY, COMPARE, OR SCORE. The termination 'illegal-move' was a FALSE POSITIVE OF THE READER, not a finding about the entrant.\n\nWHAT HAPPENED. The model answered '**f3e5**' and then explained itself: 'The black pawn on e5 is undefended (the d5 pawn defends nothing here)'. The reader mined the WHOLE output for candidate moves, found BOTH f3e5 and d5 -- and d5 resolves to the legal capture e4d5 -- so its refuse-to-guess ambiguity guard refused the RIGHT ANSWER. The record then published 'no legal move in ...' which was true of all four of its own failure modes and therefore could not be checked.\n\nTHE ENGINE WAS NEVER BROKEN. legal_moves returns 28 moves on that position, stable across 50 consecutive calls, and f3e5 is among them. The engine confirms f3e5 IS LEGAL: the knight capture of the undefended e5 pawn, and the best move available on the board.\n\nSO: ORNITH PLAYED THE BEST MOVE, NAMED IT CORRECTLY, GAVE THE CORRECT REASON, AND THE RECORD CALLED IT ILLEGAL. Four moves of correct book play, then the best capture available, then a reader failure published as a finding about the model.\n\nFIXED in chess_game.py: the answer is read from the HEAD of the output, because a model states its move and THEN justifies it, so reasoning is not ambiguity. Also added: a positive control (legal_moves(startpos) must be 20 before any termination may be trusted), an empty legality list is now an INSTRUMENT failure rather than an adjudication, and unresolved moves map to the frozen taxonomy's 'serving-failure' (MISSING VALUE) instead of a verdict about the entrant.\n\nCONTROLLED by test_chess_resolve.py -- 20/20, including this exact case.\n\nPRESERVED AS EVIDENCE, NOT DELETED. The rows are the true record of four legal moves.",
+ "entrant_would_have_played": "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2"
+}

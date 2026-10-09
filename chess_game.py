@@ -254,39 +254,10 @@ def _san_to_uci(fen, token, legal):
 _DECOR = "*`_~\"'.,;:()[]{}<>#!"
 
 
-def resolve(fen, token, legal):
-    """-> (uci, san) or (None, None). The engine decides legality; this decides what was named.
-
-    THREE FALSE ILLEGAL-MOVE VERDICTS WERE FOUND AND FIXED HERE, EACH ON A GOOD ANSWER:
-      1. SAN not accepted      the model played `e4`; a UCI-only parser scored it illegal. The record
-                               carries `move_san` precisely because SAN is expected input.
-      2. UCI misread as SAN    `g1f3` matches the SAN pattern as a PAWN move from g1, lowercase first
-                               letter -- so UCI is matched literally BEFORE any notation parsing.
-      3. MARKDOWN DECORATION   the model played `**b6d4**` after thirteen plies of real chess; the marks
-                               made it unresolvable. A MODEL THAT PLAYS CORRECT CHESS IN A DECORATED
-                               FORMAT IS NOT MAKING AN ILLEGAL MOVE. Decoration is stripped first.
-
-    EXTRACTION FROM PROSE IS THE LAST RESORT AND IT REFUSES TO GUESS: if the text yields MORE THAN ONE
-    distinct legal move, the notation did not name one move and None is returned. Ambiguity is not a
-    winner, because picking either would be a guess wearing a resolution's label.
-    """
-    raw = (token or "").strip()
-    if not raw:
-        return None, None
-
-    # 1. the whole string, decoration stripped -- the overwhelmingly common case
-    stripped = raw.strip(_DECOR).strip()
-    low = stripped.lower()
-    if low in legal:
-        return low, stripped
-    uci = _san_to_uci(fen, stripped, legal)
-    if uci:
-        return uci, stripped
-
-    # 2. last resort: candidate tokens inside prose or decoration
-    cands = re.findall(r"[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?|[Oo0]-[Oo0]-[Oo0]", raw)
+def _extract(fen, text, legal):
+    """Candidates in `text` that are legal moves -> {uci: as_written}."""
     found = {}
-    for c in cands:
+    for c in re.findall(r"[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?|[Oo0]-[Oo0]-[Oo0]", text or ""):
         cl = c.lower()
         if cl in legal:
             found[cl] = c
@@ -294,27 +265,111 @@ def resolve(fen, token, legal):
         u = _san_to_uci(fen, c, legal)
         if u:
             found[u] = c
-    # MORE THAN ONE DISTINCT MOVE IS NOT AN ANSWER
-    if len(found) == 1:
-        u = next(iter(found))
-        return u, found[u]
-    return None, None
+    return found
+
+
+def _fail(reason):
+    return None, None, reason
+
+
+def resolve(fen, token, legal):
+    """-> (uci, san, reason). The engine decides legality; this decides what was named.
+
+    FOUR FALSE VERDICTS WERE FOUND AND FIXED HERE, EACH ON A CORRECT ANSWER. The fourth is the one that
+    produced a published `illegal-move` for a model playing the best move on the board:
+
+      1. SAN not accepted       the model played `e4`; a UCI-only parser scored it illegal. The record
+                                carries `move_san` precisely because SAN is expected input.
+      2. UCI misread as SAN     `g1f3` matches the SAN pattern as a PAWN move from g1, lowercase first
+                                letter -- so UCI is matched literally BEFORE any notation parsing.
+      3. MARKDOWN DECORATION    the model played `**d4c5**`; the marks made it unresolvable.
+      4. THE REASONING WAS READ AS ALTERNATIVE MOVES. The model answered `**f3e5**` and then explained
+                                "the black pawn on e5 is undefended (the d5 pawn ...)". Mining the WHOLE
+                                output for candidates found BOTH `f3e5` and `d5` -- and `d5` resolves to
+                                the legal capture `e4d5` -- so the ambiguity guard, which exists to refuse
+                                to guess, refused the right answer and the record published
+                                `illegal-move` / "no legal move" for the best move available.
+
+    THE ANSWER IS AT THE HEAD. A model states its move and then justifies it, so the FIRST LINE is where
+    the answer lives and everything after it is prose ABOUT the answer. The whole text is consulted only
+    when the head yields nothing, and then it must still yield exactly one distinct move. Ambiguity is
+    not a winner -- but reasoning is not ambiguity, and the first version could not tell them apart.
+
+    The third return value says WHICH OF THESE IT WAS, because "no legal move" was true of all four and
+    is therefore a `why` field that cannot be checked: `resolved-head`, `resolved-full`, `ambiguous`,
+    `unreadable`, or `no-legal-moves-supplied` when the list handed in was empty.
+    """
+    raw = (token or "").strip()
+    if not raw:
+        return None, None, "unreadable: empty model output"
+    # A legality check handed an empty list calls EVERY move illegal. That is not a verdict about the
+    # model; it is a broken instrument, and it says so here rather than agreeing with the failure.
+    if not legal:
+        return None, None, "no-legal-moves-supplied: the legality list was EMPTY (instrument failure)"
+
+    first = next((l.strip() for l in raw.splitlines() if l.strip()), "")
+
+    # 1. THE HEAD. The answer lives here.
+    for cand in (first, raw):
+        if not cand:
+            continue
+        stripped = cand.strip(_DECOR).strip()
+        low = stripped.lower()
+        if low in legal:
+            return low, stripped, "resolved-head" if cand is first else "resolved-full"
+        u = _san_to_uci(fen, stripped, legal)
+        if u:
+            return u, stripped, "resolved-head" if cand is first else "resolved-full"
+
+    # 2. the head yielded nothing at all -- only now is the rest of the text consulted
+    head_found = _extract(fen, first, legal)
+    if len(head_found) == 1:
+        u = next(iter(head_found))
+        return u, head_found[u], "resolved-head"
+    if len(head_found) > 1:
+        return None, None, f"ambiguous: the first line names {len(head_found)} distinct legal moves"
+
+    full = _extract(fen, raw, legal)
+    if len(full) == 1:
+        u = next(iter(full))
+        return u, full[u], "resolved-full"
+    if len(full) > 1:
+        return None, None, (
+            f"ambiguous: {len(full)} distinct legal moves named across the text, none of them the answer "
+            f"({', '.join(sorted(full)[:6])})")
+    return None, None, "unreadable: no legal move named anywhere in the output"
 
 
 def play(base, cap, probe):
     """One game, both sides driven by the same model. Family 4 of Mike's sequencing: self-play first."""
+    # THE POSITIVE CONTROL, BEFORE ANY TERMINATION MAY BE TRUSTED. A legality checker that cannot list
+    # the moves of the STARTING POSITION is not a legality checker -- and a checker handed an empty list
+    # calls EVERY move illegal, so its verdict would agree with its own failure and report the model as
+    # the cause. The starting position's move count is fixed at 20 and nobody has to interpret it.
+    start_moves = legal_moves(STARTPOS)
+    if len(start_moves) != 20:
+        return [], "serving-failure", (
+            f"oracle control FAILED: legal_moves(startpos) returned {len(start_moves)}, expected 20. "
+            f"No termination this run produces may be read as a verdict about the entrant.")
+
     rows, engine_fail = [], []
     fen, ply = STARTPOS, 0
     prev_ev, _ = evaluate(fen)
     while ply < cap:
         moves = legal_moves(fen)
         if not moves:
-            return rows, "decisive", "no legal moves -- the engine adjudicated a finished line"
+            # AN EMPTY LEGAL LIST IS AN INSTRUMENT FAILURE, NOT AN ADJUDICATION. The first version
+            # returned "decisive" here -- "the engine adjudicated a finished line" -- for what is
+            # actually a broken read, which is the empty-room defect on the legality check.
+            return rows, "serving-failure", (
+                f"legal_moves returned NOTHING at ply {ply}; the engine dialogue failed, and no move "
+                f"could be legal against an empty list. MISSING VALUE, not an adjudication.")
         raw, secs, nt, hit = ask_model(base, fen, moves, ply)
-        choice, san = resolve(fen, raw, moves)
+        choice, san, reason = resolve(fen, raw, moves)
 
         if probe:
-            print(f"    ply {ply:2d}  {len(moves):2d} legal  raw={raw[:44]!r}  -> {choice or 'UNRESOLVED'}")
+            print(f"    ply {ply:2d}  {len(moves):2d} legal  raw={raw[:44]!r}  -> {choice or 'UNRESOLVED'}"
+                  f"  [{reason.split(':')[0]}]")
         if choice is None:
             if re.search(r"\bRESIGN", raw or "", re.I):
                 ev_b, _ = evaluate(fen)
@@ -333,11 +388,20 @@ def play(base, cap, probe):
                 return rows, "serving-failure", (
                     f"answer truncated at the {MAX_TOKENS}-token cap (tokens {nt}) -- MISSING VALUE, "
                     f"not an illegal move; a re-run is a RE-MEASUREMENT")
-            return rows, "illegal-move", f"no legal move in {raw[:60]!r} -- distinguishable, not a parse artifact"
+            # AN UNRESOLVED MOVE IS A MEASUREMENT FAILURE, NOT THE ENTRANT'S FAILURE. All of these map
+            # to the frozen taxonomy's `serving-failure` -- MISSING VALUE, never scored zero, never
+            # dropped, re-run is a RE-MEASUREMENT -- and the precise reason travels with it. The first
+            # version called them all `illegal-move` and closed the question with the sentence
+            # "distinguishable, not a parse artifact": the `why` field asserted the failure was real, in
+            # the same field that carried it, which is why it survived review. All four causes below were
+            # FALSE for the entrant and each is a different claim about the INSTRUMENT.
+            return rows, "serving-failure", (
+                f"move unresolved at ply {ply} -- {reason}; raw={raw[:80]!r}. "
+                f"MISSING VALUE, not an illegal move.")
 
         nxt = apply_move(fen, choice)
         if nxt is None:
-            return rows, "illegal-move", f"engine refused {choice}"
+            return rows, "serving-failure", f"engine refused {choice} -- MISSING VALUE, not an illegal move"
         ev_a, mate = evaluate(nxt)
         if engine_fail:
             pass

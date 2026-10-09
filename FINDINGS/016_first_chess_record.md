@@ -127,3 +127,85 @@ CARD_chess's, and this is the loop's debug run, not the event. **What is establi
 plays a game, adjudicates it, writes a termination by the path that produced it, and measures both
 directions of the one quantity from the correct side.** The event is now a second run of a harness that
 has already worked once.
+
+---
+
+# AMENDMENT 1 — THE FOURTH FALSE VERDICT, AND IT WAS PUBLISHED
+
+**The five defects above stand. One more was found after them, it is worse than all five, and it reached a
+record that was nearly relayed. Annotated, not deleted.**
+
+## WHAT WAS PUBLISHED
+
+`CHESS_GAME_Ornith-1.5-9B-Q4_K_M.json` recorded `termination: illegal-move` for Ornith 9B. **It is a FALSE
+POSITIVE OF THE READER.** Ornith played `e2e4`, `e7e5`, `g1f3`, `d7d5` — four book moves — and then
+`f3e5`: **the knight capture of the undefended e5 pawn, and the best move available on the board.**
+
+```
+the model's output, verbatim from the record:
+    **f3e5**
+    The black pawn on e5 is undefended (the d5 pawn defends nothing here).
+
+the engine, asked directly:  rnbqkbnr/ppp2ppp/8/3pp3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 3
+    28 legal moves · f3e5 IS among them · the annotation is decoration only
+```
+
+**The record is now `results/CHESS_VOID_false-illegal-move_...json`, carrying a VOID banner that forbids
+relaying, comparing or scoring it, and retaining its four true rows as evidence.**
+
+## THE ACTUAL MECHANISM — AND IT IS MINE, IN THE GUARD I ADDED TO PREVENT GUESSING
+
+**The engine was never broken.** `legal_moves` returns **28 moves on that position, stable across 50
+consecutive calls**, including 25 interleaved with `evaluate` specifically to provoke a stream desync.
+**The hypothesis that an empty or partial legality list caused this is REFUTED by measurement.**
+
+**What actually happened:** defect 3 above fixed markdown **and left the prose-mining fallback in place**,
+which reads the model's *whole output* for anything move-shaped. So:
+
+```
+candidates found in the text:   f3e5   e5   d5
+        f3e5 -> legal
+        d5   -> resolves to the legal capture e4d5
+        => TWO distinct legal moves
+        => the ambiguity guard, whose entire job is to refuse to guess, REFUSED THE RIGHT ANSWER
+```
+
+**A MODEL STATES ITS MOVE AND THEN JUSTIFIES IT. ITS REASONING IS NOT A SET OF ALTERNATIVE MOVES, AND THE
+FIRST VERSION COULD NOT TELL THE DIFFERENCE.** The guard was correct in principle — ambiguity is not a
+winner — and it was fed the wrong text.
+
+**THE FIX, and the rule it establishes: THE ANSWER IS AT THE HEAD.** The first line is where a model puts
+its move; everything after is prose *about* the answer. The head is read first, the full text only if the
+head yields nothing at all, and then it must still yield exactly one distinct move. **Verified:
+`test_chess_resolve.py`, 20/20**, including this exact case.
+
+## AND THE `why` FIELD WAS THE DISGUISE — WHICH IS THE PART WORTH KEEPING
+
+```
+why: no legal move in '**f3e5**...' -- DISTINGUISHABLE, NOT A PARSE ARTIFACT
+```
+
+**That sentence asserted the failure was real and closed the question — in the same field that carried the
+failure.** It was true of all four of the reader's failure modes, so it could not be checked, and it was
+written to stop exactly the investigation that was needed. **A `why` field that is true of every cause
+distinguishes none of them.**
+
+**The reader now returns `resolved-head`, `resolved-full`, `ambiguous`, `unreadable`, or
+`no-legal-moves-supplied`, and the record carries which.**
+
+## CHILLY'S TWO CONTROLS, BOTH ADDED, BOTH RIGHT REGARDLESS OF MECHANISM
+
+1. **A POSITIVE CONTROL BEFORE ANY TERMINATION MAY BE TRUSTED:** `legal_moves(STARTPOS)` must return **20**
+   — a fixed number nobody has to interpret. **A legality checker that cannot list the moves of the
+   starting position is not a legality checker.** If it fails, the run returns `serving-failure` and **no
+   termination it produces may be read as a verdict about the entrant.**
+2. **AN EMPTY LEGAL LIST IS AN INSTRUMENT FAILURE, NOT AN ADJUDICATION.** The first version returned
+   `decisive` — *"the engine adjudicated a finished line"* — for a broken read. **That is the empty-room
+   defect on the legality check**, and it is now loud.
+
+## AND DEFECT 5 IS CLOSED BY NOT EXTENDING THE CARD
+
+The frozen taxonomy's five values are unchanged. **Unresolved moves now map to `serving-failure` — MISSING
+VALUE, never scored zero, never dropped, re-run is a RE-MEASUREMENT — with the precise cause in `why`.**
+**`illegal-move` is not a termination the card will ever report again, because it was never a fact about
+the entrant; it was a fact about the reader.**
