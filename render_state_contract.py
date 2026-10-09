@@ -74,7 +74,16 @@ SCHEMA_PATH = os.path.join(HERE, "RENDER_STATE_SCHEMA.json")
 
 CART_KEYS = {"name", "atlas", "bindings", "cues", "resolution", "kind"}
 BINDING_KEYS = {"field", "draw", "of", "from", "to", "range", "when", "if_absent"}
-DRAW_KINDS = {"tile_layer", "sprite", "sprite_tween", "text_panel", "gauge", "state"}
+# The draw vocabulary IS §2's five primitives, and nothing else. Two entries were wrong in opposite
+# directions, and both were found by comparing this set against the spec rather than by reading it:
+#   `sprite_tween` -- NOT a primitive. §2 defines "sprite layer: positioned sprites from the atlas,
+#                     WITH A TWEEN", so the tween is a property of the sprite, not a second kind.
+#   `state`        -- NOT a primitive. It has no engine behind it, and it is not needed: R5 already
+#                     carries `when:`, and a condition is a binding property, not a drawing operation.
+#   `audio`        -- WAS MISSING, and it is §2's fifth primitive. This is the one that mattered: the
+#                     room's three outcome cues (win / loss / resignation) have no draw target without
+#                     it, so the cue map R9 enforces could not be bound to anything.
+DRAW_KINDS = {"tile_layer", "sprite", "text_panel", "gauge", "audio"}
 IF_ABSENT = {"blank", "omit"}
 
 # The closed transform set. Everything a cart may do to a recorded field before drawing it. A free
@@ -421,7 +430,7 @@ GOOD_CART = {
         {"field": "round.trials", "draw": "text_panel", "of": "trial_count", "if_absent": "blank"},
         {"field": "round.items.R1.1_floor.score",
          "draw": "sprite", "of": "station_marker", "if_absent": "omit"},
-        {"field": "round.finish_reasons.length", "draw": "state", "of": "out_of_room_flag",
+        {"field": "round.finish_reasons.length", "draw": "text_panel", "of": "out_of_room_flag",
          "when": {"field": "round.finish_reasons.length"}, "if_absent": "blank"},
         {"field": "round.kind", "draw": "text_panel", "of": "event_label", "if_absent": "blank"},
     ],
@@ -463,6 +472,9 @@ BAD_CARTS = [
      "R8 kind-ambiguous: binds only fields every event carries", "declare `kind`"),
     (dict(GOOD_CART, cues={"fanfare": "blip"}),
      "R9 a cue naming an outcome the record cannot take", "R9 cues"),
+    ({"name": "x", "bindings": [{"field": "round.kind", "draw": "state", "of": "out_of_room_flag",
+                                 "if_absent": "blank"}]},
+     "R10 a draw target with no primitive behind it", "not one of"),
 ]
 
 

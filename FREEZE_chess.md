@@ -31,16 +31,37 @@ choice is invisible in the record.
 
 ### 2. AND the answer is a function of DEPTH — perfectly reproducible, and moving
 
-    kiwipete, Threads=1:   d8 -172 · d12 -196 · d16 -213 · d18 -228 · d20 -215
-    best move:             d8 e2a6 · d12 onward d5e6
+    kiwipete, Threads=1      d8      d10     d12     d14     d16     d18     d20     d22
+    move                     e2a6    e2a6    d5e6    d5e6    d5e6    d5e6    d5e6    d5e6
+    score (cp)              -172    -188    -196    -244    -213    -228    -215    -250
+    drift from previous             -16      -8     -48     +31     -15     +13     -35
+    cost (s)                0.01    0.03    0.12    0.34    0.56    1.04    1.58    3.80
+    reproducible at depth?   YES     YES     YES     YES     YES     YES     YES     YES
 
-**Not monotone: it gets worse through d18, then *better* at d20.** So a model graded at d8 and a model
-graded at d20 are graded against **different truths — 56 centipawns and one best move apart.** Both are
-reproducible. Neither is *the* answer.
+**Two facts, and only one of them is the one you would guess:**
 
-**This matters more than the nondeterminism, because chess's entire claim to calibration is that it
-measures a GRADIENT — "how wrong was the model about how lost it was." The yardstick is itself
-depth-dependent. An undeclared depth means a gradient measured against a moving stick.**
+- **The MOVE converges — at depth 12.** `e2a6` at d8–d10, then `d5e6` stable from d12 all the way to d22.
+- **The SCORE never converges, and the drift REVERSES SIGN** (−48 at d14, **+31** at d16, +13 at d20, −35
+  at d22). There is **no convergence depth.** Deeper does not buy a truer number; it buys a *different* one.
+
+**So the depth is not discovered, it is DECLARED — and it must be carried in the RECORD, exactly like
+`card_version`, never inferred and never pooled across depths.** Two entrants graded at different depths
+were never competing.
+
+**FREEZE: `depth 12`** — the first depth at which the oracle's *verdict* (the move) is stable, and the
+cheapest such depth (0.12s against 0.56s at d16). **Going deeper buys a moving number, not a better one.**
+
+## 3. Why this bites chess specifically
+
+Chess was kept as the calibration event because *calibration is a GRADIENT — confidence against the truth —
+and only chess can measure a gradient.* **The yardstick is itself depth-dependent: the score never settles
+and the drift reverses sign. An undeclared depth is therefore a gradient measured against a moving stick.**
+
+Where the oracle is a fact, and where it is not:
+- **"was this the best move?"** — a FACT from depth 12. Stable, reproducible, cheap.
+- **"how lost was the model?"** — NOT a fact at any depth. It is a *declared scale*, and the declaration is
+  what makes it comparable. **That is not a defect; it is the definition.** An *undeclared* one is the
+  defect: a model graded at d8 and one graded at d22 differ by 78 cp with nothing recording it.
 
 ## WHAT THE FREEZE MUST RECORD — all four, or the event is not placeable
 
