@@ -38,6 +38,12 @@ LLAMA = "/home/chilly1/llama.cpp/build/bin/llama-server"
 # ---- FROZEN -------------------------------------------------------------------------------------
 THREADS, HASH_MB, MULTIPV, DEPTH = 1, 64, 1, 18
 LOST_CP, HOLD_CP = -300, -100
+# A REASONING MODEL NEEDS ROOM FOR THE TRACE **AND** THE ANSWER. At 64 tokens the trace of a prompt that
+# lists twenty legal moves consumes the whole budget and the message content comes back EMPTY -- the model
+# answered, the cap ate it. That is FINDING 001's first silent mechanism arriving in this loop, and it
+# would have read as an illegal move by the entrant. The value is generous because on this axis the cap
+# measures the CAP and not the model.
+MAX_TOKENS = 2048
 STARTPOS = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 # -------------------------------------------------------------------------------------------------
 
@@ -125,7 +131,7 @@ def ask_model(base, fen, moves, ply, timeout_s=300):
     )
     body = json.dumps({
         "messages": [{"role": "user", "content": prompt}],
-        "max_tokens": 64, "temperature": 0.0,
+        "max_tokens": MAX_TOKENS, "temperature": 0.0,
     })
     import urllib.request
     req = urllib.request.Request(base + "/v1/chat/completions", data=body.encode(),
@@ -234,6 +240,14 @@ def play(base, cap, probe):
                                  verdict="ADMIT" if ev_b <= LOST_CP else
                                          ("REJECT" if ev_b >= HOLD_CP else "NOT SCORED")))
                 return rows, "resigned", f"resigned at eval {ev_b} ({side_of(ev_b)})"
+            # A CAP IS A CAP. Empty output WITH finish_reason=length is the budget talking, so it maps to
+            # the frozen taxonomy's `serving-failure` -- MISSING VALUE, never scored zero, never dropped --
+            # rather than to an illegal move by the entrant. The distinction is the whole point: an empty
+            # answer the harness produced must not be recorded as a move the model failed to make.
+            if not (raw or "").strip() and hit:
+                return rows, "serving-failure", (
+                    f"answer truncated at the {MAX_TOKENS}-token cap (tokens {nt}) -- MISSING VALUE, "
+                    f"not an illegal move; a re-run is a RE-MEASUREMENT")
             return rows, "illegal-move", f"no legal move in {raw[:60]!r} -- distinguishable, not a parse artifact"
 
         nxt = apply_move(fen, choice)

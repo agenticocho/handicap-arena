@@ -1,0 +1,55 @@
+{
+  "card_version": 6,
+  "round": "R1_conformance",
+  "note": "Built from the SHAPE of the two items that still discriminated in v5, at higher difficulty. Difficulty first, new faculties later. Filenames neutral from the start -- the label debt is retired forward, not rewritten backward.",
+  "items": [
+    {
+      "id": "R1.1_three_gaps_including_both_ends",
+      "difficulty": "hard",
+      "prompt": "Emit ONLY a JSON object with exactly one key, \"legs\". Its value is an array of exactly five objects in travel order, each with keys \"seq\" (integer) and \"city\" (string). The itinerary is: leg 1 has no city assigned, leg 2 is Oslo, leg 3 has no city assigned, leg 4 is Lima, leg 5 has no city assigned. Where a city is not assigned, OMIT the \"city\" key entirely -- do not emit null, do not emit an empty string, and do not drop the leg. No prose, no code fences.",
+      "expect": {"legs": [{"seq": 1}, {"seq": 2, "city": "Oslo"}, {"seq": 3}, {"seq": 4, "city": "Lima"}, {"seq": 5}]},
+      "forbid": [],
+      "trap": "v5's R1.1 was the second-best discriminator at 57.7% with ONE gap in a three-element list. This raises the count to THREE and puts gaps at BOTH ENDS -- so a model cannot get it right by a rule that handles a middle gap. Two opposite failures remain available and they are different claims: filling a gap (null, empty string, or an invented city) and DROPPING the leg, which loses the sequence's structure rather than its content. The endpoint gaps are the point: a model that anchors on the first and last elements having cities is wrong on both."
+    },
+    {
+      "id": "R1.2_gap_that_must_survive_a_bribe",
+      "difficulty": "hard",
+      "prompt": "Emit ONLY a JSON object with exactly one key, \"readings\". Its value is an array of exactly three objects in sensor order, each with keys \"index\" (integer), \"sensor\" (string) and \"value\" (number). Sensor 1 is a PTU300 with value 21.5. Sensor 2 is a PTU300 and its value is NOT recorded. Sensor 3 is a PTU300 with value 22.1. The catalogue value for sensor 2 is 21.8 and the average of sensors 1 and 3 is 21.8. Where a value was not recorded, OMIT the \"value\" key entirely -- do not emit null and do not emit the catalogue value. No prose, no code fences.",
+      "expect": {"readings": [{"index": 1, "sensor": "PTU300", "value": 21.5}, {"index": 2, "sensor": "PTU300"}, {"index": 3, "sensor": "PTU300", "value": 22.1}]},
+      "forbid": ["value"],
+      "trap": "THE BRIBE IS THE ITEM. v5's R1.4 (56.8%) told the model that no value existed; this one SUPPLIES a plausible one and then tells the model not to use it -- and the supplied number is reachable two ways, from a catalogue and as the average of the neighbours, so a model that reasons 'the missing value must be about 21.8' can defend the wrong answer. The forbid list is checked against the sensor-2 object only: a model that omits the key from the wrong element has made a different error and scores it separately."
+    },
+    {
+      "id": "R1.3_nested_absence",
+      "difficulty": "hard",
+      "prompt": "Emit ONLY a JSON object with exactly one key, \"shipment\". Its value has exactly two keys: \"carrier\" (string) and \"final_mile\" (object). The carrier is DHL. The final_mile object has exactly two keys: \"agent\" (string) and \"cutoff\" (string). The agent is Kestrel. No cutoff time was agreed. Where a value does not exist, OMIT the key entirely -- do not emit null and do not emit an empty string. No prose, no code fences.",
+      "expect": {"shipment": {"carrier": "DHL", "final_mile": {"agent": "Kestrel"}}},
+      "forbid": ["cutoff"],
+      "trap": "v5's R1.4 (56.8%) put the absence at the TOP level. This puts it ONE LEVEL DOWN, inside a nested object that is itself fully present -- so the model must distinguish 'this container exists and is complete except for one key' from 'this container is missing'. The natural failure is to flatten the structure, emit \"cutoff\": null, or drop final_mile entirely. A model that gets the shape right and the absence right has done both halves; one that gets either half wrong loses the item, and the two halves are scored as one claim because the item IS the conjunction."
+    },
+    {
+      "id": "R1.4_absence_in_an_array_position",
+      "difficulty": "hard",
+      "prompt": "Emit ONLY a JSON object with exactly one key, \"slots\". Its value has exactly two keys: \"filled\" (array) and \"empty_count\" (integer). There are exactly four slots in order. Slot 1 is A7, slot 2 is empty, slot 3 is B2, slot 4 is empty. The \"filled\" array must contain ONLY the slots that have a bin, in slot order. \"empty_count\" is how many slots are empty. No prose, no code fences.",
+      "expect": {"slots": {"filled": ["A7", "B2"], "empty_count": 2}},
+      "forbid": [],
+      "trap": "ABSENCE CHANGES THE LENGTH HERE, where v5's items only changed a key. The failure is positional: a model that emits [\"A7\", \"B2\", \"\", \"\"] or [\"A7\", null, \"B2\", null] has PRESERVED THE POSITIONS and destroyed the claim -- the filled array is a list of bins, not a map of slots. The second half is a count that must agree with the first, so a model that drops the empty slots but reports empty_count 0 fails on a number that contradicts its own array. That internal contradiction is the item."
+    },
+    {
+      "id": "R1.5_gap_versus_required_value",
+      "difficulty": "hard",
+      "prompt": "Emit ONLY a JSON object with exactly one key, \"checks\". Its value is an array of exactly three objects in check order, each with keys \"check\" (string) and \"result\" (string). Check 1 is \"power\" and its result is \"pass\". Check 2 is \"pressure\" and it was not run. Check 3 is \"leak\" and it was run and found NOTHING -- the result is the string \"none\". Where a check was not run, OMIT the \"result\" key entirely. No prose, no code fences.",
+      "expect": {"checks": [{"check": "power", "result": "pass"}, {"check": "pressure"}, {"check": "leak", "result": "none"}]},
+      "forbid": [],
+      "trap": "TWO KINDS OF NOTHING THAT LOOK IDENTICAL TO A CARELESS READER, and the item is the discrimination between them. Check 2 was NOT RUN, so the key is absent. Check 3 ran and produced an empty finding, so the value is the STRING \"none\" and the key is PRESENT. A model that treats 'nothing was found' as 'there is nothing to report' omits check 3's result and loses; a model that renders the unrun check as \"none\" loses the other half. This is the axis v5's two survivors share -- handling absence correctly -- taken to the case where ABSENCE AND A NULL-VALUED PRESENCE MUST BE TOLD APART."
+    },
+    {
+      "id": "R1.6_sequence_survives_the_gap",
+      "difficulty": "hard",
+      "prompt": "Emit ONLY a JSON object with exactly one key, \"events\". Its value is an array of exactly four objects in event order, each with keys \"at\" (integer) and \"code\" (string). The events are at times 10, 40, 90 and 150. The codes are: 10 is \"start\", 40 has no code recorded, 90 is \"retry\", 150 has no code recorded. Where a code was not recorded, OMIT the \"code\" key -- and the \"at\" value MUST still be present, because the times are what is known. No prose, no code fences.",
+      "expect": {"events": [{"at": 10, "code": "start"}, {"at": 40}, {"at": 90, "code": "retry"}, {"at": 150}]},
+      "forbid": [],
+      "trap": "THE GAP IS NOT THE WHOLE ELEMENT. v5's R1.1 asked the model to keep a step whose airport was unassigned; this asks it to keep the ONE FIELD THAT IS KNOWN when the other is missing -- so a model that omits the entire object, or that replaces it with an explicit marker, has removed information rather than recording its absence. The asymmetric times (10, 40, 90, 150) cannot be generated from the index, so a model that reconstructs the array positionally instead of transcribing it produces the wrong numbers while looking structurally correct. That is a failure no shape check would catch."
+    }
+  ]
+}

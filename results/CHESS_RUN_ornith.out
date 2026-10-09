@@ -1,0 +1,9 @@
+============================================================================================
+CHESS -- SELF-PLAY, ONE ENTRANT BOTH SIDES  ·  Ornith-1.5-9B-Q4_K_M
+============================================================================================
+  frozen: Threads=1 Hash=64 MultiPV=1 depth=18 LOST_CP=-300 HOLD_CP=-100  cap=60 plies
+  oracle: stockfish-linux-x86-64-universal
+  legal moves from the SAME engine (go perft 1) -- no python-chess, one implementation
+
+  weigh-in: LOADED in 3s  (log CHESS_GAME_Ornith-1.5-9B-Q4_K_M.log)
+    ply  0  20 legal  raw='e2e4'  -> e2e4
