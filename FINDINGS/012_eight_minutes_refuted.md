@@ -25,18 +25,69 @@ response coming back. **It excludes model load and server startup entirely.**
 appeared ~6 minutes old while its own log showed `n_gen = 1172` at `15.36 t/s` — about 76 seconds of work.
 **Process age includes loading a multi-gigabyte model; `secs` does not. Both were correct.**
 
-## BOTH UNITS, MEASURED
+## BOTH UNITS, MEASURED — AND A CORRECTION TO THE FIRST VERSION OF THIS SECTION
+
+### What `secs` and `gen_tokens` each cover — settled against the server log
+
+The bundle records **one `secs` and one `gen_tokens` per ITEM**, but **each item ran THREE times.** Measured
+on the Qwen3.5-9B entrant's own server log (`arena-server-27520-33129.log`, 78,938 bytes):
 
 ```
-18 entrants with both numbers:
-  TOTAL wall (journal "scored in")   97.0 min
-  TOTAL generation (sum of secs)     36.0 min
-  GAP                                61.0 min      <- 63% of wall time is NOT inference
-
-per entrant, the largest:
-  Qwen3.5-9B-Q4_K_M     WALL 1914.0 s    GEN 707.5 s    load+overhead 1206.5 s = 20.1 min
-  Qwen3.5-4B-UD-Q4_K_XL WALL 1380.0 s    GEN 600.8 s    load+overhead  779.2 s = 13.0 min
+distinct tasks (requests) in the log   18      = 6 items x 3 trials
+log total tokens (per-task maxima)     24,324
+bundle total gen_tokens                11,601
+ratio                                  2.10
 ```
+
+**And the three largest tasks in the log are 2969, 2972, 2983 — matching the bundle's three `3000`s.** So
+**`gen_tokens` and `secs` each describe ONE of the item's three trials**, not the item's total.
+
+**THE FIRST VERSION OF THIS SECTION SAID "63% OF WALL TIME IS NOT INFERENCE". THAT WAS WRONG**, and wrong
+in exactly the way this finding is about: `wall − sum(secs)` captured **both the two uncounted trials and
+the load**, and the whole gap was attributed to load.
+
+```
+sum(item secs) x the measured ratio   707.5 x 2.10  =  1486 s   <- TOTAL generation
+wall (journal "scored in")                          =  1914 s
+LOAD + OVERHEAD                                     =   428 s   =  7.1 min
+```
+
+**So the real split is ~78% generation, ~22% load — not 37/63.**
+
+### And the load is PER-ENTRANT, which is the question that decides the claim
+
+**One `llama-server` is constructed per entrant** (`arena.py:1037`), all six items run against it, and it is
+torn down at the end. **So the model is loaded ONCE per entrant** — the 428 s above — **and a single item
+costs one request.**
+
+**Consequence for the claim, and this is the definite answer:**
+
+```
+a single ITEM  (one request)   max 145.6 s  =  2.43 min   ->  the claim is REFUTED
+the entrant's LOAD (once)          ~428 s  =  7.1 min    ->  the claim is nearly EXACT
+```
+
+**"A single move can take eight minutes of actual real-world wall time" is therefore not a unit error so
+much as a SUBSTITUTION: one entrant's model load standing where a move should be.** And 7.1 min is close
+enough to 8 that the figure is almost certainly that number.
+
+**IN A GAME, THE LOAD HAPPENS ONCE AND IS NOT A MOVE** — so the claim fails as stated, **and the number
+behind it is now located rather than merely doubted.** A reader can check both: the item maximum is 2.43
+min, and the load is 7.1.
+
+### The per-entrant numbers, for the record (generation estimated at the measured ratio)
+
+```
+Qwen3.5-9B-Q4_K_M     WALL 1914.0 s    sum(secs) 707.5 s    ->  ~1486 s gen,  ~428 s load+overhead (7.1 min)
+Qwen3.5-4B-UD-Q4_K_XL WALL 1380.0 s    sum(secs) 600.8 s    ->  ~1262 s gen,  ~118 s load+overhead (2.0 min)
+```
+
+**The load scales with the model, which is what a load does.** This is the number a reader of the card
+needs and it did not exist before this run.
+
+**CONSEQUENCE, FORWARD-ONLY:** the record must carry **wall time alongside `secs`**, and **the trial count
+alongside both** — because `secs` is per-trial while the bundle presents it per-item, and **the two differ by
+the trial count, which is the same defect as reading a count without its set.**
 
 ## THE VERDICT, IN EACH UNIT — AND THEY DISAGREE
 
@@ -55,15 +106,24 @@ loaded once and plays many moves.** A move's wall time is `secs`; the 20-minute 
 a move. **But the 8-minute figure is now explained as a plausible LOAD time rather than as an invented
 number, which is a stronger refutation than "the number is wrong."**
 
-## AND THE MEASUREMENT NOBODY WAS LOOKING FOR
+## AND THE MEASUREMENT NOBODY WAS LOOKING FOR — RESTATED, BECAUSE THE FIRST VERSION WAS WRONG
 
-**63% of the run's wall time is not inference.** On this box, for this population, **loading models costs
-almost twice as much wall time as running them.** That is a fact about the instrument — and it means any
-future "how long does an item take" number quoted in wall time is mostly a statement about model loading.
+**The load is real, large and per-entrant: ~7.1 min for the 9B, ~2.0 min for the 4B.** On a box with an
+8 GB card serving models that offload to CPU, **a single entrant's model load is 2–7 minutes, and it happens
+once.** That is a fact about the instrument, and it was invisible until this run.
 
-**CONSEQUENCE, FORWARD-ONLY:** the record must carry **wall time alongside `secs`**, or the two units will
-keep being read as one. `secs` alone cannot answer a question asked in wall time, and the difference is not
-a correction — it is 63% of the quantity.
+**But the first version of this section claimed "63% of wall time is not inference", and that was wrong** —
+it came from `wall − sum(secs)`, and `sum(secs)` covers one trial of three. **The gap was mostly the two
+uncounted trials, not the load.** The corrected split is **~78% generation / ~22% load.**
+
+**THE ERROR IS THE FINDING'S OWN SUBJECT, COMMITTED TWICE IN ONE FILE:** first a duration reported in the
+wrong unit against a claim made in another, then a *ratio* computed from a quantity whose denominator was
+not what its name said. **A number is not wrong because it is wrong — it answers a different question than
+the one it was attached to, and it does so in the same way each time.**
+
+**CONSEQUENCE, FORWARD-ONLY:** the record must carry **wall time alongside `secs`, and the trial count
+alongside both** — because `secs` is per-trial while the bundle presents it per-item, and **the two differ
+by the trial count, which is a count read without its set.**
 
 ## THE ITEM-LEVEL TABLE (unchanged, and it is inference)
 
