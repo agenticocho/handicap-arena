@@ -154,3 +154,31 @@ game contract: OK (  NO NEW violation. The 301 historical rounds stand AS RECORD
       result bundle -> /home/chilly1/workspace/ocho_arena/results/LFM2.5-VL-1.6B-Q8_0_cardv6_autofit_neutral_ctx8192_mt3000.json
       -> scored in 0.1 min
 [10/46]  1.25 GB  Qwen3.5-2B-UD-Q4_K_XL
+      DIVISION: Featherweight
+      DIVISION Featherweight (cord: teal)   footprint 1.78 GB measured
+      BELT: YELLOW   stripes 2.0/6.0   rounds won 0/1   AGG 0.33
+      0.33   Yellow belt  2.0/6.0 stripes  [Featherweight]  Qwen3.5-2B-UD-Q4_K_XL.gguf
+      result bundle -> /home/chilly1/workspace/ocho_arena/results/Qwen3.5-2B-UD-Q4_K_XL_cardv6_autofit_neutral_ctx8192_mt3000.json
+      -> scored in 4.9 min
+[11/46]  1.28 GB  LFM2.5-VL-1.6B-UD-Q8_K_XL
+      DIVISION: Featherweight
+      DIVISION Featherweight (cord: teal)   footprint 1.59 GB measured
+      BELT: WHITE   stripes 1.0/6.0   rounds won 0/1   AGG 0.17
+      0.17    White belt  1.0/6.0 stripes  [Featherweight]  LFM2.5-VL-1.6B-UD-Q8_K_XL.gguf
+      result bundle -> /home/chilly1/workspace/ocho_arena/results/LFM2.5-VL-1.6B-UD-Q8_K_XL_cardv6_autofit_neutral_ctx8192_mt3000.json
+      -> scored in 0.2 min
+[12/46]  1.68 GB  granite-3.3-2b-instruct-critical-thinking.Q5_K_M
+      DIVISION: Featherweight
+      DIVISION Featherweight (cord: teal)   footprint 2.53 GB measured
+      BELT: WHITE   stripes 0.0/6.0   rounds won 0/1   AGG 0.00
+      0.00    White belt  0.0/6.0 stripes  [Featherweight]  granite-3.3-2b-instruct-critical-thinking.Q5_K_M.gguf
+      result bundle -> /home/chilly1/workspace/ocho_arena/results/granite-3.3-2b-instruct-critical-thinking.Q5_K_M_cardv6_autofit_neutral_ctx8192_mt3000.json
+      -> scored in 0.6 min
+[13/46]  1.71 GB  Qwen3-1.7B-Q8_0
+      DIVISION: Featherweight
+      DIVISION Featherweight (cord: teal)   footprint 2.56 GB measured
+      BELT: ORANGE   stripes 4.666666666666667/6.0   rounds won 1/1   AGG 0.78
+      0.78   Orange belt  4.666666666666667/6.0 stripes  [Featherweight]  Qwen3-1.7B-Q8_0.gguf
+      result bundle -> /home/chilly1/workspace/ocho_arena/results/Qwen3-1.7B-Q8_0_cardv6_autofit_neutral_ctx8192_mt3000.json
+      -> scored in 1.7 min
+[14/46]  1.81 GB  SmolLM3-3B-128K-UD-Q4_K_XL

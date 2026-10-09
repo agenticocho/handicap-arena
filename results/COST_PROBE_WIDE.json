@@ -1,0 +1,104 @@
+[
+ {
+  "entrant": "LFM2-350M-Extract-Q4_K_M",
+  "loaded_s": 3.0,
+  "committed": false,
+  "tokens": 78,
+  "secs": 0.7,
+  "move": null,
+  "reason": "unreadable",
+  "viable": false,
+  "reasoning_chars": 0,
+  "a_60ply_event_min": 0.7
+ },
+ {
+  "entrant": "LFM2-1.2B-Extract-Q4_K_M",
+  "loaded_s": 3.0,
+  "committed": false,
+  "tokens": 2048,
+  "secs": 82.8,
+  "move": null,
+  "reason": "unreadable",
+  "viable": false,
+  "reasoning_chars": 0,
+  "a_60ply_event_min": 82.8
+ },
+ {
+  "entrant": "LFM2.5-VL-1.6B-Q8_0",
+  "loaded_s": 3.0,
+  "committed": false,
+  "tokens": 3,
+  "secs": 0.4,
+  "move": null,
+  "reason": "illegal",
+  "viable": false,
+  "reasoning_chars": 0,
+  "a_60ply_event_min": 0.4
+ },
+ {
+  "entrant": "SmolLM3-3B-128K-UD-Q4_K_",
+  "loaded_s": 3.0,
+  "committed": false,
+  "tokens": 2048,
+  "secs": 117.7,
+  "move": null,
+  "reason": "unreadable",
+  "viable": false,
+  "reasoning_chars": 6369,
+  "a_60ply_event_min": 117.7
+ },
+ {
+  "entrant": "Spark-X2.5-4B-Q4_K_M",
+  "loaded_s": 3.0,
+  "committed": false,
+  "tokens": 2048,
+  "secs": 188.1,
+  "move": null,
+  "reason": "unreadable",
+  "viable": false,
+  "reasoning_chars": 5260,
+  "a_60ply_event_min": 188.1
+ },
+ {
+  "entrant": "Meta-Llama-3.1-8B-Instru",
+  "loaded_s": 6.0,
+  "committed": false,
+  "tokens": 47,
+  "secs": 8.3,
+  "move": null,
+  "reason": "illegal",
+  "viable": false,
+  "reasoning_chars": 0,
+  "a_60ply_event_min": 8.3
+ },
+ {
+  "entrant": "Cloudflare_clef-flash-IQ",
+  "loaded_s": null,
+  "committed": null,
+  "tokens": null,
+  "secs": null,
+  "move": null,
+  "reason": "server exited rc=1",
+  "viable": null
+ },
+ {
+  "entrant": "Ternary-Bonsai-2-27B-PTQ",
+  "loaded_s": null,
+  "committed": null,
+  "tokens": null,
+  "secs": null,
+  "move": null,
+  "reason": "server exited rc=1",
+  "viable": null
+ },
+ {
+  "entrant": "Ternary-Bonsai-2-27B-PQ2",
+  "loaded_s": null,
+  "committed": null,
+  "tokens": null,
+  "secs": null,
+  "move": null,
+  "reason": "server exited rc=1",
+  "viable": null
+ }
+]

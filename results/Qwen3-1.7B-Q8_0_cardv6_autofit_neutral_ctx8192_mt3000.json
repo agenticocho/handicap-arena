@@ -1,0 +1,152 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-09T19:24:14Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/Qwen3-1.7B-Q8_0.gguf",
+      "sha256": "a4f316988f61f20a5613b1f000026e54373c3d6785563a4f8b970351dfc0be0f",
+      "footprint_gb": 2.5556640625,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 2.56,
+        "weights_gb": 1.83,
+        "gpu_free_gb_at_weigh_in": 3.58,
+        "partial_offload": false,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/Qwen3-1.7B-Q8_0.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "34705"
+        ]
+      },
+      "rounds": {
+        "R1_conformance": {
+          "score": 0.7778,
+          "wins": 4.666666666666667,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "",
+          "items": {
+            "R1.1_three_gaps_including_both_ends": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 10.4,
+              "gen_tokens": 512,
+              "serving_failures": 0,
+              "raw": [
+                "{\"legs\": [{\"seq\": 1}, {\"seq\": 2, \"city\": \"Oslo\"}, {\"seq\": 3}, {\"seq\": 4, \"city\": \"Lima\"}, {\"seq\": 5}]}",
+                "{\"legs\": [{\"seq\": 1}, {\"seq\": 2, \"city\": \"Oslo\"}, {\"seq\": 3}, {\"seq\": 4, \"city\": \"Lima\"}, {\"seq\": 5}]}",
+                "{\"legs\": [{\"seq\": 1}, {\"seq\": 2, \"city\": \"Oslo\"}, {\"seq\": 3}, {\"seq\": 4, \"city\": \"Lima\"}, {\"seq\": 5}]}"
+              ]
+            },
+            "R1.2_gap_that_must_survive_a_bribe": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 6.3,
+              "gen_tokens": 107,
+              "serving_failures": 0,
+              "raw": [
+                "{\n  \"readings\": [\n    {\n      \"index\": 1,\n      \"sensor\": \"PTU300\",\n      \"value\": 21.5\n    },\n    {\n      \"index\": 2,\n      \"sensor\": \"PTU300\",\n      \"value\": null\n    },\n    {\n      \"index\": 3,\n      \"sensor\": \"PTU300\",\n      \"value\": 22.1\n    }\n  ]\n}",
+                "{\n  \"readings\": [\n    {\n      \"index\": 1,\n      \"sensor\": \"PTU300\",\n      \"value\": 21.5\n    },\n    {\n      \"index\": 2,\n      \"sensor\": \"PTU300\",\n      \"value\": null\n    },\n    {\n      \"index\": 3,\n      \"sensor\": \"PTU300\",\n      \"value\": 22.1\n    }\n  ]\n}",
+                "{\n  \"readings\": [\n    {\n      \"index\": 1,\n      \"sensor\": \"PTU300\",\n      \"value\": 21.5\n    },\n    {\n      \"index\": 2,\n      \"sensor\": \"PTU300\",\n      \"value\": null\n    },\n    {\n      \"index\": 3,\n      \"sensor\": \"PTU300\",\n      \"value\": 22.1\n    }\n  ]\n}"
+              ]
+            },
+            "R1.3_nested_absence": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 4.5,
+              "gen_tokens": 40,
+              "serving_failures": 0,
+              "raw": [
+                "{\n  \"shipment\": {\n    \"carrier\": \"DHL\",\n    \"final_mile\": {\n      \"agent\": \"Kestrel\"\n    }\n  }\n}",
+                "{\n  \"shipment\": {\n    \"carrier\": \"DHL\",\n    \"final_mile\": {\n      \"agent\": \"Kestrel\"\n    }\n  }\n}",
+                "{\n  \"shipment\": {\n    \"carrier\": \"DHL\",\n    \"final_mile\": {\n      \"agent\": \"Kestrel\"\n    }\n  }\n}"
+              ]
+            },
+            "R1.4_absence_in_an_array_position": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 3.8,
+              "gen_tokens": 26,
+              "serving_failures": 0,
+              "raw": [
+                "{\"slots\": {\"filled\": [\"A7\", \"B2\"], \"empty_count\": 2}}",
+                "{\"slots\": {\"filled\": [\"A7\", \"B2\"], \"empty_count\": 2}}",
+                "{\"slots\": {\"filled\": [\"A7\", \"B2\"], \"empty_count\": 2}}"
+              ]
+            },
+            "R1.5_gap_versus_required_value": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 4.3,
+              "gen_tokens": 322,
+              "serving_failures": 0,
+              "raw": [
+                "{\"checks\": [{\"check\": \"power\", \"result\": \"pass\"}, {\"check\": \"pressure\"}, {\"check\": \"leak\", \"result\": \"none\"}]}",
+                "{\n  \"checks\": [\n    {\n      \"check\": \"power\",\n      \"result\": \"pass\"\n    },\n    {\n      \"check\": \"pressure\"\n    },\n    {\n      \"check\": \"leak\",\n      \"result\": \"none\"\n    }\n  ]\n}",
+                "{\n  \"checks\": [\n    {\n      \"check\": \"power\",\n      \"result\": \"pass\"\n    },\n    {\n      \"check\": \"pressure\"\n    },\n    {\n      \"check\": \"leak\",\n      \"result\": \"none\"\n    }\n  ]\n}"
+              ]
+            },
+            "R1.6_sequence_survives_the_gap": {
+              "score": 0.6666666666666666,
+              "reason": null,
+              "truncated": false,
+              "secs": 5.1,
+              "gen_tokens": 459,
+              "serving_failures": 0,
+              "raw": [
+                "{\n  \"events\": [\n    {\n      \"at\": 10,\n      \"code\": \"start\"\n    },\n    {\n      \"at\": 40,\n      \"code\": \"\"\n    },\n    {\n      \"at\": 90,\n      \"code\": \"retry\"\n    },\n    {\n      \"at\": 150,\n      \"code\": \"\"\n    }\n  ]\n}",
+                "{\"events\": [{\"at\": 10, \"code\": \"start\"}, {\"at\": 40}, {\"at\": 90, \"code\": \"retry\"}, {\"at\": 150}]}",
+                "{\"events\": [{\"at\": 10, \"code\": \"start\"}, {\"at\": 40}, {\"at\": 90, \"code\": \"retry\"}, {\"at\": 150}]}"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 18
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 512,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.7778,
+      "grade": {
+        "belt": "Orange",
+        "rounds_won": 1,
+        "rounds": 1,
+        "stripes": 4.666666666666667,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 6,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 5.05,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

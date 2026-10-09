@@ -23,3 +23,34 @@ COST OF AN ENTRANT THAT CAN COMPLETE A GAME HERE -- one move, the hard position,
   LFM2-350M-Extract-Q4_K_M probing ...
   LFM2-350M-Extract-Q4_K_M load 3.0s | 0.7s | 78 tok | committed=False | None | unreadable
   LFM2-1.2B-Extract-Q4_K_M probing ...
+  LFM2-1.2B-Extract-Q4_K_M load 3.0s | 82.8s | 2048 tok | committed=False | None | unreadable
+  LFM2.5-VL-1.6B-Q8_0 probing ...
+  LFM2.5-VL-1.6B-Q8_0 load 3.0s | 0.4s | 3 tok | committed=False | None | illegal
+  SmolLM3-3B-128K-UD-Q4_K_ probing ...
+  SmolLM3-3B-128K-UD-Q4_K_ load 3.0s | 117.7s | 2048 tok | committed=False | None | unreadable
+  Spark-X2.5-4B-Q4_K_M probing ...
+  Spark-X2.5-4B-Q4_K_M load 3.0s | 188.1s | 2048 tok | committed=False | None | unreadable
+  Meta-Llama-3.1-8B-Instru probing ...
+  Meta-Llama-3.1-8B-Instru load 6.0s | 8.3s | 47 tok | committed=False | None | illegal
+  Cloudflare_clef-flash-IQ probing ...
+  Cloudflare_clef-flash-IQ load Nones | Nones | None tok | committed=None | None | server exited rc=1
+  Ternary-Bonsai-2-27B-PTQ probing ...
+  Ternary-Bonsai-2-27B-PTQ load Nones | Nones | None tok | committed=None | None | server exited rc=1
+  Ternary-Bonsai-2-27B-PQ2 probing ...
+  Ternary-Bonsai-2-27B-PQ2 load Nones | Nones | None tok | committed=None | None | server exited rc=1
+
+  === THE TABLE ===
+  entrant               load  sec/move  tokens  commits  60-ply event
+  LFM2-350M-Extract-Q4_K_M     3.0       0.7      78    False        0.7 min
+  LFM2-1.2B-Extract-Q4_K_M     3.0      82.8    2048    False       82.8 min
+  LFM2.5-VL-1.6B-Q8_0     3.0       0.4       3    False        0.4 min
+  SmolLM3-3B-128K-UD-Q4_K_     3.0     117.7    2048    False      117.7 min
+  Spark-X2.5-4B-Q4_K_M     3.0     188.1    2048    False      188.1 min
+  Meta-Llama-3.1-8B-Instru     6.0       8.3      47    False        8.3 min
+  Cloudflare_clef-flash-IQ    None      None    None     None       None min
+  Ternary-Bonsai-2-27B-PTQ    None      None    None     None       None min
+  Ternary-Bonsai-2-27B-PQ2    None      None    None     None       None min
+
+  VIABLE (commits to a legal move): 0 of 9
+
+  artifact: results/COST_PROBE_WIDE.json

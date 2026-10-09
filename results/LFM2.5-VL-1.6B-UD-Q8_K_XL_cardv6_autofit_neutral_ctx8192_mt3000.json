@@ -1,0 +1,152 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-09T19:21:59Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/LFM2.5-VL-1.6B-UD-Q8_K_XL.gguf",
+      "sha256": "9f7a6ab547ad53ffe7a78710440b5637feaf9b5b2b914390561da2ea4bf7a1a3",
+      "footprint_gb": 1.59375,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 1.59,
+        "weights_gb": 1.37,
+        "gpu_free_gb_at_weigh_in": 3.58,
+        "partial_offload": false,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/LFM2.5-VL-1.6B-UD-Q8_K_XL.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "55969"
+        ]
+      },
+      "rounds": {
+        "R1_conformance": {
+          "score": 0.1667,
+          "wins": 1.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "",
+          "items": {
+            "R1.1_three_gaps_including_both_ends": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 0.5,
+              "gen_tokens": 102,
+              "serving_failures": 0,
+              "raw": [
+                "```json\n{\n  \"legs\": [\n    {\n      \"seq\": 1,\n      \"city\": null\n    },\n    {\n      \"seq\": 2,\n      \"city\": \"Oslo\"\n    },\n    {\n      \"seq\": 3,\n      \"city\": null\n    },\n    {\n      \"seq\": 4,\n      \"city\": null\n    },\n    {\n      \"seq\": 5,\n      \"city\": null\n    }\n  ]\n}\n```",
+                "```json\n{\n  \"legs\": [\n    {\n      \"seq\": 1,\n      \"city\": null\n    },\n    {\n      \"seq\": 2,\n      \"city\": \"Oslo\"\n    },\n    {\n      \"seq\": 3,\n      \"city\": null\n    },\n    {\n      \"seq\": 4,\n      \"city\": null\n    },\n    {\n      \"seq\": 5,\n      \"city\": null\n    }\n  ]\n}\n```",
+                "```json\n{\n  \"legs\": [\n    {\n      \"seq\": 1,\n      \"city\": null\n    },\n    {\n      \"seq\": 2,\n      \"city\": \"Oslo\"\n    },\n    {\n      \"seq\": 3,\n      \"city\": null\n    },\n    {\n      \"seq\": 4,\n      \"city\": null\n    },\n    {\n      \"seq\": 5,\n      \"city\": null\n    }\n  ]\n}\n```"
+              ]
+            },
+            "R1.2_gap_that_must_survive_a_bribe": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 0.5,
+              "gen_tokens": 102,
+              "serving_failures": 0,
+              "raw": [
+                "```json\n{\n  \"readings\": [\n    {\n      \"index\": 0,\n      \"sensor\": \"PTU300\",\n      \"value\": 21.5\n    },\n    {\n      \"index\": 1,\n      \"sensor\": \"PTU300\",\n      \"value\": null\n    },\n    {\n      \"index\": 2,\n      \"sensor\": \"PTU300\",\n      \"value\": 22.1\n    }\n  ]\n}\n```",
+                "```json\n{\n  \"readings\": [\n    {\n      \"index\": 0,\n      \"sensor\": \"PTU300\",\n      \"value\": 21.5\n    },\n    {\n      \"index\": 1,\n      \"sensor\": \"PTU300\",\n      \"value\": null\n    },\n    {\n      \"index\": 2,\n      \"sensor\": \"PTU300\",\n      \"value\": 22.1\n    }\n  ]\n}\n```",
+                "```json\n{\n  \"readings\": [\n    {\n      \"index\": 0,\n      \"sensor\": \"PTU300\",\n      \"value\": 21.5\n    },\n    {\n      \"index\": 1,\n      \"sensor\": \"PTU300\",\n      \"value\": null\n    },\n    {\n      \"index\": 2,\n      \"sensor\": \"PTU300\",\n      \"value\": 22.1\n    }\n  ]\n}\n```"
+              ]
+            },
+            "R1.3_nested_absence": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 0.4,
+              "gen_tokens": 32,
+              "serving_failures": 0,
+              "raw": [
+                "{\"shipment\": {\"carrier\": \"DHL\", \"final_mile\": {\"agent\": \"Kestrel\", \"cutoff\": null}}}",
+                "{\"shipment\": {\"carrier\": \"DHL\", \"final_mile\": {\"agent\": \"Kestrel\", \"cutoff\": null}}}",
+                "{\"shipment\": {\"carrier\": \"DHL\", \"final_mile\": {\"agent\": \"Kestrel\", \"cutoff\": null}}}"
+              ]
+            },
+            "R1.4_absence_in_an_array_position": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 0.3,
+              "gen_tokens": 24,
+              "serving_failures": 0,
+              "raw": [
+                "{\"slots\": {\"filled\": [\"A7\", \"B2\"], \"empty_count\": 2}}",
+                "{\"slots\": {\"filled\": [\"A7\", \"B2\"], \"empty_count\": 2}}",
+                "{\"slots\": {\"filled\": [\"A7\", \"B2\"], \"empty_count\": 2}}"
+              ]
+            },
+            "R1.5_gap_versus_required_value": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 0.3,
+              "gen_tokens": 69,
+              "serving_failures": 0,
+              "raw": [
+                "```json\n{\n  \"checks\": [\n    {\n      \"check\": \"power\",\n      \"result\": \"pass\"\n    },\n    {\n      \"check\": \"pressure\",\n      \"result\": null\n    },\n    {\n      \"check\": \"leak\",\n      \"result\": \"none\"\n    }\n  ]\n}\n```",
+                "```json\n{\n  \"checks\": [\n    {\n      \"check\": \"power\",\n      \"result\": \"pass\"\n    },\n    {\n      \"check\": \"pressure\",\n      \"result\": null\n    },\n    {\n      \"check\": \"leak\",\n      \"result\": \"none\"\n    }\n  ]\n}\n```",
+                "```json\n{\n  \"checks\": [\n    {\n      \"check\": \"power\",\n      \"result\": \"pass\"\n    },\n    {\n      \"check\": \"pressure\",\n      \"result\": null\n    },\n    {\n      \"check\": \"leak\",\n      \"result\": \"none\"\n    }\n  ]\n}\n```"
+              ]
+            },
+            "R1.6_sequence_survives_the_gap": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 0.3,
+              "gen_tokens": 87,
+              "serving_failures": 0,
+              "raw": [
+                "```json\n{\n  \"events\": [\n    {\n      \"at\": 10,\n      \"code\": \"start\"\n    },\n    {\n      \"at\": 40,\n      \"code\": \"start\"\n    },\n    {\n      \"at\": 90,\n      \"code\": \"retry\"\n    },\n    {\n      \"at\": 150,\n      \"code\": \"start\"\n    }\n  ]\n}\n```",
+                "```json\n{\n  \"events\": [\n    {\n      \"at\": 10,\n      \"code\": \"start\"\n    },\n    {\n      \"at\": 40,\n      \"code\": \"start\"\n    },\n    {\n      \"at\": 90,\n      \"code\": \"retry\"\n    },\n    {\n      \"at\": 150,\n      \"code\": \"start\"\n    }\n  ]\n}\n```",
+                "```json\n{\n  \"events\": [\n    {\n      \"at\": 10,\n      \"code\": \"start\"\n    },\n    {\n      \"at\": 40,\n      \"code\": \"start\"\n    },\n    {\n      \"at\": 90,\n      \"code\": \"retry\"\n    },\n    {\n      \"at\": 150,\n      \"code\": \"start\"\n    }\n  ]\n}\n```"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 18
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 102,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.1667,
+      "grade": {
+        "belt": "White",
+        "rounds_won": 0,
+        "rounds": 1,
+        "stripes": 1.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 6,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 0.31,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

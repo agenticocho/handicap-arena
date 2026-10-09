@@ -1,0 +1,152 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-09T19:22:35Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/granite-3.3-2b-instruct-critical-thinking.Q5_K_M.gguf",
+      "sha256": "33dc98c5d4cd22caefeee416fc2e6263ba8a0da5e264f10c46f71cbdf1713eaa",
+      "footprint_gb": 2.533203125,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 2.53,
+        "weights_gb": 1.8,
+        "gpu_free_gb_at_weigh_in": 3.58,
+        "partial_offload": false,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/granite-3.3-2b-instruct-critical-thinking.Q5_K_M.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "39375"
+        ]
+      },
+      "rounds": {
+        "R1_conformance": {
+          "score": 0.0,
+          "wins": 0.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "",
+          "items": {
+            "R1.1_three_gaps_including_both_ends": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 1.7,
+              "gen_tokens": 255,
+              "serving_failures": 0,
+              "raw": [
+                " {\"claims\": [\"The itinerary is structured with five legs.\", \"Each leg has a sequence number and a city assigned, except for two legs.\"], \"ambiguous_terms\": [\"Travel order\", \"omit the key\"], \"assumptions\": [\"Travel order implies a logical sequence.\", \"Omitting a city key is equivalent to omitting the city.\"], \"premises\": [\"The itinerary is divided into five legs.\", \"Each leg has a unique sequence number and city.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; follows a clear structure\"}, \"additional_data\": \"Travel itinerary examples, data on travel patterns.\", \"issues\": [\"Assumes a fixed travel order without specifying it.\"], \"competing_explanations\": [\"Travel order may be flexible or subject to change.\", \"Omitting a city key may imply a different meaning.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Specify the travel order explicitly.\", \"Clarify the meaning of omitting a city key.\"]}",
+                " {\"claims\": [\"The itinerary is structured with five legs.\", \"Each leg has a sequence number and a city assigned, except for legs 2, 3, and 5.\"], \"ambiguous_terms\": [\"Travel order\", \"omit the key\"], \"assumptions\": [\"Travel order implies a specific sequence of cities.\", \"Omitting a city key is equivalent to omitting the city.\"], \"premises\": [\"The itinerary is divided into five legs.\", \"Each leg has a unique sequence number and city.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; follows a clear structure\"}, \"additional_data\": \"Travel itinerary examples, data on travel patterns.\", \"issues\": [\"Assumes a specific travel order without explicit justification.\"], \"competing_explanations\": [\"Travel order may be flexible or non-linear.\", \"Omitting a city key may imply a different meaning.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Clarify the travel order and its implications.\", \"Explore alternative interpretations of omitting a city key.\"]}",
+                " {\"claims\": [\"The itinerary is structured with five legs.\", \"Each leg has a sequence number and a city assigned, except for legs 2, 3, and 5.\"], \"ambiguous_terms\": [\"Travel order\", \"omit the key\"], \"assumptions\": [\"Travel order implies a specific sequence of cities.\", \"Omitting a city key is equivalent to omitting the city.\"], \"premises\": [\"The itinerary is divided into five legs.\", \"Each leg has a unique sequence number and city.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; follows a clear structure\"}, \"additional_data\": \"Travel itinerary examples, data on travel patterns.\", \"issues\": [\"Assumes a specific travel order without explicit justification.\"], \"competing_explanations\": [\"Travel order may be flexible or non-linear.\", \"Omitting a city key may imply a different meaning.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Clarify the travel order and its implications.\", \"Explore alternative interpretations of omitting a city key.\"]}"
+              ]
+            },
+            "R1.2_gap_that_must_survive_a_bribe": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 1.8,
+              "gen_tokens": 276,
+              "serving_failures": 0,
+              "raw": [
+                " {\"claims\": [\"The data contains three PTU300 sensors.\", \"Sensor 2's value is not recorded.\"], \"ambiguous_terms\": [\"PTU300\", \"catalogue value\"], \"assumptions\": [\"Sensor 2's value is missing due to malfunction.\", \"The average value is calculated from recorded data.\"], \"premises\": [\"Sensor 1 has a recorded value of 21.5.\", \"Sensor 3 has a recorded value of 22.1.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"Sensor calibration records, maintenance logs.\", \"issues\": [\"No context for sensor 2's missing value.\"], \"competing_explanations\": [\"Sensor 2's value may be missing due to calibration issues.\", \"The average value may be calculated from a subset of recorded data.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Address the missing value in sensor 2's record.\", \"Clarify the calculation of the average value.\"]}",
+                " {\"claims\": [\"The data contains three PTU300 sensors with varying values.\", \"The average value of sensors 1 and 3 is 21.8.\"], \"ambiguous_terms\": [\"PTU300\", \"catalogue value\"], \"assumptions\": [\"The average value is a meaningful metric.\", \"The catalogue value is relevant to the data.\"], \"premises\": [\"Sensor 1 has a value of 21.5.\", \"Sensor 2's value is not recorded.\", \"Sensor 3 has a value of 22.1.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"Statistical analysis of sensor data, sensor calibration procedures.\", \"issues\": [\"The average value may not be representative of the entire dataset.\"], \"competing_explanations\": [\"The average value may be skewed by outliers or missing data.\", \"The catalogue value may not be relevant to the data's context.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Consider the implications of missing data and outliers.\", \"Assess the relevance of the catalogue value to the data's context.\"]}",
+                " {\"claims\": [\"The data contains three PTU300 sensors with varying values.\", \"The average value of sensors 1 and 3 is 21.8.\"], \"ambiguous_terms\": [\"PTU300\", \"catalogue value\"], \"assumptions\": [\"The average value is a meaningful metric.\", \"The catalogue value is relevant to the data.\"], \"premises\": [\"Sensor 1 has a value of 21.5.\", \"Sensor 2's value is not recorded.\", \"Sensor 3 has a value of 22.1.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"Statistical analysis of sensor data, sensor calibration procedures.\", \"issues\": [\"The average value may not be representative of the entire dataset.\"], \"competing_explanations\": [\"The average value may be skewed by outliers or missing data.\", \"The catalogue value may not be relevant to the data's context.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Consider the implications of missing data and outliers.\", \"Assess the relevance of the catalogue value to the data's context.\"]}"
+              ]
+            },
+            "R1.3_nested_absence": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 1.7,
+              "gen_tokens": 233,
+              "serving_failures": 0,
+              "raw": [
+                " {\"claims\": [\"Shipment details are provided in a JSON object.\", \"Carrier and final_mile information are specified.\"], \"ambiguous_terms\": [\"Final mile\", \"cutoff\"], \"assumptions\": [\"JSON format is the standard for data exchange.\", \"Specific details are necessary for accurate shipment tracking.\"], \"premises\": [\"JSON format is a standard for data exchange.\", \"Carrier and final_mile information are essential for shipment tracking.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; adheres to standard data format\"}, \"additional_data\": \"JSON specification, data exchange standards, shipment tracking best practices.\", \"issues\": [\"Assumes standard JSON format without explicit mention.\"], \"competing_explanations\": [\"Alternative data formats may be used for shipment tracking.\", \"Specific details may not be necessary for all shipments.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Explicitly mention JSON format in data exchange.\", \"Consider alternative data formats for specific use cases.\"]}",
+                " {\"claims\": [\"Shipment details are provided in a JSON object.\", \"Carrier and final_mile information are specified.\"], \"ambiguous_terms\": [\"Final mile\", \"cutoff\"], \"assumptions\": [\"JSON format is the standard for data exchange.\", \"Specific details are necessary for accurate shipment tracking.\"], \"premises\": [\"JSON format is a standard for data exchange.\", \"Carrier and final_mile information are essential for shipment tracking.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; adheres to standard data format\"}, \"additional_data\": \"JSON specification, data exchange standards, shipment tracking best practices.\", \"issues\": [\"Assumes standard JSON format without explicit mention.\"], \"competing_explanations\": [\"Alternative data formats may be used for shipment tracking.\", \"Specific details may not be necessary for all shipments.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Explicitly mention JSON format in data exchange.\", \"Consider alternative data formats for specific use cases.\"]}",
+                " {\"claims\": [\"Shipment details are provided in a JSON object.\", \"Carrier and final_mile information are specified.\"], \"ambiguous_terms\": [\"Final mile\", \"cutoff\"], \"assumptions\": [\"JSON format is the standard for data exchange.\", \"Specific details are necessary for accurate shipment tracking.\"], \"premises\": [\"JSON format is a standard for data exchange.\", \"Carrier and final_mile information are essential for shipment tracking.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; adheres to standard data format\"}, \"additional_data\": \"JSON specification, data exchange standards, shipment tracking best practices.\", \"issues\": [\"Assumes standard JSON format without explicit mention.\"], \"competing_explanations\": [\"Alternative data formats may be used for shipment tracking.\", \"Specific details may not be necessary for all shipments.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Explicitly mention JSON format in data exchange.\", \"Consider alternative data formats for specific use cases.\"]}"
+              ]
+            },
+            "R1.4_absence_in_an_array_position": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 1.7,
+              "gen_tokens": 262,
+              "serving_failures": 0,
+              "raw": [
+                " {\"claims\": [\"The JSON object should contain only one key, \\\"slots\\\".\", \"The value of the \\\"slots\\\" key should be an object with two keys: \\\"filled\\\" and \\\"empty_count\\\".\"], \"ambiguous_terms\": [\"\\\"exactly one key\\\"\", \"\\\"exactly two keys\\\"\"], \"assumptions\": [\"The JSON format is strictly adhered to.\", \"The structure of the JSON object is crucial for data interpretation.\"], \"premises\": [\"The JSON format requires a specific structure.\", \"The \\\"slots\\\" key must contain the necessary information.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; adheres to JSON specification\"}, \"additional_data\": \"JSON specification, data structure design principles.\", \"issues\": [\"No ambiguity in JSON specification.\"], \"competing_explanations\": [\"The JSON format is flexible and can be adapted to different needs.\", \"The structure of the JSON object is not the only factor in data interpretation.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Follow JSON specifications strictly for data interoperability.\", \"Consider the structure of the JSON object in data interpretation.\"]}",
+                " {\"claims\": [\"The JSON object should contain only one key, \\\"slots\\\".\", \"The value of the \\\"slots\\\" key should be an object with two keys: \\\"filled\\\" and \\\"empty_count\\\".\"], \"ambiguous_terms\": [\"\\\"exactly one key\\\"\", \"\\\"exactly two keys\\\"\"], \"assumptions\": [\"The JSON format is strictly adhered to.\", \"The structure of the JSON object is crucial for data interpretation.\"], \"premises\": [\"The JSON format requires a specific structure.\", \"The \\\"slots\\\" key must contain the necessary information.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; adheres to JSON specification\"}, \"additional_data\": \"JSON specification, data structure design principles.\", \"issues\": [\"No ambiguity in JSON specification.\"], \"competing_explanations\": [\"The JSON format is flexible and can be adapted to different data structures.\", \"The structure of the JSON object is not the only factor in data interpretation.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Ensure strict adherence to JSON specification.\", \"Consider the implications of the JSON structure on data interpretation.\"]}",
+                " {\"claims\": [\"The JSON object should contain only one key, \\\"slots\\\".\", \"The value of the \\\"slots\\\" key should be an object with two keys: \\\"filled\\\" and \\\"empty_count\\\".\"], \"ambiguous_terms\": [\"\\\"exactly one key\\\"\", \"\\\"exactly two keys\\\"\"], \"assumptions\": [\"The JSON format is strictly adhered to.\", \"The structure of the JSON object is crucial for data interpretation.\"], \"premises\": [\"The JSON format requires a specific structure.\", \"The \\\"slots\\\" key must contain the necessary information.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; adheres to JSON specification\"}, \"additional_data\": \"JSON specification, data structure design principles.\", \"issues\": [\"No ambiguity in JSON specification.\"], \"competing_explanations\": [\"The JSON format is flexible and can be adapted to different data structures.\", \"The structure of the JSON object is not the only factor in data interpretation.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Ensure strict adherence to JSON specification.\", \"Consider the implications of the JSON structure on data interpretation.\"]}"
+              ]
+            },
+            "R1.5_gap_versus_required_value": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 1.7,
+              "gen_tokens": 231,
+              "serving_failures": 0,
+              "raw": [
+                " {\"claims\": [\"The checks were run in the specified order.\", \"The results of the checks are accurate and complete.\"], \"ambiguous_terms\": [\"Power\", \"pressure\", \"leak\"], \"assumptions\": [\"The checks are relevant and necessary.\", \"The results are reliable and trustworthy.\"], \"premises\": [\"The checks were run in the specified order.\", \"The results were accurately recorded.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"Check results, check documentation, and expert opinions.\", \"issues\": [\"No evidence provided for the relevance or necessity of the checks.\"], \"competing_explanations\": [\"The checks may be irrelevant or unnecessary.\", \"The results may be inaccurate or incomplete.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Provide evidence for the relevance and necessity of the checks.\", \"Ensure the accuracy and completeness of the results.\"]}",
+                " {\"claims\": [\"The checks were run in the specified order.\", \"The results of the checks are accurate and complete.\"], \"ambiguous_terms\": [\"Power\", \"pressure\", \"leak\"], \"assumptions\": [\"The checks are relevant and necessary.\", \"The results are reliable and trustworthy.\"], \"premises\": [\"The checks were run in the specified order.\", \"The results of the checks are accurate and complete.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"Check results, check documentation, and expert opinions.\", \"issues\": [\"No evidence provided for the checks' relevance or necessity.\"], \"competing_explanations\": [\"The checks may be irrelevant or unnecessary.\", \"The results may be inaccurate or incomplete.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Provide evidence for the checks' relevance and necessity.\", \"Address potential issues with the results' accuracy and completeness.\"]}",
+                " {\"claims\": [\"The checks were run in the specified order.\", \"The results of the checks are accurate and complete.\"], \"ambiguous_terms\": [\"Power\", \"pressure\", \"leak\"], \"assumptions\": [\"The checks are relevant and necessary.\", \"The results are reliable and trustworthy.\"], \"premises\": [\"The checks were run in the specified order.\", \"The results of the checks are accurate and complete.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Adequate for the given context\"}, \"additional_data\": \"Check results, check documentation, and expert opinions.\", \"issues\": [\"No evidence provided for the checks' relevance or necessity.\"], \"competing_explanations\": [\"The checks may be irrelevant or unnecessary.\", \"The results may be inaccurate or incomplete.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Provide evidence for the checks' relevance and necessity.\", \"Address potential issues with the results' accuracy and completeness.\"]}"
+              ]
+            },
+            "R1.6_sequence_survives_the_gap": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 1.7,
+              "gen_tokens": 229,
+              "serving_failures": 0,
+              "raw": [
+                "{\"claims\": [\"The events are at specific times and have no recorded codes.\", \"The events are ordered by time.\"], \"ambiguous_terms\": [\"\\\"at\\\"\", \"\\\"code\\\"\"], \"assumptions\": [\"The events are known and recorded.\", \"The codes are not relevant to the events.\"], \"premises\": [\"The events are at specific times.\", \"The codes are not recorded for some events.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; specific and detailed\"}, \"additional_data\": \"Event logs, codes, and timelines.\", \"issues\": [\"Assumes all events are known and recorded.\"], \"competing_explanations\": [\"Some events may have missing or incomplete data.\", \"Codes may be relevant to understanding event outcomes.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Verify event data and codes.\", \"Consider the relevance of codes to event outcomes.\"]}",
+                "{\"claims\": [\"The events are at specific times and have corresponding codes.\", \"The codes are not always recorded.\"], \"ambiguous_terms\": [\"\\\"at\\\"\", \"\\\"code\\\"\"], \"assumptions\": [\"The codes are essential for understanding the events.\", \"The absence of a code indicates a lack of recording.\"], \"premises\": [\"The events occur at known times.\", \"The codes are associated with specific events.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; provides clear event and code associations\"}, \"additional_data\": \"Event documentation, code recording policies.\", \"issues\": [\"Assumes all events have codes, which may not be true.\"], \"competing_explanations\": [\"Codes may be recorded but not included in the JSON object.\", \"Events may have multiple codes or no codes at all.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Clarify the scope of event and code associations.\", \"Ensure the JSON object accurately reflects event and code information.\"]}",
+                "{\"claims\": [\"The events are at specific times and have corresponding codes.\", \"The codes are not always recorded.\"], \"ambiguous_terms\": [\"\\\"at\\\"\", \"\\\"code\\\"\"], \"assumptions\": [\"The codes are essential for understanding the events.\", \"The absence of a code indicates a lack of recording.\"], \"premises\": [\"The events occur at known times.\", \"The codes are associated with specific events.\"], \"evidence\": {\"credibility\": \"High\", \"relevance\": \"High\", \"sufficiency\": \"Strong; provides clear event and code associations\"}, \"additional_data\": \"Event documentation, code recording policies.\", \"issues\": [\"Assumes all events have codes, which may not be true.\"], \"competing_explanations\": [\"Codes may be recorded but not included in the JSON object.\", \"Events may have multiple codes or no codes at all.\"], \"validity\": \"Valid\", \"soundness\": \"Strong\", \"recommendations\": [\"Clarify the scope of event and code associations.\", \"Ensure the JSON object accurately reflects event and code information.\"]}"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 18
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 276,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.0,
+      "grade": {
+        "belt": "White",
+        "rounds_won": 0,
+        "rounds": 1,
+        "stripes": 0.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 6,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 1.67,
+      "answers_from_reasoning": 0
+    }
+  ]
+}
