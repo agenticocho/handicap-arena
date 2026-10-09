@@ -6,3 +6,20 @@ CHESS -- SELF-PLAY, ONE ENTRANT BOTH SIDES  ·  Ornith-1.5-9B-Q4_K_M
   legal moves from the SAME engine (go perft 1) -- no python-chess, one implementation
 
   weigh-in: LOADED in 3s  (log CHESS_GAME_Ornith-1.5-9B-Q4_K_M.log)
+    ply  0  20 legal  raw='e2e4'  -> e2e4  [resolved-head]
+    ply  1  20 legal  raw='e7e5'  -> e7e5  [resolved-head]
+    ply  2  29 legal  raw='g1f3'  -> g1f3  [resolved-head]
+    ply  3  29 legal  raw='d7d5'  -> d7d5  [resolved-head]
+    ply  4  28 legal  raw=''  -> UNRESOLVED  [unreadable]
+
+  TERMINATION  serving-failure
+    answer truncated at the 2048-token cap (tokens 2048) -- MISSING VALUE, not an illegal move; a re-run is a RE-MEASUREMENT
+
+  BOTH DIRECTIONS OF THE ONE QUANTITY (CARD_chess.md:123):
+    premature collapse          0   (stopped while HOLDABLE)
+    miscalibrated persistence   0   (played on while LOST)
+    plies spent in lost posns   0
+    plies recorded              4
+    verdict on the stop         NOT CALIBRATED
+
+  artifact: results/CHESS_GAME_Ornith-1.5-9B-Q4_K_M.json

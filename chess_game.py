@@ -38,13 +38,17 @@ LLAMA = "/home/chilly1/llama.cpp/build/bin/llama-server"
 # ---- FROZEN -------------------------------------------------------------------------------------
 THREADS, HASH_MB, MULTIPV, DEPTH = 1, 64, 1, 18
 LOST_CP, HOLD_CP = -300, -100
-# A REASONING MODEL NEEDS ROOM FOR THE TRACE **AND** THE ANSWER. At 64 tokens the trace of a prompt that
-# lists twenty legal moves consumes the whole budget and the message content comes back EMPTY -- the model
-# answered, the cap ate it. That is FINDING 001's first silent mechanism arriving in this loop, and it
-# would have read as an illegal move by the entrant. The value is generous because on this axis the cap
-# measures the CAP and not the model.
+# A REASONING MODEL NEEDS ROOM FOR THE TRACE **AND** THE ANSWER -- but raising this value only MOVES
+# the failure, it does not remove it. MEASURED: the trace ESCALATES with the position and ate the cap
+# on its own --
+#   ply 0  509 tokens · ply 1  474 · ply 2 1153 · ply 3 1969 · ply 4 2314 -> CAP HIT, content EMPTY
+# -- so the fix is not a bigger cap but a PROMPT that puts the answer FIRST. With the move on the
+# first line, a truncated trace is harmless: the answer was already emitted, and only the
+# justification is lost. THE ANSWER IS AT THE HEAD, in the prompt as well as in the reader.
 MAX_TOKENS = 2048
 STARTPOS = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+# Set by main(). Where a truncated deliberation is preserved as EVIDENCE -- never mined for a move.
+REASONING_OUT = None
 # -------------------------------------------------------------------------------------------------
 
 
@@ -168,22 +172,34 @@ def read_until(sock_file, done, timeout_s=300):
     return buf
 
 
-def ask_model(base, fen, moves, ply, timeout_s=300):
-    """-> (raw_text, chosen_uci or None, secs, gen_tokens, budget_hit).
+def ask_model(base, fen, moves, ply, timeout_s=600):
+    """-> (content, reasoning, secs, gen_tokens, budget_hit).
 
-    THE TEMPLATED PATH, AND THIS WAS A REAL BUG. The first version posted to `/completion` with a raw
-    prompt; against an instruction-tuned model the server never applies the model's own chat template,
-    and the model emits EOS immediately -- `content: ""`, `tokens_predicted: 1`. Measured directly:
-    raw `/completion` returned empty where `/v1/chat/completions` returned "Hello" on the same server.
-    A PROMPT THAT REACHES THE MODEL IN A FORMAT IT WAS NOT TRAINED ON IS NOT A MEASUREMENT OF THE MODEL.
+    THE RESPONSE HAS TWO FIELDS AND THE FIRST VERSION READ ONE. Ornith 9B is a reasoning model: it emits
+    an EMPTY `content` and puts its whole output in `reasoning_content`. Measured on the exact position
+    the run died at:
+
+        message['content']           = ''
+        message['reasoning_content'] = 'The position is: ... Let me analyze this. White to move. ...'
+        finish_reason                = length
+
+    So "the model returned nothing" was FALSE -- it returned 2048 tokens of deliberation in a field the
+    reader never opened. THAT IS THE EMPTY-ROOM DEFECT IN THE API RESPONSE: a reading that cannot tell
+    "no output" from "output somewhere else". Both fields are returned now and both are recorded.
+
+    AND IT IS NOT MERELY A DISCARD: when `finish_reason` is `length` the model was still DELIBERATING when
+    the cap hit, so it never committed to a move. Mining the reasoning for a move it mentioned would be
+    inventing a decision -- the exact guess the ambiguity guard exists to refuse -- so no move is taken
+    from it. The reasoning is captured as evidence, not mined for an answer.
     """
     prompt = (
         "You are playing a game of chess. You control one side.\n"
         f"Position (FEN): {fen}\n"
         f"Your legal moves, and the only moves you may play:\n" + ", ".join(moves) + "\n\n"
-        "Choose exactly one move from that list.\n"
-        "If you judge the position lost beyond recovery, reply RESIGN instead of a move.\n"
-        "Reply with the move in coordinate notation and nothing else."
+        "FIRST LINE: the move alone, in coordinate notation, and nothing else. Nothing before it.\n"
+        "If you judge the position lost beyond recovery, the first line is exactly: RESIGN\n"
+        "AFTER the first line you may explain your reasoning if you wish, and it will be ignored.\n\n"
+        "The move goes on the first line. Reason after, not before."
     )
     body = json.dumps({
         "messages": [{"role": "user", "content": prompt}],
@@ -197,15 +213,17 @@ def ask_model(base, fen, moves, ply, timeout_s=300):
         with urllib.request.urlopen(req, timeout=timeout_s) as r:
             j = json.loads(r.read().decode())
         dt = time.time() - t0
-        txt = ((j.get("choices") or [{}])[0].get("message", {}).get("content") or "").strip()
+        msg = ((j.get("choices") or [{}])[0].get("message") or {})
+        txt = (msg.get("content") or "").strip()
+        reasoning = (msg.get("reasoning_content") or "").strip()
         nt = (j.get("usage") or {}).get("completion_tokens", 0)
         fin = (j.get("choices") or [{}])[0].get("finish_reason")
-        # A CAP IS A CAP: finish_reason 'length' means the answer was TRUNCATED, so a missing move is
-        # the budget talking and not the model failing. Carried, never inferred.
+        # A CAP IS A CAP: finish_reason 'length' means the output was TRUNCATED, so a missing move is the
+        # budget talking and not the model failing. Carried, never inferred.
         hit = fin == "length"
-        return txt, dt, nt, hit
+        return txt, reasoning, dt, nt, hit
     except Exception as e:                                        # noqa: BLE001
-        return f"<server failure: {e}>", time.time() - t0, 0, False
+        return "", f"<server failure: {e}>", time.time() - t0, 0, False
 
 
 def _san_to_uci(fen, token, legal):
@@ -364,12 +382,12 @@ def play(base, cap, probe):
             return rows, "serving-failure", (
                 f"legal_moves returned NOTHING at ply {ply}; the engine dialogue failed, and no move "
                 f"could be legal against an empty list. MISSING VALUE, not an adjudication.")
-        raw, secs, nt, hit = ask_model(base, fen, moves, ply)
+        raw, reasoning, secs, nt, hit = ask_model(base, fen, moves, ply)
         choice, san, reason = resolve(fen, raw, moves)
 
         if probe:
-            print(f"    ply {ply:2d}  {len(moves):2d} legal  raw={raw[:44]!r}  -> {choice or 'UNRESOLVED'}"
-                  f"  [{reason.split(':')[0]}]")
+            print(f"    ply {ply:2d}  {len(moves):2d} legal  raw={raw[:40]!r}  -> {choice or 'UNRESOLVED'}"
+                  f"  [{reason.split(':')[0]}]  reason_tok={len(reasoning)}")
         if choice is None:
             if re.search(r"\bRESIGN", raw or "", re.I):
                 ev_b, _ = evaluate(fen)
@@ -384,10 +402,27 @@ def play(base, cap, probe):
             # the frozen taxonomy's `serving-failure` -- MISSING VALUE, never scored zero, never dropped --
             # rather than to an illegal move by the entrant. The distinction is the whole point: an empty
             # answer the harness produced must not be recorded as a move the model failed to make.
-            if not (raw or "").strip() and hit:
+            if not raw and hit:
+                # IT WAS STILL DELIBERATING WHEN THE CAP HIT. Not "the model said nothing" -- it emitted
+                # thousands of characters of reasoning in a field the first reader never opened, and never
+                # reached a commitment. No move is taken from that text: mining a deliberation for a move
+                # it mentioned is inventing a decision. PRESERVED AS EVIDENCE instead, in its own file, so
+                # the deliberation is inspectable without ever being scored.
+                if REASONING_OUT and reasoning:
+                    try:
+                        with open(REASONING_OUT, "w") as fh:
+                            fh.write(f"# deliberation of the entrant at ply {ply}, preserved as evidence\n")
+                            fh.write(f"# content field was EMPTY; finish_reason was 'length' at the "
+                                     f"{MAX_TOKENS}-token cap. No move was committed.\n\n")
+                            fh.write(reasoning)
+                    except OSError:
+                        pass
                 return rows, "serving-failure", (
-                    f"answer truncated at the {MAX_TOKENS}-token cap (tokens {nt}) -- MISSING VALUE, "
-                    f"not an illegal move; a re-run is a RE-MEASUREMENT")
+                    f"the model was STILL DELIBERATING when the {MAX_TOKENS}-token cap hit "
+                    f"({nt} tokens, {len(reasoning)} characters of reasoning in `reasoning_content`, "
+                    f"`content` empty). NO MOVE WAS COMMITTED, so there is no illegal move to report -- "
+                    f"MISSING VALUE, not a verdict about the entrant. The deliberation is preserved at "
+                    f"{os.path.basename(REASONING_OUT) if REASONING_OUT else '(unsaved)'}")
             # AN UNRESOLVED MOVE IS A MEASUREMENT FAILURE, NOT THE ENTRANT'S FAILURE. All of these map
             # to the frozen taxonomy's `serving-failure` -- MISSING VALUE, never scored zero, never
             # dropped, re-run is a RE-MEASUREMENT -- and the precise reason travels with it. The first
@@ -462,6 +497,7 @@ def measure(rows, termination):
 
 
 def main():
+    global REASONING_OUT
     ap = argparse.ArgumentParser()
     ap.add_argument("--entrant", required=True)
     ap.add_argument("--label", default=None)
@@ -470,6 +506,7 @@ def main():
     ap.add_argument("--probe", action="store_true")
     a = ap.parse_args()
     label = a.label or os.path.basename(a.entrant).replace(".gguf", "")
+    REASONING_OUT = os.path.join(HERE, "results", f"CHESS_REASONING_{label}.txt")
     base = f"http://127.0.0.1:{a.port}"
     if not os.path.exists(SF):
         print(f"  ORACLE ABSENT: {SF}"); return 2
