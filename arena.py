@@ -193,6 +193,83 @@ def division_for(gb):
     return DIVISIONS[-1][0]
 
 
+def measured_gb(gb, text="GB measured"):
+    """Render a measurement that may not have been taken. `f"{None:.2f}"` is a TypeError.
+
+    On a platform with no device-memory probe (no nvidia-smi: darwin) the footprint is None, and
+    `print_card` formatted it with `:.2f` -- so a Mac measured the whole card and then DIED AT THE
+    PRINT, before the bundle was written: every run on this machine discarded its own record at
+    the last step, with a traceback that reads like a scoring bug. A missing measurement is a fact
+    to print, not an exception to raise -- and it must never render as 0.00, which is a claim.
+    """
+    return ("NOT MEASURED (no device-memory probe on this platform)" if gb is None
+            else f"{gb:.2f} {text}")
+
+
+# ------------------------------------------------------- THE REALIZED PLACEMENT, READ NOT ASSUMED
+#
+# The record carried `ngl_requested: null` and `placement: "auto-fit"` -- a STAND-IN FOR A NUMBER.
+# The resolved layer count is a function of free device memory at load, so it differs between two
+# boxes and between two runs on the same box (measured here: 3.97 and 7.31 GB free at weigh-in, same
+# card, same model). Two entrants can therefore be "at the same config" in the field that matters
+# least and differently offloaded in the field that matters most -- and neither machine can tell
+# afterwards whether it ran the same thing. That is why the realized count belongs in the record.
+#
+# It is available portably, from llama-server's OWN STDOUT:
+#
+#   I load_tensors: offloading output layer to GPU
+#   I load_tensors: offloading 15 repeating layers to GPU
+#   I load_tensors: offloaded 17/17 layers to GPU
+#   I llama_prepare_model_devices: using device MTL0 (Apple M4) (unknown id) - 25558 MiB free
+#
+# and NOT from anywhere else: /props reports the model, the quantization and the build, and never
+# the placement (checked against a live b10090 server). The lines are I-tagged but GATED BY
+# VERBOSITY -- at the default (-lv 3) the whole load block is suppressed and the log says only
+# "model loaded", which is why the count was never in the record: nobody started the server with a
+# flag that emits it. Measured on b10090/Metal: -lv 3 -> absent; -lv 4 -> present, 205 lines;
+# -lv 5 -> present, 1842 lines (adds per-layer debug). SEE VERBOSITY IN LlamaServer.__init__.
+OFFLOAD_TOTAL_RE = re.compile(r"load_tensors: offloaded (\d+)/(\d+) layers to GPU")
+OFFLOAD_REPEAT_RE = re.compile(r"load_tensors: offloading (\d+) repeating layers to GPU")
+OFFLOAD_OUTPUT_RE = re.compile(r"load_tensors: offloading output layer to GPU")
+DEVICE_FREE_RE = re.compile(r"using device (\S+) \(([^)]*)\).*?(\d+) MiB free")
+FIT_PROJECTED_RE = re.compile(r"projected to use (\d+) MiB of device memory vs\. (\d+) MiB of free")
+
+
+def realized_placement(lines):
+    """What llama.cpp ACTUALLY placed, parsed from its own words. Never inferred from `auto-fit`.
+
+    An unread placement must be VISIBLE as unread: `ngl_realized` is None and `placement_source`
+    says `unreadable-server-log:<why>`, because a bare null here is exactly what the old record
+    wrote for BOTH "we did not look" and "the server did not say" -- and it read as a measurement.
+    """
+    out: dict = dict(ngl_realized=None, layers_total=None, repeating_layers_on_gpu=None,
+                     output_layer_on_gpu=None, device=None, device_free_mib_at_load=None,
+                     fit_projected_mib=None, placement_evidence=None)
+    for ln in lines:
+        m = OFFLOAD_TOTAL_RE.search(ln)
+        if m:
+            out["ngl_realized"] = int(m.group(1))
+            out["layers_total"] = int(m.group(2))
+            out["placement_evidence"] = ln.strip()
+            continue
+        m = OFFLOAD_REPEAT_RE.search(ln)
+        if m:
+            out["repeating_layers_on_gpu"] = int(m.group(1))
+            continue
+        if OFFLOAD_OUTPUT_RE.search(ln):
+            out["output_layer_on_gpu"] = True
+            continue
+        m = DEVICE_FREE_RE.search(ln)
+        if m:
+            out["device"] = f"{m.group(1)} ({m.group(2)})"
+            out["device_free_mib_at_load"] = int(m.group(3))
+            continue
+        m = FIT_PROJECTED_RE.search(ln)
+        if m:
+            out["fit_projected_mib"] = int(m.group(1))
+    return out
+
+
 # ---------------------------------------------------------------------------- the server
 class LlamaServer:
     """Launches a NEUTRAL llama-server. No grammar, no template, no alias. Just the weights."""
@@ -230,11 +307,21 @@ class LlamaServer:
             except (ValueError, OSError):
                 pass            # not on the main thread; atexit still applies
 
-    def __init__(self, gguf, ctx, ngl, port=None, binary=None, extra=None):
+    def __init__(self, gguf, ctx, ngl, port=None, binary=None, extra=None, verbosity=4):
         self.gguf, self.ctx, self.ngl = gguf, ctx, ngl
         self.binary = binary or find_llama_server()
         self.port = port or free_port()
         self.flags = ["--model", gguf, "--ctx-size", str(ctx)]
+        # START THE SERVER SO IT WILL SAY WHERE IT PUT THE MODEL.
+        #
+        # At the default verbosity the load block is suppressed and the log records `auto-fit`
+        # without ever recording what auto-fit CHOSE, so the one field that says whether two
+        # machines ran the same thing cannot be read from anywhere afterwards. -lv 4 is the
+        # cheapest level that carries it (measured: 205 lines at 4, 1842 at 5, absent at 3).
+        # It is a CONFIG value like any other, so it rides in `server_flags` and both sides
+        # of a comparison get it from the same code.
+        self.verbosity = verbosity
+        self.flags += ["-lv", str(verbosity)]
         # DO NOT pass --n-gpu-layers unless explicitly asked. llama.cpp probes free device memory
         # and auto-fits the layer count when the user has not set it -- but if the flag IS set and
         # the placement does not fit, it ABORTS instead ("failed to fit params to free device
@@ -279,6 +366,26 @@ class LlamaServer:
     @property
     def url(self):
         return f"http://127.0.0.1:{self.port}"
+
+    def realized_placement(self):
+        """Read the placement out of the server's own log. See realized_placement() at module level.
+
+        Three states, and they must not read alike:
+          read              -> ngl_realized is an int, placement_source is "server-log"
+          log unreadable    -> placement_source says so
+          read, no lines    -> placement_source says so (a build that does not print them)
+        """
+        try:
+            with open(self.logpath, errors="replace") as f:
+                lines = f.read().splitlines()
+        except OSError as e:
+            return dict(realized_placement([]),
+                        placement_source=f"unreadable-server-log:{type(e).__name__}")
+        got = realized_placement(lines)
+        got["placement_source"] = ("server-log" if got["ngl_realized"] is not None
+                                  else "unreadable-server-log:no load_tensors offload lines "
+                                       f"at -lv {self.verbosity} in {os.path.basename(self.logpath)}")
+        return got
 
     def start(self, timeout=600):
         if not self.binary:
@@ -356,6 +463,7 @@ class LlamaServer:
         partial = bool(fp is not None and wd is not None and fp < wd * 0.95)
         d_res = None if fp is None else division_for(fp)
         d_wts = None if wd is None else division_for(wd)
+        real = self.realized_placement()
         return dict(
             ngl_requested=self.ngl,                     # null = auto-fit
             placement="forced" if self.ngl is not None else "auto-fit",
@@ -368,15 +476,58 @@ class LlamaServer:
             division_from_weights=d_wts,
             # The one that counts. Partial offload means the resident number is the machine's.
             division_for_competition=(d_wts if partial else (d_res or d_wts)),
+            # ---- THE PLACEMENT THE SERVER ACTUALLY USED, NOT THE ONE IT WAS ASKED FOR ----
+            # `ngl_requested`/`placement` above are a REQUEST. `auto-fit` is a stand-in for a
+            # number, and the number is a function of free device memory at load -- different
+            # between two boxes and between two runs on one box. These fields are read from the
+            # server's own stdout (see the regex block at module level), so a cross-machine
+            # comparison can state the realized placement of each side instead of asserting
+            # "same config" about two requests.
+            ngl_realized=real["ngl_realized"],
+            layers_total=real["layers_total"],
+            output_layer_on_gpu=real["output_layer_on_gpu"],
+            placement_source=real["placement_source"],
+            placement_evidence=real["placement_evidence"],
+            device=real["device"],
+            device_free_gb_at_load=(None if real["device_free_mib_at_load"] is None
+                                    else round(int(real["device_free_mib_at_load"]) / 1024.0, 2)),
+            # WHICH PROBE PRODUCED THE MEMORY NUMBERS -- because on this box one of them does not
+            # exist. gpu_free_mb()/gpu_used_mb() shell out to nvidia-smi, which is absent on
+            # darwin, so `footprint_gb` and `gpu_free_gb_at_weigh_in` come out null for EVERY
+            # entrant measured on a Mac: a silent hole exactly where the record claims a
+            # measurement, and it reads as "no partial offload" rather than "not measured here".
+            # The `device`/`device_free_gb_at_load` pair comes from llama-server instead and
+            # exists on both platforms -- one quantity, two sources, and now the source is named.
+            memory_probe=("nvidia-smi" if self.vram_free_mb is not None
+                          else ("server-log" if real["device_free_mib_at_load"] is not None
+                                else "none")),
+            footprint_measured=fp is not None,
         )
 
     def print_weigh_in(self):
         w = self.weigh_in()
-        line = f"  footprint {w['footprint_gb']} GB measured ({w['placement']}"
+        line = f"  footprint {measured_gb(w['footprint_gb'])} ({w['placement']}"
         if w["ngl_requested"] is not None:
             line += f" ngl={w['ngl_requested']}"
         line += f", gpu free {w['gpu_free_gb_at_weigh_in']} GB)"
         print(line, flush=True)
+        # WHAT THE SERVER DID, AS OPPOSED TO WHAT IT WAS ASKED. The line above is a REQUEST
+        # (`auto-fit`); this is the realized placement, and when it cannot be read the line says
+        # so rather than leaving a null that reads as a measurement.
+        if w["ngl_realized"] is not None:
+            print(f"    placement REALIZED: ngl={w['ngl_realized']}"
+                  + (f"/{w['layers_total']}" if w["layers_total"] else "")
+                  + (", output layer on GPU" if w["output_layer_on_gpu"] else "")
+                  + (f", device {w['device']}" if w["device"] else "")
+                  + f"  [{w['placement_source']}]")
+        else:
+            print(f"    ** PLACEMENT UNREAD — {w['placement_source']}."
+                  f" A null here means NOT MEASURED, never 'not offloaded'.")
+        if w["memory_probe"] != "nvidia-smi":
+            print(f"    ** DEVICE-MEMORY PROBE {w['memory_probe'].upper()}: footprint_measured="
+                  f"{w['footprint_measured']}. On a platform with no nvidia-smi the resident "
+                  f"footprint is NOT MEASURED, so division falls back to WEIGHTS — correct, and "
+                  f"worth saying out loud.")
         if w["partial_offload"]:
             print(f"  ** PARTIAL OFFLOAD — resident {w['footprint_gb']} GB is LESS than the "
                   f"{w['weights_gb']} GB of weights on disk, so the surplus is on CPU.")
@@ -1178,7 +1329,7 @@ def print_card(res):
     print(f"\n{'='*88}")
     print(f"  {os.path.basename(res['gguf'])}")
     print(f"  DIVISION {res['division']} (cord: {res.get('cord','-')})   "
-          f"footprint {res['footprint_gb']:.2f} GB measured")
+          f"footprint {measured_gb(res.get('footprint_gb'))}")
     print(f"  BELT: {belt.upper()}   stripes {stripes}/{tot}   "
           f"rounds won {g.get('rounds_won',0)}/{g.get('rounds',0)}   AGG {res['aggregate']:.2f}")
     print(f"{'-'*88}")
@@ -1390,6 +1541,7 @@ def run_relay(paths, args, tasks):
         print("\n  The worker could not be weighed in — no relay can be run. Nothing was scored.")
         return
 
+    have_fp = router_fp is not None and worker_fp is not None
     sum_fp = (router_fp or 0) + (worker_fp or 0)
     peak_fp = max(router_fp or 0, worker_fp or 0)
     print(f"\n{'='*108}")
@@ -1412,8 +1564,15 @@ def run_relay(paths, args, tasks):
     print("-" * 108)
     print(f"{'MEAN':16s} {'':8s} {tw/k:16.2f} {tr/k:8.2f} {(tr-tw)/k:+9.2f}")
     print(f"\n  worker alone {tw/k:.2f}   relay {tr/k:.2f}")
-    print(f"  DIVISION footprint (sum of members) {sum_fp:.2f} GB -> {division_for(sum_fp)}")
-    print(f"  PEAK footprint (legs serialised)    {peak_fp:.2f} GB -> {division_for(peak_fp)}")
+    if have_fp:
+        print(f"  DIVISION footprint (sum of members) {sum_fp:.2f} GB -> {division_for(sum_fp)}")
+        print(f"  PEAK footprint (legs serialised)    {peak_fp:.2f} GB -> {division_for(peak_fp)}")
+    else:
+        # `router_fp or 0` made an unmeasured footprint print as "0.00 GB -> Featherweight", which
+        # is not a placeholder: it is a DIVISION the relay never earned, on a platform where
+        # nothing was on the scale. Same rule as measured_gb(): absence is stated, never scored.
+        print("  DIVISION and PEAK footprint NOT MEASURED on this platform (no device-memory probe),"
+              " so the relay is not placed in a division here. 0.00 GB would be a claim.")
     print("  A relay that merely matches the worker has added a model and gained nothing.")
     print("  A relay that beats the worker has to justify a larger DIVISION footprint even though "
           "its PEAK fits in the worker's class.")
@@ -1437,7 +1596,7 @@ def grade_only(path):
         g = r.get("grade") or bout_grade(rounds, 3)
         print(f"\n  {os.path.basename(r['gguf'])}")
         print(f"    sha256  {r['sha256'][:24]}...")
-        print(f"    division {r['division']}  footprint {r['footprint_gb']:.2f} GB  "
+        print(f"    division {r['division']}  footprint {measured_gb(r.get('footprint_gb'))}  "
               f"cord {r.get('cord', CORDS.get(r['division'], '-'))}")
         print(f"    BELT {g['belt']}   stripes {g['stripes']}/{g['trials']}   "
               f"rounds won {g['rounds_won']}/{g['rounds']}")
