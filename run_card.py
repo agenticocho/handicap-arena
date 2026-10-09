@@ -165,12 +165,29 @@ def gate_ratios(planned, attempted, measured):
     Kept separate from the printing block because a criterion stated in a card, implemented in a
     runner, and asserted in a test are THREE components, and two components confirming each other is
     not evidence when they share no rule. This is the rule; everything else calls it.
+
+    === THE SECOND CONDITION, RULED IN ===
+
+    `measured > 0` is now PART OF THE GATE EXPRESSION rather than a block printed after the verdict.
+
+    A coverage ratio cannot distinguish "ran completely" from "never started" -- TOTAL FAILURE IS ITS
+    PASSING CASE. A better coverage (counting STARTED rather than ATTEMPTED) is better and still not
+    sufficient. THE GUARD IS THE PAIR, NOT THE RATIO: `coverage >= 0.95 AND measured > 0`.
+
+    It used to be a separate `if _measured == 0:` block AFTER the gate verdict had already been printed,
+    which meant A READER COULD QUOTE "COVERAGE 1.000" BESIDE A RUN THAT PRODUCED NOTHING. A condition
+    that fires after the verdict is not part of the verdict.
+
+    BOTH SIDES ARE CONTROL-TESTED: a run that measured nothing must fail the gate even with coverage
+    1.000, AND a run that measured something must NOT be failed by this condition.
     """
     coverage = (attempted / planned) if planned else 0.0
     yield_   = (measured / attempted) if attempted else 0.0
-    return {"coverage": coverage, "yield": yield_,
+    measured_ok = measured > 0
+    return {"coverage": coverage, "yield": yield_, "measured": measured,
             "coverage_ok": coverage >= 0.95, "yield_ok": yield_ >= 0.85,
-            "gate_met": coverage >= 0.95 and yield_ >= 0.85}
+            "measured_ok": measured_ok,
+            "gate_met": coverage >= 0.95 and yield_ >= 0.85 and measured_ok}
 
 
 def permanently_failed(base):
@@ -484,7 +501,13 @@ def main():
           f"{'OK' if _g['coverage_ok'] else 'UNMET'}")
     print(f"      YIELD    measured/attempted  {_g['yield']:.3f}  (>= 0.85)   "
           f"{'OK' if _g['yield_ok'] else 'UNMET'}")
-    print(f"      GATE {'MET -- outcome 2 or 3 may be called' if _g['gate_met'] else 'UNMET -- outcome 1: NO VERDICT'}")
+    # THE SECOND CONDITION PRINTS BESIDE THE RATIOS, because THE GUARD IS THE PAIR, NOT THE RATIO. A
+    # coverage of 1.000 with nothing measured is the shape of total failure passing its own test, and the
+    # reader must see the conjunction rather than two ratios that look satisfied.
+    print(f"      MEASURED > 0                {_g['measured']:d}                "
+          f"{'OK' if _g['measured_ok'] else 'UNMET'}")
+    print(f"      GATE (coverage AND yield AND measured>0) "
+          f"{'MET -- outcome 2 or 3 may be called' if _g['gate_met'] else 'UNMET -- outcome 1: NO VERDICT'}")
     # AND A RUN THAT MEASURED NOTHING IS AN ERROR, NOT A VERDICT -- the second half of the coverage fix.
     # Coverage cannot distinguish "ran completely" from "never started", and its passing condition is
     # total failure; yield catches that for THIS run, but a gate verdict printed at all lets a reader

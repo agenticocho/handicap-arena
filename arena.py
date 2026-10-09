@@ -159,6 +159,22 @@ def find_llama_server(explicit=None):
     return None
 
 
+def footprint_absent_reason():
+    """WHY a footprint is absent, IN WORDS, for the record.
+
+    The rule is A1's, applied to hardware: AN INVENTED VALUE IS NEVER SUBSTITUTED -- null plus a WRITTEN
+    REASON, never a zero, never a guess. `0.00 GB measured` is worse than a missing number because IT
+    COMPUTES: it reads as a fully-CPU entrant and places the model in a division it was never measured for.
+
+    AND THE REASON IS DERIVED FROM THE CONDITION, NOT TYPED, so it cannot drift from the thing it
+    describes -- a typed explanation is a second copy of the truth, and this repo has spent the week
+    collecting what second copies do.
+    """
+    if not shutil.which("nvidia-smi"):
+        return "no nvidia-smi on this host (non-NVIDIA or non-Linux; macOS returns none)"
+    return "nvidia-smi present but returned no readable memory figure"
+
+
 def gpu_used_mb():
     """Total GPU memory in use, in MB, or None if no NVIDIA GPU / nvidia-smi."""
     exe = shutil.which("nvidia-smi")
@@ -1201,6 +1217,11 @@ def evaluate(gguf, args, tasks):
     grade = bout_grade(results, args.trials, aggregate=agg,
                        belt_rule=2 if card_version >= 2 else 1)
     return dict(gguf=gguf, sha256=digest, footprint_gb=fp, division=div, weigh_in=winfo,
+                # A NULL FOOTPRINT TRAVELS WITH ITS REASON. The rule (A1, applied to hardware): AN
+                # INVENTED VALUE IS NEVER SUBSTITUTED -- null plus a WRITTEN REASON, never 0.00, never a
+                # guess. Without the reason the null is indistinguishable from a measurement that was
+                # simply not recorded, and the reader has to guess which host they are looking at.
+                footprint_null_reason=(None if fp is not None else footprint_absent_reason()),
                 cord=CORDS.get(div, "slate"),
                 config=dict(temperature=args.temperature, max_tokens=args.max_tokens,
                             trials=args.trials, ctx=args.ctx, n_gpu_layers=args.ngl,
@@ -1217,10 +1238,25 @@ def print_card(res):
     belt = g.get("belt", "?")
     stripes = g.get("stripes", 0)
     tot = g.get("trials", 0)
+    # === THE NULL FOOTPRINT MUST NOT THROW (routed to us as the fifth port item) ===
+    #
+    # `gpu_used_mb()` -> nvidia-smi -> ABSENT ON DARWIN -> footprint_gb is None -> THIS LINE THREW before
+    # the bundle was written. So a macOS run produced NOTHING, and it failed AT THE LAST STEP rather than
+    # the first. The fix is two lines and the reason matters as much as the fix:
+    #
+    #   NO NVIDIA-SMI IS NOT A ZERO FOOTPRINT. A missing measurement is not a measurement of zero.
+    #   `0.00 GB measured` WOULD BE AN INVENTED VALUE THAT COMPUTES -- it reads as a fully-CPU entrant and
+    #   would place the model in a division it was never measured for, and it would do so silently.
+    #   A NULL WITH A WRITTEN REASON is the only honest record: THE SAME RULE AS A NULL WEIGHT.
+    fp = res.get("footprint_gb")
+    if fp is None:
+        why = res.get("footprint_null_reason") or "not measured on this host"
+        fp_line = f"footprint NOT MEASURED -- {why}"
+    else:
+        fp_line = f"footprint {fp:.2f} GB measured"
     print(f"\n{'='*88}")
     print(f"  {os.path.basename(res['gguf'])}")
-    print(f"  DIVISION {res['division']} (cord: {res.get('cord','-')})   "
-          f"footprint {res['footprint_gb']:.2f} GB measured")
+    print(f"  DIVISION {res['division']} (cord: {res.get('cord','-')})   {fp_line}")
     print(f"  BELT: {belt.upper()}   stripes {stripes}/{tot}   "
           f"rounds won {g.get('rounds_won',0)}/{g.get('rounds',0)}   AGG {res['aggregate']:.2f}")
     print(f"{'-'*88}")
