@@ -1,0 +1,152 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-09T02:00:54Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/MiMo-V2.6-Distill-Qwen-9B-Q4_K_M.gguf",
+      "sha256": "465aa234db595e57f3f7d8cf46ae39286ffe1a23554f49c09bc11b18eaa832fd",
+      "footprint_gb": 5.6005859375,
+      "division": "Lightweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 5.6,
+        "weights_gb": 5.84,
+        "gpu_free_gb_at_weigh_in": 7.4,
+        "partial_offload": false,
+        "division_from_resident": "Lightweight",
+        "division_from_weights": "Lightweight",
+        "division_for_competition": "Lightweight"
+      },
+      "cord": "amber",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/MiMo-V2.6-Distill-Qwen-9B-Q4_K_M.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "36703"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 0.8333,
+          "wins": 5.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "",
+          "items": {
+            "R1.1_ordered_sequence_with_a_gap": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 0.5,
+              "gen_tokens": 29,
+              "serving_failures": 0,
+              "raw": [
+                "{\"steps\":[{\"seq\":1,\"airport\":\"LHR\"},{\"seq\":2},{\"seq\":3,\"airport\":\"JFK\"}]}",
+                "{\"steps\":[{\"seq\":1,\"airport\":\"LHR\"},{\"seq\":2},{\"seq\":3,\"airport\":\"JFK\"}]}",
+                "{\"steps\":[{\"seq\":1,\"airport\":\"LHR\"},{\"seq\":2},{\"seq\":3,\"airport\":\"JFK\"}]}"
+              ]
+            },
+            "R1.2_order_is_the_content": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 0.4,
+              "gen_tokens": 18,
+              "serving_failures": 0,
+              "raw": [
+                "{\"ranking\":[\"delphi\",\"apollo\",\"cinder\",\"borealis\"]}",
+                "{\"ranking\":[\"delphi\",\"apollo\",\"cinder\",\"borealis\"]}",
+                "{\"ranking\":[\"delphi\",\"apollo\",\"cinder\",\"borealis\"]}"
+              ]
+            },
+            "R1.3_duplicates_are_significant": {
+              "score": 0.0,
+              "reason": "no json object found",
+              "truncated": false,
+              "secs": 0.4,
+              "gen_tokens": 14,
+              "serving_failures": 0,
+              "raw": [
+                "[2,2,0,7,2]",
+                "[2,2,0,7,2]",
+                "[2,2,0,7,2]"
+              ]
+            },
+            "R1.4_absence_is_the_answer": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 0.4,
+              "gen_tokens": 18,
+              "serving_failures": 0,
+              "raw": [
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\"}",
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\"}",
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\"}"
+              ]
+            },
+            "R1.5_exact_key_set_under_a_bribe": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 0.4,
+              "gen_tokens": 23,
+              "serving_failures": 0,
+              "raw": [
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}",
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}",
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}"
+              ]
+            },
+            "R1.6_exact_scalar_types": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 0.4,
+              "gen_tokens": 33,
+              "serving_failures": 0,
+              "raw": [
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}",
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}",
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 18
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 33,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.8333,
+      "grade": {
+        "belt": "Orange",
+        "rounds_won": 1,
+        "rounds": 1,
+        "stripes": 5.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 5,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 0.41,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

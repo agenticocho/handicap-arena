@@ -1,0 +1,153 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-09T02:07:08Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/Qwen3.5-9B-UD-Q4_K_XL.gguf",
+      "sha256": "967a80a1276a222a27092838a9610230962055a7903bde33c325709c9f3d23d1",
+      "footprint_gb": 5.7158203125,
+      "division": "Lightweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 5.72,
+        "weights_gb": 5.97,
+        "gpu_free_gb_at_weigh_in": 7.4,
+        "partial_offload": false,
+        "division_from_resident": "Lightweight",
+        "division_from_weights": "Lightweight",
+        "division_for_competition": "Lightweight"
+      },
+      "cord": "amber",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/Qwen3.5-9B-UD-Q4_K_XL.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "33519"
+        ]
+      },
+      "rounds": {
+        "R1_fencing": {
+          "score": 1.0,
+          "wins": 6.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "",
+          "items": {
+            "R1.1_ordered_sequence_with_a_gap": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 21.5,
+              "gen_tokens": 1376,
+              "serving_failures": 0,
+              "raw": [
+                "{\n  \"steps\": [\n    {\n      \"seq\": 1,\n      \"airport\": \"LHR\"\n    },\n    {\n      \"seq\": 2\n    },\n    {\n      \"seq\": 3,\n      \"airport\": \"JFK\"\n    }\n  ]\n}",
+                "{\n  \"steps\": [\n    {\n      \"seq\": 1,\n      \"airport\": \"LHR\"\n    },\n    {\n      \"seq\": 2\n    },\n    {\n      \"seq\": 3,\n      \"airport\": \"JFK\"\n    }\n  ]\n}",
+                "{\n  \"steps\": [\n    {\n      \"seq\": 1,\n      \"airport\": \"LHR\"\n    },\n    {\n      \"seq\": 2\n    },\n    {\n      \"seq\": 3,\n      \"airport\": \"JFK\"\n    }\n  ]\n}"
+              ]
+            },
+            "R1.2_order_is_the_content": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 14.0,
+              "gen_tokens": 409,
+              "serving_failures": 0,
+              "raw": [
+                "{\"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"]}",
+                "{\"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"]}",
+                "{\"ranking\": [\"delphi\", \"apollo\", \"cinder\", \"borealis\"]}"
+              ]
+            },
+            "R1.3_duplicates_are_significant": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": true,
+              "secs": 22.0,
+              "gen_tokens": 3000,
+              "serving_failures": 0,
+              "raw": [
+                "{\"draw\": [2, 2, 0, 7, 2]}",
+                "{\"draw\": [2, 2, 0, 7, 2]}",
+                "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Output format: ONLY a JSON object.\n    *   Key: \"draw\".\n    *   Value: An array of exactly five integers.\n    *   Ordering: The integers must correspond to the rounds specified: 2, 2, 0, 7, 2.\n    *   Constraint: No prose, no code fences.\n    *   Constraint: A value may repeat (which is expected given the rounds).\n    *   Constraint: Every repetition is a separate round (this implies the array length must match the number of rounds, which is 5).\n    *   Wait, the prompt says \"ordered by round. The rounds are: 2, 2, 0, 7, 2.\" This is slightly ambiguous. Does it mean the *values* in the array should be related to the rounds? Or does it mean the array should contain 5 integers, and the rounds are just context for the order?\n    *   Re-reading: \"Its value is an array of exactly five integers, ordered by round. The rounds are: 2, 2, 0, 7, 2.\"\n    *   Interpretation 1: The array should contain the round numbers themselves. So `[2, 2, 0, 7, 2]`.\n    *   Interpretation 2: The array should contain results (like scores or draws) for those rounds. But the prompt doesn't specify what the integers represent (e.g., scores, points).\n    *   Interpretation 3: The prompt is a bit meta. It says \"ordered by round. The rounds are: 2, 2, 0, 7, 2.\" This looks like it's defining the sequence of the array elements.\n    *   Let's look at the constraint: \"A value may repeat and every repetition is a separate round.\" This suggests the integers *are* the rounds or identifiers for the rounds.\n    *   Most likely interpretation: The user wants the JSON structure `{\"draw\": [2, 2, 0, 7, 2]}`. The \"rounds\" listed are the values to be placed in the array in that specific order.\n    *   Wait, is it asking for a random draw? \"Emit ONLY a JSON object...\". Usually, when prompts ask for \"draw\" in a gambling or lottery context, it might mean random numbers. However, the prompt explicitly lists the rounds: \"The rounds are: 2, 2, 0, 7, 2.\"\n    *   If I generate random numbers, I ignore the instruction \"The rounds are: 2, 2, 0, 7, 2\".\n    *   If I use the numbers 2, 2, 0, 7, 2 as the array values, I satisfy \"ordered by round\" and \"The rounds are...\".\n    *   Let's check if there's a hidden meaning. \"draw\" usually implies a lottery result. But the instruction explicitly defines the rounds.\n    *   Actually, looking closely: \"Its value is an array of exactly five integers, ordered by round. The rounds are: 2, 2, 0, 7, 2.\"\n    *   This phrasing is tricky. Does it mean the array should contain 5 integers, and the *indices* or *labels* are the rounds? Or does it mean the array *is* the sequence of rounds?\n    *   Given the strict constraint \"Emit ONLY a JSON object\", I should not overthink the semantics if the instruction is literal.\n    *   Literal instruction: Array of 5 integers. Ordered by round. The rounds are 2, 2, 0, 7, 2.\n    *   So the array should be `[2, 2, 0, 7, 2]`.\n    *   Wait, is it possible the user wants me to simulate a draw *for* those rounds? But without a distribution or range, I can't generate meaningful random numbers.\n    *   Is it possible the user is testing if I follow the instruction to output the specific numbers provided as the \"draw\"?\n    *   Let's consider the phrase \"A value may repeat and every repetition is a separate round.\" This confirms that the numbers in the array correspond to the rounds listed.\n    *   So, Round 1 = 2, Round 2 = 2, Round 3 = 0, Round 4 = 7, Round 5 = 2.\n    *   The array should be `[2, 2, 0, 7, 2]`.\n    *   Wait, could \"draw\" mean the result of a draw (like a lottery number)? If so, what range? Usually 0-9 or 0-100?\n    *   However, the prompt says \"The rounds are: 2, 2, 0, 7, 2.\" This looks like the data I need to output.\n    *   Let's assume the task is to format the provided sequence into the JSON structure.\n    *   Wait, another interpretation: \"Emit ONLY a JSON object... Its value is an array of exactly five integers... The rounds are: 2, 2, 0, 7, 2.\"\n    *   Maybe the \"rounds\" are the *indices*? No, \"ordered by round\".\n    *   Okay, the safest bet is to output the sequence provided as the array values.\n    *   Wait, I need to check if there is a specific \"draw\" logic expected. In some contexts (like poker or card games), \"draw\" might mean something specific. But without context, the literal instruction is best.\n    *   Actually, looking at similar prompts, often users want random numbers. But here they explicitly listed the rounds.\n    *   Hypothesis: The user wants me to output `{\"draw\": [2, 2, 0, 7, 2]}`.\n    *   Wait, is it possible the \"rounds\" are just labels and I need to generate 5 random integers? \"The rounds are: 2, 2, 0, 7, 2\" might be describing the *input* state, but the output should be the *draw* results.\n    *   However, \"ordered by round. The rounds are: 2, 2, 0, 7, 2.\" implies the order of the array elements corresponds to these rounds.\n    *   If I generate random numbers, say `[5, 8, 1, 9, 3]`, does that satisfy \"ordered by round\"? Yes, if I map them to the rounds. But the prompt doesn't give me a mapping rule.\n    *   If I output `[2, 2, 0, 7, 2]`, it satisfies \"array of exactly five integers\" and \"ordered by round\" (matching the list provided).\n    *   Let's look for constraints I might be missing. \"A value may repeat and every repetition is a separate round.\" This sounds like a justification for why the array has duplicates (like the 2 appearing three times).\n    *   Conclusion: The array values are the round identifiers provided.\n    *   Wait, is it possible the prompt is asking for a \"draw\" (lottery) *result* for rounds 2, 2, 0, 7, 2?\n    *   If I ask \"What is the draw for rounds 2, 2, 0, 7, 2?\", I expect numbers.\n    *   But the prompt says \"Its value is an array of exactly five integers... The rounds are: 2, 2, 0, 7, 2.\"\n    *   This phrasing \"The rounds are: ...\" defines the content of the array.\n    *   Okay, I will output the JSON with the array `[2, 2, 0, 7, 2]`.\n    *   Wait, one more check. Is it possible the user wants me to generate 5 random integers, and the \"rounds\" text is just context for the order?\n    *   \"Emit ONLY a JSON object... Its value is an array of exactly five integers, ordered by round. The rounds are: 2, 2, 0, 7, 2.\"\n    *   If I output random numbers, I am ignoring the specific numbers given.\n    *   If I output the given numbers, I am following the instruction literally.\n    *   Given the strict \"Emit ONLY a JSON object\" and \"No prose\", I should minimize interpretation risk.\n    *   Actually, thinking about \"draw\" in the context of \"rounds\". In a game, a \"draw\" might be the outcome. But without a game definition, the numbers provided are the only data I have.\n    *   Wait, could it be that the \"rounds\" are the *values* of the draw? Yes.\n    *   Okay, I'll construct the JSON.\n\n    *   Wait, I need to be careful. Is there a chance the user wants me to simulate a draw *using* those rounds as parameters? No, that's too complex for a \"Emit ONLY JSON\" prompt.\n    *   Is there a chance the user wants me to output random numbers, and the \"rounds\" text is just describing the *structure* (i.e., there are 5 rounds, here are their IDs)?\n    *   If I output `[2, 2, 0, 7, 2]`, it looks like I'm just echoing the input.\n    *   If I output `[1, 2, 3, 4, 5]`, it ignores the input numbers.\n    *   Let's assume the prompt is a test of instruction following regarding the specific values.\n    *   Wait, \"draw\" usually implies randomness. But \"The rounds are: 2, 2, 0, 7, 2\" sounds like the data I must use.\n    *   Let's consider the phrase \"A value may repeat and every repetition is a separate round.\" This explains why the array has 5 elements and why there are duplicates (like the 2).\n    *   Okay, I will use the provided numbers.\n\n    *   Wait, I need to check if there is a specific format for \"draw\".\n    *   Key: \"draw\".\n    *   Value: Array of 5 integers.\n    *   Order: 2, 2, 0, 7, 2.\n    *   So `{\"draw\": [2, 2, 0, 7, 2]}`.\n\n    *   Wait, is it possible the \"rounds\" are indices 0-4? No, \"The rounds are: 2, 2, 0, 7, 2\".\n    *   Okay, I'm confident.\n\n    *   Wait, one nuance: \"ordered by round\". Does this mean the array should be sorted by the round number?\n    *   \"The rounds are: 2, 2, 0, 7, 2.\"\n    *   If I sort them: 0, 2, 2, 2, 7.\n    *   But the instruction says \"ordered by round. The rounds are: 2, 2, 0, 7, 2.\"\n    *   This implies the order *is* 2, 2, 0, 7, 2.\n    *   So I should not sort them. I should keep the sequence.\n\n    *   Final check on constraints:\n    *   ONLY a JSON object.\n    *   Exactly one key: \"draw\".\n    *   Value: Array of exactly five integers.\n    *   No prose, no code fences.\n\n    *   Plan: `{\"draw\": [2, 2, 0, 7, 2]}`\n\n    *   Wait, is it possible the prompt implies I should generate a \"draw\" (like a lottery result) *for* those rounds?\n    *   Example: Round 2 -> Draw 5, Round 2 -> Draw 8...\n    *   But I don't have a mapping.\n    *   If I assume the \"rounds\" *are* the draw values, it's the most direct interpretation.\n    *   If I assume I need to generate random numbers, I risk violating the \"The rounds are...\" instruction which seems to define the content.\n    *   Actually, re-reading: \"Its value is an array of exactly five integers, ordered by round. The rounds are: 2, 2, 0, 7, 2.\"\n    *   This sentence structure \"The rounds are: X\" defines the content of the array.\n    *   Okay, proceeding with `[2, 2, 0, 7, 2]`.\n\n    *   Wait, I should check if there's any hidden instruction about \"draw\" meaning something else.\n    *   In some contexts, \"draw\" means a tie. But here it's a key in a JSON object.\n    *   Okay, sticking to the literal data.\n\n    *   Wait, I need to make sure I don't add markdown code blocks.\n    *   Just raw JSON.\n\n    *   Wait, one more thought. Is it possible the user wants me to generate 5 random integers, and the \"rounds\" text is just describing the *order* of the rounds (i.e. Round 1, Round 2, etc. but labeled 2, 2, 0, 7, 2)?\n    *   If I generate random numbers, I am not"
+              ]
+            },
+            "R1.4_absence_is_the_answer": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 19.1,
+              "gen_tokens": 789,
+              "serving_failures": 0,
+              "raw": [
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\"}",
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\"}",
+                "{\"sku\": \"X-9\", \"warehouse\": \"RENO\"}"
+              ]
+            },
+            "R1.5_exact_key_set_under_a_bribe": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 17.3,
+              "gen_tokens": 643,
+              "serving_failures": 0,
+              "raw": [
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}",
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}",
+                "{\"reading_id\": \"R-77\", \"celsius\": 21.5}"
+              ]
+            },
+            "R1.6_exact_scalar_types": {
+              "score": 1.0,
+              "reason": null,
+              "truncated": false,
+              "secs": 16.4,
+              "gen_tokens": 785,
+              "serving_failures": 0,
+              "raw": [
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}",
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}",
+                "{\"batch\": \"0042\", \"units\": 7, \"unit_cost\": 1.5, \"certified\": true}"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 17,
+            "length": 1
+          },
+          "truncated": true,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 3000,
+          "perfect": true
+        }
+      },
+      "aggregate": 1.0,
+      "grade": {
+        "belt": "Green",
+        "rounds_won": 1,
+        "rounds": 1,
+        "stripes": 6.0,
+        "trials": 6.0,
+        "note": "swept the bout \u2014 2 more consecutive sweeps earn Blue, then Purple (a challenger slot above)",
+        "belt_rule": 2
+      },
+      "card_version": 5,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 16.43,
+      "answers_from_reasoning": 1
+    }
+  ]
+}

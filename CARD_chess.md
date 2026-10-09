@@ -48,10 +48,35 @@ C. Threads=1, the same position across depths
    card's 200 cp grey band, and **at the band's edge it is decisive**: a position reading `-290` under one
    config and `-317` under the other is GREY in one and LOST in the other. **A threshold is only a number
    if the configuration behind it is a number too.**
-3. **Monotonicity in depth is NOT a property of chess.** It held here and failed on the other box
-   (`d18 -228` improving to `d20 -215`). So **this card does not carry "deeper is better" as a fact** —
-   it carries the per-position measurement and the conditions under which it was taken. **A claim about
-   the engine's behaviour that changes with the machine is a claim about the machine.**
+3. **Monotonicity in depth is NOT a property of chess — it is a property of the CONFIG, and the config is
+   the whole of it.** *(Amended: this section first said "a property of the machine". That was wrong, and
+   the measurement below is what refutes it.)*
+
+   Monotonicity held here and appeared to fail elsewhere, which is why the first version attributed the
+   difference to the box. **It was not the box.** Same engine asset, same depths, same position, and the
+   **Hash size** accounts for the entire difference — measured on this box:
+
+   ```
+   Threads=1, Hash=16:   d8 -172   d12 -196   d16 -213   d18 -228   d20 -215    non-monotone
+   Threads=1, Hash=64:   d8 -172   d12 -196   d16 -213   d18 -255   d20 -274    monotone
+   ```
+
+   **The Hash=16 series is the other box's series EXACTLY, to the centipawn.** So the two boxes agree
+   perfectly once the configuration agrees — and **changing one config field moves d18 by 27 cp AND flips
+   the monotonicity.** *(27 cp is the same shift the previous section measures; it is one number seen
+   twice, which is what makes it credible.)*
+
+   **THE CORRECTION MATTERS IN BOTH DIRECTIONS:**
+   - **Against the first version of this card:** a claim about the engine that changes with a *setting* is
+     a claim about the *setting*, not about the machine — and generalising it to "the machine" was a step
+     neither of us had measured.
+   - **AND IN FAVOUR of the cross-machine comparison:** the boxes are **not** a confound. **When the freeze
+     is pinned, results from different machines are comparable**, which is the opposite of what this
+     section originally said and is the more useful result.
+
+   **So the card carries neither "deeper is better" nor "boxes differ" as a fact.** It carries the
+   per-position measurement **and its configuration**, which is the only thing that made any of these
+   numbers reproducible in the first place.
 
 ### What the freeze record now holds, per position
 

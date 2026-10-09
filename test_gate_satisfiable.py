@@ -89,8 +89,24 @@ check("the card states COVERAGE over `planned`", "attempted / planned" in card, 
 check("the card states YIELD over `attempted`", "measured  / attempted" in card, True)
 check("the card's floors are 0.95 and 0.85", ("0.95" in card and "0.85" in card), True)
 
+# 8 ------------------------------- A RESUMED RUN MUST BE ABLE TO PASS ITS OWN GATE
+# THE BUG THIS CATCHES: `_measured = done` counted only entrants measured in the CURRENT invocation,
+# while entrants skipped as already-measured ticked `skipped`. So a resume that re-measured nothing
+# scored yield 0.000 against a complete field, and this run's ceiling was 19/38 = 0.50 against a 0.85
+# floor. THE GATE WAS UNSATISFIABLE BY CONSTRUCTION -- and nobody touched the gate to break it: making
+# the runner RESUMABLE did, because that correct fix changed the gate's inputs.
+print("\n8. a RESUMED run -- nothing measured this invocation, everything already measured")
+check("a complete field via skips scores yield 1.000",
+      round(rc.gate_ratios(planned=38, attempted=38, measured=0 + 38)["yield"], 3), 1.0)
+check("...and the gate is MET", rc.gate_ratios(planned=38, attempted=38, measured=38)["gate_met"], True)
+# The defect, kept as the negative control: counting ONLY this invocation's work.
+check("counting only THIS invocation (the bug) would refuse a complete field",
+      rc.gate_ratios(planned=38, attempted=38, measured=19)["gate_met"], False)
+# And the real shape of the failure: 19 pre-existing + 18 new = 37 of 38.
+check("the real resume (37 of 38) is MET", rc.gate_ratios(planned=38, attempted=38, measured=37)["gate_met"], True)
+
 print("\n" + "=" * 92)
 print(f"{'ALL CONTROLS PASS' if not fails else str(len(fails)) + ' CONTROL(S) FAILED'}"
-      f"   -- {18 - len(fails)}/18 assertions")
+      f"   -- {22 - len(fails)}/22 assertions")
 print("=" * 92)
 sys.exit(1 if fails else 0)

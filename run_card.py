@@ -434,10 +434,24 @@ def main():
     # the CODE is believed and the frozen card is not.
     _planned   = len(ents) - excluded
     _attempted = len(ents) - excluded
-    _measured  = done
+    # A SKIP (MEASURED) IS A MEASUREMENT -- the skip message says so in its own words.
+    #
+    # `_measured = done` ALONE MADE A RESUMED RUN UNABLE TO PASS ITS OWN YIELD GATE. `done` counts only
+    # entrants measured IN THIS INVOCATION; an entrant skipped because it was already measured ticks
+    # `skipped`. So a resume that re-measured nothing scored yield 0.000 while the field was complete --
+    # and this invocation, resuming 19 of 38, had a ceiling of 19/38 = 0.50 against a 0.85 floor, and
+    # printed 0.474. THE GATE WAS UNSATISFIABLE BY CONSTRUCTION, not by any property of the field.
+    #
+    # AND NOBODY TOUCHED THE GATE TO BREAK IT. Making the runner resumable was a correct fix for a real
+    # problem, and that fix changed the gate's inputs. A criterion is only as sound as its numerator's
+    # definition of the thing it counts -- and this one counted a different thing than it named.
+    #
+    # The tell was on screen: `skipped 19` and `measured 18` printed on adjacent lines, both correct,
+    # contradicting each other, visible only if you add them.
+    _measured  = done + skipped
     _g = gate_ratios(_planned, _attempted, _measured)
     print(f"DENOMINATORS  applicants {len(ents)}   planned {_planned}   attempted {_attempted}   "
-          f"excluded {excluded}   measured {_measured}")
+          f"excluded {excluded}   measured {_measured}  (this invocation {done} + already-measured {skipped})")
     print(f"GATE  COVERAGE attempted/planned    {_g['coverage']:.3f}  (>= 0.95)   "
           f"{'OK' if _g['coverage_ok'] else 'UNMET'}")
     print(f"      YIELD    measured/attempted  {_g['yield']:.3f}  (>= 0.85)   "
