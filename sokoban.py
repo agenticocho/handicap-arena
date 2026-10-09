@@ -45,6 +45,22 @@ BOX_ON, PLAYER_ON = "*", "+"
 ACTIONS = {"U": (-1, 0), "D": (1, 0), "L": (0, -1), "R": (0, 1)}
 
 
+# AN EXPLICIT GIVE-UP IS NOT NOISE. `RESIGN` IS NOT AN ACTION LETTER, so it used to be counted as
+# `unrecognised` alongside typos -- but a model that says it is beaten when it IS beaten, and one that says
+# it when it is NOT, are the dead-end faculty this cabinet exists to measure. THE GIVE-UP IS THE SIGNAL.
+#
+# AND IT IS MATCHED EXACTLY, because this is the very word that caused the truncation defect: `RESIGN` was
+# once read as `R` (Right) and EXECUTED. A prefix or substring match here would reintroduce exactly that.
+# Whitelist, whole-token, nothing inferred.
+GIVE_UP_TOKENS = {"RESIGN", "RESIGNS", "RESIGNED", "GIVEUP", "SURRENDER", "IQUIT", "QUIT", "FORFEIT"}
+
+
+def _is_give_up(tok):
+    """Exact whole-token match after removing spaces and case. NOT a prefix, NOT a substring."""
+    t = "".join((tok or "").split()).upper()
+    return t in GIVE_UP_TOKENS
+
+
 def parse(level_text):
     """ASCII -> state. Raises on a level that is not a level, because a malformed board silently parsed is
     a board whose measurements are about something else."""
@@ -147,17 +163,26 @@ def play(level_text, tokens, stop_when_solved=True):
     `unrecognised` and changes nothing -- it is a fact about the output, not about the board.
     """
     st = parse(level_text)
-    trace, moves, blocked, unrecognised = [], 0, 0, 0
+    trace, moves, blocked, not_an_action, give_up = [], 0, 0, 0, 0
+    gave_up_at: int | None = None
     for i, tok in enumerate(tokens):
-        # THE ANSWER IS EXACTLY ONE LETTER, SO ANYTHING ELSE IS UNRECOGNISED -- NEVER TRUNCATED.
+        # AN EXPLICIT GIVE-UP IS A SIGNAL AND IT IS TERMINAL. It ends the run where it happens, because a
+        # resignation the simulator ignores is not a resignation -- and because the point is to record the
+        # DECISION, not to watch the model keep bumping walls afterwards.
+        if _is_give_up(tok):
+            give_up += 1
+            gave_up_at = i
+            trace.append({"ply": i, "token": tok, "action": None, "outcome": "give_up",
+                          "board": render(st)})
+            break
+        # THE ANSWER IS EXACTLY ONE LETTER, SO ANYTHING ELSE IS NOT AN ACTION -- NEVER TRUNCATED.
         # The first version took token[:1], which read "RESIGN" as `R` (right) and executed it. A SIX-LETTER
         # WORD BECAME A LEGAL ACTION BY ACCIDENT, which is the same class as every false verdict this
         # project has filed: a reader broad enough to find an answer in text that does not contain one.
-        # One character, in UDLR, or it is a fact about the output and the board does not move.
         act = (tok or "").strip().upper()
         if len(act) != 1 or act not in ACTIONS:
-            unrecognised += 1
-            trace.append({"ply": i, "token": tok, "action": None, "outcome": "unrecognised",
+            not_an_action += 1
+            trace.append({"ply": i, "token": tok, "action": None, "outcome": "not_an_action",
                           "board": render(st)})
             continue
         nxt, outcome = step(st, act)
@@ -169,16 +194,22 @@ def play(level_text, tokens, stop_when_solved=True):
         trace.append({"ply": i, "token": tok, "action": act, "outcome": outcome, "board": render(st)})
         if stop_when_solved and solved(st):
             break
-    return {"solved": solved(st), "moves": moves, "attempted": len(tokens),
-            "blocked": blocked, "unrecognised": unrecognised,
+    return {"solved": solved(st), "moves": moves, "attempted": len(trace),
+            "blocked": blocked, "not_an_action": not_an_action, "give_up": give_up,
+            "gave_up_at": gave_up_at,
+            # ENDED says BY WHAT PATH, written by the path that produced it and never inferred later --
+            # the same rule the chess termination follows.
+            "ended": ("gave_up" if give_up else ("solved" if solved(st) else "commands_exhausted")),
             "final_board": render(st), "trace": trace}
 
 
 # -------------------------------------------------------------------------------------- controls
 def _self_test():
     fails = []
+    total = [0]                                  # a count that cannot go stale when controls are added
 
     def ck(name, got, want):
+        total[0] += 1
         ok = got == want
         print(f"  {'PASS' if ok else 'FAIL'}  {name}")
         if not ok:
@@ -259,15 +290,29 @@ def _self_test():
     ck("...and 50 blocked", r["blocked"], 50)
     ck("...and the level is UNSOLVED", r["solved"], False)
 
-    print("\n[7] unrecognised output cannot move a board")
+    print("\n[7] not-an-action and GIVE-UP are DIFFERENT COUNTERS")
     r = play(lv, ["e2e4", "Q", "RESIGN", "R", "R", "R"])
-    ck("three junk tokens are `unrecognised`", r["unrecognised"], 3)
-    ck("...and do not count as moves", r["moves"], 3)
-    ck("...and the level is still solved by the three real ones", r["solved"], True)
-    # THE TRUNCATION TRAP: "RESIGN" used to be read as R because the reader took token[:1]
+    ck("two junk tokens are `not_an_action`", r["not_an_action"], 2)
+    ck("...and RESIGN is a GIVE-UP, not noise", r["give_up"], 1)
+    ck("...and a give-up is TERMINAL -- the three real moves after it never run", r["moves"], 0)
+    ck("...and `ended` names the path that ended it", r["ended"], "gave_up")
+    ck("...and gave_up_at records where", r["gave_up_at"], 2)
     ck("RESIGN is NOT silently read as `R` (right)",
        play("#####\n#@$.#\n#####", ["RESIGN"])["moves"], 0)
-    ck("...it is unrecognised instead", play("#####\n#@$.#\n#####", ["RESIGN"])["unrecognised"], 1)
+    ck("...and the level is not solved by it", play("#####\n#@$.#\n#####", ["RESIGN"])["solved"], False)
+    # THE CALIBRATION THE CHESS GATE BRINGS FOR FREE: a give-up on a level with a ONE-MOVE solution is
+    # PREMATURE, and that is provable without a solver because the solution is verified.
+    r = play("#####\n#@$.#\n#####", ["RESIGN"], stop_when_solved=False)
+    ck("a give-up on a solvable level is recorded as a DECISION, with the board it abandoned",
+       (r["ended"], r["solved"], r["trace"][-1]["board"].count("@")), ("gave_up", False, 1))
+    ck("a give-up does not count as a move", r["moves"], 0)
+    ck("...and it is not counted as a blocked attempt either", r["blocked"], 0)
+    ck("a give-up is TERMINAL even with commands left", len(r["trace"]), 1)
+    # NOT a prefix or substring match -- the truncation defect must not come back through the give-up door
+    ck("`RESIGNED` matches (it is on the whitelist)", play(lv, ["RESIGNED"])["give_up"], 1)
+    ck("`R` is an ACTION, not a give-up", play("#####\n#@$.#\n#####", ["R"])["give_up"], 0)
+    ck("`RESIGNING` is NOT matched -- exact whole-token only", play(lv, ["RESIGNING"])["not_an_action"], 1)
+    ck("`XRESIGN` is NOT matched -- no substring", play(lv, ["XRESIGN"])["not_an_action"], 1)
 
     print("\n[8] irreversibility -- a push that can never be undone")
     st = parse("#####\n#@$ #\n#  .#\n#####")
@@ -278,8 +323,8 @@ def _self_test():
     ck("the crate is now stuck off-target and NOTHING CAN PULL IT BACK", solved(s), False)
 
     print("\n" + "=" * 94)
-    n = 30 - len(fails)
-    print(f"{'ALL CONTROLS PASS' if not fails else str(len(fails)) + ' FAILED'}   --  {n}/30")
+    n = total[0] - len(fails)
+    print(f"{'ALL CONTROLS PASS' if not fails else str(len(fails)) + ' FAILED'}   --  {n}/{total[0]}")
     print("=" * 94)
     return 1 if fails else 0
 

@@ -1,0 +1,104 @@
+#!/usr/bin/env python3
+"""SOKOBAN -- the first run. The population is DERIVED from ARENA_MODELS, the levels are the verified set,
+and the criteria are already frozen in PREREG_sokoban.md.
+
+CHILLY'S SECOND CORRECTION, APPLIED: THE EXCLUSION IS AT THE MODEL LEVEL, NOT THE FILE LEVEL.
+`mmproj-*` are ADAPTERS; excluding the adapter is not excluding the thing that consumes it. A
+vision-language model in a text population is a category error -- it answers a question about a picture --
+and excluding it by FILENAME only catches the projector that accompanies it. So the rule here is:
+
+    A `-VL-` OR `mmproj` IN THE NAME IS EXCLUDED, because the modality is a property of the MODEL.
+    And it is recorded as a category exclusion, not discovered as an unexplainable result.
+
+AND REASON COUNTS ARE REPORTED, NEVER ONLY A TOTAL. A population that never ran is not evidence about the
+population -- the empty-room rule, one layer out. `did not load` and `played and failed` are different
+claims and they are counted separately.
+
+    python3 sokoban_batch.py --n 5
+"""
+import glob
+import json
+import os
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import sokoban_run as R                                                 # noqa: E402
+
+LEVELS = ["levels/01_one_push.txt", "levels/02_two_boxes.txt"]
+
+
+def population(n=5):
+    """A SPREAD ACROSS THE SIZE RANGE, derived -- never typed. Typed names produced five ABSENT entrants
+    on the chess probe, and a second directory produced a probe against eight models while the arena held
+    fifty-three. A population named twice is a population that can disagree with itself."""
+    files = sorted((p for p in glob.glob(os.path.join(R.MODELS, "*.gguf"))
+                    if not os.path.basename(p).startswith("mmproj")
+                    and "-VL-" not in os.path.basename(p)), key=os.path.getsize)
+    if not files:
+        return []
+    step = max(1, len(files) // n)
+    return files[::step][:n]
+
+
+def main():
+    n = 5
+    if "--n" in sys.argv:
+        n = int(sys.argv[sys.argv.index("--n") + 1])
+    port = 8751
+    pop = population(n)
+    print("=" * 96)
+    print("SOKOBAN -- FIRST RUN")
+    print("=" * 96)
+    print(f"  population DERIVED from {R.MODELS}: {len(pop)} entrants at a spread across the size range")
+    print(f"  levels: {len(LEVELS)} (verified set -- the third level is REPORTED AS ABSENT, not faked)")
+    print(f"  criteria frozen in PREREG_sokoban.md BEFORE this run. No time limit; the cap is the budget.")
+    print()
+
+    rows, reasons = [], {}
+    for ent in pop:
+        for lv in LEVELS:
+            lbl = os.path.basename(ent).replace(".gguf", "")[:28]
+            print(f"  {lbl:30s} {os.path.basename(lv):22s} ...", flush=True)
+            r = R.run(ent, os.path.join(HERE, lv), 40, port)
+            port += 1
+            rows.append(r)
+            if not r.get("loaded"):
+                # NOT AN ENTRANT FAILURE. A model that never loaded has not played, and counting it either
+                # way is the defect: as a failure it libels the model, as a success it libels the run.
+                reasons["did_not_load"] = reasons.get("did_not_load", 0) + 1
+                print(f"      DID NOT LOAD -- {r['why']}")
+            else:
+                reasons["played"] = reasons.get("played", 0) + 1
+                print(f"      ended={r['ended']:18s} solved={str(r['solved']):5s} moves={r['moves']:3d}  "
+                      f"blocked={r['blocked']:3d} not_an_action={r['not_an_action']:3d} "
+                      f"give_up={r['give_up']}")
+            json.dump(rows, open(os.path.join(HERE, "probes", "SOKOBAN_FIRST_RUN.json"), "w"), indent=1)
+
+    print()
+    print("=" * 96)
+    print("THE RATES")
+    print("=" * 96)
+    played = [r for r in rows if r.get("loaded")]
+    print(f"  cells attempted      {len(rows)}")
+    print(f"  PLAYED               {len(played)}      DID NOT LOAD  {len(rows) - len(played)}")
+    print(f"  REASON COUNTS        {reasons}   <- never only a total: a population that never ran is not "
+          f"evidence about the population")
+    if played:
+        for lv in LEVELS:
+            sub = [r for r in played if r["level"] == os.path.basename(lv).replace(".txt", "")]
+            sol = sum(1 for r in sub if r["solved"])
+            gv = sum(1 for r in sub if r["give_up"])
+            na = sum(1 for r in sub if r["not_an_action"])
+            print(f"  {os.path.basename(lv):22s} played {len(sub):2d}  solved {sol:2d}  "
+                  f"gave_up {gv:2d}  not_an_action {na:2d}")
+    print()
+    print("  LEVEL SET: 2 of 3. The third level is ABSENT and is reported as ABSENT -- a level nobody can")
+    print("  solve needs a solver to PROVE it, and a level that merely LOOKS lost is a trap for the reader,")
+    print("  not a control for the entrant. C1 is scored on the levels that exist, per outcome row 6.")
+    print(f"\n  artifact: probes/SOKOBAN_FIRST_RUN.json")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

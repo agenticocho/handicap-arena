@@ -100,25 +100,46 @@ def main():
     print(f"      {bundles} v6 bundles; round keys: " +
           ", ".join(f"{k} x{v}" for k, v in sorted(keys.items())))
 
-    print(f"\n[5] verdict under each copy")
-    for label, table in (("the FROZEN copy (what runs today)", frozen),
-                         ("the CONTRACT copy (what the message names)", parsed)):
-        bad = sorted(k for k in keys if k not in table)
-        print(f"      {label:42s} -> {'REFUSES ' + str(bad) if bad else 'admits every bundle'}")
+    print(f"\n[5] WHERE DOES THE CHECKER GET ITS NAMESPACE?")
+    parses = hasattr(tgs, "parse_declared_slots")
+    print(f"      test_game_states.py exposes parse_declared_slots() : {parses}")
+    if parses:
+        try:
+            live = tgs.parse_declared_slots()
+            print(f"      ...and it parses {len(live)} slots from the contract")
+        except Exception as e:                                    # noqa: BLE001
+            print(f"      ...and it RAISED: {e}")
+            live = {}
+    else:
+        live = frozen
 
-    print(f"\n[6] so: does amending GAME_CONTRACT.md change the outcome?")
-    print(f"      the marker block ALREADY contains R1_conformance, and the check reads a hardcoded")
-    print(f"      dict instead -- so the recommended remedy is applied and the refusal still stands.")
-    print(f"      GAME_CONTRACT.md asserts its marker block is 'the SINGLE SOURCE test_game_states.py")
-    print(f"      parses'. NOTHING in the repository parses it: the markers appear in the .md and")
-    print(f"      nowhere else, in any file type.")
+    print(f"\n[6] the two copies, and the one that governs")
+    print(f"      contract declares      : {sorted(parsed)}")
+    print(f"      checker enforces       : {sorted(live)}")
+    print(f"      disagree               : {sorted(set(parsed) ^ set(live)) or 'no -- they agree'}")
+
+    print(f"\n[7] verdict under the GOVERNING copy")
+    bad = sorted(k for k in keys if k not in live)
+    print(f"      v6 round keys          : {sorted(keys)}")
+    print(f"      refused                : {bad if bad else 'none -- every bundle is admitted'}")
 
     print("\n" + "=" * 98)
-    ok = "R1_conformance" in parsed and "R1_conformance" in only_contract
-    print("PROOF " + ("HOLDS" if ok else "FAILS") +
-          ": parsing the contract's own block yields R1_conformance, which the frozen copy lacks.")
+    # THE VERDICT IS DERIVED FROM THE MEASUREMENT, NOT PRESUPPOSED. The first version of this script asserted
+    # a disagreement it had been written against; the repository moved and the assertion became false about
+    # the code while the script kept printing it. A script whose conclusion is written into its own source is
+    # the same defect as a caption nobody checks.
+    if set(parsed) == set(live) and not bad:
+        print("STATE: SINGLE SOURCE. The checker parses the contract and every v6 bundle is admitted.")
+        rc = 0
+    elif bad:
+        print(f"STATE: BLOCKED. {bad} is declared in the contract and refused by the checker -- the remedy")
+        print("       message sends its reader to a file the check does not read.")
+        rc = 1
+    else:
+        print("STATE: the copies agree but the checker does not parse the contract -- they can drift again.")
+        rc = 1
     print("=" * 98)
-    return 0 if ok else 1
+    return rc
 
 
 if __name__ == "__main__":

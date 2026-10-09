@@ -245,3 +245,36 @@ REFUSED: the game contract is violated by a NEW round or task file.
   THE REMEDY IS NOT TO IGNORE THIS. Amend GAME_CONTRACT.md -- a deliberate, recorded act --
   or fix the task file / round that caused it. The historical violations are annotated and
   do NOT trip this gate; only a NEW one does.
+entrants: 46   config: ctx=8192 mt=3000 trials=3 ngl=auto-fit
+================================================================================================
+game contract: OK (  NO NEW violation. The 301 historical rounds stand AS RECORDED -- superseded, not)
+GATE REVISION  d95ecb40997726ef   (sha256 of GAME_CONTRACT.md, first 16)
+[ 1/46] SKIP (MEASURED -- LFM2-350M-Extract-Q4_K_M_cardv6_autofit_neutral_ctx8192_mt3000.json)
+[ 2/46] SKIP (MEASURED -- LFM2-350M-Math-Q4_K_M_cardv6_autofit_neutral_ctx8192_mt3000.json)
+[ 3/46] SKIP (MEASURED -- LFM2.5-VL-1.6B-Q4_0_cardv6_autofit_neutral_ctx8192_mt3000.json)
+[ 4/46] SKIP (MEASURED -- LFM2-1.2B-Extract-Q4_K_M_cardv6_autofit_neutral_ctx8192_mt3000.json)
+[ 5/46] EXCLUDED (permanent failure: 9 record(s), empty in every attempt -- a RECORDED RESULT, NOT A QUEUE)
+[ 6/46] SKIP (MEASURED -- LFM2.5-1.2B-Instruct-Q6_K_cardv6_autofit_neutral_ctx8192_mt3000.json)
+[ 7/46] SKIP (MEASURED -- stablelm-2-zephyr-1_6b-Q4_K_M_cardv6_autofit_neutral_ctx8192_mt3000.json)
+[ 8/46] SKIP (MEASURED -- Qwen3-VL-2B-Instruct-1M-UD-Q4_K_XL_cardv6_autofit_neutral_ctx8192_mt3000.json)
+[ 9/46] SKIP (MEASURED -- LFM2.5-VL-1.6B-Q8_0_cardv6_autofit_neutral_ctx8192_mt3000.json)
+[10/46] SKIP (MEASURED -- Qwen3.5-2B-UD-Q4_K_XL_cardv6_autofit_neutral_ctx8192_mt3000.json)
+[11/46] SKIP (MEASURED -- LFM2.5-VL-1.6B-UD-Q8_K_XL_cardv6_autofit_neutral_ctx8192_mt3000.json)
+[12/46] SKIP (MEASURED -- granite-3.3-2b-instruct-critical-thinking.Q5_K_M_cardv6_autofit_neutral_ctx8192_mt3000.json)
+[13/46] SKIP (MEASURED -- Qwen3-1.7B-Q8_0_cardv6_autofit_neutral_ctx8192_mt3000.json)
+[14/46] SKIP (MEASURED -- SmolLM3-3B-128K-UD-Q4_K_XL_cardv6_autofit_neutral_ctx8192_mt3000.json)
+[15/46]  1.88 GB  Llama-3.2-3B-Instruct-Q4_K_M
+      DIVISION: Featherweight
+      DIVISION Featherweight (cord: teal)   footprint 2.98 GB measured
+      BELT: ORANGE   stripes 5.0/6.0   rounds won 1/1   AGG 0.83
+      0.83   Orange belt  5.0/6.0 stripes  [Featherweight]  Llama-3.2-3B-Instruct-Q4_K_M.gguf
+      result bundle -> /home/chilly1/workspace/ocho_arena/results/Llama-3.2-3B-Instruct-Q4_K_M_cardv6_autofit_neutral_ctx8192_mt3000.json
+      -> scored in 0.2 min
+[16/46]  2.04 GB  Ministral-3-3B-Instruct-2512-UD-Q4_K_XL
+      DIVISION: Featherweight
+      DIVISION Featherweight (cord: teal)   footprint 3.09 GB measured
+      BELT: GREEN   stripes 6.0/6.0   rounds won 1/1   AGG 1.00
+      1.00    Green belt  6.0/6.0 stripes  [Featherweight]  Ministral-3-3B-Instruct-2512-UD-Q4_K_XL.gguf
+      result bundle -> /home/chilly1/workspace/ocho_arena/results/Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_cardv6_autofit_neutral_ctx8192_mt3000.json
+      -> scored in 0.2 min
+[17/46]  2.18 GB  LFM2.5-1.2B-Thinking-BF16
