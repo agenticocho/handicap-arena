@@ -38,8 +38,59 @@ MAX_TOKENS = 64                     # ONE LETTER NEEDS A FEW TOKENS, and a cap t
                                     # into is the constraint this game was chosen for
 
 
+# ==================================================================================================
+# THE CONTROLLED A/B. Both legends are kept because the PREDICTION CANNOT BE TESTED WITHOUT BOTH.
+#
+# The re-run gave granite-3.3-2b a clean result (`U`, 40 blocked, not_an_action 0) and gave LFM2-350M
+# UNCHANGED (40 not_an_action). So granite IMPROVED -- and improving is not the same as having been
+# disadvantaged, because THERE WAS NO granite RUN UNDER THE OLD LEGEND. A result with no control is an
+# observation, not a difference.
+#
+# SO THE OLD LEGEND IS REINTRODUCED DELIBERATELY, as a CONTROL. Reintroducing a known defect is legitimate
+# exactly here and nowhere else: the defect is MEASURED, its size is KNOWN, and the only question left is
+# whether THIS entrant was affected by it. That is a control's job.
+#
+# AND IT IS VERBATIM. A paraphrased control is not a control -- if the old prompt were tidied while being
+# restored, the A/B would measure the tidying.
+#
+# Selection is by SOKOBAN_LEGEND=old|new, read at CALL TIME so one process can do both.
+# ==================================================================================================
+PROMPT_OLD = (
+    "You are playing Sokoban. One crate per target; a crate can be PUSHED but never pulled, so a "
+    "wrong push can end the level permanently.\n\n"
+    "Board:\n"
+    "# wall   . target   $ crate   @ you   * crate on target   + you on target\n\n"
+    "{board}\n\n"
+    "Moves so far: {recent}\n\n"
+    "FIRST LINE: your next move as ONE letter and nothing else.\n"
+    "  U = up    D = down    L = left    R = right\n"
+    "If you judge the level unwinnable from here, the first line is exactly: RESIGN\n"
+    "AFTER the first line you may explain your reasoning if you wish."
+)
+
+PROMPT_NEW = (
+    "You are playing Sokoban. The goal is to push every crate onto a target. A crate can be pushed "
+    "but never pulled, so one wrong push can end the level permanently.\n\n"
+    "The board below uses these symbols. A hash mark is a wall. A dot is a target. A dollar sign is "
+    "a crate. An at sign is you. A star is a crate that is already sitting on a target, and a plus "
+    "is you standing on a target.\n\n"
+    "{board}\n\n"
+    "The moves you have already made are: {recent}\n\n"
+    "Answer with a single letter. Use U to move up, D to move down, L to move left, or R to move "
+    "right. If you judge the level unwinnable from here, answer with the single word RESIGN. You may "
+    "add an explanation after your answer, and it will be ignored."
+)
+
+LEGEND_DIGESTS = {}
+
+
+def legend():
+    """Read at CALL TIME, so a single process can run both arms of the A/B."""
+    return os.environ.get("SOKOBAN_LEGEND", "new").strip().lower()
+
+
 def prompt_for(board, history):
-    """THE SCREEN, not the answers -- and NOT A FORM.
+    """THE SCREEN, not the answers -- and NOT A FORM in the `new` arm.
 
     INSTRUMENT CHANGE, PRE-REGISTERED BEFORE THE RE-RUN. The first version's legend was a line of
     key-value PAIRS:
@@ -60,21 +111,22 @@ def prompt_for(board, history):
 
     THE PREDICTION, RECORDED IN ADVANCE: a legend that does not look like a schema should move
     `not_an_action` DOWN. IF IT DOES NOT MOVE, THE SCHEMA-FILLING EXPLANATION IS WRONG and the echo has
-    another cause -- and the re-run is what distinguishes a repaired instrument from a luckier sample.
+    another cause -- and the A/B is what distinguishes a repaired instrument from a luckier sample.
     """
     recent = "".join(history[-12:]) if history else "none yet"
-    return (
-        "You are playing Sokoban. The goal is to push every crate onto a target. A crate can be pushed "
-        "but never pulled, so one wrong push can end the level permanently.\n\n"
-        "The board below uses these symbols. A hash mark is a wall. A dot is a target. A dollar sign is "
-        "a crate. An at sign is you. A star is a crate that is already sitting on a target, and a plus "
-        "is you standing on a target.\n\n"
-        f"{board}\n\n"
-        f"The moves you have already made are: {recent}\n\n"
-        "Answer with a single letter. Use U to move up, D to move down, L to move left, or R to move "
-        "right. If you judge the level unwinnable from here, answer with the single word RESIGN. You may "
-        "add an explanation after your answer, and it will be ignored."
-    )
+    tpl = PROMPT_OLD if legend() == "old" else PROMPT_NEW
+    return tpl.replace("{board}", board).replace("{recent}", recent)
+
+
+def legend_digest():
+    """THE ARM A RECORD WAS TAKEN UNDER, carried with the record.
+
+    Without this a reader cannot tell the two arms apart in the artifacts, and a comparison between
+    them would be a comparison between two files whose difference is invisible.
+    """
+    import hashlib
+    tpl = PROMPT_OLD if legend() == "old" else PROMPT_NEW
+    return hashlib.sha256(tpl.encode()).hexdigest()[:16]
 
 
 def ask(base, board, history, timeout_s=300):
@@ -117,7 +169,10 @@ def run(entrant, level_path, cap, port):
     st = S.parse(level)
 
     os.makedirs(os.path.join(HERE, "logs"), exist_ok=True)
-    log = os.path.join(HERE, "logs", f"SOKOBAN_{label}_{lname}.log")
+    # THE ARM IS IN THE FILENAME. Without it the second arm overwrites the first arm's raw log -- an
+    # artifact whose identity is its path, destroyed by the next thing that writes that path. That is
+    # FINDING 018 and this is the same defect one layer down, caught before it happened this time.
+    log = os.path.join(HERE, "logs", f"SOKOBAN_{label}_{lname}_{legend()}.log")
     srv = subprocess.Popen([LLAMA, "-m", entrant, "-c", "4096", "-ngl", "0", "--port", str(port),
                             "--no-webui"], stdout=open(log, "w"), stderr=subprocess.STDOUT)
     base = f"http://127.0.0.1:{port}"
@@ -160,7 +215,10 @@ def run(entrant, level_path, cap, port):
 
         r = S.play(level, tokens)
         r.update({"entrant": label, "level": lname, "loaded": True, "load_s": round(load_s, 1),
-                  "turns": turns, "cap": cap, "final_screen": cur})
+                  "turns": turns, "cap": cap, "final_screen": cur,
+                  # THE ARM, CARRIED WITH THE RECORD. Two artifacts whose difference is invisible cannot
+                  # be compared -- the reader would have to take the filenames on trust.
+                  "legend": legend(), "legend_digest": legend_digest()})
         return r
     finally:
         srv.terminate()
