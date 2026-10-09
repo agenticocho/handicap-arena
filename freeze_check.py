@@ -5,8 +5,11 @@ THE ORDER's rule: "an event is not placeable until its oracle is present AND its
 MEASURED -- a depth at which two runs of the same position disagree is not a fact and must not
 be frozen." This runs each position twice at each depth and reports where the two runs agree.
 """
-import chess, chess.engine, sys
-ENG = "/opt/homebrew/bin/stockfish"
+import chess, chess.engine, os, shutil, sys
+# Resolve the engine PORTABLY. A check hardcoded to /opt/homebrew/bin/stockfish cannot run on Linux --
+# i.e. it cannot run on the box where the claim is made, which is the exact defect this file exists to
+# prevent. Order: $STOCKFISH, then PATH, then the macOS default.
+ENG = os.environ.get("STOCKFISH") or shutil.which("stockfish") or "/opt/homebrew/bin/stockfish"
 POSITIONS = {
     "kiwipete": "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1",
     "italian":  "r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
