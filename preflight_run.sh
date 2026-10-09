@@ -7,13 +7,19 @@
 # it thrashes long before oomd acts. The unit's own properties now bound swap; this waits for a window
 # where the box is quiet to begin with.
 #
+# THRESHOLD, MEASURED NOT GUESSED. The first version required load1 < 1.5, which is UNACHIEVABLE on
+# this box: the operator's own stack (hermes-vision, hermes-local-runtime) plus gnome-shell keep a
+# floor above it, and the Hermes desktop app alone was observed at 798% CPU (~8 of 12 cores). A gate
+# that can never open is the same defect as an instrument that can never fail. 4.0 on 12 CPUs is a
+# third of the machine -- clearly quiet, and reachable when the operator steps away.
+#
 # WHAT IT DETECTS, AND WHAT IT CANNOT. There is no xprintidle on this box, so it CANNOT tell whether a
 # human is typing. It detects the two things that actually make the run dangerous: the machine being
 # under load, and memory being tight. It does not claim to detect "the user is at the keyboard", and it
 # does not need to -- a browser tab is not what freezes a box; a 35B model and a 64K-context server are.
 set -u
 
-LOAD_OK=1.5          # 1-minute load average must be below this
+LOAD_OK=4.0          # 1-min load must be below this; see note below
 MEM_OK_GB=30         # available memory must be at least this
 STABLE_SECS=300      # the pressures must hold this long before we start
 MAX_WAIT_SECS=21600  # give up after 6 h and leave it for a human
