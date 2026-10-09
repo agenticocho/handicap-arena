@@ -28,6 +28,34 @@ import sokoban_run as R                                                 # noqa: 
 LEVELS = ["levels/01_one_push.txt", "levels/02_two_boxes.txt"]
 
 
+def classifier(name):
+    """A CLASS LABEL, NOT AN EXCLUSION.
+
+    `LFM2-350M-Extract` is an EXTRACTION model, and it failed by transcribing the instructions as a schema.
+    THAT IS A DATUM, NOT NOISE: it tells us exactly what class of model cannot play a game at all, and it is
+    the cleanest single example we have. REMOVING IT WOULD BE RE-SCOPING THE POPULATION TO FIT THE RESULT --
+    the move this project has refused all day.
+
+    So it gets a label and stays. A POPULATION THAT IS DESCRIBED HONESTLY IS WORTH MORE THAN A POPULATION
+    THAT IS FLATTERING. Same for the 350M SIZE: it is the floor of the field and it belongs in the run
+    PRECISELY BECAUSE IT IS THE FLOOR.
+
+    The label is derived from the name and is deliberately coarse: it claims only what the name supports and
+    says `unlabelled` otherwise, because a class label invented from a filename is the same defect as a
+    field whose name is a claim its contents cannot support.
+    """
+    n = name.lower()
+    if "extract" in n:
+        return "extraction / tool"
+    if "-vl-" in n or n.startswith("mmproj"):
+        return "vision / not in this population"
+    if "coder" in n or "code" in n:
+        return "code-tuned"
+    if "instruct" in n or "chat" in n:
+        return "instruction-tuned"
+    return "unlabelled"
+
+
 def population(n=5):
     """A SPREAD ACROSS THE SIZE RANGE, derived -- never typed. Typed names produced five ABSENT entrants
     on the chess probe, and a second directory produced a probe against eight models while the arena held
@@ -57,11 +85,14 @@ def main():
 
     rows, reasons = [], {}
     for ent in pop:
+        cn = os.path.basename(ent).replace(".gguf", "")
+        cls = classifier(cn)
         for lv in LEVELS:
-            lbl = os.path.basename(ent).replace(".gguf", "")[:28]
-            print(f"  {lbl:30s} {os.path.basename(lv):22s} ...", flush=True)
+            lbl = cn[:28]
+            print(f"  {lbl:30s} [{cls:17s}] {os.path.basename(lv):22s} ...", flush=True)
             r = R.run(ent, os.path.join(HERE, lv), 40, port)
             port += 1
+            r["class"] = cls
             rows.append(r)
             if not r.get("loaded"):
                 # NOT AN ENTRANT FAILURE. A model that never loaded has not played, and counting it either

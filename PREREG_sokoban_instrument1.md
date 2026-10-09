@@ -86,6 +86,37 @@ repaired instrument from a luckier sample.**
 **Directional, not numeric.** No count is predicted: predicting a count would need a baseline this run does
 not legitimately provide.
 
+## THE BRANCHES, ALL OF WHICH ARE INFORMATIVE
+
+**A prediction that cannot fail is not a prediction, so the three outcomes are named in advance -- and every
+one of them is a result:**
+
+```
+not_an_action DOWN, moves > 0        THE SCHEMA-FILLING EXPLANATION WAS RIGHT and the instrument is
+                                     REPAIRED. Report the rates.
+not_an_action DOWN, moves still 0    the explanation was RIGHT and there is a SECOND DEFECT BEHIND IT.
+  with a DIFFERENT reason            Report WHICH REASON TOOK OVER -- that is the next instrument
+                                     finding, not a population verdict.
+not_an_action UNCHANGED              THE EXPLANATION WAS WRONG. The echo has another cause and we would
+                                     have published a fake fix. THIS IS THE BRANCH THE PREDICTION
+                                     EXISTS TO CATCH.
+```
+
+**ONLY THE THIRD BRANCH COSTS ANYTHING, AND IT ONLY COSTS ANYTHING IF IT IS UNSTATED.**
+
+### AND HOW THESE BRANCHES ARE PRE-REGISTERED, STATED HONESTLY
+
+**The PREDICTION was written and committed BEFORE the re-run launched. THESE BRANCHES WERE NOT -- they were
+written while the re-run was already in flight.** Recording that here rather than letting the document imply
+otherwise, because the closing time of a criterion is part of the criterion.
+
+**AND THEY ARE HONEST ANYWAY, FOR A REASON THAT IS CHECKABLE RATHER THAN ASSERTED: they do not change what
+is predicted. They are the THREE READINGS of a prediction that was already frozen** — a down-move with
+moves, a down-move without them, and no move at all. **A branch table added afterwards is a problem only
+when it changes what counts as the prediction being right; this one enumerates the outcomes of a prediction
+that is already committed to.** The falsifiable claim — *not_an_action should move DOWN, and if it does not,
+the explanation is wrong* — was committed before the run and is unchanged by anything below.
+
 ## THE FIRST RUN IS INSTRUMENT-SUSPECT, ASTERISKED, NOT DELETED
 
 **`probes/SOKOBAN_FIRST_RUN.json` is retained under a VOID-style banner: the numbers are TRUE and they are
