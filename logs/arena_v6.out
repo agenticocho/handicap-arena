@@ -93,3 +93,43 @@ GATE  COVERAGE attempted/planned    1.000  (>= 0.95)   OK
       GATE UNMET -- outcome 1: NO VERDICT
 log: /home/chilly1/workspace/ocho_arena/logs/card_run.log
 bundles now on disk: 212
+entrants: 46   config: ctx=8192 mt=3000 trials=3 ngl=auto-fit
+================================================================================================
+game contract: OK (  NO NEW violation. The 301 historical rounds stand AS RECORDED -- superseded, not)
+[ 1/46]  0.21 GB  LFM2-350M-Extract-Q4_K_M
+      DIVISION: Featherweight
+      DIVISION Featherweight (cord: teal)   footprint 0.50 GB measured
+      BELT: WHITE   stripes 0.0/6.0   rounds won 0/1   AGG 0.00
+      0.00    White belt  0.0/6.0 stripes  [Featherweight]  LFM2-350M-Extract-Q4_K_M.gguf
+      result bundle -> /home/chilly1/workspace/ocho_arena/results/LFM2-350M-Extract-Q4_K_M_cardv6_autofit_neutral_ctx8192_mt3000.json
+      -> scored in 0.1 min
+[ 2/46]  0.21 GB  LFM2-350M-Math-Q4_K_M
+      DIVISION: Featherweight
+      DIVISION Featherweight (cord: teal)   footprint 0.50 GB measured
+      BELT: WHITE   stripes 0.0/6.0   rounds won 0/1   AGG 0.00
+      0.00    White belt  0.0/6.0 stripes  [Featherweight]  LFM2-350M-Math-Q4_K_M.gguf
+      result bundle -> /home/chilly1/workspace/ocho_arena/results/LFM2-350M-Math-Q4_K_M_cardv6_autofit_neutral_ctx8192_mt3000.json
+      -> scored in 0.8 min
+[ 3/46]  0.65 GB  LFM2.5-VL-1.6B-Q4_0
+      DIVISION: Featherweight
+      DIVISION Featherweight (cord: teal)   footprint 0.90 GB measured
+      BELT: WHITE   stripes 1.0/6.0   rounds won 0/1   AGG 0.17
+      0.17    White belt  1.0/6.0 stripes  [Featherweight]  LFM2.5-VL-1.6B-Q4_0.gguf
+      result bundle -> /home/chilly1/workspace/ocho_arena/results/LFM2.5-VL-1.6B-Q4_0_cardv6_autofit_neutral_ctx8192_mt3000.json
+      -> scored in 0.1 min
+[ 4/46]  0.68 GB  LFM2-1.2B-Extract-Q4_K_M
+      DIVISION: Featherweight
+      DIVISION Featherweight (cord: teal)   footprint 1.01 GB measured
+      BELT: WHITE   stripes 0.0/6.0   rounds won 0/1   AGG 0.00
+      0.00    White belt  0.0/6.0 stripes  [Featherweight]  LFM2-1.2B-Extract-Q4_K_M.gguf
+      result bundle -> /home/chilly1/workspace/ocho_arena/results/LFM2-1.2B-Extract-Q4_K_M_cardv6_autofit_neutral_ctx8192_mt3000.json
+      -> scored in 0.1 min
+[ 5/46] EXCLUDED (permanent failure: 9 record(s), empty in every attempt -- a RECORDED RESULT, NOT A QUEUE)
+[ 6/46]  0.90 GB  LFM2.5-1.2B-Instruct-Q6_K
+      DIVISION: Featherweight
+      DIVISION Featherweight (cord: teal)   footprint 1.18 GB measured
+      BELT: WHITE   stripes 1.0/6.0   rounds won 0/1   AGG 0.17
+      0.17    White belt  1.0/6.0 stripes  [Featherweight]  LFM2.5-1.2B-Instruct-Q6_K.gguf
+      result bundle -> /home/chilly1/workspace/ocho_arena/results/LFM2.5-1.2B-Instruct-Q6_K_cardv6_autofit_neutral_ctx8192_mt3000.json
+      -> scored in 0.1 min
+[ 7/46]  0.96 GB  stablelm-2-zephyr-1_6b-Q4_K_M

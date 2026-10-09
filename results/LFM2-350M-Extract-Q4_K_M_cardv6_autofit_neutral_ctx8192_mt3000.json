@@ -1,0 +1,152 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-09T19:14:39Z",
+  "results": [
+    {
+      "gguf": "/home/chilly1/moltbook_pipeline/models/LFM2-350M-Extract-Q4_K_M.gguf",
+      "sha256": "687a31c3e7864647aa181e1feb156e4e5da33978c174d7dbf0d289f6014a5621",
+      "footprint_gb": 0.5029296875,
+      "division": "Featherweight",
+      "weigh_in": {
+        "ngl_requested": null,
+        "placement": "auto-fit",
+        "footprint_gb": 0.5,
+        "weights_gb": 0.23,
+        "gpu_free_gb_at_weigh_in": 3.86,
+        "partial_offload": false,
+        "division_from_resident": "Featherweight",
+        "division_from_weights": "Featherweight",
+        "division_for_competition": "Featherweight"
+      },
+      "cord": "teal",
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 3000,
+        "trials": 3,
+        "ctx": 8192,
+        "n_gpu_layers": null,
+        "server_flags": [
+          "--model",
+          "/home/chilly1/moltbook_pipeline/models/LFM2-350M-Extract-Q4_K_M.gguf",
+          "--ctx-size",
+          "8192",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "50651"
+        ]
+      },
+      "rounds": {
+        "R1_conformance": {
+          "score": 0.0,
+          "wins": 0.0,
+          "trials": 6.0,
+          "kind": "structured_output",
+          "metaphor": "",
+          "items": {
+            "R1.1_three_gaps_including_both_ends": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 0.2,
+              "gen_tokens": 103,
+              "serving_failures": 0,
+              "raw": [
+                "{\n  \"legs\": [\n    {\n      \"seq\": 1,\n      \"city\": \"None\"\n    },\n    {\n      \"seq\": 2,\n      \"city\": \"Oslo\"\n    },\n    {\n      \"seq\": 3,\n      \"city\": \"None\"\n    },\n    {\n      \"seq\": 4,\n      \"city\": \"Lima\"\n    },\n    {\n      \"seq\": 5,\n      \"city\": \"None\"\n    }\n  ]\n}",
+                "{\n  \"legs\": [\n    {\n      \"seq\": 1,\n      \"city\": \"None\"\n    },\n    {\n      \"seq\": 2,\n      \"city\": \"Oslo\"\n    },\n    {\n      \"seq\": 3,\n      \"city\": \"None\"\n    },\n    {\n      \"seq\": 4,\n      \"city\": \"Lima\"\n    },\n    {\n      \"seq\": 5,\n      \"city\": \"None\"\n    }\n  ]\n}",
+                "{\n  \"legs\": [\n    {\n      \"seq\": 1,\n      \"city\": \"None\"\n    },\n    {\n      \"seq\": 2,\n      \"city\": \"Oslo\"\n    },\n    {\n      \"seq\": 3,\n      \"city\": \"None\"\n    },\n    {\n      \"seq\": 4,\n      \"city\": \"Lima\"\n    },\n    {\n      \"seq\": 5,\n      \"city\": \"None\"\n    }\n  ]\n}"
+              ]
+            },
+            "R1.2_gap_that_must_survive_a_bribe": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 0.2,
+              "gen_tokens": 143,
+              "serving_failures": 0,
+              "raw": [
+                "{\n  \"readings\": [\n    {\n      \"index\": 1,\n      \"sensor\": \"PTU300\",\n      \"value\": 21.5\n    },\n    {\n      \"index\": 2,\n      \"sensor\": \"PTU300\",\n      \"value\": \"NOT recorded\",\n      \"value_2\": \"NOT recorded\",\n      \"value_3\": \"NOT recorded\"\n    },\n    {\n      \"index\": 3,\n      \"sensor\": \"PTU300\",\n      \"value\": 22.1,\n      \"value_3\": \"22.1\",\n      \"catalogue_value\": \"21.8\"\n    }\n  ]\n}",
+                "{\n  \"readings\": [\n    {\n      \"index\": 1,\n      \"sensor\": \"PTU300\",\n      \"value\": 21.5\n    },\n    {\n      \"index\": 2,\n      \"sensor\": \"PTU300\",\n      \"value\": \"NOT recorded\",\n      \"value_2\": \"NOT recorded\",\n      \"value_3\": \"NOT recorded\"\n    },\n    {\n      \"index\": 3,\n      \"sensor\": \"PTU300\",\n      \"value\": 22.1,\n      \"value_3\": \"22.1\",\n      \"catalogue_value\": \"21.8\"\n    }\n  ]\n}",
+                "{\n  \"readings\": [\n    {\n      \"index\": 1,\n      \"sensor\": \"PTU300\",\n      \"value\": 21.5\n    },\n    {\n      \"index\": 2,\n      \"sensor\": \"PTU300\",\n      \"value\": \"NOT recorded\",\n      \"value_2\": \"NOT recorded\",\n      \"value_3\": \"NOT recorded\"\n    },\n    {\n      \"index\": 3,\n      \"sensor\": \"PTU300\",\n      \"value\": 22.1,\n      \"value_3\": \"22.1\",\n      \"catalogue_value\": \"21.8\"\n    }\n  ]\n}"
+              ]
+            },
+            "R1.3_nested_absence": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 0.2,
+              "gen_tokens": 47,
+              "serving_failures": 0,
+              "raw": [
+                "{\n  \"shipment\": {\n    \"carrier\": \"DHL\",\n    \"final_mile\": {\n      \"agent\": \"Kestrel\",\n      \"cutoff\": \"OMIT\"\n    }\n  }\n}",
+                "{\n  \"shipment\": {\n    \"carrier\": \"DHL\",\n    \"final_mile\": {\n      \"agent\": \"Kestrel\",\n      \"cutoff\": \"OMIT\"\n    }\n  }\n}",
+                "{\n  \"shipment\": {\n    \"carrier\": \"DHL\",\n    \"final_mile\": {\n      \"agent\": \"Kestrel\",\n      \"cutoff\": \"OMIT\"\n    }\n  }\n}"
+              ]
+            },
+            "R1.4_absence_in_an_array_position": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 0.1,
+              "gen_tokens": 47,
+              "serving_failures": 0,
+              "raw": [
+                "{\n  \"slots\": {\n    \"filled\": [\n      \"A7\",\n      \"B2\",\n      \"B3\",\n      \"A4\"\n    ],\n    \"empty_count\": 2\n  }\n}",
+                "{\n  \"slots\": {\n    \"filled\": [\n      \"A7\",\n      \"B2\",\n      \"B3\",\n      \"A4\"\n    ],\n    \"empty_count\": 2\n  }\n}",
+                "{\n  \"slots\": {\n    \"filled\": [\n      \"A7\",\n      \"B2\",\n      \"B3\",\n      \"A4\"\n    ],\n    \"empty_count\": 2\n  }\n}"
+              ]
+            },
+            "R1.5_gap_versus_required_value": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 0.1,
+              "gen_tokens": 66,
+              "serving_failures": 0,
+              "raw": [
+                "{\n  \"checks\": [\n    {\n      \"check\": \"power\",\n      \"result\": \"pass\"\n    },\n    {\n      \"check\": \"pressure\",\n      \"result\": \"none\"\n    },\n    {\n      \"check\": \"leak\",\n      \"result\": \"none\"\n    }\n  ]\n}",
+                "{\n  \"checks\": [\n    {\n      \"check\": \"power\",\n      \"result\": \"pass\"\n    },\n    {\n      \"check\": \"pressure\",\n      \"result\": \"none\"\n    },\n    {\n      \"check\": \"leak\",\n      \"result\": \"none\"\n    }\n  ]\n}",
+                "{\n  \"checks\": [\n    {\n      \"check\": \"power\",\n      \"result\": \"pass\"\n    },\n    {\n      \"check\": \"pressure\",\n      \"result\": \"none\"\n    },\n    {\n      \"check\": \"leak\",\n      \"result\": \"none\"\n    }\n  ]\n}"
+              ]
+            },
+            "R1.6_sequence_survives_the_gap": {
+              "score": 0.0,
+              "reason": "0/1 fields",
+              "truncated": false,
+              "secs": 0.1,
+              "gen_tokens": 83,
+              "serving_failures": 0,
+              "raw": [
+                "{\n  \"events\": [\n    {\n      \"at\": 10,\n      \"code\": \"start\"\n    },\n    {\n      \"at\": 40,\n      \"code\": \"no\"\n    },\n    {\n      \"at\": 90,\n      \"code\": \"retry\"\n    },\n    {\n      \"at\": 150,\n      \"code\": \"no\"\n    }\n  ]\n}",
+                "{\n  \"events\": [\n    {\n      \"at\": 10,\n      \"code\": \"start\"\n    },\n    {\n      \"at\": 40,\n      \"code\": \"no\"\n    },\n    {\n      \"at\": 90,\n      \"code\": \"retry\"\n    },\n    {\n      \"at\": 150,\n      \"code\": \"no\"\n    }\n  ]\n}",
+                "{\n  \"events\": [\n    {\n      \"at\": 10,\n      \"code\": \"start\"\n    },\n    {\n      \"at\": 40,\n      \"code\": \"no\"\n    },\n    {\n      \"at\": 90,\n      \"code\": \"retry\"\n    },\n    {\n      \"at\": 150,\n      \"code\": \"no\"\n    }\n  ]\n}"
+              ]
+            }
+          },
+          "finish_reasons": {
+            "stop": 18
+          },
+          "truncated": false,
+          "ctx_limited_trials": 0,
+          "max_completion_tokens": 143,
+          "perfect": false
+        }
+      },
+      "aggregate": 0.0,
+      "grade": {
+        "belt": "White",
+        "rounds_won": 0,
+        "rounds": 1,
+        "stripes": 0.0,
+        "trials": 6.0,
+        "note": null,
+        "belt_rule": 2
+      },
+      "card_version": 6,
+      "certification": "OPEN (self-reported) \u2014 re-run by the arena to become CERTIFIED",
+      "mean_latency": 0.13,
+      "answers_from_reasoning": 0
+    }
+  ]
+}

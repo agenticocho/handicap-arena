@@ -281,6 +281,17 @@ def main():
     print(f"game contract: OK ({gate_detail.strip().splitlines()[-3] if gate_detail else 'clean'})")
 
     done = scratched = skipped = excluded = 0
+    # AN ENTRANT THAT RETURNED IN ~ZERO SECONDS WITH A NONZERO CODE WAS NEVER STARTED.
+    #
+    # This counter exists because COVERAGE CANNOT TELL "ATTEMPTED" FROM "STARTED", and its PASSING
+    # CONDITION IS TOTAL FAILURE. Measured: `--card v6` was rejected by arena.py's argparse (the registry
+    # was defined twice), so every entrant returned rc=2 in 0.0 s -- and the gate reported
+    #     COVERAGE attempted/planned  1.000  OK
+    #     YIELD    measured/attempted 0.000  UNMET
+    # A run that never started scored FULL MARKS on the completeness metric, because `attempted` was
+    # COMPUTED as len(ents) - excluded rather than COUNTED. Same defect as the empty bundle: a quantity
+    # named for what happened, whose value comes from what was planned.
+    never_started = 0
     t_start = time.time()
     for i, (size, path, base) in enumerate(ents, 1):
         stem = base.replace(".gguf", "")
@@ -361,6 +372,10 @@ def main():
                 print(f"      -> scored in {dt/60:.1f} min", flush=True)
             else:
                 scratched += 1
+                if r.returncode != 0 and dt < 5.0:
+                    never_started += 1
+                    print(f"      -> NEVER STARTED: rc={r.returncode} in {dt:.1f}s "
+                          f"(not an attempt -- the runner never reached the model)", flush=True)
                 # THE REASON MUST TRAVEL WITH THE ARTIFACT, NOT JUST THE LOG.
                 #
                 # `why_empty` was computed here and written to stdout and to the log -- both of which
@@ -435,7 +450,10 @@ def main():
     # the population decided. A criterion and its implementation are two components; where they disagree,
     # the CODE is believed and the frozen card is not.
     _planned   = len(ents) - excluded
-    _attempted = len(ents) - excluded
+    # ATTEMPTED IS COUNTED, NOT COMPUTED. It used to read len(ents) - excluded, which asserts that every
+    # planned entrant was tried -- so a runner that never reached a single model still reported that it
+    # had attempted all of them. Subtract the ones the runner demonstrably never started.
+    _attempted = len(ents) - excluded - never_started
     # A SKIP (MEASURED) IS A MEASUREMENT -- the skip message says so in its own words.
     #
     # `_measured = done` ALONE MADE A RESUMED RUN UNABLE TO PASS ITS OWN YIELD GATE. `done` counts only
@@ -459,6 +477,23 @@ def main():
     print(f"      YIELD    measured/attempted  {_g['yield']:.3f}  (>= 0.85)   "
           f"{'OK' if _g['yield_ok'] else 'UNMET'}")
     print(f"      GATE {'MET -- outcome 2 or 3 may be called' if _g['gate_met'] else 'UNMET -- outcome 1: NO VERDICT'}")
+    # AND A RUN THAT MEASURED NOTHING IS AN ERROR, NOT A VERDICT -- the second half of the coverage fix.
+    # Coverage cannot distinguish "ran completely" from "never started", and its passing condition is
+    # total failure; yield catches that for THIS run, but a gate verdict printed at all lets a reader
+    # quote "COVERAGE 1.000" beside a run that produced nothing. An empty field is not a measurement of
+    # an empty field; it is a broken runner, and it must say so and exit non-zero.
+    if _measured == 0:
+        print()
+        print("=" * 96)
+        print("ERROR -- NO MEASUREMENT WAS PRODUCED. This is not a verdict about the population.")
+        print(f"  planned {_planned}   attempted {_attempted}   never started {never_started}   measured 0")
+        if never_started:
+            print(f"  {never_started} entrant(s) returned a NONZERO code in under 5 s, so the runner never")
+            print("  reached a model. That is a broken invocation, not a field of failures.")
+        print("  A run whose measured count is zero reports an ERROR rather than a verdict, because")
+        print("  COVERAGE CANNOT TELL 'ATTEMPTED' FROM 'STARTED' AND TOTAL FAILURE IS ITS PASSING CASE.")
+        print("=" * 96)
+        return 3
     print(f"log: {log}")
     ls = sorted(glob.glob(os.path.join(RESULTS, "*_neutral_ctx*_mt*.json")))
     print(f"bundles now on disk: {len(ls)}")
