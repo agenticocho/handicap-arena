@@ -1,0 +1,4301 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-10T20:47:20Z",
+  "event": "DIG DUG",
+  "card_version": "digdug_v1",
+  "declared": {
+    "reasoning": "off",
+    "reasoning_note": "DECLARED per-run instrument field. 'unset' is NOT 'off': an undeclared run must not be pooled with a declared one. Same weights with thinking ON versus OFF produced OPPOSITE outcomes on this circuit's first cabinet.",
+    "gpu": {
+      "probe": "nvidia-smi (absent) -> host is Linux x86_64",
+      "name": null,
+      "index": null,
+      "memory_total_gb": null,
+      "memory_free_gb": null,
+      "driver": null,
+      "n_devices": null,
+      "note": "NO ACCELERATOR FOUND by this probe. Recorded as null, not 0.00 and not 'none': an unprobed machine is not a machine with no GPU. A model run on this host is CPU-only and its numbers are not comparable to a GPU run.",
+      "raw": null
+    },
+    "gpu_note": "DECLARED per-run. No accelerator is recorded as null with the probe that ran, never 0.00 and never 'none'.",
+    "budget_per_level": 10,
+    "budget_note": "the cap is a DECISION (D-BUDGET), it is the horizon of the per-ply proof, and control [HZ] asserts HORIZON >= budget instead of assuming it"
+  },
+  "frozen_contract": {
+    "document": "digdug/CONTRACT_digdug_v1.md",
+    "manifest": "digdug/CONTRACT_frozen.json",
+    "frozen_utc": "2026-10-10T20:47:18Z",
+    "digests": {
+      "contract": "2d5679d0064fbbdd4c3c5f07ba4400ec94d183c9cd0f7d38b49261a71aecb908",
+      "reader": "6be849338e25b73c453a1a21020cb193a1df081168bd7da881e871545883de21",
+      "readings": "a0efae8dab4e7d13801a3ba668d486b7569128243f37f35feb3f187edc5c295a",
+      "runner": "c507c71600709db2174628f6094e92449a80b1ba081eb2692c483629eb2fc4a3",
+      "simulator": "f77c2b142b0706e33b0e47be21d4798853f83e08652c6dc5b7212e10680abd53",
+      "solver": "7445589976a0eed9d333624ef70a05c0e373199490ce6dbce67edc48bf1388ca",
+      "level:01_first_dig.txt": "a896a90e3b0c29f4178ba4dada481245fb134931bf1142e5e08fb2e27b45b1f6",
+      "level:02_the_shortcut.txt": "36dd8f0d9b6ded93ccd19acb2e207d587d28ded2facd1f5071b5be356f3b0109",
+      "level:03_ground_you_cannot_reuse.txt": "19c3bba3665d5b341cb8b457eac88ac8874af767ef9cf7eded7f238412c01b15",
+      "level:04_the_only_door.txt": "5e40bfd3c67971cb0a337fcfdf0a40c673e6770eabd53da995c387f5ca5561b7",
+      "level:05_the_photo_finish.txt": "ed5e9afb6a6673b9c2d4f173229cd8758e2384eddd7da3a03ea69e1523089f69"
+    },
+    "frozen_before_this_run": true,
+    "note": "the freeze is a GATE: run_digdug refuses every entrant until the manifest exists and every digest matches the file on disk, so this field cannot be true by accident"
+  },
+  "results": [
+    {
+      "entrant": "wall-bumper",
+      "kind": "?",
+      "instrument": "code",
+      "instrument_note": "CODE entrant, not a model -- a DIFFERENT INSTRUMENT; never pooled into a model table",
+      "entrant_is_a_model": false,
+      "on_board": false,
+      "weights": null,
+      "weights_sha256": null,
+      "verdict_code": {
+        "module": "digdug_run.py",
+        "function": "run_entrant",
+        "sha256": "c507c71600709db2174628f6094e92449a80b1ba081eb2692c483629eb2fc4a3",
+        "simulator": {
+          "module": "digdug.py",
+          "sha256": "f77c2b142b0706e33b0e47be21d4798853f83e08652c6dc5b7212e10680abd53",
+          "transition": "step(state, action) -> ((row, col), word); mutates; raises outside the alphabet; bounds checked inside"
+        },
+        "reader": {
+          "module": "digdug_reader.py",
+          "sha256": "6be849338e25b73c453a1a21020cb193a1df081168bd7da881e871545883de21",
+          "note": "ONE reader of record, imported by every side script, never reimplemented"
+        },
+        "solver": {
+          "module": "digdug_solve.py",
+          "sha256": "7445589976a0eed9d333624ef70a05c0e373199490ce6dbce67edc48bf1388ca",
+          "role": "proves the optima, proves 04 lost, and supplies both facets' per-ply diagnostics.  Never scores."
+        }
+      },
+      "rules_fired": [
+        "A3.action_letter"
+      ],
+      "rules_declared": [
+        "A1.none_answer",
+        "A1.empty_answer",
+        "A1.multi_line",
+        "A2.give_up_token",
+        "A3.action_letter",
+        "A3.wait_letter",
+        "A4.wasd_not_a_synonym",
+        "A4.single_char_not_in_alphabet",
+        "A5.multi_char_never_truncated"
+      ],
+      "rules_subset_ok": true,
+      "terminals": [
+        "KILLED_BY_HAZARD",
+        "WALLED_IN_ONLY"
+      ],
+      "terminal_reason": {
+        "per_level": {
+          "01_first_dig.txt": "WALLED_IN_ONLY",
+          "02_the_shortcut.txt": "WALLED_IN_ONLY",
+          "03_ground_you_cannot_reuse.txt": "WALLED_IN_ONLY",
+          "04_the_only_door.txt": "KILLED_BY_HAZARD",
+          "05_the_photo_finish.txt": "WALLED_IN_ONLY"
+        },
+        "corrections_offered": 0,
+        "corrections_ignored": 0,
+        "note": "corrections_ignored > 0 means the entrant was TOLD its answer was unreadable and produced no legal action anyway -- not the same finding as producing legal actions that failed."
+      },
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 8,
+        "trials": 1,
+        "ctx": null,
+        "n_gpu_layers": null,
+        "server_flags": null,
+        "attempt_budget_per_level": 10,
+        "retries_on_unreadable": null,
+        "reasoning": "off",
+        "entrant_reasoning": null,
+        "entrant_reasoning_note": "NOT APPLICABLE -- this entrant is code; no model was served and no reasoning setting existed. Recorded as null with this reason, never 'off' and never omitted.",
+        "config_note": "RUN_FACTS that do not exist on this host are null, not omitted and not zeroed."
+      },
+      "contract": {
+        "clauses_frozen_for_this_run": {
+          "name": "FROZEN",
+          "clauses": {
+            "hazard_clock": "per_player_turn",
+            "hazard_terrain": "tunnels_only",
+            "hazard_tiebreak": "reading_order",
+            "player_into_hazard": "blocked",
+            "resolve_order": "player_first",
+            "end_on_solve_first": true,
+            "death_beats_solve": true,
+            "wait_legal": true,
+            "objective": "all_targets",
+            "target_persistence": "removed",
+            "bounds": "blocked",
+            "wrap": false,
+            "hazard_blocks_hazard": true
+          },
+          "word_precedence": [
+            "collected",
+            "dug",
+            "moved"
+          ],
+          "step_words": [
+            "moved",
+            "dug",
+            "collected",
+            "waited",
+            "blocked",
+            "entered_hazard"
+          ]
+        },
+        "decisions_index": {
+          "D-ADJ": [
+            "resolve_order",
+            "player_first",
+            "simultaneous",
+            "'adjacent cells, whose turn resolves first' is undecided; player-then-hazard, with the winning ply ending the run BEFORE hazard motion, is what makes level 05 a WIN and not a death"
+          ],
+          "D-BLOCK": [
+            "player_into_hazard",
+            "blocked",
+            "killed",
+            "moving into the cell a hazard stands on is undecided; blocked makes a hazard a living wall, which is the ONLY mechanism in this contract that destroys the player's route -- see 4F1"
+          ],
+          "D-BLOCKED-TURN": [
+            "blocked_legal_letter",
+            "costs_a_turn",
+            "costs_nothing",
+            "a legal letter aimed at rock is CONSUMED: `moves` does not advance, the turn count does, and a hazard already on a road steps closer. The rejected reading -- 'only a successful move is a turn' -- makes waiting safe by walking into a wall, which is the same rule as [D-STOP] wearing a costume; the two are decided together and reported separately because `blocked` and `waited` are different counters and the record must be able to tell which one a run filled"
+          ],
+          "D-BOUNDS": [
+            "bounds",
+            "blocked",
+            "raises",
+            "B2: bounds are checked in the transition function; walking off the board is impossible, and an unbounded walk is an error only in the sense that it never happens"
+          ],
+          "D-CLOCK": [
+            "hazard_clock",
+            "per_player_turn",
+            "every_2_player_turns",
+            "the paragraph says a hazard 'can arrive' through tunnels and never says when it moves; per-player-turn is the only reading that makes the run a pure function of the answer stream"
+          ],
+          "D-END": [
+            "end_on_solve_first",
+            true,
+            false,
+            "does a run that collects the last pearl on the ply a hazard would step onto it count?  Decided YES.  Level 05 exists to exercise exactly this clause"
+          ],
+          "D-HAZCOLL": [
+            "hazard_blocks_hazard",
+            true,
+            false,
+            "two hazards in one cell is not expressible in the prose and is decided: they block each other, which makes a junction into a thing a plan can use"
+          ],
+          "D-NEIGHBOUR": [
+            "neighbour_rule",
+            "one_shared_function",
+            "six_copies_of_two_lines",
+            "the boundary is one rule, so it is ONE function: `neighbour(state, cell, delta)` applies wrap and nothing else decides where a coordinate is.  It is recorded as a decision because it was found as a bug: a copy of these two lines in `reachable_cells()` reduced the coordinate AFTER adding it to `seen`, so on any `wrap=True` reading the mobility flood fill expanded off the edge forever and the process died.  The frozen reading cannot reach it (wrap is off), which is why it survived review -- and why [B2]'s rule is not only 'check the bounds in the transition function' but 'there is one place that knows the bounds'"
+          ],
+          "D-OBJ": [
+            "objective",
+            "all_targets",
+            "survive_n",
+            "'solved' is not defined by the paragraph; collecting every target is the only reading that uses the sentence it does provide ('a target is collected by moving into its cell')"
+          ],
+          "D-STOP": [
+            "wait_legal",
+            true,
+            false,
+            "the paragraph never says the player may stop; WAIT is in the ALPHABET anyway, because R3 puts the answer shape in the grammar and a game that permits a pause the grammar forbids makes a correct answer a failure"
+          ],
+          "D-T0": [
+            "hazard_terrain",
+            "tunnels_only",
+            "soil_too",
+            "the paragraph says a hazard cannot reach the player except through tunnels, so its route does NOT exist through UNDIGGED soil. Measured scope, stated here because the first draft of this sentence said 'at time zero nothing moves' and level 04 refutes it: `_` is ground the level AUTHOR dug, so 04 has a hazard armed at distance 2 before the entrant has typed anything. A new level cannot arm a hazard; an authored tunnel run can -- which is the difference between this clause and [D-TIEBREAK]'s determinism, and why the item set contains one of each"
+          ],
+          "D-TARGET": [
+            "target_persistence",
+            "removed",
+            "persists_as_marker",
+            "'collected' has no stated consequence; removal is the reading under which the word means something"
+          ],
+          "D-TIEBREAK": [
+            "hazard_tiebreak",
+            "reading_order",
+            "reverse_reading_order",
+            "the paragraph permits more than one hazard and never says what two hazards wanting the same cell do. Frozen to reading order because the EXHAUSTIVE PROOF depends on it: a randomised tie-break makes the state key incomplete and every number in this cabinet unreplayable. The choice costs nothing on any of the five levels (measured: 4F item 6) and buys determinism with no seed -- which is why it is in the contract and not in a comment"
+          ],
+          "D-WRAP": [
+            "wrap",
+            false,
+            true,
+            "the grid is bounded, it does not wrap; 'a grid of soil' with no torus language is a bounded grid, and wrapping would make the enclosure measurement meaningless"
+          ]
+        },
+        "prose_source": "the one paragraph in section 3 of the Tier-3 brief; every clause it did not settle is marked [UNDER-SPECIFIED] in the frozen document and [D-*] in the code"
+      },
+      "hardware": {
+        "host": "e2b.local",
+        "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+        "machine": "x86_64",
+        "processor": null,
+        "python": "3.11.2",
+        "cpu_count": 2,
+        "gpu": {
+          "probe": "nvidia-smi (absent) -> host is Linux x86_64",
+          "name": null,
+          "index": null,
+          "memory_total_gb": null,
+          "memory_free_gb": null,
+          "driver": null,
+          "n_devices": null,
+          "note": "NO ACCELERATOR FOUND by this probe. Recorded as null, not 0.00 and not 'none': an unprobed machine is not a machine with no GPU. A model run on this host is CPU-only and its numbers are not comparable to a GPU run.",
+          "raw": null
+        }
+      },
+      "admission": {
+        "rc": 0,
+        "secs": 0.0,
+        "started": true,
+        "never_started": false,
+        "holder": null
+      },
+      "rounds": {
+        "R_digdug_levels": {
+          "score": 0.0,
+          "wins": 0,
+          "trials": 5,
+          "items_attempted_emitted": 5,
+          "items_attempted_consumed": 5,
+          "score_is": "solved levels / levels on which an answer was EMITTED (R2's rate at the gate).  `moves` is carried per item and in `totals` and is NOT averaged: it is a COST, not a score.",
+          "denominator_rule": "NEVER_STARTED sits OUTSIDE both denominators and is counted separately (B1); an item where every answer was unreadable is still EMITTED and is still in the denominator, which is what makes the zero rule bite.",
+          "kind": "grid_puzzle_destructive",
+          "class": "CONTEST",
+          "oracle": "rules_frozen_before_the_run_and_verified_by_exhaustive_search",
+          "staged_as": "arcade cabinet -- DIG DUG: the soil you dig is the road that reaches you",
+          "items": {
+            "01_first_dig.txt": {
+              "level": "01_first_dig.txt",
+              "level_sha256": "a896a90e3b0c29f4178ba4dada481245fb134931bf1142e5e08fb2e27b45b1f6",
+              "enclosed_measured": true,
+              "enclosed_note": "B2: measured by the parser's flood fill on the board as authored, for this run, not asserted by a level file or a comment",
+              "solved": false,
+              "moves": 0,
+              "attempted_emitted": 10,
+              "attempted_consumed": 10,
+              "blocked": 10,
+              "waited": 0,
+              "digs": 0,
+              "collects": 0,
+              "not_an_action": 0,
+              "give_up": 0,
+              "after_end": 0,
+              "over_budget": 0,
+              "gave_up_at": null,
+              "hazard_turns": 0,
+              "armed_at": null,
+              "killed_at": null,
+              "killed_by": null,
+              "digs_by_word_vs_delta": {
+                "by_word": 0,
+                "by_delta": 0
+              },
+              "terminal": "WALLED_IN_ONLY",
+              "budget": 10,
+              "budget_exhausted": true,
+              "corrections_offered": 0,
+              "corrections_ignored": 0,
+              "never_produced_a_legal_action": false,
+              "produced_a_legal_action": true,
+              "final_board": "#####\n#@o~#\n#####",
+              "board_is": "BOARD AFTER THE LAST CONSUMED ANSWER",
+              "trace": [
+                {
+                  "ply": 1,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        1,
+                        3
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#####\n#@o~#\n#####",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "749687f701b2230a",
+                  "diag": {
+                    "ply": 1,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 3,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 1,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 1,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "R"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 2,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        1,
+                        3
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#####\n#@o~#\n#####",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "3f2a82e9af6ea01c",
+                  "diag": {
+                    "ply": 2,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 3,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 1,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 1,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "R"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 3,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        1,
+                        3
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#####\n#@o~#\n#####",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "033196b27ab8f431",
+                  "diag": {
+                    "ply": 3,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 3,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 1,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 1,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "R"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 4,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        1,
+                        3
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#####\n#@o~#\n#####",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "fe4504743fe1a34f",
+                  "diag": {
+                    "ply": 4,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 3,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 1,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 1,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "R"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 5,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        1,
+                        3
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#####\n#@o~#\n#####",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "04fb780e9312361f",
+                  "diag": {
+                    "ply": 5,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 3,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 1,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 1,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "R"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 6,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        1,
+                        3
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#####\n#@o~#\n#####",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "2db35332cf4ca093",
+                  "diag": {
+                    "ply": 6,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 3,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 1,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 1,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "R"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 7,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        1,
+                        3
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#####\n#@o~#\n#####",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "a4bd50dc93bca632",
+                  "diag": {
+                    "ply": 7,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 3,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 1,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 1,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "R"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 8,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        1,
+                        3
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#####\n#@o~#\n#####",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "11ddf28fc724760f",
+                  "diag": {
+                    "ply": 8,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 3,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 1,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 1,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "R"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 9,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        1,
+                        3
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#####\n#@o~#\n#####",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "d20b5d4e8515ecd1",
+                  "diag": {
+                    "ply": 9,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 3,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 1,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 1,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "R"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 10,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        1,
+                        3
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#####\n#@o~#\n#####",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "45919d6735c02cc0",
+                  "diag": {
+                    "ply": 10,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 3,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 1,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 1,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "R"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                }
+              ],
+              "start_diag": {
+                "ply": 0,
+                "alive": true,
+                "objective_met": false,
+                "F1_mobility": 3,
+                "F1_mobility_equals_start_mobility": true,
+                "F1_dug_cells": 1,
+                "F1_targets_left": 1,
+                "F1_completable_within_budget": true,
+                "F1_dist_to_win": 1,
+                "F1_tunnel_only_completion": null,
+                "F1_tunnel_only_search_exact": true,
+                "F1_committed_to_dug_ground": true,
+                "F1_moves_available": [
+                  "R"
+                ],
+                "F2_armed": false,
+                "F2_arming_ply": null,
+                "F2_min_hazard_distance": null,
+                "proof_grade": "exhaustive",
+                "progress": null,
+                "threat_gain": 0,
+                "balance": null,
+                "slack": null,
+                "hazard_route": false,
+                "hazard_route_changed": false
+              },
+              "secs": 0.001,
+              "rules_fired": [
+                "A3.action_letter"
+              ],
+              "facets": {
+                "F1_search_under_destruction": {
+                  "question": "did the plan consume the ground it needed?",
+                  "read_from": "trace[] rows F1_*, same plies as F2",
+                  "plies_examined": 10,
+                  "mobility_shrink_events": 0,
+                  "plies_negative_balance": 0,
+                  "plies_negative_progress": 0,
+                  "plies_objective_lost_while_mobile": 1,
+                  "first_ply_objective_lost_while_mobile": 10,
+                  "min_slack": null,
+                  "runs_ending_lost_while_mobile": false,
+                  "committed_plies": 9,
+                  "digs": 0
+                },
+                "F2_hazard_aware_planning": {
+                  "question": "did the route it dug open a path for the hazard that killed it?",
+                  "read_from": "trace[] rows F2_*, same plies as F1",
+                  "arming_plies": 0,
+                  "first_arming_ply": null,
+                  "ever_armed": false,
+                  "killed": false,
+                  "killed_at_ply": null,
+                  "deaths_armed_by_own_dig": 0,
+                  "deaths_at_the_arming_ply": 0,
+                  "deaths_with_a_safe_alternative": 0,
+                  "arms_with_no_safe_alternative": 0,
+                  "min_threat_at_win": null,
+                  "photo_finish_wins": 0,
+                  "attribution": null
+                }
+              }
+            },
+            "02_the_shortcut.txt": {
+              "level": "02_the_shortcut.txt",
+              "level_sha256": "36dd8f0d9b6ded93ccd19acb2e207d587d28ded2facd1f5071b5be356f3b0109",
+              "enclosed_measured": true,
+              "enclosed_note": "B2: measured by the parser's flood fill on the board as authored, for this run, not asserted by a level file or a comment",
+              "solved": false,
+              "moves": 0,
+              "attempted_emitted": 10,
+              "attempted_consumed": 10,
+              "blocked": 10,
+              "waited": 0,
+              "digs": 0,
+              "collects": 0,
+              "not_an_action": 0,
+              "give_up": 0,
+              "after_end": 0,
+              "over_budget": 0,
+              "gave_up_at": null,
+              "hazard_turns": 0,
+              "armed_at": null,
+              "killed_at": null,
+              "killed_by": null,
+              "digs_by_word_vs_delta": {
+                "by_word": 0,
+                "by_delta": 0
+              },
+              "terminal": "WALLED_IN_ONLY",
+              "budget": 10,
+              "budget_exhausted": true,
+              "corrections_offered": 0,
+              "corrections_ignored": 0,
+              "never_produced_a_legal_action": false,
+              "produced_a_legal_action": true,
+              "final_board": "#######\n#.o...#\n#@#.~.#\n#..o..#\n#######",
+              "board_is": "BOARD AFTER THE LAST CONSUMED ANSWER",
+              "trace": [
+                {
+                  "ply": 1,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o...#\n#@#.~.#\n#..o..#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "8c8e305870accca0",
+                  "diag": {
+                    "ply": 1,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 14,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "D",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 2,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o...#\n#@#.~.#\n#..o..#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "feb0cb07ab08f95b",
+                  "diag": {
+                    "ply": 2,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 14,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "D",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 3,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o...#\n#@#.~.#\n#..o..#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "f20199d413ef38f3",
+                  "diag": {
+                    "ply": 3,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 14,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "D",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 4,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o...#\n#@#.~.#\n#..o..#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "50dea3d9e25598e3",
+                  "diag": {
+                    "ply": 4,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 14,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "D",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 5,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o...#\n#@#.~.#\n#..o..#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "6de3f317b4347a10",
+                  "diag": {
+                    "ply": 5,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 14,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "D",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 6,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o...#\n#@#.~.#\n#..o..#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "fb395c6e7241c6d7",
+                  "diag": {
+                    "ply": 6,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 14,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "D",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 7,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o...#\n#@#.~.#\n#..o..#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "bf933843d149957e",
+                  "diag": {
+                    "ply": 7,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 14,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "D",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 8,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o...#\n#@#.~.#\n#..o..#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "189b54738733edc7",
+                  "diag": {
+                    "ply": 8,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 14,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "D",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 9,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o...#\n#@#.~.#\n#..o..#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "9b72624e17ab867a",
+                  "diag": {
+                    "ply": 9,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 14,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "D",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 10,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o...#\n#@#.~.#\n#..o..#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "1b6f5f2038db81ee",
+                  "diag": {
+                    "ply": 10,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 14,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "D",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                }
+              ],
+              "start_diag": {
+                "ply": 0,
+                "alive": true,
+                "objective_met": false,
+                "F1_mobility": 14,
+                "F1_mobility_equals_start_mobility": true,
+                "F1_dug_cells": 1,
+                "F1_targets_left": 2,
+                "F1_completable_within_budget": true,
+                "F1_dist_to_win": 7,
+                "F1_tunnel_only_completion": null,
+                "F1_tunnel_only_search_exact": true,
+                "F1_committed_to_dug_ground": true,
+                "F1_moves_available": [
+                  "D",
+                  "U"
+                ],
+                "F2_armed": false,
+                "F2_arming_ply": null,
+                "F2_min_hazard_distance": null,
+                "proof_grade": "exhaustive",
+                "progress": null,
+                "threat_gain": 0,
+                "balance": null,
+                "slack": null,
+                "hazard_route": false,
+                "hazard_route_changed": false
+              },
+              "secs": 0.001,
+              "rules_fired": [
+                "A3.action_letter"
+              ],
+              "facets": {
+                "F1_search_under_destruction": {
+                  "question": "did the plan consume the ground it needed?",
+                  "read_from": "trace[] rows F1_*, same plies as F2",
+                  "plies_examined": 10,
+                  "mobility_shrink_events": 0,
+                  "plies_negative_balance": 0,
+                  "plies_negative_progress": 0,
+                  "plies_objective_lost_while_mobile": 7,
+                  "first_ply_objective_lost_while_mobile": 4,
+                  "min_slack": null,
+                  "runs_ending_lost_while_mobile": false,
+                  "committed_plies": 3,
+                  "digs": 0
+                },
+                "F2_hazard_aware_planning": {
+                  "question": "did the route it dug open a path for the hazard that killed it?",
+                  "read_from": "trace[] rows F2_*, same plies as F1",
+                  "arming_plies": 0,
+                  "first_arming_ply": null,
+                  "ever_armed": false,
+                  "killed": false,
+                  "killed_at_ply": null,
+                  "deaths_armed_by_own_dig": 0,
+                  "deaths_at_the_arming_ply": 0,
+                  "deaths_with_a_safe_alternative": 0,
+                  "arms_with_no_safe_alternative": 0,
+                  "min_threat_at_win": null,
+                  "photo_finish_wins": 0,
+                  "attribution": null
+                }
+              }
+            },
+            "03_ground_you_cannot_reuse.txt": {
+              "level": "03_ground_you_cannot_reuse.txt",
+              "level_sha256": "19c3bba3665d5b341cb8b457eac88ac8874af767ef9cf7eded7f238412c01b15",
+              "enclosed_measured": true,
+              "enclosed_note": "B2: measured by the parser's flood fill on the board as authored, for this run, not asserted by a level file or a comment",
+              "solved": false,
+              "moves": 0,
+              "attempted_emitted": 10,
+              "attempted_consumed": 10,
+              "blocked": 10,
+              "waited": 0,
+              "digs": 0,
+              "collects": 0,
+              "not_an_action": 0,
+              "give_up": 0,
+              "after_end": 0,
+              "over_budget": 0,
+              "gave_up_at": null,
+              "hazard_turns": 0,
+              "armed_at": null,
+              "killed_at": null,
+              "killed_by": null,
+              "digs_by_word_vs_delta": {
+                "by_word": 0,
+                "by_delta": 0
+              },
+              "terminal": "WALLED_IN_ONLY",
+              "budget": 10,
+              "budget_exhausted": true,
+              "corrections_offered": 0,
+              "corrections_ignored": 0,
+              "never_produced_a_legal_action": false,
+              "produced_a_legal_action": true,
+              "final_board": "#######\n#.o#..#\n#.#.#.#\n#@..~.#\n#.o...#\n#######",
+              "board_is": "BOARD AFTER THE LAST CONSUMED ANSWER",
+              "trace": [
+                {
+                  "ply": 1,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    3,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        3,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o#..#\n#.#.#.#\n#@..~.#\n#.o...#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "61c2d3df0511bb4a",
+                  "diag": {
+                    "ply": 1,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 17,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "D",
+                      "R",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 2,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    3,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        3,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o#..#\n#.#.#.#\n#@..~.#\n#.o...#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "a9a4d48b865b79cc",
+                  "diag": {
+                    "ply": 2,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 17,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "D",
+                      "R",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 3,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    3,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        3,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o#..#\n#.#.#.#\n#@..~.#\n#.o...#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "58681c173b8bf734",
+                  "diag": {
+                    "ply": 3,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 17,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "D",
+                      "R",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 4,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    3,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        3,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o#..#\n#.#.#.#\n#@..~.#\n#.o...#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "f936078a90a0027c",
+                  "diag": {
+                    "ply": 4,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 17,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "D",
+                      "R",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 5,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    3,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        3,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o#..#\n#.#.#.#\n#@..~.#\n#.o...#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "b1ab386100de52d5",
+                  "diag": {
+                    "ply": 5,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 17,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "D",
+                      "R",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 6,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    3,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        3,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o#..#\n#.#.#.#\n#@..~.#\n#.o...#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "c808f4305171507f",
+                  "diag": {
+                    "ply": 6,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 17,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "D",
+                      "R",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 7,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    3,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        3,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o#..#\n#.#.#.#\n#@..~.#\n#.o...#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "b7219ad5c8663e12",
+                  "diag": {
+                    "ply": 7,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 17,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "D",
+                      "R",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 8,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    3,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        3,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o#..#\n#.#.#.#\n#@..~.#\n#.o...#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "80d65ca975a4af3d",
+                  "diag": {
+                    "ply": 8,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 17,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "D",
+                      "R",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 9,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    3,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        3,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o#..#\n#.#.#.#\n#@..~.#\n#.o...#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "7c648a7d157077ed",
+                  "diag": {
+                    "ply": 9,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 17,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "D",
+                      "R",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 10,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    3,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        3,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o#..#\n#.#.#.#\n#@..~.#\n#.o...#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "f82690f89479cc0c",
+                  "diag": {
+                    "ply": 10,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 17,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 7,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "D",
+                      "R",
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                }
+              ],
+              "start_diag": {
+                "ply": 0,
+                "alive": true,
+                "objective_met": false,
+                "F1_mobility": 17,
+                "F1_mobility_equals_start_mobility": true,
+                "F1_dug_cells": 1,
+                "F1_targets_left": 2,
+                "F1_completable_within_budget": true,
+                "F1_dist_to_win": 7,
+                "F1_tunnel_only_completion": null,
+                "F1_tunnel_only_search_exact": true,
+                "F1_committed_to_dug_ground": true,
+                "F1_moves_available": [
+                  "D",
+                  "R",
+                  "U"
+                ],
+                "F2_armed": false,
+                "F2_arming_ply": null,
+                "F2_min_hazard_distance": null,
+                "proof_grade": "exhaustive",
+                "progress": null,
+                "threat_gain": 0,
+                "balance": null,
+                "slack": null,
+                "hazard_route": false,
+                "hazard_route_changed": false
+              },
+              "secs": 0.001,
+              "rules_fired": [
+                "A3.action_letter"
+              ],
+              "facets": {
+                "F1_search_under_destruction": {
+                  "question": "did the plan consume the ground it needed?",
+                  "read_from": "trace[] rows F1_*, same plies as F2",
+                  "plies_examined": 10,
+                  "mobility_shrink_events": 0,
+                  "plies_negative_balance": 0,
+                  "plies_negative_progress": 0,
+                  "plies_objective_lost_while_mobile": 7,
+                  "first_ply_objective_lost_while_mobile": 4,
+                  "min_slack": null,
+                  "runs_ending_lost_while_mobile": false,
+                  "committed_plies": 3,
+                  "digs": 0
+                },
+                "F2_hazard_aware_planning": {
+                  "question": "did the route it dug open a path for the hazard that killed it?",
+                  "read_from": "trace[] rows F2_*, same plies as F1",
+                  "arming_plies": 0,
+                  "first_arming_ply": null,
+                  "ever_armed": false,
+                  "killed": false,
+                  "killed_at_ply": null,
+                  "deaths_armed_by_own_dig": 0,
+                  "deaths_at_the_arming_ply": 0,
+                  "deaths_with_a_safe_alternative": 0,
+                  "arms_with_no_safe_alternative": 0,
+                  "min_threat_at_win": null,
+                  "photo_finish_wins": 0,
+                  "attribution": null
+                }
+              }
+            },
+            "04_the_only_door.txt": {
+              "level": "04_the_only_door.txt",
+              "level_sha256": "5e40bfd3c67971cb0a337fcfdf0a40c673e6770eabd53da995c387f5ca5561b7",
+              "enclosed_measured": true,
+              "enclosed_note": "B2: measured by the parser's flood fill on the board as authored, for this run, not asserted by a level file or a comment",
+              "solved": false,
+              "moves": 1,
+              "attempted_emitted": 3,
+              "attempted_consumed": 3,
+              "blocked": 2,
+              "waited": 0,
+              "digs": 0,
+              "collects": 0,
+              "not_an_action": 0,
+              "give_up": 0,
+              "after_end": 0,
+              "over_budget": 0,
+              "gave_up_at": null,
+              "hazard_turns": 0,
+              "armed_at": 0,
+              "killed_at": 3,
+              "killed_by": 0,
+              "digs_by_word_vs_delta": {
+                "by_word": 0,
+                "by_delta": 0
+              },
+              "terminal": "KILLED_BY_HAZARD",
+              "budget": 10,
+              "budget_exhausted": false,
+              "corrections_offered": 0,
+              "corrections_ignored": 0,
+              "never_produced_a_legal_action": false,
+              "produced_a_legal_action": true,
+              "final_board": "#######\n#@__.o#\n#######",
+              "board_is": "BOARD AFTER THE LAST CONSUMED ANSWER",
+              "trace": [
+                {
+                  "ply": 1,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "moved",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": false,
+                  "outcome": "moved",
+                  "hazard_resolution": "armed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        1,
+                        3
+                      ],
+                      "to": [
+                        1,
+                        3
+                      ],
+                      "moved": true,
+                      "killed": false,
+                      "swap": false,
+                      "distance_to_player": 3
+                    }
+                  ],
+                  "min_hazard_distance": 2,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#@_X.o#\n#######",
+                  "player": {
+                    "moves": 1,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "8634f9409ae9f952",
+                  "diag": {
+                    "ply": 1,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 5,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 3,
+                    "F1_targets_left": 1,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": null,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "R"
+                    ],
+                    "F2_armed": true,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": 2,
+                    "proof_grade": "exhaustive",
+                    "progress": null,
+                    "threat_gain": 0,
+                    "balance": null,
+                    "slack": null,
+                    "hazard_route": true,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 2,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "armed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        1,
+                        2
+                      ],
+                      "to": [
+                        1,
+                        2
+                      ],
+                      "moved": true,
+                      "killed": false,
+                      "swap": false,
+                      "distance_to_player": 2
+                    }
+                  ],
+                  "min_hazard_distance": 1,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#@X_.o#\n#######",
+                  "player": {
+                    "moves": 1,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "d0d1fcf0f7c1cd64",
+                  "diag": {
+                    "ply": 2,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 5,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 3,
+                    "F1_targets_left": 1,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": null,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [],
+                    "F2_armed": true,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": 1,
+                    "proof_grade": "exhaustive",
+                    "progress": null,
+                    "threat_gain": 1,
+                    "balance": null,
+                    "slack": null,
+                    "hazard_route": true,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 3,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "killed",
+                  "hazard_resolution": "killed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        1,
+                        1
+                      ],
+                      "to": [
+                        1,
+                        1
+                      ],
+                      "moved": true,
+                      "killed": true,
+                      "swap": false,
+                      "distance_to_player": 1
+                    }
+                  ],
+                  "min_hazard_distance": 0,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#@__.o#\n#######",
+                  "player": {
+                    "moves": 1,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "9fe529eb799f0db7",
+                  "diag": {
+                    "ply": 3,
+                    "alive": false,
+                    "objective_met": false,
+                    "F1_mobility": 5,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 3,
+                    "F1_targets_left": 1,
+                    "F1_completable_within_budget": null,
+                    "F1_dist_to_win": null,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": null,
+                    "F1_moves_available": [
+                      "R"
+                    ],
+                    "F2_armed": true,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": 0,
+                    "proof_grade": "exhaustive",
+                    "progress": null,
+                    "threat_gain": 1,
+                    "balance": null,
+                    "slack": null,
+                    "hazard_route": true,
+                    "hazard_route_changed": false
+                  }
+                }
+              ],
+              "start_diag": {
+                "ply": 0,
+                "alive": true,
+                "objective_met": false,
+                "F1_mobility": 5,
+                "F1_mobility_equals_start_mobility": true,
+                "F1_dug_cells": 3,
+                "F1_targets_left": 1,
+                "F1_completable_within_budget": false,
+                "F1_dist_to_win": null,
+                "F1_tunnel_only_completion": null,
+                "F1_tunnel_only_search_exact": true,
+                "F1_committed_to_dug_ground": false,
+                "F1_moves_available": [
+                  "L",
+                  "R"
+                ],
+                "F2_armed": true,
+                "F2_arming_ply": 0,
+                "F2_min_hazard_distance": 2,
+                "proof_grade": "exhaustive",
+                "progress": null,
+                "threat_gain": null,
+                "balance": null,
+                "slack": null,
+                "hazard_route": true,
+                "hazard_route_changed": true
+              },
+              "secs": 0.001,
+              "rules_fired": [
+                "A3.action_letter"
+              ],
+              "safe_alternatives_at_arming_ply": null,
+              "safe_alternatives_note": "the hazard had a road from ply 0 and the search for an alternative was not run at a ply that opened one -- the level armed BEFORE the first answer, so no ply of this run is an arming ply",
+              "facets": {
+                "F1_search_under_destruction": {
+                  "question": "did the plan consume the ground it needed?",
+                  "read_from": "trace[] rows F1_*, same plies as F2",
+                  "plies_examined": 3,
+                  "mobility_shrink_events": 0,
+                  "plies_negative_balance": 0,
+                  "plies_negative_progress": 0,
+                  "plies_objective_lost_while_mobile": 2,
+                  "first_ply_objective_lost_while_mobile": 1,
+                  "min_slack": null,
+                  "runs_ending_lost_while_mobile": true,
+                  "committed_plies": 0,
+                  "digs": 0
+                },
+                "F2_hazard_aware_planning": {
+                  "question": "did the route it dug open a path for the hazard that killed it?",
+                  "read_from": "trace[] rows F2_*, same plies as F1",
+                  "arming_plies": 1,
+                  "first_arming_ply": 1,
+                  "ever_armed": true,
+                  "killed": true,
+                  "killed_at_ply": 3,
+                  "deaths_armed_by_own_dig": 1,
+                  "deaths_at_the_arming_ply": 0,
+                  "deaths_with_a_safe_alternative": 0,
+                  "arms_with_no_safe_alternative": 0,
+                  "min_threat_at_win": null,
+                  "photo_finish_wins": 0,
+                  "attribution": "every route a hazard used was dug by the player, by [D-T0]; so attribution is 1.000 by CONSTRUCTION and is NOT a finding about the entrant -- see SECTION_4F.md item 2.  The finding is whether the arming ply had an alternative.",
+                  "attribution_rate": 1.0
+                }
+              }
+            },
+            "05_the_photo_finish.txt": {
+              "level": "05_the_photo_finish.txt",
+              "level_sha256": "ed5e9afb6a6673b9c2d4f173229cd8758e2384eddd7da3a03ea69e1523089f69",
+              "enclosed_measured": true,
+              "enclosed_note": "B2: measured by the parser's flood fill on the board as authored, for this run, not asserted by a level file or a comment",
+              "solved": false,
+              "moves": 0,
+              "attempted_emitted": 10,
+              "attempted_consumed": 10,
+              "blocked": 10,
+              "waited": 0,
+              "digs": 0,
+              "collects": 0,
+              "not_an_action": 0,
+              "give_up": 0,
+              "after_end": 0,
+              "over_budget": 0,
+              "gave_up_at": null,
+              "hazard_turns": 0,
+              "armed_at": null,
+              "killed_at": null,
+              "killed_by": null,
+              "digs_by_word_vs_delta": {
+                "by_word": 0,
+                "by_delta": 0
+              },
+              "terminal": "WALLED_IN_ONLY",
+              "budget": 10,
+              "budget_exhausted": true,
+              "corrections_offered": 0,
+              "corrections_ignored": 0,
+              "never_produced_a_legal_action": false,
+              "produced_a_legal_action": true,
+              "final_board": "#######\n#.o.o.#\n#@#.~.#\n#######",
+              "board_is": "BOARD AFTER THE LAST CONSUMED ANSWER",
+              "trace": [
+                {
+                  "ply": 1,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o.o.#\n#@#.~.#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "c6026169307819a1",
+                  "diag": {
+                    "ply": 1,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 9,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 4,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 2,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o.o.#\n#@#.~.#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "c22dba95eb568f4c",
+                  "diag": {
+                    "ply": 2,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 9,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 4,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 3,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o.o.#\n#@#.~.#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "633ca811edf9bede",
+                  "diag": {
+                    "ply": 3,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 9,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 4,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 4,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o.o.#\n#@#.~.#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "1246ddc2c37375cc",
+                  "diag": {
+                    "ply": 4,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 9,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 4,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 5,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o.o.#\n#@#.~.#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "ddf7613a7b258bcb",
+                  "diag": {
+                    "ply": 5,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 9,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 4,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 6,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o.o.#\n#@#.~.#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "2747b49c887846dc",
+                  "diag": {
+                    "ply": 6,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 9,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": true,
+                    "F1_dist_to_win": 4,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": true,
+                    "F1_moves_available": [
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 7,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o.o.#\n#@#.~.#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "f9317f856ef58f82",
+                  "diag": {
+                    "ply": 7,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 9,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 4,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 8,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o.o.#\n#@#.~.#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "e3da2555d1efddff",
+                  "diag": {
+                    "ply": 8,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 9,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 4,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 9,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o.o.#\n#@#.~.#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "282a1ed2d56693b5",
+                  "diag": {
+                    "ply": 9,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 9,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 4,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                },
+                {
+                  "ply": 10,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "rule": "A3.action_letter",
+                    "why": "one letter from the frozen alphabet",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "rule_fired": "A3.action_letter",
+                  "action": "L",
+                  "word": "blocked",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "dug": false,
+                  "collected": false,
+                  "consumed": true,
+                  "blocked": true,
+                  "outcome": "blocked",
+                  "hazard_resolution": "unharmed",
+                  "hazard_moves": [
+                    {
+                      "hazard": 0,
+                      "from": [
+                        2,
+                        4
+                      ],
+                      "moved": false,
+                      "distance_to_player": null,
+                      "state": "asleep_no_route"
+                    }
+                  ],
+                  "min_hazard_distance": null,
+                  "arming_ply": null,
+                  "solved": false,
+                  "board": "#######\n#.o.o.#\n#@#.~.#\n#######",
+                  "player": {
+                    "moves": 0,
+                    "digs": 0,
+                    "collects": 0
+                  },
+                  "raw": "L",
+                  "prompt_sha256": "cbefefdd4979640c",
+                  "diag": {
+                    "ply": 10,
+                    "alive": true,
+                    "objective_met": false,
+                    "F1_mobility": 9,
+                    "F1_mobility_equals_start_mobility": true,
+                    "F1_dug_cells": 1,
+                    "F1_targets_left": 2,
+                    "F1_completable_within_budget": false,
+                    "F1_dist_to_win": 4,
+                    "F1_tunnel_only_completion": null,
+                    "F1_tunnel_only_search_exact": true,
+                    "F1_committed_to_dug_ground": false,
+                    "F1_moves_available": [
+                      "U"
+                    ],
+                    "F2_armed": false,
+                    "F2_arming_ply": null,
+                    "F2_min_hazard_distance": null,
+                    "proof_grade": "exhaustive",
+                    "progress": 0,
+                    "threat_gain": 0,
+                    "balance": 0,
+                    "slack": null,
+                    "hazard_route": false,
+                    "hazard_route_changed": false
+                  }
+                }
+              ],
+              "start_diag": {
+                "ply": 0,
+                "alive": true,
+                "objective_met": false,
+                "F1_mobility": 9,
+                "F1_mobility_equals_start_mobility": true,
+                "F1_dug_cells": 1,
+                "F1_targets_left": 2,
+                "F1_completable_within_budget": true,
+                "F1_dist_to_win": 4,
+                "F1_tunnel_only_completion": null,
+                "F1_tunnel_only_search_exact": true,
+                "F1_committed_to_dug_ground": true,
+                "F1_moves_available": [
+                  "U"
+                ],
+                "F2_armed": false,
+                "F2_arming_ply": null,
+                "F2_min_hazard_distance": null,
+                "proof_grade": "exhaustive",
+                "progress": null,
+                "threat_gain": 0,
+                "balance": null,
+                "slack": null,
+                "hazard_route": false,
+                "hazard_route_changed": false
+              },
+              "secs": 0.001,
+              "rules_fired": [
+                "A3.action_letter"
+              ],
+              "facets": {
+                "F1_search_under_destruction": {
+                  "question": "did the plan consume the ground it needed?",
+                  "read_from": "trace[] rows F1_*, same plies as F2",
+                  "plies_examined": 10,
+                  "mobility_shrink_events": 0,
+                  "plies_negative_balance": 0,
+                  "plies_negative_progress": 0,
+                  "plies_objective_lost_while_mobile": 4,
+                  "first_ply_objective_lost_while_mobile": 7,
+                  "min_slack": null,
+                  "runs_ending_lost_while_mobile": false,
+                  "committed_plies": 6,
+                  "digs": 0
+                },
+                "F2_hazard_aware_planning": {
+                  "question": "did the route it dug open a path for the hazard that killed it?",
+                  "read_from": "trace[] rows F2_*, same plies as F1",
+                  "arming_plies": 0,
+                  "first_arming_ply": null,
+                  "ever_armed": false,
+                  "killed": false,
+                  "killed_at_ply": null,
+                  "deaths_armed_by_own_dig": 0,
+                  "deaths_at_the_arming_ply": 0,
+                  "deaths_with_a_safe_alternative": 0,
+                  "arms_with_no_safe_alternative": 0,
+                  "min_threat_at_win": null,
+                  "photo_finish_wins": 0,
+                  "attribution": null
+                }
+              }
+            }
+          },
+          "facets": {
+            "F1_search_under_destruction": {
+              "plies_examined": 43,
+              "mobility_shrink_events": 0,
+              "plies_negative_balance": 0,
+              "plies_negative_progress": 0,
+              "plies_objective_lost_while_mobile": 21,
+              "first_ply_objective_lost_while_mobile": 26,
+              "committed_plies": 21,
+              "digs": 0,
+              "plies_examined__items": 5,
+              "mobility_shrink_events__items": 5,
+              "plies_negative_balance__items": 5,
+              "plies_negative_progress__items": 5,
+              "plies_objective_lost_while_mobile__items": 5,
+              "first_ply_objective_lost_while_mobile__items": 5,
+              "committed_plies__items": 5,
+              "digs__items": 5,
+              "n_items": 5,
+              "note_missing": "a field absent from this dict had NO numeric value on any item -- which is a different statement from the field being 0, and is why `min_slack` may be missing rather than zero",
+              "items_objective_lost_while_mobile": 5
+            },
+            "F2_hazard_aware_planning": {
+              "arming_plies": 1,
+              "deaths_armed_by_own_dig": 1,
+              "deaths_at_the_arming_ply": 0,
+              "deaths_with_a_safe_alternative": 0,
+              "arms_with_no_safe_alternative": 0,
+              "photo_finish_wins": 0,
+              "first_arming_ply": 1,
+              "killed_at_ply": 3,
+              "attribution_rate": 1.0,
+              "arming_plies__items": 5,
+              "deaths_armed_by_own_dig__items": 5,
+              "deaths_at_the_arming_ply__items": 5,
+              "deaths_with_a_safe_alternative__items": 5,
+              "arms_with_no_safe_alternative__items": 5,
+              "photo_finish_wins__items": 5,
+              "first_arming_ply__items": 1,
+              "killed_at_ply__items": 1,
+              "attribution_rate__items": 1,
+              "n_items": 5,
+              "note_missing": "a field absent from this dict had NO numeric value on any item -- which is a different statement from the field being 0, and is why `min_slack` may be missing rather than zero",
+              "items_that_died_after_arming": 1
+            },
+            "note": "D: both facets are projections of ONE trace per item. The same plies, the same run, the same recorded raws. There is no second event in this cabinet and no number here that required one."
+          },
+          "started": 5,
+          "readable": 5,
+          "never_started": 0,
+          "coverage": 1.0,
+          "totals": {
+            "moves": 1,
+            "attempted_emitted": 43,
+            "attempted_consumed": 43,
+            "digs": 0,
+            "collects": 0,
+            "blocked": 42,
+            "waited": 0,
+            "not_an_action": 0,
+            "after_end": 0,
+            "over_budget": 0,
+            "give_up": 0,
+            "hazard_turns": 0,
+            "corrections_offered": 0,
+            "corrections_ignored": 0,
+            "loose_give_up_unscored": 0
+          },
+          "loose_give_up_note": "answers that LOOKED like an abstention to a substring test but were scored not_an_action by the frozen exact-token list. DIAGNOSTIC ONLY -- never scored, never folded into give_up [R1].",
+          "attempt_budget_per_level": 10
+        }
+      },
+      "grammar": {
+        "reader": "digdug/digdug_reader.py",
+        "reader_sha256": "6be849338e25b73c453a1a21020cb193a1df081168bd7da881e871545883de21",
+        "grammar_source": "digdug/CONTRACT_digdug_v1.md section A",
+        "actions": [
+          "U",
+          "D",
+          "L",
+          "R",
+          "."
+        ],
+        "wait": {
+          "letter": ".",
+          "is_a_turn": true,
+          "note": "WAIT is in the ALPHABET because the prose does not settle whether the player may stop, and R3 puts the answer shape in the grammar [D-STOP]."
+        },
+        "case_insensitive": true,
+        "wasd": "not_an_action (NOT synonyms).  D is DOWN, never RIGHT [D-WASD] -- a synonym table would change the GAME without changing any counter.",
+        "truncation": "NEVER.  multi-char -> not_an_action.  GIVE UP is not G.",
+        "give_up_tokens": [
+          "GIVE UP",
+          "GIVEUP",
+          "GIVE UP.",
+          "GIVE-UP",
+          "GIVE_UP",
+          "GIVING UP",
+          "I GIVE UP",
+          "I GIVE UP.",
+          "RESIGN",
+          "RESIGN.",
+          "RESIGNS",
+          "ABSTAIN",
+          "ABSTAIN.",
+          "NO MOVE",
+          "NO_MOVE",
+          "NO-MOVE",
+          "UNSOLVABLE",
+          "DEAD END",
+          "STUCK"
+        ],
+        "give_up_match": "EXACT on casefold + whitespace-collapsed line; punctuation NOT stripped [D-TOKENS]",
+        "give_up_diagnostic": "loose_give_up is a substring test, RECORDED ONLY, never scored, never folded into give_up [R1]",
+        "rule_precedence": "A1 line count, A2 give_up, A3 alphabet, A4 near-miss, A5 multi-char  [D-ORDER]",
+        "line_rule": "answer is the single non-empty line; 2+ non-empty lines -> not_an_action (multi_line), never one of them",
+        "whitespace_rule": "the chosen line is stripped; ' U ' reads as U",
+        "outcomes_read_here": [
+          "action",
+          "give_up",
+          "not_an_action"
+        ],
+        "outcomes_owned_by_transition": [
+          "moved",
+          "dug",
+          "collected",
+          "waited",
+          "blocked"
+        ],
+        "outcomes_owned_by_hazard_resolution": [
+          "armed",
+          "killed",
+          "unharmed"
+        ],
+        "rules_declared": [
+          "A1.none_answer",
+          "A1.empty_answer",
+          "A1.multi_line",
+          "A2.give_up_token",
+          "A3.action_letter",
+          "A3.wait_letter",
+          "A4.wasd_not_a_synonym",
+          "A4.single_char_not_in_alphabet",
+          "A5.multi_char_never_truncated"
+        ]
+      },
+      "levels": {
+        "01_first_dig.txt": {
+          "sha256": "a896a90e3b0c29f4178ba4dada481245fb134931bf1142e5e08fb2e27b45b1f6",
+          "enclosed_measured": true,
+          "optimal_moves": 1,
+          "proof": "digdug_solve.py (see tasks/digdug_v1.json)"
+        },
+        "02_the_shortcut.txt": {
+          "sha256": "36dd8f0d9b6ded93ccd19acb2e207d587d28ded2facd1f5071b5be356f3b0109",
+          "enclosed_measured": true,
+          "optimal_moves": 7,
+          "proof": "digdug_solve.py (see tasks/digdug_v1.json)"
+        },
+        "03_ground_you_cannot_reuse.txt": {
+          "sha256": "19c3bba3665d5b341cb8b457eac88ac8874af767ef9cf7eded7f238412c01b15",
+          "enclosed_measured": true,
+          "optimal_moves": 7,
+          "proof": "digdug_solve.py (see tasks/digdug_v1.json)"
+        },
+        "04_the_only_door.txt": {
+          "sha256": "5e40bfd3c67971cb0a337fcfdf0a40c673e6770eabd53da995c387f5ca5561b7",
+          "enclosed_measured": true,
+          "optimal_moves": null,
+          "proof": "digdug_solve.py (see tasks/digdug_v1.json)"
+        },
+        "05_the_photo_finish.txt": {
+          "sha256": "ed5e9afb6a6673b9c2d4f173229cd8758e2384eddd7da3a03ea69e1523089f69",
+          "enclosed_measured": true,
+          "optimal_moves": 4,
+          "proof": "digdug_solve.py (see tasks/digdug_v1.json)"
+        }
+      },
+      "aggregate": 0.0,
+      "coverage": 1.0,
+      "verdict": "SCORED",
+      "exit_code": 0,
+      "exit_code_table": {
+        "0": "SCORED -- measured > 0, harness sound",
+        "1": "INSTRUMENT NOT PROVEN -- self-test / instrument-check / level verification failed",
+        "2": "ZERO MEASURED -- ERROR, never a verdict",
+        "3": "USAGE -- unknown entrant or bad arguments",
+        "4": "ENTRANT NEVER STARTED -- counted separately from played-and-failed",
+        "5": "RECORD NOT WRITTEN -- a run with no record is not a run",
+        "6": "CONTRACT NOT FROZEN (or it drifted) -- no entrant plays"
+      },
+      "certification": "REFERENCE RUN -- not an entrant, not for the board.",
+      "tasks": "digdug/tasks/digdug_v1.json",
+      "decisions": "digdug/DIGDUG_DECISIONS.md",
+      "section_4f": "digdug/SECTION_4F.md"
+    }
+  ]
+}
