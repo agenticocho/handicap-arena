@@ -108,8 +108,27 @@ the same run, and the format does not decide it.**
 > hold if the ERROR gate counts **readable** answers, not turns. So: `trials = started` (turning) and the
 > gate is `readable > 0` (the pair: coverage AND measured), **not** `trials > 0`. An all-unreadable run is
 > therefore still an ERROR (garbage: coverage 1.000, measured 0, exit 2), while an unreadable mixed in
-> with readable answers DRAGS the score instead of being dropped. **If that is not the reading he meant,
-> this is the line to object to** — it changes the score on every run.
+> with readable answers DRAGS the score instead of being dropped.
+>
+> **CONFIRMED 2026-10-09 (Chilly) — no objection. This block is the specification, and his two sentences
+> were an under-specified form of it.** His words: *"The denominator and the gate are different
+> quantities, and your reconciliation is the correct general form of what I said in two sentences."*
+>
+> **The one line that is the whole thing: the denominator counts TURNS; the gate counts READABLE answers.**
+>
+> ```
+> trials    = started_items               every item that TOOK A TURN (unreadable inside, non-pass)
+> never_started                           OUTSIDE, counted separately
+> measured  = started_items - unreadable  the READABLE answers -- the gate
+> ERROR     iff started_items == 0 OR measured == 0
+> ```
+>
+> **Why the gate is NOT `turns > 0`, in his words:** an all-unreadable run would then score **0.0**, and
+> **"we would publish a rule failure as a model failure."** A run where nothing readable was produced is
+> a broken **READER**, not a failed **population** — the same class as coverage 1.000 with nothing
+> measured, as an empty field, as a runner that never started.
+>
+> **Closed. Nothing outstanding on A6.**
 
 ## A7 — COVERAGE CANNOT BE THE GUARD; `never_started` AND `unreadable` ARE NOT IN THE FORMAT AT ALL
 
