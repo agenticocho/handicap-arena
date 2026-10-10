@@ -96,7 +96,7 @@ carries, and what a spectator actually learns from it.
 
 | cabinet | drawn from the record | what the audience learns |
 |---|---|---|
-| **SOKOBAN** | `tile_layer`: the grid (`# . $ @ * +`); `sprite_tween`: the player's one-cell slide; `gauge`: `moves` beside `attempted`; `state`: `solved` / `give_up` | **the push that cannot be undone — and, beside it, the attempts that never moved anything** |
+| **SOKOBAN** | `tile_layer`: the grid (`# . $ @ * +`); `sprite`: the player's one-cell slide (with a tween -- the tween is a property, not a primitive); `gauge`: `moves` beside `attempted`; `gauge`/`text_panel` with `when:` on `solved` / `give_up` / `dead_end` | **the push that cannot be undone — and, beside it, the attempts that never moved anything** |
 | **MISSILE COMMAND** | `sprite_layer`: incoming trajectories; `gauge`: interceptors remaining, cities standing; `state`: each `spared` decoy marked **SPARED**, never as a miss | **what was NOT spent.** The faculty is the decoy correctly ignored, and it must be visible rather than inferred from a good score |
 | **ZORK / THE LONG CRAWL** | `text_panel` at 480x270 (**the §1 exception, named here**); `state`: room, inventory, and the item required much later | **long-horizon state**: the key found in room two, needed in room forty |
 | **DARTS** | a board, a dart path, an exact-score panel | the exact answer, and correctness per dart |
@@ -161,13 +161,24 @@ Chilly runs inference on one 8GB card at **585% CPU** during a field. The render
    that killed a field mid-entrant cost nine entrants and a night.
 4. **Budget: under 500KB served, under 3% of one core while animating, 0% idle.**
 
-## 8. Enforced by
+## 8. Enforced by -- TWO checks, on two sides, named honestly
 
-`test_cart_bindings.py` — reads every cart, and fails on:
-- a `draw:` target with no `field:` behind it
-- a binding naming a field absent from the event's state schema
-- **positive control:** verified to fire on a deliberately unbindable element, so it cannot become a check
-  that passes by being unable to fail
+**This section previously named `test_cart_bindings.py` and nothing else. That file exists on neither
+machine.** A check named beside the work, running somewhere other than where the work happens, **reads as
+enforcement and functions as a caption.** Corrected:
 
-**And the exit code is checked, not assumed** — an enforcing check that exits 0 while reporting violations
-is a check that cannot fail, which this project has already been bitten by.
+    STATE side    render_state_contract.py     lives WITH the schema, runs where the schema is derived.
+                                               Ten rules, eleven positive controls and a negative one,
+                                               exit code checked. It is the one that is real today.
+                                               R2 fails a binding whose field is absent from the DERIVED
+                                               schema, which is why a new cabinet's fields fail before
+                                               its first bundle exists -- see the declare-then-record rule.
+    CART side     test_cart_bindings.py        UNWRITTEN. Named here as the intended enforcer for the
+                                               draw side: fails on a `draw:` with no `field:` behind it,
+                                               on a binding naming an absent field, and carries a
+                                               positive control verified to fire on a deliberately
+                                               unbindable element. NOT to be relied on until it exists;
+                                               until then, the state side is the only enforcement.
+
+**An enforcer that does not exist may not be cited. Attribute each rule to the check that actually runs it,
+and name the side it runs on.**
