@@ -185,9 +185,21 @@ def main():
         print("  BRANCH N -- FAILED, AND THE FEEDBACK DID NOT FIX IT.")
         br = "BRANCH N"
     print(f"  one-shot {good1}/{total}   with feedback {good2}/{total2}")
+    # THE CODE, INTO THE RECORD. This is the gap I declared rather than claimed when this experiment first ran:
+    # the artifact carried tokens, field, disagreements and verdict -- AND NOT WHAT THE MODEL WROTE, so
+    # "it ignored the correction" and "it tried and failed" were INDISTINGUISHABLE, and the mechanism behind
+    # Branch N was INFERRED rather than measured. One line, and the next run's mechanism is checkable.
+    #
+    # It closes the same hole ruling 82 closed, in the other direction: there, the FAILURE path wrote no record;
+    # here, the record omits the ARTEFACT THE VERDICT IS ABOUT. Both are the failure path being the one where
+    # the record matters most.
     json.dump({"branch": br, "one_shot": f"{good1}/{total}", "with_feedback": f"{good2}/{total2}",
                "disagreements_one_shot": dis1[:4], "disagreements_after": dis2[:4],
-               "oracle": {g[0]: g[2] for g in goldens}},
+               "oracle": {g[0]: g[2] for g in goldens},
+               "code_one_shot": code1, "code_after_feedback": code2,
+               "code_changed_between_turns": code1.strip() != code2.strip(),
+               "code_note": "THE MODEL'S CODE, so 'ignored the correction' and 'tried and failed' are "
+                            "DISTINGUISHABLE. Without this the mechanism behind a failed branch is inferred."},
               open(os.path.join(HERE, "probes", "RECOVERY_SEMANTIC.json"), "w"), indent=1)
     return 0
 

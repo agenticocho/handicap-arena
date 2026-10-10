@@ -52,17 +52,28 @@ the prereg wrote it before the run:** *recovery depends on the defect ANNOUNCING
 does not generalise, and the capacity conclusion narrows to "non-one-shot works where the failure names itself."*
 **Here the failure named itself, precisely, and it still did not recover.**
 
-## AND THE ONE THING I CANNOT DISTINGUISH, DECLARED RATHER THAN CLAIMED
+## AND THE ONE THING I COULD NOT DISTINGUISH — NOW MEASURED, NOT INFERRED
 
-**I DO NOT KNOW WHETHER IT IGNORED THE CORRECTION OR TRIED AND FAILED.** The artifact records tokens, the field,
-the disagreements and the verdict — **it does NOT record the code the model wrote.** Two turns of identical token
-count are *consistent* with re-emitting the same answer, **but consistency is not evidence and I did not save the
-text.**
+**When this first ran I wrote: *"I DO NOT KNOW WHETHER IT IGNORED THE CORRECTION OR TRIED AND FAILED. The artifact
+records tokens, the field, the disagreements and the verdict — IT DOES NOT RECORD THE CODE."* I declared it
+rather than claiming either way, and named the fix: save the code into the record.**
 
-**That is the same sentence as the ruling-82 console-versus-artifact gap, and it is the half of this result I am
-not going to round up.** The branch (N) is stable across both runs; **the mechanism behind it is inferred, not
-measured.** Closing it needs one line in the harness — save the model's code into the record — and that is a
-change to make before the next experiment, not a reason to run this one a third time.
+**The fix is in, and the mechanism is now a measurement:**
+
+```
+CODE CHANGED BETWEEN TURNS:  False
+one-shot code         np, nb, word = step(pos, a)
+after-feedback code   np, nb, word = step(pos, a)      <- BYTE-IDENTICAL
+```
+
+**IT DID NOT TRY AND FAIL. IT DID NOT CHANGE THE CODE AT ALL.** With the diagnostic handed to it verbatim —
+*"your call raised ValueError: not enough values to unpack (expected 3, got 2)"*, pointing at the unpacking — **it
+re-emitted the same line, still unpacking a two-value return into three names.**
+
+**That is a sharper finding than either branch I wrote, and it is the one I could not have claimed an hour ago.**
+*A declared unknown is worth more than a guessed answer, and it is worth more still when the fix that closes it
+was one line.* **AND THE BRANCH IS STABLE ACROSS THREE RUNS: 0/3, 0/3, 0/3.**
+
 
 ## WHAT THIS DOES TO THE TWO CLAIMS THE LAST EXPERIMENTS SUPPORTED
 

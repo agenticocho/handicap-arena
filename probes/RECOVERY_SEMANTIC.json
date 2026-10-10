@@ -16,5 +16,9 @@
   "01_one_push.txt": 1,
   "02_two_boxes.txt": 12,
   "03_the_corner_waiting.txt": 6
- }
+ },
+ "code_one_shot": "from collections import deque\n\ndef min_moves(pos):\n    if solved(pos):\n        return 0\n    walls = pos['walls']\n    boxes = pos['boxes']\n    targets = pos['targets']\n    player = pos['player']\n    rows, cols = pos['rows'], pos['cols']\n    seen = {(player, frozenset(boxes))}\n    queue = deque([(player, frozenset(boxes), 0)])\n    while queue:\n        p, b, d = queue.popleft()\n        for a in ACTIONS:\n            np, nb, word = step(pos, a)\n            if word == 'blocked':\n                continue\n            nb = frozenset(nb)\n            key = (np, nb)\n            if key in seen:\n                continue\n            if solved(np):\n                return d + 1\n            seen.add(key)\n            queue.append((np, nb, d + 1))\n    return -1\n",
+ "code_after_feedback": "from collections import deque\n\ndef min_moves(pos):\n    if solved(pos):\n        return 0\n    walls = pos['walls']\n    boxes = pos['boxes']\n    targets = pos['targets']\n    player = pos['player']\n    rows, cols = pos['rows'], pos['cols']\n    seen = {(player, frozenset(boxes))}\n    queue = deque([(player, frozenset(boxes), 0)])\n    while queue:\n        p, b, d = queue.popleft()\n        for a in ACTIONS:\n            np, nb, word = step(pos, a)\n            if word == 'blocked':\n                continue\n            nb = frozenset(nb)\n            key = (np, nb)\n            if key in seen:\n                continue\n            if solved(np):\n                return d + 1\n            seen.add(key)\n            queue.append((np, nb, d + 1))\n    return -1\n",
+ "code_changed_between_turns": false,
+ "code_note": "THE MODEL'S CODE, so 'ignored the correction' and 'tried and failed' are DISTINGUISHABLE. Without this the mechanism behind a failed branch is inferred."
 }
