@@ -21,6 +21,7 @@ collapse is provable without a solver wherever the level's solution is verified.
     python3 sokoban_run.py --self-test
 """
 import argparse
+import hashlib
 import json
 import os
 import subprocess
@@ -34,6 +35,50 @@ import sokoban as S                                                     # noqa: 
 
 LLAMA = "/home/chilly1/llama.cpp/build/bin/llama-server"
 MODELS = os.environ.get("ARENA_MODELS") or os.path.expanduser("~/moltbook_pipeline/models")
+
+# THE ENTRANT IS THE THING BEING MEASURED, AND A NAME IS NOT AN IDENTITY.
+#
+# The record digested the INSTRUMENT (simulator_digest, legend_digest) and named the ENTRANT by a filename with
+# its extension stripped -- so two people holding the same weights under different filenames were
+# indistinguishable, and two different QUANTIZATIONS under one name were equally indistinguishable. Q4_K_M and
+# IQ2_XXS would have looked identical. THAT IS BACKWARDS: the entrant is the subject of the measurement.
+#
+# The name STAYS, beside the digest, as a LABEL -- a label is for reading, an identity is for checking.
+_DIGEST_CACHE = {}
+
+
+def model_digest(path):
+    """sha256 of the model FILE, first 16 hex, cached per path. Streamed, so a multi-GB GGUF is fine."""
+    if path not in _DIGEST_CACHE:
+        h = hashlib.sha256()
+        try:
+            with open(path, "rb") as f:
+                for chunk in iter(lambda: f.read(1 << 20), b""):
+                    h.update(chunk)
+            _DIGEST_CACHE[path] = h.hexdigest()[:16]
+        except OSError:
+            # AN UNREADABLE MODEL GETS null AND A REASON, NEVER A FABRICATED DIGEST. A made-up hash is worse
+            # than a missing one because it verifies.
+            _DIGEST_CACHE[path] = None
+    return _DIGEST_CACHE[path]
+
+
+def cap_cut_statement(hit, answer_present):
+    """WHAT THE CAP CUT -- because `finish_reason=length` IS A STATEMENT ABOUT THE HARNESS, NOT THE MODEL.
+
+    The ceiling sweep measured this directly: the same task at 1200, 2048 and 4096 tokens returned
+    `finish_reason=length` at EVERY size AND THE ANSWER WAS CORRECT AT EVERY SIZE. So `length` on its own says
+    nothing about whether a model answered -- it says WE STOPPED IT. A verdict carrying it must therefore say
+    WHAT was cut, or it invites the reader to infer a failure that may not exist.
+    """
+    if not hit:
+        return "nothing -- the model stopped on its own"
+    if not answer_present:
+        return ("THE ANSWER -- deliberation consumed the ceiling before any answer was reached. "
+                "THIS IS THE ONE CASE WHERE `length` MEANS THE MODEL DID NOT ANSWER.")
+    return ("SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. "
+            "NOT a failed turn.")
+
 MAX_TOKENS = 64                     # ONE LETTER NEEDS A FEW TOKENS, and a cap that cannot be deliberated
                                     # into is the constraint this game was chosen for.
                                     # THE CEILING, not the count used -- both travel in the record.
@@ -387,7 +432,8 @@ def run(entrant, level_path, cap, port):
         up = False
         while time.time() - t0 < 600:
             if srv.poll() is not None:
-                return {"entrant": label, "level": lname, "loaded": False,
+                return {"entrant": label, "entrant_digest": model_digest(entrant),
+                        "level": lname, "loaded": False,
                         "why": f"server exited rc={srv.returncode}"}
             try:
                 urllib.request.urlopen(base + "/health", timeout=3).read()
@@ -396,7 +442,8 @@ def run(entrant, level_path, cap, port):
             except Exception:                                           # noqa: BLE001
                 time.sleep(3)
         if not up:
-            return {"entrant": label, "level": lname, "loaded": False,
+            return {"entrant": label, "entrant_digest": model_digest(entrant),
+                    "level": lname, "loaded": False,
                     "why": "never answered /health in 600 s"}
         load_s = time.time() - t0
 
@@ -415,8 +462,14 @@ def run(entrant, level_path, cap, port):
             is_missing = (source == "capped-deliberation-missing-value")
             if is_missing:
                 missing_values += 1
+            # EACH TURN SAYS WHAT THE CAP CUT, because `finish_reason=length` describes the harness and not the
+            # model. Measured: the same task returned `length` at 1200, 2048 AND 4096 tokens and was CORRECT at
+            # every size -- so a bare `length` invites a reader to infer a failure that may not be there.
+            capped = hit
             turns.append({"ply": i, "raw": text[:400], "token": tok, "secs": round(secs, 1),
-                          "gen_tokens": nt, "budget_hit": hit, "answer_field": source,
+                          "gen_tokens": nt, "budget_hit": hit,
+                          "cap_cut": cap_cut_statement(capped, bool(tok)),
+                          "answer_field": source,
                           # A MISSING VALUE IS NOT AN ANSWER. The harness produced this emptiness, so it is
                           # recorded as missing rather than scored -- never an illegal move, never a zero.
                           "missing_value": is_missing,
@@ -446,7 +499,11 @@ def run(entrant, level_path, cap, port):
             r["ended_why"] = ("every command was an empty answer the HARNESS produced: the model "
                               "deliberated into the ceiling and never reached an answer. NOT a capability "
                               "result until it is re-run with room or at a setting that stops deliberating.")
-        r.update({"entrant": label, "level": lname, "loaded": True, "load_s": round(load_s, 1),
+        r.update({"entrant": label, "entrant_digest": model_digest(entrant),
+                  "entrant_digest_scope": "sha256 of the model FILE, first 16 hex. THE ENTRANT IS THE THING "
+                                          "BEING MEASURED, so it is identified by a digest and not by a name; "
+                                          "`entrant` beside it is a LABEL, for reading, not for checking.",
+                  "level": lname, "loaded": True, "load_s": round(load_s, 1),
                   "turns": turns, "cap": cap, "final_screen": cur,
                   "legend": legend(), "legend_digest": legend_digest(),
                   # THE CONFIG BLOCK, with the reasoning setting on the same footing as ctx and temperature.
