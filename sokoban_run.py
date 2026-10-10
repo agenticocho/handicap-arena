@@ -586,16 +586,24 @@ def main():
     r = run(p, a.level, a.cap, a.port)
     print(f"  entrant   {r['entrant']}")
     print(f"  level     {r['level']}")
-    if not r.get("loaded"):
-        print(f"  DID NOT LOAD -- {r['why']}"); return 3
-    print(f"  ended     {r['ended']}    solved={r['solved']}    moves={r['moves']}")
-    print(f"  counts    blocked={r['blocked']}  not_an_action={r['not_an_action']}  "
-          f"give_up={r['give_up']}  gave_up_at={r['gave_up_at']}")
-    print(f"  tokens    {[t['token'] for t in r['turns']]}")
+    # THE RECORD, NOT JUST THE CONSOLE -- ruling 82's unverified half, closed.
+    #
+    # A LOAD FAILURE RETURNED BEFORE THIS POINT, SO THE SENTENCE NAMING THE HOLDER EXISTED ONLY IN STDOUT. That
+    # is the whole difference between a finding and a line on a screen: stdout is gone when the terminal closes,
+    # and the tenant list is exactly what the tenancy decision needs to survive. THE FAILURE PATH WAS ALSO THE
+    # ONE PATH WHERE THE RECORD MATTERED MOST, because a failure nobody can read later is a failure that gets
+    # re-diagnosed from scratch.
     out = os.path.join(HERE, "probes", f"SOKOBAN_{r['entrant']}_{r['level']}.json")
     os.makedirs(os.path.join(HERE, "probes"), exist_ok=True)
     json.dump(r, open(out, "w"), indent=1)
     print(f"  artifact  {os.path.relpath(out, HERE)}")
+    if not r.get("loaded"):
+        print(f"  DID NOT LOAD -- {r['why']}")
+        return 3
+    print(f"  ended     {r['ended']}    solved={r['solved']}    moves={r['moves']}")
+    print(f"  counts    blocked={r['blocked']}  not_an_action={r['not_an_action']}  "
+          f"give_up={r['give_up']}  gave_up_at={r['gave_up_at']}")
+    print(f"  tokens    {[t['token'] for t in r['turns']]}")
     return 0
 
 
