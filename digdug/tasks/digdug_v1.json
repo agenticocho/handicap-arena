@@ -1,0 +1,108 @@
+{
+ "id": "digdug_v1",
+ "event": "DIG DUG",
+ "class": "CONTEST",
+ "kind": "grid_puzzle_destructive_search",
+ "oracle": "rules_of_the_game_implemented_once_with_controls",
+ "staged_as": "arcade cabinet -- DIG DUG: the tunnel you dug is a road you cannot close",
+ "format": "A -- the model is the player",
+ "the_faculty_under_test": "SEARCH THAT CHANGES THE MAP.  The player is not exploring a fixed graph: the act of exploring rewrites it, and digging is permanent.",
+ "contract": {
+  "file": "digdug/CONTRACT_DIGDUG.md",
+  "status": "FROZEN before any entrant ran; digest in digdug/FROZEN.json",
+  "prose_settles": 8,
+  "decisions_recorded": "every [U<n>] and [A<n>] in the contract register; the runner refuses to run if the code carries a decision the contract does not record"
+ },
+ "note": "Four levels. 01 is the FLOOR of the scale. 02 is THE CABINET: the 8-move route to the target digs the cell beside the hazard's pocket and the hazard arrives on the same turn, while a 12-move route around the rock spine lives and is the only safe line. 03 has a barrier one dig wide and a ring the player can flee around forever. 04 is a CONTROL, not a scored level: it has NO safe line, proved exhaustively, so the only correct answer on it is an abstention -- scoring it would punish a correct answer, which standing rule R3 calls a disproof of the spec. Every optimum below was PROVED by complete search with an exact heuristic before any entrant ran, and the number of DISTINCT optimal lines is counted, not assumed (standing rules R2 and B3). Nothing in this instrument ever compares a move stream to a reference plan -- it executes it [A16].",
+ "levels": [
+  {
+   "id": "01_first_blood",
+   "file": "01_first_blood.txt",
+   "sha256": "43b658b80ba5487e59b1d0e88eb7b0417e1f31e1f082a431ae998695ecea26ff",
+   "scored": true,
+   "optimal_moves": 4,
+   "n_distinct_optimal_lines": 1,
+   "plan": "RRRR",
+   "proven_by": "digdug_solve.py -- complete search, exact heuristic, COMPLETE flag set",
+   "targets": 1,
+   "hazards": 1,
+   "hazard_sealed_at_start": true,
+   "faculty": "the floor of the scale: a model that cannot dig four cells in a straight line cannot play at all.  The hazard is sealed in soil for the whole run, so facet 1a CANNOT fire here -- which is the point: a level that cannot fail a facet is the control that proves the other levels can."
+  },
+  {
+   "id": "02_the_long_way_round",
+   "file": "02_the_long_way_round.txt",
+   "sha256": "705e711fe60936d9575d796934084b1a831fb8541b0b752e7e72e0adcaaab955",
+   "scored": true,
+   "optimal_moves": 12,
+   "n_distinct_optimal_lines": 1,
+   "plan": "DDRRRRRRRRUU",
+   "proven_by": "digdug_solve.py -- complete search, exact heuristic, COMPLETE flag set",
+   "targets": 1,
+   "hazards": 1,
+   "hazard_sealed_at_start": false,
+   "hazard_reachable_at_start": false,
+   "faculty": "THE CABINET.  The straight route is 8 moves and it is a death: the second dig opens (1,3) beside the hazard's pocket and the hazard walks in on the same turn.  The only safe line is 12 moves, down and around a rock spine that the prose never mentions and the board shows as rock.  A model that plans on the map it was shown and does not re-plan against the map it has made dies at turn 2.",
+   "measured": "a hazard-blind shortest-path planner dies at turn 2 with barrier_lost_at_turn 2 and one of the two cells on the killing road dug by itself"
+  },
+  {
+   "id": "03_the_open_door",
+   "file": "03_the_open_door.txt",
+   "sha256": "3066ba521caf9a93f6c357f369fa13fb7be91707763d989cac57fd594a2897ff",
+   "scored": true,
+   "optimal_moves": 7,
+   "n_distinct_optimal_lines": 1,
+   "plan": "DDDDRRR",
+   "proven_by": "digdug_solve.py -- complete search, exact heuristic, COMPLETE flag set",
+   "targets": 1,
+   "hazards": 1,
+   "hazard_sealed_at_start": true,
+   "faculty": "THE BARRIER IS ONE DIG WIDE.  A single cell -- (1,4) -- is the only ground between the player's ring and the hazard's two-cell pocket, and the ring is a 20-cell cycle the player can flee around forever.  This is the level where an entrant can destroy every safe line and still be alive at the budget: facet 1 without facet 2.",
+   "ring_cells": 20
+  },
+  {
+   "id": "04_no_safe_line",
+   "file": "04_no_safe_line.txt",
+   "sha256": "a7982852a2da2e11b007db5b100ba822a7146ef6b7d4189b6ce55309547cf39a",
+   "scored": false,
+   "role": "CONTROL -- NOT SCORED [A5]",
+   "optimal_moves": null,
+   "n_distinct_optimal_lines": 0,
+   "plan": null,
+   "proven_by": "digdug_solve.py -- exhaustive to the 30-turn budget, COMPLETE flag set: there is no safe line",
+   "targets": 1,
+   "hazards": 1,
+   "faculty": "THE ONLY LEVEL WHERE THE CORRECT ANSWER IS TO STOP.  One corridor, the hazard in the middle of it: the player's second dig opens the cell beside the hazard and the hazard arrives on the same turn.  An instrument that cannot read an abstention records a correct answer here as a malformed one, which is the failure standing rule R1 exists for."
+  }
+ ],
+ "facets": {
+  "one_trace_rule": "both facets are computed by digdug.facets_from_trace() from ONE trace object and both results carry that trace's sha256, so a reader can check the claim rather than take it.  A second event is not a second facet.",
+  "facet1_destruction": "search under destruction -- did the plan consume the ground it needed?  1a barrier_lost_at_turn: the first turn the player's digging put it in the hazard's connected tunnel component, irreversible because digging is permanent.  1b budget_ruin_at_turn: the first turn the shortest possible completion exceeded the turns left; exact, and it needs no hazard at all.",
+  "facet2_hazard_aware": "hazard-aware planning -- did the route it dug open a path for the hazard that killed it?  died_at_turn, kill_path, kill_path_cells_dug_by_player, kill_path_cells_pre_existing, first_kill_cell_dug_at_turn, dig_to_death_turns.",
+  "nesting": "facet 2 implies facet 1: a death requires the components to have merged.  They are not independent mechanics under this prose, and destruction_reachability_proof() is the evidence -- digging never removes a route, so the only destructive resource in the game is the soil barrier.  Recorded as a finding, not hidden."
+ },
+ "criteria_frozen_before_run": {
+  "C1_answer_is_executed": "the answer is checked by EXECUTING it through step() and turn(); never by reading it and comparing it to a known plan",
+  "C2_counters_are_separate": "dug / moved / blocked / collected / not_an_action / give_up / after_end are separate counters; a malformed answer is never a wrong move",
+  "C3_no_truncation": "more than one letter is not_an_action; the first character is never taken",
+  "C4_zero_rule": "a run with zero measured entrants is an ERROR (non-zero exit), never a verdict; never_started is counted separately from played-and-failed",
+  "C5_record_before_verdict": "the record is written to disk BEFORE the success/failure branch",
+  "C6_exit_code_reflects_the_run": "the exit code comes from the run, and the self-test drives every path that returns one",
+  "C7_frozen_before_the_field": "freeze.verify() must pass or the runner exits 6; no entrant runs against an unfrozen contract",
+  "C8_two_facets_one_trace": "both facet records cite the same trace digest"
+ },
+ "score": {
+  "gate": "solved / attempted_emitted, where attempted_emitted is LEVELS on which the entrant emitted at least one answer [A15, standing rule R2]",
+  "moves_are": "A COST.  Carried per level and in totals, never averaged.",
+  "also_recorded": "solved / answers_emitted, the other reading of R2, so a reader can see whether the two rank the field differently",
+  "B1": "answers_emitted and answers_consumed are DIFFERENT numbers and both are in the record; tokens emitted after the attempt ended are answers_after_end and are not folded into not_an_action"
+ },
+ "budget": {
+  "turns_per_level": 30,
+  "status": "A DECLARED INSTRUMENT PARAMETER [A14], not a discovery.  30 is 2.5x-7.5x the proven optima.  Two runs with different budgets are not comparable."
+ },
+ "declared_per_run": {
+  "reasoning": "on | off | unset -- DECLARED before the run; 'unset' is NOT 'off' and must not be pooled",
+  "gpu": "the accelerator the run used, WITH the probe that established it.  No accelerator is null, never 0.00 and never 'none'."
+ }
+}

@@ -1,0 +1,220 @@
+{
+ "card_version": "digdug_v1",
+ "declared": {
+  "budget_note": "a DECLARED instrument parameter [A14], not a discovery; two runs with different budgets are not comparable",
+  "budget_turns_per_level": 30,
+  "gpu": {
+   "driver": null,
+   "index": null,
+   "memory_free_gb": null,
+   "memory_total_gb": null,
+   "n_devices": null,
+   "name": null,
+   "note": "NO ACCELERATOR FOUND by this probe.  This is null, not 0.00 and not 'none': the host was probed and the probe found nothing.",
+   "probe": "nvidia-smi -> not runnable: FileNotFoundError",
+   "raw": null
+  },
+  "gpu_note": "NO ACCELERATOR FOUND by this probe.  This is null, not 0.00 and not 'none': the host was probed and the probe found nothing.",
+  "reasoning": "off",
+  "reasoning_note": "DECLARED BEFORE THE RUN, one setting for the whole event.  OFF, because the answer is ONE CHARACTER per turn: this is a format-carry task, not multi-step arithmetic.  A setting nobody wrote down is indistinguishable from a decision."
+ },
+ "event": "DIG DUG",
+ "generated": "2026-10-10T20:34:31+00:00",
+ "harness": "handicap-arena",
+ "results": [
+  {
+   "admission": {
+    "error": "ConnectionRefusedError: [Errno 111] Connection refused",
+    "holder": {
+     "holders": [],
+     "kind": "port",
+     "named": false,
+     "note": "no holder found by /proc/net/tcp -- nothing is holding it",
+     "probe": "/proc/net/tcp{,6} LISTEN + /proc/<pid>/fd",
+     "resource": 8080
+    },
+    "note": "nothing is listening on port 8080; no holder found by /proc/net/tcp -- nothing is holding it",
+    "ok": false,
+    "port": 8080,
+    "probe": "socket connect to http://127.0.0.1:8080",
+    "server_url": "http://127.0.0.1:8080",
+    "weights": {
+     "bytes": null,
+     "name": null,
+     "note": "NO WEIGHTS: no --model-path was given, so there is no file to digest.  This is stated rather than left empty.",
+     "path": null,
+     "sha256": null
+    }
+   },
+   "aggregate": null,
+   "certification": "model entrant",
+   "config": {
+    "attempt_budget_per_level": 30,
+    "levels_control": [],
+    "levels_scored": [],
+    "tasks": "digdug/tasks/digdug_v1.json"
+   },
+   "contract": {
+    "clause_the_prose_did_not_settle": [
+     "A1",
+     "A10",
+     "A11",
+     "A12",
+     "A13",
+     "A14",
+     "A15",
+     "A16",
+     "A17",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9",
+     "U1",
+     "U2",
+     "U3",
+     "U4",
+     "U5",
+     "U6",
+     "U7",
+     "U8",
+     "U9"
+    ],
+    "combined_digest": "084f8726dfc30e342bf89fc8de5c00c16bb211f6c40d0469cb4d6d502dacd748",
+    "decisions_recorded": 26,
+    "frozen_at": "2026-10-10T20:32:29+00:00",
+    "path": "digdug/CONTRACT_DIGDUG.md",
+    "sha256": "b48c1c6a1c912374483d82eccb91b7b2e7aff2b8fe7b52f75ffce00989560e37"
+   },
+   "contract_document": "digdug/CONTRACT_DIGDUG.md",
+   "entrant": "model",
+   "entrant_is_a_model": true,
+   "exit_code": 4,
+   "exit_code_table": {
+    "0": "SCORED -- measured > 0, harness sound",
+    "1": "INSTRUMENT NOT PROVEN -- self-test / instrument-check / level verification failed (RESERVED: no entrant's run produces it)",
+    "2": "ZERO MEASURED -- ERROR, never a verdict",
+    "3": "USAGE -- unknown entrant or bad arguments",
+    "4": "ENTRANT NEVER STARTED -- counted separately from played-and-failed",
+    "5": "RECORD NOT WRITTEN -- a run with no record is not a run",
+    "6": "NOT FROZEN -- the contract on disk is not the frozen contract; no entrant ran"
+   },
+   "facets": null,
+   "grammar": {
+    "actions": [
+     "U",
+     "D",
+     "L",
+     "R"
+    ],
+    "answer_shape": "ONE token per turn (standing rule R3).  A plan, a sentence, or two lines is not_an_action.",
+    "case_insensitive": true,
+    "give_up_diagnostic": "loose_give_up is a substring test, RECORDED ONLY and never scored [A11/R1]",
+    "give_up_match": "EXACT on casefold + whitespace-collapsed line; punctuation NOT stripped except where the punctuated form is itself listed [A11]",
+    "give_up_token_count": 31,
+    "give_up_tokens": [
+     "RESIGN",
+     "RESIGNS",
+     "RESIGNED",
+     "GIVEUP",
+     "SURRENDER",
+     "IQUIT",
+     "QUIT",
+     "FORFEIT",
+     "GIVE UP",
+     "GIVE UP.",
+     "GIVE-UP",
+     "GIVE_UP",
+     "GIVING UP",
+     "I GIVE UP",
+     "I GIVE UP.",
+     "ABSTAIN",
+     "ABSTAIN.",
+     "NO MOVE",
+     "NO_MOVE",
+     "NO-MOVE",
+     "UNSOLVABLE",
+     "DEAD END",
+     "STUCK",
+     "IMPOSSIBLE",
+     "NO SAFE LINE",
+     "CANNOT SOLVE",
+     "CANNOT SOLVE.",
+     "CAN NOT SOLVE",
+     "I STOP",
+     "STOP",
+     "STOP."
+    ],
+    "grammar_source": "digdug/CONTRACT_DIGDUG.md section 2 (READ GRAMMAR)",
+    "line_rule": "the answer is the single non-empty line; 2+ non-empty lines -> not_an_action (multi_line), never one of them",
+    "outcomes_owned_by_step": [
+     "dug",
+     "moved",
+     "blocked",
+     "collected"
+    ],
+    "outcomes_owned_by_turn": [
+     "dug",
+     "moved",
+     "blocked",
+     "collected",
+     "killed"
+    ],
+    "outcomes_read_here": [
+     "action",
+     "give_up",
+     "not_an_action"
+    ],
+    "reader": "digdug/digdug_reader.py",
+    "reader_sha256": "f2e0292212f7ea3a4914cfb835b2e943398996533286346a34bf8dc554e0870f",
+    "truncation": "NEVER. multi-char -> not_an_action. RESIGN is not R.",
+    "wait": "not_an_action -- there is NO pass action [U5]",
+    "wasd": "not_an_action (NOT synonyms) -- rule wasd_not_a_synonym",
+    "whitespace_rule": "the chosen line is stripped; ' U ' reads as U"
+   },
+   "hardware": {
+    "hostname": "e2b.local",
+    "machine": "x86_64",
+    "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+    "python": "3.11.2"
+   },
+   "instrument": "model",
+   "instrument_note": "model entrant",
+   "kind": "model",
+   "levels": {},
+   "never_started": true,
+   "prose_traps": "digdug/DIGDUG_PROSE_TRAPS.md",
+   "rounds": {
+    "R_digdug_levels": {
+     "items": {},
+     "load_error": "URLError: <urlopen error [Errno 111] Connection refused>"
+    }
+   },
+   "tasks": "digdug/tasks/digdug_v1.json",
+   "verdict": "ENTRANT NEVER STARTED",
+   "verdict_code": {
+    "contract": "b48c1c6a1c912374483d82eccb91b7b2e7aff2b8fe7b52f75ffce00989560e37",
+    "contract_combined_digest": "084f8726dfc30e342bf89fc8de5c00c16bb211f6c40d0469cb4d6d502dacd748",
+    "frozen_at": "2026-10-10T20:32:29+00:00",
+    "function": "cmd_run -> score_field -> write_bundle",
+    "module": "digdug/digdug_run.py",
+    "reader": "f2e0292212f7ea3a4914cfb835b2e943398996533286346a34bf8dc554e0870f",
+    "sha256": "8af4e0b7cbf02a1568ba5a503392165c565c31a30fa4ce9cb7c5919544a606c8",
+    "simulator": "8fe3e3e45d83deb1714b99950001d414f0d9304822094a1b45d9934b9a3805cf",
+    "solver": "2cb9caeb0dfd3d6b2105480ea49347e36a3ea727cdf17f8e06c55f8311868ac6"
+   },
+   "weights": {
+    "bytes": null,
+    "name": null,
+    "note": "NO WEIGHTS: no --model-path was given, so there is no file to digest.  This is stated rather than left empty.",
+    "path": null,
+    "sha256": null
+   },
+   "weights_sha256": null
+  }
+ ],
+ "version": "1.0"
+}

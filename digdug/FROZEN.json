@@ -1,0 +1,131 @@
+{
+ "abstention_tokens": {
+  "agrees": true,
+  "count": 31,
+  "in_code_not_contract": [],
+  "in_contract_not_code": [],
+  "uniqueness_problems": [],
+  "why": "lists equal and unique"
+ },
+ "cabinet": "digdug/",
+ "combined_digest": "084f8726dfc30e342bf89fc8de5c00c16bb211f6c40d0469cb4d6d502dacd748",
+ "contract_path": "digdug/CONTRACT_DIGDUG.md",
+ "contract_sha256": "b48c1c6a1c912374483d82eccb91b7b2e7aff2b8fe7b52f75ffce00989560e37",
+ "decision_register": {
+  "code": [
+   "A1",
+   "A10",
+   "A11",
+   "A12",
+   "A13",
+   "A14",
+   "A15",
+   "A16",
+   "A17",
+   "A2",
+   "A3",
+   "A4",
+   "A5",
+   "A6",
+   "A7",
+   "A8",
+   "A9",
+   "U1",
+   "U2",
+   "U3",
+   "U4",
+   "U5",
+   "U6",
+   "U7",
+   "U8",
+   "U9"
+  ],
+  "contract": [
+   "A1",
+   "A10",
+   "A11",
+   "A12",
+   "A13",
+   "A14",
+   "A15",
+   "A16",
+   "A17",
+   "A2",
+   "A3",
+   "A4",
+   "A5",
+   "A6",
+   "A7",
+   "A8",
+   "A9",
+   "U1",
+   "U2",
+   "U3",
+   "U4",
+   "U5",
+   "U6",
+   "U7",
+   "U8",
+   "U9"
+  ],
+  "in_code_not_contract": [],
+  "in_contract_not_code": [],
+  "n_decisions_recorded": 26
+ },
+ "digest_of": "sha256 over the sorted 'path sha256' lines of every normative file below",
+ "event": "DIG DUG",
+ "files": [
+  {
+   "path": "CONTRACT_DIGDUG.md",
+   "role": "the contract (standing demand E)",
+   "sha256": "b48c1c6a1c912374483d82eccb91b7b2e7aff2b8fe7b52f75ffce00989560e37"
+  },
+  {
+   "path": "digdug_reader.py",
+   "role": "the read grammar -- the answer shape and the frozen abstention list",
+   "sha256": "f2e0292212f7ea3a4914cfb835b2e943398996533286346a34bf8dc554e0870f"
+  },
+  {
+   "path": "digdug.py",
+   "role": "the transition function, the turn order, the facets",
+   "sha256": "8fe3e3e45d83deb1714b99950001d414f0d9304822094a1b45d9934b9a3805cf"
+  },
+  {
+   "path": "digdug_solve.py",
+   "role": "the solver that proves the optima and the counts",
+   "sha256": "2cb9caeb0dfd3d6b2105480ea49347e36a3ea727cdf17f8e06c55f8311868ac6"
+  },
+  {
+   "path": "digdug_run.py",
+   "role": "the runner and the SCORER -- which code produced the verdict",
+   "sha256": "8af4e0b7cbf02a1568ba5a503392165c565c31a30fa4ce9cb7c5919544a606c8"
+  },
+  {
+   "path": "tasks/digdug_v1.json",
+   "role": "the item set, with the proven optima",
+   "sha256": "21870b5b3a41f7b0836a3068d25bcf88cedda388cd2e25bff1bbf7ef6a0c5396"
+  },
+  {
+   "path": "levels/01_first_blood.txt",
+   "role": "level 01",
+   "sha256": "43b658b80ba5487e59b1d0e88eb7b0417e1f31e1f082a431ae998695ecea26ff"
+  },
+  {
+   "path": "levels/02_the_long_way_round.txt",
+   "role": "level 02",
+   "sha256": "705e711fe60936d9575d796934084b1a831fb8541b0b752e7e72e0adcaaab955"
+  },
+  {
+   "path": "levels/03_the_open_door.txt",
+   "role": "level 03",
+   "sha256": "3066ba521caf9a93f6c357f369fa13fb7be91707763d989cac57fd594a2897ff"
+  },
+  {
+   "path": "levels/04_no_safe_line.txt",
+   "role": "level 04 -- CONTROL, not scored",
+   "sha256": "a7982852a2da2e11b007db5b100ba822a7146ef6b7d4189b6ce55309547cf39a"
+  }
+ ],
+ "frozen_at": "2026-10-10T20:32:29+00:00",
+ "note": "WRITTEN BEFORE ANY ENTRANT RAN.  The runner refuses to run unless verify() passes, so this file is a precondition of every bundle, not a description of it."
+}

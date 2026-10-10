@@ -1,0 +1,618 @@
+{
+ "card_version": "digdug_v1",
+ "declared": {
+  "budget_note": "a DECLARED instrument parameter [A14], not a discovery; two runs with different budgets are not comparable",
+  "budget_turns_per_level": 30,
+  "gpu": {
+   "driver": null,
+   "index": null,
+   "memory_free_gb": null,
+   "memory_total_gb": null,
+   "n_devices": null,
+   "name": null,
+   "note": "NO ACCELERATOR FOUND by this probe.  This is null, not 0.00 and not 'none': the host was probed and the probe found nothing.",
+   "probe": "nvidia-smi -> not runnable: FileNotFoundError",
+   "raw": null
+  },
+  "gpu_note": "NO ACCELERATOR FOUND by this probe.  This is null, not 0.00 and not 'none': the host was probed and the probe found nothing.",
+  "reasoning": "off",
+  "reasoning_note": "DECLARED BEFORE THE RUN, one setting for the whole event.  OFF, because the answer is ONE CHARACTER per turn: this is a format-carry task, not multi-step arithmetic.  A setting nobody wrote down is indistinguishable from a decision."
+ },
+ "event": "DIG DUG",
+ "generated": "2026-10-10T20:32:30+00:00",
+ "harness": "handicap-arena",
+ "results": [
+  {
+   "admission": {
+    "admitted": true
+   },
+   "aggregate": 0.0,
+   "certification": "CODE ENTRANT -- a different instrument; not for the board.",
+   "config": {
+    "attempt_budget_per_level": 30,
+    "levels_control": [
+     "04_no_safe_line.txt"
+    ],
+    "levels_scored": [
+     "01_first_blood.txt",
+     "02_the_long_way_round.txt",
+     "03_the_open_door.txt"
+    ],
+    "tasks": "digdug/tasks/digdug_v1.json"
+   },
+   "contract": {
+    "clause_the_prose_did_not_settle": [
+     "A1",
+     "A10",
+     "A11",
+     "A12",
+     "A13",
+     "A14",
+     "A15",
+     "A16",
+     "A17",
+     "A2",
+     "A3",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A8",
+     "A9",
+     "U1",
+     "U2",
+     "U3",
+     "U4",
+     "U5",
+     "U6",
+     "U7",
+     "U8",
+     "U9"
+    ],
+    "combined_digest": "084f8726dfc30e342bf89fc8de5c00c16bb211f6c40d0469cb4d6d502dacd748",
+    "decisions_recorded": 26,
+    "frozen_at": "2026-10-10T20:32:29+00:00",
+    "path": "digdug/CONTRACT_DIGDUG.md",
+    "sha256": "b48c1c6a1c912374483d82eccb91b7b2e7aff2b8fe7b52f75ffce00989560e37"
+   },
+   "contract_document": "digdug/CONTRACT_DIGDUG.md",
+   "entrant": "resigner",
+   "entrant_is_a_model": false,
+   "exit_code": 0,
+   "exit_code_table": {
+    "0": "SCORED -- measured > 0, harness sound",
+    "1": "INSTRUMENT NOT PROVEN -- self-test / instrument-check / level verification failed (RESERVED: no entrant's run produces it)",
+    "2": "ZERO MEASURED -- ERROR, never a verdict",
+    "3": "USAGE -- unknown entrant or bad arguments",
+    "4": "ENTRANT NEVER STARTED -- counted separately from played-and-failed",
+    "5": "RECORD NOT WRITTEN -- a run with no record is not a run",
+    "6": "NOT FROZEN -- the contract on disk is not the frozen contract; no entrant ran"
+   },
+   "facets": {
+    "facet1_destruction": {
+     "barrier_lost_on": [],
+     "budget_ruin_on": [],
+     "facet": "search under destruction",
+     "failed_on": [],
+     "first_barrier_lost_at_turn": null,
+     "first_budget_ruin_at_turn": null
+    },
+    "facet2_hazard_aware": {
+     "died_on": [],
+     "dig_to_death_turns": [],
+     "facet": "hazard-aware planning",
+     "failed_on": [],
+     "kill_path_cells_dug_by_player": 0,
+     "kill_path_cells_pre_existing": 0,
+     "killed_through_own_digging": []
+    },
+    "one_trace_per_level": true,
+    "the_two_facets": {
+     "both": [],
+     "facet1_only": [],
+     "facet2_only": [],
+     "neither": [
+      "01_first_blood.txt",
+      "02_the_long_way_round.txt",
+      "03_the_open_door.txt"
+     ],
+     "nesting": "facet 2 implies facet 1: a death needs the components to have merged.  Under this prose the two facets share one mechanism and are separated by outcome, not by mechanic -- measured here, not asserted."
+    },
+    "trace_sha256_per_level": {
+     "01_first_blood.txt": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c",
+     "02_the_long_way_round.txt": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c",
+     "03_the_open_door.txt": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c"
+    }
+   },
+   "grammar": {
+    "actions": [
+     "U",
+     "D",
+     "L",
+     "R"
+    ],
+    "answer_shape": "ONE token per turn (standing rule R3).  A plan, a sentence, or two lines is not_an_action.",
+    "case_insensitive": true,
+    "give_up_diagnostic": "loose_give_up is a substring test, RECORDED ONLY and never scored [A11/R1]",
+    "give_up_match": "EXACT on casefold + whitespace-collapsed line; punctuation NOT stripped except where the punctuated form is itself listed [A11]",
+    "give_up_token_count": 31,
+    "give_up_tokens": [
+     "RESIGN",
+     "RESIGNS",
+     "RESIGNED",
+     "GIVEUP",
+     "SURRENDER",
+     "IQUIT",
+     "QUIT",
+     "FORFEIT",
+     "GIVE UP",
+     "GIVE UP.",
+     "GIVE-UP",
+     "GIVE_UP",
+     "GIVING UP",
+     "I GIVE UP",
+     "I GIVE UP.",
+     "ABSTAIN",
+     "ABSTAIN.",
+     "NO MOVE",
+     "NO_MOVE",
+     "NO-MOVE",
+     "UNSOLVABLE",
+     "DEAD END",
+     "STUCK",
+     "IMPOSSIBLE",
+     "NO SAFE LINE",
+     "CANNOT SOLVE",
+     "CANNOT SOLVE.",
+     "CAN NOT SOLVE",
+     "I STOP",
+     "STOP",
+     "STOP."
+    ],
+    "grammar_source": "digdug/CONTRACT_DIGDUG.md section 2 (READ GRAMMAR)",
+    "line_rule": "the answer is the single non-empty line; 2+ non-empty lines -> not_an_action (multi_line), never one of them",
+    "outcomes_owned_by_step": [
+     "dug",
+     "moved",
+     "blocked",
+     "collected"
+    ],
+    "outcomes_owned_by_turn": [
+     "dug",
+     "moved",
+     "blocked",
+     "collected",
+     "killed"
+    ],
+    "outcomes_read_here": [
+     "action",
+     "give_up",
+     "not_an_action"
+    ],
+    "reader": "digdug/digdug_reader.py",
+    "reader_sha256": "f2e0292212f7ea3a4914cfb835b2e943398996533286346a34bf8dc554e0870f",
+    "truncation": "NEVER. multi-char -> not_an_action. RESIGN is not R.",
+    "wait": "not_an_action -- there is NO pass action [U5]",
+    "wasd": "not_an_action (NOT synonyms) -- rule wasd_not_a_synonym",
+    "whitespace_rule": "the chosen line is stripped; ' U ' reads as U"
+   },
+   "hardware": {
+    "hostname": "e2b.local",
+    "machine": "x86_64",
+    "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+    "python": "3.11.2"
+   },
+   "instrument": "code",
+   "instrument_note": "CODE entrant, not a model -- a DIFFERENT INSTRUMENT; never pooled into a model table",
+   "kind": "control-resigner",
+   "levels": {
+    "01_first_blood.txt": {
+     "distinct_optimal_lines": 1,
+     "enclosed": true,
+     "hazards": 1,
+     "optimal_moves": 4,
+     "sha256": "43b658b80ba5487e59b1d0e88eb7b0417e1f31e1f082a431ae998695ecea26ff",
+     "targets": 1
+    },
+    "02_the_long_way_round.txt": {
+     "distinct_optimal_lines": 1,
+     "enclosed": true,
+     "hazards": 1,
+     "optimal_moves": 12,
+     "sha256": "705e711fe60936d9575d796934084b1a831fb8541b0b752e7e72e0adcaaab955",
+     "targets": 1
+    },
+    "03_the_open_door.txt": {
+     "distinct_optimal_lines": 1,
+     "enclosed": true,
+     "hazards": 1,
+     "optimal_moves": 7,
+     "sha256": "3066ba521caf9a93f6c357f369fa13fb7be91707763d989cac57fd594a2897ff",
+     "targets": 1
+    },
+    "04_no_safe_line.txt": {
+     "distinct_optimal_lines": 0,
+     "enclosed": true,
+     "hazards": 1,
+     "optimal_moves": null,
+     "role": "CONTROL -- NOT SCORED [A5]",
+     "sha256": "a7982852a2da2e11b007db5b100ba822a7146ef6b7d4189b6ce55309547cf39a",
+     "targets": 1
+    }
+   },
+   "never_started": false,
+   "prose_traps": "digdug/DIGDUG_PROSE_TRAPS.md",
+   "rounds": {
+    "R_digdug_levels": {
+     "B1_note": "emitted and consumed are DIFFERENT numbers and both are here; tokens emitted after the attempt ended are answers_after_end and are not not_an_action",
+     "alt_reading_is": "solved / answers_emitted -- the OTHER reading of R2, recorded, NOT the gate [A15]",
+     "alt_reading_solved_per_answer": 0.0,
+     "answers_after_end": 0,
+     "answers_consumed": 3,
+     "answers_emitted": 3,
+     "attempted_emitted": 3,
+     "class_": "CONTEST",
+     "give_up": 3,
+     "items": {
+      "01_first_blood.txt": {
+       "answers_after_end": 0,
+       "answers_consumed": 1,
+       "answers_emitted": 1,
+       "blocked": 0,
+       "budget": 30,
+       "collected": 0,
+       "died_at_turn": null,
+       "dug": 0,
+       "facets": {
+        "facet1_destruction": {
+         "barrier_lost": false,
+         "barrier_lost_at_turn": null,
+         "budget": 30,
+         "budget_ruin": false,
+         "budget_ruin_at_turn": null,
+         "facet": "search under destruction",
+         "facet_id": 1,
+         "irreversible": "digging is permanent, so 1a can never become False again -- this is the only monotone loss in the game",
+         "measured_from": "the recorded map on each ply of THIS trace",
+         "per_turn": [],
+         "trace_sha256": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c"
+        },
+        "facet2_hazard_aware": {
+         "died_at_turn": null,
+         "dig_to_death_turns": null,
+         "facet": "hazard-aware planning",
+         "facet_id": 2,
+         "first_kill_cell_dug_at_turn": null,
+         "hazard_index": null,
+         "kill_path_all_player_dug": null,
+         "kill_path_cells": 0,
+         "kill_path_cells_dug_by_player": 0,
+         "kill_path_cells_pre_existing": 0,
+         "killed": false,
+         "measured_from": "the recorded death on THIS trace",
+         "trace_sha256": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c"
+        },
+        "one_trace": true,
+        "trace_sha256": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c"
+       },
+       "final_board": "#######\n#P%%%T#\n#%%%%%#\n#H%%%%#\n#######",
+       "gave_up_at": 1,
+       "give_up": 1,
+       "kill": null,
+       "level": "01_first_blood.txt",
+       "level_sha256": "43b658b80ba5487e59b1d0e88eb7b0417e1f31e1f082a431ae998695ecea26ff",
+       "moved": 0,
+       "n_distinct_optimal_lines": 1,
+       "not_an_action": 0,
+       "optimal_moves": 4,
+       "rules_fired": {
+        "give_up_token_exact": 1
+       },
+       "scored": true,
+       "solved": false,
+       "terminal": "GAVE_UP",
+       "trace": [
+        {
+         "answers_emitted": 1,
+         "outcome": "give_up",
+         "position": [
+          1,
+          1
+         ],
+         "reading": {
+          "action": null,
+          "line_read": "RESIGN",
+          "loose_give_up_diagnostic": true,
+          "n_nonempty_lines": 1,
+          "outcome": "give_up",
+          "raw": "RESIGN",
+          "rule_fired": "give_up_token_exact"
+         },
+         "turn": 1,
+         "word": "give_up"
+        }
+       ],
+       "trace_sha256": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c",
+       "turns_used": 0
+      },
+      "02_the_long_way_round.txt": {
+       "answers_after_end": 0,
+       "answers_consumed": 1,
+       "answers_emitted": 1,
+       "blocked": 0,
+       "budget": 30,
+       "collected": 0,
+       "died_at_turn": null,
+       "dug": 0,
+       "facets": {
+        "facet1_destruction": {
+         "barrier_lost": false,
+         "barrier_lost_at_turn": null,
+         "budget": 30,
+         "budget_ruin": false,
+         "budget_ruin_at_turn": null,
+         "facet": "search under destruction",
+         "facet_id": 1,
+         "irreversible": "digging is permanent, so 1a can never become False again -- this is the only monotone loss in the game",
+         "measured_from": "the recorded map on each ply of THIS trace",
+         "per_turn": [],
+         "trace_sha256": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c"
+        },
+        "facet2_hazard_aware": {
+         "died_at_turn": null,
+         "dig_to_death_turns": null,
+         "facet": "hazard-aware planning",
+         "facet_id": 2,
+         "first_kill_cell_dug_at_turn": null,
+         "hazard_index": null,
+         "kill_path_all_player_dug": null,
+         "kill_path_cells": 0,
+         "kill_path_cells_dug_by_player": 0,
+         "kill_path_cells_pre_existing": 0,
+         "killed": false,
+         "measured_from": "the recorded death on THIS trace",
+         "trace_sha256": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c"
+        },
+        "one_trace": true,
+        "trace_sha256": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c"
+       },
+       "final_board": "###########\n#P%%H  %%T#\n#%#######%#\n#%%%%%%%%%#\n###########",
+       "gave_up_at": 1,
+       "give_up": 1,
+       "kill": null,
+       "level": "02_the_long_way_round.txt",
+       "level_sha256": "705e711fe60936d9575d796934084b1a831fb8541b0b752e7e72e0adcaaab955",
+       "moved": 0,
+       "n_distinct_optimal_lines": 1,
+       "not_an_action": 0,
+       "optimal_moves": 12,
+       "rules_fired": {
+        "give_up_token_exact": 1
+       },
+       "scored": true,
+       "solved": false,
+       "terminal": "GAVE_UP",
+       "trace": [
+        {
+         "answers_emitted": 1,
+         "outcome": "give_up",
+         "position": [
+          1,
+          1
+         ],
+         "reading": {
+          "action": null,
+          "line_read": "RESIGN",
+          "loose_give_up_diagnostic": true,
+          "n_nonempty_lines": 1,
+          "outcome": "give_up",
+          "raw": "RESIGN",
+          "rule_fired": "give_up_token_exact"
+         },
+         "turn": 1,
+         "word": "give_up"
+        }
+       ],
+       "trace_sha256": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c",
+       "turns_used": 0
+      },
+      "03_the_open_door.txt": {
+       "answers_after_end": 0,
+       "answers_consumed": 1,
+       "answers_emitted": 1,
+       "blocked": 0,
+       "budget": 30,
+       "collected": 0,
+       "died_at_turn": null,
+       "dug": 0,
+       "facets": {
+        "facet1_destruction": {
+         "barrier_lost": false,
+         "barrier_lost_at_turn": null,
+         "budget": 30,
+         "budget_ruin": false,
+         "budget_ruin_at_turn": null,
+         "facet": "search under destruction",
+         "facet_id": 1,
+         "irreversible": "digging is permanent, so 1a can never become False again -- this is the only monotone loss in the game",
+         "measured_from": "the recorded map on each ply of THIS trace",
+         "per_turn": [],
+         "trace_sha256": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c"
+        },
+        "facet2_hazard_aware": {
+         "died_at_turn": null,
+         "dig_to_death_turns": null,
+         "facet": "hazard-aware planning",
+         "facet_id": 2,
+         "first_kill_cell_dug_at_turn": null,
+         "hazard_index": null,
+         "kill_path_all_player_dug": null,
+         "kill_path_cells": 0,
+         "kill_path_cells_dug_by_player": 0,
+         "kill_path_cells_pre_existing": 0,
+         "killed": false,
+         "measured_from": "the recorded death on THIS trace",
+         "trace_sha256": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c"
+        },
+        "one_trace": true,
+        "trace_sha256": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c"
+       },
+       "final_board": "#########\n#P%%%%%%#\n#%## ##%#\n#%##H##%#\n#%#####%#\n#%%%T%%%#\n#########",
+       "gave_up_at": 1,
+       "give_up": 1,
+       "kill": null,
+       "level": "03_the_open_door.txt",
+       "level_sha256": "3066ba521caf9a93f6c357f369fa13fb7be91707763d989cac57fd594a2897ff",
+       "moved": 0,
+       "n_distinct_optimal_lines": 1,
+       "not_an_action": 0,
+       "optimal_moves": 7,
+       "rules_fired": {
+        "give_up_token_exact": 1
+       },
+       "scored": true,
+       "solved": false,
+       "terminal": "GAVE_UP",
+       "trace": [
+        {
+         "answers_emitted": 1,
+         "outcome": "give_up",
+         "position": [
+          1,
+          1
+         ],
+         "reading": {
+          "action": null,
+          "line_read": "RESIGN",
+          "loose_give_up_diagnostic": true,
+          "n_nonempty_lines": 1,
+          "outcome": "give_up",
+          "raw": "RESIGN",
+          "rule_fired": "give_up_token_exact"
+         },
+         "turn": 1,
+         "word": "give_up"
+        }
+       ],
+       "trace_sha256": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c",
+       "turns_used": 0
+      },
+      "04_no_safe_line.txt": {
+       "abstained": true,
+       "answers_after_end": 0,
+       "answers_consumed": 1,
+       "answers_emitted": 1,
+       "blocked": 0,
+       "budget": 30,
+       "collected": 0,
+       "control_role": "CONTROL -- NOT SCORED [A5]",
+       "correct_answer_was": "an abstention -- there is no safe line, proved exhaustively",
+       "died_at_turn": null,
+       "dug": 0,
+       "facets": {
+        "facet1_destruction": {
+         "barrier_lost": false,
+         "barrier_lost_at_turn": null,
+         "budget": 30,
+         "budget_ruin": false,
+         "budget_ruin_at_turn": null,
+         "facet": "search under destruction",
+         "facet_id": 1,
+         "irreversible": "digging is permanent, so 1a can never become False again -- this is the only monotone loss in the game",
+         "measured_from": "the recorded map on each ply of THIS trace",
+         "per_turn": [],
+         "trace_sha256": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c"
+        },
+        "facet2_hazard_aware": {
+         "died_at_turn": null,
+         "dig_to_death_turns": null,
+         "facet": "hazard-aware planning",
+         "facet_id": 2,
+         "first_kill_cell_dug_at_turn": null,
+         "hazard_index": null,
+         "kill_path_all_player_dug": null,
+         "kill_path_cells": 0,
+         "kill_path_cells_dug_by_player": 0,
+         "kill_path_cells_pre_existing": 0,
+         "killed": false,
+         "measured_from": "the recorded death on THIS trace",
+         "trace_sha256": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c"
+        },
+        "one_trace": true,
+        "trace_sha256": "7219264d5aab8fcec73a768bc982fe01401fc22680e04914e903e548c14e966c"
+       },
+       "final_board": "###########\n#P%%H  %%T#\n###########",
+       "gave_up_at": 1,
+       "give_up": 1,
+       "kill": null,
+       "level": "04_no_safe_line.txt",
+       "level_sha256": "a7982852a2da2e11b007db5b100ba822a7146ef6b7d4189b6ce55309547cf39a",
+       "moved": 0,
+       "not_an_action": 0,
+       "rules_fired": {
+        "give_up_token_exact": 1
+       },
+       "scored": false,
+       "solved": false,
+       "terminal": "GAVE_UP",
+       "trace": [
+        {
+         "answers_emitted": 1,
+         "outcome": "give_up",
+         "position": [
+          1,
+          1
+         ],
+         "reading": {
+          "action": null,
+          "line_read": "RESIGN",
+          "loose_give_up_diagnostic": true,
+          "n_nonempty_lines": 1,
+          "outcome": "give_up",
+          "raw": "RESIGN",
+          "rule_fired": "give_up_token_exact"
+         },
+         "turn": 1,
+         "word": "give_up"
+        }
+       ],
+       "turns_used": 0,
+       "was_right": true
+      }
+     },
+     "kind": "grid_puzzle_destructive_search",
+     "moves_are_a_cost": {
+      "averaged": false,
+      "blocked": 0,
+      "collected": 0,
+      "dug": 0,
+      "moved": 0,
+      "turns_used": 0,
+      "why_not_averaged": "a move count is not a rate, and averaging counts across levels of different sizes produces a number with no denominator"
+     },
+     "not_an_action": 0,
+     "readable_answers": 3,
+     "score": 0.0,
+     "score_is": "solved / attempted_emitted (LEVELS that emitted at least one answer) -- standing rule R2 [A15]",
+     "solved": 0
+    }
+   },
+   "tasks": "digdug/tasks/digdug_v1.json",
+   "verdict": "SCORED",
+   "verdict_code": {
+    "contract": "b48c1c6a1c912374483d82eccb91b7b2e7aff2b8fe7b52f75ffce00989560e37",
+    "contract_combined_digest": "084f8726dfc30e342bf89fc8de5c00c16bb211f6c40d0469cb4d6d502dacd748",
+    "frozen_at": "2026-10-10T20:32:29+00:00",
+    "function": "cmd_run -> score_field -> write_bundle",
+    "module": "digdug/digdug_run.py",
+    "reader": "f2e0292212f7ea3a4914cfb835b2e943398996533286346a34bf8dc554e0870f",
+    "sha256": "8af4e0b7cbf02a1568ba5a503392165c565c31a30fa4ce9cb7c5919544a606c8",
+    "simulator": "8fe3e3e45d83deb1714b99950001d414f0d9304822094a1b45d9934b9a3805cf",
+    "solver": "2cb9caeb0dfd3d6b2105480ea49347e36a3ea727cdf17f8e06c55f8311868ac6"
+   },
+   "weights": null,
+   "weights_sha256": null
+  }
+ ],
+ "version": "1.0"
+}
