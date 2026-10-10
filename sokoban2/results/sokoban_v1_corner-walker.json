@@ -1,0 +1,4633 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-10T18:24:50Z",
+  "event": "SOKOBAN",
+  "card_version": "sokoban_v1",
+  "declared": {
+    "reasoning": "off",
+    "reasoning_note": "DECLARED per-run instrument field. 'unset' is NOT 'off': an undeclared run must not be pooled with a declared one. Same weights with thinking ON vs OFF produced OPPOSITE outcomes on this project's cabinet task.",
+    "gpu": {
+      "probe": "nvidia-smi (absent) -> host is Linux x86_64",
+      "name": null,
+      "index": null,
+      "memory_total_gb": null,
+      "memory_free_gb": null,
+      "driver": null,
+      "n_devices": null,
+      "note": "NO ACCELERATOR FOUND by this probe. Recorded as null, not 0.00 and not 'none': an unprobed machine is not a machine with no GPU. A model run on this host is CPU-only and its numbers are not comparable to a GPU run.",
+      "raw": null
+    },
+    "gpu_note": "DECLARED per-run. No accelerator is recorded as null with the probe that ran, never 0.00 and never 'none'."
+  },
+  "results": [
+    {
+      "entrant": "corner-walker",
+      "kind": "dead-end-walker-reference",
+      "instrument": "code",
+      "instrument_note": "CODE entrant, not a model -- a DIFFERENT INSTRUMENT; never pooled into a model table",
+      "entrant_is_a_model": false,
+      "on_board": false,
+      "weights": null,
+      "weights_sha256": null,
+      "verdict_code": {
+        "module": "sokoban2_run.py",
+        "function": "run_entrant",
+        "sha256": "6b679fa507748a4acd4fb6add0ffadd6d24b36c03f1bde760594b4bedc356692",
+        "simulator": {
+          "module": "sokoban2.py",
+          "sha256": "83e8fbedc1fa7c03e61c91ab91c12af353c7f088f0690bcc76abca3388c09682",
+          "transition": "step(state, action) -> (position, word)"
+        },
+        "reader": {
+          "module": "sokoban_reader.py",
+          "sha256": "c950758e8c7c4136a9f863884367ce386ce3109f79e38e6f9ad0c17b04b79afc",
+          "note": "ONE reader of record, imported by every side script, never reimplemented."
+        },
+        "solver": {
+          "module": "sokoban2_solve.py",
+          "sha256": "6b9b797aa68dc5b7678136036c4e0908263ff499a9ef69466c86c3c806fb1c8a",
+          "role": "verifies the frozen optima and supplies the dead-end DIAGNOSTIC. Never scores."
+        }
+      },
+      "terminals": [
+        "BUDGET_EXHAUSTED",
+        "WALL_BUMPED_ONLY"
+      ],
+      "terminal_reason": {
+        "per_level": {
+          "01_one_push.txt": "WALL_BUMPED_ONLY",
+          "02_two_boxes.txt": "WALL_BUMPED_ONLY",
+          "03_the_corner_waiting.txt": "BUDGET_EXHAUSTED"
+        },
+        "corrections_offered": 0,
+        "corrections_ignored": 0,
+        "note": "corrections_ignored > 0 means the entrant was TOLD its answer was unreadable and produced no legal action anyway -- which is not the same finding as producing legal actions that failed."
+      },
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 8,
+        "trials": 1,
+        "ctx": null,
+        "n_gpu_layers": null,
+        "server_flags": null,
+        "attempt_budget_per_level": 60,
+        "retries_on_unreadable": 2,
+        "reasoning": "off",
+        "reasoning_note": "DECLARED per-run instrument field; 'unset' is NOT 'off'.",
+        "entrant_reasoning": null,
+        "entrant_reasoning_note": "NOT APPLICABLE -- this entrant is code; no model was served and no reasoning setting existed. Recorded as null with this reason, never 'off' and never omitted [G16].",
+        "config_note": "RUN_FACTS that do not exist on this host are null, not omitted and not zeroed."
+      },
+      "hardware": {
+        "host": "e2b.local",
+        "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+        "machine": "x86_64",
+        "processor": null,
+        "python": "3.11.2",
+        "cpu_count": 2,
+        "gpu": {
+          "probe": "nvidia-smi (absent) -> host is Linux x86_64",
+          "name": null,
+          "index": null,
+          "memory_total_gb": null,
+          "memory_free_gb": null,
+          "driver": null,
+          "n_devices": null,
+          "note": "NO ACCELERATOR FOUND by this probe. Recorded as null, not 0.00 and not 'none': an unprobed machine is not a machine with no GPU. A model run on this host is CPU-only and its numbers are not comparable to a GPU run.",
+          "raw": null
+        }
+      },
+      "admission": {
+        "rc": 0,
+        "secs": 0.0,
+        "started": true,
+        "never_started": false,
+        "holder": null
+      },
+      "rounds": {
+        "R_sokoban_levels": {
+          "score": 0.0,
+          "wins": 0,
+          "trials": 3,
+          "kind": "grid_puzzle",
+          "class": "CONTEST",
+          "oracle": "rules_of_the_game_implemented_once_with_controls",
+          "staged_as": "arcade cabinet -- SOKOBAN: push every crate, and the crates never pull",
+          "denominator_rule": "trials = levels the entrant TOOK A TURN on; NEVER_STARTED is OUTSIDE, counted separately; the zero-rule gate counts READABLE tokens, not turns [G15]",
+          "score_is": "solved levels / levels attempted -- a RATE, for the gate. `moves` (the read grammar's SCORE) is carried per level and is NOT averaged: a move count is not a rate [G15]",
+          "items": {
+            "01_one_push.txt": {
+              "level": "01_one_push.txt",
+              "level_sha256": "db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313",
+              "solved": false,
+              "moves": 0,
+              "attempted": 60,
+              "blocked": 60,
+              "not_an_action": 0,
+              "after_end": 0,
+              "give_up": 0,
+              "gave_up": false,
+              "gave_up_at": null,
+              "ended": false,
+              "terminal": "WALL_BUMPED_ONLY",
+              "budget": 60,
+              "budget_exhausted": true,
+              "corrections_offered": 0,
+              "corrections_ignored": 0,
+              "never_produced_a_legal_action": false,
+              "produced_a_legal_action": true,
+              "final_board": "#####\n#@$.#\n#####",
+              "board_is": "BOARD AFTER THE LAST MOVE",
+              "trace": [
+                {
+                  "attempt": 1,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:782b90445b0e8d2f"
+                },
+                {
+                  "attempt": 2,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:c7ca6305a4577ab5"
+                },
+                {
+                  "attempt": 3,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:29ee06573cc7b5d9"
+                },
+                {
+                  "attempt": 4,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:1ff7f4efc4439550"
+                },
+                {
+                  "attempt": 5,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:bfb548fcae0ed714"
+                },
+                {
+                  "attempt": 6,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:2c6a9bf66d1b2429"
+                },
+                {
+                  "attempt": 7,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:c52eff8a3eec4ca4"
+                },
+                {
+                  "attempt": 8,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:9a4c006022200e45"
+                },
+                {
+                  "attempt": 9,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:021d8649af0d1046"
+                },
+                {
+                  "attempt": 10,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:add6e076b0a1afa1"
+                },
+                {
+                  "attempt": 11,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:856922e8cfd206e1"
+                },
+                {
+                  "attempt": 12,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:f2ab0a7734f61ad4"
+                },
+                {
+                  "attempt": 13,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:7ac5e0ad1a9da02f"
+                },
+                {
+                  "attempt": 14,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:b5f2dc4c859a1d5d"
+                },
+                {
+                  "attempt": 15,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:f62011b71894a70f"
+                },
+                {
+                  "attempt": 16,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:4bb830f77b90f98a"
+                },
+                {
+                  "attempt": 17,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:4070dd8de8da27ec"
+                },
+                {
+                  "attempt": 18,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:57ce651bc5a248ad"
+                },
+                {
+                  "attempt": 19,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:2ed537f459d1c7ae"
+                },
+                {
+                  "attempt": 20,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:b1119904764db642"
+                },
+                {
+                  "attempt": 21,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:203b0dac8be8a611"
+                },
+                {
+                  "attempt": 22,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:1ae161339d7346f2"
+                },
+                {
+                  "attempt": 23,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:5836e4e3ed52ab73"
+                },
+                {
+                  "attempt": 24,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:ca60b96e8af017cb"
+                },
+                {
+                  "attempt": 25,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:83cc980599267a89"
+                },
+                {
+                  "attempt": 26,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:c4822b2cea312fc4"
+                },
+                {
+                  "attempt": 27,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:5005074e760bb123"
+                },
+                {
+                  "attempt": 28,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:84d09975ad7aa848"
+                },
+                {
+                  "attempt": 29,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:35b48c53eccb6890"
+                },
+                {
+                  "attempt": 30,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:829eeb46acaa55b8"
+                },
+                {
+                  "attempt": 31,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:001726cd38f5baaf"
+                },
+                {
+                  "attempt": 32,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:8849e82ea0214c73"
+                },
+                {
+                  "attempt": 33,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:3b5e0a35fc90d126"
+                },
+                {
+                  "attempt": 34,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:a74920888bb22607"
+                },
+                {
+                  "attempt": 35,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:a18ab9cdddda84a0"
+                },
+                {
+                  "attempt": 36,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:ab1579844eb651aa"
+                },
+                {
+                  "attempt": 37,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:6d3db4dada688f35"
+                },
+                {
+                  "attempt": 38,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:831df4f7d9283de5"
+                },
+                {
+                  "attempt": 39,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:eee8e59f16f70541"
+                },
+                {
+                  "attempt": 40,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:c5a8bf5abce8f4c5"
+                },
+                {
+                  "attempt": 41,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:cfa0c63d2411f96e"
+                },
+                {
+                  "attempt": 42,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:8c1a2dcd2a5f9b0d"
+                },
+                {
+                  "attempt": 43,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:fca0a60293942250"
+                },
+                {
+                  "attempt": 44,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:a20f89aca220807f"
+                },
+                {
+                  "attempt": 45,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:d2df2463b38e41c5"
+                },
+                {
+                  "attempt": 46,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:d4278fc87699eb6b"
+                },
+                {
+                  "attempt": 47,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:e446ef19f67c8f1e"
+                },
+                {
+                  "attempt": 48,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:ad18331482b9b780"
+                },
+                {
+                  "attempt": 49,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:14c71447c18407f2"
+                },
+                {
+                  "attempt": 50,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:9062058e26bd1de5"
+                },
+                {
+                  "attempt": 51,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:f29a96a0e4853065"
+                },
+                {
+                  "attempt": 52,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:98f66a6aa2f6eea1"
+                },
+                {
+                  "attempt": 53,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:4ab06050f4c95283"
+                },
+                {
+                  "attempt": 54,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:5fc58abf9b04e458"
+                },
+                {
+                  "attempt": 55,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:1d9cae5e8460d6bf"
+                },
+                {
+                  "attempt": 56,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:99fa279c4d82e1f1"
+                },
+                {
+                  "attempt": 57,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:2a59b30631760a80"
+                },
+                {
+                  "attempt": 58,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:0a5cb58365823b87"
+                },
+                {
+                  "attempt": 59,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:0f17f84fbb3951f7"
+                },
+                {
+                  "attempt": 60,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "U",
+                  "prompt_was": "SHA256:53ecdf5dd970674a"
+                }
+              ],
+              "dead_end_diagnostic": [],
+              "secs": 0.001,
+              "prompt_legal": true
+            },
+            "02_two_boxes.txt": {
+              "level": "02_two_boxes.txt",
+              "level_sha256": "7549657f1768607cefab6d892b1756b1cabf23f51144a7679d76f331b38a57d7",
+              "solved": false,
+              "moves": 0,
+              "attempted": 60,
+              "blocked": 60,
+              "not_an_action": 0,
+              "after_end": 0,
+              "give_up": 0,
+              "gave_up": false,
+              "gave_up_at": null,
+              "ended": false,
+              "terminal": "WALL_BUMPED_ONLY",
+              "budget": 60,
+              "budget_exhausted": true,
+              "corrections_offered": 0,
+              "corrections_ignored": 0,
+              "never_produced_a_legal_action": false,
+              "produced_a_legal_action": true,
+              "final_board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+              "board_is": "BOARD AFTER THE LAST MOVE",
+              "trace": [
+                {
+                  "attempt": 1,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:7e6e95b0fe32f6c0"
+                },
+                {
+                  "attempt": 2,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:304ee661cc10fe22"
+                },
+                {
+                  "attempt": 3,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:1aae29e5a9ff40c2"
+                },
+                {
+                  "attempt": 4,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:af553ab85640de93"
+                },
+                {
+                  "attempt": 5,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:cb51686aa059d5b4"
+                },
+                {
+                  "attempt": 6,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:0625e363bc3235c1"
+                },
+                {
+                  "attempt": 7,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:a6651b800d97687e"
+                },
+                {
+                  "attempt": 8,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:2ee9ba77bc4ef9b2"
+                },
+                {
+                  "attempt": 9,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:1399651597e97fce"
+                },
+                {
+                  "attempt": 10,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:3ba67bcd9099aa92"
+                },
+                {
+                  "attempt": 11,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:be959c49d60d191d"
+                },
+                {
+                  "attempt": 12,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:3994a4d7cb0debe3"
+                },
+                {
+                  "attempt": 13,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:8362711310376a98"
+                },
+                {
+                  "attempt": 14,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:ed5d9a4ac3874bf0"
+                },
+                {
+                  "attempt": 15,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:fddd5bee6d6abdf6"
+                },
+                {
+                  "attempt": 16,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:1f6c815f856e2d1a"
+                },
+                {
+                  "attempt": 17,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:a0d4a67702dfc8d7"
+                },
+                {
+                  "attempt": 18,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:dbd5c31118462713"
+                },
+                {
+                  "attempt": 19,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:2e439aa703f26b8c"
+                },
+                {
+                  "attempt": 20,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:74b45115f8678b17"
+                },
+                {
+                  "attempt": 21,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:6aaddb05007e3900"
+                },
+                {
+                  "attempt": 22,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:9094b1791c5e0100"
+                },
+                {
+                  "attempt": 23,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:ef00af704cddf687"
+                },
+                {
+                  "attempt": 24,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:f2c2a876b87a3247"
+                },
+                {
+                  "attempt": 25,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:e35df33585f3d80e"
+                },
+                {
+                  "attempt": 26,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:cf416efa97854961"
+                },
+                {
+                  "attempt": 27,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:4447cb2d29ddc3cb"
+                },
+                {
+                  "attempt": 28,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:70392b6aa6aa9545"
+                },
+                {
+                  "attempt": 29,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:5ba646fb0f1a1001"
+                },
+                {
+                  "attempt": 30,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:45453707e2f9ba59"
+                },
+                {
+                  "attempt": 31,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:aa4398797bd27fb8"
+                },
+                {
+                  "attempt": 32,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:1b80d74f4d98b537"
+                },
+                {
+                  "attempt": 33,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:dd496a5255aa32b5"
+                },
+                {
+                  "attempt": 34,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:94eb7ae1eb279fa8"
+                },
+                {
+                  "attempt": 35,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:56bc8810dfd99d82"
+                },
+                {
+                  "attempt": 36,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:7431a5f1aa2d99c6"
+                },
+                {
+                  "attempt": 37,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:9d2f8e04050d5b2a"
+                },
+                {
+                  "attempt": 38,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:a97c8411781107f2"
+                },
+                {
+                  "attempt": 39,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:745838d63cc4924f"
+                },
+                {
+                  "attempt": 40,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:eddaa3504328715e"
+                },
+                {
+                  "attempt": 41,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:8cb0530719214779"
+                },
+                {
+                  "attempt": 42,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:3b52507ee44002ec"
+                },
+                {
+                  "attempt": 43,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:2ceaf4b94546ef58"
+                },
+                {
+                  "attempt": 44,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:64d0c4a6a43a1742"
+                },
+                {
+                  "attempt": 45,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:d6baeb81a4bde976"
+                },
+                {
+                  "attempt": 46,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:dce09bbf2f07a628"
+                },
+                {
+                  "attempt": 47,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:21706e699b40b7bc"
+                },
+                {
+                  "attempt": 48,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:20c5456f170eaba2"
+                },
+                {
+                  "attempt": 49,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:b52de64048e9ddc7"
+                },
+                {
+                  "attempt": 50,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:64659bd269209dfb"
+                },
+                {
+                  "attempt": 51,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:0c7ceef01f6b3566"
+                },
+                {
+                  "attempt": 52,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:f2b6c0def88e330e"
+                },
+                {
+                  "attempt": 53,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:848f0f95a797173a"
+                },
+                {
+                  "attempt": 54,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:d694bc039790e86e"
+                },
+                {
+                  "attempt": 55,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:7bba52ac1017960e"
+                },
+                {
+                  "attempt": 56,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:fc01ebddedc64e16"
+                },
+                {
+                  "attempt": 57,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:12022c2209e1516f"
+                },
+                {
+                  "attempt": 58,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:e3732c75aa1a93d9"
+                },
+                {
+                  "attempt": 59,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:5391f5149f9cbafd"
+                },
+                {
+                  "attempt": 60,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "L",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:95a61bd2a24b3791"
+                }
+              ],
+              "dead_end_diagnostic": [],
+              "secs": 0.001,
+              "prompt_legal": true
+            },
+            "03_the_corner_waiting.txt": {
+              "level": "03_the_corner_waiting.txt",
+              "level_sha256": "2d8c46733bd04b9a3333d30e56442c03fffe3e5f4ee4bc95202ac01c463c9284",
+              "solved": false,
+              "moves": 52,
+              "attempted": 60,
+              "blocked": 8,
+              "not_an_action": 0,
+              "after_end": 0,
+              "give_up": 0,
+              "gave_up": false,
+              "gave_up_at": null,
+              "ended": false,
+              "terminal": "BUDGET_EXHAUSTED",
+              "budget": 60,
+              "budget_exhausted": true,
+              "corrections_offered": 0,
+              "corrections_ignored": 0,
+              "never_produced_a_legal_action": false,
+              "produced_a_legal_action": true,
+              "final_board": "#######\n#.  @$#\n#     #\n#######",
+              "board_is": "BOARD AFTER THE LAST MOVE",
+              "trace": [
+                {
+                  "attempt": 1,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @$ #\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:e86d4cde6858a71a",
+                  "solvable_after": true,
+                  "moves_to_go": 7
+                },
+                {
+                  "attempt": 2,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "pushed",
+                  "word": "pushed",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:f35feca55eb593f0",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 3,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:c5b99f37bb8545ea",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 4,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:356189046a8e5ad5",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 5,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:07083fe2f3449475",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 6,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "D",
+                    "line_read": "D",
+                    "why": "action_letter",
+                    "raw": "D",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "D",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.   $#\n#  @  #\n#######",
+                  "raw": "D",
+                  "prompt_was": "SHA256:0861dc5c11ea9e80",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 7,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:ccaf91afb346ca10",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 8,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:235275d9ea1a5cd2"
+                },
+                {
+                  "attempt": 9,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:53ef120318826e6d",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 10,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:154e3ecd943d8328",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 11,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:618e4859a010d510",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 12,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:dd95704b804d7eb6",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 13,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "D",
+                    "line_read": "D",
+                    "why": "action_letter",
+                    "raw": "D",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "D",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.   $#\n#  @  #\n#######",
+                  "raw": "D",
+                  "prompt_was": "SHA256:362eb7bb87108073",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 14,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:2c8b7325657d24b8",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 15,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:39d7354cfefc374e"
+                },
+                {
+                  "attempt": 16,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:9ec9aea62902c6c3",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 17,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:aa3a8c7241b6e7ad",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 18,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:c72a3bceda252e7b",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 19,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:169054ddfcc0090e",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 20,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "D",
+                    "line_read": "D",
+                    "why": "action_letter",
+                    "raw": "D",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "D",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.   $#\n#  @  #\n#######",
+                  "raw": "D",
+                  "prompt_was": "SHA256:008d4c53f8835c72",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 21,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:254702233886e69e",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 22,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:023f23a3d80fd105"
+                },
+                {
+                  "attempt": 23,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:854d5b493213f163",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 24,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:d3f988d9c6f45ccd",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 25,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:38ccad2a25314af4",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 26,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:e9ca97c872dc4a25",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 27,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "D",
+                    "line_read": "D",
+                    "why": "action_letter",
+                    "raw": "D",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "D",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.   $#\n#  @  #\n#######",
+                  "raw": "D",
+                  "prompt_was": "SHA256:4e75bdbda462ff71",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 28,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:0bd14dbe4c14eb27",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 29,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:24bb3b6c14eeac06"
+                },
+                {
+                  "attempt": 30,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:5830c7b19921809b",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 31,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:0e329da668f6da75",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 32,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:d5f8c193b29b6d07",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 33,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:e5c42183701d9717",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 34,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "D",
+                    "line_read": "D",
+                    "why": "action_letter",
+                    "raw": "D",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "D",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.   $#\n#  @  #\n#######",
+                  "raw": "D",
+                  "prompt_was": "SHA256:4aa95a4f1aa7a077",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 35,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:f80f3325e9eeb4d8",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 36,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:bed51eb3e058a208"
+                },
+                {
+                  "attempt": 37,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:52412527209380b2",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 38,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:20700d9b8fe466fe",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 39,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:c27bfb9c51eed394",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 40,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:dafdd94de548a6c4",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 41,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "D",
+                    "line_read": "D",
+                    "why": "action_letter",
+                    "raw": "D",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "D",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.   $#\n#  @  #\n#######",
+                  "raw": "D",
+                  "prompt_was": "SHA256:bc82de8e704ebcae",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 42,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:42a4f56653d594ea",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 43,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:a2e62f0b8aea24ca"
+                },
+                {
+                  "attempt": 44,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:c8b586b4f6f4ff87",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 45,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:6149a6ba02562f5d",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 46,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:ea7a05086ad02be5",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 47,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:1909ee65b793f870",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 48,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "D",
+                    "line_read": "D",
+                    "why": "action_letter",
+                    "raw": "D",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "D",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.   $#\n#  @  #\n#######",
+                  "raw": "D",
+                  "prompt_was": "SHA256:a541cdff0386e26f",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 49,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:882a400e1fe6d4bd",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 50,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:5538031eb3beec21"
+                },
+                {
+                  "attempt": 51,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:3cc9ccba071ae97d",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 52,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:d7a8124b0fb3100a",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 53,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:9bec8215d3e8585b",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 54,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:920706cc7bc9b093",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 55,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "D",
+                    "line_read": "D",
+                    "why": "action_letter",
+                    "raw": "D",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "D",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.   $#\n#  @  #\n#######",
+                  "raw": "D",
+                  "prompt_was": "SHA256:80b20341b3aa5bc2",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 56,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:e24167a1f5af2a5d",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 57,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "blocked",
+                  "word": "blocked",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:731a87e253879640"
+                },
+                {
+                  "attempt": 58,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:c180d4a2220547a9",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 59,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#. @ $#\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:edb924d9a8aafbe0",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                },
+                {
+                  "attempt": 60,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#.  @$#\n#     #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:c643fdd8f189fc9d",
+                  "solvable_after": false,
+                  "moves_to_go": null
+                }
+              ],
+              "dead_end_diagnostic": [
+                {
+                  "attempt": 1,
+                  "solvable_after": true,
+                  "to_go": 7
+                },
+                {
+                  "attempt": 2,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 3,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 4,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 5,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 6,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 7,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 9,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 10,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 11,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 12,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 13,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 14,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 16,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 17,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 18,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 19,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 20,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 21,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 23,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 24,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 25,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 26,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 27,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 28,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 30,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 31,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 32,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 33,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 34,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 35,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 37,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 38,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 39,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 40,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 41,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 42,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 44,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 45,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 46,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 47,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 48,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 49,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 51,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 52,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 53,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 54,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 55,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 56,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 58,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 59,
+                  "solvable_after": false,
+                  "to_go": null
+                },
+                {
+                  "attempt": 60,
+                  "solvable_after": false,
+                  "to_go": null
+                }
+              ],
+              "secs": 0.002,
+              "prompt_legal": true
+            }
+          },
+          "started": 3,
+          "measured": 3,
+          "readable": 3,
+          "never_started": 0,
+          "coverage": 1.0,
+          "totals": {
+            "moves": 52,
+            "attempted": 180,
+            "blocked": 128,
+            "not_an_action": 0,
+            "after_end": 0,
+            "give_up": 0,
+            "corrections_offered": 0,
+            "corrections_ignored": 0,
+            "loose_give_up_unscored": 0
+          },
+          "loose_give_up_note": "answers that LOOKED like an abstention to a substring test but were scored not_an_action by the strict token rule. DIAGNOSTIC ONLY -- never scored, and never folded into give_up [G1].",
+          "attempt_budget_per_level": 60
+        }
+      },
+      "grammar": {
+        "reader": "sokoban2/sokoban_reader.py",
+        "reader_sha256": "c950758e8c7c4136a9f863884367ce386ce3109f79e38e6f9ad0c17b04b79afc",
+        "grammar_source": "SOKOBAN_READ_GRAMMAR.md",
+        "actions": [
+          "U",
+          "D",
+          "L",
+          "R"
+        ],
+        "case_insensitive": true,
+        "wasd": "not_an_action (NOT synonyms) -- grammar section 1",
+        "truncation": "NEVER. multi-char -> not_an_action. RESIGN is not R.",
+        "give_up_tokens": [
+          "GIVE UP",
+          "GIVEUP",
+          "GIVE UP.",
+          "GIVE-UP",
+          "GIVE_UP",
+          "GIVING UP",
+          "I GIVE UP",
+          "I GIVE UP.",
+          "RESIGN",
+          "RESIGN.",
+          "RESIGNS",
+          "ABSTAIN",
+          "ABSTAIN.",
+          "NO MOVE",
+          "NO_MOVE",
+          "NO-MOVE",
+          "UNSOLVABLE",
+          "DEAD END",
+          "STUCK"
+        ],
+        "give_up_match": "EXACT on casefold + whitespace-collapsed line; punctuation NOT stripped [G1]",
+        "give_up_diagnostic": "loose_give_up is a substring test, RECORDED ONLY and never scored [G1]",
+        "line_rule": "answer is the single non-empty line; 2+ non-empty lines -> not_an_action (multi_line), never one of them [G2]",
+        "whitespace_rule": "the chosen line is stripped; ' U ' reads as U [G3]",
+        "outcomes_read_here": [
+          "action",
+          "give_up",
+          "not_an_action"
+        ],
+        "outcomes_owned_by_step": [
+          "moved",
+          "pushed",
+          "blocked"
+        ]
+      },
+      "levels": {
+        "01_one_push.txt": {
+          "sha256": "db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313",
+          "optimal_moves": 1,
+          "optimal_proven_by": "sokoban2_solve.py (exhaustive BFS, complete over the state space)"
+        },
+        "02_two_boxes.txt": {
+          "sha256": "7549657f1768607cefab6d892b1756b1cabf23f51144a7679d76f331b38a57d7",
+          "optimal_moves": 12,
+          "optimal_proven_by": "sokoban2_solve.py (exhaustive BFS, complete over the state space)"
+        },
+        "03_the_corner_waiting.txt": {
+          "sha256": "2d8c46733bd04b9a3333d30e56442c03fffe3e5f4ee4bc95202ac01c463c9284",
+          "optimal_moves": 6,
+          "optimal_proven_by": "sokoban2_solve.py (exhaustive BFS, complete over the state space)"
+        }
+      },
+      "aggregate": 0.0,
+      "coverage": 1.0,
+      "verdict": "SCORED",
+      "exit_code": 0,
+      "exit_code_table": {
+        "0": "SCORED -- measured > 0, harness sound",
+        "1": "INSTRUMENT NOT PROVEN -- self-test / instrument-check / level verification failed",
+        "2": "ZERO MEASURED -- ERROR, never a verdict (grammar section 4)",
+        "3": "USAGE -- unknown entrant or bad arguments",
+        "4": "ENTRANT NEVER STARTED -- counted separately from played-and-failed",
+        "5": "RECORD NOT WRITTEN -- a run with no record is not a run"
+      },
+      "certification": "REFERENCE RUN -- not an entrant, not for the board.",
+      "tasks": "sokoban2/tasks/sokoban_v1.json",
+      "ambiguities": "sokoban2/SOKOBAN2_AMBIGUITIES.md"
+    }
+  ]
+}

@@ -1,0 +1,4087 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-10T18:24:50Z",
+  "event": "SOKOBAN",
+  "card_version": "sokoban_v1",
+  "declared": {
+    "reasoning": "off",
+    "reasoning_note": "DECLARED per-run instrument field. 'unset' is NOT 'off': an undeclared run must not be pooled with a declared one. Same weights with thinking ON vs OFF produced OPPOSITE outcomes on this project's cabinet task.",
+    "gpu": {
+      "probe": "nvidia-smi (absent) -> host is Linux x86_64",
+      "name": null,
+      "index": null,
+      "memory_total_gb": null,
+      "memory_free_gb": null,
+      "driver": null,
+      "n_devices": null,
+      "note": "NO ACCELERATOR FOUND by this probe. Recorded as null, not 0.00 and not 'none': an unprobed machine is not a machine with no GPU. A model run on this host is CPU-only and its numbers are not comparable to a GPU run.",
+      "raw": null
+    },
+    "gpu_note": "DECLARED per-run. No accelerator is recorded as null with the probe that ran, never 0.00 and never 'none'."
+  },
+  "results": [
+    {
+      "entrant": "soft-resigner",
+      "kind": "soft-abstainer-reference",
+      "instrument": "code",
+      "instrument_note": "CODE entrant, not a model -- a DIFFERENT INSTRUMENT; never pooled into a model table",
+      "entrant_is_a_model": false,
+      "on_board": false,
+      "weights": null,
+      "weights_sha256": null,
+      "verdict_code": {
+        "module": "sokoban2_run.py",
+        "function": "run_entrant",
+        "sha256": "6b679fa507748a4acd4fb6add0ffadd6d24b36c03f1bde760594b4bedc356692",
+        "simulator": {
+          "module": "sokoban2.py",
+          "sha256": "83e8fbedc1fa7c03e61c91ab91c12af353c7f088f0690bcc76abca3388c09682",
+          "transition": "step(state, action) -> (position, word)"
+        },
+        "reader": {
+          "module": "sokoban_reader.py",
+          "sha256": "c950758e8c7c4136a9f863884367ce386ce3109f79e38e6f9ad0c17b04b79afc",
+          "note": "ONE reader of record, imported by every side script, never reimplemented."
+        },
+        "solver": {
+          "module": "sokoban2_solve.py",
+          "sha256": "6b9b797aa68dc5b7678136036c4e0908263ff499a9ef69466c86c3c806fb1c8a",
+          "role": "verifies the frozen optima and supplies the dead-end DIAGNOSTIC. Never scores."
+        }
+      },
+      "terminals": [
+        "NO_LEGAL_ACTION_PRODUCED"
+      ],
+      "terminal_reason": {
+        "per_level": {
+          "01_one_push.txt": "NO_LEGAL_ACTION_PRODUCED",
+          "02_two_boxes.txt": "NO_LEGAL_ACTION_PRODUCED",
+          "03_the_corner_waiting.txt": "NO_LEGAL_ACTION_PRODUCED"
+        },
+        "corrections_offered": 6,
+        "corrections_ignored": 6,
+        "note": "corrections_ignored > 0 means the entrant was TOLD its answer was unreadable and produced no legal action anyway -- which is not the same finding as producing legal actions that failed."
+      },
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 8,
+        "trials": 1,
+        "ctx": null,
+        "n_gpu_layers": null,
+        "server_flags": null,
+        "attempt_budget_per_level": 60,
+        "retries_on_unreadable": 2,
+        "reasoning": "off",
+        "reasoning_note": "DECLARED per-run instrument field; 'unset' is NOT 'off'.",
+        "entrant_reasoning": null,
+        "entrant_reasoning_note": "NOT APPLICABLE -- this entrant is code; no model was served and no reasoning setting existed. Recorded as null with this reason, never 'off' and never omitted [G16].",
+        "config_note": "RUN_FACTS that do not exist on this host are null, not omitted and not zeroed."
+      },
+      "hardware": {
+        "host": "e2b.local",
+        "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+        "machine": "x86_64",
+        "processor": null,
+        "python": "3.11.2",
+        "cpu_count": 2,
+        "gpu": {
+          "probe": "nvidia-smi (absent) -> host is Linux x86_64",
+          "name": null,
+          "index": null,
+          "memory_total_gb": null,
+          "memory_free_gb": null,
+          "driver": null,
+          "n_devices": null,
+          "note": "NO ACCELERATOR FOUND by this probe. Recorded as null, not 0.00 and not 'none': an unprobed machine is not a machine with no GPU. A model run on this host is CPU-only and its numbers are not comparable to a GPU run.",
+          "raw": null
+        }
+      },
+      "admission": {
+        "rc": 0,
+        "secs": 0.0,
+        "started": true,
+        "never_started": false,
+        "holder": null
+      },
+      "rounds": {
+        "R_sokoban_levels": {
+          "score": 0.0,
+          "wins": 0,
+          "trials": 3,
+          "kind": "grid_puzzle",
+          "class": "CONTEST",
+          "oracle": "rules_of_the_game_implemented_once_with_controls",
+          "staged_as": "arcade cabinet -- SOKOBAN: push every crate, and the crates never pull",
+          "denominator_rule": "trials = levels the entrant TOOK A TURN on; NEVER_STARTED is OUTSIDE, counted separately; the zero-rule gate counts READABLE tokens, not turns [G15]",
+          "score_is": "solved levels / levels attempted -- a RATE, for the gate. `moves` (the read grammar's SCORE) is carried per level and is NOT averaged: a move count is not a rate [G15]",
+          "items": {
+            "01_one_push.txt": {
+              "level": "01_one_push.txt",
+              "level_sha256": "db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313",
+              "solved": false,
+              "moves": 0,
+              "attempted": 60,
+              "blocked": 0,
+              "not_an_action": 60,
+              "after_end": 0,
+              "give_up": 0,
+              "gave_up": false,
+              "gave_up_at": null,
+              "ended": false,
+              "terminal": "NO_LEGAL_ACTION_PRODUCED",
+              "budget": 60,
+              "budget_exhausted": true,
+              "corrections_offered": 2,
+              "corrections_ignored": 2,
+              "never_produced_a_legal_action": true,
+              "produced_a_legal_action": false,
+              "final_board": "#####\n#@$.#\n#####",
+              "board_is": "BOARD AFTER THE LAST MOVE",
+              "trace": [
+                {
+                  "attempt": 1,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:782b90445b0e8d2f"
+                },
+                {
+                  "attempt": 2,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:782b90445b0e8d2f"
+                },
+                {
+                  "attempt": 3,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:782b90445b0e8d2f"
+                },
+                {
+                  "attempt": 4,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:2ef3fb72c1ffde79"
+                },
+                {
+                  "attempt": 5,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:497047067efa47bf"
+                },
+                {
+                  "attempt": 6,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:a99f945678958938"
+                },
+                {
+                  "attempt": 7,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:7c100475c5742723"
+                },
+                {
+                  "attempt": 8,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:346d47813c7c2ccb"
+                },
+                {
+                  "attempt": 9,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:9a5a11291eed2d50"
+                },
+                {
+                  "attempt": 10,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:c1d9105513acfdf5"
+                },
+                {
+                  "attempt": 11,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:3fbae558a6eda10a"
+                },
+                {
+                  "attempt": 12,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:cd33032955a79723"
+                },
+                {
+                  "attempt": 13,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:2762c04afa2b1df4"
+                },
+                {
+                  "attempt": 14,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:121b5112fa5f76ea"
+                },
+                {
+                  "attempt": 15,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:9de63bdc0decf30b"
+                },
+                {
+                  "attempt": 16,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:96640c28c819233c"
+                },
+                {
+                  "attempt": 17,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:c1ca8cf435ea1169"
+                },
+                {
+                  "attempt": 18,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:f79447747ec61f57"
+                },
+                {
+                  "attempt": 19,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:ef192e023a2208a1"
+                },
+                {
+                  "attempt": 20,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:ffb11b1dfd97693e"
+                },
+                {
+                  "attempt": 21,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:261fca85c81ed16e"
+                },
+                {
+                  "attempt": 22,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:3719e22fcdcf3843"
+                },
+                {
+                  "attempt": 23,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:e7468959592c8853"
+                },
+                {
+                  "attempt": 24,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:7f9c2f2f2d2bceef"
+                },
+                {
+                  "attempt": 25,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:56c0588c272019cc"
+                },
+                {
+                  "attempt": 26,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:bba39e88e86c9c59"
+                },
+                {
+                  "attempt": 27,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:c398c0a6863f7906"
+                },
+                {
+                  "attempt": 28,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:c56cc4d9c08bf9b0"
+                },
+                {
+                  "attempt": 29,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:b1522927264ad42b"
+                },
+                {
+                  "attempt": 30,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:186bfbc4ad87842f"
+                },
+                {
+                  "attempt": 31,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:ebbf443b62ef6ce6"
+                },
+                {
+                  "attempt": 32,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:871d8182f7923b6e"
+                },
+                {
+                  "attempt": 33,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:8b455236dfb30d83"
+                },
+                {
+                  "attempt": 34,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:c67a80096ab302a7"
+                },
+                {
+                  "attempt": 35,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:94da8e6c67c7d408"
+                },
+                {
+                  "attempt": 36,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:ba97ec2ed9983311"
+                },
+                {
+                  "attempt": 37,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:42d2584660d644d8"
+                },
+                {
+                  "attempt": 38,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:efea176a71191a20"
+                },
+                {
+                  "attempt": 39,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:0469a2e1fd3d61d0"
+                },
+                {
+                  "attempt": 40,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:635027accffb0963"
+                },
+                {
+                  "attempt": 41,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:23c17615cee08de2"
+                },
+                {
+                  "attempt": 42,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:251de0ae3f06777f"
+                },
+                {
+                  "attempt": 43,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:945a8b56d1cc0999"
+                },
+                {
+                  "attempt": 44,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:830acb77bdadf75b"
+                },
+                {
+                  "attempt": 45,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:0083e70cba9d934a"
+                },
+                {
+                  "attempt": 46,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:6211c1a3364804ef"
+                },
+                {
+                  "attempt": 47,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:ccc537f05dd9419c"
+                },
+                {
+                  "attempt": 48,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:7deb7ea32abfbb94"
+                },
+                {
+                  "attempt": 49,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:d0ce2595de425186"
+                },
+                {
+                  "attempt": 50,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:2ad58eba0443e831"
+                },
+                {
+                  "attempt": 51,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:d045cf8b430400d3"
+                },
+                {
+                  "attempt": 52,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:dabb245740164c6f"
+                },
+                {
+                  "attempt": 53,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:0b590cc32c7c93bc"
+                },
+                {
+                  "attempt": 54,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:bf5f0383aa8b43c5"
+                },
+                {
+                  "attempt": 55,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:8c664f44e04cd9e0"
+                },
+                {
+                  "attempt": 56,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:04fd77d74e7f2d6b"
+                },
+                {
+                  "attempt": 57,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:2e82240c9da60420"
+                },
+                {
+                  "attempt": 58,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:4733cf53cb9c29d9"
+                },
+                {
+                  "attempt": 59,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:312c290d3770cadf"
+                },
+                {
+                  "attempt": 60,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "#####\n#@$.#\n#####",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:0ddf656aeb7a36d8"
+                }
+              ],
+              "dead_end_diagnostic": [],
+              "secs": 0.001,
+              "prompt_legal": true
+            },
+            "02_two_boxes.txt": {
+              "level": "02_two_boxes.txt",
+              "level_sha256": "7549657f1768607cefab6d892b1756b1cabf23f51144a7679d76f331b38a57d7",
+              "solved": false,
+              "moves": 0,
+              "attempted": 60,
+              "blocked": 0,
+              "not_an_action": 60,
+              "after_end": 0,
+              "give_up": 0,
+              "gave_up": false,
+              "gave_up_at": null,
+              "ended": false,
+              "terminal": "NO_LEGAL_ACTION_PRODUCED",
+              "budget": 60,
+              "budget_exhausted": true,
+              "corrections_offered": 2,
+              "corrections_ignored": 2,
+              "never_produced_a_legal_action": true,
+              "produced_a_legal_action": false,
+              "final_board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+              "board_is": "BOARD AFTER THE LAST MOVE",
+              "trace": [
+                {
+                  "attempt": 1,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:7e6e95b0fe32f6c0"
+                },
+                {
+                  "attempt": 2,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:7e6e95b0fe32f6c0"
+                },
+                {
+                  "attempt": 3,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:7e6e95b0fe32f6c0"
+                },
+                {
+                  "attempt": 4,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:cde014e8dd4167a5"
+                },
+                {
+                  "attempt": 5,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:4d148982ccf0bc69"
+                },
+                {
+                  "attempt": 6,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:75c8995abdc1d527"
+                },
+                {
+                  "attempt": 7,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:2a7ecf155b86410d"
+                },
+                {
+                  "attempt": 8,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:6568c00dff100509"
+                },
+                {
+                  "attempt": 9,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:963c92100ebe9d00"
+                },
+                {
+                  "attempt": 10,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:c2f8beb80c13c044"
+                },
+                {
+                  "attempt": 11,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:0225175863b99d88"
+                },
+                {
+                  "attempt": 12,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:f023813065280f3e"
+                },
+                {
+                  "attempt": 13,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:9906c73bea554184"
+                },
+                {
+                  "attempt": 14,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:323660d184be99c4"
+                },
+                {
+                  "attempt": 15,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:31d40db41bf40ad4"
+                },
+                {
+                  "attempt": 16,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:f817ff9903cf9d1b"
+                },
+                {
+                  "attempt": 17,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:9ef8d1912ef1894c"
+                },
+                {
+                  "attempt": 18,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:c8dc51ccd8cd5a79"
+                },
+                {
+                  "attempt": 19,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:c2a6f2a1abdd96ef"
+                },
+                {
+                  "attempt": 20,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:877045a4a0aa10a4"
+                },
+                {
+                  "attempt": 21,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:251ff906123ed2a9"
+                },
+                {
+                  "attempt": 22,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:64183d805d9d010d"
+                },
+                {
+                  "attempt": 23,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:da238faa4c711273"
+                },
+                {
+                  "attempt": 24,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:3e9f8827394a6775"
+                },
+                {
+                  "attempt": 25,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:de96c7419d21bc9c"
+                },
+                {
+                  "attempt": 26,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:df44d3c6ec62cdb3"
+                },
+                {
+                  "attempt": 27,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:f2a55f062f807a26"
+                },
+                {
+                  "attempt": 28,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:0f877a150fcdd53c"
+                },
+                {
+                  "attempt": 29,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:9df3fa3333017482"
+                },
+                {
+                  "attempt": 30,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:1c573afddf676b1d"
+                },
+                {
+                  "attempt": 31,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:f96267f2779be36a"
+                },
+                {
+                  "attempt": 32,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:79ef5d28e7c727c7"
+                },
+                {
+                  "attempt": 33,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:00a7b6580ca67fbf"
+                },
+                {
+                  "attempt": 34,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:04aa230dc4ee036a"
+                },
+                {
+                  "attempt": 35,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:bd8e1f3de28eb737"
+                },
+                {
+                  "attempt": 36,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:a2faf4cc336b0243"
+                },
+                {
+                  "attempt": 37,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:687442e70ed2d954"
+                },
+                {
+                  "attempt": 38,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:16ea4988872cee53"
+                },
+                {
+                  "attempt": 39,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:c1dd276fe51c3848"
+                },
+                {
+                  "attempt": 40,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:705af9c24335cbed"
+                },
+                {
+                  "attempt": 41,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:51eb5e829abdb912"
+                },
+                {
+                  "attempt": 42,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:8595791f00cce9c9"
+                },
+                {
+                  "attempt": 43,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:dfd1700336ac250e"
+                },
+                {
+                  "attempt": 44,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:51967a20f274b4ca"
+                },
+                {
+                  "attempt": 45,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:9d8a4a11dc6517bd"
+                },
+                {
+                  "attempt": 46,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:64c5c2189ab6058c"
+                },
+                {
+                  "attempt": 47,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:2f102a2ed68626c4"
+                },
+                {
+                  "attempt": 48,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:f0db411f6c155e56"
+                },
+                {
+                  "attempt": 49,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:a79ed2085a1b13c4"
+                },
+                {
+                  "attempt": 50,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:c1ba2c8b4b7c54b6"
+                },
+                {
+                  "attempt": 51,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:babf30bb417ed05f"
+                },
+                {
+                  "attempt": 52,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:610f1f4cecf8f169"
+                },
+                {
+                  "attempt": 53,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:a2e066a06fe0a87c"
+                },
+                {
+                  "attempt": 54,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:6833c42f9fb93b68"
+                },
+                {
+                  "attempt": 55,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:d5ffdb3e272cd73c"
+                },
+                {
+                  "attempt": 56,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:f8f0cb53ca0d6af7"
+                },
+                {
+                  "attempt": 57,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:a9884420d3c50c36"
+                },
+                {
+                  "attempt": 58,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:7d1d5b19a42af648"
+                },
+                {
+                  "attempt": 59,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:126a16c0c32c287d"
+                },
+                {
+                  "attempt": 60,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    1,
+                    1
+                  ],
+                  "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:3be4a2d823b12806"
+                }
+              ],
+              "dead_end_diagnostic": [],
+              "secs": 0.001,
+              "prompt_legal": true
+            },
+            "03_the_corner_waiting.txt": {
+              "level": "03_the_corner_waiting.txt",
+              "level_sha256": "2d8c46733bd04b9a3333d30e56442c03fffe3e5f4ee4bc95202ac01c463c9284",
+              "solved": false,
+              "moves": 0,
+              "attempted": 60,
+              "blocked": 0,
+              "not_an_action": 60,
+              "after_end": 0,
+              "give_up": 0,
+              "gave_up": false,
+              "gave_up_at": null,
+              "ended": false,
+              "terminal": "NO_LEGAL_ACTION_PRODUCED",
+              "budget": 60,
+              "budget_exhausted": true,
+              "corrections_offered": 2,
+              "corrections_ignored": 2,
+              "never_produced_a_legal_action": true,
+              "produced_a_legal_action": false,
+              "final_board": "#######\n#.  $ #\n#  @  #\n#######",
+              "board_is": "BOARD AFTER THE LAST MOVE",
+              "trace": [
+                {
+                  "attempt": 1,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:e86d4cde6858a71a"
+                },
+                {
+                  "attempt": 2,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:e86d4cde6858a71a"
+                },
+                {
+                  "attempt": 3,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:e86d4cde6858a71a"
+                },
+                {
+                  "attempt": 4,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:a695b753a51280c4"
+                },
+                {
+                  "attempt": 5,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:25f7f7b13662d7eb"
+                },
+                {
+                  "attempt": 6,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:e93b860bf9c24b40"
+                },
+                {
+                  "attempt": 7,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:0993a2bafd6b85b8"
+                },
+                {
+                  "attempt": 8,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:18aacd5c16c04fff"
+                },
+                {
+                  "attempt": 9,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:ea3aae12126b9c34"
+                },
+                {
+                  "attempt": 10,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:9b966bf01195a1b2"
+                },
+                {
+                  "attempt": 11,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:6fab2080ffd4dca4"
+                },
+                {
+                  "attempt": 12,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:8ae39ffd2711e865"
+                },
+                {
+                  "attempt": 13,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:6d83a6c130b24c29"
+                },
+                {
+                  "attempt": 14,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:e4f5072979fab2cf"
+                },
+                {
+                  "attempt": 15,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:a7081e276ad8d840"
+                },
+                {
+                  "attempt": 16,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:b04d65dad112b17e"
+                },
+                {
+                  "attempt": 17,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:1e97e00c85dce652"
+                },
+                {
+                  "attempt": 18,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:ef315dd17dcec97b"
+                },
+                {
+                  "attempt": 19,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:dc8097c271f3dd05"
+                },
+                {
+                  "attempt": 20,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:82a1e2743210b7ea"
+                },
+                {
+                  "attempt": 21,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:05ae894ea059412a"
+                },
+                {
+                  "attempt": 22,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:57cf2504d138ff56"
+                },
+                {
+                  "attempt": 23,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:f2ba6b81bfc06527"
+                },
+                {
+                  "attempt": 24,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:709651779c747cd8"
+                },
+                {
+                  "attempt": 25,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:9063d734d7477c2c"
+                },
+                {
+                  "attempt": 26,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:472bad571c6d72da"
+                },
+                {
+                  "attempt": 27,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:24eeeff3c728496c"
+                },
+                {
+                  "attempt": 28,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:2b42a1d916134412"
+                },
+                {
+                  "attempt": 29,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:7be2a468570c1dd6"
+                },
+                {
+                  "attempt": 30,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:c89841e53fbec8ee"
+                },
+                {
+                  "attempt": 31,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:b770a4497acec6a4"
+                },
+                {
+                  "attempt": 32,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:a5d47c1e21ecaa73"
+                },
+                {
+                  "attempt": 33,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:6c13866ed645fac2"
+                },
+                {
+                  "attempt": 34,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:64c7d2385e8990cc"
+                },
+                {
+                  "attempt": 35,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:6b07a8caac004c0b"
+                },
+                {
+                  "attempt": 36,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:bd2894f965144236"
+                },
+                {
+                  "attempt": 37,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:4d0da4c1c9a53f20"
+                },
+                {
+                  "attempt": 38,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:3f4b0b982a13cc79"
+                },
+                {
+                  "attempt": 39,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:59d63389de2bc048"
+                },
+                {
+                  "attempt": 40,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:37b40f48b5ce4fb6"
+                },
+                {
+                  "attempt": 41,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:158a39f48eafc49d"
+                },
+                {
+                  "attempt": 42,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:2134676175037c86"
+                },
+                {
+                  "attempt": 43,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:284aaea13b4b6f53"
+                },
+                {
+                  "attempt": 44,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:48b87b36cefa7531"
+                },
+                {
+                  "attempt": 45,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:5c495c0d60b7bb29"
+                },
+                {
+                  "attempt": 46,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:049ace54ce5fbd78"
+                },
+                {
+                  "attempt": 47,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:b0d584d76a45a672"
+                },
+                {
+                  "attempt": 48,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:4bd6ffebde5c5b02"
+                },
+                {
+                  "attempt": 49,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:87272de7809154c3"
+                },
+                {
+                  "attempt": 50,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:35bb457cc6c1801e"
+                },
+                {
+                  "attempt": 51,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:3accfe5f1de60097"
+                },
+                {
+                  "attempt": 52,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:fa586adde011f870"
+                },
+                {
+                  "attempt": 53,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:bb98d9401d62b64e"
+                },
+                {
+                  "attempt": 54,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:0627dd1e046745c5"
+                },
+                {
+                  "attempt": 55,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:f09088bf06de47b5"
+                },
+                {
+                  "attempt": 56,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:f6a9a5ee2fbbf8f7"
+                },
+                {
+                  "attempt": 57,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:64de8a92f12058e4"
+                },
+                {
+                  "attempt": 58,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:50df43e202ba5e4c"
+                },
+                {
+                  "attempt": 59,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:725828ad37f7199d"
+                },
+                {
+                  "attempt": 60,
+                  "reading": {
+                    "outcome": "not_an_action",
+                    "action": null,
+                    "line_read": "I give up, there is no way to finish this one.",
+                    "why": "multi_char",
+                    "raw": "I give up, there is no way to finish this one.",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": true
+                  },
+                  "outcome": "not_an_action",
+                  "word": "not_an_action",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "#######\n#.  $ #\n#  @  #\n#######",
+                  "raw": "I give up, there is no way to finish this one.",
+                  "prompt_was": "SHA256:0ccac66d82b22d52"
+                }
+              ],
+              "dead_end_diagnostic": [],
+              "secs": 0.001,
+              "prompt_legal": true
+            }
+          },
+          "started": 3,
+          "measured": 3,
+          "readable": 0,
+          "never_started": 0,
+          "coverage": 1.0,
+          "totals": {
+            "moves": 0,
+            "attempted": 180,
+            "blocked": 0,
+            "not_an_action": 180,
+            "after_end": 0,
+            "give_up": 0,
+            "corrections_offered": 6,
+            "corrections_ignored": 6,
+            "loose_give_up_unscored": 180
+          },
+          "loose_give_up_note": "answers that LOOKED like an abstention to a substring test but were scored not_an_action by the strict token rule. DIAGNOSTIC ONLY -- never scored, and never folded into give_up [G1].",
+          "attempt_budget_per_level": 60
+        }
+      },
+      "grammar": {
+        "reader": "sokoban2/sokoban_reader.py",
+        "reader_sha256": "c950758e8c7c4136a9f863884367ce386ce3109f79e38e6f9ad0c17b04b79afc",
+        "grammar_source": "SOKOBAN_READ_GRAMMAR.md",
+        "actions": [
+          "U",
+          "D",
+          "L",
+          "R"
+        ],
+        "case_insensitive": true,
+        "wasd": "not_an_action (NOT synonyms) -- grammar section 1",
+        "truncation": "NEVER. multi-char -> not_an_action. RESIGN is not R.",
+        "give_up_tokens": [
+          "GIVE UP",
+          "GIVEUP",
+          "GIVE UP.",
+          "GIVE-UP",
+          "GIVE_UP",
+          "GIVING UP",
+          "I GIVE UP",
+          "I GIVE UP.",
+          "RESIGN",
+          "RESIGN.",
+          "RESIGNS",
+          "ABSTAIN",
+          "ABSTAIN.",
+          "NO MOVE",
+          "NO_MOVE",
+          "NO-MOVE",
+          "UNSOLVABLE",
+          "DEAD END",
+          "STUCK"
+        ],
+        "give_up_match": "EXACT on casefold + whitespace-collapsed line; punctuation NOT stripped [G1]",
+        "give_up_diagnostic": "loose_give_up is a substring test, RECORDED ONLY and never scored [G1]",
+        "line_rule": "answer is the single non-empty line; 2+ non-empty lines -> not_an_action (multi_line), never one of them [G2]",
+        "whitespace_rule": "the chosen line is stripped; ' U ' reads as U [G3]",
+        "outcomes_read_here": [
+          "action",
+          "give_up",
+          "not_an_action"
+        ],
+        "outcomes_owned_by_step": [
+          "moved",
+          "pushed",
+          "blocked"
+        ]
+      },
+      "levels": {
+        "01_one_push.txt": {
+          "sha256": "db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313",
+          "optimal_moves": 1,
+          "optimal_proven_by": "sokoban2_solve.py (exhaustive BFS, complete over the state space)"
+        },
+        "02_two_boxes.txt": {
+          "sha256": "7549657f1768607cefab6d892b1756b1cabf23f51144a7679d76f331b38a57d7",
+          "optimal_moves": 12,
+          "optimal_proven_by": "sokoban2_solve.py (exhaustive BFS, complete over the state space)"
+        },
+        "03_the_corner_waiting.txt": {
+          "sha256": "2d8c46733bd04b9a3333d30e56442c03fffe3e5f4ee4bc95202ac01c463c9284",
+          "optimal_moves": 6,
+          "optimal_proven_by": "sokoban2_solve.py (exhaustive BFS, complete over the state space)"
+        }
+      },
+      "aggregate": 0.0,
+      "coverage": 1.0,
+      "verdict": "ERROR: ZERO MEASURED (nothing readable was produced)",
+      "exit_code": 2,
+      "exit_code_table": {
+        "0": "SCORED -- measured > 0, harness sound",
+        "1": "INSTRUMENT NOT PROVEN -- self-test / instrument-check / level verification failed",
+        "2": "ZERO MEASURED -- ERROR, never a verdict (grammar section 4)",
+        "3": "USAGE -- unknown entrant or bad arguments",
+        "4": "ENTRANT NEVER STARTED -- counted separately from played-and-failed",
+        "5": "RECORD NOT WRITTEN -- a run with no record is not a run"
+      },
+      "certification": "REFERENCE RUN -- not an entrant, not for the board.",
+      "tasks": "sokoban2/tasks/sokoban_v1.json",
+      "ambiguities": "sokoban2/SOKOBAN2_AMBIGUITIES.md"
+    }
+  ]
+}

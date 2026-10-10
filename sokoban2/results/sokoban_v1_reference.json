@@ -1,0 +1,861 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.0",
+  "generated": "2026-10-10T18:24:50Z",
+  "event": "SOKOBAN",
+  "card_version": "sokoban_v1",
+  "declared": {
+    "reasoning": "off",
+    "reasoning_note": "DECLARED per-run instrument field. 'unset' is NOT 'off': an undeclared run must not be pooled with a declared one. Same weights with thinking ON vs OFF produced OPPOSITE outcomes on this project's cabinet task.",
+    "gpu": {
+      "probe": "nvidia-smi (absent) -> host is Linux x86_64",
+      "name": null,
+      "index": null,
+      "memory_total_gb": null,
+      "memory_free_gb": null,
+      "driver": null,
+      "n_devices": null,
+      "note": "NO ACCELERATOR FOUND by this probe. Recorded as null, not 0.00 and not 'none': an unprobed machine is not a machine with no GPU. A model run on this host is CPU-only and its numbers are not comparable to a GPU run.",
+      "raw": null
+    },
+    "gpu_note": "DECLARED per-run. No accelerator is recorded as null with the probe that ran, never 0.00 and never 'none'."
+  },
+  "results": [
+    {
+      "entrant": "reference",
+      "kind": "reference-solver",
+      "instrument": "code",
+      "instrument_note": "CODE entrant, not a model -- a DIFFERENT INSTRUMENT; never pooled into a model table",
+      "entrant_is_a_model": false,
+      "on_board": false,
+      "weights": null,
+      "weights_sha256": null,
+      "verdict_code": {
+        "module": "sokoban2_run.py",
+        "function": "run_entrant",
+        "sha256": "6b679fa507748a4acd4fb6add0ffadd6d24b36c03f1bde760594b4bedc356692",
+        "simulator": {
+          "module": "sokoban2.py",
+          "sha256": "83e8fbedc1fa7c03e61c91ab91c12af353c7f088f0690bcc76abca3388c09682",
+          "transition": "step(state, action) -> (position, word)"
+        },
+        "reader": {
+          "module": "sokoban_reader.py",
+          "sha256": "c950758e8c7c4136a9f863884367ce386ce3109f79e38e6f9ad0c17b04b79afc",
+          "note": "ONE reader of record, imported by every side script, never reimplemented."
+        },
+        "solver": {
+          "module": "sokoban2_solve.py",
+          "sha256": "6b9b797aa68dc5b7678136036c4e0908263ff499a9ef69466c86c3c806fb1c8a",
+          "role": "verifies the frozen optima and supplies the dead-end DIAGNOSTIC. Never scores."
+        }
+      },
+      "terminals": [
+        "SOLVED"
+      ],
+      "terminal_reason": {
+        "per_level": {
+          "01_one_push.txt": "SOLVED",
+          "02_two_boxes.txt": "SOLVED",
+          "03_the_corner_waiting.txt": "SOLVED"
+        },
+        "corrections_offered": 0,
+        "corrections_ignored": 0,
+        "note": "corrections_ignored > 0 means the entrant was TOLD its answer was unreadable and produced no legal action anyway -- which is not the same finding as producing legal actions that failed."
+      },
+      "config": {
+        "temperature": 0.0,
+        "max_tokens": 8,
+        "trials": 1,
+        "ctx": null,
+        "n_gpu_layers": null,
+        "server_flags": null,
+        "attempt_budget_per_level": 60,
+        "retries_on_unreadable": 2,
+        "reasoning": "off",
+        "reasoning_note": "DECLARED per-run instrument field; 'unset' is NOT 'off'.",
+        "entrant_reasoning": null,
+        "entrant_reasoning_note": "NOT APPLICABLE -- this entrant is code; no model was served and no reasoning setting existed. Recorded as null with this reason, never 'off' and never omitted [G16].",
+        "config_note": "RUN_FACTS that do not exist on this host are null, not omitted and not zeroed."
+      },
+      "hardware": {
+        "host": "e2b.local",
+        "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+        "machine": "x86_64",
+        "processor": null,
+        "python": "3.11.2",
+        "cpu_count": 2,
+        "gpu": {
+          "probe": "nvidia-smi (absent) -> host is Linux x86_64",
+          "name": null,
+          "index": null,
+          "memory_total_gb": null,
+          "memory_free_gb": null,
+          "driver": null,
+          "n_devices": null,
+          "note": "NO ACCELERATOR FOUND by this probe. Recorded as null, not 0.00 and not 'none': an unprobed machine is not a machine with no GPU. A model run on this host is CPU-only and its numbers are not comparable to a GPU run.",
+          "raw": null
+        }
+      },
+      "admission": {
+        "rc": 0,
+        "secs": 0.0,
+        "started": true,
+        "never_started": false,
+        "holder": null
+      },
+      "rounds": {
+        "R_sokoban_levels": {
+          "score": 1.0,
+          "wins": 3,
+          "trials": 3,
+          "kind": "grid_puzzle",
+          "class": "CONTEST",
+          "oracle": "rules_of_the_game_implemented_once_with_controls",
+          "staged_as": "arcade cabinet -- SOKOBAN: push every crate, and the crates never pull",
+          "denominator_rule": "trials = levels the entrant TOOK A TURN on; NEVER_STARTED is OUTSIDE, counted separately; the zero-rule gate counts READABLE tokens, not turns [G15]",
+          "score_is": "solved levels / levels attempted -- a RATE, for the gate. `moves` (the read grammar's SCORE) is carried per level and is NOT averaged: a move count is not a rate [G15]",
+          "items": {
+            "01_one_push.txt": {
+              "level": "01_one_push.txt",
+              "level_sha256": "db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313",
+              "solved": true,
+              "moves": 1,
+              "attempted": 1,
+              "blocked": 0,
+              "not_an_action": 0,
+              "after_end": 0,
+              "give_up": 0,
+              "gave_up": false,
+              "gave_up_at": null,
+              "ended": true,
+              "terminal": "SOLVED",
+              "budget": 60,
+              "budget_exhausted": false,
+              "corrections_offered": 0,
+              "corrections_ignored": 0,
+              "never_produced_a_legal_action": false,
+              "produced_a_legal_action": true,
+              "final_board": "#####\n# @*#\n#####",
+              "board_is": "BOARD AFTER THE LAST MOVE",
+              "trace": [
+                {
+                  "attempt": 1,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "pushed",
+                  "word": "pushed",
+                  "action": "R",
+                  "position": [
+                    1,
+                    2
+                  ],
+                  "board": "#####\n# @*#\n#####",
+                  "raw": "R",
+                  "prompt_was": "SHA256:782b90445b0e8d2f",
+                  "solvable_after": true,
+                  "moves_to_go": 0
+                }
+              ],
+              "dead_end_diagnostic": [
+                {
+                  "attempt": 1,
+                  "solvable_after": true,
+                  "to_go": 0
+                }
+              ],
+              "secs": 0.001,
+              "prompt_legal": true
+            },
+            "02_two_boxes.txt": {
+              "level": "02_two_boxes.txt",
+              "level_sha256": "7549657f1768607cefab6d892b1756b1cabf23f51144a7679d76f331b38a57d7",
+              "solved": true,
+              "moves": 12,
+              "attempted": 12,
+              "blocked": 0,
+              "not_an_action": 0,
+              "after_end": 0,
+              "give_up": 0,
+              "gave_up": false,
+              "gave_up_at": null,
+              "ended": true,
+              "terminal": "SOLVED",
+              "budget": 60,
+              "budget_exhausted": false,
+              "corrections_offered": 0,
+              "corrections_ignored": 0,
+              "never_produced_a_legal_action": false,
+              "produced_a_legal_action": true,
+              "final_board": "########\n#    @*#\n#      #\n#     *#\n########",
+              "board_is": "BOARD AFTER THE LAST MOVE",
+              "trace": [
+                {
+                  "attempt": 1,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "D",
+                    "line_read": "D",
+                    "why": "action_letter",
+                    "raw": "D",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "D",
+                  "position": [
+                    2,
+                    1
+                  ],
+                  "board": "########\n#   $ .#\n#@     #\n#  $  .#\n########",
+                  "raw": "D",
+                  "prompt_was": "SHA256:7e6e95b0fe32f6c0",
+                  "solvable_after": true,
+                  "moves_to_go": 11
+                },
+                {
+                  "attempt": 2,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "D",
+                    "line_read": "D",
+                    "why": "action_letter",
+                    "raw": "D",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "D",
+                  "position": [
+                    3,
+                    1
+                  ],
+                  "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########",
+                  "raw": "D",
+                  "prompt_was": "SHA256:13adc6907fc39c24",
+                  "solvable_after": true,
+                  "moves_to_go": 10
+                },
+                {
+                  "attempt": 3,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    3,
+                    2
+                  ],
+                  "board": "########\n#   $ .#\n#      #\n# @$  .#\n########",
+                  "raw": "R",
+                  "prompt_was": "SHA256:aeee6a92c10c4fa3",
+                  "solvable_after": true,
+                  "moves_to_go": 9
+                },
+                {
+                  "attempt": 4,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "pushed",
+                  "word": "pushed",
+                  "action": "R",
+                  "position": [
+                    3,
+                    3
+                  ],
+                  "board": "########\n#   $ .#\n#      #\n#  @$ .#\n########",
+                  "raw": "R",
+                  "prompt_was": "SHA256:d8540e45773bb5ac",
+                  "solvable_after": true,
+                  "moves_to_go": 8
+                },
+                {
+                  "attempt": 5,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "pushed",
+                  "word": "pushed",
+                  "action": "R",
+                  "position": [
+                    3,
+                    4
+                  ],
+                  "board": "########\n#   $ .#\n#      #\n#   @$.#\n########",
+                  "raw": "R",
+                  "prompt_was": "SHA256:2fb01aedd3ce332a",
+                  "solvable_after": true,
+                  "moves_to_go": 7
+                },
+                {
+                  "attempt": 6,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "pushed",
+                  "word": "pushed",
+                  "action": "R",
+                  "position": [
+                    3,
+                    5
+                  ],
+                  "board": "########\n#   $ .#\n#      #\n#    @*#\n########",
+                  "raw": "R",
+                  "prompt_was": "SHA256:66acd291a006a078",
+                  "solvable_after": true,
+                  "moves_to_go": 6
+                },
+                {
+                  "attempt": 7,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "U",
+                  "position": [
+                    2,
+                    5
+                  ],
+                  "board": "########\n#   $ .#\n#    @ #\n#     *#\n########",
+                  "raw": "U",
+                  "prompt_was": "SHA256:dbaf10e9fd646616",
+                  "solvable_after": true,
+                  "moves_to_go": 5
+                },
+                {
+                  "attempt": 8,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    2,
+                    4
+                  ],
+                  "board": "########\n#   $ .#\n#   @  #\n#     *#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:fee252eef0fc338c",
+                  "solvable_after": true,
+                  "moves_to_go": 4
+                },
+                {
+                  "attempt": 9,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "L",
+                  "position": [
+                    2,
+                    3
+                  ],
+                  "board": "########\n#   $ .#\n#  @   #\n#     *#\n########",
+                  "raw": "L",
+                  "prompt_was": "SHA256:fdd3d9e17f1a3c03",
+                  "solvable_after": true,
+                  "moves_to_go": 3
+                },
+                {
+                  "attempt": 10,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "U",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "########\n#  @$ .#\n#      #\n#     *#\n########",
+                  "raw": "U",
+                  "prompt_was": "SHA256:9502ce96ca191bda",
+                  "solvable_after": true,
+                  "moves_to_go": 2
+                },
+                {
+                  "attempt": 11,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "pushed",
+                  "word": "pushed",
+                  "action": "R",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "########\n#   @$.#\n#      #\n#     *#\n########",
+                  "raw": "R",
+                  "prompt_was": "SHA256:6f323011120d5faa",
+                  "solvable_after": true,
+                  "moves_to_go": 1
+                },
+                {
+                  "attempt": 12,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "pushed",
+                  "word": "pushed",
+                  "action": "R",
+                  "position": [
+                    1,
+                    5
+                  ],
+                  "board": "########\n#    @*#\n#      #\n#     *#\n########",
+                  "raw": "R",
+                  "prompt_was": "SHA256:445ea8f2b109f859",
+                  "solvable_after": true,
+                  "moves_to_go": 0
+                }
+              ],
+              "dead_end_diagnostic": [
+                {
+                  "attempt": 1,
+                  "solvable_after": true,
+                  "to_go": 11
+                },
+                {
+                  "attempt": 2,
+                  "solvable_after": true,
+                  "to_go": 10
+                },
+                {
+                  "attempt": 3,
+                  "solvable_after": true,
+                  "to_go": 9
+                },
+                {
+                  "attempt": 4,
+                  "solvable_after": true,
+                  "to_go": 8
+                },
+                {
+                  "attempt": 5,
+                  "solvable_after": true,
+                  "to_go": 7
+                },
+                {
+                  "attempt": 6,
+                  "solvable_after": true,
+                  "to_go": 6
+                },
+                {
+                  "attempt": 7,
+                  "solvable_after": true,
+                  "to_go": 5
+                },
+                {
+                  "attempt": 8,
+                  "solvable_after": true,
+                  "to_go": 4
+                },
+                {
+                  "attempt": 9,
+                  "solvable_after": true,
+                  "to_go": 3
+                },
+                {
+                  "attempt": 10,
+                  "solvable_after": true,
+                  "to_go": 2
+                },
+                {
+                  "attempt": 11,
+                  "solvable_after": true,
+                  "to_go": 1
+                },
+                {
+                  "attempt": 12,
+                  "solvable_after": true,
+                  "to_go": 0
+                }
+              ],
+              "secs": 0.005,
+              "prompt_legal": true
+            },
+            "03_the_corner_waiting.txt": {
+              "level": "03_the_corner_waiting.txt",
+              "level_sha256": "2d8c46733bd04b9a3333d30e56442c03fffe3e5f4ee4bc95202ac01c463c9284",
+              "solved": true,
+              "moves": 6,
+              "attempted": 6,
+              "blocked": 0,
+              "not_an_action": 0,
+              "after_end": 0,
+              "give_up": 0,
+              "gave_up": false,
+              "gave_up_at": null,
+              "ended": true,
+              "terminal": "SOLVED",
+              "budget": 60,
+              "budget_exhausted": false,
+              "corrections_offered": 0,
+              "corrections_ignored": 0,
+              "never_produced_a_legal_action": false,
+              "produced_a_legal_action": true,
+              "final_board": "#######\n#*@   #\n#     #\n#######",
+              "board_is": "BOARD AFTER THE LAST MOVE",
+              "trace": [
+                {
+                  "attempt": 1,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    2,
+                    4
+                  ],
+                  "board": "#######\n#.  $ #\n#   @ #\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:e86d4cde6858a71a",
+                  "solvable_after": true,
+                  "moves_to_go": 5
+                },
+                {
+                  "attempt": 2,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "R",
+                    "line_read": "R",
+                    "why": "action_letter",
+                    "raw": "R",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "R",
+                  "position": [
+                    2,
+                    5
+                  ],
+                  "board": "#######\n#.  $ #\n#    @#\n#######",
+                  "raw": "R",
+                  "prompt_was": "SHA256:e886bb5bfaae9eb4",
+                  "solvable_after": true,
+                  "moves_to_go": 4
+                },
+                {
+                  "attempt": 3,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "U",
+                    "line_read": "U",
+                    "why": "action_letter",
+                    "raw": "U",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "moved",
+                  "word": "moved",
+                  "action": "U",
+                  "position": [
+                    1,
+                    5
+                  ],
+                  "board": "#######\n#.  $@#\n#     #\n#######",
+                  "raw": "U",
+                  "prompt_was": "SHA256:3fda2af6128204c7",
+                  "solvable_after": true,
+                  "moves_to_go": 3
+                },
+                {
+                  "attempt": 4,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "pushed",
+                  "word": "pushed",
+                  "action": "L",
+                  "position": [
+                    1,
+                    4
+                  ],
+                  "board": "#######\n#. $@ #\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:cfd327fec0a7b039",
+                  "solvable_after": true,
+                  "moves_to_go": 2
+                },
+                {
+                  "attempt": 5,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "pushed",
+                  "word": "pushed",
+                  "action": "L",
+                  "position": [
+                    1,
+                    3
+                  ],
+                  "board": "#######\n#.$@  #\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:532052f8c997e6f9",
+                  "solvable_after": true,
+                  "moves_to_go": 1
+                },
+                {
+                  "attempt": 6,
+                  "reading": {
+                    "outcome": "action",
+                    "action": "L",
+                    "line_read": "L",
+                    "why": "action_letter",
+                    "raw": "L",
+                    "n_nonempty_lines": 1,
+                    "loose_give_up_diagnostic": false
+                  },
+                  "outcome": "pushed",
+                  "word": "pushed",
+                  "action": "L",
+                  "position": [
+                    1,
+                    2
+                  ],
+                  "board": "#######\n#*@   #\n#     #\n#######",
+                  "raw": "L",
+                  "prompt_was": "SHA256:097a370c98179c5f",
+                  "solvable_after": true,
+                  "moves_to_go": 0
+                }
+              ],
+              "dead_end_diagnostic": [
+                {
+                  "attempt": 1,
+                  "solvable_after": true,
+                  "to_go": 5
+                },
+                {
+                  "attempt": 2,
+                  "solvable_after": true,
+                  "to_go": 4
+                },
+                {
+                  "attempt": 3,
+                  "solvable_after": true,
+                  "to_go": 3
+                },
+                {
+                  "attempt": 4,
+                  "solvable_after": true,
+                  "to_go": 2
+                },
+                {
+                  "attempt": 5,
+                  "solvable_after": true,
+                  "to_go": 1
+                },
+                {
+                  "attempt": 6,
+                  "solvable_after": true,
+                  "to_go": 0
+                }
+              ],
+              "secs": 0.0,
+              "prompt_legal": true
+            }
+          },
+          "started": 3,
+          "measured": 3,
+          "readable": 3,
+          "never_started": 0,
+          "coverage": 1.0,
+          "totals": {
+            "moves": 19,
+            "attempted": 19,
+            "blocked": 0,
+            "not_an_action": 0,
+            "after_end": 0,
+            "give_up": 0,
+            "corrections_offered": 0,
+            "corrections_ignored": 0,
+            "loose_give_up_unscored": 0
+          },
+          "loose_give_up_note": "answers that LOOKED like an abstention to a substring test but were scored not_an_action by the strict token rule. DIAGNOSTIC ONLY -- never scored, and never folded into give_up [G1].",
+          "attempt_budget_per_level": 60
+        }
+      },
+      "grammar": {
+        "reader": "sokoban2/sokoban_reader.py",
+        "reader_sha256": "c950758e8c7c4136a9f863884367ce386ce3109f79e38e6f9ad0c17b04b79afc",
+        "grammar_source": "SOKOBAN_READ_GRAMMAR.md",
+        "actions": [
+          "U",
+          "D",
+          "L",
+          "R"
+        ],
+        "case_insensitive": true,
+        "wasd": "not_an_action (NOT synonyms) -- grammar section 1",
+        "truncation": "NEVER. multi-char -> not_an_action. RESIGN is not R.",
+        "give_up_tokens": [
+          "GIVE UP",
+          "GIVEUP",
+          "GIVE UP.",
+          "GIVE-UP",
+          "GIVE_UP",
+          "GIVING UP",
+          "I GIVE UP",
+          "I GIVE UP.",
+          "RESIGN",
+          "RESIGN.",
+          "RESIGNS",
+          "ABSTAIN",
+          "ABSTAIN.",
+          "NO MOVE",
+          "NO_MOVE",
+          "NO-MOVE",
+          "UNSOLVABLE",
+          "DEAD END",
+          "STUCK"
+        ],
+        "give_up_match": "EXACT on casefold + whitespace-collapsed line; punctuation NOT stripped [G1]",
+        "give_up_diagnostic": "loose_give_up is a substring test, RECORDED ONLY and never scored [G1]",
+        "line_rule": "answer is the single non-empty line; 2+ non-empty lines -> not_an_action (multi_line), never one of them [G2]",
+        "whitespace_rule": "the chosen line is stripped; ' U ' reads as U [G3]",
+        "outcomes_read_here": [
+          "action",
+          "give_up",
+          "not_an_action"
+        ],
+        "outcomes_owned_by_step": [
+          "moved",
+          "pushed",
+          "blocked"
+        ]
+      },
+      "levels": {
+        "01_one_push.txt": {
+          "sha256": "db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313",
+          "optimal_moves": 1,
+          "optimal_proven_by": "sokoban2_solve.py (exhaustive BFS, complete over the state space)"
+        },
+        "02_two_boxes.txt": {
+          "sha256": "7549657f1768607cefab6d892b1756b1cabf23f51144a7679d76f331b38a57d7",
+          "optimal_moves": 12,
+          "optimal_proven_by": "sokoban2_solve.py (exhaustive BFS, complete over the state space)"
+        },
+        "03_the_corner_waiting.txt": {
+          "sha256": "2d8c46733bd04b9a3333d30e56442c03fffe3e5f4ee4bc95202ac01c463c9284",
+          "optimal_moves": 6,
+          "optimal_proven_by": "sokoban2_solve.py (exhaustive BFS, complete over the state space)"
+        }
+      },
+      "aggregate": 1.0,
+      "coverage": 1.0,
+      "verdict": "SCORED",
+      "exit_code": 0,
+      "exit_code_table": {
+        "0": "SCORED -- measured > 0, harness sound",
+        "1": "INSTRUMENT NOT PROVEN -- self-test / instrument-check / level verification failed",
+        "2": "ZERO MEASURED -- ERROR, never a verdict (grammar section 4)",
+        "3": "USAGE -- unknown entrant or bad arguments",
+        "4": "ENTRANT NEVER STARTED -- counted separately from played-and-failed",
+        "5": "RECORD NOT WRITTEN -- a run with no record is not a run"
+      },
+      "certification": "REFERENCE RUN -- not an entrant, not for the board.",
+      "tasks": "sokoban2/tasks/sokoban_v1.json",
+      "ambiguities": "sokoban2/SOKOBAN2_AMBIGUITIES.md"
+    }
+  ]
+}

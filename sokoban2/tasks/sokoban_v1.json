@@ -1,0 +1,54 @@
+{
+  "id": "sokoban_v1",
+  "event": "SOKOBAN",
+  "class": "CONTEST",
+  "kind": "grid_puzzle",
+  "oracle": "rules_of_the_game_implemented_once_with_controls",
+  "staged_as": "arcade cabinet -- SOKOBAN: push every crate, and the crates never pull",
+  "note": "Three levels. 01 is the FLOOR of the scale. 02 is 12 moves and punishes a player that cannot re-approach: after the first crate is placed the player must walk around to the far side of the other one. 03 is THE CORNER WAITING: a two-move push puts the crate in the right-hand corner where it can never be moved again, and the board does not say so. Every optimum below was VERIFIED by exhaustive BFS over the whole state space before any entrant ran, not asserted from a level file. Level 02 has THIRTEEN distinct 12-move solutions: the optimum is a fact, 'the plan' is not. Nothing in this instrument ever compares a move stream to a reference plan -- it executes it. [G18]",
+  "levels": [
+    {
+      "id": "01_one_push",
+      "file": "sokoban/levels/01_one_push.txt",
+      "sha256": "db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313",
+      "optimal_moves": 1,
+      "proven_by": "sokoban2_solve.py -- exhaustive BFS, complete over the state space",
+      "plan": "R",
+      "faculty": "the floor of the scale: a model that cannot do this cannot play at all",
+      "distinct_shortest_plans": 1
+    },
+    {
+      "id": "02_two_boxes",
+      "file": "sokoban/levels/02_two_boxes.txt",
+      "sha256": "7549657f1768607cefab6d892b1756b1cabf23f51144a7679d76f331b38a57d7",
+      "optimal_moves": 12,
+      "proven_by": "sokoban2_solve.py -- exhaustive BFS, complete over the state space",
+      "plan": "DDRRRRULLURR",
+      "faculty": "after the first crate is placed the player must cross to the FAR side of the remaining crate: RRRR puts the near crate on its target and the player at (1,5), and the shortest continuation walks to (3,2) before it can push again (RRRR+DLLLDRRR = 12). 13 distinct 12-move optima exist, so the optimum is a fact and 'the plan' is not.",
+      "distinct_shortest_plans": 13
+    },
+    {
+      "id": "03_the_corner_waiting",
+      "file": "sokoban2/levels/03_the_corner_waiting.txt",
+      "sha256": "2d8c46733bd04b9a3333d30e56442c03fffe3e5f4ee4bc95202ac01c463c9284",
+      "optimal_moves": 6,
+      "proven_by": "sokoban2_solve.py -- exhaustive BFS, complete over the state space",
+      "plan": "RRULLL",
+      "faculty": "THE POINT OF NO RETURN. U then R pushes the crate into the right-hand corner, where nothing can ever move it again. The level is then dead, and nothing on the board says so.",
+      "status": "NOT IN THE FROZEN SET -- this file did not exist in the branch. See SOKOBAN2_AMBIGUITIES.md [W1].",
+      "distinct_shortest_plans": 1
+    }
+  ],
+  "criteria_frozen_before_run": {
+    "C1_answer_is_executed": "the answer is checked by EXECUTING it through step(); never by reading it and comparing it to a known plan",
+    "C2_four_outcomes": "moved/pushed, blocked, give_up and not_an_action are four counters, and a malformed answer is never a wrong move",
+    "C3_no_truncation": "more than one letter is not_an_action; the first character is never taken",
+    "C4_zero_rule": "a run with zero measured entrants is an ERROR (non-zero exit), never a verdict; never_started is counted separately from played-and-failed",
+    "C5_record_before_verdict": "the record is written to disk BEFORE the success/failure branch",
+    "C6_exit_code_reflects_the_run": "the exit code comes from the run, and the self-test drives every path that returns one"
+  },
+  "declared_per_run": {
+    "reasoning": "on | off | unset -- DECLARED before the run; 'unset' is NOT 'off' and must not be pooled [A11]",
+    "gpu": "the accelerator the run used, WITH the probe that established it. No accelerator is null, never 0.00 and never 'none'."
+  }
+}
