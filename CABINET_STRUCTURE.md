@@ -148,3 +148,57 @@ control; the run record omitted the artefact the verdict was about; **and the di
 holder.** Each time **the reader was checked against its own expectation and not against the thing it
 read.** Ruling 82 is what made this catchable: a blocked load must NAME THE HOLDER -- and it was re-reading
 that output against ground truth, not the tool, that found the error.
+
+## POINTING AN AGENT AT THE LOCAL RUNTIME -- FIVE CHECKS, IN ORDER
+
+**DECISION 3 IS WITHDRAWN AND THESE REPLACE IT.** The recipe it gave was wrong, it was wrong SILENTLY, and it
+was found from Hermes's own error log rather than from a hypothesis. **A profile configured exactly as instructed
+— provider `llamacpp`, `base_url` `127.0.0.1:8080/v1`, model a llama-swap alias — produced:**
+
+```
+provider=custom base_url=http://127.0.0.1:36389/v1 model=brain
+HTTP 400: model 'brain' not found
+```
+
+**TWO THINGS WERE WRONG AND BOTH WERE SILENT.**
+
+```
+1  THE MODEL NAME IS A PRESET from ~/.hermes/runtimes/llamacpp/presets.ini -- NOT a llama-swap alias.
+ Aliases live on :8080; the provider does not go there. Using an alias gets HTTP 400, every turn.
+
+2  THE `base_url` LINE IS DECORATION. The profile declares :8080 and the provider reaches :36389. THE CONFIG
+ SAYS ONE THING AND THE PROVIDER DOES ANOTHER, AND THE CONFIG IS NOT EVIDENCE. The working profile works
+ because its MODEL NAME IS A PRESET, and that is the whole of it.
+
+3  CONFIRM THE NAME BY READING THE PROFILE'S OWN PRESET SECTION -- not a list of aliases from somewhere else.
+
+4  AND THE ENDPOINT THE PROVIDER ACTUALLY USES IS KNOWN. The declared base_url is not evidence of it. THE
+ ERROR LOG NAMED IT; nothing on disk did.
+```
+
+**AND THE FAILURE DOES NOT LOOK LIKE ONE.** Hermes surfaces that 400 as:
+
+```
+"Your request was not processed. Send it again if you still want me to carry it out."
+```
+
+**THAT READS AS A TRANSIENT HICCUP. IT IS A MISCONFIGURATION THAT RECURS ON EVERY TURN** — an agent will retry
+forever while a human reads a suggestion to try again. **The queued-versus-delivered shape, one layer down: a
+route that ACCEPTS is not a route that ANSWERS.**
+
+### AND THE FIFTH IS THE ONE TO INSIST ON
+
+```
+5  RUN A TRIVIAL ROUND TRIP AND READ THE REPLY.
+```
+
+**NOT the config. NOT the provider. NOT a successful dispatch. THE REPLY.** *Every one of the four checks above
+can pass while the agent still produces nothing* — a correct preset name on a busy card, a reachable endpoint
+that cannot load the model, a dispatch that returns `queued`. **THE VERIFICATION OF A CONFIGURED AGENT ENDS WITH
+TEXT THAT CAME BACK.**
+
+**This is the fifth carrier, and the carrier ruling is amended rather than extended by a new one:** menu, legend,
+shell, launch config, **and now the profile config — a file that describes a runtime it does not control. The
+first four were text a reader could inspect; this one is a description whose behaviour lives somewhere else
+entirely. THE DESCRIPTION AND THE BEHAVIOUR ARE TWO DOCUMENTS AND ONLY ONE OF THEM IS ON DISK.**
+
