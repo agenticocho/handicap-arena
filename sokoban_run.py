@@ -261,11 +261,30 @@ def probe_reasoning(base, timeout_s=180):
     txt = (msg.get("content") or "").strip()
     think = (msg.get("reasoning_content") or "").strip()
     ctok = (j.get("usage") or {}).get("completion_tokens", 0)
-    # THE THRESHOLD IS DELIBERATELY BLUNT AND STATED, because a tuned threshold would be a new instrument.
+    # WHAT THE PROBE ACTUALLY MEASURES, NAMED PRECISELY, BECAUSE IT CANNOT SEE WHY.
+    #
+    # The threshold is on ANSWER LENGTH. From that it INFERS a reasoning mode -- and that inference can be
+    # wrong. MEASURED: LFM2-350M-Extract answers the one-token question in 33 tokens whose content is
+    # `{"answer": "2 + 2", "answer": "2 + 2", ...}` -- AN EXTRACTION MODEL ECHOING THE QUESTION AS JSON,
+    # not deliberating. The old field called that `observed: "on"`, which is a FALSE STATEMENT ABOUT THE
+    # MODEL made out of a TRUE MEASUREMENT of its output.
+    #
+    # So length and inference are now TWO FIELDS. The measurement is stated; the inference is labelled as an
+    # inference; and a reader can see which one the disagreement is about.
+    shape = "short" if ctok <= 8 else "long"
     observed = "off" if ctok <= 8 else "on"
     return {"question": q, "answer": txt[:60], "answer_from_reasoning_field": bool(think and not txt),
             "completion_tokens": ctok, "finish_reason": ch.get("finish_reason"),
-            "observed": observed, "requested": REASONING,
+            # THE MEASUREMENT: what came out.
+            "observed_answer_shape": shape,
+            "shape_threshold_tokens": 8,
+            # THE INFERENCE: what that is taken to mean. SEPARATE, because it is a second step.
+            "observed": observed,
+            "observed_is_an_inference": True,
+            "inference_caveat": ("a LONG answer is not necessarily deliberation -- a model that echoes the "
+                                 "question in a schema produces a long answer too, and this probe cannot "
+                                 "tell them apart"),
+            "requested": REASONING,
             "disagrees_with_config": (REASONING != "auto" and observed != REASONING)}
 
 

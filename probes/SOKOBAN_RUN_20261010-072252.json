@@ -2436,9 +2436,5222 @@
     "why": "the first token was not an action letter"
    },
    "class": "extraction / tool"
+  },
+  {
+   "solved": true,
+   "moves": 1,
+   "attempted": 3,
+   "blocked": 2,
+   "not_an_action": 0,
+   "give_up": 0,
+   "gave_up_at": null,
+   "ended": "solved",
+   "final_board": "#####\n# @*#\n#####",
+   "trace": [
+    {
+     "ply": 0,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 1,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 2,
+     "token": "R",
+     "action": "R",
+     "outcome": "pushed",
+     "board": "#####\n# @*#\n#####"
+    }
+   ],
+   "entrant": "granite-3.3-2b-instruct-critical-thinking.Q5_K_M",
+   "level": "01_one_push",
+   "loaded": true,
+   "load_s": 3.0,
+   "turns": [
+    {
+     "ply": 0,
+     "raw": "U\n\nExplanation: The player should move up to reach the crate at the top-right corner. This is the first crate to be pushed, and it's the only one visible from the starting position. Moving up allows the player to access the crate and begin the process of pushing it onto a target.",
+     "token": "U",
+     "secs": 3.0,
+     "gen_tokens": 63,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 1,
+     "raw": "U",
+     "token": "U",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#####\n#@$.#\n#####"
+    },
+    {
+     "ply": 2,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#####\n#@$.#\n#####"
+    }
+   ],
+   "cap": 40,
+   "final_screen": "#####\n# @*#\n#####",
+   "legend": "new",
+   "legend_digest": "0d86057c46d4c83b",
+   "config": {
+    "reasoning": "off",
+    "reasoning_source": "declared in PREREG_sokoban.md",
+    "reasoning_declared": "off",
+    "reasoning_declared_in": "PREREG_sokoban.md",
+    "reasoning_rationale": "Sokoban's answer is ONE LETTER. A thinking model puts deliberation where the answer belongs and the ceiling eats it -- measured on the same weights: 2314 tokens and no commitment. This cabinet is the one-letter case, so the setting is off. MISSILE COMMAND is the same case (one integer). DARTS is the opposite (exact checkout arithmetic), and a harness that proves the SHAPE should be able to prove it at either setting -- so it takes this as a PARAMETER rather than a constant.",
+    "reasoning_changed_from_declaration": false,
+    "reasoning_argv": [
+     "--reasoning",
+     "off"
+    ],
+    "reasoning_supported_by_build": true,
+    "max_tokens_ceiling": 64,
+    "command_cap": 40,
+    "ctx": 4096,
+    "n_gpu_layers": 0,
+    "temperature": 0.0,
+    "legend": "new",
+    "legend_digest": "0d86057c46d4c83b",
+    "server_argv": [
+     "/home/chilly1/llama.cpp/build/bin/llama-server",
+     "-m",
+     "/home/chilly1/moltbook_pipeline/models/granite-3.3-2b-instruct-critical-thinking.Q5_K_M.gguf",
+     "-c",
+     "4096",
+     "-ngl",
+     "0",
+     "--port",
+     "8754",
+     "--no-webui",
+     "--reasoning",
+     "off"
+    ]
+   },
+   "reasoning_probe": {
+    "question": "What is 2 + 2? Reply with just the number and nothing else.",
+    "answer": "4",
+    "answer_from_reasoning_field": false,
+    "completion_tokens": 3,
+    "finish_reason": "stop",
+    "observed": "off",
+    "requested": "off",
+    "disagrees_with_config": false
+   },
+   "kind": "model",
+   "unreadable": 0,
+   "unreadable_is_the_aggregate_of": "not_an_action (grammar \u00a72), per turn",
+   "never_started": 0,
+   "budget_signature": {
+    "turns": 3,
+    "turns_that_hit_the_ceiling": 0,
+    "ceiling": 64,
+    "fraction_capped": 0.0,
+    "all_turns_capped": false,
+    "reading": "no turn hit the ceiling -- the answers are the model's own endings"
+   },
+   "dead_end": {
+    "checked": false,
+    "first_action": "U",
+    "why": "the first action was blocked"
+   },
+   "class": "instruction-tuned"
+  },
+  {
+   "solved": false,
+   "moves": 4,
+   "attempted": 40,
+   "blocked": 36,
+   "not_an_action": 0,
+   "give_up": 0,
+   "gave_up_at": null,
+   "ended": "commands_exhausted",
+   "final_board": "########\n#    @*#\n#      #\n#  $  .#\n########",
+   "trace": [
+    {
+     "ply": 0,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 1,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 2,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 3,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 4,
+     "token": "R",
+     "action": "R",
+     "outcome": "pushed",
+     "board": "########\n#   @$.#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 5,
+     "token": "R",
+     "action": "R",
+     "outcome": "pushed",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 6,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 7,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 8,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 9,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 10,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 11,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 12,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 13,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 14,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 15,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 16,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 17,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 18,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 19,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 20,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 21,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 22,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 23,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 24,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 25,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 26,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 27,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 28,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 29,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 30,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 31,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 32,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 33,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 34,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 35,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 36,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 37,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 38,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 39,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    }
+   ],
+   "entrant": "granite-3.3-2b-instruct-critical-thinking.Q5_K_M",
+   "level": "02_two_boxes",
+   "loaded": true,
+   "load_s": 3.0,
+   "turns": [
+    {
+     "ply": 0,
+     "raw": "U\n\nExplanation: The player should move up to the crate in the top-left corner. This is the first crate to be pushed, and it's the only one that can be moved without hitting a wall. The player should then move to the crate in the bottom-right corner, which is already on a",
+     "token": "U",
+     "secs": 3.1,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 1,
+     "raw": "U\n\nExplanation: The player is currently on a target and can move up to the next row. This move is necessary to continue progressing towards the goal.",
+     "token": "U",
+     "secs": 1.7,
+     "gen_tokens": 34,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 2,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 3,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 4,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 5,
+     "raw": "R\n\nExplanation: The player has already made moves that have placed a crate on a target. The next move should be to push the remaining crate onto the target. The player should move right to reach the crate and then push it onto the target.",
+     "token": "R",
+     "secs": 2.5,
+     "gen_tokens": 52,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   @$.#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 6,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 7,
+     "raw": "R\n\nExplanation: The player needs to move right to reach the crate that is already on a target. The current position is UURRRRR, which places the player on the left side of the board. Moving right will allow the player to reach the target and complete the level.",
+     "token": "R",
+     "secs": 2.8,
+     "gen_tokens": 59,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 8,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 9,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 10,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 11,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 12,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 13,
+     "raw": "R\n\nExplanation: The player has already moved up and to the right, pushing the crate to the left. The next move should be to move down and to the left, allowing the player to push the crate onto the target.",
+     "token": "R",
+     "secs": 2.3,
+     "gen_tokens": 48,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 14,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.8,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 15,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.6,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 16,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 17,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 18,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.6,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 19,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 20,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 21,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 22,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 23,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 24,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 25,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 26,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 27,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 28,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 29,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 30,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 31,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 32,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 33,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 34,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 35,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 36,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 37,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 38,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 39,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (3,3) is blocking the path to the target at (4,4). The player needs to move the crate to a different location to access the target.",
+     "token": "R",
+     "secs": 2.7,
+     "gen_tokens": 58,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#    @*#\n#      #\n#  $  .#\n########"
+    }
+   ],
+   "cap": 40,
+   "final_screen": "########\n#    @*#\n#      #\n#  $  .#\n########",
+   "legend": "new",
+   "legend_digest": "0d86057c46d4c83b",
+   "config": {
+    "reasoning": "off",
+    "reasoning_source": "declared in PREREG_sokoban.md",
+    "reasoning_declared": "off",
+    "reasoning_declared_in": "PREREG_sokoban.md",
+    "reasoning_rationale": "Sokoban's answer is ONE LETTER. A thinking model puts deliberation where the answer belongs and the ceiling eats it -- measured on the same weights: 2314 tokens and no commitment. This cabinet is the one-letter case, so the setting is off. MISSILE COMMAND is the same case (one integer). DARTS is the opposite (exact checkout arithmetic), and a harness that proves the SHAPE should be able to prove it at either setting -- so it takes this as a PARAMETER rather than a constant.",
+    "reasoning_changed_from_declaration": false,
+    "reasoning_argv": [
+     "--reasoning",
+     "off"
+    ],
+    "reasoning_supported_by_build": true,
+    "max_tokens_ceiling": 64,
+    "command_cap": 40,
+    "ctx": 4096,
+    "n_gpu_layers": 0,
+    "temperature": 0.0,
+    "legend": "new",
+    "legend_digest": "0d86057c46d4c83b",
+    "server_argv": [
+     "/home/chilly1/llama.cpp/build/bin/llama-server",
+     "-m",
+     "/home/chilly1/moltbook_pipeline/models/granite-3.3-2b-instruct-critical-thinking.Q5_K_M.gguf",
+     "-c",
+     "4096",
+     "-ngl",
+     "0",
+     "--port",
+     "8755",
+     "--no-webui",
+     "--reasoning",
+     "off"
+    ]
+   },
+   "reasoning_probe": {
+    "question": "What is 2 + 2? Reply with just the number and nothing else.",
+    "answer": "4",
+    "answer_from_reasoning_field": false,
+    "completion_tokens": 3,
+    "finish_reason": "stop",
+    "observed": "off",
+    "requested": "off",
+    "disagrees_with_config": false
+   },
+   "kind": "model",
+   "unreadable": 0,
+   "unreadable_is_the_aggregate_of": "not_an_action (grammar \u00a72), per turn",
+   "never_started": 0,
+   "budget_signature": {
+    "turns": 40,
+    "turns_that_hit_the_ceiling": 1,
+    "ceiling": 64,
+    "fraction_capped": 0.025,
+    "all_turns_capped": false,
+    "reading": "some turns hit the ceiling -- see the per-turn rows"
+   },
+   "dead_end": {
+    "checked": false,
+    "first_action": "U",
+    "why": "the first action was blocked"
+   },
+   "class": "instruction-tuned"
+  },
+  {
+   "solved": false,
+   "moves": 5,
+   "attempted": 40,
+   "blocked": 35,
+   "not_an_action": 0,
+   "give_up": 0,
+   "gave_up_at": null,
+   "ended": "commands_exhausted",
+   "final_board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######",
+   "trace": [
+    {
+     "ply": 0,
+     "token": "U",
+     "action": "U",
+     "outcome": "pushed",
+     "board": "#######\n#.$#  #\n# @   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 1,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#######\n#.$#  #\n# @   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 2,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "#######\n#.$#  #\n#  @  #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 3,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "#######\n#.$#  #\n#   @ #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 4,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 5,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 6,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 7,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 8,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 9,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 10,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 11,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 12,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 13,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 14,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 15,
+     "token": "U",
+     "action": "U",
+     "outcome": "moved",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 16,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 17,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 18,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 19,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 20,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 21,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 22,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 23,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 24,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 25,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 26,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 27,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 28,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 29,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 30,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 31,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 32,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 33,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 34,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 35,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 36,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 37,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 38,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 39,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    }
+   ],
+   "entrant": "granite-3.3-2b-instruct-critical-thinking.Q5_K_M",
+   "level": "03_the_corner_waiting",
+   "loaded": true,
+   "load_s": 3.0,
+   "turns": [
+    {
+     "ply": 0,
+     "raw": "U\n\nExplanation: The player should move up to the crate in the top-left corner, then move right to the target. From there, the player can move down to the crate in the bottom-right corner and push it onto the target. The player can then move back to the top-left corner and",
+     "token": "U",
+     "secs": 3.1,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n# @   #\n#     #\n#######"
+    },
+    {
+     "ply": 1,
+     "raw": "U\n\nExplanation: The player is currently on a dot (target) and has already made a move up (U). The next logical move is to move right (R) to reach the adjacent dot (target).",
+     "token": "U",
+     "secs": 2.2,
+     "gen_tokens": 45,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$#  #\n# @   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 2,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$#  #\n# @   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 3,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$#  #\n#  @  #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 4,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$#  #\n#   @ #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 5,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 6,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 7,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 8,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 9,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 10,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 11,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 12,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 13,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate at (2,2) is already on a target, and the crate at (2,3) is in the way of reaching the target at (3,3). The player cannot move to the",
+     "token": "R",
+     "secs": 3.0,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 14,
+     "raw": "R\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate in the bottom-right corner is already on a target, and the crate in the center is also on a target. The player cannot move further without hitting a wall or another crate. Therefore, the level is",
+     "token": "R",
+     "secs": 3.1,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 15,
+     "raw": "U\n\nExplanation: The player has already made moves that have blocked the path to the target. The crate in the bottom-right corner is already on a target, and the crate in the center is also on a target. The player cannot move further without hitting a wall or another crate. Therefore, the level is",
+     "token": "U",
+     "secs": 2.9,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 16,
+     "raw": "U",
+     "token": "U",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 17,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 18,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 19,
+     "raw": "R\n\nExplanation: The player has already made moves to push the crate to the right, and there is a path to the target. The next move should be to push the crate to the right again to reach the target.",
+     "token": "R",
+     "secs": 2.2,
+     "gen_tokens": 47,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 20,
+     "raw": "R\n\nExplanation: The player has successfully moved all crates to their respective targets. The level is now complete and winnable.",
+     "token": "R",
+     "secs": 1.4,
+     "gen_tokens": 28,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 21,
+     "raw": "R\n\nExplanation: The player has already made moves that have placed the crate in a position where it can be pushed onto the target. The next move should be to push the crate onto the target.",
+     "token": "R",
+     "secs": 2.0,
+     "gen_tokens": 42,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 22,
+     "raw": "R\n\nExplanation: The player has successfully moved all crates to their respective targets. The level is now complete and winnable.",
+     "token": "R",
+     "secs": 1.4,
+     "gen_tokens": 28,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 23,
+     "raw": "R\n\nExplanation: The player has successfully moved all crates to their respective targets. The level is now complete and winnable.",
+     "token": "R",
+     "secs": 1.4,
+     "gen_tokens": 28,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 24,
+     "raw": "R\n\nExplanation: The player has successfully moved all crates to their respective targets. The level is now complete and winnable.",
+     "token": "R",
+     "secs": 1.4,
+     "gen_tokens": 28,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 25,
+     "raw": "R\n\nExplanation: The player has successfully moved all crates to their respective targets. The level is now complete and winnable.",
+     "token": "R",
+     "secs": 1.4,
+     "gen_tokens": 28,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 26,
+     "raw": "R\n\nExplanation: The player has already made moves that have placed the crate in a position where it can be pushed onto the target. The next move should be to push the crate onto the target.",
+     "token": "R",
+     "secs": 2.0,
+     "gen_tokens": 42,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 27,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 28,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 29,
+     "raw": "R\n\nExplanation: The player has already made moves to the right, and there are no walls or obstacles blocking the path to the target. The player can continue moving right to reach the target.",
+     "token": "R",
+     "secs": 2.0,
+     "gen_tokens": 42,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 30,
+     "raw": "U\n\nExplanation: The player has already moved all the crates to the targets, so the level is winnable. The next move should be to move up to the next crate.",
+     "token": "U",
+     "secs": 1.8,
+     "gen_tokens": 39,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 31,
+     "raw": "U\n\nExplanation: The player has successfully moved all crates to their respective targets, and there are no obstacles or crates blocking the path to the exit. The level is winnable.",
+     "token": "U",
+     "secs": 2.0,
+     "gen_tokens": 41,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 32,
+     "raw": "R\n\nExplanation: The player has already made moves to push the crate in the top-right corner onto the target. The next move should be to push the crate in the bottom-left corner onto the target. The player should continue to push the remaining crates onto the targets, ensuring no crate is left un",
+     "token": "R",
+     "secs": 3.1,
+     "gen_tokens": 64,
+     "budget_hit": true,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 33,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 34,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 35,
+     "raw": "R\n\nExplanation: The player has successfully moved all crates to their respective targets. The level is now complete and winnable.",
+     "token": "R",
+     "secs": 1.4,
+     "gen_tokens": 28,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 36,
+     "raw": "R\n\nExplanation: The player has successfully moved all crates to their respective targets. The level is now complete and winnable.",
+     "token": "R",
+     "secs": 1.4,
+     "gen_tokens": 28,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 37,
+     "raw": "R\n\nExplanation: The player has successfully moved all crates to their respective targets. The level is now complete and winnable.",
+     "token": "R",
+     "secs": 1.4,
+     "gen_tokens": 28,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 38,
+     "raw": "R\n\nExplanation: The player has already made moves that have placed the crate in a position where it can be pushed onto the target. The next move should be to push the crate onto the target.",
+     "token": "R",
+     "secs": 2.0,
+     "gen_tokens": 42,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 39,
+     "raw": "R\n\nExplanation: The player has successfully moved all crates to their respective targets. The level is winnable.",
+     "token": "R",
+     "secs": 1.3,
+     "gen_tokens": 25,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######"
+    }
+   ],
+   "cap": 40,
+   "final_screen": "#######\n#.$# @#\n#     #\n#     #\n#     #\n#######",
+   "legend": "new",
+   "legend_digest": "0d86057c46d4c83b",
+   "config": {
+    "reasoning": "off",
+    "reasoning_source": "declared in PREREG_sokoban.md",
+    "reasoning_declared": "off",
+    "reasoning_declared_in": "PREREG_sokoban.md",
+    "reasoning_rationale": "Sokoban's answer is ONE LETTER. A thinking model puts deliberation where the answer belongs and the ceiling eats it -- measured on the same weights: 2314 tokens and no commitment. This cabinet is the one-letter case, so the setting is off. MISSILE COMMAND is the same case (one integer). DARTS is the opposite (exact checkout arithmetic), and a harness that proves the SHAPE should be able to prove it at either setting -- so it takes this as a PARAMETER rather than a constant.",
+    "reasoning_changed_from_declaration": false,
+    "reasoning_argv": [
+     "--reasoning",
+     "off"
+    ],
+    "reasoning_supported_by_build": true,
+    "max_tokens_ceiling": 64,
+    "command_cap": 40,
+    "ctx": 4096,
+    "n_gpu_layers": 0,
+    "temperature": 0.0,
+    "legend": "new",
+    "legend_digest": "0d86057c46d4c83b",
+    "server_argv": [
+     "/home/chilly1/llama.cpp/build/bin/llama-server",
+     "-m",
+     "/home/chilly1/moltbook_pipeline/models/granite-3.3-2b-instruct-critical-thinking.Q5_K_M.gguf",
+     "-c",
+     "4096",
+     "-ngl",
+     "0",
+     "--port",
+     "8756",
+     "--no-webui",
+     "--reasoning",
+     "off"
+    ]
+   },
+   "reasoning_probe": {
+    "question": "What is 2 + 2? Reply with just the number and nothing else.",
+    "answer": "4",
+    "answer_from_reasoning_field": false,
+    "completion_tokens": 3,
+    "finish_reason": "stop",
+    "observed": "off",
+    "requested": "off",
+    "disagrees_with_config": false
+   },
+   "kind": "model",
+   "unreadable": 0,
+   "unreadable_is_the_aggregate_of": "not_an_action (grammar \u00a72), per turn",
+   "never_started": 0,
+   "budget_signature": {
+    "turns": 40,
+    "turns_that_hit_the_ceiling": 5,
+    "ceiling": 64,
+    "fraction_capped": 0.125,
+    "all_turns_capped": false,
+    "reading": "some turns hit the ceiling -- see the per-turn rows"
+   },
+   "dead_end": {
+    "checked": true,
+    "first_action": "U",
+    "no_solution_from_here": true,
+    "proof_kind": "sound_rule_at_the_start",
+    "proof_rule": "corner_rule: a box in a non-target corner can never move again",
+    "reachable_states_enumerated": 0,
+    "states_expanded": 0,
+    "reading": "DEAD END ON THE FIRST ACTION -- proved by sound_rule_at_the_start; a sound, skip-only rule fired at the start, so the position is dead on a rule rather than on this search's exhaustion. Every later counter is movement inside a position that cannot be finished."
+   },
+   "class": "instruction-tuned"
+  },
+  {
+   "solved": true,
+   "moves": 1,
+   "attempted": 1,
+   "blocked": 0,
+   "not_an_action": 0,
+   "give_up": 0,
+   "gave_up_at": null,
+   "ended": "solved",
+   "final_board": "#####\n# @*#\n#####",
+   "trace": [
+    {
+     "ply": 0,
+     "token": "R",
+     "action": "R",
+     "outcome": "pushed",
+     "board": "#####\n# @*#\n#####"
+    }
+   ],
+   "entrant": "Qwen3.5-4B-UD-Q4_K_XL",
+   "level": "01_one_push",
+   "loaded": true,
+   "load_s": 3.0,
+   "turns": [
+    {
+     "ply": 0,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.6,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#####\n#@$.#\n#####"
+    }
+   ],
+   "cap": 40,
+   "final_screen": "#####\n# @*#\n#####",
+   "legend": "new",
+   "legend_digest": "0d86057c46d4c83b",
+   "config": {
+    "reasoning": "off",
+    "reasoning_source": "declared in PREREG_sokoban.md",
+    "reasoning_declared": "off",
+    "reasoning_declared_in": "PREREG_sokoban.md",
+    "reasoning_rationale": "Sokoban's answer is ONE LETTER. A thinking model puts deliberation where the answer belongs and the ceiling eats it -- measured on the same weights: 2314 tokens and no commitment. This cabinet is the one-letter case, so the setting is off. MISSILE COMMAND is the same case (one integer). DARTS is the opposite (exact checkout arithmetic), and a harness that proves the SHAPE should be able to prove it at either setting -- so it takes this as a PARAMETER rather than a constant.",
+    "reasoning_changed_from_declaration": false,
+    "reasoning_argv": [
+     "--reasoning",
+     "off"
+    ],
+    "reasoning_supported_by_build": true,
+    "max_tokens_ceiling": 64,
+    "command_cap": 40,
+    "ctx": 4096,
+    "n_gpu_layers": 0,
+    "temperature": 0.0,
+    "legend": "new",
+    "legend_digest": "0d86057c46d4c83b",
+    "server_argv": [
+     "/home/chilly1/llama.cpp/build/bin/llama-server",
+     "-m",
+     "/home/chilly1/moltbook_pipeline/models/Qwen3.5-4B-UD-Q4_K_XL.gguf",
+     "-c",
+     "4096",
+     "-ngl",
+     "0",
+     "--port",
+     "8757",
+     "--no-webui",
+     "--reasoning",
+     "off"
+    ]
+   },
+   "reasoning_probe": {
+    "question": "What is 2 + 2? Reply with just the number and nothing else.",
+    "answer": "4",
+    "answer_from_reasoning_field": false,
+    "completion_tokens": 2,
+    "finish_reason": "stop",
+    "observed": "off",
+    "requested": "off",
+    "disagrees_with_config": false
+   },
+   "kind": "model",
+   "unreadable": 0,
+   "unreadable_is_the_aggregate_of": "not_an_action (grammar \u00a72), per turn",
+   "never_started": 0,
+   "budget_signature": {
+    "turns": 1,
+    "turns_that_hit_the_ceiling": 0,
+    "ceiling": 64,
+    "fraction_capped": 0.0,
+    "all_turns_capped": false,
+    "reading": "no turn hit the ceiling -- the answers are the model's own endings"
+   },
+   "dead_end": {
+    "checked": true,
+    "first_action": "R",
+    "no_solution_from_here": false,
+    "still_solvable_in": 0,
+    "reading": "still winnable after the first action"
+   },
+   "class": "unlabelled"
+  },
+  {
+   "solved": false,
+   "moves": 8,
+   "attempted": 40,
+   "blocked": 32,
+   "not_an_action": 0,
+   "give_up": 0,
+   "gave_up_at": null,
+   "ended": "commands_exhausted",
+   "final_board": "########\n#   $ .#\n#      #\n#@ $  .#\n########",
+   "trace": [
+    {
+     "ply": 0,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 1,
+     "token": "L",
+     "action": "L",
+     "outcome": "moved",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 2,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 3,
+     "token": "D",
+     "action": "D",
+     "outcome": "moved",
+     "board": "########\n#   $ .#\n#@     #\n#  $  .#\n########"
+    },
+    {
+     "ply": 4,
+     "token": "D",
+     "action": "D",
+     "outcome": "moved",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 5,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 6,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 7,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 8,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 9,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 10,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 11,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 12,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 13,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 14,
+     "token": "L",
+     "action": "L",
+     "outcome": "moved",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 15,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 16,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 17,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 18,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 19,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 20,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 21,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 22,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 23,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 24,
+     "token": "L",
+     "action": "L",
+     "outcome": "moved",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 25,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 26,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 27,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 28,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 29,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 30,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 31,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 32,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 33,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 34,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 35,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 36,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 37,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 38,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 39,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    }
+   ],
+   "entrant": "Qwen3.5-4B-UD-Q4_K_XL",
+   "level": "02_two_boxes",
+   "loaded": true,
+   "load_s": 3.0,
+   "turns": [
+    {
+     "ply": 0,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.6,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 1,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 2,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.6,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 3,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 4,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#@     #\n#  $  .#\n########"
+    },
+    {
+     "ply": 5,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 6,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 7,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 8,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 9,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 10,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 11,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 12,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 13,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 14,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 15,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 16,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 17,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 18,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 19,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 20,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 21,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 22,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 23,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 24,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 25,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 26,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 27,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 28,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 29,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 30,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 31,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 32,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 33,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 34,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 35,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 36,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 37,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 38,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    },
+    {
+     "ply": 39,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.2,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#@ $  .#\n########"
+    }
+   ],
+   "cap": 40,
+   "final_screen": "########\n#   $ .#\n#      #\n#@ $  .#\n########",
+   "legend": "new",
+   "legend_digest": "0d86057c46d4c83b",
+   "config": {
+    "reasoning": "off",
+    "reasoning_source": "declared in PREREG_sokoban.md",
+    "reasoning_declared": "off",
+    "reasoning_declared_in": "PREREG_sokoban.md",
+    "reasoning_rationale": "Sokoban's answer is ONE LETTER. A thinking model puts deliberation where the answer belongs and the ceiling eats it -- measured on the same weights: 2314 tokens and no commitment. This cabinet is the one-letter case, so the setting is off. MISSILE COMMAND is the same case (one integer). DARTS is the opposite (exact checkout arithmetic), and a harness that proves the SHAPE should be able to prove it at either setting -- so it takes this as a PARAMETER rather than a constant.",
+    "reasoning_changed_from_declaration": false,
+    "reasoning_argv": [
+     "--reasoning",
+     "off"
+    ],
+    "reasoning_supported_by_build": true,
+    "max_tokens_ceiling": 64,
+    "command_cap": 40,
+    "ctx": 4096,
+    "n_gpu_layers": 0,
+    "temperature": 0.0,
+    "legend": "new",
+    "legend_digest": "0d86057c46d4c83b",
+    "server_argv": [
+     "/home/chilly1/llama.cpp/build/bin/llama-server",
+     "-m",
+     "/home/chilly1/moltbook_pipeline/models/Qwen3.5-4B-UD-Q4_K_XL.gguf",
+     "-c",
+     "4096",
+     "-ngl",
+     "0",
+     "--port",
+     "8758",
+     "--no-webui",
+     "--reasoning",
+     "off"
+    ]
+   },
+   "reasoning_probe": {
+    "question": "What is 2 + 2? Reply with just the number and nothing else.",
+    "answer": "4",
+    "answer_from_reasoning_field": false,
+    "completion_tokens": 2,
+    "finish_reason": "stop",
+    "observed": "off",
+    "requested": "off",
+    "disagrees_with_config": false
+   },
+   "kind": "model",
+   "unreadable": 0,
+   "unreadable_is_the_aggregate_of": "not_an_action (grammar \u00a72), per turn",
+   "never_started": 0,
+   "budget_signature": {
+    "turns": 40,
+    "turns_that_hit_the_ceiling": 0,
+    "ceiling": 64,
+    "fraction_capped": 0.0,
+    "all_turns_capped": false,
+    "reading": "no turn hit the ceiling -- the answers are the model's own endings"
+   },
+   "dead_end": {
+    "checked": true,
+    "first_action": "R",
+    "no_solution_from_here": false,
+    "still_solvable_in": 11,
+    "reading": "still winnable after the first action"
+   },
+   "class": "unlabelled"
+  },
+  {
+   "solved": false,
+   "moves": 12,
+   "attempted": 40,
+   "blocked": 28,
+   "not_an_action": 0,
+   "give_up": 0,
+   "gave_up_at": null,
+   "ended": "commands_exhausted",
+   "final_board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######",
+   "trace": [
+    {
+     "ply": 0,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+    },
+    {
+     "ply": 1,
+     "token": "L",
+     "action": "L",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n# @   #\n#     #\n#######"
+    },
+    {
+     "ply": 2,
+     "token": "L",
+     "action": "L",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#@    #\n#     #\n#######"
+    },
+    {
+     "ply": 3,
+     "token": "D",
+     "action": "D",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 4,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 5,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 6,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 7,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 8,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 9,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 10,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 11,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 12,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 13,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n# @   #\n#######"
+    },
+    {
+     "ply": 14,
+     "token": "L",
+     "action": "L",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 15,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 16,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 17,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 18,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 19,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 20,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 21,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 22,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 23,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 24,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 25,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 26,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n# @   #\n#######"
+    },
+    {
+     "ply": 27,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n# @   #\n#######"
+    },
+    {
+     "ply": 28,
+     "token": "L",
+     "action": "L",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 29,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 30,
+     "token": "L",
+     "action": "L",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 31,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 32,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 33,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n# @   #\n#######"
+    },
+    {
+     "ply": 34,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n# @   #\n#######"
+    },
+    {
+     "ply": 35,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#  @  #\n#######"
+    },
+    {
+     "ply": 36,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#   @ #\n#######"
+    },
+    {
+     "ply": 37,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 38,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 39,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    }
+   ],
+   "entrant": "Qwen3.5-4B-UD-Q4_K_XL",
+   "level": "03_the_corner_waiting",
+   "loaded": true,
+   "load_s": 3.0,
+   "turns": [
+    {
+     "ply": 0,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.6,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n# @   #\n#     #\n#######"
+    },
+    {
+     "ply": 1,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+    },
+    {
+     "ply": 2,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n# @   #\n#     #\n#######"
+    },
+    {
+     "ply": 3,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#@    #\n#     #\n#######"
+    },
+    {
+     "ply": 4,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 5,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 6,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 7,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 8,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 9,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 10,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 11,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 12,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 13,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 14,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n# @   #\n#######"
+    },
+    {
+     "ply": 15,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 16,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 17,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 18,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 19,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 20,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 21,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 22,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 23,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 24,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 25,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 26,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 27,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n# @   #\n#######"
+    },
+    {
+     "ply": 28,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n# @   #\n#######"
+    },
+    {
+     "ply": 29,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 30,
+     "raw": "L",
+     "token": "L",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 31,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 32,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 33,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#@    #\n#######"
+    },
+    {
+     "ply": 34,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n# @   #\n#######"
+    },
+    {
+     "ply": 35,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n# @   #\n#######"
+    },
+    {
+     "ply": 36,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#  @  #\n#######"
+    },
+    {
+     "ply": 37,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#   @ #\n#######"
+    },
+    {
+     "ply": 38,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 39,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.5,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    }
+   ],
+   "cap": 40,
+   "final_screen": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######",
+   "legend": "new",
+   "legend_digest": "0d86057c46d4c83b",
+   "config": {
+    "reasoning": "off",
+    "reasoning_source": "declared in PREREG_sokoban.md",
+    "reasoning_declared": "off",
+    "reasoning_declared_in": "PREREG_sokoban.md",
+    "reasoning_rationale": "Sokoban's answer is ONE LETTER. A thinking model puts deliberation where the answer belongs and the ceiling eats it -- measured on the same weights: 2314 tokens and no commitment. This cabinet is the one-letter case, so the setting is off. MISSILE COMMAND is the same case (one integer). DARTS is the opposite (exact checkout arithmetic), and a harness that proves the SHAPE should be able to prove it at either setting -- so it takes this as a PARAMETER rather than a constant.",
+    "reasoning_changed_from_declaration": false,
+    "reasoning_argv": [
+     "--reasoning",
+     "off"
+    ],
+    "reasoning_supported_by_build": true,
+    "max_tokens_ceiling": 64,
+    "command_cap": 40,
+    "ctx": 4096,
+    "n_gpu_layers": 0,
+    "temperature": 0.0,
+    "legend": "new",
+    "legend_digest": "0d86057c46d4c83b",
+    "server_argv": [
+     "/home/chilly1/llama.cpp/build/bin/llama-server",
+     "-m",
+     "/home/chilly1/moltbook_pipeline/models/Qwen3.5-4B-UD-Q4_K_XL.gguf",
+     "-c",
+     "4096",
+     "-ngl",
+     "0",
+     "--port",
+     "8759",
+     "--no-webui",
+     "--reasoning",
+     "off"
+    ]
+   },
+   "reasoning_probe": {
+    "question": "What is 2 + 2? Reply with just the number and nothing else.",
+    "answer": "4",
+    "answer_from_reasoning_field": false,
+    "completion_tokens": 2,
+    "finish_reason": "stop",
+    "observed": "off",
+    "requested": "off",
+    "disagrees_with_config": false
+   },
+   "kind": "model",
+   "unreadable": 0,
+   "unreadable_is_the_aggregate_of": "not_an_action (grammar \u00a72), per turn",
+   "never_started": 0,
+   "budget_signature": {
+    "turns": 40,
+    "turns_that_hit_the_ceiling": 0,
+    "ceiling": 64,
+    "fraction_capped": 0.0,
+    "all_turns_capped": false,
+    "reading": "no turn hit the ceiling -- the answers are the model's own endings"
+   },
+   "dead_end": {
+    "checked": true,
+    "first_action": "R",
+    "no_solution_from_here": false,
+    "still_solvable_in": 5,
+    "reading": "still winnable after the first action"
+   },
+   "class": "unlabelled"
+  },
+  {
+   "solved": true,
+   "moves": 1,
+   "attempted": 1,
+   "blocked": 0,
+   "not_an_action": 0,
+   "give_up": 0,
+   "gave_up_at": null,
+   "ended": "solved",
+   "final_board": "#####\n# @*#\n#####",
+   "trace": [
+    {
+     "ply": 0,
+     "token": "R",
+     "action": "R",
+     "outcome": "pushed",
+     "board": "#####\n# @*#\n#####"
+    }
+   ],
+   "entrant": "Qwen3.5-9B-Q4_K_M",
+   "level": "01_one_push",
+   "loaded": true,
+   "load_s": 6.0,
+   "turns": [
+    {
+     "ply": 0,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.9,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#####\n#@$.#\n#####"
+    }
+   ],
+   "cap": 40,
+   "final_screen": "#####\n# @*#\n#####",
+   "legend": "new",
+   "legend_digest": "0d86057c46d4c83b",
+   "config": {
+    "reasoning": "off",
+    "reasoning_source": "declared in PREREG_sokoban.md",
+    "reasoning_declared": "off",
+    "reasoning_declared_in": "PREREG_sokoban.md",
+    "reasoning_rationale": "Sokoban's answer is ONE LETTER. A thinking model puts deliberation where the answer belongs and the ceiling eats it -- measured on the same weights: 2314 tokens and no commitment. This cabinet is the one-letter case, so the setting is off. MISSILE COMMAND is the same case (one integer). DARTS is the opposite (exact checkout arithmetic), and a harness that proves the SHAPE should be able to prove it at either setting -- so it takes this as a PARAMETER rather than a constant.",
+    "reasoning_changed_from_declaration": false,
+    "reasoning_argv": [
+     "--reasoning",
+     "off"
+    ],
+    "reasoning_supported_by_build": true,
+    "max_tokens_ceiling": 64,
+    "command_cap": 40,
+    "ctx": 4096,
+    "n_gpu_layers": 0,
+    "temperature": 0.0,
+    "legend": "new",
+    "legend_digest": "0d86057c46d4c83b",
+    "server_argv": [
+     "/home/chilly1/llama.cpp/build/bin/llama-server",
+     "-m",
+     "/home/chilly1/moltbook_pipeline/models/Qwen3.5-9B-Q4_K_M.gguf",
+     "-c",
+     "4096",
+     "-ngl",
+     "0",
+     "--port",
+     "8760",
+     "--no-webui",
+     "--reasoning",
+     "off"
+    ]
+   },
+   "reasoning_probe": {
+    "question": "What is 2 + 2? Reply with just the number and nothing else.",
+    "answer": "4",
+    "answer_from_reasoning_field": false,
+    "completion_tokens": 2,
+    "finish_reason": "stop",
+    "observed": "off",
+    "requested": "off",
+    "disagrees_with_config": false
+   },
+   "kind": "model",
+   "unreadable": 0,
+   "unreadable_is_the_aggregate_of": "not_an_action (grammar \u00a72), per turn",
+   "never_started": 0,
+   "budget_signature": {
+    "turns": 1,
+    "turns_that_hit_the_ceiling": 0,
+    "ceiling": 64,
+    "fraction_capped": 0.0,
+    "all_turns_capped": false,
+    "reading": "no turn hit the ceiling -- the answers are the model's own endings"
+   },
+   "dead_end": {
+    "checked": true,
+    "first_action": "R",
+    "no_solution_from_here": false,
+    "still_solvable_in": 0,
+    "reading": "still winnable after the first action"
+   },
+   "class": "unlabelled"
+  },
+  {
+   "solved": false,
+   "moves": 12,
+   "attempted": 40,
+   "blocked": 28,
+   "not_an_action": 0,
+   "give_up": 0,
+   "gave_up_at": null,
+   "ended": "commands_exhausted",
+   "final_board": "########\n#   $ .#\n#     @#\n#     *#\n########",
+   "trace": [
+    {
+     "ply": 0,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 1,
+     "token": "D",
+     "action": "D",
+     "outcome": "moved",
+     "board": "########\n#   $ .#\n# @    #\n#  $  .#\n########"
+    },
+    {
+     "ply": 2,
+     "token": "D",
+     "action": "D",
+     "outcome": "moved",
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 3,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 4,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 5,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 6,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 7,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 8,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 9,
+     "token": "R",
+     "action": "R",
+     "outcome": "pushed",
+     "board": "########\n#   $ .#\n#      #\n#  @$ .#\n########"
+    },
+    {
+     "ply": 10,
+     "token": "R",
+     "action": "R",
+     "outcome": "pushed",
+     "board": "########\n#   $ .#\n#      #\n#   @$.#\n########"
+    },
+    {
+     "ply": 11,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#   @$.#\n########"
+    },
+    {
+     "ply": 12,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#   @$.#\n########"
+    },
+    {
+     "ply": 13,
+     "token": "R",
+     "action": "R",
+     "outcome": "pushed",
+     "board": "########\n#   $ .#\n#      #\n#    @*#\n########"
+    },
+    {
+     "ply": 14,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#    @*#\n########"
+    },
+    {
+     "ply": 15,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#    @*#\n########"
+    },
+    {
+     "ply": 16,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#    @*#\n########"
+    },
+    {
+     "ply": 17,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#    @*#\n########"
+    },
+    {
+     "ply": 18,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#    @*#\n########"
+    },
+    {
+     "ply": 19,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#      #\n#    @*#\n########"
+    },
+    {
+     "ply": 20,
+     "token": "U",
+     "action": "U",
+     "outcome": "moved",
+     "board": "########\n#   $ .#\n#    @ #\n#     *#\n########"
+    },
+    {
+     "ply": 21,
+     "token": "U",
+     "action": "U",
+     "outcome": "moved",
+     "board": "########\n#   $@.#\n#      #\n#     *#\n########"
+    },
+    {
+     "ply": 22,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "########\n#   $ +#\n#      #\n#     *#\n########"
+    },
+    {
+     "ply": 23,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#   $ +#\n#      #\n#     *#\n########"
+    },
+    {
+     "ply": 24,
+     "token": "D",
+     "action": "D",
+     "outcome": "moved",
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 25,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 26,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 27,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 28,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 29,
+     "token": "U",
+     "action": "U",
+     "outcome": "moved",
+     "board": "########\n#   $ +#\n#      #\n#     *#\n########"
+    },
+    {
+     "ply": 30,
+     "token": "D",
+     "action": "D",
+     "outcome": "moved",
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 31,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 32,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 33,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 34,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 35,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 36,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 37,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 38,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 39,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    }
+   ],
+   "entrant": "Qwen3.5-9B-Q4_K_M",
+   "level": "02_two_boxes",
+   "loaded": true,
+   "load_s": 3.0,
+   "turns": [
+    {
+     "ply": 0,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.9,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#@  $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 1,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+    },
+    {
+     "ply": 2,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n# @    #\n#  $  .#\n########"
+    },
+    {
+     "ply": 3,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 4,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 5,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 6,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 7,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 8,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 9,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n# @$  .#\n########"
+    },
+    {
+     "ply": 10,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#  @$ .#\n########"
+    },
+    {
+     "ply": 11,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#   @$.#\n########"
+    },
+    {
+     "ply": 12,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#   @$.#\n########"
+    },
+    {
+     "ply": 13,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#   @$.#\n########"
+    },
+    {
+     "ply": 14,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#    @*#\n########"
+    },
+    {
+     "ply": 15,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#    @*#\n########"
+    },
+    {
+     "ply": 16,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#    @*#\n########"
+    },
+    {
+     "ply": 17,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#    @*#\n########"
+    },
+    {
+     "ply": 18,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#    @*#\n########"
+    },
+    {
+     "ply": 19,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#    @*#\n########"
+    },
+    {
+     "ply": 20,
+     "raw": "U",
+     "token": "U",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#      #\n#    @*#\n########"
+    },
+    {
+     "ply": 21,
+     "raw": "U",
+     "token": "U",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#    @ #\n#     *#\n########"
+    },
+    {
+     "ply": 22,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $@.#\n#      #\n#     *#\n########"
+    },
+    {
+     "ply": 23,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ +#\n#      #\n#     *#\n########"
+    },
+    {
+     "ply": 24,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ +#\n#      #\n#     *#\n########"
+    },
+    {
+     "ply": 25,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 26,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 27,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 28,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 29,
+     "raw": "U",
+     "token": "U",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 30,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ +#\n#      #\n#     *#\n########"
+    },
+    {
+     "ply": 31,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 32,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 33,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 34,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 35,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 36,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 37,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 38,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    },
+    {
+     "ply": 39,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "########\n#   $ .#\n#     @#\n#     *#\n########"
+    }
+   ],
+   "cap": 40,
+   "final_screen": "########\n#   $ .#\n#     @#\n#     *#\n########",
+   "legend": "new",
+   "legend_digest": "0d86057c46d4c83b",
+   "config": {
+    "reasoning": "off",
+    "reasoning_source": "declared in PREREG_sokoban.md",
+    "reasoning_declared": "off",
+    "reasoning_declared_in": "PREREG_sokoban.md",
+    "reasoning_rationale": "Sokoban's answer is ONE LETTER. A thinking model puts deliberation where the answer belongs and the ceiling eats it -- measured on the same weights: 2314 tokens and no commitment. This cabinet is the one-letter case, so the setting is off. MISSILE COMMAND is the same case (one integer). DARTS is the opposite (exact checkout arithmetic), and a harness that proves the SHAPE should be able to prove it at either setting -- so it takes this as a PARAMETER rather than a constant.",
+    "reasoning_changed_from_declaration": false,
+    "reasoning_argv": [
+     "--reasoning",
+     "off"
+    ],
+    "reasoning_supported_by_build": true,
+    "max_tokens_ceiling": 64,
+    "command_cap": 40,
+    "ctx": 4096,
+    "n_gpu_layers": 0,
+    "temperature": 0.0,
+    "legend": "new",
+    "legend_digest": "0d86057c46d4c83b",
+    "server_argv": [
+     "/home/chilly1/llama.cpp/build/bin/llama-server",
+     "-m",
+     "/home/chilly1/moltbook_pipeline/models/Qwen3.5-9B-Q4_K_M.gguf",
+     "-c",
+     "4096",
+     "-ngl",
+     "0",
+     "--port",
+     "8761",
+     "--no-webui",
+     "--reasoning",
+     "off"
+    ]
+   },
+   "reasoning_probe": {
+    "question": "What is 2 + 2? Reply with just the number and nothing else.",
+    "answer": "4",
+    "answer_from_reasoning_field": false,
+    "completion_tokens": 2,
+    "finish_reason": "stop",
+    "observed": "off",
+    "requested": "off",
+    "disagrees_with_config": false
+   },
+   "kind": "model",
+   "unreadable": 0,
+   "unreadable_is_the_aggregate_of": "not_an_action (grammar \u00a72), per turn",
+   "never_started": 0,
+   "budget_signature": {
+    "turns": 40,
+    "turns_that_hit_the_ceiling": 0,
+    "ceiling": 64,
+    "fraction_capped": 0.0,
+    "all_turns_capped": false,
+    "reading": "no turn hit the ceiling -- the answers are the model's own endings"
+   },
+   "dead_end": {
+    "checked": true,
+    "first_action": "R",
+    "no_solution_from_here": false,
+    "still_solvable_in": 11,
+    "reading": "still winnable after the first action"
+   },
+   "class": "unlabelled"
+  },
+  {
+   "solved": false,
+   "moves": 12,
+   "attempted": 40,
+   "blocked": 28,
+   "not_an_action": 0,
+   "give_up": 0,
+   "gave_up_at": null,
+   "ended": "commands_exhausted",
+   "final_board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######",
+   "trace": [
+    {
+     "ply": 0,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+    },
+    {
+     "ply": 1,
+     "token": "D",
+     "action": "D",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#  @  #\n#######"
+    },
+    {
+     "ply": 2,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#   @ #\n#######"
+    },
+    {
+     "ply": 3,
+     "token": "U",
+     "action": "U",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#   @ #\n#     #\n#######"
+    },
+    {
+     "ply": 4,
+     "token": "U",
+     "action": "U",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $ @ #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 5,
+     "token": "R",
+     "action": "R",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 6,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 7,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 8,
+     "token": "U",
+     "action": "U",
+     "outcome": "moved",
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 9,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 10,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 11,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 12,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 13,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 14,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 15,
+     "token": "D",
+     "action": "D",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 16,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 17,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 18,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 19,
+     "token": "U",
+     "action": "U",
+     "outcome": "moved",
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 20,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 21,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 22,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 23,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 24,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 25,
+     "token": "U",
+     "action": "U",
+     "outcome": "blocked",
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 26,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 27,
+     "token": "D",
+     "action": "D",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 28,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 29,
+     "token": "D",
+     "action": "D",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#    @#\n#     #\n#######"
+    },
+    {
+     "ply": 30,
+     "token": "D",
+     "action": "D",
+     "outcome": "moved",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 31,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 32,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 33,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 34,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 35,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 36,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 37,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 38,
+     "token": "R",
+     "action": "R",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 39,
+     "token": "D",
+     "action": "D",
+     "outcome": "blocked",
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    }
+   ],
+   "entrant": "Qwen3.5-9B-Q4_K_M",
+   "level": "03_the_corner_waiting",
+   "loaded": true,
+   "load_s": 3.0,
+   "turns": [
+    {
+     "ply": 0,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.9,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n# @   #\n#     #\n#######"
+    },
+    {
+     "ply": 1,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+    },
+    {
+     "ply": 2,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#  @  #\n#######"
+    },
+    {
+     "ply": 3,
+     "raw": "U",
+     "token": "U",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#   @ #\n#######"
+    },
+    {
+     "ply": 4,
+     "raw": "U",
+     "token": "U",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#   @ #\n#     #\n#######"
+    },
+    {
+     "ply": 5,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $ @ #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 6,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 7,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 8,
+     "raw": "U",
+     "token": "U",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 9,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 10,
+     "raw": "U",
+     "token": "U",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 11,
+     "raw": "U",
+     "token": "U",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 12,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 13,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 14,
+     "raw": "U",
+     "token": "U",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 15,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 16,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 17,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 18,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 19,
+     "raw": "U",
+     "token": "U",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 20,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 21,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 22,
+     "raw": "U",
+     "token": "U",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 23,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 24,
+     "raw": "U",
+     "token": "U",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 25,
+     "raw": "U",
+     "token": "U",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 26,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 27,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. # @#\n# $   #\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 28,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 29,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $  @#\n#     #\n#     #\n#######"
+    },
+    {
+     "ply": 30,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#    @#\n#     #\n#######"
+    },
+    {
+     "ply": 31,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 32,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 33,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 34,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 35,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 36,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 37,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 38,
+     "raw": "R",
+     "token": "R",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    },
+    {
+     "ply": 39,
+     "raw": "D",
+     "token": "D",
+     "secs": 0.8,
+     "gen_tokens": 2,
+     "budget_hit": false,
+     "answer_field": "content",
+     "missing_value": false,
+     "board": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######"
+    }
+   ],
+   "cap": 40,
+   "final_screen": "#######\n#. #  #\n# $   #\n#     #\n#    @#\n#######",
+   "legend": "new",
+   "legend_digest": "0d86057c46d4c83b",
+   "config": {
+    "reasoning": "off",
+    "reasoning_source": "declared in PREREG_sokoban.md",
+    "reasoning_declared": "off",
+    "reasoning_declared_in": "PREREG_sokoban.md",
+    "reasoning_rationale": "Sokoban's answer is ONE LETTER. A thinking model puts deliberation where the answer belongs and the ceiling eats it -- measured on the same weights: 2314 tokens and no commitment. This cabinet is the one-letter case, so the setting is off. MISSILE COMMAND is the same case (one integer). DARTS is the opposite (exact checkout arithmetic), and a harness that proves the SHAPE should be able to prove it at either setting -- so it takes this as a PARAMETER rather than a constant.",
+    "reasoning_changed_from_declaration": false,
+    "reasoning_argv": [
+     "--reasoning",
+     "off"
+    ],
+    "reasoning_supported_by_build": true,
+    "max_tokens_ceiling": 64,
+    "command_cap": 40,
+    "ctx": 4096,
+    "n_gpu_layers": 0,
+    "temperature": 0.0,
+    "legend": "new",
+    "legend_digest": "0d86057c46d4c83b",
+    "server_argv": [
+     "/home/chilly1/llama.cpp/build/bin/llama-server",
+     "-m",
+     "/home/chilly1/moltbook_pipeline/models/Qwen3.5-9B-Q4_K_M.gguf",
+     "-c",
+     "4096",
+     "-ngl",
+     "0",
+     "--port",
+     "8762",
+     "--no-webui",
+     "--reasoning",
+     "off"
+    ]
+   },
+   "reasoning_probe": {
+    "question": "What is 2 + 2? Reply with just the number and nothing else.",
+    "answer": "4",
+    "answer_from_reasoning_field": false,
+    "completion_tokens": 2,
+    "finish_reason": "stop",
+    "observed": "off",
+    "requested": "off",
+    "disagrees_with_config": false
+   },
+   "kind": "model",
+   "unreadable": 0,
+   "unreadable_is_the_aggregate_of": "not_an_action (grammar \u00a72), per turn",
+   "never_started": 0,
+   "budget_signature": {
+    "turns": 40,
+    "turns_that_hit_the_ceiling": 0,
+    "ceiling": 64,
+    "fraction_capped": 0.0,
+    "all_turns_capped": false,
+    "reading": "no turn hit the ceiling -- the answers are the model's own endings"
+   },
+   "dead_end": {
+    "checked": true,
+    "first_action": "R",
+    "no_solution_from_here": false,
+    "still_solvable_in": 5,
+    "reading": "still winnable after the first action"
+   },
+   "class": "unlabelled"
+  },
+  {
+   "entrant": "Ternary-Bonsai-2-27B-PQ2_0",
+   "level": "01_one_push",
+   "loaded": false,
+   "why": "server exited rc=1",
+   "class": "unlabelled"
+  },
+  {
+   "entrant": "Ternary-Bonsai-2-27B-PQ2_0",
+   "level": "02_two_boxes",
+   "loaded": false,
+   "why": "server exited rc=1",
+   "class": "unlabelled"
+  },
+  {
+   "entrant": "Ternary-Bonsai-2-27B-PQ2_0",
+   "level": "03_the_corner_waiting",
+   "loaded": false,
+   "why": "server exited rc=1",
+   "class": "unlabelled"
   }
  ],
- "never_started": 0,
+ "never_started": 3,
  "unreadable": 120,
  "unreadable_note": "the AGGREGATE of the grammar's `not_an_action`, per turn; INSIDE the denominator as a non-pass (A6)"
 }
