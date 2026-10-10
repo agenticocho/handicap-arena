@@ -28,7 +28,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import sokoban_run as R                                                 # noqa: E402
 
-LEVELS = ["levels/01_one_push.txt", "levels/02_two_boxes.txt"]
+LEVELS = ["levels/01_one_push.txt", "levels/02_two_boxes.txt", "levels/03_the_corner_waiting.txt"]
 
 
 def classifier(name):
@@ -105,8 +105,15 @@ def main():
     print(f"  ARTIFACT    {os.path.relpath(out_path, HERE)}   <- owned by this run alone")
     print(f"  legend      {R.legend()}   digest {R.legend_digest()}   <- travels in every cell")
     print(f"  population DERIVED from {R.MODELS}: {len(pop)} entrants at a spread across the size range")
-    print(f"  levels: {len(LEVELS)} (verified set -- the third level is REPORTED AS ABSENT, not faked)")
+    print(f"  levels      {len(LEVELS)}  ({', '.join(os.path.basename(l) for l in LEVELS)})")
     print(f"  criteria frozen in PREREG_sokoban.md BEFORE this run. No time limit; the cap is the budget.")
+    print()
+    # DERIVED, NOT TYPED. This line used to read "the third level is REPORTED AS ABSENT, not faked" and it
+    # stayed there after the third level was WRITTEN. A hand-typed scope claim beside a growing list is a
+    # second copy of the truth, and this one made a TRUE sentence FALSE without anything editing it -- the
+    # same defect as the read-control caption and the prereg's `unrecognised`.
+    print(f"  LEVEL SET: {len(LEVELS)} of the verified set. Whether the set is COMPLETE is stated by the")
+    print(f"  registry (verify_levels.py), never by a sentence in the runner.")
     print()
 
     meta = {"run_id": run_id, "legend": R.legend(), "legend_digest": R.legend_digest(),

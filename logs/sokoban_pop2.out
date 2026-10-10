@@ -1,0 +1,17 @@
+================================================================================================
+SOKOBAN -- POPULATION RUN
+================================================================================================
+  RUN ID      20261010-072130
+  ARTIFACT    probes/SOKOBAN_RUN_20261010-072130.json   <- owned by this run alone
+  legend      new   digest 0d86057c46d4c83b   <- travels in every cell
+  population DERIVED from /home/chilly1/moltbook_pipeline/models: 5 entrants at a spread across the size range
+  levels: 2 (verified set -- the third level is REPORTED AS ABSENT, not faked)
+  criteria frozen in PREREG_sokoban.md BEFORE this run. No time limit; the cap is the budget.
+
+  LFM2-350M-Extract-Q4_K_M       [extraction / tool] 01_one_push.txt        ...
+      ended=commands_exhausted solved=False moves=  0  blocked=  0 not_an_action= 40 give_up=0
+  LFM2-350M-Extract-Q4_K_M       [extraction / tool] 02_two_boxes.txt       ...
+      ended=commands_exhausted solved=False moves=  0  blocked=  0 not_an_action= 40 give_up=0
+  granite-3.3-2b-instruct-crit   [instruction-tuned] 01_one_push.txt        ...
+      ended=solved             solved=True  moves=  1  blocked=  2 not_an_action=  0 give_up=0
+  granite-3.3-2b-instruct-crit   [instruction-tuned] 02_two_boxes.txt       ...
