@@ -48,6 +48,54 @@ HARNESS = "handicap-arena"
 VERSION = "1.0"
 EVENT = "DIG DUG"
 CARD_VERSION = "digdug_v1"
+
+
+# ---------------------------------------------------------------------------
+# THE SAMPLER GRAMMAR (GBNF) -- A FROZEN ARTIFACT, AND THE FIX FOR AN UNWINNABLE FORMAT
+# ---------------------------------------------------------------------------
+# Standing demand: the answer format was UNWINNABLE BY PROMPT ALONE. A real 4B answered with a JSON
+# document whose "direction" field HELD OUR OWN ALPHABET LINE as a value -- the letter was in there and
+# the reader correctly refused to open a JSON object. The prompt already said a word, a number, two
+# letters or a sentence is not an answer. An explicit imperative shape line: no change. /no_think: no
+# change. A GBNF GRAMMAR ON THE SAMPLER: legal token on the first try, 01 -> 'GIVE UP' 3 of 3,
+# 04 -> 'U'. The constraint belongs where the sampling happens, not in the prose.
+#
+# AND IT LIVES INSIDE THE CABINET, NOT AT THE REPOSITORY ROOT, ON PURPOSE: the cabinet is a git
+# worktree and could not reach the root copy. A path that resolves on one machine and not another is
+# the portability failure the conformance package exists to prevent, so the artifact travels with the
+# cabinet that samples under it.
+SAMPLER_GRAMMAR_FILE = os.path.join(HERE, "FROZEN_GBNF_sampler_grammar.gbnf")
+
+
+def sampler_grammar():
+    """The GBNF string, READ FROM THE FROZEN FILE -- never from memory, never typed here.
+
+    A grammar restated in code is a second copy of a frozen thing, and the two drift silently.
+    """
+    with open(SAMPLER_GRAMMAR_FILE, encoding="utf-8") as fh:
+        return fh.read()
+
+
+def sampler_grammar_record():
+    """The sampler grammar, for the bundle: the string AND its digest.
+
+    Two bundles sampled under different grammars are not the same measurement, and until the
+    grammar is IN the file nobody can tell. Same rule as the read grammar's record.
+    """
+    try:
+        text = sampler_grammar()
+    except OSError as exc:
+        return {"sampler_grammar": None, "sampler_grammar_sha256": None,
+                "sampler_grammar_note":
+                    "NO GRAMMAR: %s. A grammar that could not be READ is not the same "
+                    "thing as a grammar that was not WANTED, and this says which."
+                    % exc}
+    return {"sampler_grammar_file": os.path.basename(SAMPLER_GRAMMAR_FILE),
+            "sampler_grammar": text,
+            "sampler_grammar_sha256": hashlib.sha256(text.encode()).hexdigest(),
+            "sampler_grammar_bytes": len(text.encode()),
+            "sampler_grammar_role": "sent on EVERY request to /completion as `grammar`, "
+                                    "constraining sampling -- not a description of it"}
 TASKS = os.path.join(HERE, "tasks", "digdug_v1.json")
 
 #: [A14] DECLARED instrument parameter, in every bundle.
@@ -598,12 +646,16 @@ class ModelEntrant(Entrant):
     entrant_is_a_model = True
 
     def __init__(self, model_path=None, server_url="http://127.0.0.1:8080",
-                 max_tokens=8, temperature=0.0, timeout=120):
+                 max_tokens=8, temperature=0.0, timeout=120, grammar=True):
         self.model_path = model_path
         self.server_url = server_url.rstrip("/")
         self.max_tokens = max_tokens
         self.temperature = temperature
         self.timeout = timeout
+        # THE SAMPLER GRAMMAR IS A DECLARED PARAMETER, NOT A HARDCODED ONE.  A run with it and a
+        # run without it are two different measurements, and the record has to be able to say which
+        # one happened.  Default ON, because with it OFF the format was measurably unwinnable.
+        self.grammar = grammar
 
     # -- admission ----------------------------------------------------------
     def weights_record(self):
@@ -650,12 +702,19 @@ class ModelEntrant(Entrant):
             return False, rec
 
     def answer(self, view):
-        body = json.dumps({
+        payload = {
             "prompt": view["prompt"],
             "n_predict": self.max_tokens,
             "temperature": self.temperature,
             "stop": ["\n\n", "\nLevel:", "\nThe board now:"],
-        }).encode("utf-8")
+        }
+        # THE CONSTRAINT GOES WHERE THE SAMPLING HAPPENS.  The prompt asked for the shape in WORDS
+        # and the model answered with a JSON object whose field held our own alphabet line as a
+        # VALUE -- the letter was in the output and the reader correctly refused to open a JSON
+        # document.  A prompt can be argued with; a sampler grammar cannot.
+        if self.grammar:
+            payload["grammar"] = sampler_grammar()
+        body = json.dumps(payload).encode("utf-8")
         req = urllib.request.Request(self.server_url + "/completion",
                                      data=body,
                                      headers={"Content-Type":
@@ -948,6 +1007,28 @@ def build_bundle(entrant_name, entrant, result, items, reasoning, gpu,
             },
             "hardware": host_block(),
             "grammar": digdug_reader.grammar_as_record(),
+            # THE SAMPLER GRAMMAR, ALONGSIDE THE READ GRAMMAR -- they are two different things and
+            # a record that carries one without the other cannot be reproduced.  The READ grammar
+            # says how an answer is interpreted; THIS says what the model was allowed to emit.
+            "sampler_grammar": sampler_grammar_record(),
+            # ASK 3: reasoning AND max-tokens, PER RUN, in the record.  Both are known to matter:
+            # --reasoning is a NO-OP for granite (measured), thinking OFF answered 5/5 where the
+            # default produced nothing, and a token ceiling can cut the answer itself.  A run whose
+            # ceiling is not in its record cannot be compared with one whose ceiling differs.
+            "run_settings": {
+                "reasoning": reasoning,
+                "reasoning_source": "the --reasoning argument, or DEFAULT_REASONING=%r when it "
+                                    "was not passed -- 'unset' is a THIRD value and means "
+                                    "nobody declared it" % DEFAULT_REASONING,
+                "max_tokens": getattr(entrant, "max_tokens", None),
+                "max_tokens_note": ("this entrant has no token ceiling -- it is not a model, so "
+                                    "there is nothing to record.  Stated rather than left "
+                                    "empty.")
+                                   if not hasattr(entrant, "max_tokens") else
+                                   "the ceiling this model's answers were cut at",
+                "temperature": getattr(entrant, "temperature", None),
+                "sampler_grammar_enabled": getattr(entrant, "grammar", None),
+            },
             "rounds": {
                 "R_digdug_levels": dict(
                     sc, kind="grid_puzzle_destructive_search",

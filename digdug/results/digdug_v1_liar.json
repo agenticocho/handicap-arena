@@ -1912,5 +1912,13 @@
    "weights_sha256": null
   }
  ],
- "version": "1.0"
+ "version": "1.0",
+ "instrument_era": {
+  "era": "pre-sampler-grammar",
+  "what_this_means": "This bundle was produced by the DIG DUG instrument BEFORE the sampler grammar existed. A model could then answer only in a format this instrument could not read: a real 4B answered with a JSON document whose 'direction' field held OUR OWN ALPHABET LINE as a VALUE -- the letter was in the output and the reader correctly refused to open a JSON object. So every MODEL cell in this bundle measures the UNWINNABLE FORMAT, not the model. The non-model entrants (reference, and the code entrants) are unaffected: they never go through a sampler.",
+  "not_superseded_because": "These are not wrong and they are not deleted. They are evidence of a DIFFERENT INSTRUMENT. The first run of a cabinet is asterisked, never removed -- a number that vanishes cannot be checked by anyone.",
+  "successor": "From the next freeze onward the sampler grammar (FROZEN_GBNF_sampler_grammar.gbnf, sha256 33598f79118f2dd9...) is sent on EVERY request to /completion, and the bundle records the string and its digest under 'sampler_grammar'. The re-freeze that introduces it carries its own note; this field marks the other side of that boundary.",
+  "asterisked": "2026-10-10",
+  "asterisked_by": "ocho, at Tiel's instruction"
+ }
 }

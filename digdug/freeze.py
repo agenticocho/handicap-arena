@@ -229,8 +229,18 @@ def write_tokens(contract_path=CONTRACT):
 
 
 def main(argv=None):
-    ap = argparse.ArgumentParser(description="freeze the DIG DUG contract")
-    ap.add_argument("--check", action="store_true")
+    ap = argparse.ArgumentParser(
+        description="freeze the DIG DUG contract -- CHECKS BY DEFAULT")
+    # A GUARD COMMAND MUST NOT PERFORM THE GUARDED ACTION WHEN YOU INVOKE IT TO INSPECT THE GUARD.
+    # This used to write FROZEN.json when given no arguments, so `python3 freeze.py` -- the obvious way
+    # to see the gate's verdict -- silently re-stamped the tree, superseding the provenance of every
+    # bundle already on disk. Running it to WATCH it refuse, and having it succeed instead, is a
+    # silence in the direction of a thawed tree. Checking is now the default; stamping is opt-in.
+    ap.add_argument("--check", action="store_true",
+                    help="recompute and compare (the DEFAULT -- kept so existing callers still work)")
+    ap.add_argument("--write", action="store_true",
+                    help="STAMP THE TREE.  The ONLY invocation that writes FROZEN.json, and it "
+                         "supersedes the provenance of every bundle produced before it.")
     ap.add_argument("--write-tokens", action="store_true")
     a = ap.parse_args(argv)
     if a.write_tokens:
@@ -238,9 +248,12 @@ def main(argv=None):
         print("token block %s" % ("regenerated" if ok else "NOT WRITTEN -- "
                                   "the contract has no marked block"))
         return 0 if ok else 1
-    if a.check:
+    if not a.write:
         ok, why = verify()
         print(why)
+        if not a.check:
+            print("  NOT STAMPED: this run only CHECKED.  Pass --write to freeze "
+                  "-- and know that it supersedes every bundle already on disk.")
         return 0 if ok else 1
     rec = write_record()
     print("FROZEN at %s" % rec["frozen_at"])
