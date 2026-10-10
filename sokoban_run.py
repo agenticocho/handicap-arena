@@ -372,10 +372,13 @@ def run(entrant, level_path, cap, port):
     st = S.parse(level)
 
     os.makedirs(os.path.join(HERE, "logs"), exist_ok=True)
-    # THE ARM IS IN THE FILENAME. Without it the second arm overwrites the first arm's raw log -- an
-    # artifact whose identity is its path, destroyed by the next thing that writes that path. That is
-    # FINDING 018 and this is the same defect one layer down, caught before it happened this time.
-    log = os.path.join(HERE, "logs", f"SOKOBAN_{label}_{lname}_{legend()}.log")
+    # THE ARM IS IN THE FILENAME -- BOTH ARMS. It carried `legend()` and NOT the reasoning setting, so an
+    # A/B over `--reasoning` would have had arm A's raw log OVERWRITTEN BY ARM B's, and the only evidence of
+    # what each arm actually sent would have been gone. THAT IS FINDING 018 AND 020 A THIRD TIME, caught
+    # this time before the run rather than after -- and caught because the filename was READ rather than
+    # assumed, the same way the read-control caption and the batch's scope sentence were caught.
+    log = os.path.join(HERE, "logs",
+                       f"SOKOBAN_{label}_{lname}_{legend()}_rea-{REASONING}.log")
     srv = subprocess.Popen(server_argv(entrant, 4096, port),
                            stdout=open(log, "w"), stderr=subprocess.STDOUT)
     base = f"http://127.0.0.1:{port}"
@@ -404,18 +407,28 @@ def run(entrant, level_path, cap, port):
 
         tokens, turns = [], []
         cur, history = S.render(st), []
+        missing_values = 0
         for i in range(cap):
             text, secs, nt, hit, source = ask(base, cur, history)
             tok = first_token(text)
             tokens.append(tok)
+            is_missing = (source == "capped-deliberation-missing-value")
+            if is_missing:
+                missing_values += 1
             turns.append({"ply": i, "raw": text[:400], "token": tok, "secs": round(secs, 1),
                           "gen_tokens": nt, "budget_hit": hit, "answer_field": source,
                           # A MISSING VALUE IS NOT AN ANSWER. The harness produced this emptiness, so it is
                           # recorded as missing rather than scored -- never an illegal move, never a zero.
-                          "missing_value": source == "capped-deliberation-missing-value",
+                          "missing_value": is_missing,
                           "board": cur})
             history.append(tok)
             if not tok:
+                # AN EMPTY ANSWER ENDS THE RUN, AND THE REASON IS NAMED RATHER THAN IMPLIED.
+                #
+                # `commands_exhausted` WOULD BE A FALSE STATEMENT -- this run used ONE command, not its
+                # allocation. And that difference is not cosmetic: it changes the DENOMINATOR, and a rate
+                # over `attempted` can be improved by quitting early. So the cell says WHICH termination it
+                # was, and the reader is not left to infer forty turns from a one-turn cell.
                 break
             # STEP THE SIMULATOR, so the next screen is the truth rather than the model's belief about it
             nxt, _outcome = S.step(st, tok.strip().upper()) if (
@@ -426,6 +439,13 @@ def run(entrant, level_path, cap, port):
                 break
 
         r = S.play(level, tokens)
+        # THE TERMINATION IS NAMED BY THE PATH THAT PRODUCED IT, and a harness-produced empty gets its own
+        # name because "it could not answer" and "we cut it off" are different findings.
+        if not r["solved"] and missing_values and missing_values == len(turns):
+            r["ended"] = "budget_confounded"
+            r["ended_why"] = ("every command was an empty answer the HARNESS produced: the model "
+                              "deliberated into the ceiling and never reached an answer. NOT a capability "
+                              "result until it is re-run with room or at a setting that stops deliberating.")
         r.update({"entrant": label, "level": lname, "loaded": True, "load_s": round(load_s, 1),
                   "turns": turns, "cap": cap, "final_screen": cur,
                   "legend": legend(), "legend_digest": legend_digest(),
@@ -459,6 +479,12 @@ def run(entrant, level_path, cap, port):
                   "kind": "model",
                   "unreadable": r.get("not_an_action", 0),
                   "unreadable_is_the_aggregate_of": "not_an_action (grammar §2), per turn",
+                  # AND INSIDE `unreadable` THERE IS A SUBSET THE HARNESS PRODUCED. Both are non-answers and
+                  # both are INSIDE the denominator (A6) -- but "the model answered badly" and "we cut it
+                  # off" are different findings and one has already been published as the other.
+                  "missing_values": missing_values,
+                  "missing_values_are_a_subset_of": "unreadable -- the harness produced these, the model "
+                                                    "produced the rest",
                   # A7: OUTSIDE the denominator and reported separately. This cell PLAYED, so it is 0; the
                   # run-level count of cells that never started lives in the run block.
                   "never_started": 0,
