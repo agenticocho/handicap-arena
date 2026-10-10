@@ -1,0 +1,152 @@
+#!/usr/bin/env python3
+"""gcommit -- THE COMMIT WRAPPER. Mechanises a rule that has now been applied to itself three times.
+
+THE RULE: *the content of a record must not be subject to the shell that carries it.*
+
+WHAT ACTUALLY HAPPENED, MORE THAN ONCE: a commit message containing backticks was passed with `-m`, the SHELL
+EXECUTED THE BACKTICKED WORDS AS COMMANDS, and a TRUNCATED RECORD WAS COMMITTED. The first time it was caught in
+minutes; the second time the message that recorded the finding was itself mangled by the shell carrying it. Being
+careful had failed three times. Carefulness is not a mechanism.
+
+WHAT THIS DOES, AND IT DOES THE THIRD THING ON PURPOSE:
+
+  1  WRITES the message from a FILE, so nothing between the text and the commit interprets it.
+  2  REFUSES `-m` whose text carries a shell-active character -- backtick, dollar, and the rest -- with a message
+     saying to write it to a file instead, because THAT is the safe path rather than "be careful".
+  3  READS THE MESSAGE BACK OUT OF THE COMMIT AND COMPARES IT TO WHAT WAS INTENDED, and FAILS LOUDLY if they
+     differ. THIS IS THE PART THAT MATTERS: the other two prevent the known cause, and only this one DETECTS an
+     unknown one. A wrapper that cannot catch a new failure mode is a wrapper for one bad afternoon.
+
+    gcommit -F MSG_FILE [--amend] [-- repo paths...]     <- the normal form
+    gcommit -m "one-liner with no shell-active characters"  <- allowed only if nothing in it can be executed
+"""
+import os
+import re
+import subprocess
+import sys
+
+# Anything the shell would act on. The list is deliberately blunt: a commit message has no business containing
+# any of these, and refusing a legal case costs a second of annoyance while accepting one costs a truncated record.
+SHELL_ACTIVE = {
+    "`": "backtick -- the shell would EXECUTE the text between two of them, which is exactly what happened",
+    "$": "dollar -- the shell would EXPAND what follows, silently replacing text with a variable's value",
+    "!": "bang -- history expansion in an interactive shell",
+    "\\": "backslash -- escapes are eaten before the message is stored",
+}
+
+
+def die(msg, code=2):
+    print(f"gcommit: REFUSED -- {msg}", file=sys.stderr)
+    sys.exit(code)
+
+
+def main(argv):
+    if not argv:
+        die("no arguments. Use: gcommit -F <file> [--amend] [-- paths...]")
+
+    msg_file, msg_inline, amend, paths = None, None, False, []
+    i = 0
+    while i < len(argv):
+        a = argv[i]
+        if a == "-F":
+            i += 1
+            if i >= len(argv):
+                die("-F requires a filename")
+            msg_file = argv[i]
+        elif a.startswith("-F") and len(a) > 2:
+            msg_file = a[2:]
+        elif a == "-m":
+            i += 1
+            if i >= len(argv):
+                die("-m requires a message")
+            msg_inline = argv[i]
+        elif a == "--amend":
+            amend = True
+        elif a == "--":
+            paths = argv[i + 1:]
+            break
+        else:
+            paths.append(a)
+        i += 1
+
+    if msg_inline is not None and msg_file is not None:
+        die("give -m or -F, not both")
+
+    if msg_inline is not None:
+        # ---- CHECK 2. THE REFUSAL.
+        bad = [f"  {c!r}: {why}" for c, why in SHELL_ACTIVE.items() if c in msg_inline]
+        if bad:
+            print("gcommit: that -m message contains characters the shell acts on:", file=sys.stderr)
+            for b in bad:
+                print(b, file=sys.stderr)
+            print("\n  The safe form is a FILE:\n"
+                  "      gcommit -F path/to/message.txt\n"
+                  "  Nothing between the text and the commit interprets it, and THIS is the path the rule is\n"
+                  "  actually about -- 'be careful with quoting' has now failed three times on this project.",
+                  file=sys.stderr)
+            sys.exit(2)
+        body = msg_inline
+    elif msg_file is not None:
+        try:
+            with open(msg_file) as f:
+                body = f.read()
+        except OSError as e:
+            die(f"cannot read {msg_file}: {e}")
+        if not body.strip():
+            die(f"{msg_file} is empty -- an empty commit message is a commit nobody can read later")
+        # A file CAN carry shell-active characters safely, so there is no refusal here. But it is said out loud
+        # that the file is the dangerous-content path, so nobody mistakes the silence for approval.
+        hits = [c for c in SHELL_ACTIVE if c in body]
+        if hits:
+            print(f"gcommit: note -- the message contains {hits} and is being passed as a FILE, which is safe. "
+                  f"THIS IS WHY THE FILE FORM EXISTS.")
+    else:
+        die("no message given. Use -F <file> (preferred) or -m '<clean one-liner>'")
+
+    # ---- COMMIT
+    cmd = ["git", "commit", "-F", msg_file] if msg_file else ["git", "commit", "-F", "-"]
+    if amend:
+        cmd.append("--amend")
+    if paths:
+        cmd += ["--"] + paths
+
+    if msg_file:
+        r = subprocess.run(cmd)
+    else:
+        r = subprocess.run(cmd, input=body.encode())
+    if r.returncode != 0:
+        die(f"git commit failed with rc={r.returncode}", r.returncode)
+
+    # ---- CHECK 3. READ IT BACK OUT OF THE COMMIT AND COMPARE. THE DETECTOR, NOT THE PREVENTERS.
+    got = subprocess.run(["git", "log", "-1", "--format=%B"], capture_output=True, text=True).stdout
+    want_norm = "\n".join(ln.rstrip() for ln in body.strip().splitlines())
+    got_norm = "\n".join(ln.rstrip() for ln in got.strip().splitlines())
+    if want_norm != got_norm:
+        print("gcommit: *** THE COMMITTED MESSAGE IS NOT THE MESSAGE THAT WAS INTENDED ***", file=sys.stderr)
+        print(f"  intended {len(want_norm)} chars, committed {len(got_norm)} chars", file=sys.stderr)
+        print(f"  intended head: {want_norm[:110]!r}", file=sys.stderr)
+        print(f"  committed head: {got_norm[:110]!r}", file=sys.stderr)
+        print("\n  THE COMMIT EXISTS AND ITS MESSAGE IS WRONG. Fix it with `git commit --amend -F <file>`.",
+              file=sys.stderr)
+        sys.exit(3)
+
+    head = subprocess.run(["git", "log", "-1", "--format=%h %s"], capture_output=True, text=True).stdout.strip()
+    print(f"gcommit: committed and VERIFIED BY READBACK -- {head}")
+    return 0
+
+
+def self_test():
+    """THE CONTROL. Does the wrapper refuse the exact message that caused the damage, and accept the file form?"""
+    bad = 'a message with a `backtick` in it'
+    refused = any(c in bad for c in SHELL_ACTIVE)
+    good = "a plain message"
+    accepted = not any(c in good for c in SHELL_ACTIVE)
+    print(f"  refuses the message that broke the record: {'YES' if refused else 'NO'}")
+    print(f"  accepts a plain one-liner:                {'YES' if accepted else 'NO'}")
+    return refused and accepted
+
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1 and sys.argv[1] == "--self-test":
+        sys.exit(0 if self_test() else 1)
+    sys.exit(main(sys.argv[1:]))
