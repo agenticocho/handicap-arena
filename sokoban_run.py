@@ -34,6 +34,8 @@ sys.path.insert(0, HERE)
 import sokoban as S                                                     # noqa: E402
 # THE ONE READER OF RECORD -- IMPORTED, NEVER REIMPLEMENTED (RULING 79).
 from answer_reader import read_answer                                   # noqa: E402
+# RULING 82 -- the failure names the HOLDER, not the model.
+from vram_holder import holder_sentence                                 # noqa: E402
 
 LLAMA = "/home/chilly1/llama.cpp/build/bin/llama-server"
 MODELS = os.environ.get("ARENA_MODELS") or os.path.expanduser("~/moltbook_pipeline/models")
@@ -439,7 +441,13 @@ def run(entrant, level_path, cap, port):
             if srv.poll() is not None:
                 return {"entrant": label, "entrant_digest": model_digest(entrant),
                         "level": lname, "loaded": False,
-                        "why": f"server exited rc={srv.returncode}"}
+                        # RULING 82: THE FAILURE NAMES THE HOLDER, NOT THE MODEL. A bare `failed to load` is
+                        # indistinguishable from a broken model, a bad preset or a corrupt file -- and an agent
+                        # will retry forever while the operator reads a load error. Measured on this box: five
+                        # failed loads whose real cause was a live seat lease holding 5.5 of 8 GB under a policy
+                        # that never reclaims it. ONE SENTENCE IS THE DIFFERENCE BETWEEN AN INFRASTRUCTURE
+                        # CONDITION AND A MODEL FAILURE, and the record is the only place that sentence lives.
+                        "why": f"server exited rc={srv.returncode}.{os.linesep}{holder_sentence()}"}
             try:
                 urllib.request.urlopen(base + "/health", timeout=3).read()
                 up = True
@@ -449,7 +457,7 @@ def run(entrant, level_path, cap, port):
         if not up:
             return {"entrant": label, "entrant_digest": model_digest(entrant),
                     "level": lname, "loaded": False,
-                    "why": "never answered /health in 600 s"}
+                    "why": f"never answered /health in 600 s.{os.linesep}{holder_sentence()}"}
         load_s = time.time() - t0
 
         # THE PROBE RUNS BEFORE A SINGLE GAME TURN. Ask once, briefly: what setting is this model ACTUALLY
