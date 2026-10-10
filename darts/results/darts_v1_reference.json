@@ -1,7 +1,7 @@
 {
   "harness": "handicap-arena",
   "version": "1.1",
-  "generated": "2026-10-10T00:26:41Z",
+  "generated": "2026-10-10T14:47:28Z",
   "event": "DARTS",
   "card_version": "darts_v1",
   "results": [
@@ -13,7 +13,7 @@
       "entrant_is_a_model": false,
       "weights_sha256": null,
       "weights_note": "no weights: this entrant is code, not a GGUF. The oracle is arithmetic and the entrant played no model.",
-      "solver_source_sha256": "b79e84780c72227286fc63b9497972ccfc483192dfdf2f55a394fe54a3ea828f",
+      "solver_source_sha256": "47e7f78593705c1c3024aa7630b90268df90c664d025b32e564ae8498a9b4bc4",
       "division": null,
       "division_note": "NOT MEASURED -- a footprint is a property of weights; this entrant has none. Never 0.00.",
       "cord": null,
@@ -24,6 +24,8 @@
         "ctx": null,
         "n_gpu_layers": null,
         "server_flags": null,
+        "reasoning": "on",
+        "reasoning_note": "DECLARED per-run instrument field [A11]; 'unset' is NOT 'off' and must not be pooled with a declared run.",
         "config_note": "RUN_FACTS that do not exist for a solver are null, not omitted and not zeroed. [A2]"
       },
       "admission": {
@@ -53,7 +55,7 @@
               "verified_sum": 40,
               "state": "PASS",
               "reason": null,
-              "secs": 0.0015
+              "secs": 0.0016
             },
             "D1.2_two_dart_checkout": {
               "remaining": 100,
@@ -65,7 +67,7 @@
               "verified_sum": 100,
               "state": "PASS",
               "reason": null,
-              "secs": 0.0031
+              "secs": 0.0033
             },
             "D1.3_impossible_control": {
               "remaining": 169,
@@ -77,7 +79,7 @@
               "verified_sum": null,
               "state": "PASS",
               "reason": null,
-              "secs": 0.003
+              "secs": 0.0032
             }
           },
           "started": 3,

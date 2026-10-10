@@ -494,7 +494,7 @@ def cmd_run(args):
 # 5b. THE INSTRUMENT CHECK -- prove the HARNESS, enter nothing
 # ---------------------------------------------------------------------------
 
-def instrument_check(out_dir=None):
+def instrument_check(out_dir=None, reasoning="unset"):
     """[INSTRUMENT CHECK]  Prove the harness can RUN the event, with a
     known-good solver as the entrant -- NOT a contest.
 
@@ -511,7 +511,13 @@ def instrument_check(out_dir=None):
     here = os.path.dirname(__file__)
     items = load_items(os.path.join(here, "tasks", "darts_v1.json"))
     result = run_entrant(ReferenceSolver(), items)
-    bundle = build_bundle("reference", result, items, "tasks/darts_v1.json")
+    # [A11] the DECLARED reasoning instrument setting is recorded here too: the
+    # instrument-check bundle must be the SAME instrument as the reference run,
+    # or the two are not comparable.  Before this, instrument-check hard-coded
+    # the 'unset' default while `run` recorded 'on', so the two bundles for the
+    # same event declared different instruments.
+    bundle = build_bundle("reference", result, items, "tasks/darts_v1.json",
+                          reasoning=reasoning)
     ent = bundle["results"][0]
     ent["certification"] = ("INSTRUMENT CHECK -- the solver-as-entrant path; "
                             "proves the harness and ENTERS NOTHING. Not a contest.")
@@ -707,13 +713,19 @@ def main():
     ic = sub.add_parser("instrument-check",
                         help="prove the harness with a solver entrant; enters nothing")
     ic.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "results"))
+    # [A11] the SAME declared instrument field as `run`: the instrument check
+    # must record the reasoning setting it establishes the harness under, so its
+    # bundle is comparable to the reference run (both 'on' for DARTS).
+    ic.add_argument("--reasoning", default="unset", choices=("on", "off", "unset"),
+                    help="DECLARED per-run reasoning instrument setting [A11]; "
+                         "recorded in the bundle. 'unset' is NOT 'off'.")
     args = ap.parse_args()
     if args.self_test:
         return self_test()
     if args.cmd == "run":
         return cmd_run(args)
     if args.cmd == "instrument-check":
-        return instrument_check(args.out)
+        return instrument_check(args.out, reasoning=getattr(args, "reasoning", "unset"))
     ap.print_help()
     return 0
 
