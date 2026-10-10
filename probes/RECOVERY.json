@@ -1,0 +1,22 @@
+{
+ "alias": "brain",
+ "prediction": "BRANCH 2 -- patches the symptom",
+ "turn1": {
+  "field": "content",
+  "tokens": 186,
+  "compiles": false,
+  "matched": 0,
+  "total": 0,
+  "error": "SyntaxError: unterminated string literal (detected at line 16) (detected at line 16)\n                    line.append('+ if cell in targets else '@')"
+ },
+ "turn2": {
+  "field": "content",
+  "tokens": 187,
+  "compiles": true,
+  "matched": 22,
+  "total": 22,
+  "error": null
+ },
+ "branch": "BRANCH 1",
+ "code_turn2": "def render_position(pos):\n    walls = pos['walls']\n    boxes = pos['boxes']\n    targets = pos['targets']\n    player = pos['player']\n    rows = pos['rows']\n    cols = pos['cols']\n    out = []\n    for r in range(rows):\n        line = []\n        for c in range(cols):\n            cell = (r, c)\n            if cell in walls:\n                line.append('#')\n            elif cell == player:\n                line.append('+' if cell in targets else '@')\n            elif cell in boxes:\n                line.append('*' if cell in targets else '$')\n            elif cell in targets:\n                line.append('.')\n            else:\n                line.append(' ')\n        out.append(''.join(line))\n    return '\\n'.join(out)\n"
+}
