@@ -39,26 +39,52 @@ MAX_TOKENS = 64                     # ONE LETTER NEEDS A FEW TOKENS, and a cap t
                                     # THE CEILING, not the count used -- both travel in the record.
 
 # ==================================================================================================
-# THE REASONING SETTING IS A CONFIG FIELD, AND IT IS SET DELIBERATELY HERE.
+# THE REASONING SETTING IS DECLARED, PER CABINET, WITH A REASON -- AND AN UNDECLARED RUN IS REFUSED.
 #
-# MEASURED ELSEWHERE, ON THE SAME WEIGHTS: Ornith-1.5-9B with thinking ON returned 2314 tokens and NO
-# COMMITMENT on a real chess position. The same model with thinking OFF held a format, carried instructions
-# across turns, and compressed accurately with zero padding. SAME MODEL, TWO SETTINGS, OPPOSITE OUTCOMES.
+# THE CHAIR'S REFINEMENT, AND IT CORRECTS A GENERALISATION I HAD ALREADY CODED: "off" is NOT the right value
+# in general. It is the right value FOR THIS CABINET, because of what this cabinet asks for.
 #
-# So "the model cannot do it" and "the model was deliberating with no stop condition" are DIFFERENT FINDINGS,
-# and a series at one setting is not comparable to a series at another -- which is the same reason `ctx`,
-# `temperature` and `ngl` are recorded.
+#   thinking OFF   held a short-answer format perfectly (two turns, four rules carried across, zero padding)
+#   thinking ON    appears to IMPROVE the same model's ARITHMETIC
 #
-# EVERY CABINET HERE ASKS FOR A SHORT ANSWER: one letter, one digit, one word. That is the format a
-# non-thinking model is built for and the format a thinking model will fight. So `off` is the deliberate
-# setting, not a default anybody inherited.
+# So the rule is narrower and it is an INSTRUMENT CHOICE:
 #
-# AND IT APPLIES TO FUTURE RUNS. The runs already taken were taken at `auto`, and their numbers STAND AS
-# RECORDED -- a criterion change after the number is a file, not a criterion.
+#   ONE LETTER or ONE WORD answers        -> off. Deliberation occupies the answer slot and the ceiling eats
+#                                            it. Measured: 2314 tokens, no move.
+#   MULTI-STEP ARITHMETIC, exact sums     -> on, probably. That is where it helps. (DARTS, not this cabinet.)
+#
+# AND IT MUST BE DECLARED, NOT DEFAULTED: AN UNRECORDED DEFAULT IS INDISTINGUISHABLE FROM A DECISION, AND
+# ONLY ONE OF THOSE IS EVIDENCE. My first version of this block DID exactly that -- it read an env var and
+# fell back to "off". That fallback was a decision nobody made, wearing a default's clothes.
+#
+# THE FIRST VERSION OF *THIS* BLOCK WAS THEREFORE THE SAME DEFECT AS THE ONE IT WAS WRITTEN TO FIX.
 # ==================================================================================================
-REASONING = os.environ.get("SOKOBAN_REASONING", "off").strip().lower()
-if REASONING not in ("on", "off", "auto"):
-    raise SystemExit(f"SOKOBAN_REASONING must be on|off|auto, got {REASONING!r}")
+REASONING_DECLARED = "off"
+REASONING_DECLARED_IN = "PREREG_sokoban.md"
+REASONING_RATIONALE = (
+    "Sokoban's answer is ONE LETTER. A thinking model puts deliberation where the answer belongs and the "
+    "ceiling eats it -- measured on the same weights: 2314 tokens and no commitment. This cabinet is the "
+    "one-letter case, so the setting is off. MISSILE COMMAND is the same case (one integer). DARTS is the "
+    "opposite (exact checkout arithmetic), and a harness that proves the SHAPE should be able to prove it at "
+    "either setting -- so it takes this as a PARAMETER rather than a constant."
+)
+
+# THE OVERRIDE IS FOR EXPERIMENTS, NOT FOR DEFAULTS. It is the instrument-check path's argument, so the
+# harness can prove the shape at either setting -- and when it is used, THE RECORD SAYS SO.
+REASONING_OVERRIDE = os.environ.get("SOKOBAN_REASONING_TEST_ARM", "").strip().lower() or None
+if REASONING_OVERRIDE is not None and REASONING_OVERRIDE not in ("on", "off", "auto"):
+    raise SystemExit(f"SOKOBAN_REASONING_TEST_ARM must be on|off|auto, got {REASONING_OVERRIDE!r}")
+REASONING = REASONING_OVERRIDE or REASONING_DECLARED
+
+
+def reasoning_source():
+    return "override (experiment arm)" if REASONING_OVERRIDE else f"declared in {REASONING_DECLARED_IN}"
+
+
+def reasoning_changed_from_declaration():
+    """A CABINET THAT CHANGES THIS BETWEEN RUNS IS A DIFFERENT INSTRUMENT -- like a depth series or a
+    Context/Hash pair. The record states the change rather than hiding it inside a flag."""
+    return REASONING != REASONING_DECLARED
 
 
 def reasoning_argv():
@@ -261,6 +287,65 @@ def budget_signature(turns, cap):
                         if hit else "no turn hit the ceiling -- the answers are the model's own endings")}
 
 
+def dead_end_verdict(level_text, tokens, max_states=200000):
+    """DID THIS ENTRANT WALK INTO A DEAD END? Recorded BESIDE THE COUNTERS, because they cannot say.
+
+    THE GAP THIS CLOSES: `moves 4` reads as four successful actions whether they were progress or four walks
+    around a level that cannot be finished. The counters are TRUE and they are not the whole truth, and a
+    reader who only has them cannot tell the difference.
+
+    AND IT IS A PROOF ABOUT *THIS ENTRANT'S* MOVE, not a general remark about the level: the position after
+    its first action is handed to the solver, which either finds a solution or COMPLETELY ENUMERATES the
+    reachable space and finds none. An empty search is not a dead end -- BUDGET_EXHAUSTED is reported as
+    UNKNOWN, never as a fatal verdict.
+    """
+    if not tokens:
+        return {"checked": False, "why": "no tokens produced"}
+    first = (tokens[0] or "").strip().upper()
+    if len(first) != 1 or first not in ACTIONS_UDLR:
+        return {"checked": False, "first_action": tokens[0], "why": "the first token was not an action letter"}
+    import sokoban_solver as SOL
+    st = S.parse(level_text)
+    nxt, outcome = S.step(st, first)
+    if outcome not in ("moved", "pushed"):
+        return {"checked": False, "first_action": first, "why": f"the first action was {outcome}"}
+    r = SOL.solve_text(S.render(nxt), name="after-first-action", max_states=max_states)
+    v = r.get("verdict")
+    # THE PROOF LIVES IN `r["proof"]`, NOT AT THE TOP LEVEL -- and reading the wrong one made this function
+    # claim A METHOD IT HAD NOT USED. The first version said "complete enumeration" for every UNSOLVABLE,
+    # including a case the solver proved with the corner rule at the start. THE METHOD IS PART OF THE CLAIM:
+    # "1 reachable state by a sound rule" and "70 states by full enumeration" are different proofs with
+    # different strengths, and a field that reports the strength must read where the strength is written.
+    proof = r.get("proof") or {}
+    cost = r.get("cost") or {}
+    kind = proof.get("kind") or "?"
+    enumerated = proof.get("reachable_states_enumerated", cost.get("states_reachable_enumerated"))
+    if v == "UNSOLVABLE":
+        return {"checked": True, "first_action": first, "no_solution_from_here": True,
+                "proof_kind": kind,
+                "proof_rule": proof.get("rule"),
+                "reachable_states_enumerated": enumerated,
+                "states_expanded": cost.get("states_expanded"),
+                # THE READING NAMES THE METHOD THE SOLVER ACTUALLY USED, AND CLAIMS ONLY WHAT WAS RUN.
+                "reading": (f"DEAD END ON THE FIRST ACTION -- proved by {kind}"
+                            + ("; no solution exists from here"
+                               if kind == "complete_enumeration" else
+                               "; a sound, skip-only rule fired at the start, so the position is dead on a "
+                               "rule rather than on this search's exhaustion")
+                            + ". Every later counter is movement inside a position that cannot be finished.")}
+    if v == "SOLVABLE":
+        return {"checked": True, "first_action": first, "no_solution_from_here": False,
+                "still_solvable_in": r.get("moves"),
+                "reading": "still winnable after the first action"}
+    return {"checked": True, "first_action": first, "no_solution_from_here": None,
+            "unknown": True, "budget": r.get("budget"),
+            "reading": ("UNKNOWN -- the follow-up search stopped early, so this is NOT a dead end. "
+                        "'Gave up' and 'dead end' are different claims.")}
+
+
+ACTIONS_UDLR = ("U", "D", "L", "R")
+
+
 def run(entrant, level_path, cap, port):
     level = open(level_path).read()
     label = os.path.basename(entrant).replace(".gguf", "")
@@ -329,7 +414,12 @@ def run(entrant, level_path, cap, port):
                   # THE CEILING IS RECORDED SEPARATELY FROM THE COUNT USED: `max_tokens_ceiling` is what the
                   # model was allowed, `cap` is how many turns it was allowed -- two different ceilings that
                   # were previously one word, "cap".
-                  "config": {"reasoning_requested": REASONING,
+                  "config": {"reasoning": REASONING,
+                             "reasoning_source": reasoning_source(),
+                             "reasoning_declared": REASONING_DECLARED,
+                             "reasoning_declared_in": REASONING_DECLARED_IN,
+                             "reasoning_rationale": REASONING_RATIONALE,
+                             "reasoning_changed_from_declaration": reasoning_changed_from_declaration(),
                              "reasoning_argv": reasoning_argv(),
                              "reasoning_supported_by_build": True,
                              "max_tokens_ceiling": MAX_TOKENS,
@@ -341,7 +431,10 @@ def run(entrant, level_path, cap, port):
                   "reasoning_probe": probe,
                   # AND DID IT HIT THE CEILING OR COULD IT NOT ANSWER -- read BEFORE any not_an_action
                   # count is read as a capability result.
-                  "budget_signature": budget_signature(turns, MAX_TOKENS)})
+                  "budget_signature": budget_signature(turns, MAX_TOKENS),
+                  # THE COUNTERS CANNOT SAY WHETHER `moves 4` WAS PROGRESS. This can, and it travels on the
+                  # same line as them because a reader who has only the counters cannot tell the difference.
+                  "dead_end": dead_end_verdict(level, tokens)})
         return r
     finally:
         srv.terminate()

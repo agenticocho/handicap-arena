@@ -1,8 +1,8 @@
 {
  "solved": false,
  "moves": 4,
- "attempted": 8,
- "blocked": 4,
+ "attempted": 4,
+ "blocked": 0,
  "not_an_action": 0,
  "give_up": 0,
  "gave_up_at": null,
@@ -35,34 +35,6 @@
    "token": "R",
    "action": "R",
    "outcome": "moved",
-   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
-  },
-  {
-   "ply": 4,
-   "token": "R",
-   "action": "R",
-   "outcome": "blocked",
-   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
-  },
-  {
-   "ply": 5,
-   "token": "R",
-   "action": "R",
-   "outcome": "blocked",
-   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
-  },
-  {
-   "ply": 6,
-   "token": "R",
-   "action": "R",
-   "outcome": "blocked",
-   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
-  },
-  {
-   "ply": 7,
-   "token": "R",
-   "action": "R",
-   "outcome": "blocked",
    "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
   }
  ],
@@ -114,65 +86,26 @@
    "answer_field": "content",
    "missing_value": false,
    "board": "#######\n#.$#  #\n#   @ #\n#     #\n#     #\n#######"
-  },
-  {
-   "ply": 4,
-   "raw": "R",
-   "token": "R",
-   "secs": 0.2,
-   "gen_tokens": 2,
-   "budget_hit": false,
-   "answer_field": "content",
-   "missing_value": false,
-   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
-  },
-  {
-   "ply": 5,
-   "raw": "R",
-   "token": "R",
-   "secs": 0.2,
-   "gen_tokens": 2,
-   "budget_hit": false,
-   "answer_field": "content",
-   "missing_value": false,
-   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
-  },
-  {
-   "ply": 6,
-   "raw": "R",
-   "token": "R",
-   "secs": 0.2,
-   "gen_tokens": 2,
-   "budget_hit": false,
-   "answer_field": "content",
-   "missing_value": false,
-   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
-  },
-  {
-   "ply": 7,
-   "raw": "R\n\nExplanation: The player has already made moves that have placed the crate in a position where it can be pushed onto the target. The crate is currently on the top row, and the target is on the bottom row. The player can move right to push the crate onto the target.",
-   "token": "R",
-   "secs": 2.9,
-   "gen_tokens": 60,
-   "budget_hit": false,
-   "answer_field": "content",
-   "missing_value": false,
-   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
   }
  ],
- "cap": 8,
+ "cap": 4,
  "final_screen": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######",
  "legend": "new",
  "legend_digest": "0d86057c46d4c83b",
  "config": {
-  "reasoning_requested": "off",
+  "reasoning": "off",
+  "reasoning_source": "declared in PREREG_sokoban.md",
+  "reasoning_declared": "off",
+  "reasoning_declared_in": "PREREG_sokoban.md",
+  "reasoning_rationale": "Sokoban's answer is ONE LETTER. A thinking model puts deliberation where the answer belongs and the ceiling eats it -- measured on the same weights: 2314 tokens and no commitment. This cabinet is the one-letter case, so the setting is off. MISSILE COMMAND is the same case (one integer). DARTS is the opposite (exact checkout arithmetic), and a harness that proves the SHAPE should be able to prove it at either setting -- so it takes this as a PARAMETER rather than a constant.",
+  "reasoning_changed_from_declaration": false,
   "reasoning_argv": [
    "--reasoning",
    "off"
   ],
   "reasoning_supported_by_build": true,
   "max_tokens_ceiling": 64,
-  "command_cap": 8,
+  "command_cap": 4,
   "ctx": 4096,
   "n_gpu_layers": 0,
   "temperature": 0.0,
@@ -187,7 +120,7 @@
    "-ngl",
    "0",
    "--port",
-   "8795",
+   "8799",
    "--no-webui",
    "--reasoning",
    "off"
@@ -204,11 +137,21 @@
   "disagrees_with_config": false
  },
  "budget_signature": {
-  "turns": 8,
+  "turns": 4,
   "turns_that_hit_the_ceiling": 0,
   "ceiling": 64,
   "fraction_capped": 0.0,
   "all_turns_capped": false,
   "reading": "no turn hit the ceiling -- the answers are the model's own endings"
+ },
+ "dead_end": {
+  "checked": true,
+  "first_action": "U",
+  "no_solution_from_here": true,
+  "proof_kind": "sound_rule_at_the_start",
+  "proof_rule": "corner_rule: a box in a non-target corner can never move again",
+  "reachable_states_enumerated": 0,
+  "states_expanded": 0,
+  "reading": "DEAD END ON THE FIRST ACTION -- proved by sound_rule_at_the_start; a sound, skip-only rule fired at the start, so the position is dead on a rule rather than on this search's exhaustion. Every later counter is movement inside a position that cannot be finished."
  }
 }

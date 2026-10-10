@@ -109,9 +109,13 @@ C1  SCALE IS VISIBLE   at least one level solved by at least one entrant, AND at
                        the instrument; the point of run one is that the range exists.
 C2  THE FLOOR          at least one entrant solves 01_one_push (1 move). A population that cannot push a
                        single crate one square is the Sokoban version of the chess finding.
-C3  MOVES ARE A NUMBER  the move count is reported per entrant per level, with `blocked` and
-                       `unrecognised` beside it -- a score is not a score if a wall-bumper and a solver
-                       can produce the same row.
+C3  MOVES ARE A NUMBER  the move count is reported per entrant per level, with `blocked`, `not_an_action`
+                       and `give_up` beside it -- a score is not a score if a wall-bumper and a solver can
+                       produce the same row. FIELD NAMES AMENDED: this line said `unrecognised`, which was
+                       SPLIT into `not_an_action` and `give_up` at the Chair's direction, because an explicit
+                       resignation is a SIGNAL and not noise. A card that names a field the code does not
+                       have is the defect this project keeps finding; it is corrected here rather than left
+                       to be inherited.
 ```
 
 ### THE OUTCOME ROWS, WRITTEN DOWN BEFORE THE RUN
@@ -128,8 +132,53 @@ C3  MOVES ARE A NUMBER  the move count is reported per entrant per level, with `
    reason it is written in advance: it is the row that exists so a null result cannot be quietly converted
    into a positive one by changing the question.
 **5. NO MEASURED ENTRANTS** → `ERROR`, exit non-zero, not a verdict.
-**6. THE THIRD LEVEL IS ABSENT** → `C1 SCALE IS VISIBLE` cannot be evaluated as written; it is scored on
-   the levels that exist and **the level set is named as incomplete in the verdict itself.**
+**6. THE THIRD LEVEL WAS ABSENT** → *this row fired on the first run and is now AMENDED, FUTURE RUNS ONLY:
+`03_the_corner_waiting` exists, verified, with a PROVEN fatal opening move and a fatal fraction of 0.250.
+`C1 SCALE IS VISIBLE` can now be evaluated against a level set that has a dead end in it.** **THE FIRST
+RUN'S NUMBERS ARE NOT RE-SCORED** — it was taken on two levels and the third is not in it, because *a
+criterion change after the number is a file, not a criterion* — the same rule applied to the taxonomy
+amendment and the commit hash.
+
+## THE CONFIG, DECLARED BEFORE THE FIRST NUMBER — INCLUDING THE ONE THAT IS EASY TO INHERIT
+
+**THE REASONING SETTING IS A DECLARED INSTRUMENT CHOICE, NOT A DEFAULT, AND IT GETS ITS OWN LINE HERE.**
+
+```
+reasoning        off
+declared in      this file (PREREG_sokoban.md)
+rationale        Sokoban's answer is ONE LETTER. A thinking model puts deliberation where the answer
+                 belongs and the ceiling eats it -- measured on the same weights: 2314 tokens and no
+                 commitment, against a format held perfectly with it off.
+field name       config.reasoning   (+ config.reasoning_source, config.reasoning_declared_in,
+                 config.reasoning_rationale, config.reasoning_changed_from_declaration, config.reasoning_argv)
+```
+
+**AND IT IS TASK-DEPENDENT, NOT A GLOBAL RULE.** The Chair's refinement, and it corrects a generalisation
+that was briefly coded here before it was caught: **thinking OFF held a short-answer format perfectly;
+thinking ON appears to IMPROVE the same model's ARITHMETIC.** So:
+
+```
+ONE LETTER or ONE WORD answers       -> off. Deliberation occupies the answer slot and the ceiling eats it.
+MULTI-STEP ARITHMETIC, exact sums    -> on, probably. (DARTS, not this cabinet.)
+```
+
+**SOKOBAN AND MISSILE COMMAND ARE THE ONE-LETTER CASE. A CABINET THAT CHANGES THIS BETWEEN RUNS IS A
+DIFFERENT INSTRUMENT**, exactly like a depth series or a Context/Hash pair — so it sits in the same block as
+`ctx` and `temperature`, **and the record states the change rather than hiding it inside a flag.**
+
+**TWO WRITING RULES THIS PREREG ADOPTS, both learned by getting them wrong:**
+
+```
+THE CEILING IS RECORDED SEPARATELY FROM THE COUNT USED, AND FROM THE COMMAND CAP.
+  config.max_tokens_ceiling  what the model was allowed per answer
+  config.command_cap         how many answers it was allowed
+  TWO ceilings that were one word, "cap", until this line existed.
+
+A not_an_action COUNT IS NOT A CAPABILITY RESULT UNTIL THE BUDGET SIGNATURE IS READ.
+  "hit the ceiling deliberating" and "could not produce an answer" are different findings, and one has
+  already been published as the other. config.budget_signature carries the check; a capped answer that
+  came from the reasoning field is a MISSING VALUE, never a token.
+```
 
 ## FROZEN
 
