@@ -95,3 +95,8 @@ they chose** — and the rule is the part that has to be written before the numb
 - **one run, one path.** The artifact path carries a RUN ID and the run refuses a path that exists.
 - **every artifact the Chair sends is a CLAIM** until the file it names has been read, the count it quotes
   has been run, and the enforcer it cites has been found.
+
+## HOUSE FACT -- pronouns
+
+everyone on this box is male: tiel, ocho, ocho2, birdy, sokoban, missile-command, zork. HE/HIM.
+This is a fact about PEOPLE, not about a system -- no artifact records it, so it must be READ here.
