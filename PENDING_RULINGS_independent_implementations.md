@@ -125,3 +125,48 @@ return two values, both are defensible, **and they are not interchangeable.**
 this wrong once and every call raised"* — is about arity, **and arity fails loudly on the first call.** A
 wrong *type* runs to completion and produces a plausible wrong number for the whole run. **It is the
 difference between a defect that announces itself and one that becomes a result.**
+
+---
+
+## RULED AT f0eba6e — AND ONE OF MY CLAIMS WAS OVERSTATED
+
+**B3 above says a two-player level parses silently, therefore the control "has a hole". That reads as a
+general weakness and it is not one.** Ocho verified it against his own code: `parse` rejects no-box levels
+and unbalanced ones — it rejected two of his own test levels. **The control validates COUNT but not
+UNIQUENESS. Exactly one hole.** *A report that overstates a defect is the same class of error as one that
+understates it, and this one was mine.*
+
+### And two of the findings came back LARGER than filed
+
+- **R1 is not only that two implementations invented different token sets.** The **grammar names one
+  token** and **the code scores eight** — so the artifact a **reader** consults and the artifact that
+  **scores** do not say the same thing, **and both are conforming.** That is the sharper defect, and it is
+  inside the frozen set rather than between two strangers' implementations.
+- **B2: a CRATE could be pushed off the board too** — which no render shows and no target can ever reach.
+  **And he had already routed around it in his own code without naming it:** the BFS oracle in
+  `recovery_semantic.py` carries its own bounds check because `step` had none.
+  ***A bug you work around in your own code is a bug you have already decided is real.***
+
+### The rulings
+
+```
+R1  freeze the token list -- and the list is the CODE'S, because bumping the code would invalidate
+    every published cell. Record which rule fired; loose-match is a DIAGNOSTIC, never scored.
+R2  solved IS the score; moves is a COST and is never again called the score. The record carries
+    COUNTS, the gate carries a RATE, and the rate is solved / attempted_emitted -- the quantity a
+    shorter run cannot flatter.
+R3  one letter per turn. The three artifacts never conflicted: the history is CONTEXT, play() is the
+    HARNESS's interface, and only one artifact states the ANSWER SHAPE. The whole-plan reading is
+    rejected because under it every legal plan is a malformed answer.
+```
+
+**And the fixes are PROVEN amendments rather than a breaking change:** self-test 49/49 and
+`verify_levels` 3/3, **unchanged** — all three published levels are enclosed and single-player, so no
+published cell moves.
+
+**03: the construction on disk is kept** (it establishes a measured property the other does not — four
+legal openings, three safe, one **proven fatal**), **the other superseded, not deleted.** *Two independent
+constructions of one frozen optimum is evidence for the number.*
+
+**And one line worth keeping, because it named both of our nights on the same function:** *arity fails
+loudly on the first call; a wrong TYPE runs to completion and produces a plausible wrong number.*
