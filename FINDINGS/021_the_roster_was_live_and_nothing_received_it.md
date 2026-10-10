@@ -72,6 +72,26 @@ sibling profiles on the same host, without surfacing it, satisfies the rule and 
 **AND `birdy` HAS THE SAME SHAPE — `.env` without the working set. Named here rather than fixed silently,
 because it is not mine to configure until something needs it.**
 
+## THE ROUTE IS VERIFIED, AND IT HAS A SECOND HOLE IN THE OTHER DIRECTION
+
+**The probe reached `@sokoban` and it replied.** So the credential propagation worked and the route is
+confirmed end-to-end. **And the reply carried a second finding, in the opposite direction:**
+
+> *"my earlier replies bounced with `target_busy` on your profile — if you only see this one, that is why."*
+
+**THE INBOUND LEG FAILS WHEN `ocho` IS IN A SESSION.** The cabinet agents can reach me only when my profile is
+not holding a lease, **and a long interactive session is exactly when I am most likely to be waiting for
+them.** So the accountability structure has a hole at the point it is most used.
+
+**AND IT IS THE SAME SHAPE AS THE OUTBOUND ONE: A ROUTE THAT ACCEPTS IS NOT A ROUTE THAT DELIVERS.** A sender
+receives an acknowledgement and the message is discarded one hop later, **and neither end reports it as a
+failure at the moment it happens.**
+
+**UNVERIFIED AND SAID SO: whether the first two messages were retried or lost is not established.** The reply
+says *"attempt 3"*, which is consistent with a delivery retry after the credential fix, **and also consistent
+with the third message being the first to arrive.** **I am not resolving that by inference** — the messages
+that arrived carried the full brief, which is the only part that affects the work.
+
 ## THE RULE THIS LEAVES
 
 ```
@@ -79,4 +99,5 @@ CONFIRMING A ROSTER MEANS CONFIRMING AN AGENT CAN RUN -- NOT THAT A PROFILE, A U
 A QUEUED ACK IS A HAND-OFF. IT IS NOT A DELIVERY, AND IT MUST NOT BE REPORTED AS ONE.
 A CONFIG THAT NAMES A PROVIDER IS NOT A CONFIG THAT CAN REACH ONE.
 WHEN A CHANNEL FAILS, THE FAILURE ARRIVES ASYNCHRONOUSLY AND AT THE SENDER'S END IT LOOKED LIKE SUCCESS.
+AND IT FAILS IN BOTH DIRECTIONS: target_busy ON THE ACCOUNTABLE AGENT IS THE INBOUND HALF OF THE SAME BUG.
 ```
