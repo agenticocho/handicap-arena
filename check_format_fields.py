@@ -59,6 +59,22 @@ GRANDFATHERED_MARKERS = re.compile(
     r"|A7: `unreadable` is not a format field"
     r"|A7: `never_started` is not a format field)")
 
+# AND A BUNDLE THAT DECLARES ITSELF NEW-FORMAT IS NEVER GRANDFATHERED.
+#
+# THE FLAW THIS CLOSES, found by asking the question rather than by a control: the marker keys on THE FIELD
+# BEING ABSENT, so a NEW bundle that forgot one would have been grandfathered too. A RULE THAT COVERS
+# EVERYTHING COVERS NOTHING -- and the grandfather rule is for the HISTORY, not for the next run.
+#
+# The bundle already carries the evidence of which side it is on: `run_id` and `kind` are new-format fields
+# and no historical bundle has either. Presence of any one of them means THIS BUNDLE MUST COMPLY IN FULL.
+NEW_FORMAT_MARKERS = ("run_id", "kind", "freeze")
+
+
+def is_new_format(d):
+    """Does this bundle declare itself written under the ruling? If so it must carry every field, and the
+    grandfather rule cannot excuse it."""
+    return any(k in d for k in NEW_FORMAT_MARKERS)
+
 
 def _find(d, names, path="<bundle>"):
     """Walk the whole bundle for quantity keys, reporting the PATH so a nested one is located, not guessed.
@@ -178,10 +194,14 @@ def main():
         probs = check_bundle(d, t)
         if not probs:
             clean.append(t)
-        elif all(GRANDFATHERED_MARKERS.match(x) for x in probs):
+        elif all(GRANDFATHERED_MARKERS.match(x) for x in probs) and not is_new_format(d):
             # A CRITERION CHANGE AFTER THE NUMBER IS A FILE, NOT A CRITERION. A bundle taken before these
             # fields existed CANNOT carry them, and failing it would be scoring a historical run against a
             # rule written afterwards -- the defect this project refuses everywhere else.
+            #
+            # AND ONLY IF THE BUNDLE DOES NOT DECLARE ITSELF NEW-FORMAT. A bundle carrying `run_id` or
+            # `kind` is written UNDER the ruling and must carry all of it; excusing it would be the
+            # grandfather rule eating the rule.
             grandfather.append(t)
         else:
             broken.append((t, probs))
@@ -271,6 +291,24 @@ def self_test():
     ck("a NON-deterministic bundle may run 3 trials -> CLEAN",
        check_bundle({k: v for k, v in FAITHFUL.items()
                      if k not in ("deterministic", "why_one_trial")} | {"trials": 3}) == [], True)
+
+    print()
+    print("=" * 100)
+    print("[4] AND THE GRANDFATHER RULE MUST NOT EAT THE RULE")
+    print("=" * 100)
+    absence = ["A1: no `kind` -- the entrant does not say whether it is a MODEL or CODE"]
+
+    def grandfathered(d, probs):
+        return bool(probs) and all(GRANDFATHERED_MARKERS.match(x) for x in probs) and not is_new_format(d)
+
+    ck("a HISTORICAL bundle (no run_id, no kind) IS grandfathered", grandfathered({}, absence), True)
+    ck("a NEW-FORMAT bundle (has run_id) is NOT grandfathered -- it must comply",
+       grandfathered({"run_id": "20261010-0001"}, absence), False)
+    ck("a bundle carrying `kind` is NEW-FORMAT", is_new_format({"kind": "model"}), True)
+    ck("a bundle carrying `freeze` is NEW-FORMAT", is_new_format({"freeze": {}}), True)
+    ck("a bundle carrying none of them is HISTORICAL", is_new_format({"results": []}), False)
+    ck("and a NON-absence problem is never grandfathered, new or old",
+       grandfathered({"results": []}, ["A4: `deterministic` is true and `trials` is 3"]), False)
 
     print()
     print("=" * 100)

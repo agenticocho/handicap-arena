@@ -1,0 +1,138 @@
+{
+ "solved": true,
+ "moves": 1,
+ "attempted": 3,
+ "blocked": 2,
+ "not_an_action": 0,
+ "give_up": 0,
+ "gave_up_at": null,
+ "ended": "solved",
+ "final_board": "#####\n# @*#\n#####",
+ "trace": [
+  {
+   "ply": 0,
+   "token": "U",
+   "action": "U",
+   "outcome": "blocked",
+   "board": "#####\n#@$.#\n#####"
+  },
+  {
+   "ply": 1,
+   "token": "U",
+   "action": "U",
+   "outcome": "blocked",
+   "board": "#####\n#@$.#\n#####"
+  },
+  {
+   "ply": 2,
+   "token": "R",
+   "action": "R",
+   "outcome": "pushed",
+   "board": "#####\n# @*#\n#####"
+  }
+ ],
+ "entrant": "granite-3.3-2b-instruct-critical-thinking.Q5_K_M",
+ "level": "01_one_push",
+ "loaded": true,
+ "load_s": 3.0,
+ "turns": [
+  {
+   "ply": 0,
+   "raw": "U\n\nExplanation: The player should move up to reach the crate at the top-right corner. This is the first crate to be pushed, and it's the only one visible from the starting position. Moving up allows the player to access the crate and begin the process of pushing it onto a target.",
+   "token": "U",
+   "secs": 3.0,
+   "gen_tokens": 63,
+   "budget_hit": false,
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#####\n#@$.#\n#####"
+  },
+  {
+   "ply": 1,
+   "raw": "U",
+   "token": "U",
+   "secs": 0.2,
+   "gen_tokens": 2,
+   "budget_hit": false,
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#####\n#@$.#\n#####"
+  },
+  {
+   "ply": 2,
+   "raw": "R",
+   "token": "R",
+   "secs": 0.2,
+   "gen_tokens": 2,
+   "budget_hit": false,
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#####\n#@$.#\n#####"
+  }
+ ],
+ "cap": 6,
+ "final_screen": "#####\n# @*#\n#####",
+ "legend": "new",
+ "legend_digest": "0d86057c46d4c83b",
+ "config": {
+  "reasoning": "off",
+  "reasoning_source": "declared in PREREG_sokoban.md",
+  "reasoning_declared": "off",
+  "reasoning_declared_in": "PREREG_sokoban.md",
+  "reasoning_rationale": "Sokoban's answer is ONE LETTER. A thinking model puts deliberation where the answer belongs and the ceiling eats it -- measured on the same weights: 2314 tokens and no commitment. This cabinet is the one-letter case, so the setting is off. MISSILE COMMAND is the same case (one integer). DARTS is the opposite (exact checkout arithmetic), and a harness that proves the SHAPE should be able to prove it at either setting -- so it takes this as a PARAMETER rather than a constant.",
+  "reasoning_changed_from_declaration": false,
+  "reasoning_argv": [
+   "--reasoning",
+   "off"
+  ],
+  "reasoning_supported_by_build": true,
+  "max_tokens_ceiling": 64,
+  "command_cap": 6,
+  "ctx": 4096,
+  "n_gpu_layers": 0,
+  "temperature": 0.0,
+  "legend": "new",
+  "legend_digest": "0d86057c46d4c83b",
+  "server_argv": [
+   "/home/chilly1/llama.cpp/build/bin/llama-server",
+   "-m",
+   "/home/chilly1/moltbook_pipeline/models/granite-3.3-2b-instruct-critical-thinking.Q5_K_M.gguf",
+   "-c",
+   "4096",
+   "-ngl",
+   "0",
+   "--port",
+   "8805",
+   "--no-webui",
+   "--reasoning",
+   "off"
+  ]
+ },
+ "reasoning_probe": {
+  "question": "What is 2 + 2? Reply with just the number and nothing else.",
+  "answer": "4",
+  "answer_from_reasoning_field": false,
+  "completion_tokens": 3,
+  "finish_reason": "stop",
+  "observed": "off",
+  "requested": "off",
+  "disagrees_with_config": false
+ },
+ "kind": "model",
+ "unreadable": 0,
+ "unreadable_is_the_aggregate_of": "not_an_action (grammar \u00a72), per turn",
+ "never_started": 0,
+ "budget_signature": {
+  "turns": 3,
+  "turns_that_hit_the_ceiling": 0,
+  "ceiling": 64,
+  "fraction_capped": 0.0,
+  "all_turns_capped": false,
+  "reading": "no turn hit the ceiling -- the answers are the model's own endings"
+ },
+ "dead_end": {
+  "checked": false,
+  "first_action": "U",
+  "why": "the first action was blocked"
+ }
+}

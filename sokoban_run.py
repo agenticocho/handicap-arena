@@ -429,8 +429,20 @@ def run(entrant, level_path, cap, port):
                              "server_argv": server_argv(entrant, 4096, port)},
                   # WHAT HAPPENED, not what was asked for.
                   "reasoning_probe": probe,
-                  # AND DID IT HIT THE CEILING OR COULD IT NOT ANSWER -- read BEFORE any not_an_action
-                  # count is read as a capability result.
+                  # THE FORMAT FIELDS (A7), AND A NAMING RELATIONSHIP NAMED RATHER THAN LEFT TO BE GUESSED:
+                  #
+                  #   `not_an_action`  is the GRAMMAR's per-turn outcome (SOKOBAN_READ_GRAMMAR §2)
+                  #   `unreadable`     is the FORMAT field (A6/A7), and it is the AGGREGATE of the above
+                  #
+                  # THEY ARE THE SAME STATE AT TWO LEVELS, NOT TWO STATES. Two names for one state is how a
+                  # format field and its reader drift apart -- so the relationship is written down here, and
+                  # both travel, because the grammar's name is frozen and the format field is required.
+                  "kind": "model",
+                  "unreadable": r.get("not_an_action", 0),
+                  "unreadable_is_the_aggregate_of": "not_an_action (grammar §2), per turn",
+                  # A7: OUTSIDE the denominator and reported separately. This cell PLAYED, so it is 0; the
+                  # run-level count of cells that never started lives in the run block.
+                  "never_started": 0,
                   "budget_signature": budget_signature(turns, MAX_TOKENS),
                   # THE COUNTERS CANNOT SAY WHETHER `moves 4` WAS PROGRESS. This can, and it travels on the
                   # same line as them because a reader who has only the counters cannot tell the difference.

@@ -109,24 +109,54 @@ def main():
     print(f"  criteria frozen in PREREG_sokoban.md BEFORE this run. No time limit; the cap is the budget.")
     print()
 
-    with open(out_path, "w") as fh:
-        json.dump({"run_id": run_id, "legend": R.legend(), "legend_digest": R.legend_digest(),
-                   # §6 FROZEN IDENTITY, CARRIED IN THE RECORD RATHER THAN ASSUMED. "levels ... sha256 with
-                   # the run" -- a level is an INPUT, and an input that does not travel with the result
-                   # makes the result unattributable. Same rule as the legend digest, and the same lesson
-                   # as FINDING 020: THE IDENTITY OF A RUN IS THE INPUTS IT WAS PRODUCED UNDER.
-                   "levels": {os.path.basename(lv): (
-                       hashlib.sha256(open(os.path.join(HERE, lv), "rb").read()).hexdigest()[:16]
-                       if os.path.exists(os.path.join(HERE, lv)) else None) for lv in LEVELS},
-                   "simulator_digest": hashlib.sha256(open(os.path.join(HERE, "sokoban.py"), "rb")
-                                                      .read()).hexdigest()[:16],
-                   # "host recorded per bundle, WITH the host's hardware state" -- §6. A score taken on one
-                   # box is not a score taken on another, and the same reasoning as FINDING 002: the
-                   # machine gets a say unless the record can tell it apart from the model.
-                   "host": {"node": platform.node(), "platform": platform.platform(),
-                            "cpu_count": os.cpu_count(),
-                            "nvidia_smi": bool(__import__("shutil").which("nvidia-smi"))},
-                   "cells": []}, fh, indent=1)
+    meta = {"run_id": run_id, "legend": R.legend(), "legend_digest": R.legend_digest(),
+            # A1: THE ENTRANT BLOCK DECLARES ITS KIND. The population is DERIVED from ARENA_MODELS, so
+            # it is GGUF models by construction -- and a CODE entrant is a DIFFERENT INSTRUMENT that is
+            # never pooled with them. Stated once here and on every cell, so the two cannot disagree.
+            "kind": "model",
+            # A9: THE FREEZE RECORD CARRIES THE **VERIFIER's** IDENTITY, NOT ONLY THE ORACLE'S.
+            # The simulator decides solved or not, but a self-test only proves the instrument agrees
+            # with ITSELF. What makes the levels trustworthy is a SECOND implementation replaying
+            # published strings, and a THIRD that proves dead ends by complete enumeration.
+            "freeze": {
+                "simulator": "sokoban.py (its --self-test IS its contract)",
+                "verifier": "verify_levels.py -- replays a PUBLISHED solution per level through the frozen"
+                            " simulator; independent of the thing it checks",
+                "dead_end_verifier": "sokoban_deadend.py -- proves a fatal opening by complete enumeration,"
+                                     " and never reports UNKNOWN as a dead end",
+                "why_this_field_exists": "A self-test proves the instrument agrees with itself, which is not"
+                                         " the same as agreeing with anything else",
+            },
+            # §6 FROZEN IDENTITY, CARRIED IN THE RECORD RATHER THAN ASSUMED. "levels ... sha256 with
+            # the run" -- a level is an INPUT, and an input that does not travel with the result
+            # makes the result unattributable. Same rule as the legend digest, and the same lesson
+            # as FINDING 020: THE IDENTITY OF A RUN IS THE INPUTS IT WAS PRODUCED UNDER.
+            "levels": {os.path.basename(lv): (
+                hashlib.sha256(open(os.path.join(HERE, lv), "rb").read()).hexdigest()[:16]
+                if os.path.exists(os.path.join(HERE, lv)) else None) for lv in LEVELS},
+            "simulator_digest": hashlib.sha256(open(os.path.join(HERE, "sokoban.py"), "rb")
+                                               .read()).hexdigest()[:16],
+            # "host recorded per bundle, WITH the host's hardware state" -- §6. A score taken on one
+            # box is not a score taken on another, and the same reasoning as FINDING 002: the
+            # machine gets a say unless the record can tell it apart from the model.
+            "host": {"node": platform.node(), "platform": platform.platform(),
+                     "cpu_count": os.cpu_count(),
+                     "nvidia_smi": bool(__import__("shutil").which("nvidia-smi"))}}
+
+    def write(rows_now):
+        """ONE WRITER. The first version had TWO json.dump calls with the metadata written out twice --
+        and the second one REBUILT the dict, so it would have ERASED the freeze, levels and host blocks the
+        first one wrote. A SECOND COPY OF THE TRUTH IS ONE THAT CAN DISAGREE WITH IT."""
+        played_now = [r for r in rows_now if r.get("loaded") is True]
+        payload = dict(meta, cells=rows_now,
+                       # A7: the two counters, on OPPOSITE SIDES of the denominator, at run level.
+                       never_started=len(rows_now) - len(played_now),
+                       unreadable=sum(r.get("unreadable", 0) for r in played_now),
+                       unreadable_note="the AGGREGATE of the grammar's `not_an_action`, per turn;"
+                                       " INSIDE the denominator as a non-pass (A6)")
+        json.dump(payload, open(out_path, "w"), indent=1)
+
+    write([])
 
     rows, reasons = [], {}
     for ent in pop:
@@ -150,8 +180,7 @@ def main():
                 print(f"      ended={r['ended']:18s} solved={str(r['solved']):5s} moves={r['moves']:3d}  "
                       f"blocked={r['blocked']:3d} not_an_action={r['not_an_action']:3d} "
                       f"give_up={r['give_up']}")
-            json.dump({"run_id": run_id, "legend": R.legend(), "legend_digest": R.legend_digest(),
-                       "cells": rows}, open(out_path, "w"), indent=1)
+            write(rows)
 
     print()
     print("=" * 96)
