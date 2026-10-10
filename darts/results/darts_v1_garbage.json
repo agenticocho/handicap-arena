@@ -1,13 +1,15 @@
 {
   "harness": "handicap-arena",
-  "version": "1.0",
-  "generated": "2026-10-09T19:28:54Z",
+  "version": "1.1",
+  "generated": "2026-10-10T00:26:41Z",
   "event": "DARTS",
   "card_version": "darts_v1",
   "results": [
     {
       "entrant": "garbage",
       "kind": "malformed-reference",
+      "instrument": "code",
+      "instrument_note": "CODE entrant, not a model -- a DIFFERENT INSTRUMENT; never pooled into a model table [A1].",
       "entrant_is_a_model": false,
       "weights_sha256": null,
       "weights_note": "no weights: this entrant is code, not a GGUF. The oracle is arithmetic and the entrant played no model.",
@@ -34,11 +36,12 @@
         "R_darts_checkouts": {
           "score": null,
           "wins": 0,
-          "trials": 0,
+          "trials": 3,
           "kind": "exact_arithmetic",
           "class": "CONTEST",
           "oracle": "arithmetic",
           "staged_as": "arcade cabinet -- DARTS: 501 checkouts, the oracle is the sum",
+          "denominator_rule": "trials = items that took a turn; UNREADABLE is a non-pass INSIDE it; NEVER_STARTED is OUTSIDE [A6]",
           "items": {
             "D1.1_easy_checkout": {
               "remaining": 40,
@@ -78,8 +81,10 @@
             }
           },
           "started": 3,
+          "failed": 0,
           "unreadable": 3,
           "never_started": 0,
+          "measured": 0,
           "coverage": 1.0
         }
       },

@@ -1,17 +1,19 @@
 {
   "harness": "handicap-arena",
-  "version": "1.0",
-  "generated": "2026-10-09T19:28:54Z",
+  "version": "1.1",
+  "generated": "2026-10-10T00:26:41Z",
   "event": "DARTS",
   "card_version": "darts_v1",
   "results": [
     {
       "entrant": "reference",
       "kind": "reference-solver",
+      "instrument": "code",
+      "instrument_note": "CODE entrant, not a model -- a DIFFERENT INSTRUMENT; never pooled into a model table [A1].",
       "entrant_is_a_model": false,
       "weights_sha256": null,
       "weights_note": "no weights: this entrant is code, not a GGUF. The oracle is arithmetic and the entrant played no model.",
-      "solver_source_sha256": "224958fc19b33701199b4a41318505493fc23d1186462f17b5fa87cf3c945597",
+      "solver_source_sha256": "b79e84780c72227286fc63b9497972ccfc483192dfdf2f55a394fe54a3ea828f",
       "division": null,
       "division_note": "NOT MEASURED -- a footprint is a property of weights; this entrant has none. Never 0.00.",
       "cord": null,
@@ -39,6 +41,7 @@
           "class": "CONTEST",
           "oracle": "arithmetic",
           "staged_as": "arcade cabinet -- DARTS: 501 checkouts, the oracle is the sum",
+          "denominator_rule": "trials = items that took a turn; UNREADABLE is a non-pass INSIDE it; NEVER_STARTED is OUTSIDE [A6]",
           "items": {
             "D1.1_easy_checkout": {
               "remaining": 40,
@@ -50,7 +53,7 @@
               "verified_sum": 40,
               "state": "PASS",
               "reason": null,
-              "secs": 0.0016
+              "secs": 0.0015
             },
             "D1.2_two_dart_checkout": {
               "remaining": 100,
@@ -62,7 +65,7 @@
               "verified_sum": 100,
               "state": "PASS",
               "reason": null,
-              "secs": 0.0033
+              "secs": 0.0031
             },
             "D1.3_impossible_control": {
               "remaining": 169,
@@ -74,12 +77,14 @@
               "verified_sum": null,
               "state": "PASS",
               "reason": null,
-              "secs": 0.0031
+              "secs": 0.003
             }
           },
           "started": 3,
+          "failed": 0,
           "unreadable": 0,
           "never_started": 0,
+          "measured": 3,
           "coverage": 1.0
         }
       },

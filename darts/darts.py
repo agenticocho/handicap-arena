@@ -14,6 +14,7 @@ Standard library ONLY -- argparse json os re sys time hashlib datetime.
 No third-party import, so `python3 darts.py --self-test` runs on either box.
 
   python3 darts.py --self-test
+  python3 darts.py instrument-check   # prove the HARNESS with a solver; enters nothing
   python3 darts.py run --entrant reference
   python3 darts.py run --entrant liar        # values that LOOK like arithmetic
   python3 darts.py run --entrant garbage     # malformed -> UNREADABLE, not wrong
@@ -30,7 +31,7 @@ import time
 from datetime import datetime, timezone
 
 HARNESS = "handicap-arena"
-VERSION = "1.0"
+VERSION = "1.1"
 
 # ---------------------------------------------------------------------------
 # 1. THE BOARD -- the oracle is this table and nothing else
@@ -326,6 +327,7 @@ def run_entrant(entrant, items):
     started_items = 0
     unreadable = 0
     passed = 0
+    failed = 0
     for item in items:
         if not started:
             rows[item["id"]] = {
@@ -346,14 +348,23 @@ def run_entrant(entrant, items):
             unreadable += 1
         elif row["state"] == "PASS":
             passed += 1
+        elif row["state"] == "FAIL":
+            failed += 1
 
     total = len(items)
-    measured = started_items - unreadable
+    #  [A6 -- RULED 2026-10-09] THE DENOMINATOR IS "TOOK A TURN", NOT "DID WELL".
+    #  An item that produced an answer -- right, wrong, or UNREADABLE -- took a
+    #  turn and is INSIDE the denominator.  UNREADABLE is a non-pass inside it,
+    #  never dropped and never folded into FAIL.  A never-started item took no
+    #  turn and is OUTSIDE, counted separately as NOT_STARTED.  Three states,
+    #  three treatments; the distinction is DID IT TAKE A TURN.
+    trials = started_items
+    measured = started_items - unreadable      # a READABLE answer -- the gate
     coverage = (float(started_items) / total) if total else 0.0
 
-    #  THE RULE: a run with zero measured is an ERROR, not a verdict.
-    #  Coverage counts STARTED, and a never-started item is NOT_STARTED -- so
-    #  total failure cannot read as its own passing condition.  [A7]
+    #  THE GUARD IS THE PAIR (coverage AND measured), NOT THE RATIO: coverage
+    #  alone can read 1.000 with nothing measured (the garbage run), so the
+    #  verdict needs `measured > 0` as a SECOND condition.  [A7]
     if started_items == 0:
         verdict = "ERROR: POPULATION NEVER STARTED"
         aggregate = None
@@ -363,22 +374,26 @@ def run_entrant(entrant, items):
         aggregate = None
         exit_code = 2
     else:
-        aggregate = round(float(passed) / measured, 6)
+        aggregate = round(float(passed) / trials, 6)   # unreadable inside, non-pass
         verdict = "SCORED"
         exit_code = 0
 
     roundblock = {
         "score": aggregate,
         "wins": passed,
-        "trials": measured,
+        "trials": trials,               # denominator = items that TOOK A TURN [A6]
         "kind": "exact_arithmetic",
         "class": "CONTEST",
         "oracle": "arithmetic",
         "staged_as": "arcade cabinet -- DARTS: 501 checkouts, the oracle is the sum",
+        "denominator_rule": "trials = items that took a turn; UNREADABLE is a "
+                            "non-pass INSIDE it; NEVER_STARTED is OUTSIDE [A6]",
         "items": rows,
         "started": started_items,
-        "unreadable": unreadable,
-        "never_started": total - started_items,
+        "failed": failed,               # a readable wrong throw -- non-pass, inside
+        "unreadable": unreadable,       # non-pass, INSIDE the denominator [A6]
+        "never_started": total - started_items,   # OUTSIDE, counted separately [A6]
+        "measured": measured,           # readable answers -- the gate quantity [A7]
         "coverage": round(coverage, 6),
     }
     return {"admission": admission, "round": roundblock,
@@ -386,7 +401,7 @@ def run_entrant(entrant, items):
 
 
 def build_bundle(entrant_name, result, items, items_path):
-    ent = ENTRANTS[entrant_name]()
+    ent = ENTRANTS[entrant_name]() if entrant_name in ENTRANTS else ReferenceSolver()
     sha = ent.source_sha256() if hasattr(ent, "source_sha256") else None
     return {
         "harness": HARNESS,
@@ -396,12 +411,17 @@ def build_bundle(entrant_name, result, items, items_path):
         "card_version": "darts_v1",
         "results": [
             {
-                # [A1] the format's entrant block is MODEL-shaped (gguf, sha256,
-                # footprint_gb, division, weigh_in, cord, n_gpu_layers...).  A
-                # darts entrant here is a SOLVER with no weights, so those
-                # fields are STATED-not-applicable rather than faked.
+                # [A1 -- RULED 2026-10-09] the entrant block DECLARES model|code.
+                # A CODE entrant is a DIFFERENT INSTRUMENT and is never pooled
+                # into a model table.  The format's entrant fields (gguf, sha256,
+                # footprint_gb, division, weigh_in, cord, n_gpu_layers) all
+                # presuppose weights, so for a code entrant they are STATED not
+                # applicable rather than faked.
                 "entrant": entrant_name,
                 "kind": ent.kind,
+                "instrument": "code",
+                "instrument_note": "CODE entrant, not a model -- a DIFFERENT "
+                                   "INSTRUMENT; never pooled into a model table [A1].",
                 "entrant_is_a_model": False,
                 "weights_sha256": None,
                 "weights_note": "no weights: this entrant is code, not a GGUF. "
@@ -454,6 +474,76 @@ def cmd_run(args):
         args.entrant, result["aggregate"], result["round"]["coverage"],
         result["verdict"]))
     return result["exit_code"]
+
+
+# ---------------------------------------------------------------------------
+# 5b. THE INSTRUMENT CHECK -- prove the HARNESS, enter nothing
+# ---------------------------------------------------------------------------
+
+def instrument_check(out_dir=None):
+    """[INSTRUMENT CHECK]  Prove the harness can RUN the event, with a
+    known-good solver as the entrant -- NOT a contest.
+
+    This is the sequencing split (Jarvis's own note to Chilly, 2026-10-09):
+    ask (a) CAN THE HARNESS RUN DARTS? separately from (b) CAN A MODEL PLAY IT?
+    A solver run exercises the four things that need no model -- the STATE KIND,
+    the ORACLE, the BUNDLE SHAPE and the SCORING PATH -- so that if a model
+    later fails, the harness is already proven and the failure is the model's.
+
+    It ENTERS NOTHING: the bundle is labelled INSTRUMENT CHECK, on_board False,
+    instrument code, and is written under its own name so it cannot be swept
+    into a model table (A1/A8).  Exit 1 if the instrument is not proven."""
+    ok = True
+    here = os.path.dirname(__file__)
+    items = load_items(os.path.join(here, "tasks", "darts_v1.json"))
+    result = run_entrant(ReferenceSolver(), items)
+    bundle = build_bundle("reference", result, items, "tasks/darts_v1.json")
+    ent = bundle["results"][0]
+    ent["certification"] = ("INSTRUMENT CHECK -- the solver-as-entrant path; "
+                            "proves the harness and ENTERS NOTHING. Not a contest.")
+    ent["on_board"] = False
+
+    print("INSTRUMENT CHECK -- solver-as-entrant; proves the harness, enters nothing.")
+    #  1. THE ORACLE -- a known-good solver must score the item set exactly.
+    ok &= _assert(result["aggregate"] == 1.0,
+                  "ORACLE: solver scores 1.0 on the item set", result["aggregate"])
+    #  2. THE STATE KIND -- PASS is reached, and the impossible item's correct
+    #     answer is an ABSTENTION which must PASS.
+    states = sorted({r["state"] for r in result["round"]["items"].values()})
+    ok &= _assert(states == ["PASS"], "STATE KIND: every item PASS (abstention too)",
+                  states)
+    #  3. THE BUNDLE SHAPE -- the record carries what the format requires.
+    for key in ("harness", "version", "event", "card_version", "results"):
+        ok &= _assert(key in bundle, "BUNDLE SHAPE: has %r" % key, sorted(bundle))
+    for key in ("tasks", "ambiguities", "instrument", "admission", "rounds"):
+        ok &= _assert(key in ent, "BUNDLE SHAPE: result carries %r" % key, sorted(ent))
+    ok &= _assert(
+        all(k in result["round"] for k in
+            ("score", "wins", "trials", "started", "unreadable",
+             "never_started", "measured", "coverage")),
+        "BUNDLE SHAPE: round block carries the full count set",
+        sorted(result["round"]))
+    #  4. THE SCORING PATH -- score is wins/trials, trials counts TURNS taken.
+    rnd = result["round"]
+    ok &= _assert(rnd["score"] == round(rnd["wins"] / float(rnd["trials"]), 6),
+                  "SCORING PATH: score == wins/trials", rnd["score"])
+    ok &= _assert(rnd["trials"] == rnd["started"] and rnd["never_started"] == 0,
+                  "SCORING PATH: trials == started; never_started OUTSIDE [A6]",
+                  (rnd["trials"], rnd["started"], rnd["never_started"]))
+    #  LABEL -- a code entrant is a different instrument and is not on the board.
+    ok &= _assert(ent["instrument"] == "code" and ent["on_board"] is False,
+                  "LABEL: instrument=code, on_board=False", ent.get("instrument"))
+
+    if out_dir:
+        os.makedirs(out_dir, exist_ok=True)
+        path = os.path.join(out_dir, "darts_v1_instrument-check.json")
+        with open(path, "w") as fh:
+            json.dump(bundle, fh, indent=2)
+            fh.write("\n")
+        print("wrote %s" % path)
+    print("")
+    print("INSTRUMENT CHECK %s" % ("PASSED" if ok else "FAILED"))
+    return 0 if ok else 1
 
 
 # ---------------------------------------------------------------------------
@@ -518,6 +608,9 @@ def self_test():
                   "never-started run has NO aggregate (not 0.0)", res["aggregate"])
     ok &= _assert(res["round"]["never_started"] == len(items),
                   "never_started counted per item", res["round"]["never_started"])
+    ok &= _assert(res["round"]["trials"] == 0,
+                  "never-started run has trials 0 (nothing took a turn)",
+                  res["round"]["trials"])
     res = run_entrant(ReferenceSolver(), items)
     ok &= _assert(res["aggregate"] == 1.0 and res["exit_code"] == 0,
                   "reference solver scores 1.0 on the item set", res["aggregate"])
@@ -525,6 +618,44 @@ def self_test():
     ok &= _assert(res["exit_code"] == 2 and res["aggregate"] is None,
                   "all-unreadable run is an ERROR, not a 0.0",
                   (res["exit_code"], res["aggregate"]))
+    ok &= _assert(res["round"]["coverage"] == 1.0 and res["round"]["measured"] == 0,
+                  "garbage: coverage 1.000 AND measured 0 -- the ratio is not the guard",
+                  (res["round"]["coverage"], res["round"]["measured"]))
+
+    print("A6 -- UNREADABLE is INSIDE the denominator as a non-pass:")
+    class _Mixed(Entrant):
+        kind = "mixed-reference"
+        def start(self):
+            return 0, 0.0, True
+        def answer(self, item):
+            # right on the easy item; prose (UNREADABLE) on the other two
+            return "D20" if item["remaining"] == 40 else "hmm, maybe not"
+    res = run_entrant(_Mixed(), items)
+    rnd = res["round"]
+    ok &= _assert(rnd["started"] == 3 and rnd["trials"] == 3,
+                  "denominator counts every item that TOOK A TURN (3)",
+                  (rnd["started"], rnd["trials"]))
+    ok &= _assert(rnd["unreadable"] == 2 and rnd["measured"] == 1,
+                  "unreadable 2 (INSIDE, non-pass) / measured 1 (the gate)",
+                  (rnd["unreadable"], rnd["measured"]))
+    ok &= _assert(rnd["never_started"] == 0,
+                  "no item was never-started, so none is OUTSIDE", rnd["never_started"])
+    ok &= _assert(res["aggregate"] == round(1.0 / 3.0, 6),
+                  "score = passed/trials, so the unreadables DRAG it (1/3)",
+                  res["aggregate"])
+    ok &= _assert(res["aggregate"] != 1.0,
+                  "the reader that EXCLUDED unreadable would have said 1.0 -- it does not",
+                  res["aggregate"])
+
+    print("A1 -- a code entrant DECLARES itself and is not a model:")
+    b = build_bundle("reference", run_entrant(ReferenceSolver(), items), items, None)
+    ent = b["results"][0]
+    ok &= _assert(ent["instrument"] == "code" and ent["entrant_is_a_model"] is False,
+                  "entrant block declares instrument=code, model=False",
+                  ent["instrument"])
+    ok &= _assert(ent["division"] is None and ent["weights_sha256"] is None,
+                  "no footprint / no weights invented for a code entrant (never 0.00)",
+                  (ent["division"], ent["weights_sha256"]))
 
     print("")
     print("SELF-TEST %s" % ("PASSED" if ok else "FAILED"))
@@ -543,11 +674,16 @@ def main():
     r.add_argument("--tasks", default=os.path.join(os.path.dirname(__file__),
                                                   "tasks", "darts_v1.json"))
     r.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "results"))
+    ic = sub.add_parser("instrument-check",
+                        help="prove the harness with a solver entrant; enters nothing")
+    ic.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "results"))
     args = ap.parse_args()
     if args.self_test:
         return self_test()
     if args.cmd == "run":
         return cmd_run(args)
+    if args.cmd == "instrument-check":
+        return instrument_check(args.out)
     ap.print_help()
     return 0
 

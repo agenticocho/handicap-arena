@@ -8,13 +8,28 @@ the ambiguity and tell me.* This is that list. Every one of them is a place my c
 something the format does not define, marked `[A<n>]` at the line that decided it in `darts.py`.
 
 **Status of what is here:** built and run on Jarvis, stdlib only, no model played. `python3 darts.py
---self-test` → **18/18 controls, exit 0**. Four bundles written (`reference`, `liar`, `garbage`,
-`never-starts`). The reference solver is NOT an entrant and this is NOT for the board.
+--self-test` → **28/28 controls, exit 0**. `python3 darts.py instrument-check` → **PASSED, exit 0** (the
+solver-as-entrant harness proof; enters nothing). Five bundles written (`reference`, `liar`, `garbage`,
+`never-starts`, `instrument-check`). The reference solver is NOT an entrant and this is NOT for the board.
+
+**RESOLVED by Chilly's ruling, 2026-10-09 — `[A6]` and `[A1]` are now encoded (`darts.py` v1.1):**
+
+    A6  applied.  The denominator is "TOOK A TURN", not "did it do well": UNREADABLE is INSIDE the
+        denominator as a non-pass, NEVER_STARTED is OUTSIDE, counted separately, and zero measured is
+        an ERROR.  The gate is the PAIR (coverage AND measured > 0), never the ratio.
+    A1  applied.  The entrant block DECLARES `instrument: "code" | "model"`; a code entrant is a
+        DIFFERENT INSTRUMENT and is never pooled into a model table.
 
     the fact the code reproduces (no engine, no freeze, no depth):
       170 -> T20 T20 D25   and it is the ONLY checkout for 170
        40 -> D20            2 -> D1 (the minimum)      100 -> T20 D20
       169, 1, 171 -> no checkout exists
+
+    the self-test carries a control for each resolution:
+      A6  a mixed run (1 right, 2 unreadable) scores 1/3, NOT 1.0 -- the reader that EXCLUDED
+          unreadable from the denominator would have said 1.0; this one does not.
+      A1  the built bundle declares instrument=code / model=False, with NO footprint and NO weights
+          invented (division null + written reason, never 0.00).
 
 ---
 
@@ -32,6 +47,11 @@ be the `router_fp or 0` defect wearing a new field — a division nothing earned
 
 **The question for you:** in your independent build, is the darts entrant a model or a solver? If we
 answer differently, our bundles are not comparable and neither of us can tell that from the two files.
+
+> **RESOLVED 2026-10-09 (Chilly).** The entrant block **declares `model` | `code`**, and a **code entrant
+> is a DIFFERENT INSTRUMENT — never pooled into a model table.** Encoded: `run_entrant`/`build_bundle` now
+> emit `"instrument": "code"` (plus a note) and `on_board: false`; the harness proof is labelled
+> `INSTRUMENT CHECK` and written under its own name so it cannot be swept in as an entrant (see also A8).
 
 ## A2 — WHICH CONFIG FIELDS EXIST WHEN THERE IS NO SERVER
 
@@ -80,6 +100,17 @@ unreadable`). Consequence: an all-unreadable run has denominator 0 → **ERROR**
 answer a wrong throw **by arithmetic**, by the back door. **The two readings give different aggregates on
 the same run, and the format does not decide it.**
 
+> **RESOLVED 2026-10-09 (Chilly): UNREADABLE goes INSIDE the denominator as a non-pass.** Applied —
+> `trials = started_items` (every item that TOOK A TURN), with `unreadable` included as a non-pass;
+> `never_started` stays OUTSIDE; the score is `passed / trials`. **The one reading I had to fix, and the
+> one place I read his ruling twice:** he wrote *"UNREADABLE inside the denominator as a non-pass"* AND
+> *"your own garbage run proved coverage alone can be 1.000 with **nothing measured**"* — which only both
+> hold if the ERROR gate counts **readable** answers, not turns. So: `trials = started` (turning) and the
+> gate is `readable > 0` (the pair: coverage AND measured), **not** `trials > 0`. An all-unreadable run is
+> therefore still an ERROR (garbage: coverage 1.000, measured 0, exit 2), while an unreadable mixed in
+> with readable answers DRAGS the score instead of being dropped. **If that is not the reading he meant,
+> this is the line to object to** — it changes the score on every run.
+
 ## A7 — COVERAGE CANNOT BE THE GUARD; `never_started` AND `unreadable` ARE NOT IN THE FORMAT AT ALL
 
 Your bug: `COVERAGE 1.000` on a run where every entrant returned `rc=2` in 0.0s, because coverage counted
@@ -92,6 +123,12 @@ And the format has **no field at all** for `never_started` or `unreadable` — t
 `{score, wins, trials}`. Any implementation that "counts" them is **extending** the format, and two
 extensions do not compare. The field names need to be agreed, because *a count carried in a private field
 is not a shared one.*
+
+> **Partially settled 2026-10-09.** The gate is now the pair (coverage AND `measured > 0`), and the round
+> block carries `started · failed · unreadable · never_started · measured · coverage` **plus a
+> `denominator_rule` string** so a reader can see the A6 rule in the record itself. The field NAMES are
+> still a proposal, not an agreed schema — a peer whose reader keys on different names will still not
+> join. Named, not closed.
 
 ## A8 — WHERE DOES A NON-MODEL EVENT'S BUNDLE LIVE, AND WHAT IS ITS `card_version`?
 
@@ -106,7 +143,7 @@ separate root per event, or a non-int suite id, or the event lives outside the a
 
 The order says darts has no engine and no freeze. True of the oracle — arithmetic is a fact. **False
 about the verifier:** a buggy checkout enumerator is exactly the failure that read a legal best move as
-illegal. So what pins *my* instrument? I used an **in-file self-test, 18 controls** — but a self-test
+illegal. So what pins *my* instrument? I used an **in-file self-test, 28 controls** — but a self-test
 proves the instrument agrees with **itself**. The real cross-machine check is the two implementations
 agreeing on the **same item set under the same notation** — which is A5. Named, not resolved.
 
@@ -128,4 +165,5 @@ inherited your answers silently and taught nothing; the second implementation fo
 does not speak.
 
 The one I would settle first is **A6**, because it changes the score on every run; **A1** second, because
-it decides whether the two bundles are the same instrument at all.
+it decides whether the two bundles are the same instrument at all. Both are now encoded to your ruling
+(v1.1) — see the resolutions at the top.
