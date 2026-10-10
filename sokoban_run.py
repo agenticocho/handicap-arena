@@ -35,7 +35,41 @@ import sokoban as S                                                     # noqa: 
 LLAMA = "/home/chilly1/llama.cpp/build/bin/llama-server"
 MODELS = os.environ.get("ARENA_MODELS") or os.path.expanduser("~/moltbook_pipeline/models")
 MAX_TOKENS = 64                     # ONE LETTER NEEDS A FEW TOKENS, and a cap that cannot be deliberated
-                                    # into is the constraint this game was chosen for
+                                    # into is the constraint this game was chosen for.
+                                    # THE CEILING, not the count used -- both travel in the record.
+
+# ==================================================================================================
+# THE REASONING SETTING IS A CONFIG FIELD, AND IT IS SET DELIBERATELY HERE.
+#
+# MEASURED ELSEWHERE, ON THE SAME WEIGHTS: Ornith-1.5-9B with thinking ON returned 2314 tokens and NO
+# COMMITMENT on a real chess position. The same model with thinking OFF held a format, carried instructions
+# across turns, and compressed accurately with zero padding. SAME MODEL, TWO SETTINGS, OPPOSITE OUTCOMES.
+#
+# So "the model cannot do it" and "the model was deliberating with no stop condition" are DIFFERENT FINDINGS,
+# and a series at one setting is not comparable to a series at another -- which is the same reason `ctx`,
+# `temperature` and `ngl` are recorded.
+#
+# EVERY CABINET HERE ASKS FOR A SHORT ANSWER: one letter, one digit, one word. That is the format a
+# non-thinking model is built for and the format a thinking model will fight. So `off` is the deliberate
+# setting, not a default anybody inherited.
+#
+# AND IT APPLIES TO FUTURE RUNS. The runs already taken were taken at `auto`, and their numbers STAND AS
+# RECORDED -- a criterion change after the number is a file, not a criterion.
+# ==================================================================================================
+REASONING = os.environ.get("SOKOBAN_REASONING", "off").strip().lower()
+if REASONING not in ("on", "off", "auto"):
+    raise SystemExit(f"SOKOBAN_REASONING must be on|off|auto, got {REASONING!r}")
+
+
+def reasoning_argv():
+    """THE FLAG AS IT IS ACTUALLY PASSED, so the record carries the argv and not a summary of it."""
+    return ["--reasoning", REASONING]
+
+
+def server_argv(entrant, ctx, port):
+    """THE WHOLE LAUNCH, in one place, so what is recorded is what was run."""
+    return ([LLAMA, "-m", entrant, "-c", str(ctx), "-ngl", "0", "--port", str(port), "--no-webui"]
+            + reasoning_argv())
 
 
 # ==================================================================================================
@@ -141,16 +175,30 @@ def ask(base, board, history, timeout_s=300):
         dt = time.time() - t0
         msg = ((j.get("choices") or [{}])[0].get("message") or {})
         txt = (msg.get("content") or "").strip()
+        source = "content"
         if not txt and (msg.get("reasoning_content") or "").strip():
-            # THE SECOND FIELD, AGAIN. A reasoning model puts its output in `reasoning_content` and leaves
-            # `content` empty -- measured on this box, 2048 tokens of deliberation and no answer. Reading
-            # one field and reporting "the model said nothing" is the empty-room defect in the API response.
+            # THE SECOND FIELD, AND THIS IS A TRAP I NEARLY WALKED INTO.
+            #
+            # A reasoning model leaves `content` empty and puts its deliberation in `reasoning_content`.
+            # Falling back to it is right WHEN THE DELIBERATION CONTAINS THE ANSWER. IT IS WRONG WHEN THE
+            # TURN WAS CUT OFF AT THE CEILING, because then the first token of the deliberation is NOT an
+            # answer -- it is the beginning of a sentence that never finished. THE ORNITH CASE EXACTLY:
+            # 2314 tokens of deliberation, no move. Reading that fallback as a token would score a
+            # TRUNCATION ARTIFACT as a legal action.
+            #
+            # So the fallback is kept -- it is the only way a thinking model's answer is ever read -- but it
+            # TRAVELS WITH ITS PROVENANCE, and a capped fallback is reported as a MISSING VALUE rather than
+            # mined for a token.
             txt = (msg.get("reasoning_content") or "").strip()
+            source = "reasoning_content"
         nt = (j.get("usage") or {}).get("completion_tokens", 0)
         hit = (j.get("choices") or [{}])[0].get("finish_reason") == "length"
-        return txt, dt, nt, hit
+        # THE HARNESS MADE THIS EMPTY: capped, with only deliberation behind it. NOT an answer.
+        if source == "reasoning_content" and hit:
+            return "", dt, nt, True, "capped-deliberation-missing-value"
+        return txt, dt, nt, hit, source
     except Exception as e:                                              # noqa: BLE001
-        return "", time.time() - t0, 0, False
+        return "", time.time() - t0, 0, False, f"error:{type(e).__name__}"
 
 
 def first_token(text):
@@ -160,6 +208,57 @@ def first_token(text):
         if line:
             return line.split()[0] if line.split() else ""
     return ""
+
+
+def probe_reasoning(base, timeout_s=180):
+    """ASK THE MODEL ONCE, BRIEFLY, BEFORE THE FIELD -- two seconds, and it would have caught this a week ago.
+
+    A model with thinking OFF answers a one-token question in one or two tokens. A model with thinking ON
+    answers it in hundreds. That is the whole test.
+
+    AND IT RECORDS WHAT HAPPENED, NOT WHAT WAS ASKED FOR. The flag says which setting was requested; the
+    probe says which one the model is actually running under. WHEN THOSE TWO DISAGREE, THE DISAGREEMENT IS
+    THE FINDING -- a config field nobody measured is the same class as a legend nobody read.
+    """
+    q = "What is 2 + 2? Reply with just the number and nothing else."
+    body = json.dumps({"messages": [{"role": "user", "content": q}], "max_tokens": MAX_TOKENS,
+                       "temperature": 0.0})
+    req = urllib.request.Request(base + "/v1/chat/completions", data=body.encode(),
+                                 headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout_s) as r:
+            j = json.loads(r.read().decode())
+    except Exception as e:                                              # noqa: BLE001
+        return {"question": q, "error": f"{type(e).__name__}: {e}", "observed": None}
+    ch = (j.get("choices") or [{}])[0]
+    msg = ch.get("message") or {}
+    txt = (msg.get("content") or "").strip()
+    think = (msg.get("reasoning_content") or "").strip()
+    ctok = (j.get("usage") or {}).get("completion_tokens", 0)
+    # THE THRESHOLD IS DELIBERATELY BLUNT AND STATED, because a tuned threshold would be a new instrument.
+    observed = "off" if ctok <= 8 else "on"
+    return {"question": q, "answer": txt[:60], "answer_from_reasoning_field": bool(think and not txt),
+            "completion_tokens": ctok, "finish_reason": ch.get("finish_reason"),
+            "observed": observed, "requested": REASONING,
+            "disagrees_with_config": (REASONING != "auto" and observed != REASONING)}
+
+
+def budget_signature(turns, cap):
+    """DID IT HIT THE CAP, OR COULD IT NOT ANSWER? Different findings, and one has been published as the other.
+
+    A `not_an_action` count is NOT a capability result until this has been read. `2314 tokens and no
+    commitment` is the signature of a model with no stop condition, not of a model that cannot do the task.
+    """
+    n = len(turns) or 1
+    hit = sum(1 for t in turns if t.get("budget_hit"))
+    return {"turns": len(turns), "turns_that_hit_the_ceiling": hit, "ceiling": cap,
+            "fraction_capped": round(hit / n, 3),
+            "all_turns_capped": hit == len(turns) and len(turns) > 0,
+            "reading": ("BUDGET-CONFOUNDED -- every answer was cut off at the ceiling, so this is NOT a "
+                        "capability result until it is re-run with room"
+                        if hit == len(turns) and turns else
+                        "some turns hit the ceiling -- see the per-turn rows"
+                        if hit else "no turn hit the ceiling -- the answers are the model's own endings")}
 
 
 def run(entrant, level_path, cap, port):
@@ -173,8 +272,8 @@ def run(entrant, level_path, cap, port):
     # artifact whose identity is its path, destroyed by the next thing that writes that path. That is
     # FINDING 018 and this is the same defect one layer down, caught before it happened this time.
     log = os.path.join(HERE, "logs", f"SOKOBAN_{label}_{lname}_{legend()}.log")
-    srv = subprocess.Popen([LLAMA, "-m", entrant, "-c", "4096", "-ngl", "0", "--port", str(port),
-                            "--no-webui"], stdout=open(log, "w"), stderr=subprocess.STDOUT)
+    srv = subprocess.Popen(server_argv(entrant, 4096, port),
+                           stdout=open(log, "w"), stderr=subprocess.STDOUT)
     base = f"http://127.0.0.1:{port}"
     try:
         t0 = time.time()
@@ -194,14 +293,23 @@ def run(entrant, level_path, cap, port):
                     "why": "never answered /health in 600 s"}
         load_s = time.time() - t0
 
+        # THE PROBE RUNS BEFORE A SINGLE GAME TURN. Ask once, briefly: what setting is this model ACTUALLY
+        # on? Recorded as OBSERVED beside REQUESTED, because a config field nobody measured is the same
+        # class as a legend nobody read.
+        probe = probe_reasoning(base)
+
         tokens, turns = [], []
         cur, history = S.render(st), []
         for i in range(cap):
-            text, secs, nt, hit = ask(base, cur, history)
+            text, secs, nt, hit, source = ask(base, cur, history)
             tok = first_token(text)
             tokens.append(tok)
             turns.append({"ply": i, "raw": text[:400], "token": tok, "secs": round(secs, 1),
-                          "gen_tokens": nt, "budget_hit": hit, "board": cur})
+                          "gen_tokens": nt, "budget_hit": hit, "answer_field": source,
+                          # A MISSING VALUE IS NOT AN ANSWER. The harness produced this emptiness, so it is
+                          # recorded as missing rather than scored -- never an illegal move, never a zero.
+                          "missing_value": source == "capped-deliberation-missing-value",
+                          "board": cur})
             history.append(tok)
             if not tok:
                 break
@@ -216,9 +324,24 @@ def run(entrant, level_path, cap, port):
         r = S.play(level, tokens)
         r.update({"entrant": label, "level": lname, "loaded": True, "load_s": round(load_s, 1),
                   "turns": turns, "cap": cap, "final_screen": cur,
-                  # THE ARM, CARRIED WITH THE RECORD. Two artifacts whose difference is invisible cannot
-                  # be compared -- the reader would have to take the filenames on trust.
-                  "legend": legend(), "legend_digest": legend_digest()})
+                  "legend": legend(), "legend_digest": legend_digest(),
+                  # THE CONFIG BLOCK, with the reasoning setting on the same footing as ctx and temperature.
+                  # THE CEILING IS RECORDED SEPARATELY FROM THE COUNT USED: `max_tokens_ceiling` is what the
+                  # model was allowed, `cap` is how many turns it was allowed -- two different ceilings that
+                  # were previously one word, "cap".
+                  "config": {"reasoning_requested": REASONING,
+                             "reasoning_argv": reasoning_argv(),
+                             "reasoning_supported_by_build": True,
+                             "max_tokens_ceiling": MAX_TOKENS,
+                             "command_cap": cap,
+                             "ctx": 4096, "n_gpu_layers": 0, "temperature": 0.0,
+                             "legend": legend(), "legend_digest": legend_digest(),
+                             "server_argv": server_argv(entrant, 4096, port)},
+                  # WHAT HAPPENED, not what was asked for.
+                  "reasoning_probe": probe,
+                  # AND DID IT HIT THE CEILING OR COULD IT NOT ANSWER -- read BEFORE any not_an_action
+                  # count is read as a capability result.
+                  "budget_signature": budget_signature(turns, MAX_TOKENS)})
         return r
     finally:
         srv.terminate()

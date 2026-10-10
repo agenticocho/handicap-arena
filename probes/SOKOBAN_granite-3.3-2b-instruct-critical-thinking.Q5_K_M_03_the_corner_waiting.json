@@ -1,0 +1,214 @@
+{
+ "solved": false,
+ "moves": 4,
+ "attempted": 8,
+ "blocked": 4,
+ "not_an_action": 0,
+ "give_up": 0,
+ "gave_up_at": null,
+ "ended": "commands_exhausted",
+ "final_board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######",
+ "trace": [
+  {
+   "ply": 0,
+   "token": "U",
+   "action": "U",
+   "outcome": "pushed",
+   "board": "#######\n#.$#  #\n# @   #\n#     #\n#     #\n#######"
+  },
+  {
+   "ply": 1,
+   "token": "R",
+   "action": "R",
+   "outcome": "moved",
+   "board": "#######\n#.$#  #\n#  @  #\n#     #\n#     #\n#######"
+  },
+  {
+   "ply": 2,
+   "token": "R",
+   "action": "R",
+   "outcome": "moved",
+   "board": "#######\n#.$#  #\n#   @ #\n#     #\n#     #\n#######"
+  },
+  {
+   "ply": 3,
+   "token": "R",
+   "action": "R",
+   "outcome": "moved",
+   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+  },
+  {
+   "ply": 4,
+   "token": "R",
+   "action": "R",
+   "outcome": "blocked",
+   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+  },
+  {
+   "ply": 5,
+   "token": "R",
+   "action": "R",
+   "outcome": "blocked",
+   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+  },
+  {
+   "ply": 6,
+   "token": "R",
+   "action": "R",
+   "outcome": "blocked",
+   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+  },
+  {
+   "ply": 7,
+   "token": "R",
+   "action": "R",
+   "outcome": "blocked",
+   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+  }
+ ],
+ "entrant": "granite-3.3-2b-instruct-critical-thinking.Q5_K_M",
+ "level": "03_the_corner_waiting",
+ "loaded": true,
+ "load_s": 3.0,
+ "turns": [
+  {
+   "ply": 0,
+   "raw": "U\n\nExplanation: The player should move up to the crate in the top-left corner and then push it onto the target. This is the only viable move to progress in the level.",
+   "token": "U",
+   "secs": 2.0,
+   "gen_tokens": 41,
+   "budget_hit": false,
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n# @   #\n#     #\n#######"
+  },
+  {
+   "ply": 1,
+   "raw": "R",
+   "token": "R",
+   "secs": 0.2,
+   "gen_tokens": 2,
+   "budget_hit": false,
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#.$#  #\n# @   #\n#     #\n#     #\n#######"
+  },
+  {
+   "ply": 2,
+   "raw": "R\n\nExplanation: The player is currently on a dot (target) and can move right to reach another dot. This move is necessary to continue progressing towards the goal.",
+   "token": "R",
+   "secs": 1.8,
+   "gen_tokens": 37,
+   "budget_hit": false,
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#.$#  #\n#  @  #\n#     #\n#     #\n#######"
+  },
+  {
+   "ply": 3,
+   "raw": "R",
+   "token": "R",
+   "secs": 0.2,
+   "gen_tokens": 2,
+   "budget_hit": false,
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#.$#  #\n#   @ #\n#     #\n#     #\n#######"
+  },
+  {
+   "ply": 4,
+   "raw": "R",
+   "token": "R",
+   "secs": 0.2,
+   "gen_tokens": 2,
+   "budget_hit": false,
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+  },
+  {
+   "ply": 5,
+   "raw": "R",
+   "token": "R",
+   "secs": 0.2,
+   "gen_tokens": 2,
+   "budget_hit": false,
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+  },
+  {
+   "ply": 6,
+   "raw": "R",
+   "token": "R",
+   "secs": 0.2,
+   "gen_tokens": 2,
+   "budget_hit": false,
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+  },
+  {
+   "ply": 7,
+   "raw": "R\n\nExplanation: The player has already made moves that have placed the crate in a position where it can be pushed onto the target. The crate is currently on the top row, and the target is on the bottom row. The player can move right to push the crate onto the target.",
+   "token": "R",
+   "secs": 2.9,
+   "gen_tokens": 60,
+   "budget_hit": false,
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######"
+  }
+ ],
+ "cap": 8,
+ "final_screen": "#######\n#.$#  #\n#    @#\n#     #\n#     #\n#######",
+ "legend": "new",
+ "legend_digest": "0d86057c46d4c83b",
+ "config": {
+  "reasoning_requested": "off",
+  "reasoning_argv": [
+   "--reasoning",
+   "off"
+  ],
+  "reasoning_supported_by_build": true,
+  "max_tokens_ceiling": 64,
+  "command_cap": 8,
+  "ctx": 4096,
+  "n_gpu_layers": 0,
+  "temperature": 0.0,
+  "legend": "new",
+  "legend_digest": "0d86057c46d4c83b",
+  "server_argv": [
+   "/home/chilly1/llama.cpp/build/bin/llama-server",
+   "-m",
+   "/home/chilly1/moltbook_pipeline/models/granite-3.3-2b-instruct-critical-thinking.Q5_K_M.gguf",
+   "-c",
+   "4096",
+   "-ngl",
+   "0",
+   "--port",
+   "8795",
+   "--no-webui",
+   "--reasoning",
+   "off"
+  ]
+ },
+ "reasoning_probe": {
+  "question": "What is 2 + 2? Reply with just the number and nothing else.",
+  "answer": "4",
+  "answer_from_reasoning_field": false,
+  "completion_tokens": 3,
+  "finish_reason": "stop",
+  "observed": "off",
+  "requested": "off",
+  "disagrees_with_config": false
+ },
+ "budget_signature": {
+  "turns": 8,
+  "turns_that_hit_the_ceiling": 0,
+  "ceiling": 64,
+  "fraction_capped": 0.0,
+  "all_turns_capped": false,
+  "reading": "no turn hit the ceiling -- the answers are the model's own endings"
+ }
+}
