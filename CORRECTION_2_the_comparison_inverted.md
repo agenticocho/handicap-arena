@@ -29,8 +29,8 @@ answer at any of those sizes either. It saturates in deliberation and never reac
 
 ## AND SO THE CHAIR'S ORIGINAL INSTINCT WAS RIGHT TWICE OVER
 
-**Her first ruling was `thinking OFF` for a cabinet agent writing a simulator. I "corrected" it with a `0/5`
-produced by the same bug. She accepted the correction — reasonably, on the numbers I gave her — and ruled
+**His first ruling was `thinking OFF` for a cabinet agent writing a simulator. I "corrected" it with a `0/5`
+produced by the same bug. He accepted the correction — reasonably, on the numbers I gave him — and ruled
 `ON-with-a-ceiling`. THE CORRECTION WAS AN ARTIFACT, AND THE RULING RESTS ON IT:**
 
 > *"0/5 against 5/5 is not a close call."* — Decision 2.
@@ -61,7 +61,7 @@ chat-template enable_thinking=false           answers 5/5    193 tokens, 3.4 s, 
 are not. `--reasoning on` at the server and `enable_thinking` in the chat template produce DIFFERENT BEHAVIOUR
 on this model, and only the chat-template switch produced a fully correct answer.**
 
-**AND THAT SETTLES THE SEAT PROBLEM SHE RAISED.** *"Declare the seat's reasoning setting in `llama-swap.yaml`,
+**AND THAT SETTLES THE SEAT PROBLEM HE RAISED.** *"Declare the seat's reasoning setting in `llama-swap.yaml`,
 where it can be read"* — but a SEAT IS SHARED, and the setting travels with the TASK. **Declaring one setting per
 seat would make two tasks needing different settings fight over one seat. `chat_template_kwargs` travels with
 the REQUEST, so it travels with the TASK — which is where the setting belongs.** **The seat declaration should
