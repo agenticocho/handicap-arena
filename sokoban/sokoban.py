@@ -345,7 +345,7 @@ def main():
     r = play(text, toks)
     print(f"  solved      {r['solved']}")
     print(f"  moves       {r['moves']}   (successful actions -- the score)")
-    print(f"  attempted   {r['attempted']}   blocked {r['blocked']}   unrecognised {r['unrecognised']}")
+    print(f"  attempted   {r['attempted']}   blocked {r['blocked']}   unrecognised {r['not_an_action']}")
     print()
     print(r["final_board"])
     return 0
