@@ -7,7 +7,82 @@ a version that can be bumped without a new name is not an identity.**
 
 ---
 
-## 1. THE SOURCE LIST — GATHERED, WITH DIGESTS, NOT RECALLED
+## 1. THE TWO LISTS — THE CHAIR'S HARD REQUIREMENT, MADE MECHANICAL
+
+**The split is a TEST, not an editorial judgement, and the test is RUN (`make_conformance_package.py`) rather
+than asserted:**
+
+```
+A FIELD IS FORMAT  IF AN INDEPENDENT IMPLEMENTATION, ON OTHER HARDWARE, IN ANOTHER LANGUAGE,
+                   WOULD PRODUCE IT WITH A VALUE THAT MEANS THE SAME THING.
+A FIELD IS LOCAL   IF ITS VALUE IS MEANINGFUL ONLY ON THE MACHINE THAT WROTE IT.
+```
+
+**Plus a tripwire: every FORMAT field's VALUE is scanned for a path, a hostname, or a device model. A FORMAT
+field carrying a local value is a HARD FAILURE. Result on the run of record: THE SPLIT IS CLEAN.**
+
+### LIST 1 — THE FORMAT
+
+```
+IDENTITY                       run_id  entrant  level  kind  cap  simulator_digest  legend_digest  freeze
+
+CONFIG, DECLARED AND PORTABLE  reasoning  reasoning_source  reasoning_declared  reasoning_declared_in
+                               reasoning_rationale  reasoning_changed_from_declaration  reasoning_argv
+                               ctx  temperature  max_tokens_ceiling  command_cap  legend
+
+COUNTERS, THE MEASUREMENT      solved  moves  attempted  blocked  not_an_action  give_up  gave_up_at
+                               ended  trace
+
+HONESTY FIELDS, WHICH SAY      loaded  load_s  never_started  unreadable  missing_values
+WHAT IS MISSING                unreadable_is_the_aggregate_of  missing_values_are_a_subset_of
+
+INSTRUMENT READINGS            reasoning_probe  budget_signature  dead_end  turns
+```
+
+### LIST 2 — THE LOCAL BOOKKEEPING A CONFORMING IMPLEMENTATION DOES NOT PRODUCE
+
+```
+host.node           = chilly                                     a MACHINE NAME
+host.platform       = Linux-7.0.0-38-generic-x86_64-with-glibc   an OS image identity
+host.cpu_count      = 12                                          this box
+host.nvidia_smi     = True                                        whether this box has the tool
+config.server_argv  = ['/home/chilly1/llama.cpp/build/bin/...']   ABSOLUTE LOCAL PATHS
+config.n_gpu_layers = 0                                           a property of THIS box's VRAM
+```
+
+**AND THE LINE BETWEEN `ctx` AND `n_gpu_layers` IS DELIBERATE: `ctx` is a CHOICE made about the measurement
+and travels with it; `n_gpu_layers` is a NECESSITY imposed by one machine's VRAM and does not describe the
+measurement at all.**
+
+## 2. AND THE GAP THE SPLIT FOUND — THE ENTRANT HAS A NAME, NOT AN IDENTITY
+
+**The instrument is digested. The entrant is not.**
+
+```
+simulator_digest   186f561facd44916             THE INSTRUMENT -- digested
+legend_digest      0d86057c46d4c83b             THE INSTRUMENT -- digested
+entrant            LFM2-350M-Extract-Q4_K_M    THE ENTRANT -- A NAME
+```
+
+**And the name is produced by stripping the extension off a filename** (`sokoban_batch.py`:170,
+`os.path.basename(ent).replace(".gguf","")`) — **read, not recalled.**
+
+**WHY IT MATTERS FOR AN OUTSIDE BUILD: two people holding the same weights under different filenames are
+indistinguishable in this record, and two people holding DIFFERENT QUANTIZATIONS under the same name are
+equally indistinguishable.** The cabinet already knows this failure from its own side — a local seat config
+carries the comment *"REMOVED alias `qwen3-coder-next`: it named the model this seat USED TO serve. An alias
+that names a model lies the moment the model is swapped."*
+
+**SO THE SPEC MUST EITHER REQUIRE AN ENTRANT DIGEST OR STATE THIS AS A KNOWN GAP. I recommend requiring it:
+an external derivation is only checkable if both sides can name the thing that was tested.**
+
+**AND ON FIRST RUNNING, THE TRIPWIRE MISSED IT — because my check only ran when the value resolved, and
+`entrant` lives per-cell. A CHECK THAT SKIPS WHAT IT CANNOT READ REPORTS CLEAN FOR THE SAME REASON A DEAD
+PROBE REPORTS SUCCESS. It now resolves at every level the field could live at and reports an UNRESOLVED field
+as *"not checked, not clean"* rather than as a pass.**
+
+## 3. THE SOURCE LIST — GATHERED, WITH DIGESTS, NOT RECALLED
+
 
 Every file below was read to produce this list. Digests are `sha256`, first 16 hex, taken now.
 
