@@ -36,6 +36,27 @@ def _run(cmd, timeout=10):
         return ""
 
 
+def _ancestry(pid):
+    """-> the pid and every ancestor, from /proc/<pid>/stat. THE LEASE RECORDS THE WRAPPER, NOT THE SERVER.
+
+    MY FIRST VERSION MATCHED THE LEASE'S PID AGAINST THE TENANT'S PID BY EQUALITY, so it never found the seat
+    that held 5.5 GB: the lease is taken by `gpu-lease.sh` (the wrapper) and the memory is held by its CHILD
+    `llama-server`. IT REPORTED A LEASED TENANT AS "NO LEASE RECORD" -- a false statement about the holder,
+    from a reader that did not match the thing it was reading. Ancestry is the correct association.
+    """
+    chain, cur, guard = [], pid, 0
+    while cur and cur > 1 and guard < 40:
+        chain.append(cur)
+        try:
+            with open(f"/proc/{cur}/stat") as f:
+                fields = f.read().rsplit(")", 1)[1].split()
+            cur = int(fields[1])                    # 4th field overall, 2nd after the comm paren
+        except (OSError, IndexError, ValueError):
+            break
+        guard += 1
+    return chain
+
+
 def tenants():
     """-> [(pid, mib)] from nvidia-smi. Empty means no tool or no holders -- both are reported as unknown."""
     out = _run(["nvidia-smi", "--query-compute-apps=pid,used_memory", "--format=csv,noheader"])
@@ -78,19 +99,21 @@ def holder_sentence():
         return ("  AND THE HOLDER IS UNKNOWN -- no tenants reported and no lease records found. THIS IS NOT THE "
                 "SAME AS NOBODY HOLDING IT: an unreadable cause is reported as unreadable, never as absent.")
     parts = []
+    claimed = set()
     for owner, need, mode, pid in ls:
-        live = pid and os.path.exists(f"/proc/{pid}")
-        mem = ""
-        for tpid, tmib in t:
-            if pid and tpid == pid:
-                mem = f", {tmib} MiB"
-                break
-        parts.append(f"{owner} (pid {pid or '?'}{mem}) under a {mode or '?'} lease"
+        live = bool(pid) and os.path.exists(f"/proc/{pid}")
+        # A TENANT BELONGS TO THIS LEASE IF THE LEASE'S PID IS ONE OF ITS ANCESTORS -- NOT IF THEY ARE EQUAL.
+        # The lease is taken by the gpu-lease.sh WRAPPER and the memory is held by its CHILD llama-server, so
+        # equality never matched and a LEASED tenant was reported as "NO LEASE RECORD".
+        mine = [(tp, tm) for tp, tm in t if pid and pid in _ancestry(tp)]
+        claimed |= {tp for tp, _tm in mine}
+        mem = ", ".join(f"pid {tp} holding {tm} MiB" for tp, tm in mine) or "no tenant traced to it"
+        parts.append(f"{owner} (lease pid {pid or '?'}, {mem}) under a {mode or '?'} lease"
                      f"{' -- LIVE, so NOT reclaimable at any age' if live else ' -- not alive, reclaimable'}"
                      f"{f', need {need} MiB' if need else ''}")
-    for tpid, tmib in t:
-        if not any(pid == tpid for _o, _n, _m, pid in ls):
-            parts.append(f"pid {tpid} ({tmib} MiB) holding the card with NO LEASE RECORD")
+    untraced = [(tp, tm) for tp, tm in t if tp not in claimed]
+    for tpid, tmib in untraced:
+        parts.append(f"pid {tpid} ({tmib} MiB) holding the card with NO LEASE TRACED TO IT")
     total = sum(m for _p, m in t)
     return f"  AND THE CARD IS HELD BY: {'; '.join(parts)}.  Tenants total {total} MiB."
 
