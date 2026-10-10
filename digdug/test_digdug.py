@@ -64,7 +64,7 @@ def main(argv=None):
             b = json.load(fh)
         r = b["results"][0]
         name = os.path.basename(p)
-        reasonings.add(b["declared"]["reasoning"])
+        reasonings.add(digdug_reader.declared_reasoning(b))
         gpus.add(json.dumps(b["declared"]["gpu"], sort_keys=True))
         budgets.add(b["declared"]["budget_turns_per_level"])
 

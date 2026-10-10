@@ -273,6 +273,74 @@ def grammar_as_record():
     }
 
 
+class DeclaredFieldMissing(KeyError):
+    """A DECLARED setting was looked for at a path where it does not exist.
+
+    Raised rather than returning None, because None is a legitimate STORED value and a miss is
+    not a value at all.  `bundle.get("reasoning")` returns None for a field that is absent AND
+    for a field that is present and holds null, and those are different facts about the record --
+    one of them means nobody declared it, the other means the declaration was never written.
+    A MISS THAT READS AS A VALUE IS THE DEFECT; this exception is how it stops being silent.
+    """
+
+
+def declared_field(bundle, name, *, must_be_present=True):
+    """Read one DECLARED setting out of a bundle.  THE READER OF RECORD FOR THIS BLOCK.
+
+    Why this exists rather than a dict lookup at each call site:
+
+      * THE FIELD IS AT declared.<name>, NOT AT THE TOP LEVEL.  A lookup at the top level is not
+        a weaker reading of the same thing, it is a MISS -- and it returns None, which reads as
+        "the value is null" rather than "you looked in the wrong place".  That happened: a
+        top-level lookup for `reasoning` reported None while declared.reasoning held 'off'.
+      * ONE DEFINITION, IMPORTED EVERYWHERE.  Two readers for one record is the one-definition
+        defect applied to interpretation, and it fails silently in the direction of a better
+        looking number.
+      * THE MISS NAMES ITSELF.  The KeyError carries the path that was tried, every key that IS
+        present, and where the field actually lives.
+
+    must_be_present=False returns None for an ABSENT field and is opt-in, so a caller taking it
+    has decided to, in writing, at the call site.
+    """
+    if not isinstance(bundle, dict):
+        raise DeclaredFieldMissing(
+            "declared_field: the record is %s, not a dict -- there is no 'declared' block to "
+            "read.  This is not a missing setting, it is not a bundle." % type(bundle).__name__)
+    block = bundle.get("declared")
+    if not isinstance(block, dict):
+        raise DeclaredFieldMissing(
+            "declared_field(%r): the bundle has no 'declared' block.  Top-level keys present: %s.  "
+            "Every declared setting lives under 'declared'; a top-level lookup is a MISS and would "
+            "have returned None, which is indistinguishable from a stored null."
+            % (name, sorted(bundle.keys())))
+    if name not in block:
+        if not must_be_present:
+            return None
+        raise DeclaredFieldMissing(
+            "declared_field(%r): NOT PRESENT in bundle['declared'].  Declared keys present: %s.  "
+            "Raised rather than returning None: an absent field and a field holding null are "
+            "different facts and a record must not let them read the same."
+            % (name, sorted(block.keys())))
+    return block[name]
+
+
+def declared_reasoning(bundle):
+    """The reasoning setting for the run that produced this bundle.
+
+    Three of the values that can come back are DIFFERENT FACTS and none of them is None:
+
+      'off'   -- declared OFF before the run (the answer is one character per turn: a
+                 format-carry task, not multi-step deliberation)
+      'on'    -- declared ON
+      'unset' -- DEFAULT_REASONING, meaning NOBODY DECLARED IT.  A fallback to a default is a
+                 decision nobody made wearing a default's clothes, and it is recorded as such.
+
+    So a bundle showing 'unset' is not a bundle showing 'off', and neither is a bundle that is
+    missing the field -- which RAISES here instead of returning None.
+    """
+    return declared_field(bundle, "reasoning")
+
+
 def reader_sha256():
     """Digest of THIS file.  The reader is part of the instrument."""
     try:

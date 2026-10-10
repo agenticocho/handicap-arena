@@ -1319,7 +1319,7 @@ def verify_all(out_dir):
         with open(p, "r", encoding="utf-8") as fh:
             b = json.load(fh)
         r = b["results"][0]
-        reasonings.add(b["declared"]["reasoning"])
+        reasonings.add(digdug_reader.declared_reasoning(b))
         g = b["declared"]["gpu"]
         gpus.add(json.dumps(g, sort_keys=True))
         if r.get("never_started"):
