@@ -1,0 +1,15 @@
+# SOKOBAN INSTRUMENT — pinned copy. Hashes read from disk at pin time.
+# Pinned because the working copy lived in a scratch dir that prunes idle entries.
+# A gate you cannot produce the bytes for is not a gate.
+
+46c01c9b9380d6f4ea5463296146a1b8acc1d62a447e7e81005950cfa3203778  sokoban.py
+db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313  levels/01_one_push.txt
+7549657f1768607cefab6d892b1756b1cabf23f51144a7679d76f331b38a57d7  levels/02_two_boxes.txt
+6f4d72319ec6f87c5fa099e282df29b8ea7bc29e7394352ced34edfe80c09281  SOKOBAN_READ_GRAMMAR.md
+509e6278f6156b89bc3f2a5ea2efa275b75d3b51706a14bd5fea996d583546a7  independent_level_check.py
+
+# Recorded state: the instrument check, 2026-10-09.
+#   python3 sokoban.py --self-test        -> ALL CONTROLS PASS -- 49/49, exit 0
+#   python3 independent_level_check.py    -> BOTH LEVELS VERIFIED, exit 0
+#   python3 sokoban.py --level ... --moves ...  -> KeyError: 'unrecognised' (line 348), exit 1 on EVERY input
+# Frozen bytes are UNCHANGED. The one-line fix was demonstrated on a separate labelled copy, not here.

@@ -1,0 +1,11 @@
+--- sokoban.py	2026-10-09 15:52:58
++++ sokoban-cli-patched.py	2026-10-09 17:51:51
+@@ -345,7 +345,7 @@
+     r = play(text, toks)
+     print(f"  solved      {r['solved']}")
+     print(f"  moves       {r['moves']}   (successful actions -- the score)")
+-    print(f"  attempted   {r['attempted']}   blocked {r['blocked']}   unrecognised {r['unrecognised']}")
++    print(f"  attempted   {r['attempted']}   blocked {r['blocked']}   not_an_action {r['not_an_action']}")
+     print()
+     print(r["final_board"])
+     return 0
