@@ -31,6 +31,10 @@ import urllib.request
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import sokoban as S                                                     # noqa: E402
+# THE ONE READER OF RECORD -- IMPORTED, NEVER REIMPLEMENTED (RULING 79). This file previously built its own
+# answer with `content or reasoning_content` and then scored whatever fell out -- WHICH IS HOW A 1/5 BECAME A
+# 5/5, because on one arm the code was found inside the model's THINKING TRACE.
+from answer_reader import read_answer                                   # noqa: E402
 
 BASE = "http://127.0.0.1:8080/v1/chat/completions"
 
@@ -56,22 +60,23 @@ CASES = [("levels/01_one_push.txt", "R"), ("levels/01_one_push.txt", "UUR"),
          ("levels/03_the_corner_waiting.txt", "xyzUR")]
 
 
-def ask(alias, prompt, think_off):
+def ask(alias, prompt, think_off, max_tokens=1200, base=BASE):
     payload = {"model": alias, "messages": [{"role": "user", "content": prompt}],
-               "max_tokens": 1200, "temperature": 0.0}
+               "max_tokens": max_tokens, "temperature": 0.0}
     # THE ONE THING THAT VARIES. `enable_thinking` is the chat-template switch the Qwen-family template reads;
     # the A/B showed the equivalent server-side flag is the difference between an answer and an empty cell.
     if think_off:
         payload["chat_template_kwargs"] = {"enable_thinking": False}
-    req = urllib.request.Request(BASE, data=json.dumps(payload).encode(),
+    req = urllib.request.Request(base, data=json.dumps(payload).encode(),
                                  headers={"Content-Type": "application/json"})
     t0 = time.time()
     with urllib.request.urlopen(req, timeout=900) as r:
         j = json.loads(r.read().decode())
-    m = (j.get("choices") or [{}])[0].get("message") or {}
-    txt = (m.get("content") or "").strip() or (m.get("reasoning_content") or "").strip()
-    fr = (j.get("choices") or [{}])[0].get("finish_reason")
-    return txt, round(time.time() - t0, 1), (j.get("usage") or {}).get("completion_tokens", 0), fr
+    # THE READER DECIDES, NOT THIS FUNCTION. It returns text only when there IS an answer; a trace comes back
+    # labelled `is_deliberation_only` with an EMPTY text, so nothing downstream can accidentally score it.
+    ans = read_answer(j)
+    ans["secs"] = round(time.time() - t0, 1)
+    return ans
 
 
 def code_of(t):
@@ -121,15 +126,25 @@ def main():
                              ("thinking OFF (enable_thinking=false)", True)):
         print(f"\n=== {label} ===")
         try:
-            txt, secs, ctok, fr = ask(alias, PROMPT, think_off)
+            ans = ask(alias, PROMPT, think_off)
         except Exception as e:                                          # noqa: BLE001
             print(f"  no answer: {type(e).__name__}: {e}")
             rows.append((label, "NO ANSWER", 0, 0, None))
             continue
-        code = code_of(txt)
+        ctok, secs, fr = ans["completion_tokens"], ans["secs"], ans["finish_reason"]
+        print(f"  {secs}s  {ctok} completion tokens  finish_reason={fr}  field={ans['field']}")
+        # NO ANSWER MEANS NO SCORE. Scoring an empty text would report "DOES NOT COMPILE", which is a
+        # statement about a model that never answered -- and for a deliberation-only response it would be a
+        # statement about its THINKING. THE GATE IS THE WHOLE POINT OF IMPORTING THE READER.
+        if not ans["is_answer"]:
+            print(f"  NO ANSWER TO SCORE -- {ans.get('why', ans['field'])}")
+            if ans.get("cap_cut"):
+                print(f"  cap_cut: {ans['cap_cut']}")
+            rows.append((label, f"NO ANSWER ({ans['field']})", 0, 0, ctok))
+            continue
+        code = code_of(ans["text"])
         verdict, good, total = score(code)
-        print(f"  {secs}s  {ctok} completion tokens  finish_reason={fr}")
-        print(f"  first 100 chars: {txt[:100]!r}")
+        print(f"  first 100 chars: {ans['text'][:100]!r}")
         print(f"  -> {verdict}: {good}/{total} cases match the frozen simulator")
         rows.append((label, verdict, good, total, ctok))
     print()

@@ -32,6 +32,8 @@ import urllib.request
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import sokoban as S                                                     # noqa: E402
+# THE ONE READER OF RECORD -- IMPORTED, NEVER REIMPLEMENTED (RULING 79).
+from answer_reader import read_answer                                   # noqa: E402
 
 LLAMA = "/home/chilly1/llama.cpp/build/bin/llama-server"
 MODELS = os.environ.get("ARENA_MODELS") or os.path.expanduser("~/moltbook_pipeline/models")
@@ -244,32 +246,32 @@ def ask(base, board, history, timeout_s=300):
         with urllib.request.urlopen(req, timeout=timeout_s) as r:
             j = json.loads(r.read().decode())
         dt = time.time() - t0
-        msg = ((j.get("choices") or [{}])[0].get("message") or {})
-        txt = (msg.get("content") or "").strip()
-        source = "content"
-        if not txt and (msg.get("reasoning_content") or "").strip():
-            # THE SECOND FIELD, AND THIS IS A TRAP I NEARLY WALKED INTO.
-            #
-            # A reasoning model leaves `content` empty and puts its deliberation in `reasoning_content`.
-            # Falling back to it is right WHEN THE DELIBERATION CONTAINS THE ANSWER. IT IS WRONG WHEN THE
-            # TURN WAS CUT OFF AT THE CEILING, because then the first token of the deliberation is NOT an
-            # answer -- it is the beginning of a sentence that never finished. THE ORNITH CASE EXACTLY:
-            # 2314 tokens of deliberation, no move. Reading that fallback as a token would score a
-            # TRUNCATION ARTIFACT as a legal action.
-            #
-            # So the fallback is kept -- it is the only way a thinking model's answer is ever read -- but it
-            # TRAVELS WITH ITS PROVENANCE, and a capped fallback is reported as a MISSING VALUE rather than
-            # mined for a token.
-            txt = (msg.get("reasoning_content") or "").strip()
-            source = "reasoning_content"
-        nt = (j.get("usage") or {}).get("completion_tokens", 0)
-        hit = (j.get("choices") or [{}])[0].get("finish_reason") == "length"
-        # THE HARNESS MADE THIS EMPTY: capped, with only deliberation behind it. NOT an answer.
-        if source == "reasoning_content" and hit:
-            return "", dt, nt, True, "capped-deliberation-missing-value"
-        return txt, dt, nt, hit, source
+        # THE READER OF RECORD IS IMPORTED, NOT REIMPLEMENTED -- RULING 79, AND THIS FILE WAS THE LAST
+        # HOLD-OUT. It had its own read built from `if not txt and reasoning_content...`, which agreed with the
+        # shared one TODAY and would have been free to disagree tomorrow. THE INSTRUMENT THAT WRITES THE RECORD
+        # AND THE INSTRUMENTS THAT SCORE IT MUST READ IT THE SAME WAY, OR THE RECORD HAS TWO MEANINGS.
+        #
+        # AND THE ONE BEHAVIOUR THIS CHANGES, STATED RATHER THAN SLIPPED IN: an UNCAPPED trace is now a MISSING
+        # VALUE instead of a fallback. The old read handed the deliberation back as if it were an answer; a
+        # trace is deliberation, and nothing is scored from it. STRICTER, and on the side of not scoring
+        # something that is not an answer.
+        ans = read_answer(j)
+        return (ans["text"], dt, ans["completion_tokens"],
+                ans["finish_reason"] == "length", ans["field"])
     except Exception as e:                                              # noqa: BLE001
-        return "", time.time() - t0, 0, False, f"error:{type(e).__name__}"
+        ans = read_answer({}, exception=e)
+        return "", time.time() - t0, 0, False, ans["field"]
+
+
+# THE COMMENT THAT WAS HERE IS NOW THE REASON THE READER EXISTS, and it is preserved because it is the whole
+# argument: "A reasoning model leaves `content` empty and puts its deliberation in `reasoning_content`.
+# Falling back to it is right WHEN THE DELIBERATION CONTAINS THE ANSWER. IT IS WRONG WHEN THE TURN WAS CUT OFF
+# AT THE CEILING, because then the first token of the deliberation is NOT an answer -- it is the beginning of a
+# sentence that never finished. THE ORNITH CASE EXACTLY: 2314 tokens of deliberation, no move. Reading that
+# fallback as a token would score a TRUNCATION ARTIFACT as a legal action."
+#
+# THAT ARGUMENT WAS RIGHT, AND I THEN VIOLATED IT IN A SIDE-SCRIPT BY SCORING A TRACE AS AN ANSWER -- which is
+# why the rule now lives in ONE IMPORTED MODULE instead of in this file's good intentions.
 
 
 def first_token(text):
@@ -302,10 +304,13 @@ def probe_reasoning(base, timeout_s=180):
     except Exception as e:                                              # noqa: BLE001
         return {"question": q, "error": f"{type(e).__name__}: {e}", "observed": None}
     ch = (j.get("choices") or [{}])[0]
-    msg = ch.get("message") or {}
-    txt = (msg.get("content") or "").strip()
-    think = (msg.get("reasoning_content") or "").strip()
-    ctok = (j.get("usage") or {}).get("completion_tokens", 0)
+    # THE PROBE READS THE SAME READER, SO "content or reasoning_content" HAS ONE DEFINITION IN THIS TREE.
+    # It does not SCORE the answer -- it only reports which field the text arrived in -- but a second
+    # definition of that question is the same class of defect as a second reader of record.
+    _ans = read_answer(j)
+    txt = _ans["text"]
+    think = _ans.get("trace_head") or ""
+    ctok = _ans["completion_tokens"]
     # WHAT THE PROBE ACTUALLY MEASURES, NAMED PRECISELY, BECAUSE IT CANNOT SEE WHY.
     #
     # The threshold is on ANSWER LENGTH. From that it INFERS a reasoning mode -- and that inference can be

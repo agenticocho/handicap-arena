@@ -27,18 +27,14 @@ CEILINGS = [1200, 2048, 4096]
 
 
 def ask(alias, prompt, ceiling):
-    payload = {"model": alias, "messages": [{"role": "user", "content": prompt}],
-               "max_tokens": ceiling, "temperature": 0.0}
-    req = urllib.request.Request("http://127.0.0.1:8080/v1/chat/completions",
-                                 data=json.dumps(payload).encode(),
-                                 headers={"Content-Type": "application/json"})
-    t0 = time.time()
-    with urllib.request.urlopen(req, timeout=1200) as r:
-        j = json.loads(r.read().decode())
-    ch = (j.get("choices") or [{}])[0]
-    m = ch.get("message") or {}
-    txt = (m.get("content") or "").strip() or (m.get("reasoning_content") or "").strip()
-    return txt, ch.get("finish_reason"), (j.get("usage") or {}).get("completion_tokens", 0), round(time.time() - t0, 1)
+    """DELEGATES TO THE SHARED READER PATH (RULING 79).
+
+    This file used to read an answer with `content or reasoning_content` and then score whatever the
+    extraction found -- which is how the ceiling sweep reported 5/5 on code that was inside the model's
+    THINKING TRACE. It now calls local_task_compare.ask, which calls answer_reader.read_answer, and there is
+    exactly one reader of record.
+    """
+    return L.ask(alias, prompt, False, max_tokens=ceiling)
 
 
 def main():
@@ -50,13 +46,22 @@ def main():
     for c in CEILINGS:
         print(f"\n  ceiling {c} ...", flush=True)
         try:
-            txt, fr, ctok, secs = ask(alias, L.PROMPT, c)
+            ans = ask(alias, L.PROMPT, c)
         except Exception as e:                                          # noqa: BLE001
             print(f"    no answer: {type(e).__name__}: {e}")
             rows.append((c, "NO ANSWER", None, None, None))
             continue
-        verdict, good, total = L.score(L.code_of(txt))
-        print(f"    finish_reason={fr}  {ctok} tokens  {secs}s  -> {verdict} {good}/{total}")
+        fr, ctok, secs = ans["finish_reason"], ans["completion_tokens"], ans["secs"]
+        if not ans["is_answer"]:
+            # NO ANSWER MEANS NO SCORE -- and the field says whether the harness cut it or the model only
+            # thought. Scoring anyway is how a trace became a 5/5.
+            print(f"    finish_reason={fr}  {ctok} tokens  {secs}s  field={ans['field']}")
+            print(f"    NO ANSWER TO SCORE -- {ans.get('why', ans['field'])}")
+            rows.append((c, fr, ctok, f"NO ANSWER ({ans['field']})", secs))
+            continue
+        verdict, good, total = L.score(L.code_of(ans["text"]))
+        print(f"    finish_reason={fr}  {ctok} tokens  {secs}s  field={ans['field']}  "
+              f"-> {verdict} {good}/{total}")
         rows.append((c, fr, ctok, f"{good}/{total}", secs))
 
     print()

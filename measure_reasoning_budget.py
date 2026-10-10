@@ -67,9 +67,16 @@ def run_one(budget, port):
             j = json.loads(r.read().decode())
         wall = round(time.time() - t1, 1)
         ch = (j.get("choices") or [{}])[0]
-        m = ch.get("message") or {}
-        txt = (m.get("content") or "").strip() or (m.get("reasoning_content") or "").strip()
-        ctok = (j.get("usage") or {}).get("completion_tokens", 0)
+        # THE ONE READER OF RECORD (RULING 79). This file previously built its own answer with
+        # `content or reasoning_content` and then scored it -- WHICH IS HOW ITS SIBLING REPORTED 5/5 ON A
+        # THINKING TRACE.
+        from answer_reader import read_answer
+        ans = read_answer(j)
+        if not ans["is_answer"]:
+            return (ans["finish_reason"], ans["completion_tokens"],
+                    f"NO ANSWER ({ans['field']})", wall, (ans.get("trace_head") or "")[:70])
+        txt = ans["text"]
+        ctok = ans["completion_tokens"]
         verdict, good, total = L.score(L.code_of(txt))
         return (ch.get("finish_reason"), ctok, f"{good}/{total} ({verdict})", wall, txt[:70])
     finally:
