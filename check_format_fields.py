@@ -149,11 +149,17 @@ def check_bundle(d, where="<bundle>"):
                      "CONTRADICTION, and one of the two fields is wrong")
 
     # ---- A9: the freeze record names the VERIFIER, not only the oracle.
+    #
+    # ONE NAME, AND IT IS THE PRODUCER'S. This check asked for `verifier_identity` while the record wrote
+    # `verifier` -- A NAME MISMATCH BETWEEN A CHECK AND THE THING IT CHECKS, which is the defect this
+    # project keeps finding in cards, gates and slot namespaces. AND THE CONTROL DID NOT CATCH IT, because
+    # the control was built with the check's vocabulary and so agreed with the check. ONLY THE REAL RECORD
+    # EXPOSED IT. A control that shares the checker's words cannot detect a disagreement about words.
     fr = d.get("freeze") or d.get("freeze_record")
     if isinstance(fr, dict):
-        if not fr.get("verifier_identity"):
-            p.append("A9: the freeze record names no VERIFIER. A self-test proves the instrument agrees "
-                     "with ITSELF, which is not the same as agreeing with anything else")
+        if not fr.get("verifier"):
+            p.append("A9: the freeze record names no VERIFIER (`freeze.verifier`). A self-test proves the "
+                     "instrument agrees with ITSELF, which is not the same as agreeing with anything else")
 
     # ---- A2: a server block, IF PRESENT, must not be a REDUCED one.
     srv = d.get("server")
@@ -254,7 +260,7 @@ def self_test():
     FAITHFUL = dict(kind="model", never_started=3, unreadable=40, deterministic=True, trials=1,
                     why_one_trial="the oracle is a fixed algorithm; repeats cannot differ",
                     weigh_in={"footprint_gb": None, "footprint_gb_null_reason": "no nvidia-smi here"},
-                    freeze={"verifier_identity": "verify_levels.py, 3/3"},
+                    freeze={"verifier": "verify_levels.py, 3/3"},
                     server={"flags": ["--reasoning", "off"]})
 
     print("=" * 100)
@@ -276,6 +282,13 @@ def self_test():
         ("A4 trials 1 with NO reason", {k: v for k, v in FAITHFUL.items() if k != "why_one_trial"}, True),
         ("A4 deterministic but trials_are_identical false", dict(FAITHFUL, trials_are_identical=False), True),
         ("A9 a freeze record with no verifier", dict(FAITHFUL, freeze={"oracle": "sf_19"}), True),
+        # THE CONTROL THAT WOULD HAVE CAUGHT THE REAL MISMATCH: the verifier is named, but under a name the
+        # CHECK does not read. A control built with the checker's own vocabulary agrees with the checker by
+        # construction and can never expose a disagreement about vocabulary -- THE REAL RECORD FOUND IT.
+        ("A9 the verifier named under a DIFFERENT KEY -> FIRES",
+         dict(FAITHFUL, freeze={"verifier_identity": "verify_levels.py"}), True),
+        ("A9 and the PRODUCER's name is the one that passes",
+         dict(FAITHFUL, freeze={"verifier": "verify_levels.py"}), False),
         ("A2 a server block carrying none of the shape", dict(FAITHFUL, server={"something": 1}), True),
     ]:
         ck(f"{label} -> FIRES", check_bundle(mut) != [], want)
