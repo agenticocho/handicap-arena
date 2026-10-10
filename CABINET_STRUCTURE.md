@@ -122,3 +122,29 @@ being played.**
     measured tonight   1853 MiB free · a live mode=run lease holding 5532 MiB with no argument
                        · an unleased holder at 5874 MiB that the arbiter could not see at all
                        · the blocked run: `failed to load`, five retries, six minutes, one message
+
+### CORRECTION to the GPU PRIORITY ruling (2026-10-10, later the same night)
+
+**WHAT I RECORDED:** an unleased tenant at 5,874 MiB, created by our own launcher.
+**WHAT IS TRUE, read not recalled:**
+
+    (a) the cabinet launcher passes `-ngl 0` -- it is CPU-ONLY, cannot hold VRAM, and was never that tenant
+    (b) the 5,534 MiB holder IS LEASED -- llama-swap-brain -- and the arbiter sees it correctly.
+        The association was missed because the tool matched lease pid to tenant pid BY EQUALITY, when the
+        lease is held by the WRAPPER (`gpu-lease.sh`) and the memory by its CHILD (`llama-server`).
+        Fixed: association is by ANCESTRY, walking the process tree, verified against nvidia-smi.
+    (c) the one truly untraced tenant is 134 MiB.
+
+    ITEM 1  launcher lease      PRUDENCE, NOT EVIDENCE. The code does take no lease and that is true;
+                                with `-ngl 0` it is harmless; it would matter only at `-ngl > 0`.
+                                **Required on that basis -- not on a number that was wrong.**
+    ITEM 2  seat lease yields   **STANDS, and it is the item the measurements support.** The live lease
+                                held 5,534 MiB under a never-reclaim policy and it DID block the load --
+                                the six-minute stall and the failed load were real. Same conclusion,
+                                different holder.
+
+**AND THE SHAPE, FOR THE THIRD TIME IN ONE DAY:** the profile config described a runtime it did not
+control; the run record omitted the artefact the verdict was about; **and the diagnostic named the wrong
+holder.** Each time **the reader was checked against its own expectation and not against the thing it
+read.** Ruling 82 is what made this catchable: a blocked load must NAME THE HOLDER -- and it was re-reading
+that output against ground truth, not the tool, that found the error.
