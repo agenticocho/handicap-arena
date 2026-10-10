@@ -1,0 +1,20 @@
+{
+ "branch": "BRANCH N",
+ "one_shot": "0/3",
+ "with_feedback": "0/3",
+ "disagreements_one_shot": [
+  "01_one_push.txt: your call raised ValueError: not enough values to unpack (expected 3, got 2)",
+  "02_two_boxes.txt: your call raised ValueError: not enough values to unpack (expected 3, got 2)",
+  "03_the_corner_waiting.txt: your call raised ValueError: not enough values to unpack (expected 3, got 2)"
+ ],
+ "disagreements_after": [
+  "01_one_push.txt: your call raised ValueError: not enough values to unpack (expected 3, got 2)",
+  "02_two_boxes.txt: your call raised ValueError: not enough values to unpack (expected 3, got 2)",
+  "03_the_corner_waiting.txt: your call raised ValueError: not enough values to unpack (expected 3, got 2)"
+ ],
+ "oracle": {
+  "01_one_push.txt": 1,
+  "02_two_boxes.txt": 12,
+  "03_the_corner_waiting.txt": 6
+ }
+}
