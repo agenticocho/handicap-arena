@@ -1,0 +1,58 @@
+====================================================================================================
+THE REASONING A/B -- pre-registered in PREREG_reasoning_ab.md
+====================================================================================================
+  entrants  ['Qwen3.5-4B-UD-Q4_K_XL.gguf', 'Qwen3.5-9B-Q4_K_M.gguf']
+  levels    ['01_one_push.txt', '02_two_boxes.txt', '03_the_corner_waiting.txt']
+  arms      [('declared', 'off'), ('override', 'on')]
+  cells     12
+
+  CONTROL -- the override must change the LAUNCH ARGV, or this measures nothing:
+    declared  REASONING='off'  argv=['--reasoning', 'off']  source='declared in PREREG_sokoban.md'  changed=False
+    override  REASONING='on'  argv=['--reasoning', 'on']  source='override (experiment arm)'  changed=True
+    -> the argv differs. Proceeding.
+
+  01_one_push.txt          Qwen3.5-4B-UD-Q4_K_XL.   arm=declared  argv=['--reasoning', 'off'] ...
+      ended=solved             moves=  1 blocked=  0 unreadable=  0 probe=off
+  01_one_push.txt          Qwen3.5-4B-UD-Q4_K_XL.   arm=override  argv=['--reasoning', 'on'] ...
+      ended=budget_confounded  moves=  0 blocked=  0 unreadable=  1 probe=on
+  01_one_push.txt          Qwen3.5-9B-Q4_K_M.gguf   arm=declared  argv=['--reasoning', 'off'] ...
+      ended=solved             moves=  1 blocked=  0 unreadable=  0 probe=off
+  01_one_push.txt          Qwen3.5-9B-Q4_K_M.gguf   arm=override  argv=['--reasoning', 'on'] ...
+      ended=budget_confounded  moves=  0 blocked=  0 unreadable=  1 probe=on
+  02_two_boxes.txt         Qwen3.5-4B-UD-Q4_K_XL.   arm=declared  argv=['--reasoning', 'off'] ...
+      ended=commands_exhausted moves= 16 blocked= 24 unreadable=  0 probe=off
+  02_two_boxes.txt         Qwen3.5-4B-UD-Q4_K_XL.   arm=override  argv=['--reasoning', 'on'] ...
+      ended=budget_confounded  moves=  0 blocked=  0 unreadable=  1 probe=on
+  02_two_boxes.txt         Qwen3.5-9B-Q4_K_M.gguf   arm=declared  argv=['--reasoning', 'off'] ...
+      ended=commands_exhausted moves=  9 blocked= 31 unreadable=  0 probe=off
+  02_two_boxes.txt         Qwen3.5-9B-Q4_K_M.gguf   arm=override  argv=['--reasoning', 'on'] ...
+      ended=budget_confounded  moves=  0 blocked=  0 unreadable=  1 probe=on
+  03_the_corner_waiting.txt Qwen3.5-4B-UD-Q4_K_XL.   arm=declared  argv=['--reasoning', 'off'] ...
+      ended=commands_exhausted moves= 12 blocked= 28 unreadable=  0 probe=off
+  03_the_corner_waiting.txt Qwen3.5-4B-UD-Q4_K_XL.   arm=override  argv=['--reasoning', 'on'] ...
+      ended=budget_confounded  moves=  0 blocked=  0 unreadable=  1 probe=on
+  03_the_corner_waiting.txt Qwen3.5-9B-Q4_K_M.gguf   arm=declared  argv=['--reasoning', 'off'] ...
+      ended=commands_exhausted moves= 17 blocked= 23 unreadable=  0 probe=off
+  03_the_corner_waiting.txt Qwen3.5-9B-Q4_K_M.gguf   arm=override  argv=['--reasoning', 'on'] ...
+      ended=budget_confounded  moves=  0 blocked=  0 unreadable=  1 probe=on
+
+====================================================================================================
+FROM THE ARTIFACT, NOT FROM THIS SCRIPT'S MEMORY
+====================================================================================================
+  entrant                  level                    arm        unreadable  solved  moves
+  Qwen3.5-4B-UD-Q4_K_XL    01_one_push              declared            0    True      1
+  Qwen3.5-4B-UD-Q4_K_XL    01_one_push              override            1   False      0
+  Qwen3.5-9B-Q4_K_M        01_one_push              declared            0    True      1
+  Qwen3.5-9B-Q4_K_M        01_one_push              override            1   False      0
+  Qwen3.5-4B-UD-Q4_K_XL    02_two_boxes             declared            0   False     16
+  Qwen3.5-4B-UD-Q4_K_XL    02_two_boxes             override            1   False      0
+  Qwen3.5-9B-Q4_K_M        02_two_boxes             declared            0   False      9
+  Qwen3.5-9B-Q4_K_M        02_two_boxes             override            1   False      0
+  Qwen3.5-4B-UD-Q4_K_XL    03_the_corner_waiting    declared            0   False     12
+  Qwen3.5-4B-UD-Q4_K_XL    03_the_corner_waiting    override            1   False      0
+  Qwen3.5-9B-Q4_K_M        03_the_corner_waiting    declared            0   False     17
+  Qwen3.5-9B-Q4_K_M        03_the_corner_waiting    override            1   False      0
+
+  === THE BRANCH ===
+    Qwen3.5-4B-UD-Q4_K_XL.gg   unreadable declared=  0 override=  3  BRANCH 1 -- the flag IS the carrier (readable with it, unreadable without)
+    Qwen3.5-9B-Q4_K_M.gguf     unreadable declared=  0 override=  3  BRANCH 1 -- the flag IS the carrier (readable with it, unreadable without)
