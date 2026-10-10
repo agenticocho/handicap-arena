@@ -400,7 +400,7 @@ def run_entrant(entrant, items):
             "aggregate": aggregate, "verdict": verdict, "exit_code": exit_code}
 
 
-def build_bundle(entrant_name, result, items, items_path):
+def build_bundle(entrant_name, result, items, items_path, reasoning="unset"):
     ent = ENTRANTS[entrant_name]() if entrant_name in ENTRANTS else ReferenceSolver()
     sha = ent.source_sha256() if hasattr(ent, "source_sha256") else None
     return {
@@ -439,6 +439,19 @@ def build_bundle(entrant_name, result, items, items_path):
                     "ctx": None,
                     "n_gpu_layers": None,
                     "server_flags": None,
+                    # [A11 -- 2026-10-10] THE REASONING SETTING IS AN INSTRUMENT
+                    # CHOICE, PER TASK, DECLARED BEFORE THE RUN -- not a constant.
+                    # For DARTS the oracle is exact arithmetic, which is the task
+                    # class where thinking measurably HELPS, so darts should be
+                    # run with reasoning ON (the launch flag, not a per-request
+                    # flip). A bundle that does not RECORD the setting it ran
+                    # under is a bundle nobody can compare -- recording it is the
+                    # whole fix. "unset" means the caller did not declare one and
+                    # the result MUST NOT be pooled with a declared run.
+                    "reasoning": reasoning,
+                    "reasoning_note": "DECLARED per-run instrument field [A11]; "
+                                      "'unset' is NOT 'off' and must not be pooled "
+                                      "with a declared run.",
                     "config_note": "RUN_FACTS that do not exist for a solver are "
                                    "null, not omitted and not zeroed. [A2]",
                 },
@@ -463,7 +476,8 @@ def cmd_run(args):
             args.entrant, ", ".join(sorted(ENTRANTS))), file=sys.stderr)
         return 2
     result = run_entrant(ENTRANTS[args.entrant](), items)
-    bundle = build_bundle(args.entrant, result, items, args.tasks)
+    bundle = build_bundle(args.entrant, result, items, args.tasks,
+                          reasoning=getattr(args, "reasoning", "unset"))
     os.makedirs(args.out, exist_ok=True)
     path = os.path.join(args.out, "darts_v1_%s.json" % args.entrant)
     with open(path, "w") as fh:
@@ -533,6 +547,16 @@ def instrument_check(out_dir=None):
     #  LABEL -- a code entrant is a different instrument and is not on the board.
     ok &= _assert(ent["instrument"] == "code" and ent["on_board"] is False,
                   "LABEL: instrument=code, on_board=False", ent.get("instrument"))
+    #  5. THE DECLARED INSTRUMENT FIELD [A11] -- the bundle must RECORD the
+    #     reasoning setting it ran under, and 'unset' must be distinguishable
+    #     from a declared value. A field that is absent is the failure this
+    #     guards: it makes two runs non-comparable while both look fine.
+    ok &= _assert("reasoning" in ent["config"],
+                  "INSTRUMENT FIELD [A11]: bundle records config.reasoning",
+                  sorted(ent["config"]))
+    ok &= _assert(ent["config"].get("reasoning") in ("on", "off", "unset"),
+                  "INSTRUMENT FIELD [A11]: reasoning is one of on/off/unset",
+                  ent["config"].get("reasoning"))
 
     if out_dir:
         os.makedirs(out_dir, exist_ok=True)
@@ -674,6 +698,12 @@ def main():
     r.add_argument("--tasks", default=os.path.join(os.path.dirname(__file__),
                                                   "tasks", "darts_v1.json"))
     r.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "results"))
+    # [A11] the reasoning setting is DECLARED here and RECORDED in the bundle.
+    # It is a launch-flag instrument choice, so it must be named before the run,
+    # not inferred afterwards. 'unset' is the honest default: not 'off'.
+    r.add_argument("--reasoning", default="unset", choices=("on", "off", "unset"),
+                   help="DECLARED per-run reasoning instrument setting [A11]; "
+                        "recorded in the bundle. 'unset' is NOT 'off'.")
     ic = sub.add_parser("instrument-check",
                         help="prove the harness with a solver entrant; enters nothing")
     ic.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "results"))

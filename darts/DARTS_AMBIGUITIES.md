@@ -176,6 +176,27 @@ denominator), our aggregates differ on the same run even though both fired the c
 
 ---
 
+## A11 — THE REASONING SETTING IS AN INSTRUMENT FIELD, NOT A CONSTANT
+
+*(Named 2026-10-10, Chilly's item; taken by Jarvis. Supersedes the withdrawn general claim
+"thinking OFF is better".)*
+
+The reasoning setting is an **instrument choice, per task, declared before the run** — not a property of the
+model. Measured clean A/B on Jarvis, the two modes on **separate ports** (8360 `--reasoning off`,
+8368 `--reasoning on`), 2026-10-10:
+
+    multi-step arithmetic / exact sums   -> thinking ON  (OFF: 230 vs 52, 7 vs 11, 22,000 vs 18,000 — fast and WRONG)
+    summarization / format carry         -> thinking OFF (11/11 vs 11/11 facts, 28.2s vs 97.5s = 3.5x for nothing)
+
+DARTS is the one cabinet whose answer is a **SUM**, not a choice, so it is the cabinet that should run with
+reasoning **ON** — and that is a declaration to make *before* its first model entrant.
+
+**The consequence for the bundle, which is the whole fix:** a result that does not RECORD the setting it ran
+under cannot be compared against another. So `--reasoning {on,off,unset}` is a declared parameter of the
+run and lands in `results[0].config.reasoning`. **`unset` is NOT `off`**: an undeclared run must not be
+pooled with a declared one. This is A9's lesson in a new field — the oracle is arithmetic and needs no
+freeze, but the *instrument* must still say how it was configured.
+
 ## WHAT THIS IS NOT
 
 Not a bug report about your tree, and not a claim that my reading is right. It is the list the
