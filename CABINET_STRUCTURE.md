@@ -100,3 +100,25 @@ they chose** — and the rule is the part that has to be written before the numb
 
 everyone on this box is male: tiel, ocho, ocho2, birdy, sokoban, missile-command, zork. HE/HIM.
 This is a fact about PEOPLE, not about a system -- no artifact records it, so it must be READ here.
+
+## GPU PRIORITY -- OPERATOR RULING, 2026-10-10
+
+**If a cabinet is running, it owns the GPU. The Arcade takes priority over everything else while a game is
+being played.**
+
+**And it is not enforceable until two things are true, both of which are ours:**
+
+1. **THE CABINET'S LAUNCHER MUST TAKE A LEASE.** A cabinet that holds the card must be VISIBLE to the
+   arbiter. Tonight it was not: `sokoban_run.py` starts llama-server with a bare `subprocess.Popen` and
+   records no lease, so the tool that arbitrates cannot name it. **A priority rule cannot be enforced in
+   favour of a tenant the arbiter cannot see.**
+2. **A SEAT LEASE MUST YIELD TO A CABINET RUN.** The current policy -- *a `mode=run` holder whose pid is
+   alive is never reclaimable, at any age* -- means a warm seat can lock out a cabinet indefinitely. That is
+   the priority rule inverted, and it held tonight for ~24 hours on a lease nothing was using.
+
+**And the diagnostic that makes either one visible: a blocked load NAMES THE HOLDER** (ruling 82), never
+`failed to load`. The operator's rule needs to be checkable from the failure, not inferred from it.
+
+    measured tonight   1853 MiB free · a live mode=run lease holding 5532 MiB with no argument
+                       · an unleased holder at 5874 MiB that the arbiter could not see at all
+                       · the blocked run: `failed to load`, five retries, six minutes, one message
