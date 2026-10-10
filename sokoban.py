@@ -79,11 +79,21 @@ def parse(level_text):
             elif ch == BOX:
                 boxes.add((r, c))
             elif ch == PLAYER:
+                # B3 -- MORE THAN ONE PLAYER IS AN ERROR, NOT A BOARD. The old code overwrote `player` on every
+                # `@`/`+`, so a two-player level PARSED SILENTLY and the last one won -- a hole in the control
+                # "a malformed level is an error, not a board". VERIFIED before fixing: a level with two players
+                # parsed without error and reported player=(1,3).
+                if player is not None:
+                    raise ValueError(f"level has more than one player (@) -- one at row {r} col {c}, another "
+                                     f"already at {player}. A level is one player.")
                 player = (r, c)
             elif ch == BOX_ON:
                 boxes.add((r, c))
                 targets.add((r, c))
             elif ch == PLAYER_ON:
+                if player is not None:
+                    raise ValueError(f"level has more than one player (@/+) -- one at row {r} col {c}, another "
+                                     f"already at {player}. A level is one player.")
                 player = (r, c)
                 targets.add((r, c))
             elif ch != " ":
@@ -97,8 +107,15 @@ def parse(level_text):
     if len(boxes) != len(targets):
         raise ValueError(f"{len(boxes)} boxes against {len(targets)} targets -- an unbalanced level "
                          f"cannot be solved and would be measured as an entrant failure")
+    # B2's MEASURED PROPERTY: IS THIS BOARD ENCLOSED? A level with a non-wall cell on any edge CAN be walked off,
+    # so whether it can is a declared property of the LEVEL rather than an accident discovered mid-run. With
+    # out-of-bounds now blocked, an unenclosed level is no longer a hole in the simulation -- but it remains a
+    # property worth recording, because it is the difference between a level that contains its player and one
+    # that merely refuses to let them leave.
+    enclosed = (all((0, c) in walls and (len(rows) - 1, c) in walls for c in range(width))
+                and all((r, 0) in walls and (r, width - 1) in walls for r in range(len(rows))))
     return {"walls": walls, "targets": targets, "boxes": set(boxes), "player": player,
-            "rows": len(rows), "cols": width}
+            "rows": len(rows), "cols": width, "enclosed": enclosed}
 
 
 def render(st):
@@ -136,12 +153,26 @@ def step(st, action):
     dr, dc = ACTIONS[action]
     pr, pc = st["player"]
     ahead = (pr + dr, pc + dc)
+    # B2 -- OUT OF BOUNDS IS BLOCKED. Ruled on the report from an independent implementation and VERIFIED here
+    # before fixing: on an unenclosed level the player reached row 3 of a 3-row board, `render` stopped drawing
+    # them, and the game continued on a board that no longer contained the player -- reachable in three moves, and
+    # every later screen a position the entrant cannot act from.
+    #
+    # I HAD ALREADY ROUTED AROUND THIS WITHOUT NAMING IT: the independent BFS oracle in recovery_semantic.py
+    # carries its own bounds check, because this function did not have one. A bug you work around in your own
+    # code is a bug you have already decided is real.
+    if not (0 <= ahead[0] < st["rows"] and 0 <= ahead[1] < st["cols"]):
+        return st, "blocked"
     if ahead in st["walls"]:
         return st, "blocked"
     if ahead in st["boxes"]:
         beyond = (ahead[0] + dr, ahead[1] + dc)
         # A BOX CANNOT BE PUSHED INTO A WALL OR INTO ANOTHER BOX. That is the entire irreversibility rule:
         # nothing pulls, so a crate against a wall is against it for the rest of the level.
+        # AND IT CANNOT BE PUSHED OFF THE BOARD EITHER -- the same hole as the player's, one step further out,
+        # and worse: a crate beyond the edge is a crate no render shows and no target can ever reach.
+        if not (0 <= beyond[0] < st["rows"] and 0 <= beyond[1] < st["cols"]):
+            return st, "blocked"
         if beyond in st["walls"] or beyond in st["boxes"]:
             return st, "blocked"
         nb = set(st["boxes"])
@@ -163,6 +194,9 @@ def play(level_text, tokens, stop_when_solved=True):
     `unrecognised` and changes nothing -- it is a fact about the output, not about the board.
     """
     st = parse(level_text)
+    # B1 -- `tokens` IS MATERIALISED SO THE EMITTED LENGTH IS KNOWABLE. The ruled fix needs both quantities, and
+    # one of them is the length of the stream the entrant produced; enumerate() over a generator cannot report it.
+    tokens = list(tokens)
     trace, moves, blocked, not_an_action, give_up = [], 0, 0, 0, 0
     gave_up_at: int | None = None
     for i, tok in enumerate(tokens):
@@ -194,7 +228,22 @@ def play(level_text, tokens, stop_when_solved=True):
         trace.append({"ply": i, "token": tok, "action": act, "outcome": outcome, "board": render(st)})
         if stop_when_solved and solved(st):
             break
-    return {"solved": solved(st), "moves": moves, "attempted": len(trace),
+    # B1 -- `attempted` MEANT TWO THINGS AND NOW NAMES NEITHER. The frozen harness truncates the stream at the end
+    # of the run and counted the CONSUMED tokens; the other implementation consumes the stream and counts the
+    # REMAINDER separately. 13 of 75 probes disagreed and every one was here -- ON THE DENOMINATOR for the
+    # not_an_action and blocked rates, so two conforming implementations computed different rates from one run.
+    #
+    # BOTH ARE NAMED, AND THE RATE IS solved / attempted_emitted -- because that is the quantity a SHORTER RUN
+    # CANNOT FLATTER. It is the same defect this cabinet closed tonight one level up, where a rate over
+    # `attempted` could be improved by quitting early.
+    return {"solved": solved(st), "moves": moves,
+            "attempted_emitted": len(tokens), "attempted_consumed": len(trace),
+            # DEPRECATED AND KEPT ONLY SO THE EXISTING BATCH AND REPORT PATHS DO NOT BREAK IN THE SAME COMMIT THAT
+            # REPLACES THEM: `attempted` still equals attempted_consumed. My ruling retires the name; it does not
+            # require retiring it mid-flight. A READER OF AN OLD RECORD SHOULD READ `attempted` AS CONSUMED, which
+            # is what it always was.
+            "attempted": len(trace), "attempted_note": "DEPRECATED -- equals attempted_consumed; future runs use "
+                                                       "the named pair",
             "blocked": blocked, "not_an_action": not_an_action, "give_up": give_up,
             "gave_up_at": gave_up_at,
             # ENDED says BY WHAT PATH, written by the path that produced it and never inferred later --
