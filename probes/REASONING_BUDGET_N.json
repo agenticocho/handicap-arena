@@ -1,0 +1,39 @@
+{
+ "model": "Tiel-Inspired-Coder-9B-UD-Q4_K_M.gguf",
+ "digest": "8bda33873d8cb2cf",
+ "task": "counters() against a provided API, five cases, temp 0.0, max_tokens 4096",
+ "rows": [
+  {
+   "budget": -1,
+   "finish_reason": "stop",
+   "completion_tokens": 179,
+   "cases": "1/5 (compiles)",
+   "wall_s": 26.8,
+   "head": "```python\ndef counters(level, tokens):\n    pos = parse(level)\n    coun"
+  },
+  {
+   "budget": 0,
+   "finish_reason": "stop",
+   "completion_tokens": 189,
+   "cases": "3/5 (compiles)",
+   "wall_s": 26.1,
+   "head": "```python\ndef counters(level, tokens):\n    pos = parse(level)\n    coun"
+  },
+  {
+   "budget": 256,
+   "finish_reason": "stop",
+   "completion_tokens": 196,
+   "cases": "1/5 (compiles)",
+   "wall_s": 27.0,
+   "head": "```python\nfrom enum import Enum\n\nclass Action(Enum):\n    RESIGN = \"RES"
+  },
+  {
+   "budget": 512,
+   "finish_reason": "stop",
+   "completion_tokens": 558,
+   "cases": "0/5 (compiles)",
+   "wall_s": 74.7,
+   "head": "```python\nfrom enum import auto\n\nclass Token:\n    def __init__(self, v"
+  }
+ ]
+}
