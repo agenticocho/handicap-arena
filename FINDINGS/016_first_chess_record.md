@@ -209,3 +209,34 @@ The frozen taxonomy's five values are unchanged. **Unresolved moves now map to `
 VALUE, never scored zero, never dropped, re-run is a RE-MEASUREMENT — with the precise cause in `why`.**
 **`illegal-move` is not a termination the card will ever report again, because it was never a fact about
 the entrant; it was a fact about the reader.**
+
+## AND THE HOLE IN *THIS* RECORD, NAMED RATHER THAN FILLED
+
+**THE POPULATION WAS NEVER MEASURED WITH THE REASONING SETTING CONTROLLED — OR EVEN RECORDED.**
+
+The launch passed `-m -c -ngl --port --no-webui` and nothing else, so the reasoning mode was `auto`: **decided
+by each model's own default and written down nowhere.** `CARD_chess.md` records Threads, Hash, MultiPV and
+depth, and does not record this.
+
+**AND THE EVIDENCE THAT IT MATTERS IS DIRECT, ON THE SAME WEIGHTS:**
+
+```
+Ornith-1.5-9B, thinking ON    a real chess position, 2314 tokens of deliberation, NO MOVE COMMITTED
+Ornith-1.5-9B, thinking OFF   format held, instructions carried across turns, compressed accurately
+```
+
+**SO "TWELVE ASKED, SIX PLAYED, ZERO COMMITTED" MAY BE A STATEMENT ABOUT A FLAG RATHER THAN ABOUT THE
+MODELS.** `2314 tokens and no commitment` is the SIGNATURE of a reasoning model with no stop condition, not
+the signature of a model that cannot play. **This record must not be read as a capability claim until that is
+settled.**
+
+**THIS IS NOT A REQUEST TO REOPEN IT, AND IT DOES NOT WEAKEN THE FINDING AS RECORDED.** Chess was stood down
+by the operator and that stands: **blocked, asterisked, on disk.** The run is not re-scored, the taxonomy
+amendment still stands, and the numbers are unchanged.
+
+**WHAT IT COSTS IF IT IS EVER REOPENED: ONE RUN.** The card and the oracle are frozen, the prompt carries its
+digest, and the only thing missing is a config field — **which now exists, because the cabinets record it.**
+
+**AND THE HONEST FRAMING FOR ANYONE READING `zero of twelve` LATER: the population was measured once, at one
+setting, and the setting was not controlled. That is a hole in the RECORD, and a hole named is worth more
+than a hole filled by a re-run nobody asked for.**
