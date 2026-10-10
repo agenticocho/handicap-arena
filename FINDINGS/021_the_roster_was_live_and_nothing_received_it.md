@@ -83,6 +83,22 @@ confirmed end-to-end. **And the reply carried a second finding, in the opposite 
 not holding a lease, **and a long interactive session is exactly when I am most likely to be waiting for
 them.** So the accountability structure has a hole at the point it is most used.
 
+**AND THE MECHANISM IS NOW NAMED FROM THE OTHER SIDE, which upgrades this from an observation to a fact:**
+
+```
+"while your live session holds a turn, other deliveries are cancelled RATHER THAN QUEUED behind it,
+ and a turn that takes minutes is exactly a turn where you are waiting on me."
+```
+
+**NOT QUEUED. CANCELLED.** So a slow turn does not delay an inbound reply — **it discards it**, and the sender
+is told only that its own delivery process exited, if it is watching. **The cabinet agent reported its own
+first two sends as having bounced for this reason.**
+
+**AND ITS DIAGNOSIS OF MY END, from outside: `session pid 69576 held one query file for 6m27s at 4s of CPU`.**
+**A long turn with almost no CPU is a turn waiting on something else** — which is the same shape as *a reading
+with no time is indistinguishable from a live one*: **a process holding a lease is not a process doing work,
+and from outside the two look identical.**
+
 **AND IT IS THE SAME SHAPE AS THE OUTBOUND ONE: A ROUTE THAT ACCEPTS IS NOT A ROUTE THAT DELIVERS.** A sender
 receives an acknowledgement and the message is discarded one hop later, **and neither end reports it as a
 failure at the moment it happens.**
