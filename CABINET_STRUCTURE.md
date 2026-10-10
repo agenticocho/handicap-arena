@@ -68,6 +68,25 @@ they chose** — and the rule is the part that has to be written before the numb
 **AND THE STANDING RULES THAT APPLY TO EVERY CABINET:**
 
 - **the answer is SHORT** — one letter, one digit, one word. A long answer can be deliberated into the cap.
+- **THE REASONING SETTING IS A CONFIG FIELD AND EVERY BUNDLE RECORDS IT** — on the same footing as `ctx`,
+  `temperature` and `ngl`, because *a series taken at one setting is not comparable to a series taken at
+  another.* Set it DELIBERATELY (default `off`: every cabinet here asks for a short answer, which is the
+  format a non-thinking model is built for and a thinking model will fight) and record the ARGV, not a
+  summary of it. **MEASURED ELSEWHERE ON THE SAME WEIGHTS: thinking ON gave 2314 tokens and no commitment;
+  thinking OFF held the format. Same model, two settings, opposite outcomes.** So "the model cannot do it"
+  and "the model was deliberating with no stop condition" are DIFFERENT FINDINGS.
+- **THE PROBE COMES BEFORE THE FIELD.** Ask the model ONE brief question and record OBSERVED beside
+  REQUESTED. A model that answers a one-token question in one token has thinking off; one that takes two
+  hundred has it on. **When the two disagree, the disagreement IS the finding** — a config field nobody
+  measured is the same class as a legend nobody read. And a flag can be a NO-OP for a given model, so the
+  probe is what makes the claim real.
+- **THE CEILING IS RECORDED SEPARATELY FROM THE COUNT USED**, and from the COMMAND cap. Three different
+  numbers that were previously one word.
+- **A `not_an_action` COUNT IS NOT A CAPABILITY RESULT UNTIL THE BUDGET SIGNATURE IS READ.** "Hit the cap
+  deliberating" and "could not produce an answer" are different findings, and one has already been published
+  as the other in this project.
+- **AN EMPTY ANSWER THE HARNESS PRODUCED IS A MISSING VALUE** — capped deliberation is never a token, never
+  an illegal move, never a zero, never dropped.
 - **an unreadable answer is COUNTED, never scored as a wrong move.** A6: it is INSIDE the denominator.
 - **`never_started` is counted SEPARATELY** and a zero-measured run is an ERROR with a non-zero exit.
 - **the population is DERIVED from `ARENA_MODELS`** — not typed, not from a second directory.
