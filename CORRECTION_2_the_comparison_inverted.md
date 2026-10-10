@@ -74,6 +74,9 @@ tokens, 3.4 seconds, ZERO API tokens, with the answer in the `content` field whe
 
 **Scope, unchanged and stated: temperature 0.0, so this is DETERMINISTIC and reproducible rather than sampled —
 n=1 per setting is n=1 per PROMPT, and the generality limit is TASKS, not trials. One task, one alias.**
+**CORRECTION (added after the N sweep, `N_VERDICT.md`): determinism at temperature 0 is A PROPERTY OF THE ARM,
+NOT OF THE SETTING.** The arms here ran **without a budget**, so the claim holds for them; **it does not hold as
+a general statement about temperature 0**, and the budgeted arms in the N sweep did not repeat.
 
 ## WHAT I HAVE NOT DONE
 

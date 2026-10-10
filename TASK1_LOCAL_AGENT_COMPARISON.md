@@ -55,9 +55,12 @@ inference.**
 
 ## THE SCOPE, STATED SO THIS CANNOT BE READ AS MORE THAN IT IS
 
-- **Temperature 0.0, so the answer is DETERMINISTIC: n=1 per setting is REPRODUCIBLE, not sampled. Repeating
-  it at this temperature returns the same bytes.** The generality limit is **TASKS, not trials** — one task,
-  one alias, one model. It does not establish that every cabinet code task behaves this way.
+- **Temperature 0.0, so this was taken to be DETERMINISTIC — n=1 per setting is REPRODUCIBLE, not sampled.
+  CORRECTION (added after the N sweep, `N_VERDICT.md`): THAT IS RETRACTED FOR BUDGETED ARMS.** Determinism at
+  temperature 0 is **a property of the ARM, not of the setting** — an unbudgeted arm reproduced to the token, a
+  budgeted one did not, same weights, same box, same task. **This verdict's arms were run WITHOUT a budget, so
+  the claim holds here; it does not hold as a general statement about temperature 0.** The generality limit is
+  **TASKS, not trials** — one task, one alias, one model.
 - **`enable_thinking:false` is the CHAT-TEMPLATE switch, not the server's `--reasoning off`.** They are not
   proven equivalent here, and the honest statement is that this measures **the chat-template switch on this
   template.**

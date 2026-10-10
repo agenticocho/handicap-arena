@@ -68,6 +68,10 @@ IS EXACTLY WHY THE CHAIR WAS RIGHT TO WITHHOLD THE MOVE ON ONE TASK.**
 
 - **It is SPECIFIC** — one construct, at the compound rules, not a general collapse.
 - **It is REPRODUCIBLE** — temperature 0, so this output is deterministic, not one unlucky sample.
+  **CORRECTION (added after the N sweep, `N_VERDICT.md`): the claim is narrower than it reads.** Determinism at
+  temperature 0 is **a property of the ARM, not of the setting** — an unbudgeted arm reproduced to the token, a
+  budgeted one did not, same weights, same box, same task. **This verdict's run was made WITHOUT a budget, so
+  the claim stands here; it does not stand as a general statement about temperature 0.**
 - **It is LOCALISED** — a model that can produce 24 lines of correct structure and then put a ternary in a string
   is failing at something addressable, not at the task.
 
