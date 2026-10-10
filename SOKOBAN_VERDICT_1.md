@@ -93,7 +93,18 @@ side — and it is only visible because `give_up` was split out of `unrecognised
 
 ## SCOPE
 
-**Two levels, five entrants, one instrument history, n=1 per cell for the population run.** The A/B is
-n=3 per arm and is the controlled evidence. **This is not a Sokoban score and it is not a population rate.**
-The third level is **ABSENT** and is reported as absent: a level nobody can solve needs a solver to PROVE
-it, and one that merely LOOKS lost is a trap for the reader rather than a control for the entrant.
+**TWO LEVELS AT THE TIME OF THE RUN, five entrants, one instrument history, n=1 per cell for the population
+run.** The A/B is n=3 per arm and is the controlled evidence. **This is not a Sokoban score and it is not a
+population rate.**
+
+**AND THE THIRD LEVEL NOW EXISTS** — `03_the_corner_waiting`, added once the solver made unsolvability
+provable. It was withheld rather than invented, and the reason is kept because the rule did not change when
+the solver arrived: **a level nobody can solve needs a solver to PROVE it, and one that merely LOOKS lost is
+a trap for the reader rather than a control for the entrant.** What changed is that the proof became
+available. The level, its solution and its proven dead end are in `verify_levels.py`; the dead-end proof is
+re-derived in `sokoban_deadend.py`.
+
+**AND THE POPULATION RUN ABOVE RAN ON TWO LEVELS. THE THIRD LEVEL IS NOT IN IT.** Adding a level after a run
+does not retroactively add it to that run — **a criterion change after the number is a file, not a
+criterion**, which is the standing rule this project has applied to the taxonomy amendment, to the commit
+hash, and now here. **The next population run carries three levels; this run's numbers stand as recorded.**

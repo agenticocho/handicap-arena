@@ -27,12 +27,14 @@ WHAT IT DOES NOT DO
 
 THE TWO DIRECTIONS, BOTH ASSERTED
     A solver that never says UNSOLVABLE is broken; one that always says it is dead. The control suite
-    asserts BOTH: the two frozen levels must come back SOLVABLE with EXACTLY 1 and 12 moves, and a
+    asserts BOTH: the frozen levels must come back SOLVABLE with EXACTLY the move counts the project already
+    has, and a
     level built here -- a crate whose only legal moves end in a non-target corner -- must come back
     UNSOLVABLE, with the enumeration cross-checked by a second, independently written enumerator.
 
     python3 sokoban_solver.py                     # the full control suite (exit 0 = all controls pass)
-    python3 sokoban_solver.py --read-control      # ONLY the frozen read-control: exactly 1 and 12
+    python3 sokoban_solver.py --read-control      # ONLY the frozen read-control; the counts are in
+                                                  # READ_CONTROL and are not restated here
     python3 sokoban_solver.py --level levels/02_two_boxes.txt
     python3 sokoban_solver.py --level X.txt --max-states 50          # -> BUDGET_EXHAUSTED, named
     python3 sokoban_solver.py --level X.txt --json
@@ -53,9 +55,42 @@ SOLVABLE, UNSOLVABLE, BUDGET_EXHAUSTED = "SOLVABLE", "UNSOLVABLE", "BUDGET_EXHAU
 ACTIONS = "UDLR"                                    # the frozen action space, in the frozen order
 
 # --------------------------------------------------------------------------------- what we are read against
-# THE READ-CONTROL, declared HERE and not inferred from a run: the two answers the project already has.
+# THE READ-CONTROL, declared HERE and not inferred from a run: the answers the project already has.
 # A solver that cannot reproduce these cannot be trusted on the answers it does not have.
-READ_CONTROL = [("01_one_push", 1), ("02_two_boxes", 12)]
+#
+# AND THE THREE ENTRIES ARE NOT EQUALLY STRONG, SO THE DIFFERENCE IS WRITTEN DOWN RATHER THAN BLURRED:
+#
+#   01, 02   the solutions were PUBLISHED BEFORE THIS SOLVER EXISTED (verify_levels.py carried R and
+#            RRRRDLLLDRRR). Fully independent of the thing being checked.
+#   03       the solution was FOUND BY THIS SOLVER, and then confirmed by the FROZEN SIMULATOR replaying
+#            RULDLU -> solved, 6 moves. THE ENFORCER IS INDEPENDENT; THE DISCOVERY IS NOT. So this entry
+#            tests that the solver still returns what it found and that an independent enforcer agrees the
+#            count is ACHIEVABLE -- it does NOT independently establish optimality.
+#
+# Keeping both kinds, and labelling which is which, is the point: a control whose provenance is not stated
+# gets read as the strongest kind.
+READ_CONTROL = [("01_one_push", 1), ("02_two_boxes", 12), ("03_the_corner_waiting", 6)]
+
+
+# AND THE MESSAGES ARE BUILT FROM THE TABLE, NEVER RETYPED.
+#
+# They read "the two answers" and "PASSES: 1 and 12" while the table held two entries. Adding a third made
+# a TRUE sentence FALSE WITHOUT ANYTHING EDITING IT -- the caption drifted from the record it captions,
+# which is the defect this project has spent the week removing. A hand-typed count beside a growing table
+# is a second copy of the truth, so these are derived at print time instead.
+_COUNT_WORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five"}
+
+
+def _rc_count_word():
+    n = len(READ_CONTROL)
+    return _COUNT_WORDS.get(n, str(n))
+
+
+def _rc_moves_str():
+    ms = [m for _, m in READ_CONTROL]
+    if len(ms) == 1:
+        return str(ms[0])
+    return ", ".join(str(m) for m in ms[:-1]) + f" and {ms[-1]}"
 
 # The digests the freeze record names. If any of these does not match, the artifact this solver read is
 # not the artifact the numbers came from -- and that is reported, not rounded off.
@@ -63,6 +98,7 @@ FROZEN_DIGESTS = {
     "sokoban.py": "186f561facd449165f1c6f56f6eabd9955ee26c6d6c536dea96e0824d61b29c0",
     "levels/01_one_push.txt": "db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313",
     "levels/02_two_boxes.txt": "7549657f1768607cefab6d892b1756b1cabf23f51144a7679d76f331b38a57d7",
+    "levels/03_the_corner_waiting.txt": "77d18407a001da292b2f1dcf8054ed40ddc2038563f23b96861a362c78cf23d6",
 }
 
 # The frozen solution `verify_levels.py` carries for 02, used as a CROSS-CHECK on the read-control: 12
@@ -339,7 +375,7 @@ def _self_test():
     level_path = lambda n: os.path.join(HERE, "levels", f"{n}.txt")   # noqa: E731
 
     # ---- [1] THE READ-CONTROL. First, because it is the first thing the reader will check.
-    print("\n[1] THE READ-CONTROL -- the two answers we already have, reproduced EXACTLY")
+    print(f"\n[1] THE READ-CONTROL -- the {_rc_count_word()} answers we already have, reproduced EXACTLY")
     read_results = {}
     for lname, want_moves in READ_CONTROL:
         text = open(level_path(lname)).read()
@@ -526,7 +562,7 @@ def main():
     ap.add_argument("--level", help="a level file to solve")
     ap.add_argument("--controls", action="store_true", help="the full control suite (default)")
     ap.add_argument("--read-control", action="store_true",
-                    help="ONLY the frozen read-control: exactly 1 and 12")
+                    help=f"ONLY the frozen read-control; its counts live in READ_CONTROL ({_rc_moves_str()})")
     ap.add_argument("--max-states", type=int, default=None, help="budget: states expanded")
     ap.add_argument("--max-seconds", type=float, default=None, help="budget: wall-clock seconds")
     ap.add_argument("--deadlock", choices=("corner", "none"), default="corner",
@@ -536,7 +572,8 @@ def main():
 
     if a.read_control and not a.level:
         print("=" * 100)
-        print("THE READ-CONTROL -- the two answers the project already has, reproduced by the solver")
+        print(f"THE READ-CONTROL -- the {_rc_count_word()} answers the project already has, "
+              f"reproduced by the solver")
         print("=" * 100)
         bad = []
         for lname, want in READ_CONTROL:
@@ -549,7 +586,7 @@ def main():
                 bad.append(lname)
         print()
         print("=" * 100)
-        print(f"{'READ-CONTROL PASSES: 1 and 12' if not bad else 'READ-CONTROL FAILED: ' + ', '.join(bad)}")
+        print(f"{'READ-CONTROL PASSES: ' + _rc_moves_str() if not bad else 'READ-CONTROL FAILED: ' + ', '.join(bad)}")
         print("=" * 100)
         return 1 if bad else 0
 

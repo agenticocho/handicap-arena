@@ -2,6 +2,12 @@
 
 **Written at the close of the off-peak window. HEAD `d413b81`, tree clean, no unit running.**
 
+> **SUPERSEDED IN PART, later the same evening:** item 1 below (the third level) **IS DONE** —
+> `levels/03_the_corner_waiting.txt`, verified, with a PROVEN fatal opening move, plus the new
+> `sokoban_deadend.py` mapper. Item 3's caution about the shared artifact path is still live. See the
+> commit that added the level for the current state. **Kept rather than rewritten, because a handoff that
+> is silently edited is a handoff nobody can audit.**
+
 ---
 
 ## WHAT LANDED THIS WINDOW
