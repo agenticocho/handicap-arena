@@ -340,7 +340,13 @@ moment the Arcade becomes an arcade rather than a very careful laboratory.
 
 ---
 
-## 12. RESULTS — THE CABINET HAS BEEN RUN
+## 12. RESULTS — THIS CABINET HAS BEEN RUN
+
+**Which instrument this section reports, stated because the word "cabinet" is currently doing double duty
+in this tree.** The results below are from the **CODE-WRITING cabin**: the entrant is given a task and
+writes a function that solves levels, collected and checked by `sokoban_run.py`. They are **not** from the
+**MOVE instrument** (`sokoban.py --level`, which plays a supplied move list and is the file a reader is
+most likely to have open). Both are real; only one is reported here.
 
 *Added after the first run. The opening paragraph of this document said the instrument "has not yet been
 run." That was true when it was written and is not true now. The sentence was corrected rather than
