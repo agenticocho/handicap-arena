@@ -1,14 +1,14 @@
 {
   "artifact": "DIG DUG cabinet -- frozen contract manifest",
   "card_version": "digdug_v1",
-  "frozen_utc": "2026-10-10T20:47:18Z",
+  "frozen_utc": "2026-10-10T21:02:59Z",
   "frozen_before_any_entrant_run": true,
   "contract": "CONTRACT_digdug_v1.md",
   "digests": {
     "contract": "2d5679d0064fbbdd4c3c5f07ba4400ec94d183c9cd0f7d38b49261a71aecb908",
     "reader": "6be849338e25b73c453a1a21020cb193a1df081168bd7da881e871545883de21",
     "readings": "a0efae8dab4e7d13801a3ba668d486b7569128243f37f35feb3f187edc5c295a",
-    "runner": "c507c71600709db2174628f6094e92449a80b1ba081eb2692c483629eb2fc4a3",
+    "runner": "23a029b3e1a7538402cfbe4063b3529dd4e9bbdd81733011af7b54ea64a114ad",
     "simulator": "f77c2b142b0706e33b0e47be21d4798853f83e08652c6dc5b7212e10680abd53",
     "solver": "7445589976a0eed9d333624ef70a05c0e373199490ce6dbce67edc48bf1388ca"
   },

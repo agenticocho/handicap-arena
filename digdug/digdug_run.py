@@ -839,7 +839,7 @@ class ModelEntrant(Entrant):
     is_model = True
     instrument = "model"
 
-    def __init__(self, model_path, server_url="http://127.0.0.1:8080",
+    def __init__(self, model_path=None, server_url="http://127.0.0.1:8080",
                  port=8080):
         self.model_path = model_path
         self.server_url = server_url
@@ -2054,6 +2054,7 @@ def cmd_run(args):
         retries=args.retries if args.retries is not None else DEFAULT_RETRIES,
         max_tokens=args.max_tokens, temperature=args.temperature)
     bundle = build_bundle(name, result, levels, reasoning=args.reasoning,
+                            weights=ent.weights_info(),
                           frozen=detail,
                           config_extra={"budget": args.budget,
                                         "retries": args.retries,

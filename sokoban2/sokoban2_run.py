@@ -550,7 +550,7 @@ class ModelEntrant(Entrant):
     is_model = True
     instrument = "model"
 
-    def __init__(self, model_path, server_url="http://127.0.0.1:8080",
+    def __init__(self, model_path=None, server_url="http://127.0.0.1:8080",
                  port=8080):
         self.model_path = model_path
         self.server_url = server_url
