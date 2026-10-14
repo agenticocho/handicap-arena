@@ -101,6 +101,39 @@ now makes that automatic.)
 can displace its own record is not an instrument. Anything that only becomes diagnosable if it is
 captured before something else runs must be captured by construction, not by remembering.
 
+## The unit's own deployment error — a live rule, not history
+
+**Supplied raw by Chilly on 2026-10-14 and absorbed here rather than kept as a separate finding.** It
+is a rule about the units this project runs *today*, so it belongs beside the operational part rather
+than in an annex:
+
+> The first freeze's unit was launched with `ManagedOOMPreference=omit`, which removes it from oomd's
+> candidate set — **protecting the measurement at the cost of the machine**. An earlier run without it
+> was OOM-killed at 33 G and the box survived. **On a live desktop that property must not be set**: the
+> box wins over the run, always. The corrected unit carries no preference, `MemoryHigh=28G`/`MemoryMax=32G`
+> (a real ~28 GiB reserve rather than a ceiling above the peak), `MemorySwapMax=2G`, and `OOMPolicy=stop`.
+
+**Why this is the deployable half:** the failure it describes is not the card's — it is the measurement's
+own scaffolding deciding that the run outranks the desk it runs on. A run that survives by killing the
+machine is not more robust; it is less honest about what it costs. **`omit` is available, it worked, and
+it is the wrong default on a live desktop** — which is exactly the shape of setting that gets copied
+forward because it was effective once.
+
+## What did not break — the constructive half
+
+**Failures get recorded and successes do not, so the resumability evidence is stated explicitly here.**
+Also supplied raw by Chilly, 2026-10-14:
+
+> 19 of 38 entrants measured across two freezes, **all bundles intact, zero corrupt, zero partial, and
+> 114/114 item records carrying `secs` and `gen_tokens`.** A resumable runner turns a crash into a
+> shorter run rather than a lost one — and the per-item clock survived a hard power-off because it was
+> written into the bundle rather than held in the process.
+
+**The design rule underneath it:** anything the record needs after a hard stop must be written into the
+bundle as it is produced, not accumulated in the process and flushed at the end. Same rule as the
+capture rule above, applied to the runner instead of the diagnostics — **the record survives the crash
+because it was never only in memory.**
+
 ## The correction that is the real lesson
 
 Two corrections landed here, and they are the same defect in different costumes:
@@ -120,9 +153,19 @@ actually run.*
 **This also stands as counter-evidence to any clean bill of health.** This card's GSP **can hang on 580
 too**, mid-run, with the same text — and **two clean boots on 615 are not a clearance either**. So "the
 card is fine" is true of *today's* failure and is **not a general clearance**: the two modes coexist on
-the same driver line, and a clean bring-up clears only one of them. The ~19 CUDA context create/teardown
-cycles per arena run correlation stands as a hypothesis with **n=2** — better met as a known pattern than
-as a surprise.
+the same driver line, and a clean bring-up clears only one of them. **AND THE CORRELATION IS LEFT STANDING, LABELLED AS A CORRELATION.** 2 of 2 freezes occurred with the
+arena running — each entrant spawns a `llama-server`, loads a model, exits, and the next repeats it, so
+~19 CUDA context create/teardown cycles land on firmware that is already marginal. **That is a hypothesis
+with n=2 and it is NOT a finding** — better met as a known pattern than as a surprise, and not to be
+promoted by repetition.
+
+## Provenance — what came from where
+
+**Three sections above were supplied raw by Chilly on 2026-10-14 from `011_two_freezes_gpu_firmware.md`,
+and absorbed here rather than landed as a separate finding 024:** the unit deployment error (a live rule),
+the resumability evidence, and the n=2 correlation. **They are quoted rather than paraphrased** because
+the originating copies come out of `FINDINGS/` in the same reconcile that lands this text, and a
+paraphrase would be the only surviving record of them.
 
 ## Provenance and correction (recorded against both names)
 
