@@ -96,6 +96,22 @@ they chose** — and the rule is the part that has to be written before the numb
 - **every artifact the Chair sends is a CLAIM** until the file it names has been read, the count it quotes
   has been run, and the enforcer it cites has been found.
 
+## THE DIG DUG LINES — two cabinets, two names
+
+**Recorded here because a decision that lives only in a transcript is not recorded.** Two
+independent DIG DUG builds exist, and until now nothing on disk said which was which:
+
+| name | line | told apart by its OWN artifacts |
+|---|---|---|
+| `digdug` | `fix/model-entrant-reachable` (`5e780fd`) | 31 `digdug/` files · `CONTRACT_digdug_v1.md` + `CONTRACT_frozen.json` · `card_version: digdug_v1` |
+| `digdug2` | `digdug-sampler-grammar` (`5539512`) | 32 `digdug/` files · carries `FROZEN_GBNF_sampler_grammar.gbnf` + `CONTRACT_DIGDUG.md` + `FROZEN.json` |
+
+**THE NAME IS A LABEL, NOT A PATH, AND NOTHING WAS RENAMED ON DISK FOR IT.** The
+`"cabinet"` field in `digdug/FROZEN.json`, its generator at `digdug/freeze.py`, and the
+`Cabinet:` line in each contract all name the cabinet's **directory** and are left exactly
+as they are. The two builds stay distinguishable by their own artifacts — which is how the
+mapping was re-derived in the first place, from disk rather than from memory.
+
 ## HOUSE FACT -- pronouns
 
 everyone on this box is male: tiel, ocho, ocho2, birdy, sokoban, missile-command, zork. HE/HIM.
