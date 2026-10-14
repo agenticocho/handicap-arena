@@ -11,16 +11,36 @@ The Chair re-derived my figures and reports:
 A finding about my own instrument that I accept without checking would be worth nothing, so
 each one is re-derived here independently.
 """
-import glob, json, os
+import glob, json, os, sys
 from collections import Counter, defaultdict
 
-RESULTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)                      # root scripts: already sys.path[0]; scripts/*: required
+import cabinet_root as _root
+
+
+def scope(pattern="*.json"):
+    """[(kind, base, [paths])] over the DECLARED domain, entry by entry. No pattern is widened,
+    no directory joins by existing."""
+    rows = []
+    for kind, base in _root.domain():
+        rows.append((kind, base, sorted(glob.glob(os.path.join(base, pattern)))))
+    return rows
+
+
+def print_scope(rows, pattern):
+    # THE SCOPE IS PRINTED WITH THE COUNT IT CONTRIBUTED: a count without its scope is not a count.
+    for kind, base, hits in rows:
+        print(f"  scope  {kind:16} {len(hits):4} {pattern}  {base}")
+
 ORDER = ["White", "Yellow", "Orange", "Green", "Blue", "Purple", "Brown", "Black"]
 
 
 def load():
     entries, empty = [], []
-    for p in sorted(glob.glob(os.path.join(RESULTS, "*.json"))):
+    _rows = scope("*.json")
+    print_scope(_rows, "*.json")
+    for p in [p for _k, _b, hits in _rows for p in hits]:
         try:
             d = json.load(open(p))
         except Exception:
