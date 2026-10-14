@@ -33,7 +33,29 @@ import glob, json, os, shutil, subprocess, sys, time
 # point it at your GGUFs" -- with absolute paths baked in, it could only be downloaded by one
 # machine, which is the opposite of the point.
 ARENA = os.path.dirname(os.path.abspath(__file__))
-RESULTS = os.path.join(ARENA, "results")
+sys.path.insert(0, ARENA)
+
+# THE RESULT ROOT IS DECLARED, NOT DERIVED -- and this line REFUSES rather than falling back.
+#
+# It used to read:
+#     RESULTS = os.path.join(ARENA, "results")
+# three lines under the paragraph above, which says this file is "overridable by environment".
+# MODELS and SERVER are. RESULTS was not: ARENA derives from THIS SCRIPT'S OWN LOCATION, so in a
+# worktree the root WAS that worktree's results/ -- inside a git tree, matched by
+# reconcile_and_backfill.py:38 and test_bind_control.py:39, excluded by nothing.
+#
+# THE FIX IS NOT A DEFAULT. cabinet_root.results_dir() resolves the DECLARED root
+# (git config --local arena.cabinetResults, which lives in the git COMMON dir and is therefore the
+# same for every worktree of this repo and outside all of them; CABINET_RESULTS overrides it) and
+# RAISES when there is no declaration, and when the declaration resolves inside a git working tree
+# -- so this exits at IMPORT, before a single model is spawned. THE FALLBACK TO <worktree>/results
+# IS THE DEFECT: a fallback that works silently is how a declared root becomes decorative: every
+# run succeeds, nothing complains, and the results land in the matchable tree.
+#
+# Read it back:  python3 cabinet_root.py     Free controls:  python3 test_declared_root.py
+# See CABINET_STRUCTURE.md, addendum 2026-10-14 (items 1-4 are landed by this commit).
+import cabinet_root as _root                                              # noqa: E402
+RESULTS = _root.results_dir()          # <declared ROOT>/<this worktree's cabinet>, OR A REFUSAL
 MODELS = os.environ.get("ARENA_MODELS") or os.path.expanduser("~/moltbook_pipeline/models")
 # THE RESOLVER IS arena.py's, AND THERE IS ONLY ONE OF IT.
 #
