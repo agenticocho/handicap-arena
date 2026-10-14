@@ -2,6 +2,13 @@
  "declares": "DECISION_logs_are_scratch.md",
  "classification": "scratch",
  "read_it_back": "python3 test_declared_root.py    (section 7 -- the log coordinate, the ignore rule, this manifest)",
+ "landing": {
+  "main": "8f51ae8",
+  "cabinet/sokoban": "9aa5a21",
+  "cabinet/missile-command": "07d8815",
+  "cabinet/zork": "07d8815",
+  "note": "the commit that landed this on each branch, as a FIXED claim with the date 2026-10-14. The per-branch hash differs by construction (the landing was applied per file on the cabinet branches); the branch-agnostic way to read the current one is `git log --format=%h -1 --grep='DECIDED: logs/'` -- NOT `git log -1 -- LOG_EDGES.json`, which returns the commit that last TOUCHED this file, i.e. this one. The 'commit' field on each migrated edge is main's landing commit, where the migration was written."
+ },
  "what_this_file_is": "THE DECLARED EDGE LIST FOR THE LOGS. logs/ is scratch (see DECISION_logs_are_scratch.md), so a log edge needs no root outside the tree -- but it DOES need a declared coordinate, and an edge that is neither migrated nor declared is the mixed state this project rejects. `edges` is every place in the tree that still constructs a log path, each with a status and an anchor string; `migrated` is every edge that was re-pointed at cabinet_root.log_dir()/log_for(). test_declared_root.py section 7 FAILS if a new file starts constructing a log path, or if a declared anchor disappears, or if a 'migrated' file has started constructing one again. A list of edges that nothing checks is a resolution, not a mechanism.",
  "edges": [
   {
@@ -42,7 +49,7 @@
    "before": "os.path.join(ARENA, \"logs\", \"card_run.log\")",
    "after": "cabinet_root.log_path()",
    "anchor": "log = _root.log_path()",
-   "commit": "PENDING -- the next commit names the commit that landed this; a commit cannot cite its own hash"
+   "commit": "8f51ae8"
   },
   {
    "file": "arena.py",
@@ -50,7 +57,7 @@
    "before": "os.path.join(os.path.dirname(os.path.abspath(__file__)), \"logs\")",
    "after": "cabinet_root.log_dir(HERE)",
    "anchor": "_logs = _root.log_dir(HERE)",
-   "commit": "PENDING -- the next commit names the commit that landed this; a commit cannot cite its own hash"
+   "commit": "8f51ae8"
   },
   {
    "file": "check_run.py",
@@ -58,7 +65,7 @@
    "before": "[<HERE>/logs/card_run.log, <HERE>/results/card_run.log]",
    "after": "[cabinet_root.log_path(HERE), LEGACY_LOGS/card_run.log], newest wins",
    "anchor": "_cands = [_root.log_path(HERE), os.path.join(_root.LEGACY_LOGS, _root.LOG_NAME)]",
-   "commit": "PENDING -- the next commit names the commit that landed this; a commit cannot cite its own hash"
+   "commit": "8f51ae8"
   },
   {
    "file": "chess_game.py",
@@ -66,7 +73,7 @@
    "before": "os.makedirs(os.path.join(HERE, \"logs\"))",
    "after": "os.makedirs(cabinet_root.log_dir(HERE))",
    "anchor": "log = os.path.join(_root.log_dir(HERE), f\"CHESS_GAME_{label}.log\")",
-   "commit": "PENDING -- the next commit names the commit that landed this; a commit cannot cite its own hash"
+   "commit": "8f51ae8"
   },
   {
    "file": "cost_probe.py",
@@ -74,7 +81,7 @@
    "before": "os.path.join(HERE, \"logs\", f\"COST_PROBE_{label}.log\")",
    "after": "os.path.join(cabinet_root.log_dir(HERE), ...)",
    "anchor": "log = os.path.join(_root.log_dir(HERE), f\"COST_PROBE_{label}.log\")",
-   "commit": "PENDING -- the next commit names the commit that landed this; a commit cannot cite its own hash"
+   "commit": "8f51ae8"
   },
   {
    "file": "measure_reasoning_budget.py",
@@ -82,7 +89,7 @@
    "before": "os.path.join(HERE, \"logs\", f\"budget_{budget}.log\")",
    "after": "os.path.join(cabinet_root.log_dir(HERE), ...)",
    "anchor": "log = os.path.join(_root.log_dir(HERE), f\"budget_{budget}.log\")",
-   "commit": "PENDING -- the next commit names the commit that landed this; a commit cannot cite its own hash"
+   "commit": "8f51ae8"
   },
   {
    "file": "reconcile_and_backfill.py",
@@ -90,7 +97,7 @@
    "before": "LOG = os.path.join(HERE, \"logs\", \"card_run.log\"); \"source_log\": \"logs/card_run.log\"",
    "after": "per bundle: cabinet_root.log_for(p); \"source_log\": <that resolved path>",
    "anchor": "_lp = _root.log_for(p)",
-   "commit": "PENDING -- the next commit names the commit that landed this; a commit cannot cite its own hash"
+   "commit": "8f51ae8"
   }
  ]
 }
