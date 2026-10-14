@@ -26,8 +26,22 @@ import os
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
 TASKS = os.path.join(HERE, "tasks")
-RESULTS = os.path.join(HERE, "results")
+
+# THE GATE READS THE SAME DECLARED DOMAIN THE RUNNER WRITES TO -- from the same ONE definition.
+#
+# This used to read `RESULTS = os.path.join(HERE, "results")`: the gate's scope was DERIVED from
+# the checker's own location, exactly as the runner's was. Once run_card.py resolves the DECLARED
+# root, a gate that still globbed <worktree>/results would GATE ONE PLACE WHILE THE RUN WROTE
+# ANOTHER -- an admission gate reading a different tree from the writer it admits is the
+# empty-list rule pointed at the gate: every check passes, on nothing.
+#
+# `cabinet_root.domain()` is a LIST, not a walk: this worktree's subtree under the declared root,
+# always present whether or not it exists yet, plus the one legacy record declared in place. No
+# part of this scope is found by recursion.
+import cabinet_root as _root                                              # noqa: E402
+DOMAIN = _root.domain()        # [(kind, path)] -- declared in cabinet_root.py, never discovered
 # ONE RULE, ONE DEFINITION. The checker and the record generator must not re-implement the rule that maps
 # a bundle filename to its annotation filename: two implementations can drift, and they agreed by
 # COINCIDENTAL RE-IMPLEMENTATION -- which is the class this item was about. The generator's docstring
@@ -205,7 +219,13 @@ def is_superseded(failure_line):
     #
     # AND THE STEM, NOT THE FILENAME -- by the SAME FUNCTION the generator uses, imported above, rather
     # than by a copy of its rule. A copy can drift; a function cannot disagree with itself.
-    return os.path.exists(os.path.join(RESULTS, "supersessions", stem_of(name) + ".json"))
+    # OVER THE DECLARED DOMAIN, not one derived tree. The record has two declared instances (the
+    # live subtree and the legacy record kept in place), and an annotation counts as an annotation
+    # wherever the declaration says the record lives.
+    for _kind, _base in DOMAIN:
+        if os.path.exists(os.path.join(_base, "supersessions", stem_of(name) + ".json")):
+            return True
+    return False
 
 
 def main():
@@ -218,12 +238,18 @@ def main():
         for f in check_task_file(d):
             fails.append(f"{os.path.relpath(p, HERE)}: {f}")
 
-    # 2: recorded bundles
-    bundles = sorted(glob.glob(os.path.join(RESULTS, "*.json")))
+    # 2: recorded bundles -- over the declared domain, and the declared scope is printed with the
+    # count, so the number a reader takes away carries the trees it was counted in.
+    bundles = []
+    for _kind, _base in DOMAIN:
+        bundles.extend(glob.glob(os.path.join(_base, "*.json")))
+    bundles = sorted(bundles)
     for p in bundles:
         fails.extend(check_bundle(p))
 
     print(f"checked {checked} task file(s) and {len(bundles)} bundle(s)")
+    for _kind, _base in DOMAIN:
+        print(f"  scope  {_kind:16} {_base}")
 
     # POSITIVE CONTROL -- and it must cover BOTH directions, because the rule cuts both ways.
     # The last one matters most: an honest weigh-in must PASS. A rule that fails the thing it was
