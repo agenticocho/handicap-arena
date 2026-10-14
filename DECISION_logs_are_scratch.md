@@ -228,8 +228,31 @@ python3 cabinet_root.py                  # the resolution, the domain, and the l
 | `git check-ignore -v logs/card_run.log` | `.gitignore:7:*.log` | `logs/` | one rule, whole directory |
 
 **§4.1 THE FOUR TREES, READ BACK.** Filled by the commit that follows the landing: a commit cannot
-report the read-back of cherry-picks it has not been cherry-picked into yet. See the table appended
-below.
+report the read-back of cherry-picks it has not been cherry-picked into yet. Every number below was
+produced by `bash runall.sh after` (the harness in the card's workspace) against these four commits,
+2026-10-14 ~16:25 PDT.
+
+```
+tree                      HEAD        logs tree HEAD:logs   test_declared_root   backfill SOURCE / admissible / REJECTED   test_game_states
+main                      8f51ae8     a60a5c6d…             40 ok / 0 FAIL       90 / 31 / 17                                NEW 0 / HIST 301
+cabinet/sokoban           9aa5a21     a60a5c6d…             40 ok / 0 FAIL       90 / 31 / 17                                NEW 0 / HIST 301
+cabinet/missile-command   07d8815     0817e5a4…             40 ok / 0 FAIL       90 / 31 / 17                                NEW 0 / HIST 301
+cabinet/zork              07d8815     0817e5a4…             40 ok / 0 FAIL       90 / 31 / 17                                NEW 0 / HIST 301
+```
+
+**NONE REGRESSED, AND THE TWO COLUMNS THAT MOVED ARE THE CARD:** `test_declared_root.py` 25 → 40 ok
+with 0 failures in every tree; the backfill's source count in the three cabinet trees **0 → 90** and
+its admissible lines **0 → 31**. `check_run.py v4` reports `46 of 59 accounted for (38 measured)` in
+all four trees, unchanged. `git ls-files logs` is **9 / 9 / 6 / 6** and `HEAD:logs` is **unchanged in
+every tree** — declared in place means exactly that: no capture moved into or out of git.
+
+**AND THE TREES DIVERGE ON ONE FILE, NAMED RATHER THAN SILENCED.** The landing was applied per file
+(CABINET_STRUCTURE.md rule 2): ten files had pre-images identical to main's and were taken whole;
+`arena.py` (older on missile-command/zork) and `CABINET_STRUCTURE.md` (behind main on all three) were
+carried by hand, and `measure_reasoning_budget.py` does not exist on missile-command/zork so it has no
+log edge to migrate there. The three cabinet copies of `CABINET_STRUCTURE.md` remain **behind main's**
+by the 2026-10-14 addendum and the `## LANDED` section — **pre-existing divergence, not this card's,
+and named in each copy** so it is not discovered as a mystery later.
 
 ---
 
