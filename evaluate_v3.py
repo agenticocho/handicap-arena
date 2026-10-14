@@ -20,17 +20,37 @@ import glob
 import json
 import os
 import re
+import sys
 from collections import Counter, defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-RESULTS = os.path.join(HERE, "results")
+sys.path.insert(0, HERE)                      # root scripts: already sys.path[0]; scripts/*: required
+import cabinet_root as _root
+
+
+def scope(pattern="*.json"):
+    """[(kind, base, [paths])] over the DECLARED domain, entry by entry. No pattern is widened,
+    no directory joins by existing."""
+    rows = []
+    for kind, base in _root.domain():
+        rows.append((kind, base, sorted(glob.glob(os.path.join(base, pattern)))))
+    return rows
+
+
+def print_scope(rows, pattern):
+    # THE SCOPE IS PRINTED WITH THE COUNT IT CONTRIBUTED: a count without its scope is not a count.
+    for kind, base, hits in rows:
+        print(f"  scope  {kind:16} {len(hits):4} {pattern}  {base}")
+
 ROUND = "R1_fencing"
 SEVERE = 0.34
 
 
 def load(card=3):
     rows = []
-    for p in sorted(glob.glob(os.path.join(RESULTS, f"*cardv{card}*.json"))):
+    _rows = scope(f"*cardv{card}*.json")
+    print_scope(_rows, f"*cardv{card}*.json")
+    for p in [p for _k, _b, hits in _rows for p in hits]:
         try:
             d = json.load(open(p, encoding="utf-8"))
         except Exception:
