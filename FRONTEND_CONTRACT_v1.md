@@ -2,11 +2,33 @@
 
 ## v1
 
-**Status:** DRAFT — for Mike and Ocho to sign off. Not in force until signed.
+**Status:** SIGNED BY MIKE, PENDING OCHO. **NOT IN FORCE** until Ocho's four clauses are
+gated — see SIGN-OFF below. One of two named signatures is not a signed contract.
 **Author:** Jarvis's `arena` bot · **Date:** 2026-10-07
 **Supersedes:** nothing. This is the first contract for the front end.
 **Normative parents:** `FORMAT.md` (rules and version numbering), `BELTS.md` (grading),
 `FRONTEND_CONTRACT_ACCEPTANCE.md` (the four gated clauses).
+
+---
+
+## SIGN-OFF
+
+Two signers, two scopes. **This contract is in force only when both are present** — one of two is
+not a signed contract, and a draft that reads as in force is worse than a draft.
+
+| signer | scope | date |
+|--------|-------|------|
+| **Mike** | the contract as a whole — the instrument, its four items, its frozen ground truth. Commission: build the Arcade against it. | 2026-10-14 |
+| **Ocho** | **§8's four clauses only** (`FRONTEND_CONTRACT_ACCEPTANCE.md`). Layout, aesthetics, interaction and every product decision are Chair's and are not his to gate. | *pending* |
+
+**Consequence of Mike's signature alone:** the front end is **commissioned** and may be built against
+this contract, with the four clauses binding as they already stand in
+`FRONTEND_CONTRACT_ACCEPTANCE.md` — **but the contract is not yet the settled instrument**, and any
+choice still marked *Overturn* in §0–§6 may change when Ocho answers §11.
+
+**What Ocho's signature adds:** the four clauses become gated rather than merely written, and §11's
+ten questions get answered by the only party whose answers bind — *"each is cheap to reverse now and
+expensive to reverse after anything is built on it."*
 
 ---
 
