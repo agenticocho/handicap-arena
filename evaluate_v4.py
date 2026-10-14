@@ -31,7 +31,24 @@ import sys
 from collections import defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-RESULTS = os.path.join(HERE, "results")
+sys.path.insert(0, HERE)                      # root scripts: already sys.path[0]; scripts/*: required
+import cabinet_root as _root
+
+
+def scope(pattern="*.json"):
+    """[(kind, base, [paths])] over the DECLARED domain, entry by entry. No pattern is widened,
+    no directory joins by existing."""
+    rows = []
+    for kind, base in _root.domain():
+        rows.append((kind, base, sorted(glob.glob(os.path.join(base, pattern)))))
+    return rows
+
+
+def print_scope(rows, pattern):
+    # THE SCOPE IS PRINTED WITH THE COUNT IT CONTRIBUTED: a count without its scope is not a count.
+    for kind, base, hits in rows:
+        print(f"  scope  {kind:16} {len(hits):4} {pattern}  {base}")
+
 ROUND = "R1_fencing"
 BAND_LO, BAND_HI = 0.15, 0.85
 FLOOR = 0.34
@@ -40,7 +57,9 @@ C1_NEED, C2_NEED = 4, 5
 
 def load_v4():
     rows = []
-    for p in sorted(glob.glob(os.path.join(RESULTS, "*cardv4*.json"))):
+    _rows = scope("*cardv4*.json")
+    print_scope(_rows, "*cardv4*.json")
+    for p in [p for _k, _b, hits in _rows for p in hits]:
         try:
             d = json.load(open(p, encoding="utf-8"))
         except Exception:
@@ -283,7 +302,9 @@ def main():
         # a reader to wait for a number that is not coming. So the gate now asks whether any entrant can
         # still add: an entrant whose EVERY attempt produced an empty bundle has failed permanently.
         per_entrant = {}
-        for p in sorted(glob.glob(os.path.join(RESULTS, "*cardv4*.json"))):
+        _rows = scope("*cardv4*.json")
+        print_scope(_rows, "*cardv4*.json")
+        for p in [p for _k, _b, hits in _rows for p in hits]:
             try:
                 d = json.load(open(p, encoding="utf-8"))
             except Exception:
