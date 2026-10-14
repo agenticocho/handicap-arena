@@ -255,11 +255,11 @@
    "edges": [
     {
      "kind": "results-write",
-     "status": "deferred:t_fdf55800"
+     "status": "migrated:16381bc"
     },
     {
      "kind": "log-coordinate",
-     "status": "deferred:log-coordinate:t_c442023d",
+     "status": "migrated:16381bc",
      "landed_by": "8f51ae8",
      "why": "its log DIRECTORY (os.makedirs(<worktree>/logs) and CHESS_GAME_<label>.log) is a LOG coordinate: t_c442023d re-pointed it to cabinet_root.log_dir(HERE)"
     }
