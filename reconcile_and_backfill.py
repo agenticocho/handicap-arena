@@ -21,43 +21,63 @@ import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-RESULTS = os.path.join(HERE, "results")
+sys.path.insert(0, HERE)
 LOG = os.path.join(HERE, "logs", "card_run.log")
 APPLY = "--apply" in sys.argv
+
+# THE DOMAIN IS DECLARED, NOT FOUND.
+#
+# This file used to scope itself with `RESULTS = os.path.join(HERE, "results")` and then widen with
+# `os.path.join(RESULTS, "**", "*.json")`: the scope was DERIVED from where the script happens to
+# sit, and the `**` made it discover its own domain by recursion. A sweep that discovers its domain
+# by recursion cannot be protected from recursion -- and a results directory a sweep can reach is a
+# results directory a sweep will eventually rewrite, which is why the separate root exists.
+#
+# `cabinet_root.domain()` is a LIST, not a walk: the live subtrees under the declared root, plus the
+# one legacy record declared in place. Nothing joins it by existing.
+import cabinet_root as _root                                              # noqa: E402
+DOMAIN = _root.domain()      # [(kind, path)] -- declared in cabinet_root.py
 
 
 # ---------------------------------------------------------------- 1. the set
 def predicate():
     """THE EXACT SET, stated as code rather than described in prose."""
-    return ("glob results/*.json (NON-RECURSIVE -- no quarantine subdirectories), "
-            "json parses, top-level 'harness' == 'handicap-arena', and the top-level 'results' value "
-            "is empty or absent")
+    return ("glob <declared domain>/*.json (NON-RECURSIVE -- no quarantine subdirectories; the "
+            "domain is the live subtrees under the declared root plus the legacy record declared "
+            "in place, and it is a LIST rather than a walk), json parses, top-level 'harness' == "
+            "'handicap-arena', and the top-level 'results' value is empty or absent")
 
 
-def scan(recursive=False):
-    pat = os.path.join(RESULTS, "**", "*.json") if recursive else os.path.join(RESULTS, "*.json")
+def scan(recursive=False, domain=None):
+    """Each declared entry is globbed ON ITS OWN, and everything found under it is keyed by the
+    entry it was found in -- so every number this file prints names the tree it was counted in.
+    """
     rows, subdirs = [], {}
-    for p in sorted(glob.glob(pat, recursive=recursive)):
-        rel = os.path.relpath(p, RESULTS)
-        # An EXERCISE_ bundle is not an entrant -- see the note in test_no_silent_zero.py. This sweep is
-        # the WIDE one (`results/*.json` and `results/**`), and it is the glob that produced the
-        # 62-empty and 71-empty figures, so it is the one most likely to meet a mis-placed exercise.
-        if "EXERCISE_" in os.path.basename(p):
-            continue
-        if os.sep in rel:
-            subdirs.setdefault(rel.split(os.sep)[0], [0, 0])
-        try:
-            d = json.load(open(p, encoding="utf-8"))
-        except Exception:
-            continue
-        if d.get("harness") != "handicap-arena":
-            continue
-        if os.sep in rel:
-            subdirs[rel.split(os.sep)[0]][1] += 1
-        else:
-            rows.append((p, d))
-        if os.sep in rel and not (d.get("results") or []):
-            subdirs[rel.split(os.sep)[0]][0] += 1
+    for kind, base in (DOMAIN if domain is None else domain):
+        pat = os.path.join(base, "**", "*.json") if recursive else os.path.join(base, "*.json")
+        for p in sorted(glob.glob(pat, recursive=recursive)):
+            rel = os.path.relpath(p, base)
+            # An EXERCISE_ bundle is not an entrant -- see the note in test_no_silent_zero.py. This
+            # sweep is the WIDE one (`*.json` and `**/*.json`), and it is the glob that produced the
+            # 62-empty and 71-empty figures, so it is the one most likely to meet a mis-placed
+            # exercise.
+            if "EXERCISE_" in os.path.basename(p):
+                continue
+            key = f"{kind}/{rel.split(os.sep)[0]}" if os.sep in rel else None
+            if key:
+                subdirs.setdefault(key, [0, 0])
+            try:
+                d = json.load(open(p, encoding="utf-8"))
+            except Exception:
+                continue
+            if d.get("harness") != "handicap-arena":
+                continue
+            if key:
+                subdirs[key][1] += 1
+            else:
+                rows.append((p, d))
+            if key and not (d.get("results") or []):
+                subdirs[key][0] += 1
     return rows, subdirs
 
 
@@ -89,6 +109,10 @@ def main():
     print()
     print("  predicate: " + predicate())
     print()
+    print("  THE DECLARED DOMAIN this sweep reads -- a LIST, not a walk:")
+    for _kind, _base in DOMAIN:
+        print(f"    {_kind:16} {_base}")
+    print()
     top, subs = scan(recursive=False)
     wr, emp, per = count(top)
     print(f"  {len(top)} bundles parse as arena bundles")
@@ -110,7 +134,7 @@ def main():
         if n:
             print(f"        {name:28} empty {e:3} / {n:3}")
     print()
-    print(f"  THE GAP: {emp2 - emp} bundles sit in quarantine subdirectories below results/. My glob is")
+    print(f"  THE GAP: {emp2 - emp} bundles sit in subdirectories below the declared domain's roots. My glob is")
     print(f"  NOT the difference -- both scopes give {len(top)}. So the 62-vs-71 gap is NOT recursion and")
     print(f"  is NOT arithmetic; it is the BUNDLE SET itself or the definition of 'carrying results'.")
     print(f"  What is published here is the exact predicate above, so the two sets can be compared:")
@@ -186,6 +210,15 @@ def main():
     for p, stem, base, src in todo:
         if not src:
             continue
+        # THE WRITE GUARD. A sweep may only rewrite what its DECLARATION names. An --apply that
+        # reached a bundle outside the declared domain would be a sweep rewriting a tree that no
+        # declaration covers -- which is the shape this file was changed to remove, one layer down.
+        # The legacy record IS in the domain (declared in place), so maintaining it is allowed;
+        # what is not allowed is a path that joined the scope by being found.
+        if not _root.in_domain(p):
+            raise SystemExit(f"REFUSING: {p} is outside the declared domain -- this backfill will "
+                             f"not write to it. Fix the declaration in cabinet_root.py, or leave "
+                             f"the bundle alone. (CABINET_STRUCTURE.md, addendum 2026-10-14)")
         parts = src.split("\t")
         rec = {"class": "empty",
                "reason": parts[4] if len(parts) > 4 and parts[4] else "results list is EMPTY",

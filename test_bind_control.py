@@ -27,29 +27,50 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import cabinet_root as _root                                              # noqa: E402
 import run_card  # noqa: E402
 
-PLANT = os.path.join(run_card.RESULTS, "ZZ_bind_control_probe.json")
+# THE RECORD THIS CONTROL CONTROLS IS THE WHOLE DECLARED DOMAIN -- the live subtrees under the
+# declared root plus the legacy record declared in place -- not one tree derived from this file's
+# location. Measuring only `run_card.RESULTS` would leave the control blind to a write into any
+# other part of the record, and the record is exactly what a control for admission must not touch.
+DOMAIN = _root.domain()
+LIVE = _root.results_dir()
+
+# AND THE PROBE IS PLANTED OUTSIDE EVERY GIT TREE. It used to be planted into `run_card.RESULTS`,
+# which WAS <worktree>/results -- a TRACKED tree. A control that writes its violation into the tree
+# it controls is the defect this file's own docstring names, one line further down.
+PLANT = os.path.join(LIVE, "ZZ_bind_control_probe.json")
+PLANT_KEY = next(f"{k}/{os.path.relpath(PLANT, b)}" for k, b in DOMAIN
+                 if os.path.realpath(b) == os.path.realpath(LIVE))
 PLANTED = {"harness": "handicap-arena", "results": [{"rounds": {"R9_smuggled": {"game": "CHESS"}}}]}
 
 
 def fingerprint():
-    """Every file under results/, with size and mtime -- so 'nothing was written' is measured."""
+    """Every file in the DECLARED DOMAIN, with size and mtime -- so 'nothing was written' is
+    measured over the whole record, not over the tree this script happens to be sitting in. Each
+    key carries the declared tree it was found in, so a drift names where it happened."""
     out = {}
-    for root, _dirs, files in os.walk(run_card.RESULTS):
-        for f in files:
-            p = os.path.join(root, f)
-            try:
-                st = os.stat(p)
-            except OSError:
-                continue
-            out[os.path.relpath(p, run_card.RESULTS)] = (st.st_size, int(st.st_mtime))
+    for kind, base in DOMAIN:
+        for root, _dirs, files in os.walk(base):
+            for f in files:
+                p = os.path.join(root, f)
+                try:
+                    st = os.stat(p)
+                except OSError:
+                    continue
+                out[f"{kind}/{os.path.relpath(p, base)}"] = (st.st_size, int(st.st_mtime))
     return out
 
 
 def main():
     print("  BIND CONTROL -- both directions, reading the DECISION, never running the permitted work\n")
+    print("  THE RECORD, as declared (a list, not a walk):")
+    for kind, base in DOMAIN:
+        print(f"    {kind:16} {base}")
+    print()
     fails = []
+    os.makedirs(LIVE, exist_ok=True)
 
     # ---- DIRECTION 1: PERMISSION. Contract clean -> the gate must ALLOW, and nothing may be written.
     before = fingerprint()
@@ -65,7 +86,8 @@ def main():
         print(f"  FAIL  testing PERMISSION wrote to the record: {sorted(drifted)[:4]}")
         fails.append("permission direction wrote artifacts")
     else:
-        print("  ok    testing PERMISSION wrote NOTHING (measured: results/ fingerprint unchanged)")
+        print("  ok    testing PERMISSION wrote NOTHING (measured: the declared record's fingerprint "
+              "unchanged)")
 
     # ---- DIRECTION 2: REFUSAL. Plant a NEW violation -> the gate must REFUSE, and still write nothing.
     try:
@@ -85,7 +107,7 @@ def main():
         else:
             print("  ok    the refusal NAMES the offending record")
         # the only drift allowed is the planted probe itself
-        drifted = {k for k in (set(before) | set(after)) - {"ZZ_bind_control_probe.json"}
+        drifted = {k for k in (set(before) | set(after)) - {PLANT_KEY}
                    if before.get(k) != after.get(k)}
         if drifted:
             print(f"  FAIL  testing REFUSAL wrote to the record: {sorted(drifted)[:4]}")
