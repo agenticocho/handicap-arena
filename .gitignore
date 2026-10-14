@@ -5,5 +5,11 @@ result_*.json
 !result_example.json
 .env
 *.log
+# THE LOGS ARE SCRATCH, AND THE RULE IS THE DIRECTORY, NOT AN EXTENSION. `*.log` was the whole
+# rule, so a capture written with any other extension was STAGEABLE -- `git add -A` could commit
+# it, and it did: nine files under logs/ are tracked because of that gap, and scripts/run_guarded.sh
+# still writes <workdir>/logs/<UNIT>.out. A single-file exception cannot be declared by an ignore
+# rule, so the nine are declared in cabinet_root.py (LEGACY_CAPTURES) and the directory is closed.
+logs/
 .venv/
 venv/

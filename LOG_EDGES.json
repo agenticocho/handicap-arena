@@ -1,0 +1,96 @@
+{
+ "declares": "DECISION_logs_are_scratch.md",
+ "classification": "scratch",
+ "read_it_back": "python3 test_declared_root.py    (section 7 -- the log coordinate, the ignore rule, this manifest)",
+ "what_this_file_is": "THE DECLARED EDGE LIST FOR THE LOGS. logs/ is scratch (see DECISION_logs_are_scratch.md), so a log edge needs no root outside the tree -- but it DOES need a declared coordinate, and an edge that is neither migrated nor declared is the mixed state this project rejects. `edges` is every place in the tree that still constructs a log path, each with a status and an anchor string; `migrated` is every edge that was re-pointed at cabinet_root.log_dir()/log_for(). test_declared_root.py section 7 FAILS if a new file starts constructing a log path, or if a declared anchor disappears, or if a 'migrated' file has started constructing one again. A list of edges that nothing checks is a resolution, not a mechanism.",
+ "edges": [
+  {
+   "file": "cabinet_root.py",
+   "status": "the-one-definition",
+   "what": "log_dir()/log_path() (the ONE destination) and log_for(bundle) (the admissible journal PER BUNDLE). Also LEGACY_CAPTURES, the nine captures declared in place because the ignore rule named an extension and they were committed before it named the directory.",
+   "anchor": "def log_for(bundle, repo=HERE, env=None):"
+  },
+  {
+   "file": "test_declared_root.py",
+   "status": "declared-probe",
+   "what": "constructs a logs path ON PURPOSE: it asserts that a file under logs/ is NOT in the declared domain, which is what keeps the record's sweeps out of scratch. A probe is not an edge.",
+   "anchor": "os.path.join(HERE, \"logs\", \"some_bundle.json\")"
+  },
+  {
+   "file": "scripts/run_guarded.sh",
+   "status": "declared-parameter",
+   "what": "writes <workdir>/logs/<UNIT>.out. The directory is an ARGUMENT ($2 <workdir>), not a derivation from the script's own location, so there is nothing to re-point: what this edge needed was the ignore rule, and it landed (.gitignore ignores logs/ whole, so a capture can no longer be staged by git add -A). Kept in this list because it is the live source of the .out captures that ARE tracked.",
+   "anchor": "logs/${UNIT}.out"
+  },
+  {
+   "file": "sokoban_probe.py",
+   "status": "deferred:t_c442023d",
+   "what": "PROBE_*.log still built from HERE. Same one-line change as the seven migrated edges. NOT migrated here because the SOKOBAN launch path is the cabinet's own (CABINET_STRUCTURE.md rule 2, and FINDING 020 is itself about a patch to a live sokoban_run.py) -- a decision about ownership, not about uncertainty. The guard keeps it visible: it cannot be forgotten and it cannot silently grow a sibling.",
+   "anchor": "os.path.join(HERE, \"logs\", f\"PROBE_"
+  },
+  {
+   "file": "sokoban_run.py",
+   "status": "deferred:t_c442023d",
+   "what": "SOKOBAN_*.log and its makedirs, still built from HERE -- same reason and same one-line change as sokoban_probe.py.",
+   "anchor": "os.path.join(HERE, \"logs\","
+  }
+ ],
+ "migrated": [
+  {
+   "file": "run_card.py",
+   "what": "THE RUN JOURNAL the runner appends to (the write half of this card)",
+   "before": "os.path.join(ARENA, \"logs\", \"card_run.log\")",
+   "after": "cabinet_root.log_path()",
+   "anchor": "log = _root.log_path()",
+   "commit": "PENDING -- the next commit names the commit that landed this; a commit cannot cite its own hash"
+  },
+  {
+   "file": "arena.py",
+   "what": "the per-server log Arena.__init__ writes (arena-server-<pid>-<port>.log) -- the live-progress evidence check_run.py reads",
+   "before": "os.path.join(os.path.dirname(os.path.abspath(__file__)), \"logs\")",
+   "after": "cabinet_root.log_dir(HERE)",
+   "anchor": "_logs = _root.log_dir(HERE)",
+   "commit": "PENDING -- the next commit names the commit that landed this; a commit cannot cite its own hash"
+  },
+  {
+   "file": "check_run.py",
+   "what": "the journal candidate list (the <worktree>/results/card_run.log candidate is GONE -- a log coordinate sitting inside the results path, this card's coordinate question) and the arena-server log glob",
+   "before": "[<HERE>/logs/card_run.log, <HERE>/results/card_run.log]",
+   "after": "[cabinet_root.log_path(HERE), LEGACY_LOGS/card_run.log], newest wins",
+   "anchor": "_cands = [_root.log_path(HERE), os.path.join(_root.LEGACY_LOGS, _root.LOG_NAME)]",
+   "commit": "PENDING -- the next commit names the commit that landed this; a commit cannot cite its own hash"
+  },
+  {
+   "file": "chess_game.py",
+   "what": "os.makedirs(<worktree>/logs) and CHESS_GAME_<label>.log (the ruling on t_9d66efa4 recorded this as deferred:log-coordinate to this card)",
+   "before": "os.makedirs(os.path.join(HERE, \"logs\"))",
+   "after": "os.makedirs(cabinet_root.log_dir(HERE))",
+   "anchor": "log = os.path.join(_root.log_dir(HERE), f\"CHESS_GAME_{label}.log\")",
+   "commit": "PENDING -- the next commit names the commit that landed this; a commit cannot cite its own hash"
+  },
+  {
+   "file": "cost_probe.py",
+   "what": "COST_PROBE_<label>.log",
+   "before": "os.path.join(HERE, \"logs\", f\"COST_PROBE_{label}.log\")",
+   "after": "os.path.join(cabinet_root.log_dir(HERE), ...)",
+   "anchor": "log = os.path.join(_root.log_dir(HERE), f\"COST_PROBE_{label}.log\")",
+   "commit": "PENDING -- the next commit names the commit that landed this; a commit cannot cite its own hash"
+  },
+  {
+   "file": "measure_reasoning_budget.py",
+   "what": "budget_<N>.log",
+   "before": "os.path.join(HERE, \"logs\", f\"budget_{budget}.log\")",
+   "after": "os.path.join(cabinet_root.log_dir(HERE), ...)",
+   "anchor": "log = os.path.join(_root.log_dir(HERE), f\"budget_{budget}.log\")",
+   "commit": "PENDING -- the next commit names the commit that landed this; a commit cannot cite its own hash"
+  },
+  {
+   "file": "reconcile_and_backfill.py",
+   "what": "THE READ HALF: the log source was <worktree>/logs/card_run.log while the bundle domain was the DECLARED root, so a sweep run from a cabinet resolved nothing; and the backfilled record's source_log was the relative literal \"logs/card_run.log\", which named no tree in a domain of four",
+   "before": "LOG = os.path.join(HERE, \"logs\", \"card_run.log\"); \"source_log\": \"logs/card_run.log\"",
+   "after": "per bundle: cabinet_root.log_for(p); \"source_log\": <that resolved path>",
+   "anchor": "_lp = _root.log_for(p)",
+   "commit": "PENDING -- the next commit names the commit that landed this; a commit cannot cite its own hash"
+  }
+ ]
+}

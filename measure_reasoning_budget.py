@@ -26,6 +26,7 @@ import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import cabinet_root as _root                                            # noqa: E402
 import sokoban_run as R                                                 # noqa: E402
 import local_task_compare as L                                          # noqa: E402
 
@@ -40,7 +41,7 @@ def run_one(budget, port):
     env = dict(os.environ)
     env["LLAMA_ARG_THINK_BUDGET"] = str(budget)
     env["SOKOBAN_REASONING_TEST_ARM"] = "on"          # the declaration under test is ON-with-a-budget
-    log = os.path.join(HERE, "logs", f"budget_{budget}.log")
+    log = os.path.join(_root.log_dir(HERE), f"budget_{budget}.log")
     srv = subprocess.Popen(R.server_argv(MODEL, 8192, port), env=env,
                            stdout=open(log, "w"), stderr=subprocess.STDOUT)
     base = f"http://127.0.0.1:{port}"

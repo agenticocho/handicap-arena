@@ -290,9 +290,17 @@ def main():
     if _stray:
         sys.exit(f"refusing to start: {len(_stray)} log file(s) in results/, which holds result "
                  f"bundles and nothing else:\n  " + "\n  ".join(os.path.basename(p) for p in _stray)
-                 + "\nMove them to logs/ and re-run.")
+                 + f"\nMove them to {_root.log_dir()} (the declared scratch directory) and re-run.")
 
-    log = os.path.join(ARENA, "logs", "card_run.log")
+    log = _root.log_path()
+    # AND THE JOURNAL'S COORDINATE IS RESOLVED, NOT DERIVED. It used to read
+    # os.path.join(ARENA, "logs", "card_run.log"): ARENA derives from THIS FILE'S OWN LOCATION, so
+    # a reader in another worktree could not resolve what this writer had written -- MEASURED, the
+    # same sweep resolved 90 log lines from main and 0 from each cabinet worktree. cabinet_root
+    # .log_path() is the one definition, and log_for(bundle) is how a reader finds it per bundle.
+    # The logs are SCRATCH (DECISION_logs_are_scratch.md): they do NOT move out of the git tree,
+    # because scratch's obligation is to be unable to enter the record, which the ignore rule
+    # (.gitignore: logs/) enforces and a separate root would not.
     with open(log, "a") as lf:
         lf.write(f"\n=== card run started {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())} "
                  f"ctx={CTX} mt={MT} trials={TRIALS} ===\n")

@@ -22,7 +22,12 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-LOG = os.path.join(HERE, "logs", "card_run.log")
+LOG = None      # THE JOURNAL IS RESOLVED PER BUNDLE -- see log_at() below. It is NOT a module
+                # constant any more: a constant is one coordinate for the whole sweep, and the
+                # admissible coordinate is a property of the BUNDLE (cabinet_root.log_for), not of
+                # the process reading it. The old constant was <HERE>/logs/card_run.log, derived
+                # from where this reader sits; measured, that made the same sweep resolve 31
+                # admissible lines from main and 0 from each cabinet worktree.
 APPLY = "--apply" in sys.argv
 
 # THE DOMAIN IS DECLARED, NOT FOUND.
@@ -152,13 +157,35 @@ def main():
     print(f"2. THE BACKFILL {'(APPLYING)' if APPLY else '(report only -- pass --apply to write)'}")
     print("=" * 78)
     print()
-    loglines = {}
-    if os.path.exists(LOG):
-        for line in open(LOG, encoding="utf-8", errors="replace"):
-            parts = line.rstrip("\n").split("\t")
-            if len(parts) >= 5:
-                loglines[parts[0]] = line.rstrip("\n")
-    print(f"  log lines available as SOURCE: {len(loglines)}")
+    # THE JOURNAL IS RESOLVED PER BUNDLE, FROM THE DECLARATION.
+    #
+    # `cabinet_root.log_for(bundle)` answers one question per bundle: WHICH TREE'S RUN WROTE THIS?
+    # A bundle in the legacy record was written by a run in main, so its journal is the one declared
+    # in place; a bundle under a cabinet's live subtree was written in the CABINET's worktree, so its
+    # journal is that worktree's. Read as a single constant derived from HERE, the sweep answered
+    # one coordinate for every bundle in the domain -- the reader's own -- and MEASURED, that made
+    # the same domain resolve 31 admissible lines from main and 0 from each cabinet worktree. An
+    # answer that changes when you read it from another tree is an answer about the reader.
+    journals, _cache = {}, {}
+    def loglines_at(path):
+        if path not in _cache:
+            lines = {}
+            if path and os.path.exists(path):
+                for line in open(path, encoding="utf-8", errors="replace"):
+                    parts = line.rstrip("\n").split("\t")
+                    if len(parts) >= 5:
+                        lines[parts[0]] = line.rstrip("\n")
+            _cache[path] = lines
+        return _cache[path]
+    for p, _d in top:
+        lp = _root.log_for(p)
+        if lp not in journals:
+            journals[lp] = loglines_at(lp)
+    print(f"  journals this sweep may read, resolved PER BUNDLE from the declaration:")
+    for lp in sorted(journals, key=lambda x: (x is None, x or "")):
+        print(f"    {len(journals[lp]):5} lines  {lp}"
+              f"{'' if (lp and os.path.exists(lp)) else '   <- NO FILE AT THE DECLARED COORDINATE'}")
+    print(f"  log lines available as SOURCE: {sum(len(v) for v in journals.values())}")
     todo = []
     rejected = []
     for p, d in top:
@@ -168,6 +195,12 @@ def main():
             continue
         stem = os.path.basename(p).replace(".json", "")
         base = re.sub(r"_cardv\d.*$", "", stem)
+        # ADMISSIBLE, AND ONLY FROM THE DECLARED COORDINATE. There is no fallback to the reader's
+        # own journal when the declared one is missing: a fallback is how a coordinate becomes
+        # decorative, and the standing condition on this card is that a REJECT is correct behaviour
+        # while a silent substitution is not.
+        _lp = _root.log_for(p)
+        loglines = journals.get(_lp) or {}
         src = loglines.get(stem) or loglines.get(base)
         if src is None:
             cand = [k for k in loglines if base and k.startswith(base)]
@@ -183,9 +216,9 @@ def main():
             if "scored=False" not in scored:
                 rejected.append((os.path.basename(p), src[:90]))
                 src = None
-        todo.append((p, stem, base, src))
+        todo.append((p, stem, base, src, _lp))
     print(f"  silent bundles to backfill: {len(todo)}")
-    withsrc = sum(1 for _, _, _, s in todo if s)
+    withsrc = sum(1 for *_x, s, _lp in todo if s)
     print(f"    with an admissible log line (one that itself reports a failure): {withsrc}")
     print(f"    WITHOUT one (left alone)                                      : {len(todo) - withsrc}")
     print(f"    REJECTED by the provenance guard (log says scored=True)       : {len(rejected)}")
@@ -200,14 +233,15 @@ def main():
         print("  because it is append-only across runs and its stems collide.")
     print()
     if not APPLY:
-        for p, stem, base, src in todo[:3]:
+        for p, stem, base, src, _lp in todo[:3]:
             print(f"    would write: {os.path.basename(p)}")
             print(f"      source: {(src or '(none)')[:96]}")
+            print(f"      from  : {_lp}")
         return 0
 
     now = datetime.datetime.now().astimezone().isoformat(timespec="seconds")
     written = 0
-    for p, stem, base, src in todo:
+    for p, stem, base, src, _lp in todo:
         if not src:
             continue
         # THE WRITE GUARD. A sweep may only rewrite what its DECLARATION names. An --apply that
@@ -224,11 +258,16 @@ def main():
                "reason": parts[4] if len(parts) > 4 and parts[4] else "results list is EMPTY",
                "rc": int(parts[1].split("=")[1]) if len(parts) > 1 and "=" in parts[1] else None,
                "secs": float(parts[3].rstrip("s")) if len(parts) > 3 and parts[3].rstrip("s").replace(".", "").isdigit() else None,
-               "written_by": "backfill_empty_reasons.py",
+               "written_by": "reconcile_and_backfill.py",
                "backfilled": {
                    "added_after_the_run": True,
                    "added_at": now,
-                   "source_log": "logs/card_run.log",
+                   # THE RESOLVED COORDINATE, NOT A LITERAL. This read "logs/card_run.log" -- a
+                   # relative path that named no tree, in a domain that holds several, so the record
+                   # could not be re-read against the journal it was built from. The path written
+                   # here is the one cabinet_root.log_for() resolved FOR THIS BUNDLE, which is the
+                   # same rule a reader must apply to check it.
+                   "source_log": _lp,
                    "source_line": src[:300],
                    "note": ("ADDED AFTER THE RUN, not a run-time artifact. The run wrote this reason to "
                             "stdout and to the log and never to the bundle; this record reconstructs it "

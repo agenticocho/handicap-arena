@@ -24,9 +24,11 @@ And the properties the ruling asks for, each MEASURED rather than asserted in pr
 
 Run: python3 test_declared_root.py     -> exit 0 if every direction behaves.
 """
+import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 import tempfile
 
@@ -211,6 +213,135 @@ def probes():
     print(f"         legacy record: {n_tracked} tracked files here (tree {sha0})")
     print(f"         {_root.LEGACY_WHY}")
     print(f"         {_root.DUPLICATE_WHY}")
+
+    # ---------------------------------------------------------------- 7: THE LOGS ARE SCRATCH
+    print("\n  7    THE LOGS ARE SCRATCH, THE COORDINATE IS DECLARED PER BUNDLE, AND A CAPTURE\n"
+          "       CANNOT ENTER THE RECORD\n")
+    check(_root.LOGS_ARE == "scratch",
+          "the classification is stated in the one definition: logs/ IS SCRATCH",
+          f"LOGS_ARE={_root.LOGS_ARE!r}")
+    check(os.path.realpath(_root.log_dir(HERE)) == os.path.realpath(os.path.join(HERE, "logs")),
+          "log_dir() resolves to THIS worktree's logs/ -- the writer's destination, not a second copy "
+          "of the rule",
+          f"got {_root.log_dir(HERE)}")
+    check(_root.git_toplevel(_root.log_dir(HERE)) is not None,
+          "and it is INSIDE a git tree, which is correct FOR SCRATCH: what keeps a log out of the "
+          "record is the ignore rule, not a separate root -- and results_dir() still refuses, "
+          "because a RESULT in a matchable tree is the defect and a log in one is not")
+    check(_root.log_path(HERE).endswith(os.sep + _root.LOG_NAME),
+          f"the run journal is <worktree>/logs/{_root.LOG_NAME}, resolved and not remembered")
+
+    # THE COORDINATE IS A PROPERTY OF THE BUNDLE, NOT OF THE READER. This is the whole of the read
+    # half of t_c442023d: measured before it landed, one sweep over one declared domain resolved 31
+    # admissible log lines from main and 0 from each cabinet worktree -- the answer changed with
+    # where the reader was sitting.
+    probes = {k: _root.log_for(os.path.join(b, "ANY_BUNDLE.json"), env=NO_ENV)
+              for k, b in dom}
+    wts = _root.worktrees()
+    _myname = _root.cabinet()
+    # THE OTHER CABINETS THAT ARE ACTUALLY IN THE DOMAIN -- a worktree that owns no declared entry
+    # is not a second opinion, it is a different question.
+    others = sorted({k.split(":", 1)[1] for k in probes if k.startswith("live:")} - {_myname})
+    live_vals = {k: v for k, v in probes.items() if k.startswith("live:")}
+    check(len(set(live_vals.values())) == len(live_vals),
+          "each live cabinet entry resolves its OWN journal -- not one journal for the whole domain",
+          "\n".join(f"{k} -> {v}" for k, v in sorted(live_vals.items())))
+    check(all(v for v in probes.values()),
+          "and no entry resolves to nothing (an entry may not delegate its coordinate to the reader)")
+    print(f"         the legacy entry and live:{_myname} resolve to the SAME journal only in the "
+          f"worktree the legacy runs were made in -- a measurement, not the definition")
+    if others:
+        other = wts[[br for br in sorted(wts) if br.split("/")[-1] == others[0]][0]]
+        same = all(_root.log_for(os.path.join(b, "ANY_BUNDLE.json"), env=NO_ENV) ==
+                   _root.log_for(os.path.join(b, "ANY_BUNDLE.json"), repo=other, env=NO_ENV)
+                   for _k, b in dom)
+        check(same,
+              f"THE SAME BUNDLE RESOLVES TO THE SAME JOURNAL FROM ANOTHER WORKTREE "
+              f"({_myname} vs {others[0]}): an answer that changes with the reader is an answer "
+              f"about the reader")
+        mine_k, their_k = "live:" + _myname, "live:" + others[0]
+        check(probes.get(mine_k) != probes.get(their_k),
+              f"and a {others[0]} bundle does NOT resolve to this worktree's journal",
+              f"{mine_k} -> {probes.get(mine_k)}\n{their_k} -> {probes.get(their_k)}")
+
+    # THE TREE CANNOT ABSORB A CAPTURE. The ignore rule has to name the DIRECTORY: naming an
+    # extension is what let NINE captures be committed, and scripts/run_guarded.sh still writes
+    # <workdir>/logs/<UNIT>.out.
+    def ignored(rel):
+        return subprocess.run(["git", "-C", HERE, "check-ignore", "-q", rel]).returncode == 0
+    check(ignored("logs/ZZ_a_new_capture.out") and ignored("logs/ZZ_a_new_capture.log"),
+          "a NEW capture in logs/ is IGNORED whatever its extension -- `git add -A` cannot stage "
+          "one, so no capture enters the record except by a deliberate `git add -f`")
+    tracked = sorted((_root.git("ls-files", "logs", repo=HERE) or "").splitlines())
+    undeclared = [f for f in tracked if f not in _root.LEGACY_CAPTURES]
+    gone = [f for f in tracked if not os.path.exists(os.path.join(HERE, f))]
+    check(not undeclared,
+          f"every one of the {len(tracked)} tracked file(s) under logs/ is a DECLARED capture "
+          f"(LEGACY_CAPTURES) -- a tenth one cannot be committed unnoticed", "\n".join(undeclared))
+    check(not gone,
+          "and every declared capture is still ON DISK -- FINDINGS/018, FINDINGS/019, "
+          "NEXT_WINDOW.md and SOKOBAN_VERDICT_1.md cite logs/sokoban_rerun.out BY PATH",
+          "\n".join(gone))
+    print(f"         {len(tracked)} tracked here; {len(_root.LEGACY_CAPTURES)} declared in "
+          f"cabinet_root.py (the three cabinet branches carry a SUBSET -- 6, not 9 -- so the "
+          f"number is read per tree)")
+
+    # AND THE EDGE LIST IS CHECKED, NOT REMEMBERED. Every live construction of a log path must be
+    # in LOG_EDGES.json with a status and an anchor; every anchor must still be there; and a file
+    # listed as migrated must NOT have started constructing one again.
+    man_path = os.path.join(HERE, "LOG_EDGES.json")
+    try:
+        man = json.load(open(man_path, encoding="utf-8"))
+    except Exception as e:                                        # noqa: BLE001
+        man = None
+        check(False, "LOG_EDGES.json could not be read", f"{type(e).__name__}: {e}")
+    if man:
+        edge_re = re.compile(r'(os\.path\.join\([^)\n]*["\']logs["\']|["\']logs/|logs/\$\{)')
+        found = {}
+        for f in (_root.git("ls-files", "*.py", "*.sh", repo=HERE) or "").splitlines():
+            try:
+                text = open(os.path.join(HERE, f), encoding="utf-8").read()
+            except OSError:
+                continue
+            for line in text.splitlines():
+                if line.lstrip().startswith("#"):
+                    continue                    # A COMMENT IS NOT CODE, and this check reads code
+                if edge_re.search(line):
+                    found[f] = line.strip()
+        declared = {e["file"]: e for e in man.get("edges", [])}
+        undeclared_edges = sorted(set(found) - set(declared))
+        # THE ANCHOR IS CHECKED AGAINST THE FILE, NOT AGAINST THE MATCHING LINE: an anchor names
+        # the line the edge RESOLVED TO (usually cabinet_root.log_dir/…, which is exactly the line
+        # the edge predicate no longer matches -- that is the point of migrating it).
+        missing_anchor = []
+        for f, e in declared.items():
+            if f not in found or not e.get("anchor"):
+                continue
+            try:
+                _text = open(os.path.join(HERE, f), encoding="utf-8").read()
+            except OSError:
+                missing_anchor.append(f)
+                continue
+            if e["anchor"] not in _text:
+                missing_anchor.append(f)
+        check(not undeclared_edges,
+              f"every live log-path construction in the tree is DECLARED ({len(declared)} entries, "
+              f"{len(found)} file(s) construct one)", "\n".join(undeclared_edges))
+        check(not missing_anchor,
+              "and every declared anchor is still the line it named -- an edge that changes shape "
+              "without re-declaring itself FAILS", "\n".join(missing_anchor))
+        back = [m["file"] for m in man.get("migrated", [])
+                if m["file"] in found and not m["file"].endswith("test_declared_root.py")]
+        check(not back,
+              "and no file listed as MIGRATED has started constructing a log path again "
+              "(a revert cannot pass quietly)", "\n".join(back))
+        check(man.get("declares") == "DECISION_logs_are_scratch.md"
+              and os.path.exists(os.path.join(HERE, man["declares"])),
+              "the manifest names the decision and the decision is in the tree")
+        statuses = sorted({e.get("status", "?") for e in man.get("edges", [])})
+        print(f"         edge statuses: {', '.join(statuses)}")
+        print(f"         migrated: {len(man.get('migrated', []))} edge(s) now resolve through "
+              f"cabinet_root.log_dir()/log_for()")
 
     print()
     if FAILS:

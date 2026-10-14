@@ -149,6 +149,24 @@ is in the handoff). They read the **legacy record**, which is declared in place,
 correct **for that era** — but a run written now lands in the declared root and they will not see it.
 **That is a migration with its own decision, not a line edit to smuggle into this commit.**
 
+### AND THE LOGS ARE **SCRATCH** — ONE CLASSIFICATION, DECIDED 2026-10-14
+
+**`logs/` is scratch, and the directory does not move.** A record must sit outside every git tree
+because a sweep that can reach it will rewrite it; **scratch's obligation is the inverse — it must be
+unable to ENTER the record**, which is the ignore rule's job (`.gitignore` now ignores `logs/` whole,
+not `*.log`), and a second declared root for scratch would refuse a run over a diagnostic file.
+A log is not a record format (FINDING 020); the one time one carried a published number the record was
+the re-minted file in `probes/`, not the log.
+
+**AND THE COORDINATE IS DECLARED PER BUNDLE** — `cabinet_root.log_for(bundle)`: a `live:<cabinet>`
+bundle resolves to that cabinet's worktree journal, a `legacy` bundle to `LEGACY_LOGS` declared in
+place. Measured before it landed, the same declared domain resolved **90 log lines from main and 0
+from each cabinet worktree.** Nine captures under `logs/` are declared in place (a FINDING cites one by
+path); `LOG_EDGES.json` lists every remaining log edge with a status and is itself checked.
+
+**Read the decision:** `DECISION_logs_are_scratch.md` — one classification, the read half, the
+before/after numbers, and the edge list.
+
 ### 3. OCHO IS THE MERGE GATE. SHARED FILES STAY FROZEN.
 
 **Frozen, and changed only by Ocho, in `main`, with a reason:**
