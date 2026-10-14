@@ -123,10 +123,11 @@ and FORMAT's "v1". The front end is **v1**.
 release number. And no combined v1+v2 table may exist.
 
 **AND: "card_version absent" is NOT "card_version 1".** Measured: the field lives on the **entry
-row**, not the bundle. It is present on all **33** v2 rows and **absent on all 42** v1 rows. So a
-reader that defaults absent→1 is *inferring* v1 and cannot distinguish that from a row whose field
-was lost. Render it as "1 (inferred)" or carry the inference explicitly — do not let a default do
-the work invisibly. Same shape as `results: []`: an absence is a fact, not a value.
+row**, not the bundle. It is present on the v2 rows and **absent on 42 rows** (measured 2026-10-14:
+42 of 225 entrant rows). **An absence is not a version.** With five card versions now on the record,
+absent is no longer self-evidently v1 either — so a reader that defaults absent→1 is *inferring* v1
+and cannot distinguish that from a row whose field was lost. Render it as "1 (inferred)" or carry
+the inference explicitly — do not let a default do the work invisibly. Same shape as `results: []`: an absence is a fact, not a value.
 
 ---
 
