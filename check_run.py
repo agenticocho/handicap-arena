@@ -32,6 +32,21 @@ import time
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import cabinet_root as _root                                              # noqa: E402
+
+
+def scope(pattern="*.json"):
+    """[(kind, base, [paths])] over the DECLARED domain, entry by entry. No pattern is widened,
+    no directory joins by existing."""
+    rows = []
+    for kind, base in _root.domain():
+        rows.append((kind, base, sorted(glob.glob(os.path.join(base, pattern)))))
+    return rows
+
+
+def print_scope(rows, pattern):
+    # THE SCOPE IS PRINTED WITH THE COUNT IT CONTRIBUTED: a count without its scope is not a count.
+    for kind, base, hits in rows:
+        print(f"  scope  {kind:16} {len(hits):4} {pattern}  {base}")
 MODELS = os.environ.get("ARENA_MODELS") or os.path.expanduser("~/moltbook_pipeline/models")
 STALE_SECONDS = int(os.environ.get("ARENA_STALE_SECONDS", "2700"))   # 45 min: slowest entrant seen
 
@@ -77,8 +92,9 @@ def expected_entrants():
 
 def main(card="v3", pid=None):
     exp = expected_entrants()
-    pattern = os.path.join(HERE, "results", f"*card{card}*.json")
-    done = sorted(glob.glob(pattern))
+    _rows = scope(f"*card{card}*.json")
+    print_scope(_rows, f"*card{card}*.json")
+    done = [p for _k, _b, hits in _rows for p in hits]
     # FILES ARE NOT MEASUREMENTS, AND BUNDLES ARE NOT ENTRANTS.
     #
     # Chilly caught the first half in its own check -- "a count of FILES is not a count of
