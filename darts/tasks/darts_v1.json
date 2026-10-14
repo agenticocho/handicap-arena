@@ -1,0 +1,38 @@
+{
+  "id": "darts_v1",
+  "event": "DARTS",
+  "class": "CONTEST",
+  "kind": "exact_arithmetic",
+  "oracle": "arithmetic",
+  "staged_as": "arcade cabinet -- DARTS: 501 checkouts, the oracle is the sum",
+  "note": "The order's #11, exception: no game supplies this oracle, the rules do. Two difficulty layers, and the SECOND is a control rather than a hard item: a checkout that cannot exist. A system that 'solves' it is not doing arithmetic. Verified arithmetically; a malformed answer is COUNTED AS UNREADABLE, never scored as a wrong throw.",
+  "criteria_frozen_before_run": {
+    "C1_arithmetic_oracle": "the answer is verified by summing segments against the remaining score -- no model, no engine, no freeze, no depth",
+    "C2_impossible_is_a_control": "an item whose remaining score has no checkout must FAIL a claimed checkout and PASS an abstention",
+    "C3_unreadable_is_a_third_state": "a malformed answer is UNREADABLE, counted separately, never folded into FAIL",
+    "C4_never_started_cannot_score": "a run with no measured item is an ERROR with no aggregate, so total failure is not its own passing condition"
+  },
+  "items": [
+    {
+      "id": "D1.1_easy_checkout",
+      "difficulty": "easy",
+      "remaining": 40,
+      "expect": "checkout",
+      "prompt": "You are on 40 with three darts in hand. Give a checkout in standard notation. Answer with the darts only, e.g. T20 T20 D25."
+    },
+    {
+      "id": "D1.2_two_dart_checkout",
+      "difficulty": "medium",
+      "remaining": 100,
+      "expect": "checkout",
+      "prompt": "You are on 100 with three darts in hand. Give a checkout in standard notation. Answer with the darts only, e.g. T20 T20 D25."
+    },
+    {
+      "id": "D1.3_impossible_control",
+      "difficulty": "control",
+      "remaining": 169,
+      "expect": "impossible",
+      "prompt": "You are on 169 with three darts in hand. If a checkout exists, give it in standard notation. If NO checkout exists, answer exactly: NO CHECKOUT. No prose."
+    }
+  ]
+}

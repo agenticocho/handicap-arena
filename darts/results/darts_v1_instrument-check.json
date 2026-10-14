@@ -1,0 +1,102 @@
+{
+  "harness": "handicap-arena",
+  "version": "1.1",
+  "generated": "2026-10-10T14:47:28Z",
+  "event": "DARTS",
+  "card_version": "darts_v1",
+  "results": [
+    {
+      "entrant": "reference",
+      "kind": "reference-solver",
+      "instrument": "code",
+      "instrument_note": "CODE entrant, not a model -- a DIFFERENT INSTRUMENT; never pooled into a model table [A1].",
+      "entrant_is_a_model": false,
+      "weights_sha256": null,
+      "weights_note": "no weights: this entrant is code, not a GGUF. The oracle is arithmetic and the entrant played no model.",
+      "solver_source_sha256": "47e7f78593705c1c3024aa7630b90268df90c664d025b32e564ae8498a9b4bc4",
+      "division": null,
+      "division_note": "NOT MEASURED -- a footprint is a property of weights; this entrant has none. Never 0.00.",
+      "cord": null,
+      "config": {
+        "temperature": null,
+        "max_tokens": null,
+        "trials": 1,
+        "ctx": null,
+        "n_gpu_layers": null,
+        "server_flags": null,
+        "reasoning": "on",
+        "reasoning_note": "DECLARED per-run instrument field [A11]; 'unset' is NOT 'off' and must not be pooled with a declared run.",
+        "config_note": "RUN_FACTS that do not exist for a solver are null, not omitted and not zeroed. [A2]"
+      },
+      "admission": {
+        "rc": 0,
+        "secs": 0.0,
+        "started": true,
+        "never_started": false
+      },
+      "rounds": {
+        "R_darts_checkouts": {
+          "score": 1.0,
+          "wins": 3,
+          "trials": 3,
+          "kind": "exact_arithmetic",
+          "class": "CONTEST",
+          "oracle": "arithmetic",
+          "staged_as": "arcade cabinet -- DARTS: 501 checkouts, the oracle is the sum",
+          "denominator_rule": "trials = items that took a turn; UNREADABLE is a non-pass INSIDE it; NEVER_STARTED is OUTSIDE [A6]",
+          "items": {
+            "D1.1_easy_checkout": {
+              "remaining": 40,
+              "expect": "checkout",
+              "raw": [
+                "D20"
+              ],
+              "answer": "D20",
+              "verified_sum": 40,
+              "state": "PASS",
+              "reason": null,
+              "secs": 0.0015
+            },
+            "D1.2_two_dart_checkout": {
+              "remaining": 100,
+              "expect": "checkout",
+              "raw": [
+                "T20 D20"
+              ],
+              "answer": "T20 D20",
+              "verified_sum": 100,
+              "state": "PASS",
+              "reason": null,
+              "secs": 0.0032
+            },
+            "D1.3_impossible_control": {
+              "remaining": 169,
+              "expect": "impossible",
+              "raw": [
+                "NO CHECKOUT"
+              ],
+              "answer": "NO CHECKOUT",
+              "verified_sum": null,
+              "state": "PASS",
+              "reason": null,
+              "secs": 0.0031
+            }
+          },
+          "started": 3,
+          "failed": 0,
+          "unreadable": 0,
+          "never_started": 0,
+          "measured": 3,
+          "coverage": 1.0
+        }
+      },
+      "aggregate": 1.0,
+      "coverage": 1.0,
+      "verdict": "SCORED",
+      "certification": "INSTRUMENT CHECK -- the solver-as-entrant path; proves the harness and ENTERS NOTHING. Not a contest.",
+      "on_board": false,
+      "tasks": "tasks/darts_v1.json",
+      "ambiguities": "darts/DARTS_AMBIGUITIES.md"
+    }
+  ]
+}

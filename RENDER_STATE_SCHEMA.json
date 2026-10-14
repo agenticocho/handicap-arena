@@ -1,0 +1,991 @@
+{
+  "derived_from": {
+    "bundles": 234,
+    "entrant_entries": 151,
+    "results_dir": "results/"
+  },
+  "entrant": {
+    "fields": {
+      "entrant.aggregate": {
+        "class": "UNSAFE_DERIVED",
+        "present": 151,
+        "type": "float"
+      },
+      "entrant.answers_from_reasoning": {
+        "class": "ENTRANT",
+        "present": 151,
+        "type": "int"
+      },
+      "entrant.card_version": {
+        "class": "ENTRANT",
+        "present": 109,
+        "type": "int"
+      },
+      "entrant.certification": {
+        "class": "ENTRANT",
+        "present": 151,
+        "type": "str"
+      },
+      "entrant.config.ctx": {
+        "class": "RUN_FACT",
+        "present": 151,
+        "type": "int"
+      },
+      "entrant.config.max_tokens": {
+        "class": "RUN_FACT",
+        "present": 151,
+        "type": "int"
+      },
+      "entrant.config.n_gpu_layers": {
+        "class": "RUN_FACT",
+        "present": 151,
+        "type": "NoneType"
+      },
+      "entrant.config.server_flags[]": {
+        "class": "RUN_FACT",
+        "present": 151,
+        "type": "list"
+      },
+      "entrant.config.temperature": {
+        "class": "RUN_FACT",
+        "present": 151,
+        "type": "float"
+      },
+      "entrant.config.trials": {
+        "class": "RUN_FACT",
+        "present": 151,
+        "type": "int"
+      },
+      "entrant.cord": {
+        "class": "ENTRANT",
+        "present": 151,
+        "type": "str"
+      },
+      "entrant.division": {
+        "class": "ENTRANT",
+        "present": 151,
+        "type": "str"
+      },
+      "entrant.footprint_gb": {
+        "class": "ENTRANT",
+        "present": 151,
+        "type": "float"
+      },
+      "entrant.gguf": {
+        "class": "ENTRANT",
+        "present": 151,
+        "type": "str"
+      },
+      "entrant.grade.belt": {
+        "class": "ENTRANT",
+        "present": 151,
+        "type": "str"
+      },
+      "entrant.grade.belt_rule": {
+        "class": "ENTRANT",
+        "present": 76,
+        "type": "int"
+      },
+      "entrant.grade.note": {
+        "class": "ENTRANT",
+        "present": 151,
+        "type": "NoneType"
+      },
+      "entrant.grade.rounds": {
+        "class": "ENTRANT",
+        "present": 151,
+        "type": "int"
+      },
+      "entrant.grade.rounds_won": {
+        "class": "ENTRANT",
+        "present": 151,
+        "type": "int"
+      },
+      "entrant.grade.stripes": {
+        "class": "UNSAFE_DERIVED",
+        "present": 151,
+        "type": "float"
+      },
+      "entrant.grade.trials": {
+        "class": "ENTRANT",
+        "present": 151,
+        "type": "float"
+      },
+      "entrant.mean_latency": {
+        "class": "ENTRANT",
+        "present": 151,
+        "type": "float"
+      },
+      "entrant.sha256": {
+        "class": "ENTRANT",
+        "present": 151,
+        "type": "str"
+      },
+      "entrant.weigh_in.division_for_competition": {
+        "class": "RUN_FACT",
+        "present": 147,
+        "type": "str"
+      },
+      "entrant.weigh_in.division_from_resident": {
+        "class": "RUN_FACT",
+        "present": 147,
+        "type": "str"
+      },
+      "entrant.weigh_in.division_from_weights": {
+        "class": "RUN_FACT",
+        "present": 147,
+        "type": "str"
+      },
+      "entrant.weigh_in.footprint_gb": {
+        "class": "RUN_FACT",
+        "present": 147,
+        "type": "float"
+      },
+      "entrant.weigh_in.gpu_free_gb_at_weigh_in": {
+        "class": "RUN_FACT",
+        "present": 147,
+        "type": "float"
+      },
+      "entrant.weigh_in.ngl_requested": {
+        "class": "RUN_FACT",
+        "present": 147,
+        "type": "NoneType"
+      },
+      "entrant.weigh_in.partial_offload": {
+        "class": "RUN_FACT",
+        "present": 147,
+        "type": "bool"
+      },
+      "entrant.weigh_in.placement": {
+        "class": "RUN_FACT",
+        "present": 147,
+        "type": "str"
+      },
+      "entrant.weigh_in.weights_gb": {
+        "class": "RUN_FACT",
+        "present": 147,
+        "type": "float"
+      }
+    },
+    "present_on": 151
+  },
+  "note": "Derived from the recorded bundles. There is no field list in the derivation script to go stale; re-run it and the schema moves with the record.",
+  "round": {
+    "code_repair": {
+      "fields": {
+        "round.ctx_limited_trials": {
+          "class": "ROUND",
+          "present": 75,
+          "type": "int"
+        },
+        "round.finish_reasons.length": {
+          "class": "ROUND",
+          "present": 12,
+          "type": "int"
+        },
+        "round.finish_reasons.stop": {
+          "class": "ROUND",
+          "present": 71,
+          "type": "int"
+        },
+        "round.items.R3.1_floor.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R3.1_floor.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R3.1_floor.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.items.R3.2_must_not_break_others.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R3.2_must_not_break_others.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R3.2_must_not_break_others.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.items.R3.3_silent_mutation.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R3.3_silent_mutation.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R3.3_silent_mutation.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.items.R3.4_empty_input.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "str"
+        },
+        "round.items.R3.4_empty_input.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R3.4_empty_input.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.items.R3.5_bug_is_in_the_caller.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R3.5_bug_is_in_the_caller.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R3.5_bug_is_in_the_caller.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.items.R3.6_already_correct.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R3.6_already_correct.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R3.6_already_correct.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.kind": {
+          "class": "ROUND",
+          "present": 75,
+          "type": "str"
+        },
+        "round.max_completion_tokens": {
+          "class": "ROUND",
+          "present": 75,
+          "type": "int"
+        },
+        "round.metaphor": {
+          "class": "ROUND",
+          "present": 75,
+          "type": "str"
+        },
+        "round.perfect": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.score": {
+          "class": "UNSAFE_DERIVED",
+          "present": 75,
+          "type": "float"
+        },
+        "round.trials": {
+          "class": "ROUND",
+          "present": 75,
+          "type": "float"
+        },
+        "round.truncated": {
+          "class": "ROUND",
+          "present": 75,
+          "type": "bool"
+        },
+        "round.why": {
+          "class": "ROUND",
+          "present": 14,
+          "type": "str"
+        },
+        "round.wins": {
+          "class": "ROUND",
+          "present": 75,
+          "type": "float"
+        }
+      },
+      "observed_rounds": 75,
+      "outcomes": [
+        "length",
+        "loss",
+        "resign",
+        "stop",
+        "win"
+      ]
+    },
+    "structured_output": {
+      "fields": {
+        "round.ctx_limited_trials": {
+          "class": "ROUND",
+          "present": 151,
+          "type": "int"
+        },
+        "round.finish_reasons.length": {
+          "class": "ROUND",
+          "present": 21,
+          "type": "int"
+        },
+        "round.finish_reasons.stop": {
+          "class": "ROUND",
+          "present": 144,
+          "type": "int"
+        },
+        "round.items.R1.1_floor.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R1.1_floor.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R1.1_floor.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.items.R1.1_forbidden_key_must_be_absent.raw[]": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "list"
+        },
+        "round.items.R1.1_forbidden_key_must_be_absent.reason": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "NoneType"
+        },
+        "round.items.R1.1_forbidden_key_must_be_absent.score": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "float"
+        },
+        "round.items.R1.1_forbidden_key_must_be_absent.truncated": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "bool"
+        },
+        "round.items.R1.1_ordered_sequence_with_a_gap.gen_tokens": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "int"
+        },
+        "round.items.R1.1_ordered_sequence_with_a_gap.raw[]": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "list"
+        },
+        "round.items.R1.1_ordered_sequence_with_a_gap.reason": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "NoneType"
+        },
+        "round.items.R1.1_ordered_sequence_with_a_gap.score": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "float"
+        },
+        "round.items.R1.1_ordered_sequence_with_a_gap.secs": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "float"
+        },
+        "round.items.R1.1_ordered_sequence_with_a_gap.serving_failures": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "int"
+        },
+        "round.items.R1.1_ordered_sequence_with_a_gap.truncated": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "bool"
+        },
+        "round.items.R1.2_field_name_nearmiss.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R1.2_field_name_nearmiss.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R1.2_field_name_nearmiss.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.items.R1.2_null_means_absent.raw[]": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "list"
+        },
+        "round.items.R1.2_null_means_absent.reason": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "NoneType"
+        },
+        "round.items.R1.2_null_means_absent.score": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "float"
+        },
+        "round.items.R1.2_null_means_absent.truncated": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "bool"
+        },
+        "round.items.R1.2_order_is_the_content.gen_tokens": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "int"
+        },
+        "round.items.R1.2_order_is_the_content.raw[]": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "list"
+        },
+        "round.items.R1.2_order_is_the_content.reason": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "NoneType"
+        },
+        "round.items.R1.2_order_is_the_content.score": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "float"
+        },
+        "round.items.R1.2_order_is_the_content.secs": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "float"
+        },
+        "round.items.R1.2_order_is_the_content.serving_failures": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "int"
+        },
+        "round.items.R1.2_order_is_the_content.truncated": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "bool"
+        },
+        "round.items.R1.3_duplicates_are_significant.gen_tokens": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "int"
+        },
+        "round.items.R1.3_duplicates_are_significant.raw[]": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "list"
+        },
+        "round.items.R1.3_duplicates_are_significant.reason": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "NoneType"
+        },
+        "round.items.R1.3_duplicates_are_significant.score": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "float"
+        },
+        "round.items.R1.3_duplicates_are_significant.secs": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "float"
+        },
+        "round.items.R1.3_duplicates_are_significant.serving_failures": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "int"
+        },
+        "round.items.R1.3_duplicates_are_significant.truncated": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "bool"
+        },
+        "round.items.R1.3_enum_exactness.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R1.3_enum_exactness.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R1.3_enum_exactness.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.items.R1.3_type_under_natural_language.raw[]": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "list"
+        },
+        "round.items.R1.3_type_under_natural_language.reason": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "NoneType"
+        },
+        "round.items.R1.3_type_under_natural_language.score": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "float"
+        },
+        "round.items.R1.3_type_under_natural_language.truncated": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "bool"
+        },
+        "round.items.R1.4_absence_is_the_answer.gen_tokens": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "int"
+        },
+        "round.items.R1.4_absence_is_the_answer.raw[]": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "list"
+        },
+        "round.items.R1.4_absence_is_the_answer.reason": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "NoneType"
+        },
+        "round.items.R1.4_absence_is_the_answer.score": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "float"
+        },
+        "round.items.R1.4_absence_is_the_answer.secs": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "float"
+        },
+        "round.items.R1.4_absence_is_the_answer.serving_failures": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "int"
+        },
+        "round.items.R1.4_absence_is_the_answer.truncated": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "bool"
+        },
+        "round.items.R1.4_ambiguous_nesting.raw[]": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "list"
+        },
+        "round.items.R1.4_ambiguous_nesting.reason": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "NoneType"
+        },
+        "round.items.R1.4_ambiguous_nesting.score": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "float"
+        },
+        "round.items.R1.4_ambiguous_nesting.truncated": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "bool"
+        },
+        "round.items.R1.4_type_discipline.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R1.4_type_discipline.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R1.4_type_discipline.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.items.R1.5_enum_nearest_is_wrong.raw[]": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "list"
+        },
+        "round.items.R1.5_enum_nearest_is_wrong.reason": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "NoneType"
+        },
+        "round.items.R1.5_enum_nearest_is_wrong.score": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "float"
+        },
+        "round.items.R1.5_enum_nearest_is_wrong.truncated": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "bool"
+        },
+        "round.items.R1.5_exact_key_set_under_a_bribe.gen_tokens": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "int"
+        },
+        "round.items.R1.5_exact_key_set_under_a_bribe.raw[]": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "list"
+        },
+        "round.items.R1.5_exact_key_set_under_a_bribe.reason": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "NoneType"
+        },
+        "round.items.R1.5_exact_key_set_under_a_bribe.score": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "float"
+        },
+        "round.items.R1.5_exact_key_set_under_a_bribe.secs": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "float"
+        },
+        "round.items.R1.5_exact_key_set_under_a_bribe.serving_failures": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "int"
+        },
+        "round.items.R1.5_exact_key_set_under_a_bribe.truncated": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "bool"
+        },
+        "round.items.R1.5_nested.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R1.5_nested.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R1.5_nested.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.items.R1.6_array_exact_and_ordered.raw[]": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "list"
+        },
+        "round.items.R1.6_array_exact_and_ordered.reason": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "str"
+        },
+        "round.items.R1.6_array_exact_and_ordered.score": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "float"
+        },
+        "round.items.R1.6_array_exact_and_ordered.truncated": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "bool"
+        },
+        "round.items.R1.6_array_shape.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R1.6_array_shape.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R1.6_array_shape.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.items.R1.6_exact_scalar_types.gen_tokens": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "int"
+        },
+        "round.items.R1.6_exact_scalar_types.raw[]": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "list"
+        },
+        "round.items.R1.6_exact_scalar_types.reason": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "NoneType"
+        },
+        "round.items.R1.6_exact_scalar_types.score": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "float"
+        },
+        "round.items.R1.6_exact_scalar_types.secs": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "float"
+        },
+        "round.items.R1.6_exact_scalar_types.serving_failures": {
+          "class": "ROUND",
+          "present": 8,
+          "type": "int"
+        },
+        "round.items.R1.6_exact_scalar_types.truncated": {
+          "class": "ROUND",
+          "present": 38,
+          "type": "bool"
+        },
+        "round.kind": {
+          "class": "ROUND",
+          "present": 151,
+          "type": "str"
+        },
+        "round.max_completion_tokens": {
+          "class": "ROUND",
+          "present": 151,
+          "type": "int"
+        },
+        "round.metaphor": {
+          "class": "ROUND",
+          "present": 151,
+          "type": "str"
+        },
+        "round.perfect": {
+          "class": "ROUND",
+          "present": 109,
+          "type": "bool"
+        },
+        "round.score": {
+          "class": "UNSAFE_DERIVED",
+          "present": 151,
+          "type": "float"
+        },
+        "round.trials": {
+          "class": "ROUND",
+          "present": 151,
+          "type": "float"
+        },
+        "round.truncated": {
+          "class": "ROUND",
+          "present": 151,
+          "type": "bool"
+        },
+        "round.why": {
+          "class": "ROUND",
+          "present": 12,
+          "type": "str"
+        },
+        "round.wins": {
+          "class": "ROUND",
+          "present": 151,
+          "type": "float"
+        }
+      },
+      "observed_rounds": 151,
+      "outcomes": [
+        "length",
+        "loss",
+        "resign",
+        "stop",
+        "win"
+      ]
+    },
+    "tool_selection": {
+      "fields": {
+        "round.ctx_limited_trials": {
+          "class": "ROUND",
+          "present": 75,
+          "type": "int"
+        },
+        "round.finish_reasons.length": {
+          "class": "ROUND",
+          "present": 6,
+          "type": "int"
+        },
+        "round.finish_reasons.stop": {
+          "class": "ROUND",
+          "present": 74,
+          "type": "int"
+        },
+        "round.items.R2.1_floor.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R2.1_floor.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R2.1_floor.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.items.R2.2_near_duplicate.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R2.2_near_duplicate.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R2.2_near_duplicate.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.items.R2.3_constraint_violation.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R2.3_constraint_violation.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R2.3_constraint_violation.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.items.R2.4_no_tool_correct.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R2.4_no_tool_correct.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R2.4_no_tool_correct.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.items.R2.5_unit_transform.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R2.5_unit_transform.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R2.5_unit_transform.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.items.R2.6_genuine_ambiguity.reason": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "NoneType"
+        },
+        "round.items.R2.6_genuine_ambiguity.score": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "float"
+        },
+        "round.items.R2.6_genuine_ambiguity.truncated": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.kind": {
+          "class": "ROUND",
+          "present": 75,
+          "type": "str"
+        },
+        "round.max_completion_tokens": {
+          "class": "ROUND",
+          "present": 75,
+          "type": "int"
+        },
+        "round.metaphor": {
+          "class": "ROUND",
+          "present": 75,
+          "type": "str"
+        },
+        "round.perfect": {
+          "class": "ROUND",
+          "present": 33,
+          "type": "bool"
+        },
+        "round.score": {
+          "class": "UNSAFE_DERIVED",
+          "present": 75,
+          "type": "float"
+        },
+        "round.trials": {
+          "class": "ROUND",
+          "present": 75,
+          "type": "float"
+        },
+        "round.truncated": {
+          "class": "ROUND",
+          "present": 75,
+          "type": "bool"
+        },
+        "round.why": {
+          "class": "ROUND",
+          "present": 6,
+          "type": "str"
+        },
+        "round.wins": {
+          "class": "ROUND",
+          "present": 75,
+          "type": "float"
+        }
+      },
+      "observed_rounds": 75,
+      "outcomes": [
+        "length",
+        "loss",
+        "resign",
+        "stop",
+        "win"
+      ]
+    }
+  }
+}
