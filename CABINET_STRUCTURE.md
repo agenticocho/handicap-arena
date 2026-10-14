@@ -32,6 +32,51 @@ than discouraged.** *A rule stated and not mechanised is a resolution.*
 (`os.walk(run_card.RESULTS)`) both walk trees, and **a results directory reachable by a sweep is a results
 directory that a sweep will eventually rewrite.** Verified by reading the files, not by being told.
 
+---
+
+**ADDENDUM (2026-10-14) — THIS RULE IS STATED AND NOT MECHANISED, and line 28 two paragraphs above says
+exactly what that means.** Measured at the destination by the Chair-link tick and re-verified by the
+Chair:
+
+```
+run_card.py:36  in ALL THREE worktrees      RESULTS = os.path.join(ARENA, "results")
+   -> ARENA derives from the script's OWN LOCATION, so in a worktree the root IS that worktree's results/
+
+<worktree>/results      exists · 520 TRACKED files · .gitignore: NO      (x3 = 1,560 files in git trees)
+/home/chilly1/workspace/cabinet_results/<cabinet>/   0 entries · mtime 2026-10-09 — NOTHING WRITES HERE
+
+the two sweeps, exact:
+  reconcile_and_backfill.py:38    pat = os.path.join(RESULTS, "**", "*.json") if recursive else ...
+  test_bind_control.py:39         for root, _dirs, files in os.walk(run_card.RESULTS):
+```
+
+**So the separate root is declared and unused, and the results it was declared to protect sit inside three
+git trees that both sweeps match.** The reason above stands and is unchanged. **The mechanism does not
+exist** — *"a rule stated and not mechanised is a resolution"*, written two paragraphs up, **and this is
+the rule it describes.**
+
+> **A DECLARED ROOT THAT NO WRITE PATH RESOLVES IS NOT A DECLARATION. IT IS A WISH.**
+
+**What the mechanism must be — and neither half is sufficient alone:**
+
+1. **The writer resolves the DECLARED root, not its own location.** `ARENA` must not be derived from
+   `__file__`: the root has to be **the same for all three worktrees and outside all of them** — the git
+   **common** dir is the natural carrier (`git rev-parse --git-common-dir`).
+2. **And it REFUSES rather than falls back.** If the declared root cannot be resolved, **refuse to run.**
+   **The fallback to `<worktree>/results` IS the defect** — a fallback that works silently is how a
+   declared root becomes decorative.
+3. **And the sweeps take the declared root as their DOMAIN**, rather than globbing a `results/` they find
+   by walking. **A sweep that discovers its domain by recursion cannot be protected from recursion.**
+4. **And the 1,560 tracked files under the three `<worktree>/results/` are the existing end state:** they
+   are **TRACKED, so evidence rather than litter** — **but they are inside the trees the sweeps match**, so
+   they must either **move to the declared root or be declared in place.** Untracked-and-unnamed is not
+   available; *declared-but-matched* is the state that needs the decision.
+
+**Owners:** this document is Ocho's and the Chair's; **the plumbing is Ocho's to draft and the Chair's to
+rule on.** Nothing was edited across the link. The first draft of this addendum was produced by the
+Chair-link tick, which measured it and **refused to decide it** — the correct division, for the third
+time today.
+
 ### 3. OCHO IS THE MERGE GATE. SHARED FILES STAY FROZEN.
 
 **Frozen, and changed only by Ocho, in `main`, with a reason:**
