@@ -411,15 +411,31 @@ def probes():
               f"{type(e).__name__}: {e}")
     entries8 = {e["script"]: e for e in man8.get("entries", [])}
     fixed8 = {f["rel"] for f in man8.get("fixed_mechanism_files", [])}
-    found8 = {}
+    found8 = []
     if lrb is not None:
-        found8 = {rel: hits for rel, hits in lrb.find_binders(HERE) if rel not in fixed8}
-        undeclared8 = sorted(set(found8) - set(entries8))
+        found8 = [r for r in lrb.find_binders(HERE) if r["file"] not in fixed8]
+        found_files8 = {r["file"] for r in found8}
+        by_class8 = {}
+        for r in found8:
+            by_class8.setdefault(r["class"], []).append(r["file"])
+        undeclared8 = sorted(found_files8 - set(entries8))
         check(not undeclared8,
               f"every binder the counter finds in this tree is DECLARED in the manifest "
-              f"({len(found8)} found here; {len(set(entries8) - set(found8))} of the "
+              f"({len(found_files8)} file(s) found here; {len(set(entries8) - found_files8)} of the "
               f"{len(entries8)} declared entries are not binders in this tree -- absent, or already "
               f"migrated)", "UNDECLARED: " + "\nUNDECLARED: ".join(undeclared8))
+        # THE RULING'S OWN GUARD LINE (t_5742bdac / t_86fa52a2): a `darts/results` or
+        # ABSOLUTE-LITERAL binder that the manifest does not carry FAILS -- the blindness was one
+        # layer out from the two os.path.join patterns, so this check names the classes instead of
+        # trusting the pattern.
+        check(all(r["file"] in entries8 for r in found8
+                  if r["class"] in ("named_write_destination", "record_binder")),
+              "no `darts/results` or absolute-literal binder is absent from the manifest -- counting "
+              "by destination, not by syntax", "\n".join(
+                  f"{r['file']}:{r['lines']} [{r['class']}] -> {r['destination']}"
+                  for r in found8 if r["file"] not in entries8))
+        print(f"         found by class: " + ", ".join(
+            f"{c}={len(v)}" for c, v in sorted(by_class8.items())))
 
     # G5 -- THE RULING IS A TRACKED ARTIFACT AND ITS HASH IS CHECKED, NOT REMEMBERED.
     _rf = man8.get("ruling", {}).get("file")
@@ -474,9 +490,10 @@ def probes():
         for c in migs:
             if not _root.git("rev-parse", "--verify", "--quiet", c + "^{commit}"):
                 bad_commit8.append(f"{script} -> {c} (no such commit)")
-        live8 = live_binder_lines(p)
+        live8 = [r for r in found8 if r["file"] == script]
         if live8:
-            bad_claim8.append(f"{script}: still binds <worktree>/results at {live8}")
+            bad_claim8.append(f"{script}: still binds a results destination at {live8[0]['lines']} "
+                              f"[{live8[0]['class']}] -> {live8[0]['destination']}")
         if "import cabinet_root" not in open(p, encoding="utf-8").read():
             bad_import8.append(script)
     check(not bad_claim8,
@@ -489,19 +506,26 @@ def probes():
     print(f"         migrated in this tree: {sum(1 for e in entries8.values() if any(ed['status'].startswith('migrated:') for ed in e['edges']))}"
           f" entry/entries of {len(entries8)} declared")
 
-    # G7 -- THE RESIDUE NUMBER CARRIES ITS INSTRUMENT. The counter is RUN, and its printed count and
-    # manifest hash are compared with the guard's own.
+    # G7 -- THE RESIDUE NUMBER CARRIES ITS INSTRUMENT. The counter is RUN, and its printed counts,
+    # its manifest hash and its EXIT CODE are compared with the guard's own.
     if lrb is not None:
         cp = subprocess.run([sys.executable, os.path.join(HERE, "scripts", "list_results_binders.py"),
                              HERE], capture_output=True, text=True)
         out8 = cp.stdout
+        nrec = len([r for r in found8 if r["class"] == "record_binder"])
+        nnam = len([r for r in found8 if r["class"] == "named_write_destination"])
+        nlog = len({e["script"] for e in entries8.values() for ed in e["edges"]
+                    if ed.get("kind") == "log-coordinate"})
         want_line = f"manifest {RESULTS_MANIFEST} sha256 {sha8}"
         head = out8.splitlines()[0] if out8 else ""
-        check(want_line in out8 and head.startswith(f"{len(found8)} results-record binders"),
-              "the counter prints its count AND the manifest path+sha256 it read, and the count "
-              "equals the guard's own", f"headline: {head!r}\nwant substring: {want_line!r}")
-        check((cp.returncode == 0) == (len(found8) == 0),
-              f"the counter EXITS non-zero while residue > 0 (residue={len(found8)}, "
+        want_head = (f"{nrec} record_binders + {nnam} named_write_destinations + {nlog} "
+                     f"log_coordinates in {HERE}")
+        check(head == want_head and want_line in out8,
+              "the counter prints all THREE classes with its count AND the manifest path+sha256 it "
+              "read, and the counts equal the guard's own",
+              f"headline: {head!r}\nwant:      {want_head!r}\nsubstring present: {want_line in out8}")
+        check((cp.returncode == 0) == (nrec + nnam == 0),
+              f"the counter EXITS non-zero while residue > 0 (residue={nrec + nnam}, "
               f"exit={cp.returncode})", out8[-400:])
 
     # G8 -- TWO MANIFESTS THAT CAN DISAGREE ABOUT THE SAME FILE ARE ONE MANIFEST TOO MANY. The log
