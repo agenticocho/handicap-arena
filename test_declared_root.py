@@ -144,9 +144,18 @@ def probes():
                        or os.path.realpath(b) == os.path.realpath(_root.LEGACY_RECORD))]
     check(not outside, "every entry is under the declared root or is the legacy record in place",
           "\n".join(outside))
-    check(all(os.path.realpath(b) != os.path.realpath(os.path.join(HERE, "results"))
-              for _k, b in dom),
-          "this worktree's own results/ is NOT in the domain")
+    # `main` is the case that makes this a real check rather than a slogan: ITS OWN results/ IS
+    # the legacy record, so it IS in the domain -- as `legacy`, declared in place. The claim that
+    # survives in every worktree is the one that matters: nothing a RUN can write lands there.
+    mine = os.path.realpath(os.path.join(HERE, "results"))
+    as_live = [k for k, b in dom if os.path.realpath(b) == mine and not k.startswith("legacy")]
+    as_legacy = [k for k, b in dom if os.path.realpath(b) == mine and k.startswith("legacy")]
+    check(not as_live,
+          "this worktree's own results/ is NOT in the domain as a LIVE entry -- no run writes there",
+          f"it appears as {as_live}")
+    if as_legacy:
+        print(f"         (this worktree's results/ IS the declared legacy record: it appears only "
+              f"as {as_legacy}, in place, and not because a walk found it)")
     check(all(os.path.realpath(b) != os.path.realpath(p)
               for _k, b in dom for p in _root.DUPLICATE_RECORD_TREES),
           "nor are the three declared duplicate copies")
@@ -176,9 +185,17 @@ def probes():
               f"{f} takes its scope from cabinet_root (textual regression guard on the literal)")
 
     check(_root.in_domain(os.path.join(_root.LEGACY_RECORD, "some_bundle.json"), env=NO_ENV),
-          "the write guard ADMITS a file in the legacy record (maintenance is allowed)")
-    check(not _root.in_domain(os.path.join(HERE, "results", "some_bundle.json"), env=NO_ENV),
-          "and REFUSES one in <worktree>/results, so --apply cannot rewrite a found tree")
+          "the write guard ADMITS a file in the legacy record (declared maintenance is allowed)")
+    undeclared = os.path.join(HERE, "logs", "some_bundle.json")
+    check(not _root.in_domain(undeclared, env=NO_ENV),
+          "and REFUSES a file that is inside this worktree's git tree and is NOT declared",
+          undeclared)
+    here_res = os.path.join(HERE, "results", "some_bundle.json")
+    check(_root.in_domain(here_res, env=NO_ENV) == bool(as_legacy),
+          "a file in THIS worktree's results/ is admitted only where that tree IS the declared "
+          "legacy record (main), and refused where it is an undeclared copy (the cabinets)",
+          f"{here_res} -> in_domain={_root.in_domain(here_res, env=NO_ENV)}, "
+          f"is_the_legacy_record={bool(as_legacy)}")
 
     # ---------------------------------------------------------------- 6: DECLARED IN PLACE
     print("\n  6    THE LEGACY RECORD IS DECLARED IN PLACE, AND THE COPIES ARE COPIES\n")
