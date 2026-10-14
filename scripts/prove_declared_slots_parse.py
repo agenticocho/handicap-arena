@@ -13,6 +13,7 @@ It answers three questions with measurements:
 
     python3 scripts/prove_declared_slots_parse.py
 """
+import glob
 import importlib.util
 import json
 import os
@@ -20,6 +21,24 @@ import re
 import sys
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, HERE)                      # root scripts: already sys.path[0]; scripts/*: required
+import cabinet_root as _root
+
+
+def scope(pattern="*.json"):
+    """[(kind, base, [paths])] over the DECLARED domain, entry by entry. No pattern is widened,
+    no directory joins by existing."""
+    rows = []
+    for kind, base in _root.domain():
+        rows.append((kind, base, sorted(glob.glob(os.path.join(base, pattern)))))
+    return rows
+
+
+def print_scope(rows, pattern):
+    # THE SCOPE IS PRINTED WITH THE COUNT IT CONTRIBUTED: a count without its scope is not a count.
+    for kind, base, hits in rows:
+        print(f"  scope  {kind:16} {len(hits):4} {pattern}  {base}")
+
 CONTRACT = os.path.join(HERE, "GAME_CONTRACT.md")
 BEGIN = "=== DECLARED_SLOTS BEGIN ==="
 END = "=== DECLARED_SLOTS END ==="
@@ -98,20 +117,31 @@ def main():
     print(f"      enforced but not in the contract          : {only_check}")
 
     print(f"\n[4] round keys actually present in the v6 bundles")
-    rdir = os.path.join(HERE, "results")
+    rows = scope("*cardv6*.json")
+    print_scope(rows, "*cardv6*.json")
+    # A FIXTURE THAT DROPS A MEMBER IS A SILENT ZERO. This sweep FLATTENS the domain into one
+    # namespace, so a basename occurring in two entries would silently drop one: refused, not merged.
+    seen = {}
+    for kind, base, hits in rows:
+        for p in hits:
+            seen.setdefault(os.path.basename(p), []).append((kind, p))
+    clash = {n: v for n, v in seen.items() if len(v) > 1}
+    if clash:
+        print(f"STATE: BLOCKED. BASENAME COLLISION across domain entries: {clash} -- a fixture that "
+              f"drops a member is a silent zero. Nothing was written.")
+        return 1
     keys, bundles = {}, 0
-    for f in sorted(os.listdir(rdir)):
-        if not f.endswith(".json") or "cardv6" not in f:
-            continue
-        try:
-            d = json.load(open(os.path.join(rdir, f), encoding="utf-8"))
-        except Exception:
-            continue
-        for e in (d.get("results") or []):
-            for rk in (e.get("rounds") or {}):
-                keys.setdefault(rk, 0)
-                keys[rk] += 1
-        bundles += 1
+    for kind, base, hits in rows:
+        for p in hits:
+            try:
+                d = json.load(open(p, encoding="utf-8"))
+            except Exception:
+                continue
+            for e in (d.get("results") or []):
+                for rk in (e.get("rounds") or {}):
+                    keys.setdefault(rk, 0)
+                    keys[rk] += 1
+            bundles += 1
     print(f"      {bundles} v6 bundles; round keys: " +
           ", ".join(f"{k} x{v}" for k, v in sorted(keys.items())))
 
