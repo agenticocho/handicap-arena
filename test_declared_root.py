@@ -24,6 +24,8 @@ And the properties the ruling asks for, each MEASURED rather than asserted in pr
 
 Run: python3 test_declared_root.py     -> exit 0 if every direction behaves.
 """
+import hashlib
+import importlib.util
 import json
 import os
 import re
@@ -58,6 +60,37 @@ def refusal(fn, *a, **kw):
     except Exception as e:                                        # noqa: BLE001
         return f"WRONG EXCEPTION: {type(e).__name__}: {e}"
     return None
+
+
+RESULTS_MANIFEST = os.path.join(HERE, "RESULTS_BINDERS_MANIFEST.json")
+BINDER_PAT = re.compile(r'(?m)^\s*[A-Z_]*RESULTS\s*=\s*os\.path\.join\('
+                        r'|os\.path\.join\((HERE|ARENA|os\.path\.dirname\(os\.path\.abspath\(__file__\)\)), "results"')
+BINDER_CARD = re.compile(r"t_[0-9a-f]+")
+
+
+def results_manifest():
+    """-> (manifest, sha256 of its bytes) or (None, None). Read HERE, once, by the sections that need it."""
+    try:
+        raw = open(RESULTS_MANIFEST, "rb").read()
+        return json.loads(raw.decode("utf-8")), hashlib.sha256(raw).hexdigest()
+    except (OSError, ValueError):
+        return None, None
+
+
+def live_binder_lines(path):
+    """-> the NON-COMMENT lines of `path` that still bind a <worktree>/results directory."""
+    try:
+        text = open(path, encoding="utf-8", errors="replace").read()
+    except OSError:
+        return None
+    return [ln.strip() for ln in text.splitlines()
+            if not ln.lstrip().startswith("#") and BINDER_PAT.search(ln)]
+
+
+def migrated_entries(man):
+    """-> [entry] for every manifest entry carrying a migrated:<commit> edge."""
+    return [e for e in (man or {}).get("entries", [])
+            if any(ed.get("status", "").startswith("migrated:") for ed in e.get("edges", []))]
 
 
 def probes():
@@ -180,11 +213,24 @@ def probes():
                   "scope: " + ", ".join(f"{k}={b}" for k, b in m.DOMAIN))
         except SystemExit as e:
             check(False, f"{name} could not be imported", str(e))
-    for f in ("test_bind_control.py", "test_game_states.py", "reconcile_and_backfill.py"):
-        text = open(os.path.join(HERE, f), encoding="utf-8").read()
-        check("import cabinet_root" in text and
-              not re.search(r'^\s*RESULTS\s*=\s*os\.path\.join\(HERE, "results"\)', text, re.M),
-              f"{f} takes its scope from cabinet_root (textual regression guard on the literal)")
+    # THE FILE LIST COMES FROM THE MANIFEST, NOT FROM A SECOND LIST. Three of these six mechanism
+    # files were covered by a hand-typed tuple; every binder the migration lands is covered by the
+    # manifest, so this guard grows WITH the migration instead of needing a second place to be
+    # edited. One mechanism, two checks, no second list.
+    _man5, _sha5 = results_manifest()
+    _always = ["test_bind_control.py", "test_game_states.py", "reconcile_and_backfill.py"]
+    _mig = sorted(e["script"] for e in migrated_entries(_man5))
+    if _man5 is None:
+        check(False, "RESULTS_BINDERS_MANIFEST.json could not be read, so only the three mechanism "
+                     "files were checked", RESULTS_MANIFEST)
+    for f in _always + [f for f in _mig if f not in _always]:
+        path = os.path.join(HERE, f)
+        text = open(path, encoding="utf-8").read() if os.path.exists(path) else ""
+        live = live_binder_lines(path)
+        check("import cabinet_root" in text and not live,
+              f"{f} takes its scope from cabinet_root (textual regression guard on the literal)",
+              f"import cabinet_root: {'present' if 'import cabinet_root' in text else 'MISSING'}\n"
+              f"live binder line(s): {live}")
 
     check(_root.in_domain(os.path.join(_root.LEGACY_RECORD, "some_bundle.json"), env=NO_ENV),
           "the write guard ADMITS a file in the legacy record (declared maintenance is allowed)")
@@ -342,6 +388,146 @@ def probes():
         print(f"         edge statuses: {', '.join(statuses)}")
         print(f"         migrated: {len(man.get('migrated', []))} edge(s) now resolve through "
               f"cabinet_root.log_dir()/log_for()")
+
+    # ---------------------------------------------------------------- 8: THE RESULTS BINDERS
+    print("\n  8    EVERY <worktree>/results BINDER IS DECLARED, AND A DECLARED LANDING IS ONE\n"
+          "       THAT HAPPENED\n")
+    man8, sha8 = results_manifest()
+    if man8 is None:
+        check(False, "RESULTS_BINDERS_MANIFEST.json could not be read", RESULTS_MANIFEST)
+        man8, sha8 = {}, None
+    # THE DETECTION IS RE-USED, NOT COPIED. The counter's own `find_binders` is loaded BY PATH (the
+    # idiom scripts/prove_declared_slots_parse.py already uses for the gate), so the guard and the
+    # number it guards cannot drift apart -- a copy drifts from the thing it copied.
+    lrb = None
+    try:
+        _spec = importlib.util.spec_from_file_location(
+            "list_results_binders", os.path.join(HERE, "scripts", "list_results_binders.py"))
+        lrb = importlib.util.module_from_spec(_spec)
+        sys.modules["list_results_binders"] = lrb
+        _spec.loader.exec_module(lrb)
+    except Exception as e:                                        # noqa: BLE001
+        check(False, "scripts/list_results_binders.py could not be loaded, so no binder was checked",
+              f"{type(e).__name__}: {e}")
+    entries8 = {e["script"]: e for e in man8.get("entries", [])}
+    fixed8 = {f["rel"] for f in man8.get("fixed_mechanism_files", [])}
+    found8 = {}
+    if lrb is not None:
+        found8 = {rel: hits for rel, hits in lrb.find_binders(HERE) if rel not in fixed8}
+        undeclared8 = sorted(set(found8) - set(entries8))
+        check(not undeclared8,
+              f"every binder the counter finds in this tree is DECLARED in the manifest "
+              f"({len(found8)} found here; {len(set(entries8) - set(found8))} of the "
+              f"{len(entries8)} declared entries are not binders in this tree -- absent, or already "
+              f"migrated)", "UNDECLARED: " + "\nUNDECLARED: ".join(undeclared8))
+
+    # G5 -- THE RULING IS A TRACKED ARTIFACT AND ITS HASH IS CHECKED, NOT REMEMBERED.
+    _rf = man8.get("ruling", {}).get("file")
+    _rp = os.path.join(HERE, _rf) if _rf else None
+    _got = hashlib.sha256(open(_rp, "rb").read()).hexdigest() if _rp and os.path.exists(_rp) else None
+    check(_got is not None and _got == man8.get("ruling", {}).get("sha256"),
+          f"the manifest's ruling {_rf} is in the tree and hashes to the declared sha256",
+          f"got      {_got}\ndeclared {man8.get('ruling', {}).get('sha256')}")
+
+    # G4 -- presence / declared_absent DISAGREEING WITH THE FILESYSTEM IS A CLAIM ABOUT A FILE.
+    wts8 = _root.worktrees()
+    absent8, missing_wt = [], []
+    for script, e in sorted(entries8.items()):
+        for tree, claimed in sorted(e.get("presence", {}).items()):
+            wt = wts8.get(tree)
+            if not wt:
+                missing_wt.append(tree)
+                continue
+            there = os.path.exists(os.path.join(wt, script))
+            if there != bool(claimed):
+                absent8.append(f"{script}: presence[{tree}]={claimed} but the file "
+                               f"{'IS' if there else 'IS NOT'} there ({wt})")
+    check(not absent8, "every entry's presence agrees with the filesystem, tree by tree",
+          "\n".join(absent8))
+    check(not missing_wt, "and every tree named in a presence map is a worktree of this repo",
+          "\n".join(sorted(set(missing_wt))))
+    declared_gone = sorted({f"{s}: {','.join(t for t, p in sorted(e.get('presence', {}).items()) if not p)}"
+                            for s, e in entries8.items()
+                            if any(not p for p in e.get("presence", {}).values())})
+    print(f"         declared absent from some tree: {declared_gone or 'none'}")
+    print(f"         declared_absent: {json.dumps(man8.get('declared_absent', {}), sort_keys=True)}")
+    print(f"         {man8.get('declared_absent_why', '')}".rstrip())
+
+    # G3 -- A DEFERRAL IS DECLARED, NEVER SILENT: every non-migrated status names a card.
+    noc8 = sorted(f"{s}: {ed['status']}" for s, e in entries8.items() for ed in e["edges"]
+                  if not ed["status"].startswith("migrated:")
+                  and not BINDER_CARD.search(ed["status"]))
+    check(not noc8, "every deferred:*/out-of-scope:* status names the card that owns it",
+          "\n".join(noc8))
+
+    # G2 / G6 -- A MANIFEST THAT CLAIMS A LANDING THAT DID NOT HAPPEN, AND A LANDING THAT DOES NOT
+    # READ THROUGH THE DECLARATION. Checked HERE, in the tree the guard is running in.
+    bad_claim8, bad_commit8, bad_import8 = [], [], []
+    for script, e in sorted(entries8.items()):
+        migs = [ed["status"].split(":", 1)[1] for ed in e["edges"]
+                if ed["status"].startswith("migrated:")]
+        if not migs:
+            continue
+        p = os.path.join(HERE, script)
+        if not os.path.exists(p):
+            continue                       # declared absent from this tree -- not an unfinished landing
+        for c in migs:
+            if not _root.git("rev-parse", "--verify", "--quiet", c + "^{commit}"):
+                bad_commit8.append(f"{script} -> {c} (no such commit)")
+        live8 = live_binder_lines(p)
+        if live8:
+            bad_claim8.append(f"{script}: still binds <worktree>/results at {live8}")
+        if "import cabinet_root" not in open(p, encoding="utf-8").read():
+            bad_import8.append(script)
+    check(not bad_claim8,
+          "no entry claims migrated:<commit> while a live line still binds <worktree>/results -- a "
+          "manifest claiming a landing that did not happen FAILS here", "\n".join(bad_claim8))
+    check(not bad_commit8, "every migrated:<commit> names a commit that exists in this repo",
+          "\n".join(bad_commit8))
+    check(not bad_import8, "every migrated entry's text contains `import cabinet_root`",
+          "\n".join(bad_import8))
+    print(f"         migrated in this tree: {sum(1 for e in entries8.values() if any(ed['status'].startswith('migrated:') for ed in e['edges']))}"
+          f" entry/entries of {len(entries8)} declared")
+
+    # G7 -- THE RESIDUE NUMBER CARRIES ITS INSTRUMENT. The counter is RUN, and its printed count and
+    # manifest hash are compared with the guard's own.
+    if lrb is not None:
+        cp = subprocess.run([sys.executable, os.path.join(HERE, "scripts", "list_results_binders.py"),
+                             HERE], capture_output=True, text=True)
+        out8 = cp.stdout
+        want_line = f"manifest {RESULTS_MANIFEST} sha256 {sha8}"
+        head = out8.splitlines()[0] if out8 else ""
+        check(want_line in out8 and head.startswith(f"{len(found8)} results-record binders"),
+              "the counter prints its count AND the manifest path+sha256 it read, and the count "
+              "equals the guard's own", f"headline: {head!r}\nwant substring: {want_line!r}")
+        check((cp.returncode == 0) == (len(found8) == 0),
+              f"the counter EXITS non-zero while residue > 0 (residue={len(found8)}, "
+              f"exit={cp.returncode})", out8[-400:])
+
+    # G8 -- TWO MANIFESTS THAT CAN DISAGREE ABOUT THE SAME FILE ARE ONE MANIFEST TOO MANY. The log
+    # coordinate is CARRIED here and DECIDED in t_c442023d; this check is why it can be carried
+    # without being re-decided.
+    try:
+        logman = json.load(open(os.path.join(HERE, "LOG_EDGES.json"), encoding="utf-8"))
+    except Exception as e:                                        # noqa: BLE001
+        logman = None
+        check(False, "LOG_EDGES.json could not be read, so the carried log edges were not checked",
+              f"{type(e).__name__}: {e}")
+    if logman is not None:
+        log_mig = {m["file"] for m in logman.get("migrated", [])}
+        carried8 = {s for s, e in entries8.items() for ed in e["edges"]
+                    if ed["status"].startswith("deferred:log-coordinate:")}
+        check(carried8 and not (carried8 - log_mig),
+              f"every log-coordinate edge carried here ({sorted(carried8)}) appears in "
+              f"LOG_EDGES.json's migrated list", ", ".join(sorted(carried8 - log_mig)))
+        check(not (set(entries8) & log_mig) - carried8,
+              "and every file that BOTH manifests touch carries the log edge here -- the two cannot "
+              "disagree about the same file",
+              ", ".join(sorted((set(entries8) & log_mig) - carried8)))
+        noland = sorted(f"{s}: {ed['status']}" for s, e in entries8.items() for ed in e["edges"]
+                        if ed["status"].startswith("deferred:log-coordinate:") and not ed.get("landed_by"))
+        check(not noland, "and each carries the commit that landed it (landed_by)",
+              "\n".join(noland))
 
     print()
     if FAILS:

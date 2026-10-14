@@ -23,6 +23,8 @@ pattern text is not a binding.
 
 Usage: python3 scripts/audit_results_binder_forms.py [tree-root]
 """
+import hashlib
+import json
 import os
 import re
 import sys
@@ -30,11 +32,20 @@ import sys
 ROOT = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else ".")
 SKIP_DIRS = {".git", "results", "logs", "__pycache__", ".worktrees"}
 SKIP_FILES = {"scripts/list_results_binders.py", "scripts/audit_results_binder_forms.py"}
-# the six the counter excludes BY NAME (verbatim from list_results_binders.py's FIXED set);
-# listed separately so column C means "the counter does not list this AND it is not one of
-# the six the counter deliberately excludes".
-COUNTER_FIXED = {"cabinet_root.py", "run_card.py", "test_game_states.py",
-                 "reconcile_and_backfill.py", "test_bind_control.py", "test_declared_root.py"}
+# THE COUNTER'S EXCLUSION LIST IS NOW A DECLARED MANIFEST, AND THIS READER READS THE SAME
+# DECLARATION rather than keeping a second copy of it: two readers of one declaration, or two
+# lists that drift. The six paths below are no longer typed here -- they are read from
+# RESULTS_BINDERS_MANIFEST.json's fixed_mechanism_files. Column C means "the counter does not list
+# this AND the manifest does not exclude it".
+MANIFEST = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                        "RESULTS_BINDERS_MANIFEST.json")
+try:
+    _RAW = open(MANIFEST, "rb").read()
+    _MAN = json.loads(_RAW.decode("utf-8"))
+except OSError as _e:                                            # noqa: BLE001
+    raise SystemExit(f"STATE: BLOCKED. The manifest cannot be read: {_e}")
+MANIFEST_SHA = hashlib.sha256(_RAW).hexdigest()
+COUNTER_FIXED = {f["rel"] for f in _MAN.get("fixed_mechanism_files", [])}
 
 # verbatim from list_results_binders.py
 COUNTER_PAT = re.compile(r'(?m)^\s*[A-Z_]*RESULTS\s*=\s*os\.path\.join\('
@@ -69,6 +80,7 @@ bind_files = sorted({r["file"] for r in rows})
 print(f"TREE {ROOT}")
 print(f"  counter-matched .py files      : {len(counter_files)}")
 print(f"  files naming a results DIR     : {len(bind_files)}")
+print(f"  manifest                       : {MANIFEST} sha256 {MANIFEST_SHA}")
 print()
 print("  B. BINDING LINES THE COUNTER DOES NOT MATCH:")
 for r in rows:
