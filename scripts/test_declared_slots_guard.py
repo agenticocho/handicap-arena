@@ -24,6 +24,7 @@ bundle -- the guard passing while the thing it guards drifted. Case 2 is the reg
 
     python3 scripts/test_declared_slots_guard.py
 """
+import glob
 import os
 import shutil
 import subprocess
@@ -31,6 +32,24 @@ import sys
 import tempfile
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, HERE)                      # root scripts: already sys.path[0]; scripts/*: required
+import cabinet_root as _root
+
+
+def scope(pattern="*.json"):
+    """[(kind, base, [paths])] over the DECLARED domain, entry by entry. No pattern is widened,
+    no directory joins by existing."""
+    rows = []
+    for kind, base in _root.domain():
+        rows.append((kind, base, sorted(glob.glob(os.path.join(base, pattern)))))
+    return rows
+
+
+def print_scope(rows, pattern):
+    # THE SCOPE IS PRINTED WITH THE COUNT IT CONTRIBUTED: a count without its scope is not a count.
+    for kind, base, hits in rows:
+        print(f"  scope  {kind:16} {len(hits):4} {pattern}  {base}")
+
 GUARD = os.path.join(HERE, "scripts", "prove_declared_slots_parse.py")
 CHECK = "test_game_states.py"
 
@@ -49,13 +68,40 @@ MATCHING_LITERAL = '''DECLARED_SLOTS = {
 
 
 def build_sandbox(mutate_check=None, mutate_contract=None):
-    """A faithful miniature of the repo: contract, check, its import, results, and the guard."""
+    """A faithful miniature of the repo: contract, check, its imports, the DECLARATION, results, guard.
+
+    A MINIATURE THAT CANNOT DECLARE A ROOT IS NOT A MINIATURE OF THIS REPO. Every reader here --
+    the guard under test, and the check it adjudicates -- resolves its scope through
+    cabinet_root.domain(), and domain() REFUSES without a declaration. So the sandbox carries the
+    same three things the real tree carries, and only these three:
+
+      * the one declaration                      `cabinet_root.py`
+      * a WORK TREE, because the cabinet is resolved from the BRANCH and from nothing else
+      * a DECLARED ROOT OUTSIDE that work tree   `CABINET_RESULTS` for the one invocation
+
+    The first version carried none of them, and the two controls it was built to prove went red for
+    that reason rather than for a drift: the checker could not import, so the check enforced
+    ABSENT and every world answered BLOCKED. A fixture that fails everything for one reason it does
+    not name is a caption in the other direction.
+    """
     d = tempfile.mkdtemp(prefix="slotctl-")
+    root = tempfile.mkdtemp(prefix="slotroot-")          # the DECLARED ROOT: outside every git tree
     os.makedirs(os.path.join(d, "scripts"))
     os.makedirs(os.path.join(d, "results"))
+    subprocess.run(["git", "init", "-q", "-b", "main", d], check=True)
+    # AN UNBORN BRANCH HAS NO NAME TO READ: `rev-parse --abbrev-ref HEAD` fails until there is a
+    # commit, and cabinet_root refuses a work tree whose cabinet it cannot tell. One empty commit.
+    subprocess.run(["git", "-C", d, "-c", "user.name=fixture", "-c", "user.email=fixture@invalid",
+                    "commit", "-q", "--allow-empty", "-m", "fixture"], check=True)
+    live = os.path.join(root, "main")                    # domain() -> live:<branch under the root>
+    os.makedirs(live)
 
     shutil.copy2(os.path.join(HERE, "GAME_CONTRACT.md"), d)
     shutil.copy2(os.path.join(HERE, "annotate_superseded.py"), d)
+    # THE MINIATURE CARRIES THE ONE DECLARATION. Every reader here -- the guard under test and the
+    # check it adjudicates -- imports cabinet_root; a sandbox without it does not run the thing it
+    # is a sandbox FOR, it dies on the import and reports an ImportError where a drift belongs.
+    shutil.copy2(os.path.join(HERE, "cabinet_root.py"), d)
     shutil.copy2(GUARD, os.path.join(d, "scripts"))
 
     check_src = open(os.path.join(HERE, CHECK), encoding="utf-8").read()
@@ -71,19 +117,29 @@ def build_sandbox(mutate_check=None, mutate_contract=None):
         with open(cpath, "w", encoding="utf-8") as f:
             f.write(mutate_contract(ctext))
 
-    # one real v6 bundle, so the guard has round keys to adjudicate
-    for name in sorted(os.listdir(os.path.join(HERE, "results"))):
-        if "cardv6" in name and name.endswith(".json"):
-            shutil.copy2(os.path.join(HERE, "results", name),
-                         os.path.join(d, "results", name))
+    # one real v6 bundle, so the guard has round keys to adjudicate. THE SOURCE MOVES TO THE DECLARED
+    # DOMAIN; the sandbox's own `results` (built above, inside d/) is the FIXTURE's and stays.
+    _src = None
+    for _kind, _base, _hits in scope("*cardv6*.json"):
+        if _hits:
+            _src = _hits[0]
             break
-    return d
+    if _src:
+        # THE FIXTURE'S OWN `results` (built above, inside d/), NOT A SECOND ENTRY IN THE DOMAIN: the
+        # domain ALWAYS carries the real `legacy` record, so a copy under `live:main` would put the
+        # same basename in two entries -- and the guard under test refuses that as a basename
+        # collision, which a fixture must not manufacture.
+        shutil.copy2(_src, os.path.join(d, "results", os.path.basename(_src)))
+    return d, root
 
 
-def run_guard(sandbox):
+def run_guard(sandbox, root):
+    # ONE DECLARATION, FOR ONE INVOCATION: the sandbox is a tree of its own, and its scope must be
+    # its own -- otherwise the guard under test would be reading the real record from a fixture.
+    env = dict(os.environ, CABINET_RESULTS=root)
     r = subprocess.run([sys.executable,
                         os.path.join(sandbox, "scripts", "prove_declared_slots_parse.py")],
-                       capture_output=True, text=True, cwd=sandbox)
+                       capture_output=True, text=True, cwd=sandbox, env=env)
     return r.returncode, r.stdout + r.stderr
 
 
@@ -133,9 +189,9 @@ def main():
     ]
 
     for name, kw, want_state, want_rc in cases:
-        d = build_sandbox(**kw)
+        d, root = build_sandbox(**kw)
         try:
-            rc, out = run_guard(d)
+            rc, out = run_guard(d, root)
             got = (state_of(out), rc)
             ck(name, got, (want_state, want_rc))
             if got != (want_state, want_rc):
@@ -144,6 +200,7 @@ def main():
                     print(f"        {line}")
         finally:
             shutil.rmtree(d, ignore_errors=True)
+            shutil.rmtree(root, ignore_errors=True)
 
     print()
     print("=" * 98)
