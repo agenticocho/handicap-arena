@@ -23,7 +23,39 @@ import os
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-RESULTS = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "results")
+sys.path.insert(0, HERE)                      # root scripts: already sys.path[0]; scripts/*: required
+import cabinet_root as _root
+
+
+def scope(pattern="*.json"):
+    """[(kind, base, [paths])] over the DECLARED domain, entry by entry. No pattern is widened,
+    no directory joins by existing."""
+    rows = []
+    for kind, base in _root.domain():
+        rows.append((kind, base, sorted(glob.glob(os.path.join(base, pattern)))))
+    return rows
+
+
+def print_scope(rows, pattern):
+    # THE SCOPE IS PRINTED WITH THE COUNT IT CONTRIBUTED: a count without its scope is not a count.
+    for kind, base, hits in rows:
+        print(f"  scope  {kind:16} {len(hits):4} {pattern}  {base}")
+
+# A CALLER-SUPPLIED SCOPE IS DECLARED BY THE CALLER -- and a path OUTSIDE the declared domain is SAID
+# OUT LOUD, because a scan that silently reads somewhere else is a count about a different tree. The
+# argv override stays; it just stops being silent.
+CALLER = sys.argv[1] if len(sys.argv) > 1 else None
+
+
+def scan_scope():
+    """-> the paths to scan, and the scope printed with the count it contributed."""
+    if CALLER:
+        where = "" if _root.in_domain(CALLER) else ", OUTSIDE THE DECLARED DOMAIN"
+        print(f"  scope  DECLARED BY THE CALLER{where}: {CALLER}")
+        return sorted(glob.glob(os.path.join(CALLER, "*.json")))
+    rows = scope("*.json")
+    print_scope(rows, "*.json")
+    return [p for _k, _b, hits in rows for p in hits]
 
 
 def main():
@@ -31,7 +63,7 @@ def main():
     total_items = 0
     silent_bundles = []
     total_bundles = 0
-    for p in sorted(glob.glob(os.path.join(RESULTS, "*.json"))):
+    for p in scan_scope():
         # An EXERCISE_ bundle is not an entrant. The exercise that proves Fix 2 writes one record, and a
         # one-record bundle in this directory is indistinguishable from an entrant to any scan that does
         # not know the name means something. It writes to exercise/ now, and this is the second defence:
@@ -68,7 +100,7 @@ def main():
                     if not reason and not has_raw:
                         silent.append((os.path.basename(p), cv, rid, iid, it.get("truncated")))
 
-    print(f"scanned {total_items} item records in {total_bundles} bundles, {RESULTS}")
+    print(f"scanned {total_items} item records in {total_bundles} bundles")
     print()
     rc = 0
     if silent_bundles:
