@@ -259,7 +259,7 @@
     },
     {
      "kind": "log-coordinate",
-     "status": "migrated:16381bc",
+     "status": "deferred:log-coordinate:t_c442023d",
      "landed_by": "8f51ae8",
      "why": "its log DIRECTORY (os.makedirs(<worktree>/logs) and CHESS_GAME_<label>.log) is a LOG coordinate: t_c442023d re-pointed it to cabinet_root.log_dir(HERE)"
     }
