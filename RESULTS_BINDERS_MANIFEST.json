@@ -14,6 +14,26 @@
   "read": "cabinet_root.domain()/domain_paths()/domain_find()",
   "write": "cabinet_root.results_dir() -- REFUSAL, no fallback"
  },
+ "detector": {
+  "what": "ONE detector, adopted from scripts/audit_results_binder_forms.py: its find_rows() is loaded BY PATH by scripts/list_results_binders.py, which then classifies every row BY ITS DESTINATION -- never by syntax. A writer is bound by where it writes.",
+  "classes": {
+   "record_binder": "<worktree>/results, or an absolute literal into the legacy record or one of its declared duplicate copies. TARGET 0.",
+   "named_write_destination": "a named directory's own results/ (darts/results). TARGET 0.",
+   "log_coordinate": "DECLARED, and NOT residue: deferred:log-coordinate:t_c442023d with landed_by 8f51ae8 -- t_c442023d re-pointed them at cabinet_root.log_dir()/log_path() and LOG_EDGES.json carries them."
+  },
+  "why": "the counter's two os.path.join patterns could not see depth_test.py:27 (an absolute literal) or darts/darts.py:706 (os.path.join(os.path.dirname(__file__), 'results')). The blindness was one layer out from the pattern, and it is now the detector's job."
+ },
+ "AC1_before_counts_CORRECTED": {
+  "counts": {
+   "main": 24,
+   "cabinet/sokoban": 23,
+   "cabinet/missile-command": 22,
+   "cabinet/zork": 22
+  },
+  "why": "the 22 migrated binders PLUS depth_test.py:27 and depth_test2.py:32, which bind main's legacy record by ABSOLUTE literal and exist in all four trees at the same line. The inherited 22/21/20/20 was the count of a NARROWER PATTERN, not of the binders. TARGET 0, to be reached by t_86fa52a2 (the depth files + darts/darts.py).",
+  "landed_by": "the Chair's ruling on t_5742bdac, 2026-10-14-a-writer-is-bound-by-its-destination-not-its-syntax.md, sha256 6309d8a467ccdbc2317e904f98a6222c37f2678f17f2c4e8567d87b5f52232f9",
+  "how_measured": "sokoban / missile-command / zork measured directly at their travel commit; main measured with the one un-migrated file stashed, and derived = sokoban + render_state_contract.py."
+ },
  "status_classes": [
   "migrated:<commit>",
   "deferred:<card-id>",
@@ -23,14 +43,14 @@
  ],
  "built_against": {
   "base_commit": {
-   "main": "7f29963",
-   "cabinet/sokoban": "b8dae5c",
-   "cabinet/missile-command": "0ddbe1c",
-   "cabinet/zork": "0ddbe1c"
+   "main": "dffc46f",
+   "cabinet/sokoban": "ee68d9e",
+   "cabinet/missile-command": "0355a99",
+   "cabinet/zork": "9cb05ca"
   },
-  "measured_at": "2026-10-14T23:39:38Z",
+  "measured_at": "2026-10-14T23:43:35Z",
   "measured_at_how": "datetime.now(timezone.utc) when this file was written, NOT the commit date of HEAD: the reading carries its instant, or it is indistinguishable from a live one",
-  "counter_sha256": "674b5d656e416997d10b39a0b79457b5caf68bf9c8a2d703d23ac30337eb3da0",
+  "counter_sha256": "2806ceedd7f7aa298802cb097b51082d93ba3a696fbc6cd3d5403e80189b34a8",
   "counter_sha256_superseded": "f797169c... (the sha256 the counter carried in remaining_results_binders.txt's header before it read this manifest)",
   "note": "there is no single BASE for all four trees: each cabinet branch carries its own cherry-pick of the logs/ landing. The baseline RESULTS_BINDERS_BASELINE.md / results_binders_baseline.json / remaining_results_binders.txt STAY ON main -- one baseline serves all four trees because the record is one tree object, and the manifest says which tree it was measured in (main, at 125b7e2)."
  },
@@ -39,6 +59,7 @@
    "script": "analyse_card.py",
    "role": "reader",
    "pattern": "*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -56,6 +77,7 @@
    "script": "annotate_superseded.py",
    "role": "writer",
    "pattern": "*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -73,6 +95,7 @@
    "script": "audit_clock_fields.py",
    "role": "reader",
    "pattern": "*cardv4*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -90,6 +113,7 @@
    "script": "audit_stand_ins.py",
    "role": "reader",
    "pattern": "*cardv4*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -107,6 +131,7 @@
    "script": "audit_weigh_in.py",
    "role": "reader",
    "pattern": "*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -124,6 +149,7 @@
    "script": "build_roster.py",
    "role": "reader",
    "pattern": "*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -141,6 +167,7 @@
    "script": "canonicalise_filenames.py",
    "role": "writer",
    "pattern": "*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -158,6 +185,7 @@
    "script": "check_field_semantics.py",
    "role": "reader",
    "pattern": "*cardv5*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -175,6 +203,7 @@
    "script": "check_format_fields.py",
    "role": "reader",
    "pattern": "*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -192,6 +221,7 @@
    "script": "check_run.py",
    "role": "reader",
    "pattern": "*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -215,6 +245,7 @@
    "script": "chess_game.py",
    "role": "writer",
    "pattern": "*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -238,6 +269,7 @@
    "script": "discrimination_report.py",
    "role": "reader",
    "pattern": "*cardv3*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -255,6 +287,7 @@
    "script": "evaluate_v2.py",
    "role": "reader",
    "pattern": "*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -272,6 +305,7 @@
    "script": "evaluate_v3.py",
    "role": "reader",
    "pattern": "*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -289,6 +323,7 @@
    "script": "evaluate_v4.py",
    "role": "reader",
    "pattern": "*cardv4*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -306,6 +341,7 @@
    "script": "render_state_contract.py",
    "role": "reader",
    "pattern": "*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": false,
@@ -323,6 +359,7 @@
    "script": "test_no_silent_zero.py",
    "role": "reader",
    "pattern": "*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -340,6 +377,7 @@
    "script": "v3_rates_both_readings.py",
    "role": "reader",
    "pattern": "*cardv3*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -357,6 +395,7 @@
    "script": "verify_chair_audit.py",
    "role": "reader",
    "pattern": "*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -374,6 +413,7 @@
    "script": "verify_scope.py",
    "role": "reader",
    "pattern": "*cardv3*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -391,6 +431,7 @@
    "script": "scripts/prove_declared_slots_parse.py",
    "role": "reader",
    "pattern": "*cardv6*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -408,6 +449,7 @@
    "script": "scripts/test_declared_slots_guard.py",
    "role": "reader",
    "pattern": "*cardv6*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -425,6 +467,7 @@
    "script": "depth_test.py",
    "role": "writer",
    "pattern": "*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -434,8 +477,8 @@
    "edges": [
     {
      "kind": "results-write",
-     "status": "out-of-scope:t_5742bdac",
-     "why": "a WRITER by ABSOLUTE path into main's legacy record, in a form the counter's join-forms do not match; routed to the Chair as t_5742bdac rather than decided here"
+     "status": "deferred:t_86fa52a2",
+     "why": "a WRITER into main's legacy record by ABSOLUTE literal (depth_test.py:27, open(OUT,'w')), in a form the counter's two os.path.join patterns could not see: a writer is bound by its DESTINATION, not its syntax. Present in ALL FOUR trees at the same line. Routed by the Chair to t_86fa52a2 (ruling 2026-10-14-a-writer-is-bound-by-its-destination-not-its-syntax.md, sha256 6309d8a467ccdbc2317e904f98a6222c37f2678f17f2c4e8567d87b5f52232f9); STILL COUNTED AS RESIDUE, because a deferral is declared and never silent"
     }
    ]
   },
@@ -443,6 +486,7 @@
    "script": "depth_test2.py",
    "role": "writer",
    "pattern": "*.json",
+   "class": "record_binder",
    "presence": {
     "main": true,
     "cabinet/sokoban": true,
@@ -452,8 +496,8 @@
    "edges": [
     {
      "kind": "results-write",
-     "status": "out-of-scope:t_5742bdac",
-     "why": "same as depth_test.py"
+     "status": "deferred:t_86fa52a2",
+     "why": "same as depth_test.py, :32"
     }
    ]
   },
@@ -461,6 +505,7 @@
    "script": "darts/darts.py",
    "role": "writer",
    "pattern": "*.json",
+   "class": "named_write_destination",
    "presence": {
     "main": true,
     "cabinet/sokoban": false,
@@ -470,8 +515,8 @@
    "edges": [
     {
      "kind": "results-write",
-     "status": "out-of-scope:t_5742bdac",
-     "why": "`--out` defaults to <worktree>/darts/results (5 tracked darts_v1_*.json) -- a results directory inside the git tree, but not the worktree root's results/"
+     "status": "deferred:t_86fa52a2",
+     "why": "`--out` defaults to os.path.join(os.path.dirname(__file__), 'results') -> <worktree>/darts/results (5 tracked darts_v1_*.json). MAIN ONLY -- darts/ is absent from all three cabinets, so it is parity by DECLARED ABSENCE. t_86fa52a2"
     }
    ]
   }
@@ -492,7 +537,7 @@
    "cabinet/zork"
   ]
  },
- "declared_absent_why": "Absence is DECLARED, never counted as residue and never read as an unfinished landing: render_state_contract.py is absent from all three cabinet trees and check_format_fields.py from missile-command and zork. The AC1 residue target is therefore 22 / 21 / 20 / 20 (main / sokoban / missile-command / zork).",
+ "declared_absent_why": "Absence is DECLARED, never counted as residue and never read as an unfinished landing: render_state_contract.py is absent from all three cabinet trees, check_format_fields.py from missile-command and zork, and darts/darts.py (the one named_write_destination) from all three. The AC1 BEFORE-count, corrected by the Chair on t_5742bdac and re-measured here, is 24 / 23 / 22 / 22 record binders (main / sokoban / missile-command / zork) -- the 22 migrated binders plus depth_test.py:27 and depth_test2.py:32. The TARGET is 0, and reaching it from here is t_86fa52a2's job.",
  "fixed_mechanism_files": [
   {
    "rel": "cabinet_root.py",
