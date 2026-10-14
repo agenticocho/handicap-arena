@@ -13,9 +13,27 @@ result -- and the first version of this project's diagnostic named the wrong cau
 Templating: PLAIN string with __TOKENS__ replaced at the end, with an assertion per edit.
 Do NOT convert to an f-string; the JS is full of ${...} and object literals.
 """
-import glob, hashlib, json, os, html, datetime as dt
+import glob, hashlib, json, os, html, sys, datetime as dt
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)                      # root scripts: already sys.path[0]; scripts/*: required
+import cabinet_root as _root
+
+
+def scope(pattern="*.json"):
+    """[(kind, base, [paths])] over the DECLARED domain, entry by entry. No pattern is widened,
+    no directory joins by existing."""
+    rows = []
+    for kind, base in _root.domain():
+        rows.append((kind, base, sorted(glob.glob(os.path.join(base, pattern)))))
+    return rows
+
+
+def print_scope(rows, pattern):
+    # THE SCOPE IS PRINTED WITH THE COUNT IT CONTRIBUTED: a count without its scope is not a count.
+    for kind, base, hits in rows:
+        print(f"  scope  {kind:16} {len(hits):4} {pattern}  {base}")
+
 OUT = os.path.join(HERE, "roster.html")
 CORDS = {"Featherweight": "#3aa6a0", "Lightweight": "#d8a13a",
          "Middleweight": "#a07ad8", "Heavyweight": "#c9503f"}
@@ -183,7 +201,9 @@ document.getElementById('tb').innerHTML = ENTRIES.map(e => `
 
 def load_bundles():
     entries, harness, ver = [], "?", "?"
-    for path in sorted(glob.glob(os.path.join(HERE, "results", "*.json"))):
+    _rows = scope("*.json")
+    print_scope(_rows, "*.json")
+    for path in [p for _k, _b, hits in _rows for p in hits]:
         try:
             d = json.load(open(path))
         except Exception as e:
