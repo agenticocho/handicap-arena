@@ -50,6 +50,16 @@ the two sweeps, exact:
   test_bind_control.py:39         for root, _dirs, files in os.walk(run_card.RESULTS):
 ```
 
+**AND THAT MEASUREMENT IS DATE-STAMPED, WHICH IS NOW ITS MOST IMPORTANT PROPERTY.** The two file-line
+coordinates above are the state at 2026-10-14 and were stale the hour the mechanism landed -- the
+mechanism is `cabinet_root.py`, and it moved those lines. **A LINE NUMBER RESOLVES TO WHATEVER SITS
+THERE WHEN IT IS READ; A NAME DOES NOT.** Read the names below, not the numbers above.
+
+**AND `— NOTHING WRITES HERE` WAS A COINCIDENCE WEARING A GUARANTEE.** Jarvis's reading is right and it
+is a correction to the Chair: **the sentence was true because nothing had run, not because anything
+prevented a run from writing elsewhere.** A reader takes it as a guarantee and it was an accident of
+the calendar. **It stops being a coincidence when the mechanism lands — see the correction below.**
+
 **So the separate root is declared and unused, and the results it was declared to protect sit inside three
 git trees that both sweeps match.** The reason above stands and is unchanged. **The mechanism does not
 exist** — *"a rule stated and not mechanised is a resolution"*, written two paragraphs up, **and this is
@@ -57,7 +67,8 @@ the rule it describes.**
 
 > **A DECLARED ROOT THAT NO WRITE PATH RESOLVES IS NOT A DECLARATION. IT IS A WISH.**
 
-**What the mechanism must be — and neither half is sufficient alone:**
+**What the mechanism must be — and neither half is sufficient alone:** **(ALL FOUR LANDED 2026-10-14 —
+see "LANDED" below, which states each one as it was built and names the command that reads it back.)**
 
 1. **The writer resolves the DECLARED root, not its own location.** `ARENA` must not be derived from
    `__file__`: the root has to be **the same for all three worktrees and outside all of them** — the git
@@ -76,6 +87,67 @@ the rule it describes.**
 rule on.** Nothing was edited across the link. The first draft of this addendum was produced by the
 Chair-link tick, which measured it and **refused to decide it** — the correct division, for the third
 time today.
+
+---
+
+## LANDED (2026-10-14) — THE FOUR ITEMS ABOVE, AS A MECHANISM RATHER THAN A SENTENCE
+
+**`cabinet_root.py` is the mechanism, and it is ONE definition.** The writer, the admission gate and
+both sweeps import it, so there is one resolver and no second copy of the rule. Commit `a64b890`
+(the mechanism), `32d724a` (a correction to the control), `bafca92` (the refusal cites this document
+by NAME, not by line number).
+
+**1. THE WRITER RESOLVES THE DECLARED ROOT.** `run_card.py`'s `RESULTS` is
+`cabinet_root.results_dir()`: `<declared ROOT>/<this worktree's cabinet>`, the cabinet name taken from
+the worktree's OWN BRANCH (`cabinet/sokoban` -> `sokoban`, `main` -> `main`). The declaration itself is
+carried by the repository — `git config --local arena.cabinetResults` lives in the git **COMMON** dir,
+the one directory every worktree of this repo SHARES and none of them contains. `CABINET_RESULTS`
+overrides it for a single invocation, **and the override is checked against the same rule.**
+
+**2. AND IT REFUSES RATHER THAN FALLS BACK.** No declaration, a declaration inside a git working tree,
+or one inside the repository's own git directory -> **REFUSING, exit non-zero, nothing written, the
+remedy named.** The `.git` case is checked separately **because `--show-toplevel` cannot see it**
+(inside a git dir it fails outright) — measured, not assumed. *The fallback to `<worktree>/results` is
+gone as a possibility, not merely as a default.*
+
+**3. THE SWEEPS TAKE THE DECLARED DOMAIN.** `cabinet_root.domain()` returns a **LIST**: this
+worktree's subtree under the root (always present, existing or not), the root's other live children,
+and the legacy record declared in place. **A directory does not join the domain by existing** — a
+stray `results/` created inside a git tree is measured not to join it. And the sweeps are **three**,
+not two: `test_game_states.py` — the ADMISSION GATE — read `<HERE>/results` too, which would have
+**gated one tree while the runner wrote another.** It reads the declared domain now.
+
+**4. THE 1,560 TRACKED FILES ARE DECLARED IN PLACE, AND THE DECLARATION IS MEASURED.** `git rev-parse
+<ref>:results` returns `0bcaaa0188b35f0bdd17e3ca824a977cac2d94a1` for `main` AND for all three cabinet
+branches: the `520 x 3` in the cabinet worktrees are **DUPLICATE COPIES of one tree, not three more
+records.** They are named as duplicates and kept OUT of the domain — counting them would have
+multiplied the record by four and moved a published number without moving a single bundle.
+`test_declared_root.py` re-measures the equality and FAILS if a copy diverges, so the declaration must
+be re-decided rather than quietly kept.
+
+### READ IT BACK, AND IT COSTS NOTHING
+
+```bash
+python3 cabinet_root.py           # the resolution, the domain, and the path the defect used
+python3 test_declared_root.py     # the two refusals, the identity of the root across ALL SEVEN
+                                  # worktrees of this repo, the writer's path, the domain, the
+                                  # duplicate declaration. No model is spawned and no byte written:
+                                  # a refusal IS the short circuit, so testing one is free.
+```
+
+**Measured before and after, unchanged — and now scoped by the tree each number came from:** 310
+bundles parse as arena bundles, 225 carrying results, 64 empty (cardv4 6); the gate checks 6 task
+files and 317 bundles, NEW violations 0, historical 301; the bind control behaves in both directions
+and writes nothing.
+
+### AND WHAT IS NOT DONE, NAMED RATHER THAN LEFT SILENT
+
+**22 other scripts still bind a `<worktree>/results` directory** (`annotate_superseded.py` and
+`chess_game.py` among them WRITE; the rest read — `analyse_card.py`, `check_run.py`, `evaluate_v2/v3/v4.py`,
+`verify_chair_audit.py`, `canonicalise_filenames.py`, `build_roster.py`, `scripts/*` and others; the list
+is in the handoff). They read the **legacy record**, which is declared in place, so their numbers stay
+correct **for that era** — but a run written now lands in the declared root and they will not see it.
+**That is a migration with its own decision, not a line edit to smuggle into this commit.**
 
 ### 3. OCHO IS THE MERGE GATE. SHARED FILES STAY FROZEN.
 
