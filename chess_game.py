@@ -571,7 +571,11 @@ def main():
     ap.add_argument("--probe", action="store_true")
     a = ap.parse_args()
     label = a.label or os.path.basename(a.entrant).replace(".gguf", "")
-    REASONING_OUT = os.path.join(HERE, "results", f"CHESS_REASONING_{label}.txt")
+    # THE WRITE SCOPE, RESOLVED ONCE (AC5): one path, or a REFUSAL. results_dir() is a SystemExit
+    # when there is no declaration, and it is NOT caught here -- a run that cannot declare where its
+    # result goes must not write one somewhere else.
+    RES = _root.results_dir()
+    REASONING_OUT = os.path.join(RES, f"CHESS_REASONING_{label}.txt")
     base = f"http://127.0.0.1:{a.port}"
     if not os.path.exists(SF):
         print(f"  ORACLE ABSENT: {SF}"); return 2
@@ -596,7 +600,7 @@ def main():
     # another worktree cannot resolve -- so t_c442023d owns this line as a coordinate question.
     os.makedirs(_root.log_dir(HERE), exist_ok=True)
     log = os.path.join(_root.log_dir(HERE), f"CHESS_GAME_{label}.log")
-    os.makedirs(os.path.join(HERE, "results"), exist_ok=True)
+    os.makedirs(RES, exist_ok=True)
     srv = subprocess.Popen(
         [LLAMA, "-m", a.entrant, "-c", "4096", "-ngl", "0", "--port", str(a.port), "--no-webui"],
         stdout=open(log, "w"), stderr=subprocess.STDOUT)
@@ -631,7 +635,7 @@ def main():
                                prompt_digest=PROMPT_DIGEST, prompt_template=PROMPT_TEMPLATE),
                    termination=term, why=why, measures=m, wall_s=round(time.time()-t1, 1),
                    rows=rows)
-        p = os.path.join(HERE, "results", f"CHESS_GAME_{label}.json")
+        p = os.path.join(RES, f"CHESS_GAME_{label}.json")
         json.dump(art, open(p, "w"), indent=1)
     finally:
         srv.terminate()
