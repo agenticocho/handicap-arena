@@ -72,10 +72,17 @@ digest cost an A/B and a repeat test to recover a fact that should have been on 
 
 ```
 grammar        6f4d72319ec6f87…      the instrument's own text
-sokoban.py     186f561facd4491…      the simulator (§6: self-test is the contract)
+sokoban.py     7134c3e8fc59fe02…     the simulator (§6: self-test is the contract)
 01_one_push    db6ca59655f0d7d1…     the level, as an INPUT with a digest
 02_two_boxes   7549657f1768607c…     the level, as an INPUT with a digest
 ```
+
+**RE-FROZEN 2026-10-14.** `sokoban.py` advanced `186f561f…` -> `7134c3e8fc59fe02…` when the ruled fixes
+for this cabinet landed on `main` and were merged into `cabinet/sokoban`. The pin above is the CURRENT
+enforcer, a precondition for any future run; the 2026-10-10 run of record was produced under `186f561f…`
+and carries that digest in its own artifact, so nothing above is rewritten, only superseded forward.
+`SOKOBAN_CONFORMANCE_PACKAGE.md` still cites `186f561f…` deliberately — it is a record of the package
+produced under that instrument, not a live pin.
 
 ## 3. WHAT THE GRAMMAR GOT RIGHT, CHECKED RATHER THAN ASSUMED
 
