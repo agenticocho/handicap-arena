@@ -32,6 +32,27 @@ than discouraged.** *A rule stated and not mechanised is a resolution.*
 (`os.walk(run_card.RESULTS)`) both walk trees, and **a results directory reachable by a sweep is a results
 directory that a sweep will eventually rewrite.** Verified by reading the files, not by being told.
 
+### AND THE LOGS ARE **SCRATCH** — ONE CLASSIFICATION, DECIDED 2026-10-14
+
+**`logs/` is scratch, and the directory does not move.** A record must sit outside every git tree
+because a sweep that can reach it will rewrite it; **scratch's obligation is the inverse — it must be
+unable to ENTER the record**, which is the ignore rule's job (`.gitignore` now ignores `logs/` whole,
+not `*.log`), and a second declared root for scratch would refuse a run over a diagnostic file.
+A log is not a record format (FINDING 020); the one time one carried a published number the record was
+the re-minted file in `probes/`, not the log.
+
+**AND THE COORDINATE IS DECLARED PER BUNDLE** — `cabinet_root.log_for(bundle)`: a `live:<cabinet>`
+bundle resolves to that cabinet's worktree journal, a `legacy` bundle to `LEGACY_LOGS` declared in
+place. Measured before it landed, the same declared domain resolved **90 log lines from main and 0
+from each cabinet worktree.** Nine captures under `logs/` are declared in place (a FINDING cites one by
+path); `LOG_EDGES.json` lists every remaining log edge with a status and is itself checked.
+
+**Read the decision:** `DECISION_logs_are_scratch.md` — one classification, the read half, the
+before/after numbers, and the edge list.
+**NOTE, so it is not discovered as a mystery:** this copy of the operating document is BEHIND main by
+the 2026-10-14 addendum and the `## LANDED` section — pre-existing, not this card's, and named here
+rather than left silent.
+
 ### 3. OCHO IS THE MERGE GATE. SHARED FILES STAY FROZEN.
 
 **Frozen, and changed only by Ocho, in `main`, with a reason:**

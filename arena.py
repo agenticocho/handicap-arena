@@ -33,6 +33,11 @@ import argparse, json, os, re, shutil, socket, subprocess, sys, tempfile, time, 
 import urllib.request, shlex, atexit, signal
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+# THE LOGS ARE SCRATCH, AND WHERE THEY LIVE IS DECLARED IN ONE PLACE. The run's own diagnostics
+# must outlive the run (the comment at Arena.__init__), and they must be findable by a reader in
+# ANOTHER worktree, which they are not while the path is derived from this file's location.
+import cabinet_root as _root                                              # noqa: E402
 TASKS_DIR = os.path.join(HERE, "tasks")
 
 DIVISIONS = [("Featherweight", 4.0), ("Lightweight", 8.0), ("Middleweight", 16.0),
@@ -279,7 +284,11 @@ class LlamaServer:
         # time -- applied to diagnostics: where the data lives decides whether it is discarded.
         # logs/ and not results/, because results/ holds result bundles and nothing else; a log
         # sitting among them is the kind of file a reader counts as an entrant.
-        _logs = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
+        # AND THE DIRECTORY IS THE DECLARED ONE, not this file's own location: the logs are SCRATCH
+        # and cabinet_root.log_dir() is the one definition of where scratch lives
+        # (DECISION_logs_are_scratch.md). Scratch does not get a root outside the tree -- it gets an
+        # ignore rule, so that what it emits cannot enter the record.
+        _logs = _root.log_dir(HERE)
         os.makedirs(_logs, exist_ok=True)
         self.logpath = os.path.join(_logs, f"arena-server-{os.getpid()}-{self.port}.log")
 

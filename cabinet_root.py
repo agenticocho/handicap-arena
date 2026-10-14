@@ -98,6 +98,82 @@ DUPLICATE_RECORD_TREES = (
 DUPLICATE_WHY = ("the same tree object as the legacy record on all four branches (verified with "
                  "git rev-parse <ref>:results), i.e. copies, not additional evidence")
 
+# --------------------------------------------------------------- THE LOGS ARE SCRATCH, DECLARED
+# ONE CLASSIFICATION, AND THE DIRECTORY IS THE WHOLE OF IT. logs/ IS SCRATCH.
+#
+# A RECORD is something a reader may treat as evidence about what happened, whose bytes must not
+# move, and which must resolve to a coordinate. A SCRATCH FILE is what a process emits about
+# ITSELF while it runs. The difference is not taste and it is not tidiness: IT DECIDES WHETHER A
+# WRITE NEEDS A ROOT OUTSIDE EVERY GIT TREE.
+#
+# AND THE REPOSITORY HAD ALREADY SAID SO, BY MECHANISM, BEFORE THIS BLOCK WAS WRITTEN:
+#
+#   .gitignore        an ignore rule covering the logs -- a declaration carried by the repo, which
+#                     is why a reader can check it (git check-ignore) instead of believing it
+#   FINDING 020       "...A LOG IS NOT A RECORD FORMAT, and this result survived by luck."
+#   probes/SOKOBAN_RUN_20261009-1247_NEW_LEGEND_RECOVERED_FROM_LOG.json
+#                     "THIS RECORD WAS RECOVERED FROM the re-run's log ... the per-turn traces are
+#                     LOST, because a log is not a record format" -- i.e. the record that came out
+#                     of a log is a record BECAUSE it was re-minted in probes/ WITH its source
+#                     named, not because the log is one.
+#
+# SO THE WRITE DOES NOT MOVE, AND THAT IS THE DECISION RATHER THAN AN OMISSION. A record must sit
+# OUTSIDE every git tree because a sweep that can reach it will eventually rewrite it -- that is
+# why arena.cabinetResults exists and why results_dir() refuses. Scratch's obligation is the
+# INVERSE: it must be unable to ENTER the record. A second declared root for scratch would buy
+# nothing the ignore rule does not already buy, and it would buy one thing that is worse than
+# nothing: A MISSING SCRATCH DECLARATION WOULD REFUSE A RUN OVER A DIAGNOSTIC FILE. run_card.py's
+# own header states the sibling rule -- "SCRATCH, NEVER ABORT" -- and a diagnostic that can stop a
+# run is a diagnostic that has been promoted to a gate.
+#
+# WHAT WAS ACTUALLY WRONG IS TWO THINGS, BOTH MEASURED, AND NEITHER IS THE DIRECTORY:
+#
+#  1  THE COORDINATE WAS DERIVED FROM THE WRITER'S OWN LOCATION. Measured before this landing:
+#     reconcile_and_backfill.py prints "log lines available as SOURCE: 90" run from main and
+#     "SOURCE: 0" run from each of the three cabinet worktrees -- ONE DECLARED DOMAIN, THE SAME 64
+#     SILENT BUNDLES, AND AN ANSWER THAT DEPENDS ON WHERE THE READER IS SITTING. log_dir(),
+#     log_path() and log_for() below are the one definition that removes it.
+#
+#  2  THE TREE COULD ABSORB A CAPTURE. The ignore rule named ONE EXTENSION, so a capture written
+#     with any other one was stageable by `git add -A` -- and nine files under logs/ are TRACKED
+#     for exactly that reason. The gap is still live, not historical: scripts/run_guarded.sh
+#     writes <workdir>/logs/<UNIT>.out, and `git check-ignore logs/ANYTHING.out` exits non-zero on
+#     the commit before this one. The rule is therefore stated FOR THE DIRECTORY (.gitignore now
+#     ignores `logs/` whole) rather than for an extension.
+LOGS_ARE = "scratch"
+LOG_NAME = "card_run.log"
+
+# DECLARED IN PLACE, like the legacy record and for the same reason: their bytes do not move.
+# These nine are tracked, so evidence rather than litter -- and ONE OF THEM IS CITED BY PATH IN THE
+# PUBLISHED RECORD (FINDINGS/018, FINDINGS/019, NEXT_WINDOW.md, SOKOBAN_VERDICT_1.md all name
+# logs/sokoban_rerun.out), so a move would leave four citations with no carrier. Nothing writes
+# them; they are the residue of the extension gap above, named here so that "scratch" is not read
+# as "disposable": SCRATCH THAT A FINDING CITES IS SCRATCH THAT MUST STILL BE THERE WHEN THE
+# FINDING IS READ. Note the qualifier -- the three cabinet branches carry SIX of these nine, not
+# nine, so the count is read per tree and never typed.
+LEGACY_CAPTURES = (
+    "logs/arena_v6.out",
+    "logs/cost_probe_wide.out",
+    "logs/reasoning_ab.out",
+    "logs/sokoban_ab.out",
+    "logs/sokoban_first_run.out",
+    "logs/sokoban_pop2.out",
+    "logs/sokoban_pop3.out",
+    "logs/sokoban_repeat.out",
+    "logs/sokoban_rerun.out",
+)
+LEGACY_CAPTURE_WHY = ("captures committed while the ignore rule named an extension (`*.log`) "
+                      "instead of the directory; TRACKED, byte-frozen, cited by FINDINGS/018, "
+                      "FINDINGS/019, NEXT_WINDOW.md and SOKOBAN_VERDICT_1.md by path -- declared "
+                      "in place, and written by nothing")
+
+# THE LEGACY LOG COORDINATE, ALSO DECLARED IN PLACE. Every bundle in the legacy record was written
+# by a run in the MAIN worktree -- before the declaration existed, main was the only tree that ran
+# -- so the journal that explains those bundles is main's, and it is written down here rather than
+# derived from whoever is asking. (It also happens to be the coordinate log_dir() resolves for the
+# main worktree today; that equality is a measurement, not the definition.)
+LEGACY_LOGS = "/home/chilly1/workspace/ocho_arena/logs"
+
 
 class Refusal(SystemExit):
     """A refusal IS the short circuit: it costs nothing and it names the remedy.
@@ -220,6 +296,78 @@ def results_dir(repo=HERE, name=None, env=None):
     return os.path.join(root, cabinet(repo=repo, name=name))
 
 
+# --------------------------------------------------------------- the LOGS: scratch, and resolved
+def worktrees(repo=HERE):
+    """-> {branch name: that worktree's path}. The carrier is git's own worktree list.
+
+    NOT A SECOND COPY OF THE CABINET MAPPING. The name this returns is matched against
+    `cabinet()` -- `branch.split("/")[-1]` -- so `cabinet/sokoban` and a card worktree on
+    `wt/<id>` both resolve by the SAME rule that decided where their results went. Read from git
+    every time, like the declared root, because a rule you must remember is a rule that will be
+    missed.
+    """
+    out, path = {}, None
+    for line in (git("worktree", "list", "--porcelain", repo=repo) or "").splitlines():
+        if line.startswith("worktree "):
+            path = line.split(" ", 1)[1].strip()
+        elif line.startswith("branch ") and path:
+            out[line.split(" ", 1)[1].strip().replace("refs/heads/", "")] = os.path.realpath(path)
+    return out
+
+
+def log_dir(repo=HERE):
+    """-> <the worktree `repo` sits in>/logs. THE ONE DESTINATION FOR A SCRATCH FILE.
+
+    It is inside a git tree, and for SCRATCH that is the correct place: what keeps a log out of
+    the record is not a separate root, it is the ignore rule the repository carries
+    (.gitignore ignores `logs/`), which is checkable -- `git check-ignore` -- rather than a
+    promise. AND IT NEVER REFUSES. A refusal here would stop a run over a diagnostic file, which
+    is the priority inverted; `results_dir()` refuses because a result in a matchable tree IS the
+    defect, and this function exists because a log in one is not.
+
+    A path that is not in any git work tree (a copied-out script) falls back to its own directory
+    rather than to a refusal -- the same reasoning, stated so that the fallback is deliberate.
+    """
+    return os.path.join(git_toplevel(repo) or os.path.realpath(repo), "logs")
+
+
+def log_path(repo=HERE):
+    """-> <worktree of repo>/logs/card_run.log -- THE RUN JOURNAL, resolved and never remembered."""
+    return os.path.join(log_dir(repo), LOG_NAME)
+
+
+def log_for(bundle, repo=HERE, env=None):
+    """-> the journal the writer of `bundle` wrote, or None if `bundle` is in no declared entry.
+
+    PER BUNDLE, AND THAT IS THE WHOLE ANSWER TO THE READ HALF. The admissible coordinate is not
+    "logs/ relative to the reader" -- it is the journal of the tree that OWNS THE BUNDLE'S DOMAIN
+    ENTRY, because that is the tree the writer ran in. A cabinet's run writes its bundles under the
+    declared root and its journal in the cabinet's own worktree, so a sweep launched from main has
+    to resolve ACROSS worktrees or it has no admissible line for a cabinet's bundle at all.
+
+    Two details, both deliberate:
+      * the legacy entry resolves to LEGACY_LOGS, declared in place above, NOT to the reader's own
+        journal -- otherwise running the same sweep from two trees would answer two ways, which is
+        the defect this function removes;
+      * the coordinate is DECLARED, so it is returned whether or not a file is there. Whether a
+        file exists is a separate measurement (os.path.exists), and a reader that treats "no file
+        at the declared coordinate" as "use mine instead" has re-created the defect.
+    """
+    p = os.path.realpath(os.path.abspath(bundle))
+    for kind, base in domain(repo=repo, env=env):
+        b = os.path.realpath(os.path.abspath(base))
+        if not (p == b or p.startswith(b + os.sep)):
+            continue
+        if kind == "legacy":
+            return os.path.join(LEGACY_LOGS, LOG_NAME)
+        mate = kind.split(":", 1)[1]
+        for br, wt in sorted(worktrees(repo=repo).items()):
+            if br.split("/")[-1] == mate:
+                return os.path.join(wt, "logs", LOG_NAME)
+        return None
+    return None
+
+
 def domain(repo=HERE, env=None):
     """-> [(kind, path)] THE SWEEPS' DOMAIN. A LIST, AND NEVER A WALK.
 
@@ -309,6 +457,17 @@ def main():
         print(f"    duplicate        {p}")
     print(f"\n  legacy: {LEGACY_WHY}")
     print(f"  duplicates: {DUPLICATE_WHY}")
+    print(f"\n  THE LOGS ARE {LOGS_ARE.upper()} (DECISION_logs_are_scratch.md), and the coordinate is"
+          f"\n  declared PER BUNDLE rather than derived from the reader:")
+    print(f"    this worktree    {log_path()}"
+          f"   {'(file is there)' if os.path.exists(log_path()) else '(no file there)'}")
+    print(f"    legacy record    {os.path.join(LEGACY_LOGS, LOG_NAME)}"
+          f"   {'(file is there)' if os.path.exists(os.path.join(LEGACY_LOGS, LOG_NAME)) else '(no file there)'}")
+    for kind, base in domain():
+        probe = os.path.join(base, "ANY_BUNDLE.json")
+        print(f"    {kind:16} -> {log_for(probe)}")
+    print(f"  legacy captures in place: {len(LEGACY_CAPTURES)} declared; "
+          f"{len((git('ls-files', 'logs', repo=HERE) or '').splitlines())} tracked under logs/ in this tree")
     return 0
 
 
