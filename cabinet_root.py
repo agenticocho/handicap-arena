@@ -66,7 +66,13 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 DECLARED_ENV = "CABINET_RESULTS"
 DECLARED_KEY = "arena.cabinetResults"
 HOWTO = f"declare it once, for the whole repo:  git config --local {DECLARED_KEY} <root>"
-DOC = "CABINET_STRUCTURE.md:30-73 (addendum 2026-10-14) and :22 (the root itself)"
+# BY NAME, NOT BY LINE NUMBER. The first version of this constant read "CABINET_STRUCTURE.md:30-33",
+# and the commit that landed it also EDITED that file -- so the coordinate was stale the moment it
+# was written: A LINE NUMBER RESOLVES TO WHATEVER SITS THERE WHEN IT IS READ. A refusal has to send
+# its reader to a sentence that will still say the same thing next week.
+DOC = ("CABINET_STRUCTURE.md, rule 2 ('ONE OWNER PER FILE' -- the block that names "
+       "/home/chilly1/workspace/cabinet_results/<cabinet>/) and its 2026-10-14 addendum, "
+       "'WHAT THE MECHANISM MUST BE'")
 
 # --------------------------------------------------------------- THE DOMAIN, DECLARED
 # LEGACY, DECLARED IN PLACE. The standing card's record was written before this rule existed and
@@ -74,8 +80,9 @@ DOC = "CABINET_STRUCTURE.md:30-73 (addendum 2026-10-14) and :22 (the root itself
 # it is named here rather than "solved" by a walk, so the sweeps still count it. Its bytes do not
 # move; what changed is that no RUN writes new results into it any more.
 LEGACY_RECORD = "/home/chilly1/workspace/ocho_arena/results"
-LEGACY_WHY = ("the standing card's record, written before the declaration existed; TRACKED (520 "
-              "files, tree 0bcaaa01), so declared in place rather than moved")
+LEGACY_WHY = ("the standing card's record, written before the declaration existed; TRACKED -- 520 "
+              "files under it, 317 of them *.json at its top level, all one tree object (0bcaaa01) "
+              "-- so declared in place rather than moved")
 # AND THE OTHER THREE ARE THE SAME TREE OBJECT, NOT THREE MORE RECORDS. `git rev-parse
 # <ref>:results` returns 0bcaaa0188b35f0bdd17e3ca824a977cac2d94a1 for main and for all three
 # cabinet branches -- so the 520 x 3 in the cabinet worktrees are DUPLICATE COPIES of the same
