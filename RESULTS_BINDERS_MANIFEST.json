@@ -1,0 +1,522 @@
+{
+ "what_this_is": "The declared manifest of every <worktree>/results binding and its status. Replaces the counter's hardcoded FIXED exclusion list: an exclusion can HIDE a binder, a declaration cannot.",
+ "ruling": {
+  "file": "DECISION_results_binder_era.md",
+  "sha256": "55bea450e9ff76181a3e196950b771ee5c247d2356ff5039f4b81fa51d8309f9",
+  "card": "t_9d66efa4"
+ },
+ "plan": {
+  "file": "PLAN_results_binders_migration.md",
+  "sha256": "ff663884a161073b0f9c371564f00c0c8f0d9012082f84095acf0e11c11d4162",
+  "card": "t_614bf5db"
+ },
+ "scope_pair": {
+  "read": "cabinet_root.domain()/domain_paths()/domain_find()",
+  "write": "cabinet_root.results_dir() -- REFUSAL, no fallback"
+ },
+ "status_classes": [
+  "migrated:<commit>",
+  "deferred:<card-id>",
+  "deferred:log-coordinate:<card-id>",
+  "out-of-scope:<card-id>",
+  "fixed:<reason>"
+ ],
+ "built_against": {
+  "base_commit": {
+   "main": "7f29963",
+   "cabinet/sokoban": "b8dae5c",
+   "cabinet/missile-command": "0ddbe1c",
+   "cabinet/zork": "0ddbe1c"
+  },
+  "measured_at": "2026-10-14T23:39:38Z",
+  "measured_at_how": "datetime.now(timezone.utc) when this file was written, NOT the commit date of HEAD: the reading carries its instant, or it is indistinguishable from a live one",
+  "counter_sha256": "674b5d656e416997d10b39a0b79457b5caf68bf9c8a2d703d23ac30337eb3da0",
+  "counter_sha256_superseded": "f797169c... (the sha256 the counter carried in remaining_results_binders.txt's header before it read this manifest)",
+  "note": "there is no single BASE for all four trees: each cabinet branch carries its own cherry-pick of the logs/ landing. The baseline RESULTS_BINDERS_BASELINE.md / results_binders_baseline.json / remaining_results_binders.txt STAY ON main -- one baseline serves all four trees because the record is one tree object, and the manifest says which tree it was measured in (main, at 125b7e2)."
+ },
+ "entries": [
+  {
+   "script": "analyse_card.py",
+   "role": "reader",
+   "pattern": "*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "annotate_superseded.py",
+   "role": "writer",
+   "pattern": "*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-write",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "audit_clock_fields.py",
+   "role": "reader",
+   "pattern": "*cardv4*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "audit_stand_ins.py",
+   "role": "reader",
+   "pattern": "*cardv4*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "audit_weigh_in.py",
+   "role": "reader",
+   "pattern": "*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "build_roster.py",
+   "role": "reader",
+   "pattern": "*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "canonicalise_filenames.py",
+   "role": "writer",
+   "pattern": "*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-write",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "check_field_semantics.py",
+   "role": "reader",
+   "pattern": "*cardv5*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "check_format_fields.py",
+   "role": "reader",
+   "pattern": "*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": false,
+    "cabinet/zork": false
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "check_run.py",
+   "role": "reader",
+   "pattern": "*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    },
+    {
+     "kind": "log-coordinate",
+     "status": "deferred:log-coordinate:t_c442023d",
+     "landed_by": "8f51ae8",
+     "why": "its <worktree>/results/card_run.log journal candidate was a LOG coordinate, not a results read: t_c442023d re-pointed it to cabinet_root.log_path(HERE)"
+    }
+   ]
+  },
+  {
+   "script": "chess_game.py",
+   "role": "writer",
+   "pattern": "*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-write",
+     "status": "deferred:t_fdf55800"
+    },
+    {
+     "kind": "log-coordinate",
+     "status": "deferred:log-coordinate:t_c442023d",
+     "landed_by": "8f51ae8",
+     "why": "its log DIRECTORY (os.makedirs(<worktree>/logs) and CHESS_GAME_<label>.log) is a LOG coordinate: t_c442023d re-pointed it to cabinet_root.log_dir(HERE)"
+    }
+   ]
+  },
+  {
+   "script": "discrimination_report.py",
+   "role": "reader",
+   "pattern": "*cardv3*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "evaluate_v2.py",
+   "role": "reader",
+   "pattern": "*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "evaluate_v3.py",
+   "role": "reader",
+   "pattern": "*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "evaluate_v4.py",
+   "role": "reader",
+   "pattern": "*cardv4*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "render_state_contract.py",
+   "role": "reader",
+   "pattern": "*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": false,
+    "cabinet/missile-command": false,
+    "cabinet/zork": false
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "test_no_silent_zero.py",
+   "role": "reader",
+   "pattern": "*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "v3_rates_both_readings.py",
+   "role": "reader",
+   "pattern": "*cardv3*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "verify_chair_audit.py",
+   "role": "reader",
+   "pattern": "*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "verify_scope.py",
+   "role": "reader",
+   "pattern": "*cardv3*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "scripts/prove_declared_slots_parse.py",
+   "role": "reader",
+   "pattern": "*cardv6*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "scripts/test_declared_slots_guard.py",
+   "role": "reader",
+   "pattern": "*cardv6*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "deferred:t_fdf55800"
+    }
+   ]
+  },
+  {
+   "script": "depth_test.py",
+   "role": "writer",
+   "pattern": "*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-write",
+     "status": "out-of-scope:t_5742bdac",
+     "why": "a WRITER by ABSOLUTE path into main's legacy record, in a form the counter's join-forms do not match; routed to the Chair as t_5742bdac rather than decided here"
+    }
+   ]
+  },
+  {
+   "script": "depth_test2.py",
+   "role": "writer",
+   "pattern": "*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": true,
+    "cabinet/missile-command": true,
+    "cabinet/zork": true
+   },
+   "edges": [
+    {
+     "kind": "results-write",
+     "status": "out-of-scope:t_5742bdac",
+     "why": "same as depth_test.py"
+    }
+   ]
+  },
+  {
+   "script": "darts/darts.py",
+   "role": "writer",
+   "pattern": "*.json",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": false,
+    "cabinet/missile-command": false,
+    "cabinet/zork": false
+   },
+   "edges": [
+    {
+     "kind": "results-write",
+     "status": "out-of-scope:t_5742bdac",
+     "why": "`--out` defaults to <worktree>/darts/results (5 tracked darts_v1_*.json) -- a results directory inside the git tree, but not the worktree root's results/"
+    }
+   ]
+  }
+ ],
+ "declared_absent": {
+  "check_format_fields.py": [
+   "cabinet/missile-command",
+   "cabinet/zork"
+  ],
+  "render_state_contract.py": [
+   "cabinet/sokoban",
+   "cabinet/missile-command",
+   "cabinet/zork"
+  ],
+  "darts/darts.py": [
+   "cabinet/sokoban",
+   "cabinet/missile-command",
+   "cabinet/zork"
+  ]
+ },
+ "declared_absent_why": "Absence is DECLARED, never counted as residue and never read as an unfinished landing: render_state_contract.py is absent from all three cabinet trees and check_format_fields.py from missile-command and zork. The AC1 residue target is therefore 22 / 21 / 20 / 20 (main / sokoban / missile-command / zork).",
+ "fixed_mechanism_files": [
+  {
+   "rel": "cabinet_root.py",
+   "why": "the one declaration"
+  },
+  {
+   "rel": "run_card.py",
+   "why": "the writer, with the refusal"
+  },
+  {
+   "rel": "test_game_states.py",
+   "why": "the admission gate reads the domain"
+  },
+  {
+   "rel": "reconcile_and_backfill.py",
+   "why": "sweep 1"
+  },
+  {
+   "rel": "test_bind_control.py",
+   "why": "bind control"
+  },
+  {
+   "rel": "test_declared_root.py",
+   "why": "the declarations' own controls"
+  }
+ ]
+}
