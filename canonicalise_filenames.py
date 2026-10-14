@@ -25,11 +25,29 @@ repo's rule is: if it changes what the reader concludes, it belongs in the name.
 """
 import glob, json, os, shutil, sys
 
-RESULTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)                      # root scripts: already sys.path[0]; scripts/*: required
+import cabinet_root as _root
+
 # The manifest lives OUTSIDE results/, because results/ holds result bundles and nothing else.
 # A manifest sitting among them is exactly the kind of file a reader counts as an entrant --
 # the same objection the Chair raised about the empty bundle.
-MANIFEST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "RENAME_MANIFEST.json")
+MANIFEST = os.path.join(HERE, "RENAME_MANIFEST.json")
+
+
+def scope(pattern="*.json"):
+    """[(kind, base, [paths])] over the DECLARED domain, entry by entry. No pattern is widened,
+    no directory joins by existing."""
+    rows = []
+    for kind, base in _root.domain():
+        rows.append((kind, base, sorted(glob.glob(os.path.join(base, pattern)))))
+    return rows
+
+
+def print_scope(rows, pattern):
+    # THE SCOPE IS PRINTED WITH THE COUNT IT CONTRIBUTED: a count without its scope is not a count.
+    for kind, base, hits in rows:
+        print(f"  scope  {kind:16} {len(hits):4} {pattern}  {base}")
 
 
 def canonical(path):
@@ -54,8 +72,15 @@ HANDICAP = "handicap-arena"
 
 def main():
     dry = "--apply" not in sys.argv
-    moves = []
-    for path in sorted(glob.glob(os.path.join(RESULTS, "*.json"))):
+    # THE WRITE SCOPE, RESOLVED ONCE AND NEVER FALLEN BACK TO (AC5). results_dir() refuses (a
+    # SystemExit, exit 1, nothing written) when there is no declaration -- that refusal is NOT
+    # caught here, because a caught refusal is a fallback with better manners.
+    write = _root.results_dir()
+    rows = scope("*.json")
+    print_scope(rows, "*.json")
+    print(f"  write scope: {write}")
+    proposals, refused = [], []
+    for path in [p for _k, _b, hits in rows for p in hits]:
         try:
             d = json.load(open(path))
         except Exception as e:                                    # noqa: BLE001
@@ -81,22 +106,44 @@ def main():
                 want = base + ".EMPTY.json"
         if want == have:
             continue
-        moves.append((have, want))
+        # A RENAME OUTSIDE THE WRITE SCOPE IS A REWRITE OF THE RECORD, so it is REFUSED -- and the
+        # refusal prints the rename it declined, so the intent stays visible instead of vanishing.
+        in_scope = os.path.dirname(os.path.abspath(path)) == os.path.abspath(write)
+        proposals.append((have, want, in_scope))
+        if not in_scope:
+            refused.append((have, want))
 
-    print(f"{'DRY RUN — pass --apply to rename' if dry else 'APPLYING'}  ({len(moves)} rename(s))")
-    for have, want in moves:
+    print(f"{'DRY RUN — pass --apply to rename' if dry else 'APPLYING'}  ({len(proposals)} rename(s))")
+    for have, want, in_scope in proposals:
+        if not in_scope:
+            print(f"  REFUSED (not the write scope): {have} -> {want}")
+            continue
+        # THE COLLISION PROBE READS THE DIRECTORY THE RENAME WOULD HAPPEN IN, and nothing else: a
+        # probe against the legacy record would answer a question about a place this run may not
+        # write. It is a read, so it is inside the domain -- it is the ANSWER that was out of scope.
         coll = "  [COLLISION: target exists]" if os.path.exists(
-            os.path.join(RESULTS, want)) else ""
+            os.path.join(write, want)) else ""
         print(f"  {have}\n    -> {want}{coll}")
+    print(f"  {len(refused)} outside the write scope, 0 applied")
     if dry:
         return
+    # --apply WITH NO IN-SCOPE CANDIDATE WRITES NOTHING AT ALL: no empty RENAME_MANIFEST.json, and
+    # no dirty tree. A manifest of nothing is a file a reader counts.
+    if not refused and not [p for p in proposals if p[2]]:
+        print(f"  NOTHING WAS WRITTEN: no candidate anywhere, write scope {write}")
+        return
+    if not [p for p in proposals if p[2]]:
+        print(f"  NOTHING WAS WRITTEN: every candidate is outside the write scope {write}")
+        return
     manifest, failed = [], []
-    for have, want in moves:
+    for have, want, in_scope in proposals:
+        if not in_scope:
+            continue
         # PER-ITEM ISOLATION. The first run of this script raised on one malformed name and
         # killed the loop, leaving the directory half-renamed. That is the rule logger's own
         # docs state -- "one dead endpoint cannot kill the sweep" -- which I wrote and then
         # failed to apply to my own tooling. One bad item must not cost the rest.
-        src, dst = os.path.join(RESULTS, have), os.path.join(RESULTS, want)
+        src, dst = os.path.join(write, have), os.path.join(write, want)
         try:
             if os.path.exists(dst):
                 print(f"  SKIP (collision) {have}")
