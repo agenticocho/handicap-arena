@@ -70,10 +70,12 @@ A. If a belt-sorted default exists anywhere, this clause fails.
 **Requirement.** An entry with `results == []` must render as "no measurement" / "did not serve",
 visually distinct from a scored zero, and excluded from any average or ranking.
 
-**Measurement.** 16 scratched bundles across both cards. The `EMPTY`-in-filename marker is a
-**convenience, not the data**: it was applied to only 9 of 16 for a period, and the 7 unmarked were
-exactly the v1 counterparts. A UI that keyed "scratched" off the filename would have rendered those
-7 as ordinary bundles — and, by this same clause, as **zeros**.
+**Measurement.** The `EMPTY`-in-filename marker is a **convenience, not the data**, and it has never
+been complete: **9 of 16** for a period, and **as of 2026-10-14 it disagrees with `results == []` on
+25 of 310 bundles** (`python3 check_frontend_clauses.py` -> `C2 25`). **A fix was recorded in this
+section as complete, and it is not.** That is the one kind of staleness that HIDES A LIVE RISK,
+because a reader stops looking. A UI that keyed "scratched" off the filename would render those as
+ordinary bundles — and, by this same clause, as **zeros**.
 
 **AND BY 2026-10-07 THIS IS THE MAJORITY OF THE FIELD, NOT AN EDGE CASE.** The v3 field finished at
 **46 bundles of which 20 carried a result and 26 measured nothing** — 57%. The reason is a serving
@@ -105,10 +107,12 @@ treat those 16 correctly? It must, because it must key on `results == []`.
 **Requirement.** (a) Entries with different `card_version` never appear in the same table, ranking
 or aggregate. (b) The label names the **task suite**, not the release.
 
-| `card_version` | task suite | trials | graded |
-|---|---|---|---|
-| 1 | the retired 3-round card | 9 (3 rounds x 3 trials of one prompt) | 42 |
-| 2 | the 18-item battery | 18 (3 rounds x 6 distinct items, one trial each) | 33 |
+**This clause binds the DECLARED FIELD, not a snapshot of its values.** An enumerated table goes
+stale by construction, and this one had: it listed two versions while the record already carried
+**2, 3, 4, 5 and 6** (33 / 38 / 38 / 37 / 37 rows, measured 2026-10-14 by
+`python3 check_frontend_clauses.py` -> `C3`). The partition is *"these rows never share a table"*,
+keyed on whatever the field says. **The list of versions is a measurement, not the contract, and it
+must not be enumerated here** — a reader who wants the current set runs the check.
 
 **Measurement.** Current state is **card v2 on project v0.1** — two numbers on two axes. That
 conflation is not hypothetical: it is what produced the README/FORMAT roadmap divergence, where the
