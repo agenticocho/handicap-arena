@@ -33,8 +33,28 @@ import sys
 import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-RESULTS = os.path.join(HERE, "results")
-OUT = os.path.join(RESULTS, "supersessions")
+sys.path.insert(0, HERE)                      # root scripts: already sys.path[0]; scripts/*: required
+import cabinet_root as _root
+
+
+def scope(pattern="*.json"):
+    """[(kind, base, [paths])] over the DECLARED domain, entry by entry. No pattern is widened,
+    no directory joins by existing."""
+    rows = []
+    for kind, base in _root.domain():
+        rows.append((kind, base, sorted(glob.glob(os.path.join(base, pattern)))))
+    return rows
+
+
+def print_scope(rows, pattern):
+    # THE SCOPE IS PRINTED WITH THE COUNT IT CONTRIBUTED: a count without its scope is not a count.
+    for kind, base, hits in rows:
+        print(f"  scope  {kind:16} {len(hits):4} {pattern}  {base}")
+
+# THE WRITE SCOPE, RESOLVED ONCE (AC5): ONE PATH, OR A REFUSAL -- results_dir() refuses with a
+# SystemExit and the refusal PROPAGATES, because a caught refusal is a fallback with better manners.
+# A run with no declared root exits non-zero, prints the remedy, and writes NOTHING.
+OUT = os.path.join(_root.results_dir(), "supersessions")
 
 STATUS = "SUPERSEDED -- NOT COMPLIANT"
 
@@ -67,7 +87,9 @@ def bundles_with_game_names():
     sys.path.insert(0, HERE)
     import test_game_states as tgs  # noqa: E402
     names = []
-    for p in sorted(glob.glob(os.path.join(RESULTS, "*.json"))):
+    _rows = scope("*.json")
+    print_scope(_rows, "*.json")
+    for p in [p for _k, _b, hits in _rows for p in hits]:
         for f in tgs.check_bundle(p):
             if "claims game" in f:
                 names.append(os.path.basename(p))
