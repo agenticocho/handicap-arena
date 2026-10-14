@@ -30,6 +30,8 @@ import sys
 import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import cabinet_root as _root                                              # noqa: E402
 MODELS = os.environ.get("ARENA_MODELS") or os.path.expanduser("~/moltbook_pipeline/models")
 STALE_SECONDS = int(os.environ.get("ARENA_STALE_SECONDS", "2700"))   # 45 min: slowest entrant seen
 
@@ -105,11 +107,16 @@ def main(card="v3", pid=None):
     # read as DIED. Every entrant this tool can see has a stem; completeness is whether every EXPECTED
     # entrant has one.
     accounted = len(by_stem)
-    # THE RUNNER MOVED ITS LOG, SO A READER THAT KEEPS THE OLD PATH LOOKS LIVE AND REPORTS NOTHING.
-    # Read from both candidate locations and take the newest: the value is read from where it IS,
-    # not remembered from where it was. Same rule as reading EXCLUDE_PAT out of the runner.
-    _cands = [os.path.join(HERE, "logs", "card_run.log"),
-              os.path.join(HERE, "results", "card_run.log")]
+    # THE RUN'S JOURNAL IS SCRATCH, AND ITS COORDINATE IS DECLARED RATHER THAN DERIVED.
+    #
+    # This read [<HERE>/logs/card_run.log, <HERE>/results/card_run.log]: the SECOND is a log
+    # coordinate sitting inside the RESULTS path, which belongs to no era and to no declaration --
+    # the coordinate question this card owns -- and the FIRST is derived from where THIS READER
+    # sits, so a reader in a cabinet worktree could not resolve the journal main's runs wrote.
+    # Both are now declared: cabinet_root.log_path() for this worktree, plus LEGACY_LOGS, the
+    # journal every bundle in the legacy record was written against, declared in place. Read from
+    # both, newest wins: the value is read from where it IS, not remembered from where it was.
+    _cands = [_root.log_path(HERE), os.path.join(_root.LEGACY_LOGS, _root.LOG_NAME)]
     _have = [p for p in _cands if os.path.exists(p)]
     log = max(_have, key=os.path.getmtime) if _have else _cands[0]
     # AND THE SERVER LOG, BECAUSE THE RUNNER'S LOG IS COARSER THAN THE WORK.
@@ -122,7 +129,7 @@ def main(card="v3", pid=None):
     #
     # A check with a ceiling on what it can see reports a number that looks like a measurement. The
     # newest evidence is the evidence, and the newest evidence includes the server.
-    _srv = sorted(glob.glob(os.path.join(HERE, "logs", "arena-server-*.log")),
+    _srv = sorted(glob.glob(os.path.join(_root.log_dir(HERE), "arena-server-*.log")),
                   key=os.path.getmtime, reverse=True)
     _live = _have + ([_srv[0]] if _srv else [])
     age = (time.time() - max(os.path.getmtime(p) for p in _live)) if _live else -1

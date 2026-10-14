@@ -33,6 +33,7 @@ import time
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from chess_derive import parse_fen                              # noqa: E402  (shared, tested FEN reader)
+import cabinet_root as _root                                          # noqa: E402
 SF = "/home/chilly1/chess_oracle/stockfish/stockfish-linux-x86-64-universal"
 LLAMA = "/home/chilly1/llama.cpp/build/bin/llama-server"
 
@@ -590,8 +591,11 @@ def main():
     # run_card.py REFUSES TO START if it finds a .log there -- a check that caught this script's own four
     # stray logs when v6 was first launched. A .log among bundles is the file a reader counts as an
     # entrant, which is the empty-bundle defect. Fixing the writer, not just the strays.
-    os.makedirs(os.path.join(HERE, "logs"), exist_ok=True)
-    log = os.path.join(HERE, "logs", f"CHESS_GAME_{label}.log")
+    # AND THE DIRECTORY IS THE DECLARED ONE (cabinet_root.log_dir), because LOGS ARE SCRATCH:
+    # DECISION_logs_are_scratch.md. The coordinate was this file's own location, which a reader in
+    # another worktree cannot resolve -- so t_c442023d owns this line as a coordinate question.
+    os.makedirs(_root.log_dir(HERE), exist_ok=True)
+    log = os.path.join(_root.log_dir(HERE), f"CHESS_GAME_{label}.log")
     os.makedirs(os.path.join(HERE, "results"), exist_ok=True)
     srv = subprocess.Popen(
         [LLAMA, "-m", a.entrant, "-c", "4096", "-ngl", "0", "--port", str(a.port), "--no-webui"],

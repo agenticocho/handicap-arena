@@ -20,6 +20,7 @@ import urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import chess_game as g                                                # noqa: E402
+import cabinet_root as _root                                          # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FEN = "rnbqkbnr/ppp2ppp/8/3pp3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 3"
@@ -63,8 +64,11 @@ WIDE = wide_population()
 
 
 def probe(path, label):
-    os.makedirs(os.path.join(HERE, "logs"), exist_ok=True)
-    log = os.path.join(HERE, "logs", f"COST_PROBE_{label}.log")
+    # SCRATCH, AND ITS COORDINATE IS DECLARED (cabinet_root.log_dir), not derived from this file's
+    # location -- see DECISION_logs_are_scratch.md. A reader in another worktree could not resolve
+    # a path built from HERE, which is the defect the declaration removes.
+    os.makedirs(_root.log_dir(HERE), exist_ok=True)
+    log = os.path.join(_root.log_dir(HERE), f"COST_PROBE_{label}.log")
     srv = subprocess.Popen([LLAMA, "-m", path, "-c", "8192", "-ngl", "0", "--port", str(PORT),
                             "--no-webui"], stdout=open(log, "w"), stderr=subprocess.STDOUT)
     row: dict = dict(entrant=label, loaded_s=None, committed=None, tokens=None, secs=None, move=None,
