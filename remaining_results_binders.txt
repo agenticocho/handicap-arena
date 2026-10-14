@@ -1,0 +1,79 @@
+measured in /home/chilly1/workspace/ocho_arena on the working tree
+# RE-DERIVED 2026-10-14 from main @ 125b7e2c4f369a3589e8cfd99e42d5abe64b2271 (branch main, clean)
+# and from cabinet/sokoban @ e3d2f32, cabinet/missile-command @ 1edeb68, cabinet/zork @ 1edeb68.
+#
+# THE COUNTER IS IN THE REPO NOW, so the number is re-derived rather than believed:
+#   scripts/list_results_binders.py
+#   sha256 f797169c843331e505a8c6375d0137a536f4112995a263685d1014e56066a982 (verbatim from the
+#   t_af6fafd9 attachment; it prints the list to stdout, then writes the same list to a scratch
+#   path -- the stdout is the output that matters, and the scratch write is why it must be run
+#   from a tree whose scratch dir exists, i.e. under this machine's TMPDIR).
+#
+# REPRODUCE (one line per tree, four lines):
+#   python3 scripts/list_results_binders.py /home/chilly1/workspace/ocho_arena
+#   python3 scripts/list_results_binders.py /home/chilly1/workspace/ocho_arena_cabinets/sokoban
+#   python3 scripts/list_results_binders.py /home/chilly1/workspace/ocho_arena_cabinets/missile-command
+#   python3 scripts/list_results_binders.py /home/chilly1/workspace/ocho_arena_cabinets/zork
+# The script takes the tree as argv[1] and walks IT, so the copy in main measures all four.
+#
+# COUNTS, MEASURED: main 22 / sokoban 21 / missile-command 20 / zork 20.
+#   The count of 22 is CONFIRMED for main. The three cabinet trees are SUBSETS of main's set --
+#   no binder exists in a cabinet that is not in main -- missing only:
+#     sokoban            : render_state_contract.py
+#     missile-command    : render_state_contract.py, check_format_fields.py
+#     zork               : render_state_contract.py, check_format_fields.py  (identical to mc)
+#   The strings "21 files ..." and "20 files ..." in the counter's own headline are ONE TREE's
+#   set, not a different inventory: each cabinet's results/ is the SAME tree object as main's
+#   (git rev-parse <ref>:results -> 0bcaaa0188b35f0bdd17e3ca824a977cac2d94a1 on all four refs),
+#   so the numbers these tools publish do not differ by tree. Only the TOOLS differ.
+#
+# WRITERS INTO <worktree>/results -- THREE, NOT TWO (correction to the card; see the baseline doc):
+#   annotate_superseded.py   writes results/supersessions/*.json   (--dry-run available)
+#   chess_game.py            makedirs(HERE/results); writes results/CHESS_GAME_*.json,
+#                            results/CHESS_REASONING_*.txt
+#   canonicalise_filenames.py  os.rename(src, dst) with BOTH sides inside results/ -- a bundle
+#                            RENAME, applied only with --apply (dry run by default, which is how
+#                            the baseline was taken: 208 rename(s) proposed, nothing moved)
+# The other 19 of the 22 READ ONLY. A writer was measured, not believed: each run in the harness
+# records the git-status delta it produced (see results_binders_baseline.json -> tree_delta).
+#
+# WRITERS THE COUNTER DOES NOT SEE, because they bind by ABSOLUTE path rather than by join form:
+#   depth_test.py:27   OUT = "/home/chilly1/workspace/ocho_arena/results/DEPTH_TEST.json"
+#   depth_test2.py:32  OUT = "/home/chilly1/workspace/ocho_arena/results/DEPTH_TEST2.json"
+#   Both write MAIN's legacy record from ANY worktree, and neither appears in the 22.
+#
+# ADJACENT, DIFFERENT DIRECTORY (named, not folded into the 22): darts/darts.py:706,715 --
+#   --out defaults to os.path.join(os.path.dirname(__file__), "results") = <worktree>/darts/results,
+#   a results directory inside the git tree holding 5 tracked darts_v1_*.json bundles.
+#   The counter misses it on form (dirname(__file__), not dirname(abspath(__file__))) AND on
+#   directory (darts/results is not <worktree>/results).
+#
+# INDEPENDENT FORM AUDIT of the counter: scripts/audit_results_binder_forms.py
+#   python3 scripts/audit_results_binder_forms.py /home/chilly1/workspace/ocho_arena
+#   It matches every syntactic form that can build a path ending in "results" and reports the
+#   ones the counter's two patterns miss. Result, excluding prose and the six the counter
+#   excludes by name: exactly the three files above (2 absolute-path writers + 1 adjacent dir).
+#
+# NO MIGRATION IS MADE BY THIS LIST. It is the inventory; the ruling is the Chair's (t_fb870bde).
+analyse_card.py	[28]
+annotate_superseded.py	[36]
+audit_clock_fields.py	[19]
+audit_stand_ins.py	[28]
+audit_weigh_in.py	[30]
+build_roster.py	[186]
+canonicalise_filenames.py	[28]
+check_field_semantics.py	[155]
+check_format_fields.py	[38]
+check_run.py	[78, 112]
+chess_game.py	[573, 595, 630]
+discrimination_report.py	[64]
+evaluate_v2.py	[12]
+evaluate_v3.py	[26]
+evaluate_v4.py	[34]
+render_state_contract.py	[70]
+test_no_silent_zero.py	[26]
+v3_rates_both_readings.py	[67]
+verify_chair_audit.py	[17]
+verify_scope.py	[62]
+scripts/prove_declared_slots_parse.py	[101]
+scripts/test_declared_slots_guard.py	[75, 77]

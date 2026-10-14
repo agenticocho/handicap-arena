@@ -1,0 +1,418 @@
+{
+ "what_this_is": "Baseline for the <worktree>/results binders, so a later migration can show before/after numbers. NO MIGRATION IS MADE HERE.",
+ "tree": "main @ 125b7e2c4f369a3589e8cfd99e42d5abe64b2271, branch main, clean",
+ "why_one_baseline_serves_four_worktrees": {
+  "results_manifest_sha256_over_paths+sizes+bytes": "baf86e7bd299e8d0... (see results_manifests.json)",
+  "files_under_results": 520,
+  "results_slash_star_json": 317,
+  "git_tree_object_for_results_on_each_ref": "0bcaaa0188b35f0bdd17e3ca824a977cac2d94a1 (main, cabinet/sokoban, cabinet/missile-command, cabinet/zork)",
+  "conclusion": "the record the binders read is byte-identical in all four trees, so the numbers below are the numbers in all four; only the FILE SET of binders differs (22/21/20/20)."
+ },
+ "counts": {
+  "main": 22,
+  "cabinet/sokoban": 21,
+  "cabinet/missile-command": 20,
+  "cabinet/zork": 20
+ },
+ "writers": {
+  "into_the_worktree_results_tree": [
+   "annotate_superseded.py -> results/supersessions/*.json",
+   "chess_game.py -> results/CHESS_GAME_*.json, results/CHESS_REASONING_*.txt, makedirs(HERE/results)",
+   "canonicalise_filenames.py -> os.rename INSIDE results/ (only with --apply; dry run by default)"
+  ],
+  "the_card_said_two": "annotate_superseded.py and chess_game.py. canonicalise_filenames.py is a THIRD: it renames bundles inside results/ when run with --apply.",
+  "outside_the_counter_by_absolute_path": [
+   "depth_test.py -> /home/chilly1/workspace/ocho_arena/results/DEPTH_TEST.json",
+   "depth_test2.py -> .../DEPTH_TEST2.json (both write MAIN's record from any worktree)"
+  ],
+  "adjacent_different_directory": [
+   "darts/darts.py: --out defaults to <worktree>/darts/results (tracked: 5 darts_v1_*.json) -- a results directory inside the git tree, but not the worktree root's results/"
+  ],
+  "writers_that_write_only_elsewhere": [
+   "build_roster.py -> roster.html (root)",
+   "render_state_contract.py -> RENDER_STATE_SCHEMA.json (root)",
+   "scripts/test_declared_slots_guard.py -> its own tempfile fixture"
+  ]
+ },
+ "measured_staleness_of_published_artifacts": [
+  "roster.html (committed): 42 bundles / 42 entries, built 2026-10-07 04:37 UTC -- regenerating from the same record gives 225 / 225",
+  "RENDER_STATE_SCHEMA.json (committed): bundles 234, entrant_entries 151 -- regenerating gives 310 / 225"
+ ],
+ "counter_blind_spots_measured_by_scripts/audit_results_binder_forms.py": [
+  "depth_test.py:27",
+  "depth_test2.py:32",
+  "darts/darts.py:706,715"
+ ],
+ "binders": [
+  {
+   "file": "analyse_card.py",
+   "binding_lines_from_counter": "[28]",
+   "reads": "results/*.json (RESULTS = dirname(abspath(__file__))/results)",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "none",
+   "baseline": "CARD v2 -- 33 graded entries; belts White 2 / Yellow 3 / Orange 9 / Green 19; win rates R1_fencing 89.9% (SATURATED), R2_chess 61.6%, R3_pitstop 75.8%; aggregate 6 distinct (normalised) / 6 raw",
+   "reproduce": [
+    "python3",
+    "analyse_card.py"
+   ],
+   "exit": 0,
+   "stdout_sha256": "32499b44304ce79d874359d3f570af3442323b2b99a103df190ba7eeab34c796",
+   "tree_delta": []
+  },
+  {
+   "file": "annotate_superseded.py",
+   "binding_lines_from_counter": "[36]",
+   "reads": "results/*.json; imports test_game_states (the admission gate)",
+   "writes_into_the_worktree_results_tree": "YES -- results/supersessions/*.json",
+   "writes_elsewhere": "none",
+   "baseline": "151 bundle(s) claim a game with no state (dry run wrote nothing); 151 supersession records already on disk under results/supersessions/",
+   "reproduce": [
+    "python3",
+    "annotate_superseded.py",
+    "--dry-run"
+   ],
+   "exit": 0,
+   "stdout_sha256": "c862a76ce6e29993382f8347cc2e0c27f9b1e2a4d40381be74ea226681e8f7dc",
+   "tree_delta": []
+  },
+  {
+   "file": "audit_clock_fields.py",
+   "binding_lines_from_counter": "[19]",
+   "reads": "results/*cardv4*.json (one bundle is inspected in detail)",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "none",
+   "baseline": "inspects BTL-4-IQ2_XXS_cardv4_autofit_neutral_ctx8192_mt3000.json field by field (bundle keys, entry keys, round keys); publishes no aggregate count -- the baseline is the inspected filename plus the PRESENT/ABSENT list",
+   "reproduce": [
+    "python3",
+    "audit_clock_fields.py"
+   ],
+   "exit": 0,
+   "stdout_sha256": "22c89f08122f6c8ac4062bf06cf6fbe7d2c4518af8223950947cac524d730ae5",
+   "tree_delta": []
+  },
+  {
+   "file": "audit_stand_ins.py",
+   "binding_lines_from_counter": "[28]",
+   "reads": "results/*cardv4*.json",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "none",
+   "baseline": "38 measured v4 entries; 38 of 38 store aggregate rounded to 4dp; 17 lost precision (the stand-in), 21 rounding was a no-op; 0 stored at full precision; 0 above 4dp",
+   "reproduce": [
+    "python3",
+    "audit_stand_ins.py"
+   ],
+   "exit": 0,
+   "stdout_sha256": "4645e3b1d5186554ce91ca13f5dfd0f6006a6cb5b2c55227a72dbf0ebff232cd",
+   "tree_delta": []
+  },
+  {
+   "file": "audit_weigh_in.py",
+   "binding_lines_from_counter": "[30]",
+   "reads": "results/*.json",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "none",
+   "baseline": "bundles 310 / entries 225; entries with a division 225; with BOTH resident and by-weights 221; no weigh-in recorded (never offloaded) 4; 3 x 'absent on 4 of 225 entries -- expected, not a schema change'",
+   "reproduce": [
+    "python3",
+    "audit_weigh_in.py"
+   ],
+   "exit": 0,
+   "stdout_sha256": "c673809a53c60c868f9bfc6883b828e65cf3c494cb8cf900a417b95f4bb99444",
+   "tree_delta": []
+  },
+  {
+   "file": "build_roster.py",
+   "binding_lines_from_counter": "[186]",
+   "reads": "results/*.json",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "roster.html AT THE TREE ROOT (not in results/)",
+   "baseline": "regenerated: 225 bundles / 225 entries. THE COMMITTED roster.html IS STALE: it says 'built 2026-10-07 04:37 UTC, 42 bundles - 42 entries'",
+   "reproduce": [
+    "python3",
+    "build_roster.py"
+   ],
+   "exit": 0,
+   "stdout_sha256": "60676abfc85a423c29c79bd5c9cc50cad9a1a0016d0669aad44e48dbc7f2aec5",
+   "tree_delta": [
+    " M roster.html"
+   ]
+  },
+  {
+   "file": "canonicalise_filenames.py",
+   "binding_lines_from_counter": "[28]",
+   "reads": "results/*.json",
+   "writes_into_the_worktree_results_tree": "YES (with --apply): os.rename of files INSIDE results/ and nothing else",
+   "writes_elsewhere": "RENAME_MANIFEST.json AT THE TREE ROOT (dry run does not write it)",
+   "baseline": "DRY RUN (default): 208 rename(s) proposed, 7 SKIP (not a result bundle: 4 CHESS_GAME_*/CHESS_VOID_*, DEPTH_TEST.json, DEPTH_TEST2.json), many [COLLISION: target exists] where the canonical name is already present",
+   "reproduce": [
+    "python3",
+    "canonicalise_filenames.py"
+   ],
+   "exit": 0,
+   "stdout_sha256": "f2585f61fdfc07f0a3a2277f995907ac5f14c6db9d94c81df2fc4e8d72097fc9",
+   "tree_delta": []
+  },
+  {
+   "file": "check_field_semantics.py",
+   "binding_lines_from_counter": "[155]",
+   "reads": "one bundle by default; also globs results/*cardv5*.json",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "none",
+   "baseline": "stablelm-2-zephyr-1_6b-Q4_K_M_cardv5_...on disk: 11 quantity-named fields; 3 MISLEADING (gen_tokens, secs, trials -- each scope=ONE TRIAL or ITEMS-IN-THE-ROUND, not what the name claims); exit 0",
+   "reproduce": [
+    "python3",
+    "check_field_semantics.py"
+   ],
+   "exit": 0,
+   "stdout_sha256": "3ad8e1fa9ccc73cbdb23701c391868bc8c6cd02db3fe97671ec7f5cacbcc50fa",
+   "tree_delta": []
+  },
+  {
+   "file": "check_format_fields.py",
+   "binding_lines_from_counter": "[38]",
+   "reads": "results/*.json (--all)",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "none",
+   "baseline": "--all: 317 bundle(s); PASS 0; GRANDFATHERED 316 (predate the fields, recorded not re-scored); PROBLEMS 1 = Qwen3.5-4B-UD-Q4_K_XL_cardv5_autofit_neutral_ctx8192_mt3000.json (5 problems, incl. a footprint_gb ZERO where a null plus a reason is required)",
+   "reproduce": [
+    "python3",
+    "check_format_fields.py",
+    "--all"
+   ],
+   "exit": 1,
+   "stdout_sha256": "65b1f78f2341383ccf264d1eca4a0f7f9e1f2943098504c6904844a10fec4cc5",
+   "tree_delta": []
+  },
+  {
+   "file": "check_run.py",
+   "binding_lines_from_counter": "[78, 112]",
+   "reads": "results/*card<card>*.json and results/card_run.log",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "none",
+   "baseline": "card v3: expected entrants 59 (same EXCLUDE_PAT the runner uses), bundle files 72, ENTRANTS MEASURED 38, entrants that never ran 8, no pid given -> STATE: UNKNOWN (46 of 59 accounted for)",
+   "reproduce": [
+    "python3",
+    "check_run.py",
+    "v3"
+   ],
+   "exit": 1,
+   "stdout_sha256": "c35e66ed6628e9ad22260a76240e75859ff2122e7a2951940079e81168862c50",
+   "tree_delta": []
+  },
+  {
+   "file": "chess_game.py",
+   "binding_lines_from_counter": "[573, 595, 630]",
+   "reads": "n/a (it is a writer)",
+   "writes_into_the_worktree_results_tree": "YES -- results/CHESS_GAME_*.json and results/CHESS_REASONING_*.txt, plus os.makedirs(HERE/results)",
+   "writes_elsewhere": "logs/ (mkdir) and a per-run log file",
+   "baseline": "NOT RUN (see not_run): it spawns llama-server on --port and plays a full game. On disk as published artifacts: CHESS_GAME_DEBUG_Ministral3B.json, CHESS_GAME_Ornith-1.5-9B-Q4_K_M.json, CHESS_GAME_SMOKE2_Ministral3B.json, CHESS_GAME_SMOKE_LFM16.json, CHESS_VOID_false-illegal-move_Ornith-1.5-9B-Q4_K_M.json + 2 CHESS_RUN_*.out",
+   "reproduce": [
+    "python3",
+    "<not run>"
+   ],
+   "exit": "NOT RUN",
+   "stdout_sha256": null,
+   "tree_delta": [],
+   "not_run_because": "spawns llama-server on a port and plays a full game against a served entrant; not a baseline a read-only pass may take. Its WRITE set is read from source and its published artifacts are counted instead."
+  },
+  {
+   "file": "depth_test.py",
+   "binding_lines_from_counter": "NOT IN THE FILED LIST (counter blind spot)",
+   "reads": "n/a -- WRITER by ABSOLUTE path",
+   "writes_into_the_worktree_results_tree": "YES -- /home/chilly1/workspace/ocho_arena/results/DEPTH_TEST.json (absolute, so from ANY worktree it writes MAIN's legacy record)",
+   "writes_elsewhere": "none",
+   "baseline": "NOT RUN (see not_run): it runs Stockfish. Baseline is the published artifact: DEPTH_TEST.json -- crossings_at_risk 0, crossings_far 0, config {engine Stockfish 19, threads 1, hash 64, d_ref 18, d_alt 12, window 60}",
+   "reproduce": [
+    "python3",
+    "<not run>"
+   ],
+   "exit": "NOT RUN",
+   "stdout_sha256": null,
+   "tree_delta": [],
+   "not_run_because": "runs Stockfish and writes to an ABSOLUTE path inside the LIVE main tree (/home/chilly1/workspace/ocho_arena/results/DEPTH_TEST.json) -- running it would mutate the record under measurement."
+  },
+  {
+   "file": "depth_test2.py",
+   "binding_lines_from_counter": "NOT IN THE FILED LIST (counter blind spot)",
+   "reads": "n/a -- WRITER by ABSOLUTE path",
+   "writes_into_the_worktree_results_tree": "YES -- /home/chilly1/workspace/ocho_arena/results/DEPTH_TEST2.json (absolute)",
+   "writes_elsewhere": "none",
+   "baseline": "NOT RUN (see not_run). Published artifact: DEPTH_TEST2.json -- admissible False, which INADMISSIBLE, near_lost 0, near_hold 0",
+   "reproduce": [
+    "python3",
+    "<not run>"
+   ],
+   "exit": "NOT RUN",
+   "stdout_sha256": null,
+   "tree_delta": [],
+   "not_run_because": "same: absolute write into the live main tree's results/."
+  },
+  {
+   "file": "discrimination_report.py",
+   "binding_lines_from_counter": "[64]",
+   "reads": "results/*cardv3*.json",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "none",
+   "baseline": "corrected per-item pass rate over 38: R1.1 34/38 89.5% SATURATED, R1.2 23/38 60.5% DISCRIMINATES, R1.3 36/38 94.7% SATURATED, R1.4 34/38 89.5% SATURATED, R1.5 33/38 86.8% SATURATED, R1.6 15/38 39.5% DISCRIMINATES; discriminating items: 2 of 6",
+   "reproduce": [
+    "python3",
+    "discrimination_report.py"
+   ],
+   "exit": 0,
+   "stdout_sha256": "7d05c6dbb359077c883062a056764414ec7b6a77188966509216b7ab2501c23c",
+   "tree_delta": []
+  },
+  {
+   "file": "evaluate_v2.py",
+   "binding_lines_from_counter": "[12]",
+   "reads": "results/*.json",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "none",
+   "baseline": "=== v2 field === graded entries 33; empty/scratched 85; belts White 2 Yellow 3 Orange 9 Green 19; aggregate distribution 1.000 x2, 0.944 x6, 0.889 x5, 0.833 x7 ...",
+   "reproduce": [
+    "python3",
+    "evaluate_v2.py"
+   ],
+   "exit": 0,
+   "stdout_sha256": "b4c5934726791decd2313db2b8b9ef8ad16b6691e6bafbdd2b04eeb77e589b41",
+   "tree_delta": []
+  },
+  {
+   "file": "evaluate_v3.py",
+   "binding_lines_from_counter": "[26]",
+   "reads": "results/*cardv3*.json",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "none",
+   "baseline": "CARD v3 -- 38 bundles carrying a measurement; 38 have R1_fencing; C1: 12/38 score 6/6 = 31.6% (v2 was 79%) PASS",
+   "reproduce": [
+    "python3",
+    "evaluate_v3.py"
+   ],
+   "exit": 0,
+   "stdout_sha256": "6b0ab5056cdebb30e27985b2d85b77380d6344117f69ff66006beb0c81bca6c6",
+   "tree_delta": []
+  },
+  {
+   "file": "evaluate_v4.py",
+   "binding_lines_from_counter": "[34]",
+   "reads": "results/*cardv4*.json",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "none",
+   "baseline": "NO VERDICT -- THE FIELD IS CLOSED AND SHORT: 38 measured of ~46 expected; 8 entrants have an empty bundle in EVERY copy (exit 1)",
+   "reproduce": [
+    "python3",
+    "evaluate_v4.py"
+   ],
+   "exit": 1,
+   "stdout_sha256": "4474b4fdd9ae8adfff0f665e114e4a6c3d0378038bfe2a9561877e40e653f63d",
+   "tree_delta": []
+  },
+  {
+   "file": "render_state_contract.py",
+   "binding_lines_from_counter": "[70]",
+   "reads": "results/*.json",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "RENDER_STATE_SCHEMA.json AT THE TREE ROOT (not in results/)",
+   "baseline": "derived from 310 recorded bundle(s), 225 entrant entries; event kinds with recorded state: code_repair(30 fields), structured_output(138), tool_selection(30); schema sha256 (first 12) 8c2db374566c. THE COMMITTED RENDER_STATE_SCHEMA.json IS STALE: it says bundles 234 / entrant_entries 151",
+   "reproduce": [
+    "python3",
+    "render_state_contract.py"
+   ],
+   "exit": 0,
+   "stdout_sha256": "b839c2e0635ef2483e86744df39a34bf2e4a3b3e11f2774c02ba870c7e8f61d4",
+   "tree_delta": [
+    " M RENDER_STATE_SCHEMA.json"
+   ]
+  },
+  {
+   "file": "scripts/prove_declared_slots_parse.py",
+   "binding_lines_from_counter": "[101]",
+   "reads": "results/ (one cardv6 bundle) + GAME_CONTRACT.md + test_game_states.py",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "none",
+   "baseline": "STATE: SINGLE SOURCE -- contract declares 4 slots, check enforces the same 4, disagree [], 38 v6 bundles with round key R1_conformance x37, refused: none. ON A DETACHED HEAD: REFUSES (exit 1) because test_game_states imports cabinet_root, which refuses without a branch",
+   "reproduce": [
+    "python3",
+    "scripts/prove_declared_slots_parse.py"
+   ],
+   "exit": 0,
+   "stdout_sha256": "122d6ee1e289b1839edf226bd62c054fdf8cf1ff687846764f8e77cb1d2427f1",
+   "tree_delta": []
+  },
+  {
+   "file": "scripts/test_declared_slots_guard.py",
+   "binding_lines_from_counter": "[75, 77]",
+   "reads": "results/ (one cardv6 bundle, copied into a fixture)",
+   "writes_into_the_worktree_results_tree": "no (fixture is tempfile.mkdtemp, removed at the end)",
+   "writes_elsewhere": "none",
+   "baseline": "2 FAILED -- 3/5: control [1] BASELINE expected ('SINGLE SOURCE',0) got ('BLOCKED',1) and control [3] NO PARSER expected ('DRIFTABLE',1) got ('BLOCKED',1). IDENTICAL WHEN RUN IN MAIN (measured) -- pre-existing, not an artifact of the sandbox",
+   "reproduce": [
+    "python3",
+    "scripts/test_declared_slots_guard.py"
+   ],
+   "exit": 1,
+   "stdout_sha256": "c49ece8e7d965387df2fe6a7ad34acb8a409c6e7b4996552d2df9f45267d6439",
+   "tree_delta": []
+  },
+  {
+   "file": "test_no_silent_zero.py",
+   "binding_lines_from_counter": "[26]",
+   "reads": "results/*.json (RESULTS is argv[1] overridable)",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "none",
+   "baseline": "scanned 1494 item records in 310 bundles; FAIL -- 64 bundle(s) with an EMPTY results list and NO failure record; FAIL -- 1 item scored 0.0 with NO reason and NO raw (exit 1)",
+   "reproduce": [
+    "python3",
+    "test_no_silent_zero.py"
+   ],
+   "exit": 1,
+   "stdout_sha256": "2ddca60f6a1852ef66a4cc8e7d761d4dc6adc30cb26d94b13ffc05c80a52c658",
+   "tree_delta": []
+  },
+  {
+   "file": "v3_rates_both_readings.py",
+   "binding_lines_from_counter": "[67]",
+   "reads": "results/*cardv3*.json",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "none",
+   "baseline": "6 v3 items, both readings (recorded greedy vs corrected strict): R1.1 86.8->89.5 (+2.6), R1.2 57.9->60.5 (+2.6), R1.3 92.1->94.7 (+2.6), R1.4 86.8->89.5 (+2.6), R1.5 78.9->86.8 (+7.9), R1.6 39.5->39.5 (+0.0)",
+   "reproduce": [
+    "python3",
+    "v3_rates_both_readings.py"
+   ],
+   "exit": 0,
+   "stdout_sha256": "2304ca750e932c5c14f54189813e532f2b87e7d3af9678d32c36a794f519f96b",
+   "tree_delta": []
+  },
+  {
+   "file": "verify_chair_audit.py",
+   "binding_lines_from_counter": "[17]",
+   "reads": "results/*.json",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "none",
+   "baseline": "Green entries 19; aggregate range 0.7222 .. 1.0000 (the claim was 0.833-1.000 -- the Chair is right and the band is wider)",
+   "reproduce": [
+    "python3",
+    "verify_chair_audit.py"
+   ],
+   "exit": 0,
+   "stdout_sha256": "9dff65cfca4e958d2be85c203ca0613c38d9bbaf6204ac54635f1c5df11790e9",
+   "tree_delta": []
+  },
+  {
+   "file": "verify_scope.py",
+   "binding_lines_from_counter": "[62]",
+   "reads": "results/*cardv3*.json",
+   "writes_into_the_worktree_results_tree": "no",
+   "writes_elsewhere": "none",
+   "baseline": "D3a failing items (excluding no-raw) 59; D3b items with NO RAW AT ALL 1; failing items by class {unparseable 14, no_json 1, other 34, truncated 10}; D2 items that re-score HIGHER 9 (7 of them in the unparseable class)",
+   "reproduce": [
+    "python3",
+    "verify_scope.py"
+   ],
+   "exit": 0,
+   "stdout_sha256": "57808391d9d84993550793f0df381002e08ab3d0b5b3757b00113109457ecd0a",
+   "tree_delta": []
+  }
+ ]
+}
