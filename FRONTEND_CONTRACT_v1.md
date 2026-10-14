@@ -2,11 +2,37 @@
 
 ## v1
 
-**Status:** DRAFT — for Mike and Ocho to sign off. Not in force until signed.
+**Status:** **IN FORCE** — both signatures present. Mike: the contract as a whole, 2026-10-14.
+Ocho: §8's four clauses only, 2026-10-14, with the gates now executable. See SIGN-OFF below.
 **Author:** Jarvis's `arena` bot · **Date:** 2026-10-07
 **Supersedes:** nothing. This is the first contract for the front end.
 **Normative parents:** `FORMAT.md` (rules and version numbering), `BELTS.md` (grading),
 `FRONTEND_CONTRACT_ACCEPTANCE.md` (the four gated clauses).
+
+---
+
+## SIGN-OFF
+
+Two signers, two scopes. **This contract is in force only when both are present** — one of two is
+not a signed contract, and a draft that reads as in force is worse than a draft.
+
+| signer | scope | date |
+|--------|-------|------|
+| **Mike** | the contract as a whole — the instrument, its four items, its frozen ground truth. Commission: build the Arcade against it. | 2026-10-14 |
+| **Ocho** | **§8's four clauses only** (`FRONTEND_CONTRACT_ACCEPTANCE.md`). Layout, aesthetics, interaction and every product decision are Chair's and are not his to gate. | 2026-10-14 |
+
+**Ocho's verification, flags and holds:** `FRONTEND_CONTRACT_SIGN_OFF_OCHO.md` — the signer's own
+record, which carries what this table cannot: the artifacts behind the gates at their revisions, the
+five flags, and the two holds.
+
+**Consequence of Mike's signature alone:** the front end is **commissioned** and may be built against
+this contract, with the four clauses binding as they already stand in
+`FRONTEND_CONTRACT_ACCEPTANCE.md` — **but the contract is not yet the settled instrument**, and any
+choice still marked *Overturn* in §0–§6 may change when Ocho answers §11.
+
+**What Ocho's signature adds:** the four clauses become gated rather than merely written, and §11's
+ten questions get answered by the only party whose answers bind — *"each is cheap to reverse now and
+expensive to reverse after anything is built on it."*
 
 ---
 
@@ -759,6 +785,29 @@ the field without them is the misleading table §5b warns about. If you would ra
 channel, and only a two-signature document is live. If you want an arena-hosted challenge index in
 v1, that is a service to build and a new attack surface — *is a board enough, or does it need to be
 a service?* (§3.2)
+
+### ANSWERS — Ocho, 2026-10-14
+
+**These are answers, not amendments.** Each confirms or overturns the draft above; where an answer
+overturns a choice, the section named is the one to re-read.
+
+- **Q1 — Ed25519, confirmed.** Public verifiability is the point of a public board, and an arena holding no forgery secret is worth ~100 vendored stdlib lines. Keep "stdlib only" by vendoring, not by weakening to HMAC.
+- **Q2 — confirmed, and this reading is the one to keep.** Discard the stored float; compare `Fraction(sum(wins), sum(trials))`. `round(x,4)` is not a fix, it is a smaller version of the bug: two entries at exactly 10/18 stay `0.5555` and `0.5556`.
+- **Q3 — DRAW, confirmed.** A tie-break is a second axis wearing a comparator's clothes.
+- **Q4 — redact-then-sign, confirmed.** A signature over bytes a stranger cannot see is unverifiable — and 75 of 91 bundles carried a filesystem path.
+- **Q5 — confirmed.** Silence is not a forfeit; refusal is recorded. One clock: `BELTS.md §4`'s 180 days.
+- **Q6 — no default deadline.** A pre-filled default is a decision nobody made, wearing a default's clothes. `deadline_utc` stays required.
+- **Q7 — show the fraction, decimal secondary.** `10/18` IS the measurement; `.4f` is a rendering of it.
+- **Q8 — label the metric per column.** v1 is model-level, v2 can be item-level. Never merge; a side-by-side without the label implies a comparison the reader cannot make.
+- **Q9 — both failed criteria stay.** A UI showing the v2 field without them is the misleading table §5b warns about. Criterion 1 FAILED at 57.6%; belt rule 2's later 24.2% is **not** a pass.
+- **Q10 — a board, not a service.** A document travels any channel; a hosted index is a service and a new attack surface v1 does not need.
+
+**Two notes these answers carry, neither of them among the ten.** The gates are now executable —
+`check_frontend_clauses.py`, a negative control per clause, `--selftest` 5/5 caught. And §7.2's claim
+that the `EMPTY` filename marker covers **16 of 16** is measured false: it disagrees with
+`results == []` on **25 of 310** bundles. That erratum is flagged in the signer's record and is **not**
+fixed in this text, because fixing it would move a passage under Mike's signature. It is named here so
+no reader inherits the wrong number.
 
 ---
 
