@@ -147,6 +147,48 @@ def main():
     print("  => a run from a historical freeze is not stale: it is a measurement of a different")
     print("     instrument. Comparing it to a current run measures the instrument change.")
 
+    # --- check 5: the complementary claim -- content is NOT contained ----------------
+    # Raised by @sokoban. The declaration says the superseded pilot is contained "with nothing of
+    # its own left over". Keys and counters are contained; CONTENT is NOT. That is not a defect in
+    # the artifact -- it is the reason the artifact is TRACKED: its turns exist in no other file, and
+    # deleting it would delete the only copy (the SOKOBAN_VERDICT_1 / FINDING 020 failure).
+    #
+    # So the assertion runs the other way: if NOTHING differs at turn level, this artifact IS a
+    # duplicate, and the declaration's reason for tracking it does not exist.
+    print("\nCHECK 5 -- the superseded file's turn-level content is NOT contained")
+    for s in sup:
+        if not inc:
+            continue
+        sd, sc, _ = cells_of(os.path.join(ROOT, s))
+        _i, ic, _ = cells_of(os.path.join(ROOT, inc[0]))
+        SK = {(c.get("entrant"), c.get("level")): c for c in sc}
+        IK = {(c.get("entrant"), c.get("level")): c for c in ic}
+        n_diff = n_same = 0
+        for k in sorted(set(SK) & set(IK)):
+            ca, cb = SK[k], IK[k]
+            fields = sorted(set(ca) | set(cb))
+            differs = []
+            for f in fields:
+                va, vb = ca.get(f), cb.get(f)
+                if isinstance(va, (list, dict)) or isinstance(vb, (list, dict)):
+                    if json.dumps(va, sort_keys=True) != json.dumps(vb, sort_keys=True):
+                        differs.append(f)
+                elif va != vb:
+                    differs.append(f)
+            if differs:
+                n_diff += 1
+                print(f"    DIFFERS  {str(k[0])[:30]:30s} {str(k[1])[:22]:22s} {', '.join(differs)}")
+            else:
+                n_same += 1
+        print(f"    => {n_diff} of {n_diff + n_same} shared cells differ at turn level")
+        if n_diff == 0:
+            fails.append(f"{s}: NO turn-level difference -- it IS a duplicate, so the stated "
+                         f"reason for tracking it does not hold")
+            print("    => CONTRADICTION: the file is fully contained, so it need not be tracked.")
+        else:
+            print(f"    => the declaration's claim of full containment is TOO STRONG; "
+                  f"{n_diff} cell(s) exist only here. That is WHY it is tracked.")
+
     print()
     if fails:
         print("CONTRADICTIONS:", *fails, sep="\n  ")
