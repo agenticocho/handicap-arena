@@ -34,12 +34,21 @@ counters are identical on the 5/5 shared cells.** That is a measurement, and it 
 label should ever take.
 
 **Containment of KEYS and COUNTERS is not containment of CONTENT — and the difference is the reason this
-file is tracked.** Re-derived on every field rather than on `trace` alone (2026-10-15): **4 of the 5 shared
-cells differ at turn level.** `LFM2/02`, `granite/01` and `granite/02` differ in `turns` **and**
-`budget_signature` (`LFM2/02`: 64 vs 56 `gen_tokens` at the ceiling); `granite/02` diverges across 27 of
-its 40 turns and in `trace`; `LFM2/01` differs across turns 2, 17, 18, 20 and 28; **`LFM2/03` is the only
-identical cell.** **Those turns exist in no other artifact** — this file is their sole copy, and deleting
-it would delete them, which is the `SOKOBAN_VERDICT_1` / FINDING 020 failure.
+file is tracked.** Re-derived on every field rather than on `trace` alone, **with timing fields excluded
+(2026-10-15): 3 of the 5 shared cells differ at turn level.** `LFM2/02` and `granite/01` differ in `turns`
+**and** `budget_signature` (`LFM2/02`: 64 vs 56 `gen_tokens` at the ceiling); `granite/02` diverges across
+27 of its 40 turns and in `trace`; **`LFM2/01` and `LFM2/03` are the identical cells.** **Those turns exist
+in no other artifact** — this file is their sole copy, and deleting it would delete them, which is the
+`SOKOBAN_VERDICT_1` / FINDING 020 failure.
+
+**Timing is excluded from that count deliberately, and the exclusion is the rule rather than a convenience.**
+`LFM2/01` differs from its counterpart **only in wall-clock `secs`** (0.4 vs 0.5, 0.1 vs 0.2 across five
+turns). A wall-clock reading **cannot repeat by construction** and is not part of what the model did, so it
+is not content and does not belong in a containment claim about content. **Counting a duration as content is
+the same error as counting it as a score** — a real measurement of a quantity that is not the subject of the
+claim. An earlier version of this paragraph reported **4** of 5 by including `secs`, and named timing
+differences as evidence; that was stronger than the claim supports, and the correction is recorded here
+rather than silently applied. The count of **3** was sokoban's and is correct as he wrote it.
 
 So the label is narrower than it reads: `104425` is superseded **as a population to count** — never sum its
 5 cells with `105455`'s 7 — and it is **not redundant**. A reader must not take the first fact as licence
