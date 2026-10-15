@@ -167,6 +167,36 @@ LEGACY_CAPTURE_WHY = ("captures committed while the ignore rule named an extensi
                       "FINDINGS/019, NEXT_WINDOW.md and SOKOBAN_VERDICT_1.md by path -- declared "
                       "in place, and written by nothing")
 
+# --------------------------------------------------------------- THE DARTS ARCHIVE, DECLARED IN PLACE
+# THE SAME TREATMENT AS THE NINE CAPTURES ABOVE, AND THE SAME REASON: their bytes do not move.
+#
+# The darts harness's five bundles are its OWN CONTROLS -- reference, instrument-check, garbage, liar,
+# never-starts -- tracked, and cited by path in darts/DARTS_AMBIGUITIES.md. Under the test the logs/
+# ruling fixed, they are RECORDS rather than scratch: a record is something a reader may treat as
+# evidence about what happened (here: that this harness's instrument was exercised and what it
+# returned), while scratch is what a process emits about itself while it runs. So the ignore-rule
+# shortcut is OUT -- the rule may not declare them disposable.
+#
+# WHAT CHANGES IS NOT THEIR BYTES BUT WHO WRITES THE DIRECTORY. `darts/darts.py`'s `--out` used to
+# default to <this file's directory>+`results/`, i.e. INSIDE the git working tree, so the harness's
+# next run would drop a new bundle beside these five. It now resolves the DECLARED write scope's
+# `darts/` subtree through results_dir() and REFUSES a destination inside any git tree, so this
+# directory is written by nothing after that landing -- and `darts/results/` is closed to NEW bytes by
+# the ignore rule, which is mechanically checkable: git check-ignore darts/results/x. Tracked files
+# stay tracked; an ignore rule closes a directory to new bytes, it does not untrack what is committed.
+# (The ruling is DECISION_results_binder_residue.md, sha256 6309d8a4..., landed by t_86fa52a2.)
+DARTS_ARCHIVE = (
+    "darts/results/darts_v1_garbage.json",
+    "darts/results/darts_v1_instrument-check.json",
+    "darts/results/darts_v1_liar.json",
+    "darts/results/darts_v1_never-starts.json",
+    "darts/results/darts_v1_reference.json",
+)
+DARTS_ARCHIVE_WHY = ("the darts harness's five control bundles, produced while `--out` defaulted "
+                     "inside the git working tree; TRACKED, byte-frozen and cited by "
+                     "darts/DARTS_AMBIGUITIES.md by path -- declared in place, and written by nothing "
+                     "now that `--out` resolves the declared write scope's darts/ subtree")
+
 # THE LEGACY LOG COORDINATE, ALSO DECLARED IN PLACE. Every bundle in the legacy record was written
 # by a run in the MAIN worktree -- before the declaration existed, main was the only tree that ran
 # -- so the journal that explains those bundles is main's, and it is written down here rather than
@@ -468,6 +498,9 @@ def main():
         print(f"    {kind:16} -> {log_for(probe)}")
     print(f"  legacy captures in place: {len(LEGACY_CAPTURES)} declared; "
           f"{len((git('ls-files', 'logs', repo=HERE) or '').splitlines())} tracked under logs/ in this tree")
+    print(f"  darts archive in place:   {len(DARTS_ARCHIVE)} declared; "
+          f"{len((git('ls-files', 'darts/results', repo=HERE) or '').splitlines())} tracked under it in "
+          f"this tree")
     return 0
 
 
