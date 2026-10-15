@@ -182,6 +182,25 @@
    ]
   },
   {
+   "script": "build_arcade_wall.py",
+   "role": "reader",
+   "pattern": "*.json",
+   "class": "record_binder",
+   "presence": {
+    "main": true,
+    "cabinet/sokoban": false,
+    "cabinet/missile-command": false,
+    "cabinet/zork": false
+   },
+   "edges": [
+    {
+     "kind": "results-read",
+     "status": "migrated:1415773",
+     "why": "WAS `ARENA = os.path.dirname(os.path.abspath(__file__))` + `RESULTS = os.path.join(ARENA, 'results')` -- the same shape run_card.py:35-36 was fixed to remove, one layer out: the wall was a rendering of PLACEMENT. INVISIBLE from main, where that directory IS the legacy record, so every number was right by coincidence; measured in a throwaway git repo with no results/ at all, the old script renders 0 bundles / 0 graded and exits 0. NOW the scope is the DECLARED DOMAIN, entry by entry (cabinet_root.domain()), with the count each entry contributed printed AND rendered, no fallback left to be silent, and the same refusal as every other reader when there is no declaration or the declaration resolves inside a git tree. Its WRITE is unchanged and deliberately so: arcade_wall.html is a TRACKED artifact of this repository, not a result, so it stays beside the code that generates it -- and nothing named `results` is bound by this file any more. MAIN ONLY -- build_arcade_wall.py is absent from all three cabinet trees, so it is parity by DECLARED ABSENCE (their counters already read STATE: RESIDUE ZERO). Landed by t_47f6abdd; the entry flips in its OWN commit."
+    }
+   ]
+  },
+  {
    "script": "canonicalise_filenames.py",
    "role": "writer",
    "pattern": "*.json",
@@ -540,6 +559,11 @@
   }
  ],
  "declared_absent": {
+  "build_arcade_wall.py": [
+   "cabinet/sokoban",
+   "cabinet/missile-command",
+   "cabinet/zork"
+  ],
   "check_format_fields.py": [
    "cabinet/missile-command",
    "cabinet/zork"
@@ -555,7 +579,7 @@
    "cabinet/zork"
   ]
  },
- "declared_absent_why": "Absence is DECLARED, never counted as residue and never read as an unfinished landing: render_state_contract.py is absent from all three cabinet trees, check_format_fields.py from missile-command and zork, and darts/darts.py (the one named_write_destination) from all three. The AC1 BEFORE-count, corrected by the Chair on t_5742bdac and re-measured here, is 24 / 23 / 22 / 22 record binders (main / sokoban / missile-command / zork) -- the 22 migrated binders plus depth_test.py:27 and depth_test2.py:32. The TARGET is 0, and reaching it from here is t_86fa52a2's job.",
+ "declared_absent_why": "Absence is DECLARED, never counted as residue and never read as an unfinished landing: render_state_contract.py is absent from all three cabinet trees, check_format_fields.py from missile-command and zork, and darts/darts.py (the one named_write_destination) and build_arcade_wall.py from all three. The AC1 BEFORE-count, corrected by the Chair on t_5742bdac and re-measured here, is 24 / 23 / 22 / 22 record binders (main / sokoban / missile-command / zork) -- the 22 migrated binders plus depth_test.py:27 and depth_test2.py:32. The TARGET is 0, and reaching it from here is t_86fa52a2's job.",
  "fixed_mechanism_files": [
   {
    "rel": "cabinet_root.py",
