@@ -95,7 +95,7 @@ def _rc_moves_str():
 # The digests the freeze record names. If any of these does not match, the artifact this solver read is
 # not the artifact the numbers came from -- and that is reported, not rounded off.
 FROZEN_DIGESTS = {
-    "sokoban.py": "7134c3e8fc59fe027f3691ffa56ab4acb5eb735018a17683f3183ce538f90235",
+    "sokoban.py": "00996929972b9483223bf54f4dcef007162134289c5cdb76a58533ac875e8a7c",
     "levels/01_one_push.txt": "db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313",
     "levels/02_two_boxes.txt": "7549657f1768607cefab6d892b1756b1cabf23f51144a7679d76f331b38a57d7",
     "levels/03_the_corner_waiting.txt": "77d18407a001da292b2f1dcf8054ed40ddc2038563f23b96861a362c78cf23d6",

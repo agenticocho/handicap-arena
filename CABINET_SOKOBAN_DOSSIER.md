@@ -78,9 +78,9 @@ already recorded, and each one satisfied here by construction rather than by hop
    comparison, instead of a legality engine.
 
 2  NO EXTERNAL ORACLE
-   The simulator decides solved or unsolved, and the score is a move counter. There is no
-   reference binary to install, version, freeze, or trust. The ground truth is the rules of
-   the game, implemented once, with controls.
+   The simulator decides solved or unsolved -- solved IS THE SCORE -- and moves is a COST,
+   never the score. There is no reference binary to install, version, freeze, or trust. The
+   ground truth is the rules of the game, implemented once, with controls.
 
 3  SHORT ANSWERS
    A one-letter answer cannot be deliberated past a token budget. A second measured failure
@@ -129,12 +129,12 @@ it** — so a later reader can replay the entire game without trusting anyone's 
 deliberate property: **the record is a sufficient statistic for the score.** Nobody has to be believed
 about what happened; the record contains what happened.
 
-### 5.3 The measurement separates four things a naive counter merges
+### 5.3 The measurement separates five things a naive counter merges
 
 This is the heart of the cabinet's honesty:
 
 ```
-moves          SUCCESSFUL actions -- THE SCORE, and the only number comparable across entrants
+moves          a COST -- successful actions, comparable across entrants; NEVER the score
 attempted      every token the model emitted, whether or not it was legal
 blocked        attempts that could not be made -- a wall-bumper's signature
 not_an_action  tokens that were not a single action letter
@@ -147,6 +147,23 @@ that reported "moves" as *attempts* would describe that as a very long, very act
 **Measured in the controls: fifty wall bumps = 0 moves, 50 attempted, 50 blocked, UNSOLVED.**
 
 *A naive counter would have called that a long game.*
+
+*CORRECTION RECORD -- 2026-10-15 (R2, ratified 2026-10-13).* Two sentences in this document said the
+opposite of what the code does, and they are corrected above with their PRE-correction text quoted rather
+than deleted:
+
+    §4 item 2 SAID  "The simulator decides solved or unsolved, and the score is a move counter."
+    §5.3 SAID       "moves          SUCCESSFUL actions -- THE SCORE, and the only number comparable across entrants"
+
+**AND THE CODE IS WHY THEY MOVED:** `sokoban.py`'s `play()` returns `solved` -- the score -- beside `moves`
+(a COST), `attempted`, `blocked`, `not_an_action` and `give_up`, every one of them a count the record
+carries; `moves` is a tiebreak between solvers and never the score. `SOKOBAN_READ_GRAMMAR.md` §2 and §2a
+state the same list, and this document now agrees with them token for token. **FUTURE RUNS ONLY: nothing
+already published is retro-fitted, restated or reinterpreted.**
+
+**Two further defects in the same paragraphs moved with it:** the §5.3 heading counted "four things" above
+a five-row table and now counts five; and §6 read `unrecognised` for what the code, the grammar and the
+frozen prereg's successor all name `not_an_action`.
 
 ---
 
@@ -163,7 +180,7 @@ reader sees:   R          ->  the action "Right"  ->  EXECUTED
 loaded. A control — not a model, not a reviewer — caught it, because the control asked a question nobody
 had thought to ask: *what happens if the answer isn't an answer?*
 
-**The rule is now absolute: the answer is exactly one action letter, or it is counted as `unrecognised`
+**The rule is now absolute: the answer is exactly one action letter, or it is counted as `not_an_action`
 and changes nothing.** It is a named regression control, and it is checked every time the simulator runs.
 
 ### Why this bug is the whole project in one paragraph

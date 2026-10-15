@@ -2,6 +2,22 @@
 ## Every event in the Arena — formats, scorers, and what each one actually discriminates
 
 **Version 1.0 · October 2026 · Public document**
+
+> **FORK POINT — READ THIS BEFORE COMPARING THIS FILE TO ANY OTHER COPY.**
+> **This is the authoritative copy.** Three cabinet working trees carry a copy of this file that was
+> **frozen at commit `f42026b` (2026-10-08)** and is byte-identical to it — `md5 bfce27de30fe048339da75ad05274ed2`,
+> 610 lines — while this copy has moved on. **Those copies print the masthead above without saying they are
+> snapshots**, which is the defect this block exists to remove: a reader cannot tell a frozen catalogue from a
+> live one by looking at it.
+> **How far apart they are is a live reading, not a number** — derive it, do not quote it:
+> ```bash
+> git -C ~/workspace/ocho_arena diff --shortstat f42026b origin/main -- GAMES.md
+> ```
+> At the time of writing the delta was **133 lines across three sites** (a head-region rewrite, the whole of
+> League K, and a footer count), and **two of those sites are hand-written totals that nothing can age
+> against** — a stale total reads exactly like a fresh one. Evidence and the per-file sync rule:
+> `CATALOGUE_FORK.md`.
+
 **Companion to:** `WHITEPAPER.md` (institution), `FORMAT.md` (rules), `BELTS.md` (grading), `EVENTS.md` (event book)
 
 > This is the catalogue: every event in the Arena, organised into leagues, each with a
@@ -10,7 +26,9 @@
 >
 > **Counts are not maintained in this header.** They are counted from the headings below and
 > asserted by `test_doc_counts.py`. A summary line kept in sync by hand goes stale, and this one
-> did: it read *"forty-plus events across nine leagues"* while the body held **55 across 10** —
+> did: it read *"forty-plus events across nine leagues"* while the body held **61 across 11** —
+> and the number had been hand-written three times. **Never hand-write this count.** Derive it:
+> `for L in A B C D E F G H I J K; do printf "%s:%s " $L $(grep -c "^### $L[0-9]" GAMES.md); done`
 > League J (Strategy Evaluation & Research) had arrived and only the closing line was updated. The
 > stale figure then propagated out of this document and into a generated audio summary of it.
 > A number a reader skims is a number that must be computed, not remembered.
@@ -555,6 +573,137 @@ deterministically scorable, and none of them requires predicting a market.*
 
 ---
 
+# LEAGUE K — ASSISTED PLAY (the seeing-eye dog)
+
+*Proposed 2026-10-07. This league tests the boundary between PERCEPTION and REASONING by giving a
+text-only entrant a declared, frozen assistive layer — a sensor that describes and does not
+conclude. The point is not to let weak models cheat at vision. It is to stop scoring "has no eyes"
+as "cannot reason", and to measure what the eyes are worth.*
+
+> **TERMINOLOGY (standardised 2026-10-07).** In this repository **"cabinet" means an ARCADE
+> CABINET** — a self-contained game with frozen criteria, owned by one cabinet agent, in its own
+> git worktree (`cabinet/sokoban`, `cabinet/missile-command`, `cabinet/zork`). It is NOT used here
+> for anything else.
+>
+> The assistive layer in this league is a **SENSOR**: a declared, frozen perceptual channel
+> attached to an entrant. It describes and does not conclude, and it **must fail the task alone** —
+> otherwise the event measures the sensor rather than the entrant. *"Assisted play"* is the mode;
+> the sensor is the component. The seeing-eye-dog metaphor is the informal gloss.
+>
+> A sensor is **not** part of a cabinet's machinery, and a cabinet is **not** a sensor. Two
+> different things, two different words, deliberately.
+>
+> **AND A THIRD CARRIER, NAMED SO IT CANNOT BE CONFUSED.** The token `sensor` also occurs ~46 times in
+> this repo as **fixture data** — never as a concept, never as a name for anything: `sensor_count` in
+> `tasks/01_structured_output.json` and in `arena.py`'s worked example; `{"sensor": "A" | "B"}` in
+> `tasks/v2/01_conformance.json` and the assertions that read it; `"sensor"` in a required-key list at
+> `tasks/v4/01_conformance.json:93`; and sensor 1/2/3 (PTU300), "sensor order", "the sensor model was
+> supplied" in the trap text of `tasks/v6/01_conformance.json` — a weather-station instrument inside a
+> JSON-schema conformance task, plus the 37 `results/` files that answered it.
+>
+> **FIELD-NAME VERSUS CONCEPT, stated explicitly.** Where `sensor` appears in a task payload, a test
+> assertion or a model output it is a **field** and means a measuring instrument. Where it appears in
+> this league it is a **concept** and means the assistive perceptual channel. **A repo-wide grep will
+> land both in one result set — that is expected, and it is not a collision.** The reader's
+> disambiguator is the document: a task file describes a JSON schema; this league describes a play
+> mode.
+>
+> **A THIRD REGISTER, found by @missile-command after he checked the file list rather than the sum.**
+> `rename_league_k_term.py` — the script that performed this very replacement — is the one in-repo
+> document where **both terms co-occur in prose by design**, because explaining the collision is its
+> entire job. It is neither register: not a task payload, not a play mode, but a **migration script**.
+> The honest disambiguator is therefore the *purpose* of the document, not its type: **a task file
+> declares a schema; this league declares a play mode; a migration script names both because it is
+> the record of their crossing.** Anyone grepping `sensor` should expect this file to be among the
+> loudest, **and which file is loudest depends on which term you grep** — measured at `49846ce`, and
+> not at the revision that carries this sentence, because writing it added a line bearing each term
+> and so raised all four of these figures by one. A count taken before the sentence that reports it
+> is not the count that sentence publishes (counts are case-insensitive, whole-file). `GAMES.md` wins
+> on `sensor` (33 occurrences, 28 lines, against 13 and 9 here), while **this script wins decisively
+> on `cabinet`** (27 occurrences, 18 lines, against 12 and 8). So there is no single superlative to
+> assign: **the file named for a term is the loudest carrier
+> of that term**, and the earlier phrasing here — "27 cabinet-bearing lines and 32 `sensor`
+> occurrences" — was wrong in both figures, having taken one from this script and one from the
+> previous revision of `GAMES.md`. *(Caught by @missile-command, who measured it before accepting the
+> correction, and whose finding is the sharper one: a superlative over two terms that rank in
+> opposite orders cannot be stated as a superlative at all.)* The
+> point survives the correction: it is the one file where both terms co-occur **by design**, and it is
+> the most ambiguous by *count* and the least ambiguous by *reading*, which are not the same measure.
+> *(Corrected from "the noisiest of the 47", which was a superlative I did not measure; the count is
+> @missile-command's catch, made after he had verified the rest of the block and deliberately declined
+> to reopen the thread over one adjective. He was right to flag it and right not to act on it — an
+> adjective in a document that does the real work elsewhere is a low-value correction, and it is still
+> a false one.)*
+>
+> *(The count is 47 tracked files, not 46 — @missile-command caught that my earlier enumeration
+> omitted `rename_league_k_term.py` itself. The script was in my own output; I dropped it when
+> summarising. A list is not a count, and a sum of classes is not a search.)*
+> Raised by @missile-command, who verified the League K span independently (4 uses of
+> "cabinet", all inside this block; 0 as the perceptual channel) and then found this residual.
+
+## The one failure mode that would ruin this league
+
+**If the sensor can solve the task by itself, the event measures the sensor.** A description
+informative enough to be transcribed is a leak, and the entrant's score becomes the dog's score.
+Every event below therefore carries an **isolation requirement**: the sensor must be scored
+ALONE, and it must FAIL. A sensor that passes alone invalidates the round — the same way the
+grammar file invalidated a whole table in FINDING 001 by making the model's failure uninformative.
+
+Three further constraints, all from this project's own findings:
+
+- **Frozen and declared.** The sensor is an LLM, so its model, version, prompt and quantisation
+  are config. FINDING 001: a config that can change the outcome belongs in the record. A
+  per-run-varying dog makes two runs incomparable.
+- **Never merged.** The pair's score and the model's score are reported **separately**, always.
+  Merging them is the same defect as a relay that reports only the team total.
+- **Division is the SUM of members** (League H rule). A 350M entrant with a 2B dog competes as a
+  ~2.4 GB team, not a Featherweight. Peak VRAM is the largest member, because legs run in
+  sequence — but the division is what the team is worth.
+
+---
+
+### K1 · Assisted Perception
+- **Measures** — whether a text-only model can reason over a description it did not produce
+- **Format** — a task whose input is an image; a **frozen sensor** renders it to text under a declared prompt; the entrant answers from the description plus the task
+- **Scorer** — PARSE against the task's own ground truth, exactly as the visual task would be scored
+- **Null baseline** — **the entrant without the sensor** (expected to fail, and its failure is the baseline the delta is measured against), plus **chance**
+- **Discriminates** — the reasoning half of a perceptual task. A model that scores 0 bare and 0.67 assisted has demonstrated reasoning and lacked eyes; a model that scores 0 both ways lacked both
+- **Anti-gaming** — the sensor is scored alone and **must fail**; it is forbidden from emitting the answer, a decision, or a confidence; the task's ground truth is never shown to it
+
+### K2 · Sensor Isolation *(the guard, run as its own event)*
+- **Measures** — whether an assistive layer is a channel or a solver
+- **Format** — run the sensor **alone** against the same tasks, with its description as its final answer
+- **Scorer** — PARSE against the same ground truth
+- **Null baseline** — none needed; the requirement is absolute
+- **Discriminates** — **if the sensor passes a task alone, that task is void for K1.** This event exists so the check is explicit and published rather than assumed
+- **Anti-gaming** — the sensor's own score is recorded beside every assisted result, so a reader can always see how much of the pair's score the dog could have earned unaided
+
+### K3 · Mode Pair *(the delta)*
+- **Measures** — the value of perception to a given model, as a number
+- **Format** — the same entrant and the same tasks, run **twice**: bare text, and assisted
+- **Scorer** — PARSE both arms; publish the pair, never the assisted score alone
+- **Null baseline** — the bare arm
+- **Discriminates** — isolates perception from reasoning within one set of weights. This is a controlled pair in the sense the evidence set already renders, so it needs no new machinery
+- **Anti-gaming** — both arms use identical tasks, identical config and identical trials; a bare arm run at a different `--ctx` measures the config, not the model (FINDING 001)
+
+### K4 · Native Control *(the three-arm comparison)*
+- **Measures** — assisted text against genuine multimodal, on the same task
+- **Format** — three arms: (a) text model, bare; (b) text model + sensor; (c) a native VL model, no sensor
+- **Scorer** — PARSE on all three
+- **Null baseline** — arm (a)
+- **Discriminates** — **the question this league was proposed to answer:** does a described image plus a strong reasoner beat a small model that can simply see? Arm (c) is the honest control, and it is cheap because eight VL entrants are already in the field
+- **Anti-gaming** — arm (c) gets no sensor; if it is helped, the comparison is meaningless. All three arms share the task set and the trial count
+
+### K5 · Description Fidelity
+- **Measures** — how much of the image survives the sensor channel
+- **Format** — a task with a known, enumerable set of visual facts; the sensor produces a description; a deterministic parser counts which facts are present
+- **Scorer** — PARSE: fact coverage, plus **hallucination rate** (facts asserted that are not in the image)
+- **Null baseline** — a template description naming the image type and nothing else
+- **Discriminates** — whether a low assisted score means the entrant failed to reason, or the dog failed to see. Without this, K1's result is unattributable
+- **Anti-gaming** — facts are enumerated from the image's own construction, not from the description; hallucinated facts count against, so a maximal description scores worse than an accurate one
+
+---
+
 # PART 3 — THE NULL-BASELINE CATALOGUE
 
 Reusable, and the reason most events are meaningful.
@@ -605,6 +754,6 @@ Events are not equal in value-per-line-of-code.
 
 ---
 
-*56 events. Every one scored by parser, execution, or ground truth. Every one carrying a null
+*61 events. Every one scored by parser, execution, or ground truth. Every one carrying a null
 baseline. Nothing here is judged by a model — because a model grading its own family is not a
 measurement, it is a conflict of interest.*

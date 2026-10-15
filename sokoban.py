@@ -6,7 +6,7 @@ WHY THIS GAME, IN ONE LINE PER CONSTRAINT IT SATISFIES BY CONSTRUCTION RATHER TH
   1. NO LEGAL-MOVE GENERATION. The action space is FOUR SYMBOLS -- U D L R. The model SELECTS; it does not
      generate. This is what killed chess: the entrant had to derive a legal move from a position and
      nothing on this box could.
-  2. NO EXTERNAL ORACLE. The simulator decides solved or unsolved and the score is the move counter. Chess
+  2. NO EXTERNAL ORACLE. The simulator decides solved or unsolved; `solved` is the score and `moves` is a cost. Chess
      carried the third reorder case -- an oracle binary absent from the box. Sokoban drops that class of
      prerequisite entirely, and with it the largest item in a port to another machine.
   3. SHORT ANSWERS. A one-letter answer cannot be deliberated into the token cap. The second failure mode
@@ -28,7 +28,7 @@ In Sokoban a move into a wall, or a push into a wall or another box, simply does
 board is unchanged and a naive move counter would count a model that bumped a wall forever as having
 played a long game. Both quantities are therefore recorded and they are different claims:
 
-    moves      SUCCESSFUL actions -- the score, and the number that is comparable across entrants
+    moves      SUCCESSFUL actions -- a COST, never the score (`solved` IS the score)
     attempted  every token the model emitted, legal or not
     blocked    attempts that could not be made; a wall-bumper's signature
 
@@ -59,6 +59,37 @@ def _is_give_up(tok):
     """Exact whole-token match after removing spaces and case. NOT a prefix, NOT a substring."""
     t = "".join((tok or "").split()).upper()
     return t in GIVE_UP_TOKENS
+
+
+# ==================================================================================================
+# R1'S RECORD-SIDE ITEM: A LOOSE-MATCH COUNT, AND IT IS A DIAGNOSTIC AND NOT A COUNTER.
+#
+# R1 (ratified 2026-10-13) froze the whitelist above AND ruled a second thing that is NOT a rule: in the
+# Chair's own words, "the record names which rule fired -- `give_up` via which token -- AND a LOOSE-MATCH
+# COUNT is recorded as a DIAGNOSTIC ONLY, NEVER SCORED. That is how you find out how much the strict
+# reading is throwing away without letting the loose reading into the score."
+#
+# `gave_up_at` carries the token that fired. `loose_match_diagnostic_only_never_scored` carries the other
+# half: how many tokens the STRICT reading threw away.
+#
+# THE NAME IS THE CONTRACT, because a diagnostic that can be read as a counter is how a diagnostic becomes
+# a score. It is in NO rate, NO gate and NO denominator; `not_an_action` is the scored fact about those
+# tokens and this field does not touch it.
+#
+# THE LOOSE READING IS DEFINED ONCE, HERE, AND ITS STEMS HAVE PROVENANCE: the eight whitelisted tokens
+# above, plus the abstention-shaped forms the read-grammar's own §2a table names as NOT firing. It is
+# deliberately the BROADEST reading -- a stem anywhere in the token's LETTERS -- because it is a reading of
+# what was DISCARDED, not a second scoring rule. The grammar's own examples: `RESIGNING`, `XRESIGN`,
+# `RESIGN X`, `SURRENDERED`, `STUCK`, `ABSTAIN`, `DEAD END`, `I GIVE UP`, `QUIT!` are counted here and
+# score `not_an_action` there. The eight whitelisted tokens are NOT counted here: they fire strictly.
+LOOSE_ABSTENTION_STEMS = ("RESIGN", "GIVEUP", "QUIT", "SURRENDER", "FORFEIT",       # the frozen eight
+                          "ABSTAIN", "STUCK", "UNSOLVABLE", "DEADEND", "NOMOVE")    # §2a's NOT-ON-THE-LIST
+
+
+def _is_loose_abstention(tok):
+    """THE LOOSE READING -- letters only, upper-cased, stem anywhere. NOT a scoring rule: see above."""
+    t = "".join(ch for ch in (tok or "") if ch.isalpha()).upper()
+    return bool(t) and any(stem in t for stem in LOOSE_ABSTENTION_STEMS)
 
 
 def parse(level_text):
@@ -186,18 +217,22 @@ def step(st, action):
 def play(level_text, tokens, stop_when_solved=True):
     """A level plus a move stream -> the measurement. THE RECORD IS A SUFFICIENT STATISTIC FOR THE SCORE:
 
-        solved + moves          the number, and the reason this game was chosen
+        solved + moves          `solved` IS the score; `moves` is a COST beside it
         trace[] per ply         level, action, outcome, board -- so a later reader can REPLAY it
         blocked                 attempts that could not be made
+        loose_match_diagnostic_only_never_scored    DIAGNOSTIC ONLY -- never in any gate or rate
 
     `tokens` is the model's output split into actions. Anything that is not U D L R is counted as
-    `unrecognised` and changes nothing -- it is a fact about the output, not about the board.
+    `not_an_action` and changes nothing -- it is a fact about the output, not about the board.
     """
     st = parse(level_text)
     # B1 -- `tokens` IS MATERIALISED SO THE EMITTED LENGTH IS KNOWABLE. The ruled fix needs both quantities, and
     # one of them is the length of the stream the entrant produced; enumerate() over a generator cannot report it.
     tokens = list(tokens)
     trace, moves, blocked, not_an_action, give_up = [], 0, 0, 0, 0
+    # R1's RECORD-SIDE ITEM. A DIAGNOSTIC, NEVER SCORED -- see the block above. It has exactly one
+    # increment site below, and it is in no rate, no gate and no denominator.
+    loose_match_diagnostic_only = 0
     gave_up_at: int | None = None
     for i, tok in enumerate(tokens):
         # AN EXPLICIT GIVE-UP IS A SIGNAL AND IT IS TERMINAL. It ends the run where it happens, because a
@@ -216,6 +251,10 @@ def play(level_text, tokens, stop_when_solved=True):
         act = (tok or "").strip().upper()
         if len(act) != 1 or act not in ACTIONS:
             not_an_action += 1
+            # THE DIAGNOSTIC SITS BESIDE THE COUNTER, NEVER IN IT: same branch, different claim. It records
+            # how many of these tokens the LOOSEST reading would have taken as an abstention.
+            if _is_loose_abstention(tok):
+                loose_match_diagnostic_only += 1
             trace.append({"ply": i, "token": tok, "action": None, "outcome": "not_an_action",
                           "board": render(st)})
             continue
@@ -246,6 +285,14 @@ def play(level_text, tokens, stop_when_solved=True):
                                                        "the named pair",
             "blocked": blocked, "not_an_action": not_an_action, "give_up": give_up,
             "gave_up_at": gave_up_at,
+            # R1'S RECORD-SIDE ITEM, AND IT IS NOT A COUNTER. The name says what it is, because a diagnostic
+            # that can be read as a counter is how a diagnostic becomes a score. It is in no rate, no gate
+            # and no denominator; `not_an_action` above is the scored fact and is UNCHANGED by it. The count
+            # is re-derivable from `trace`, which carries every token the run emitted.
+            "loose_match_diagnostic_only_never_scored": loose_match_diagnostic_only,
+            "loose_match_diagnostic_note": ("DIAGNOSTIC ONLY, NEVER SCORED: the tokens an "
+                                            "ABSTENTION-SHAPED reading would have taken and the strict "
+                                            "whitelist did not. In no rate, gate or denominator."),
             # ENDED says BY WHAT PATH, written by the path that produced it and never inferred later --
             # the same rule the chess termination follows.
             "ended": ("gave_up" if give_up else ("solved" if solved(st) else "commands_exhausted")),
@@ -393,8 +440,8 @@ def main():
            [c for c in a.moves.strip()]
     r = play(text, toks)
     print(f"  solved      {r['solved']}")
-    print(f"  moves       {r['moves']}   (successful actions -- the score)")
-    print(f"  attempted   {r['attempted']}   blocked {r['blocked']}   unrecognised {r['not_an_action']}")
+    print(f"  moves       {r['moves']}   (successful actions -- a COST, not the score: `solved` IS the score)")
+    print(f"  attempted   {r['attempted']}   blocked {r['blocked']}   not_an_action {r['not_an_action']}")
     print()
     print(r["final_board"])
     return 0
