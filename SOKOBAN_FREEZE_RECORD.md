@@ -71,7 +71,7 @@ digest cost an A/B and a repeat test to recover a fact that should have been on 
 **NOW CARRIED:** level digests, the simulator digest, and the host with its hardware state.
 
 ```
-grammar        6f4d72319ec6f87…      the instrument's own text
+grammar        b25d59567255c937…      the instrument's own text
 sokoban.py     7134c3e8fc59fe02…     the simulator (§6: self-test is the contract)
 01_one_push    db6ca59655f0d7d1…     the level, as an INPUT with a digest
 02_two_boxes   7549657f1768607c…     the level, as an INPUT with a digest
@@ -83,6 +83,16 @@ enforcer, a precondition for any future run; the 2026-10-10 run was produced und
 and carries that digest in its own artifact, so nothing above is rewritten, only superseded forward.
 `SOKOBAN_CONFORMANCE_PACKAGE.md` still cites `186f561f…` deliberately — it is a record of the package
 produced under that instrument, not a live pin.
+
+**RE-FROZEN 2026-10-15.** The grammar advanced `6f4d72319ec6f87…` -> `b25d59567255c937…` when the RATIFIED
+amendments R1/R2/R3 landed on `main` (grammar §2's score line, §2a's eight abstention tokens named verbatim
+from the code, §5's CONTEXT/INTERFACE line, and §7's record of what moved). **THE HEADER OF THIS RECORD --
+3730 bytes, `6f4d72319ec6f87…` -- is the text §1, §2 and §3 above were READ AGAINST, and it is left exactly
+as read; the pin line above is the CURRENT instrument, a precondition for any future run.** The 2026-10-10
+population was produced under `6f4d7231…`, and no cell of it is re-scored by the amendment (`give_up` is `0`
+in all 12 cells), so nothing above is rewritten, only superseded forward. **AND §1's ITEM IS NOT SETTLED BY
+IT:** the amendment moves the abstention list and the score wording, **not §5's schema-filling mechanism**,
+which still awaits its own amendment.
 
 ## 3. WHAT THE GRAMMAR GOT RIGHT, CHECKED RATHER THAN ASSUMED
 
