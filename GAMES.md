@@ -598,8 +598,16 @@ as "cannot reason", and to measure what the eyes are worth.*
 > entire job. It is neither register: not a task payload, not a play mode, but a **migration script**.
 > The honest disambiguator is therefore the *purpose* of the document, not its type: **a task file
 > declares a schema; this league declares a play mode; a migration script names both because it is
-> the record of their crossing.** Anyone grepping `sensor` should expect this file to be the noisiest
-> of the 47 and the least ambiguous once read.
+> the record of their crossing.** Anyone grepping `sensor` should expect this file to be among the
+> loudest, **and `GAMES.md` itself is louder** — 27 cabinet-bearing lines and 32 `sensor` occurrences
+> against 18 and 13 here, so the superlative belongs to this block rather than to that script. The
+> point survives the correction: it is the one file where both terms co-occur **by design**, and it is
+> the most ambiguous by *count* and the least ambiguous by *reading*, which are not the same measure.
+> *(Corrected from "the noisiest of the 47", which was a superlative I did not measure; the count is
+> @missile-command's catch, made after he had verified the rest of the block and deliberately declined
+> to reopen the thread over one adjective. He was right to flag it and right not to act on it — an
+> adjective in a document that does the real work elsewhere is a low-value correction, and it is still
+> a false one.)*
 >
 > *(The count is 47 tracked files, not 46 — @missile-command caught that my earlier enumeration
 > omitted `rename_league_k_term.py` itself. The script was in my own output; I dropped it when
