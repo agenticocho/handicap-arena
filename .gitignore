@@ -24,5 +24,14 @@ logs/
 # check -- `git check-ignore -v .worktrees/` -- which is why this is a directory rule, the same
 # shape as the logs/ rule above and for the same reason.
 .worktrees/
+# AND THE DARTS HARNESS'S ARCHIVE DIRECTORY -- the same shape as the two directory rules above, and NOT
+# a declaration that its contents are scratch. Its five tracked control bundles are DECLARED IN PLACE in
+# cabinet_root.py (DARTS_ARCHIVE + DARTS_ARCHIVE_WHY), byte-frozen and cited by
+# darts/DARTS_AMBIGUITIES.md. The rule closes the directory to NEW bytes so that a stray write beside
+# them cannot be staged; `darts/darts.py`'s --out now resolves the DECLARED write scope's darts/ subtree
+# instead of this directory, so nothing writes here at all. Read it back with
+# `git check-ignore darts/results/x`. Tracked files stay tracked: an ignore rule does not untrack what
+# is already committed.
+darts/results/
 .venv/
 venv/
