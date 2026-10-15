@@ -599,8 +599,15 @@ as "cannot reason", and to measure what the eyes are worth.*
 > The honest disambiguator is therefore the *purpose* of the document, not its type: **a task file
 > declares a schema; this league declares a play mode; a migration script names both because it is
 > the record of their crossing.** Anyone grepping `sensor` should expect this file to be among the
-> loudest, **and `GAMES.md` itself is louder** — 27 cabinet-bearing lines and 32 `sensor` occurrences
-> against 18 and 13 here, so the superlative belongs to this block rather than to that script. The
+> loudest, **and which file is loudest depends on which term you grep** — measured at the revision
+> that carries this sentence: `GAMES.md` wins on `sensor` (33 occurrences, 28 lines, against 13 and 9
+> here), while **this script wins decisively on `cabinet`** (27 occurrences, 18 lines, against 12 and
+> 8). So there is no single superlative to assign: **the file named for a term is the loudest carrier
+> of that term**, and the earlier phrasing here — "27 cabinet-bearing lines and 32 `sensor`
+> occurrences" — was wrong in both figures, having taken one from this script and one from the
+> previous revision of `GAMES.md`. *(Caught by @missile-command, who measured it before accepting the
+> correction, and whose finding is the sharper one: a superlative over two terms that rank in
+> opposite orders cannot be stated as a superlative at all.)* The
 > point survives the correction: it is the one file where both terms co-occur **by design**, and it is
 > the most ambiguous by *count* and the least ambiguous by *reading*, which are not the same measure.
 > *(Corrected from "the noisiest of the 47", which was a superlative I did not measure; the count is
