@@ -5,10 +5,15 @@ import hashlib, json, os
 ARENA = os.path.dirname(os.path.abspath(__file__))
 PROBE = os.path.join(ARENA, "probes_RUN_20261010-072252.json")
 OUT = os.path.join(ARENA, "arcade_showcase.html")
-# Pilot run of record's simulator digest (SOKOBAN_FREEZE_RECORD.md). Derived, not typed:
-# if sokoban.py advances, the pin moves with it instead of staying put silently.
+# The CURRENT instrument on disk -- what the page labels "current pin", NOT the pilot's digest.
+# Derived, not typed: if sokoban.py advances, this moves with it and the assertion below refuses the
+# build rather than letting the plate mislabel the instrument silently.
+# Declared value: CABINET_DECLARATION_sokoban.md -- "On disk sokoban.py is 00996929972b9483; the pilots
+# RECORD 7134c3e8fc59fe02 (= commit f0eba6e) and the 2026-10-10 population RECORDS 186f561f."
+# The pilot's digest (7134c3e8) is a historical fact and is cited as a literal in the footer; it must
+# NEVER be advanced to match a re-frozen file.
 PILOT_PIN = hashlib.sha256(open(os.path.join(ARENA, "sokoban.py"), "rb").read()).hexdigest()[:8]
-assert PILOT_PIN == "7134c3e8", f"pilot pin drifted from run of record: {PILOT_PIN!r}"
+assert PILOT_PIN == "00996929", f"current instrument drifted from its declaration: {PILOT_PIN!r}"
 
 def main():
     d = json.load(open(PROBE))
