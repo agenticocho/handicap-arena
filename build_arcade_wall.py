@@ -46,6 +46,8 @@ def basename(p):
 
 
 bundles = sorted(glob.glob(os.path.join(RESULTS, "*.json")))
+non_entrant_paths = []
+arena_bundles = []
 scratched_paths = []
 graded_entries = []
 for path in bundles:
@@ -53,8 +55,21 @@ for path in bundles:
         d = json.load(open(path))
     except Exception:
         continue
-    res = d.get("results") or []
-    if not res:
+    # Contract scope: only THIS arena's bundles. Without this the glob counts 317
+    # files where the gate counts 310.
+    if d.get("harness") != "handicap-arena":
+        non_entrant_paths.append(os.path.basename(path))
+        continue
+    arena_bundles.append(path)
+    # The rendered claim, keyed on DATA: results == [] is a missed weight.
+    # A bundle with NO "results" key is not an entrant at all -- counting it as a
+    # miss is how seven test artifacts (CHESS_GAME_*, CHESS_VOID_*, DEPTH_TEST*)
+    # became seven phantom missed weights: 92 where section 7.2's rule gives 85.
+    if "results" not in d:
+        non_entrant_paths.append(os.path.basename(path))
+        continue
+    res = d["results"]
+    if res == []:
         scratched_paths.append(os.path.basename(path))
         continue
     for e in res:
@@ -126,7 +141,7 @@ from collections import Counter
 card_counts = Counter(e["card"] for e in entries)
 display_pay = {
     "generated": "derived",
-    "bundleCount": len(bundles),
+    "bundleCount": len(arena_bundles),
     "gradedCount": len(entries),
     "scratchedCount": len(scratched_paths),
     "cardCounts": {str(k): card_counts.get(k, 0) for k in sorted(card_counts)},
@@ -410,10 +425,29 @@ html = template.replace("__DATA__", data_json)
 with open(OUT, "w", encoding="utf-8") as f:
     f.write(html)
 
-# Verification assertions (printed, not just claimed).
-# graded count is derived, not hardcoded
-assert DATA if False else True
-assert "results == []" not in html or True
+# ── Verification assertions. THESE MUST BE ABLE TO FAIL. ─────────────────────
+# The pair that stood here were `assert DATA if False else True` and
+# `assert "results == []" not in html or True` -- two tautologies, under a comment
+# claiming the checks were "printed, not just claimed". Worse: `DATA` is the JS-side
+# object in the rendered template, not a Python name in this file at all, so the
+# first assertion referenced a variable that DOES NOT EXIST and `if False else True`
+# meant Python never looked. A check that cannot run is indistinguishable from a
+# check that passes, and the 92-vs-85 defect rode straight through both.
+assert display_pay["gradedCount"] == len(graded_entries), (display_pay["gradedCount"], len(graded_entries))
+assert display_pay["scratchedCount"] == len(scratched_paths), (display_pay["scratchedCount"], len(scratched_paths))
+assert display_pay["bundleCount"] == len(arena_bundles), (display_pay["bundleCount"], len(arena_bundles))
+assert len(arena_bundles) + len(non_entrant_paths) == len(bundles), (
+    len(arena_bundles), len(non_entrant_paths), len(bundles))
+
+# The claim the HTML RENDERS -- "results == [] renders as a missed weight...
+# Keyed on data, not filename" -- is now TESTED, in both directions, rather than
+# asserted in prose. Each direction is a real check with a real failure mode.
+for _name in scratched_paths:
+    assert json.load(open(os.path.join(RESULTS, _name))).get("results") == [], _name
+_scratched = set(scratched_paths)
+for _p in arena_bundles:
+    if json.load(open(_p)).get("results") == []:
+        assert os.path.basename(_p) in _scratched, _p
 from collections import Counter
 # card counts are derived and printed below
 # exact rational ordering check
