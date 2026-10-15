@@ -155,34 +155,44 @@ def main():
     #
     # So the assertion runs the other way: if NOTHING differs at turn level, this artifact IS a
     # duplicate, and the declaration's reason for tracking it does not exist.
-    print("\nCHECK 5 -- the superseded file's turn-level content is NOT contained")
+    #
+    # TIMING FIELDS ARE EXCLUDED, AND THIS COST ME A WRONG NUMBER. The first version of this check
+    # compared every field and reported 4 of 5 cells differing. One of those four -- LFM2/01 --
+    # differed ONLY in `secs`, wall-clock latency (0.4 vs 0.5, 0.1 vs 0.2). A wall-clock reading
+    # cannot repeat by construction, and it is not part of "what the model did". With timing
+    # excluded the true count is 3 of 5, which is what the owner reported. Counting a duration as
+    # content is the same error as counting it as a score.
+    TIMING = {"secs", "load_s", "elapsed", "duration", "wall_s"}
+
+    def _content(o):
+        if isinstance(o, dict):
+            return {k: _content(v) for k, v in o.items() if k not in TIMING}
+        if isinstance(o, list):
+            return [_content(x) for x in o]
+        return o
+
+    print("\nCHECK 5 -- the superseded file's turn-level CONTENT is NOT contained (timing excluded)")
     for s in sup:
         if not inc:
             continue
         sd, sc, _ = cells_of(os.path.join(ROOT, s))
         _i, ic, _ = cells_of(os.path.join(ROOT, inc[0]))
-        SK = {(c.get("entrant"), c.get("level")): c for c in sc}
-        IK = {(c.get("entrant"), c.get("level")): c for c in ic}
+        SK = {(c.get("entrant"), c.get("level")): _content(c) for c in sc}
+        IK = {(c.get("entrant"), c.get("level")): _content(c) for c in ic}
         n_diff = n_same = 0
         for k in sorted(set(SK) & set(IK)):
             ca, cb = SK[k], IK[k]
             fields = sorted(set(ca) | set(cb))
-            differs = []
-            for f in fields:
-                va, vb = ca.get(f), cb.get(f)
-                if isinstance(va, (list, dict)) or isinstance(vb, (list, dict)):
-                    if json.dumps(va, sort_keys=True) != json.dumps(vb, sort_keys=True):
-                        differs.append(f)
-                elif va != vb:
-                    differs.append(f)
+            differs = [f for f in fields
+                       if json.dumps(ca.get(f), sort_keys=True) != json.dumps(cb.get(f), sort_keys=True)]
             if differs:
                 n_diff += 1
                 print(f"    DIFFERS  {str(k[0])[:30]:30s} {str(k[1])[:22]:22s} {', '.join(differs)}")
             else:
                 n_same += 1
-        print(f"    => {n_diff} of {n_diff + n_same} shared cells differ at turn level")
+        print(f"    => {n_diff} of {n_diff + n_same} shared cells differ in content")
         if n_diff == 0:
-            fails.append(f"{s}: NO turn-level difference -- it IS a duplicate, so the stated "
+            fails.append(f"{s}: NO turn-level content difference -- it IS a duplicate, so the stated "
                          f"reason for tracking it does not hold")
             print("    => CONTRADICTION: the file is fully contained, so it need not be tracked.")
         else:
