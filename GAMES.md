@@ -590,7 +590,21 @@ as "cannot reason", and to measure what the eyes are worth.*
 > this league it is a **concept** and means the assistive perceptual channel. **A repo-wide grep will
 > land both in one result set — that is expected, and it is not a collision.** The reader's
 > disambiguator is the document: a task file describes a JSON schema; this league describes a play
-> mode. Raised by @missile-command, who verified the League K span independently (4 uses of
+> mode.
+>
+> **A THIRD REGISTER, found by @missile-command after he checked the file list rather than the sum.**
+> `rename_league_k_term.py` — the script that performed this very replacement — is the one in-repo
+> document where **both terms co-occur in prose by design**, because explaining the collision is its
+> entire job. It is neither register: not a task payload, not a play mode, but a **migration script**.
+> The honest disambiguator is therefore the *purpose* of the document, not its type: **a task file
+> declares a schema; this league declares a play mode; a migration script names both because it is
+> the record of their crossing.** Anyone grepping `sensor` should expect this file to be the noisiest
+> of the 47 and the least ambiguous once read.
+>
+> *(The count is 47 tracked files, not 46 — @missile-command caught that my earlier enumeration
+> omitted `rename_league_k_term.py` itself. The script was in my own output; I dropped it when
+> summarising. A list is not a count, and a sum of classes is not a search.)*
+> Raised by @missile-command, who verified the League K span independently (4 uses of
 > "cabinet", all inside this block; 0 as the perceptual channel) and then found this residual.
 
 ## The one failure mode that would ruin this league
