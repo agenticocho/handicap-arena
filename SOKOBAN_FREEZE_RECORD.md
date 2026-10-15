@@ -71,7 +71,7 @@ digest cost an A/B and a repeat test to recover a fact that should have been on 
 **NOW CARRIED:** level digests, the simulator digest, and the host with its hardware state.
 
 ```
-grammar        02cd63c19bcb65d4…      the instrument's own text
+grammar        86251be3d717d3b5…      the instrument's own text
 sokoban.py     00996929972b9483…     the simulator (§6: self-test is the contract)
 01_one_push    db6ca59655f0d7d1…     the level, as an INPUT with a digest
 02_two_boxes   7549657f1768607c…     the level, as an INPUT with a digest
@@ -191,6 +191,16 @@ instrument is recoverable as commit `f0eba6e`, and every one of their cells re-d
 read-grammar's §2a and §7 item 2 citations, which recorded R1's loose-match count as MEASURED ABSENT at
 `7134c3e8`, are converted to **SETTLED** in `SOKOBAN_READ_GRAMMAR.md` §7b, and that block is an APPEND: §7's
 text and §7a's table are not edited and their items are not renumbered.
+
+**AND THE GRAMMAR PIN ADVANCES IN THE SAME LANDING** `02cd63c19bcb65d4…` → `86251be3d717d3b5…`, because
+`SOKOBAN_READ_GRAMMAR.md` §7b is APPENDED to the read-grammar: the settlement of §2a's `FIRED` line and §7's
+item 2, the discharge of §7a's row 1 and of its *"R2 IS NOT LANDED ON `sokoban.py`"* sentence, and the census
+of the LANDED bytes with every hit disposed. **A list inside a live pin block is a live pin, not a
+history:** the line above is the CURRENT instrument, so it moves with the text it names, exactly as it did at
+the first amendment, the second amendment and §7a. **§7b is NAMING AND SETTLEMENT, not measurement -- it
+re-scores no cell and moves no published number** (`give_up` is `0` in all 12 cells of the 2026-10-10
+population and in both pilots), and the HEADER of this record -- 3730 bytes, `6f4d72319ec6f87…` -- is still
+left exactly as read.
 
 ## 3. WHAT THE GRAMMAR GOT RIGHT, CHECKED RATHER THAN ASSUMED
 
