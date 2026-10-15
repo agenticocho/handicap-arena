@@ -14,9 +14,14 @@ can bias WHICH positions land near a threshold, because that selection is made b
 affects precision and the ply range affects variety. Recorded as a gap, not as a bias.
 """
 import json
+import os
 import random
 import subprocess
 import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import cabinet_root as _root                                          # noqa: E402
 
 BIN = "/home/chilly1/chess_oracle/stockfish/stockfish-linux-x86-64-universal"
 D_REF, D_ALT = 18, 12
@@ -24,7 +29,16 @@ THREADS, HASH = 1, 64
 LOST_CP, HOLD_CP, WINDOW = -300, -100, 60
 N_CANDIDATES = 40
 PLY_CHOICES = list(range(12, 71, 2))
-OUT = "/home/chilly1/workspace/ocho_arena/results/DEPTH_TEST.json"
+
+# NO DESTINATION IS BOUND HERE. The line that used to sit at this position was a module-level
+# ABSOLUTE LITERAL naming main's legacy record -- the same literal, in all four trees, at the same
+# line -- and main() below opened it for writing. So running this file from ANY worktree overwrote a
+# TRACKED file inside main's checkout: a cross-worktree write into the record, in a form the counter's
+# two os.path.join patterns could not see. The Chair's ruling on t_5742bdac (a writer is bound by its
+# DESTINATION, not by its syntax; 2026-10-14-a-writer-is-bound-by-its-destination-not-its-syntax.md,
+# sha256 6309d8a467ccdbc2317e904f98a6222c37f2678f17f2c4e8567d87b5f52232f9) brings this file INTO the
+# declaration. The destination is now resolved at the write -- see depth_dir(), and do not put a path
+# constant back at module level.
 
 
 def uci(cmds, until):
@@ -99,7 +113,45 @@ def side_of(cp):
     return "GREY"
 
 
+def depth_dir():
+    """-> <declared ROOT>/<this worktree's cabinet>/depth -- THE ONE DESTINATION for this test's output.
+
+    RESOLVED AT THE WRITE, NOT AT THE IMPORT, and that is a measurement rather than a taste: the
+    ruling fixes the rule for BOTH depth files for one reason -- depth_test2.py is also a library
+    (source_probe3.py:19, source_probe4.py:21, acceptance_smoke.py:20 import it for its uci/eval/fen
+    helpers), so a resolution at module level would make three importers refuse over a write they
+    never make. This file is imported by nobody today; the rule is kept here anyway, because where a
+    destination resolves has to be ONE answer.
+
+    AND IT REFUSES RATHER THAN FALLS BACK. cabinet_root.results_dir() is a Refusal -- a SystemExit
+    that names the remedy -- when there is no declared root, or when the declaration resolves inside
+    a git working tree or the repository's own git directory. It is NOT caught here: a run that
+    cannot declare where its result goes must not write one somewhere else.
+
+    WHY A NAMED SUBTREE AND NOT THE FLAT LEVEL -- the naming is the Chair's, not this file's. The two
+    published depth artifacts stay DECLARED IN PLACE inside the legacy record (the record is one tree
+    object, 0bcaaa0188b35f0bdd17e3ca824a977cac2d94a1, and removing a file from it changes that
+    object), so a flat-level write would put a second file of the same basename under a different
+    domain entry -- a basename collision across entries, which the tools that flatten the domain are
+    required to refuse. `depth/` is a subtree OF THE DECLARED WRITE SCOPE, not a second root.
+    """
+    return os.path.join(_root.results_dir(), "depth")
+
+
+def out_path():
+    """-> <declared write scope>/depth/DEPTH_TEST.json, or a refusal. This creates nothing."""
+    return os.path.join(depth_dir(), "DEPTH_TEST.json")
+
+
 def main():
+    # NOT `out`: `out` is already the read buffer in the walk below (uci returns lines), and a name
+    # that means two things in one function is how a write lands in a list. The linter caught this
+    # one; the measurement below is what proves it.
+    dest = out_path()                    # the destination, resolved where it is written
+    print(f"  destination            {dest}")
+    print("                         resolved at the write through cabinet_root.results_dir(), which "
+          "REFUSES")
+    print("                         rather than falling back to a worktree-local path")
     rnd = random.Random(20261008)          # deterministic; the walk is reproducible
     fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
     seen, cands = set(), []
@@ -174,13 +226,14 @@ def main():
         print(f"\n  SHIFT d12->d18 across ALL {len(shifts)} candidates: "
               f"min {shifts[0]:+d}  median {shifts[len(shifts)//2]:+d}  max {shifts[-1]:+d}")
 
+    os.makedirs(depth_dir(), exist_ok=True)
     json.dump({"config": {"engine": "Stockfish 19", "threads": THREADS, "hash": HASH,
                           "d_ref": D_REF, "d_alt": D_ALT, "window": WINDOW},
                "rows": [{k: v for k, v in r.items()} for r in rows],
                "crossings_at_risk": rc_, "crossings_far": fc,
                "n_at_risk": len(risk), "n_far": len(far)},
-              open(OUT, "w"), indent=1)
-    print(f"\n  written: {OUT}")
+              open(dest, "w"), indent=1)
+    print(f"\n  written: {dest}")
     return 0
 
 
