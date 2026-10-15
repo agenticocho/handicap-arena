@@ -13,15 +13,30 @@ decision is the Chair's, and it is the one question left open from tonight's exc
 
 ## What the disk says
 
-The question was posed as *two* catalogues. It is not two. It is **one catalogue, forked three ways,
-and the arena has moved on alone.**
+The question was posed as *two* catalogues **that share a filename but name different things** — the
+arena's public event catalogue, and each cabinet's own games file. **That premise does not hold.**
+Measured:
 
-    arena commit f42026b            GAMES.md sha256 207a7797a3da6ed5   610 lines
-    cabinet/zork            GAMES.md sha256 207a7797a3da6ed5   610 lines
-    cabinet/sokoban         GAMES.md sha256 207a7797a3da6ed5   610 lines
-    cabinet/missile-command GAMES.md sha256 207a7797a3da6ed5   610 lines
+    arena now      8efe16c2d5ae8533   711 lines   11 leagues   "# THE GAMES REFERENCE ... v1.0"
+    arena f42026b  207a7797a3da6ed5   610 lines   10 leagues   same header, same version line
+    cabinet/zork   207a7797a3da6ed5   610 lines   10 leagues   <- IDENTICAL, not merely similar
+    cabinet/sokoban        207a7797a3da6ed5
+    cabinet/missile-command 207a7797a3da6ed5
 
-    arena main today        GAMES.md                 711 lines   11 leagues  (+ League K)
+A cabinet's `GAMES.md` is **not its own games file.** It is **the arena's `GAMES.md`, byte for byte,
+at commit `f42026b`, with the same title and the same `Version 1.0 · Public document` line** — one
+league behind the arena's own copy. This is not a homonym, and it is not two documents that happen to
+be named alike. **It is one document, forked three ways, that nobody has declared.**
+
+The distinction matters for the ruling. *"Two things share a name"* is a naming problem solved by
+renaming. **"One document was forked and the fork was never declared"** is a provenance problem, and
+renaming does nothing about it — the four copies would still be four copies at four different states.
+
+It is also, on the evidence, the *second* time this exchange has produced the same shape. Much of
+today's work went into the rule that **a run must carry the freeze it was produced under**. A
+catalogue that was forked must carry its fork point for the same reason, and for the same
+consequence: without it, a reader compares two states and reads the difference as a design decision.
+
 
 All three cabinets hold a **byte-identical copy of an arena commit**, `f42026b`, which is an exact
 ancestor still present on the trunk. So each cabinet's catalogue is not an independent document that
