@@ -560,21 +560,34 @@ deterministically scorable, and none of them requires predicting a market.*
 # LEAGUE K — ASSISTED PLAY (the seeing-eye dog)
 
 *Proposed 2026-10-07. This league tests the boundary between PERCEPTION and REASONING by giving a
-text-only entrant a declared, frozen assistive layer — a cabinet that describes and does not
+text-only entrant a declared, frozen assistive layer — a sensor that describes and does not
 conclude. The point is not to let weak models cheat at vision. It is to stop scoring "has no eyes"
 as "cannot reason", and to measure what the eyes are worth.*
 
+> **TERMINOLOGY (standardised 2026-10-07).** In this repository **"cabinet" means an ARCADE
+> CABINET** — a self-contained game with frozen criteria, owned by one cabinet agent, in its own
+> git worktree (`cabinet/sokoban`, `cabinet/missile-command`, `cabinet/zork`). It is NOT used here
+> for anything else.
+>
+> The assistive layer in this league is a **SENSOR**: a declared, frozen perceptual channel
+> attached to an entrant. It describes and does not conclude, and it **must fail the task alone** —
+> otherwise the event measures the sensor rather than the entrant. *"Assisted play"* is the mode;
+> the sensor is the component. The seeing-eye-dog metaphor is the informal gloss.
+>
+> A sensor is **not** part of a cabinet's machinery, and a cabinet is **not** a sensor. Two
+> different things, two different words, deliberately.
+
 ## The one failure mode that would ruin this league
 
-**If the cabinet can solve the task by itself, the event measures the cabinet.** A description
+**If the sensor can solve the task by itself, the event measures the sensor.** A description
 informative enough to be transcribed is a leak, and the entrant's score becomes the dog's score.
-Every event below therefore carries an **isolation requirement**: the cabinet must be scored
-ALONE, and it must FAIL. A cabinet that passes alone invalidates the round — the same way the
+Every event below therefore carries an **isolation requirement**: the sensor must be scored
+ALONE, and it must FAIL. A sensor that passes alone invalidates the round — the same way the
 grammar file invalidated a whole table in FINDING 001 by making the model's failure uninformative.
 
 Three further constraints, all from this project's own findings:
 
-- **Frozen and declared.** The cabinet is an LLM, so its model, version, prompt and quantisation
+- **Frozen and declared.** The sensor is an LLM, so its model, version, prompt and quantisation
   are config. FINDING 001: a config that can change the outcome belongs in the record. A
   per-run-varying dog makes two runs incomparable.
 - **Never merged.** The pair's score and the model's score are reported **separately**, always.
@@ -587,19 +600,19 @@ Three further constraints, all from this project's own findings:
 
 ### K1 · Assisted Perception
 - **Measures** — whether a text-only model can reason over a description it did not produce
-- **Format** — a task whose input is an image; a **frozen cabinet** renders it to text under a declared prompt; the entrant answers from the description plus the task
+- **Format** — a task whose input is an image; a **frozen sensor** renders it to text under a declared prompt; the entrant answers from the description plus the task
 - **Scorer** — PARSE against the task's own ground truth, exactly as the visual task would be scored
-- **Null baseline** — **the entrant without the cabinet** (expected to fail, and its failure is the baseline the delta is measured against), plus **chance**
+- **Null baseline** — **the entrant without the sensor** (expected to fail, and its failure is the baseline the delta is measured against), plus **chance**
 - **Discriminates** — the reasoning half of a perceptual task. A model that scores 0 bare and 0.67 assisted has demonstrated reasoning and lacked eyes; a model that scores 0 both ways lacked both
-- **Anti-gaming** — the cabinet is scored alone and **must fail**; it is forbidden from emitting the answer, a decision, or a confidence; the task's ground truth is never shown to it
+- **Anti-gaming** — the sensor is scored alone and **must fail**; it is forbidden from emitting the answer, a decision, or a confidence; the task's ground truth is never shown to it
 
-### K2 · Cabinet Isolation *(the guard, run as its own event)*
+### K2 · Sensor Isolation *(the guard, run as its own event)*
 - **Measures** — whether an assistive layer is a channel or a solver
-- **Format** — run the cabinet **alone** against the same tasks, with its description as its final answer
+- **Format** — run the sensor **alone** against the same tasks, with its description as its final answer
 - **Scorer** — PARSE against the same ground truth
 - **Null baseline** — none needed; the requirement is absolute
-- **Discriminates** — **if the cabinet passes a task alone, that task is void for K1.** This event exists so the check is explicit and published rather than assumed
-- **Anti-gaming** — the cabinet's own score is recorded beside every assisted result, so a reader can always see how much of the pair's score the dog could have earned unaided
+- **Discriminates** — **if the sensor passes a task alone, that task is void for K1.** This event exists so the check is explicit and published rather than assumed
+- **Anti-gaming** — the sensor's own score is recorded beside every assisted result, so a reader can always see how much of the pair's score the dog could have earned unaided
 
 ### K3 · Mode Pair *(the delta)*
 - **Measures** — the value of perception to a given model, as a number
@@ -611,15 +624,15 @@ Three further constraints, all from this project's own findings:
 
 ### K4 · Native Control *(the three-arm comparison)*
 - **Measures** — assisted text against genuine multimodal, on the same task
-- **Format** — three arms: (a) text model, bare; (b) text model + cabinet; (c) a native VL model, no cabinet
+- **Format** — three arms: (a) text model, bare; (b) text model + sensor; (c) a native VL model, no sensor
 - **Scorer** — PARSE on all three
 - **Null baseline** — arm (a)
 - **Discriminates** — **the question this league was proposed to answer:** does a described image plus a strong reasoner beat a small model that can simply see? Arm (c) is the honest control, and it is cheap because eight VL entrants are already in the field
-- **Anti-gaming** — arm (c) gets no cabinet; if it is helped, the comparison is meaningless. All three arms share the task set and the trial count
+- **Anti-gaming** — arm (c) gets no sensor; if it is helped, the comparison is meaningless. All three arms share the task set and the trial count
 
 ### K5 · Description Fidelity
-- **Measures** — how much of the image survives the cabinet channel
-- **Format** — a task with a known, enumerable set of visual facts; the cabinet produces a description; a deterministic parser counts which facts are present
+- **Measures** — how much of the image survives the sensor channel
+- **Format** — a task with a known, enumerable set of visual facts; the sensor produces a description; a deterministic parser counts which facts are present
 - **Scorer** — PARSE: fact coverage, plus **hallucination rate** (facts asserted that are not in the image)
 - **Null baseline** — a template description naming the image type and nothing else
 - **Discriminates** — whether a low assisted score means the entrant failed to reason, or the dog failed to see. Without this, K1's result is unattributable
