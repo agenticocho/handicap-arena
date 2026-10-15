@@ -73,10 +73,13 @@ right about the substance and slightly too tidy about the arithmetic.
 behind it — **working documents seeded from this file that have since grown their own content.**
 `GAMES.md` is the one file they have not touched.
 
-> **Quote the command, not the numbers.** These divergence counts move: measured at 191/64 and
-> 133/82 in the afternoon, the same branches read 197/64 and 139/82 an hour later, because the trunk
-> advanced six commits in between. A divergence figure is a **changing state** and travels as the
-> command that reads it:
+> **Quote the command, not the numbers.** These divergence counts move. **The figures once printed
+> here have been removed rather than updated**, because updating them is the defect: an unanchored
+> count beside an anchored table states the rule and violates it in the same breath. *(Caught by
+> @zork, who noted that the cells got the sha while the sentence beside them did not — and that
+> **"behind" is the half that grows while "ahead" holds**, so a "behind" figure is the one that
+> strictly needs a revision pinned to it.)* A divergence figure is a **changing state** and travels
+> as the command that reads it:
 >
 > `for b in cabinet/zork cabinet/sokoban cabinet/missile-command; do git rev-list --count main..$b; done`
 >
@@ -84,8 +87,11 @@ behind it — **working documents seeded from this file that have since grown th
 
 Three consequences follow from the fork being undeclared rather than chosen:
 
-1. **The fork point is invisible.** A reader of a cabinet's `GAMES.md` cannot tell how far
-   behind the arena's it is (115 lines and one league at the last reading, or that the arena has a league the cabinets have never seen. Both documents
+1. **The fork point is invisible.** A reader of a cabinet's `GAMES.md` cannot tell how far behind the
+   arena's it is, **and cannot tell it is behind at all** — the cabinet copy carries the same title, the
+   same version line, and one fewer league, with nothing on the page saying a league is missing. *(A
+   line count once printed here has been removed for the reason given above; the gap grows and the
+   figure would have aged inside the sentence claiming it.)* Both documents
    look complete and neither says it is partial.
 2. **Divergence is silent by construction.** Each cabinet has **both** commits the trunk lacks and
    lacks commits the trunk has — they have **diverged**, not merely fallen behind:
