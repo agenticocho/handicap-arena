@@ -71,7 +71,7 @@ digest cost an A/B and a repeat test to recover a fact that should have been on 
 **NOW CARRIED:** level digests, the simulator digest, and the host with its hardware state.
 
 ```
-grammar        c2124f17a6bdaaa8…      the instrument's own text
+grammar        02cd63c19bcb65d4…      the instrument's own text
 sokoban.py     7134c3e8fc59fe02…     the simulator (§6: self-test is the contract)
 01_one_push    db6ca59655f0d7d1…     the level, as an INPUT with a digest
 02_two_boxes   7549657f1768607c…     the level, as an INPUT with a digest
@@ -109,6 +109,32 @@ digests are *"NOW CARRIED"* -- a pin block naming two of three levels is the sta
 prevent. **AND §1's ITEM IS SETTLED IN THE TEXT:** the prescribed three-part replacement is now §5, quoted
 back in the grammar's §7 -- **while the MEASUREMENT its text calls for, the three-arm follow-up, has still
 NOT been run.**
+
+**PIN ADVANCED FOR THE NAMING, HELD FOR THE PROSE -- 2026-10-15 (R2).** Two pins, two dispositions, and this
+landing's own note beside the `sokoban.py` pin line above.
+
+**1. THE GRAMMAR PIN ADVANCES** `c2124f17a6bdaaa8…` -> `02cd63c19bcb65d4…`, because this landing APPENDS §7a to
+the read-grammar (the Chair's carrier disposition, filed as
+`2026-10-15-a-text-correction-does-not-move-a-pinned-identity`). **A list inside a live pin block is a live
+pin, not a history:** the line above is the CURRENT instrument, so it moves with the text it names, exactly as
+it did at the first and second amendments. §7a is NAMING, not measurement -- **it re-scores no cell and moves
+no published number** (`give_up` is `0` in all 12 cells of the 2026-10-10 population and in both pilots), and
+the HEADER of this record -- 3730 bytes, `6f4d72319ec6f87…` -- is still left exactly as read.
+
+**2. THE `sokoban.py` PIN IS HELD, and this note records what the pinned file's own text still READS** so that
+a reader who greps it finds a DATED sentence rather than a deletion: `sokoban.py` `:9` and `:31` still call
+`moves` the score, and its RUNTIME PRINTED LEGEND at `:396` still prints the same claim beside `:397`'s
+retired `unrecognised` for the counter the code names `not_an_action`. **R2 (`solved` IS THE SCORE; `moves` is
+a COST) IS NOT LANDED ON THIS FILE, and it cannot be landed by editing prose.** The bytes are held because
+they ARE the identity: this pin is asserted by `sokoban_solver.py`'s control [6] and required by
+`CABINET_DECLARATION_sokoban.md:42-44` for the live equality with the run of record's recorded
+`simulator_digest` (`probes/SOKOBAN_RUN_pilot-20261011-105455.json`); moving the identity for a comment would
+spend that equality permanently for zero measurement content
+(`2026-10-14-a-name-fix-must-not-buy-a-provenance-supersession`). **The four text lines move in the SAME
+COMMIT as the next change that moves this identity for a MEASUREMENT reason -- card `t_b439b167` (`:9`, `:31`,
+`:396`, `:397`) -- and the re-freeze it carries will name every subject it moves.** The carriers this record
+does not own -- both PREREGs, the pin-time snapshot with its `MANIFEST.txt`, the proposal diff, and the
+SUPERSEDED promo -- are NAMED, with lines, digests, dates and reasons, in `SOKOBAN_READ_GRAMMAR.md` §7a.
 
 ## 3. WHAT THE GRAMMAR GOT RIGHT, CHECKED RATHER THAN ASSUMED
 
