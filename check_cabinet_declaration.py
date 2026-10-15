@@ -156,13 +156,19 @@ def main():
     # So the assertion runs the other way: if NOTHING differs at turn level, this artifact IS a
     # duplicate, and the declaration's reason for tracking it does not exist.
     #
-    # TIMING FIELDS ARE EXCLUDED, AND THIS COST ME A WRONG NUMBER. The first version of this check
-    # compared every field and reported 4 of 5 cells differing. One of those four -- LFM2/01 --
-    # differed ONLY in `secs`, wall-clock latency (0.4 vs 0.5, 0.1 vs 0.2). A wall-clock reading
-    # cannot repeat by construction, and it is not part of "what the model did". With timing
-    # excluded the true count is 3 of 5, which is what the owner reported. Counting a duration as
-    # content is the same error as counting it as a score.
-    TIMING = {"secs", "load_s", "elapsed", "duration", "wall_s"}
+    # TIMING KEYS ARE EXCLUDED, AND THE LIST IS DEFENSIVE ON PURPOSE. `secs` and `load_s` are the
+    # ones that actually occur in the pilots (367 and 12 times). The rest occur zero times today --
+    # verified across the whole probes/ directory -- and are kept because the exclusion has to be a
+    # POLICY about what kind of quantity timing is, not a snapshot of the keys one artifact happened
+    # to use. `turn_s`, `started_at` and `finished_at` are the cabinet owner's additions; `elapsed`,
+    # `duration` and `wall_s` are mine.
+    #
+    # The rule: a duration or a timestamp cannot repeat across two runs of the same cell BY
+    # CONSTRUCTION, so a difference there cannot support a claim about what the model did. Counting a
+    # latency as content is the error this check was corrected for -- my first version computed 4 of
+    # 5 by including `secs`, and the true content count is 3.
+    TIMING = {"secs", "load_s", "turn_s", "elapsed", "duration", "wall_s",
+              "started_at", "finished_at"}
 
     def _content(o):
         if isinstance(o, dict):
