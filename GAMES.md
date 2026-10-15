@@ -10,7 +10,9 @@
 >
 > **Counts are not maintained in this header.** They are counted from the headings below and
 > asserted by `test_doc_counts.py`. A summary line kept in sync by hand goes stale, and this one
-> did: it read *"forty-plus events across nine leagues"* while the body held **55 across 10** —
+> did: it read *"forty-plus events across nine leagues"* while the body held **61 across 11** —
+> and the number had been hand-written three times. **Never hand-write this count.** Derive it:
+> `for L in A B C D E F G H I J K; do printf "%s:%s " $L $(grep -c "^### $L[0-9]" GAMES.md); done`
 > League J (Strategy Evaluation & Research) had arrived and only the closing line was updated. The
 > stale figure then propagated out of this document and into a generated audio summary of it.
 > A number a reader skims is a number that must be computed, not remembered.
@@ -552,6 +554,76 @@ deterministically scorable, and none of them requires predicting a market.*
 - **Null baseline** — **rank by in-sample return**, which is a strong baseline and frequently wins
 - **Discriminates** — arguably the most useful single skill in applied quant, and it is measured by one number the moment you have a holdout
 - **Anti-gaming** — the instance mixes strategies whose in-sample and out-of-sample orderings are deliberately anti-correlated in a known subset
+
+---
+
+# LEAGUE K — ASSISTED PLAY (the seeing-eye dog)
+
+*Proposed 2026-10-07. This league tests the boundary between PERCEPTION and REASONING by giving a
+text-only entrant a declared, frozen assistive layer — a cabinet that describes and does not
+conclude. The point is not to let weak models cheat at vision. It is to stop scoring "has no eyes"
+as "cannot reason", and to measure what the eyes are worth.*
+
+## The one failure mode that would ruin this league
+
+**If the cabinet can solve the task by itself, the event measures the cabinet.** A description
+informative enough to be transcribed is a leak, and the entrant's score becomes the dog's score.
+Every event below therefore carries an **isolation requirement**: the cabinet must be scored
+ALONE, and it must FAIL. A cabinet that passes alone invalidates the round — the same way the
+grammar file invalidated a whole table in FINDING 001 by making the model's failure uninformative.
+
+Three further constraints, all from this project's own findings:
+
+- **Frozen and declared.** The cabinet is an LLM, so its model, version, prompt and quantisation
+  are config. FINDING 001: a config that can change the outcome belongs in the record. A
+  per-run-varying dog makes two runs incomparable.
+- **Never merged.** The pair's score and the model's score are reported **separately**, always.
+  Merging them is the same defect as a relay that reports only the team total.
+- **Division is the SUM of members** (League H rule). A 350M entrant with a 2B dog competes as a
+  ~2.4 GB team, not a Featherweight. Peak VRAM is the largest member, because legs run in
+  sequence — but the division is what the team is worth.
+
+---
+
+### K1 · Assisted Perception
+- **Measures** — whether a text-only model can reason over a description it did not produce
+- **Format** — a task whose input is an image; a **frozen cabinet** renders it to text under a declared prompt; the entrant answers from the description plus the task
+- **Scorer** — PARSE against the task's own ground truth, exactly as the visual task would be scored
+- **Null baseline** — **the entrant without the cabinet** (expected to fail, and its failure is the baseline the delta is measured against), plus **chance**
+- **Discriminates** — the reasoning half of a perceptual task. A model that scores 0 bare and 0.67 assisted has demonstrated reasoning and lacked eyes; a model that scores 0 both ways lacked both
+- **Anti-gaming** — the cabinet is scored alone and **must fail**; it is forbidden from emitting the answer, a decision, or a confidence; the task's ground truth is never shown to it
+
+### K2 · Cabinet Isolation *(the guard, run as its own event)*
+- **Measures** — whether an assistive layer is a channel or a solver
+- **Format** — run the cabinet **alone** against the same tasks, with its description as its final answer
+- **Scorer** — PARSE against the same ground truth
+- **Null baseline** — none needed; the requirement is absolute
+- **Discriminates** — **if the cabinet passes a task alone, that task is void for K1.** This event exists so the check is explicit and published rather than assumed
+- **Anti-gaming** — the cabinet's own score is recorded beside every assisted result, so a reader can always see how much of the pair's score the dog could have earned unaided
+
+### K3 · Mode Pair *(the delta)*
+- **Measures** — the value of perception to a given model, as a number
+- **Format** — the same entrant and the same tasks, run **twice**: bare text, and assisted
+- **Scorer** — PARSE both arms; publish the pair, never the assisted score alone
+- **Null baseline** — the bare arm
+- **Discriminates** — isolates perception from reasoning within one set of weights. This is a controlled pair in the sense the evidence set already renders, so it needs no new machinery
+- **Anti-gaming** — both arms use identical tasks, identical config and identical trials; a bare arm run at a different `--ctx` measures the config, not the model (FINDING 001)
+
+### K4 · Native Control *(the three-arm comparison)*
+- **Measures** — assisted text against genuine multimodal, on the same task
+- **Format** — three arms: (a) text model, bare; (b) text model + cabinet; (c) a native VL model, no cabinet
+- **Scorer** — PARSE on all three
+- **Null baseline** — arm (a)
+- **Discriminates** — **the question this league was proposed to answer:** does a described image plus a strong reasoner beat a small model that can simply see? Arm (c) is the honest control, and it is cheap because eight VL entrants are already in the field
+- **Anti-gaming** — arm (c) gets no cabinet; if it is helped, the comparison is meaningless. All three arms share the task set and the trial count
+
+### K5 · Description Fidelity
+- **Measures** — how much of the image survives the cabinet channel
+- **Format** — a task with a known, enumerable set of visual facts; the cabinet produces a description; a deterministic parser counts which facts are present
+- **Scorer** — PARSE: fact coverage, plus **hallucination rate** (facts asserted that are not in the image)
+- **Null baseline** — a template description naming the image type and nothing else
+- **Discriminates** — whether a low assisted score means the entrant failed to reason, or the dog failed to see. Without this, K1's result is unattributable
+- **Anti-gaming** — facts are enumerated from the image's own construction, not from the description; hallucinated facts count against, so a maximal description scores worse than an accurate one
 
 ---
 
