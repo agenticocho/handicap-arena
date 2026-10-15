@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>THE ARCADE · SOKOBAN · TRACE (MODERN 8-BIT)</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% -10%,#1a1a2e 0%,#05050a 62%);color:#e7eaf2;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .room{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+  .cabinet{width:min(1120px,100%);display:grid;grid-template-columns:minmax(0,640px) minmax(0,1fr);gap:18px;align-items:start}
+  @media (max-width:980px){.cabinet{grid-template-columns:1fr}}
+  .frame{background:linear-gradient(180deg,#1c1c26,#0a0a12);border:2px solid #2a2a38;border-radius:18px;padding:18px;box-shadow:0 26px 70px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.05)}
+  .marquee{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,#2b1306,#120900);border:2px solid #ffb02e;box-shadow:inset 0 -2px 0 rgba(0,0,0,.6),0 0 18px rgba(255,176,46,.18);font-size:12px;letter-spacing:.14em;color:#ffb02e;margin-bottom:14px}
+  .marquee b{font-size:13px}
+  .leds{display:flex;gap:6px}
+  .led{width:8px;height:8px;border-radius:50%;background:#ffb02e;box-shadow:0 0 9px #ffb02e;animation:blink 1.35s infinite}
+  .led:nth-child(2){animation-delay:.25s} .led:nth-child(3){animation-delay:.5s}
+  @keyframes blink{0%,100%{opacity:1} 50%{opacity:.35}}
+  .monitor{position:relative;background:#000;border-radius:14px;overflow:hidden;padding:10px;box-shadow:inset 0 0 50px #000,0 0 0 2px #1a1a24}
+  canvas{display:block;margin:0 auto;image-rendering:pixelated;image-rendering:crisp-edges;width:640px;height:480px;background:#000}
+  .monitor::after{content:"";position:absolute;inset:10px;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 3px),radial-gradient(circle at 50% 50%,transparent 48%,rgba(0,0,0,.72) 100%);mix-blend-mode:screen}
+  .monitor::before{content:"";position:absolute;inset:0;border-radius:14px;pointer-events:none;box-shadow:inset 0 0 30px rgba(80,120,255,.12)}
+  @media (max-width:680px){canvas{width:320px;height:240px}}
+  .side{display:grid;gap:12px}
+  .card{background:rgba(255,255,255,.035);border:1px solid #2a2a38;border-radius:12px;padding:12px 14px}
+  .card h3{margin:0 0 8px;font-size:10px;letter-spacing:.18em;color:#7b8194}
+  .row{display:grid;grid-template-columns:28px 42px 1fr;gap:8px;padding:3px 0;border-top:1px dashed #232333;font-size:11px;align-items:center}
+  .row.cur{background:rgba(255,176,46,.10);color:#fff}
+  .row .tag.blocked{color:#ffb02e} .row .tag.moved{color:#7b8194} .row .tag.pushed{color:#30d158}
+  .stream{max-height:260px;overflow:auto}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .stat{padding:8px;border-radius:8px;background:rgba(0,0,0,.35);border:1px solid #202030}
+  .stat .k{font-size:9px;letter-spacing:.16em;color:#7b8194} .stat .v{font-size:15px;font-weight:700;color:#ffb02e;margin-top:2px}
+  .controls{display:flex;gap:8px;flex-wrap:wrap}
+  button{background:linear-gradient(180deg,#1a1a22,#0d0d14);border:1px solid #3a3a4a;color:#e7eaf2;font:inherit;font-size:11px;letter-spacing:.1em;padding:6px 10px;border-radius:8px;cursor:pointer;box-shadow:0 2px 0 #050508}
+  button:hover{border-color:#ffb02e;color:#ffb02e}
+  button:active{transform:translateY(1px);box-shadow:none}
+  .btnPrimary{border-color:#ffb02e;color:#ffb02e}
+  .progress{height:10px;background:#0e0e14;border:1px solid #2a2a38;border-radius:6px;overflow:hidden;margin-top:6px;position:relative}
+  .progress i{position:absolute;top:0;bottom:0;width:4px;margin:0;background:#ffb02e;border-radius:2px;transform:translateX(-50%);left:0}
+  .unsolved{color:#ff5a5a;font-weight:700}
+  .freeze{color:#ffb02e}
+  .footer{grid-column:1/-1;font-size:10px;color:#7b8194;line-height:1.55;border-top:1px solid #232333;padding-top:10px}
+  .footer b{color:#e7eaf2}
+</style>
+</head>
+<body>
+<div class="room">
+  <div class="cabinet">
+    <div class="frame">
+      <div class="marquee">
+        <span><b>THE ARCADE</b> · SOKOBAN · TRACE REPLAY</span>
+        <div class="leds"><div class="led"></div><div class="led"></div><div class="led"></div></div>
+      </div>
+      <div class="monitor">
+        <canvas id="screen" width="320" height="240"></canvas>
+      </div>
+      <div class="controls" style="margin-top:12px">
+        <button id="back">STEP BACK</button>
+        <button id="play" class="btnPrimary">PLAY</button>
+        <button id="step">STEP</button>
+        <button id="reset">RESET</button>
+      </div>
+      <div class="progress" style="margin-top:10px"><i id="bar"></i></div>
+    </div>
+    <div class="side">
+      <div class="card">
+        <h3>MOVE STREAM</h3>
+        <div id="stream" class="stream"></div>
+      </div>
+      <div class="card">
+        <h3>CABINET PLATE</h3>
+        <div class="stats">
+          <div class="stat"><div class="k">ENTRANT</div><div class="v" style="font-size:12px">QWEN3.5-9B-Q4_K_M</div></div>
+          <div class="stat"><div class="k">LEVEL</div><div class="v" style="font-size:12px">02_TWO_BOXES</div></div>
+          <div class="stat"><div class="k">MOVES</div><div class="v" id="mk">—</div></div>
+          <div class="stat"><div class="k">ATTEMPTS</div><div class="v" id="ak">—</div></div>
+          <div class="stat"><div class="k">BLOCKED</div><div class="v" id="bk">—</div></div>
+          <div class="stat"><div class="k">DISTINCT BOARDS</div><div class="v" id="dk">—</div></div>
+        </div>
+        <div style="margin-top:10px;font-size:11px">
+          freeze <span class="freeze" id="freeze"></span> · ended <b id="ended"></b><br>
+          solved <span class="unsolved">NO — UNSOLVED, NOT A FAILURE, NOT A ZERO</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <b>PROVENANCE.</b> Boards, plies, tokens, actions, outcomes and counts are taken verbatim from
+      <span>probes_RUN_20261010-072252.json</span> — entrant <b id="fent"></b>, level <b id="flvl"></b>,
+      freeze <span class="freeze" id="ffreeze"></span> (simulator digest). The freeze differs from the pilot run of record
+      (<b>7134c3e8</b>); the two are different measurements and are never pooled. The board on screen is the recorded
+      <b>final_screen / final_board</b> string, ASCII and byte-identical, not reconstructed. Catalogued cabinets nobody
+      has run do not appear.
+    </div>
+  </div>
+</div>
+<script>
+const DATA = {"entrant":"Qwen3.5-9B-Q4_K_M","level":"02_two_boxes","moves":12,"attempted":40,"blocked":28,"not_an_action":0,"give_up":0,"ended":"commands_exhausted","distinctBoards":10,"freeze":"186f561facd44916","trace":[{"ply":0,"token":"R","action":"R","outcome":"moved","board":"########\n# @ $ .#\n#      #\n#  $  .#\n########"},{"ply":1,"token":"D","action":"D","outcome":"moved","board":"########\n#   $ .#\n# @    #\n#  $  .#\n########"},{"ply":2,"token":"D","action":"D","outcome":"moved","board":"########\n#   $ .#\n#      #\n# @$  .#\n########"},{"ply":3,"token":"D","action":"D","outcome":"blocked","board":"########\n#   $ .#\n#      #\n# @$  .#\n########"},{"ply":4,"token":"D","action":"D","outcome":"blocked","board":"########\n#   $ .#\n#      #\n# @$  .#\n########"},{"ply":5,"token":"D","action":"D","outcome":"blocked","board":"########\n#   $ .#\n#      #\n# @$  .#\n########"},{"ply":6,"token":"D","action":"D","outcome":"blocked","board":"########\n#   $ .#\n#      #\n# @$  .#\n########"},{"ply":7,"token":"D","action":"D","outcome":"blocked","board":"########\n#   $ .#\n#      #\n# @$  .#\n########"},{"ply":8,"token":"D","action":"D","outcome":"blocked","board":"########\n#   $ .#\n#      #\n# @$  .#\n########"},{"ply":9,"token":"R","action":"R","outcome":"pushed","board":"########\n#   $ .#\n#      #\n#  @$ .#\n########"},{"ply":10,"token":"R","action":"R","outcome":"pushed","board":"########\n#   $ .#\n#      #\n#   @$.#\n########"},{"ply":11,"token":"D","action":"D","outcome":"blocked","board":"########\n#   $ .#\n#      #\n#   @$.#\n########"},{"ply":12,"token":"D","action":"D","outcome":"blocked","board":"########\n#   $ .#\n#      #\n#   @$.#\n########"},{"ply":13,"token":"R","action":"R","outcome":"pushed","board":"########\n#   $ .#\n#      #\n#    @*#\n########"},{"ply":14,"token":"R","action":"R","outcome":"blocked","board":"########\n#   $ .#\n#      #\n#    @*#\n########"},{"ply":15,"token":"R","action":"R","outcome":"blocked","board":"########\n#   $ .#\n#      #\n#    @*#\n########"},{"ply":16,"token":"R","action":"R","outcome":"blocked","board":"########\n#   $ .#\n#      #\n#    @*#\n########"},{"ply":17,"token":"R","action":"R","outcome":"blocked","board":"########\n#   $ .#\n#      #\n#    @*#\n########"},{"ply":18,"token":"R","action":"R","outcome":"blocked","board":"########\n#   $ .#\n#      #\n#    @*#\n########"},{"ply":19,"token":"R","action":"R","outcome":"blocked","board":"########\n#   $ .#\n#      #\n#    @*#\n########"},{"ply":20,"token":"U","action":"U","outcome":"moved","board":"########\n#   $ .#\n#    @ #\n#     *#\n########"},{"ply":21,"token":"U","action":"U","outcome":"moved","board":"########\n#   $@.#\n#      #\n#     *#\n########"},{"ply":22,"token":"R","action":"R","outcome":"moved","board":"########\n#   $ +#\n#      #\n#     *#\n########"},{"ply":23,"token":"R","action":"R","outcome":"blocked","board":"########\n#   $ +#\n#      #\n#     *#\n########"},{"ply":24,"token":"D","action":"D","outcome":"moved","board":"########\n#   $ .#\n#     @#\n#     *#\n########"},{"ply":25,"token":"D","action":"D","outcome":"blocked","board":"########\n#   $ .#\n#     @#\n#     *#\n########"},{"ply":26,"token":"D","action":"D","outcome":"blocked","board":"########\n#   $ .#\n#     @#\n#     *#\n########"},{"ply":27,"token":"D","action":"D","outcome":"blocked","board":"########\n#   $ .#\n#     @#\n#     *#\n########"},{"ply":28,"token":"D","action":"D","outcome":"blocked","board":"########\n#   $ .#\n#     @#\n#     *#\n########"},{"ply":29,"token":"U","action":"U","outcome":"moved","board":"########\n#   $ +#\n#      #\n#     *#\n########"},{"ply":30,"token":"D","action":"D","outcome":"moved","board":"########\n#   $ .#\n#     @#\n#     *#\n########"},{"ply":31,"token":"D","action":"D","outcome":"blocked","board":"########\n#   $ .#\n#     @#\n#     *#\n########"},{"ply":32,"token":"R","action":"R","outcome":"blocked","board":"########\n#   $ .#\n#     @#\n#     *#\n########"},{"ply":33,"token":"R","action":"R","outcome":"blocked","board":"########\n#   $ .#\n#     @#\n#     *#\n########"},{"ply":34,"token":"R","action":"R","outcome":"blocked","board":"########\n#   $ .#\n#     @#\n#     *#\n########"},{"ply":35,"token":"R","action":"R","outcome":"blocked","board":"########\n#   $ .#\n#     @#\n#     *#\n########"},{"ply":36,"token":"D","action":"D","outcome":"blocked","board":"########\n#   $ .#\n#     @#\n#     *#\n########"},{"ply":37,"token":"R","action":"R","outcome":"blocked","board":"########\n#   $ .#\n#     @#\n#     *#\n########"},{"ply":38,"token":"R","action":"R","outcome":"blocked","board":"########\n#   $ .#\n#     @#\n#     *#\n########"},{"ply":39,"token":"R","action":"R","outcome":"blocked","board":"########\n#   $ .#\n#     @#\n#     *#\n########"}]};
+const trace = DATA.trace;
+const canvas = document.getElementById('screen');
+const ctx = canvas.getContext('2d');
+ctx.imageSmoothingEnabled = false;
+
+const TILE = 24, HUD = 40;
+const P = {
+  bg:'#06070b', floor:'#0f121a', floorAlt:'#131722', wall:'#34394a', wallHi:'#5b6278',
+  wallSh:'#1a1d27', target:'#2b3140', targetHi:'#4a5266', player:'#45d482', playerHi:'#b6ffd7',
+  crate:'#e6a03a', crateHi:'#ffd27a', crateSh:'#8a5a18', goal:'#30d158', goalHi:'#a9ffcd',
+  text:'#e7eaf2', dim:'#7b8194', amber:'#ffb02e', red:'#ff5a5a', green:'#30d158'
+};
+
+let idx = 0, currentBoard = trace[0].board, anim = null, rafId = null;
+const outcomeLabel = o => o==='pushed'?'PUSHED':o==='moved'?'MOVED':o==='blocked'?'BLOCKED':String(o).toUpperCase();
+
+function layout(board){const lines=board.split('\n');const cols=Math.max(...lines.map(l=>l.length));const rows=lines.length;const w=cols*TILE,h=rows*TILE;return {lines,cols,rows,ox:Math.floor((320-w)/2),oy:HUD+Math.floor((240-HUD-h)/2)}}
+function entities(board){const lines=board.split('\n');const player=[],crates=[],targets=[];for(let r=0;r<lines.length;r++)for(let c=0;c<(lines[r]||'').length;c++){const ch=lines[r][c];if(ch==='.'||ch==='*'||ch==='+')targets.push({r,c});if(ch==='@'||ch==='+')player.push({r,c});if(ch==='$'||ch==='*')crates.push({r,c,goal:ch==='*'});}return{lines,player:player[0]||null,crates,targets}}
+
+function crateMoves(fromBoard,toBoard){
+  const fe=entities(fromBoard), te=entities(toBoard);
+  const fromCrates=fe.crates.map(c=>({...c})), toCrates=te.crates.map(c=>({...c}));
+  const used=new Array(toCrates.length).fill(false);
+  const moves=[];
+  for(const fc of fromCrates){
+    let found=-1; for(let i=0;i<toCrates.length;i++){if(!used[i]&&toCrates[i].r===fc.r&&toCrates[i].c===fc.c){found=i;break;}}
+    if(found>=0) used[found]=true;
+    else { let best=-1,bestd=999; for(let i=0;i<toCrates.length;i++){if(used[i])continue;const d=Math.abs(toCrates[i].r-fc.r)+Math.abs(toCrates[i].c-fc.c);if(d<bestd){bestd=d;best=i;}} if(best>=0){used[best]=true;if(toCrates[best].r!==fc.r||toCrates[best].c!==fc.c)moves.push({from:fc,to:toCrates[best]});}}
+  }
+  const playerMove = (fe.player&&te.player)?{from:fe.player,to:te.player}:null;
+  const movingTo=new Set(moves.map(m=>m.to.r+','+m.to.c));
+  const finalCrates=toCrates.filter(tc=>!movingTo.has(tc.r+','+tc.c));
+  return {fe,te,playerMove,moves,finalCrates};
+}
+
+const AUDIO=(function(){let ctx=null;function ensure(){if(!ctx)try{ctx=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}return ctx;}
+function tone(f,d,type,gain){const c=ensure();if(!c)return;const o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.value=f;g.gain.value=gain;o.connect(g);g.connect(c.destination);o.start();g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+d);o.stop(c.currentTime+d);}
+function noise(d,gain){const c=ensure();if(!c)return;const buf=c.createBuffer(1,c.sampleRate*d,c.sampleRate);const dd=buf.getChannelData(0);for(let i=0;i<dd.length;i++)dd[i]=(Math.random()*2-1)*0.4;const s=c.createBufferSource();s.buffer=buf;const gg=c.createGain();gg.gain.value=gain;s.connect(gg);gg.connect(c.destination);s.start();gg.gain.exponentialRampToValueAtTime(0.001,c.currentTime+d);s.stop(c.currentTime+d);}
+return{clack(){tone(220,0.06,'square',0.09);},push(){tone(330,0.10,'triangle',0.11);tone(165,0.14,'square',0.05);},buzz(){noise(0.18,0.11);tone(90,0.2,'square',0.06);}};
+})();
+
+function drawBase(board){
+  const {lines,ox,oy}=layout(board);
+  for(let r=0;r<lines.length;r++)for(let c=0;c<(lines[r]||'').length;c++){
+    const ch=(lines[r]||'')[c]||' ';const x=ox+c*TILE,y=oy+r*TILE;
+    if(ch==='#'){
+      ctx.fillStyle=P.wallSh;ctx.fillRect(x,y,TILE,TILE);
+      ctx.fillStyle=P.wall;ctx.fillRect(x+2,y+2,TILE-4,TILE-4);
+      ctx.fillStyle=P.wallHi;ctx.fillRect(x+2,y+2,TILE-4,3);ctx.fillRect(x+2,y+2,3,TILE-4);
+    }else{
+      const alt=((r+c)%2===0);
+      ctx.fillStyle=alt?P.floor:P.floorAlt;ctx.fillRect(x,y,TILE,TILE);
+      if(ch==='.'||ch==='*'||ch==='+'){
+        const cx=x+TILE/2,cy=y+TILE/2;
+        ctx.fillStyle=P.target;ctx.beginPath();ctx.arc(cx,cy,8,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle=P.targetHi;ctx.beginPath();ctx.arc(cx,cy,4,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle=alt?P.floor:P.floorAlt;ctx.beginPath();ctx.arc(cx,cy,2,0,Math.PI*2);ctx.fill();
+      }
+    }
+  }
+}
+function drawCrate(x,y,onGoal){
+  const body=onGoal?P.goal:P.crate, hi=onGoal?P.goalHi:P.crateHi;
+  ctx.fillStyle='rgba(0,0,0,0.32)';ctx.fillRect(x+3,y+4,TILE-6,TILE-6);
+  ctx.fillStyle=P.crateSh;ctx.fillRect(x+2,y+2,TILE-6,TILE-6);
+  ctx.fillStyle=body;ctx.fillRect(x+3,y+3,TILE-8,TILE-8);
+  ctx.fillStyle=hi;ctx.fillRect(x+3,y+3,TILE-8,2);ctx.fillRect(x+3,y+3,2,TILE-8);
+}
+function drawPlayer(x,y){
+  const cx=x+TILE/2,cy=y+TILE/2,r=TILE/2-4;
+  ctx.fillStyle='rgba(0,0,0,0.28)';ctx.beginPath();ctx.ellipse(cx+2,cy+r+2,r*0.9,r/3,0,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle=P.player;ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle=P.playerHi;ctx.beginPath();ctx.arc(cx-r/3,cy-r/3,r/3,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle=P.bg;ctx.beginPath();ctx.arc(cx+3,cy-2,2,0,Math.PI*2);ctx.fill();
+}
+
+function drawHUD(status){
+  ctx.fillStyle=P.bg;ctx.fillRect(0,0,320,HUD);
+  ctx.fillStyle=P.dim;ctx.fillRect(0,HUD-1,320,1);
+  ctx.fillStyle=P.amber;ctx.font='bold 9px ui-monospace,monospace';ctx.fillText('SOKOBAN CABINET  ·  TRACE REPLAY',8,12);
+  ctx.fillStyle=P.text;ctx.font='8px ui-monospace,monospace';ctx.fillText('ENTRANT '+DATA.entrant+'   LEVEL '+DATA.level,8,22);
+  ctx.fillStyle=P.amber;ctx.fillText('FREEZE '+DATA.freeze.slice(0,8).toUpperCase()+'   FULL '+DATA.freeze,8,31);
+  ctx.fillStyle=P.dim;ctx.fillText('PLY '+(idx+1)+'/'+trace.length+'   MOVES '+DATA.moves+'   ATTEMPTS '+DATA.attempted+'   BLOCKED '+DATA.blocked+'   '+status,8,40);
+}
+
+function easeOutCubic(t){return 1-Math.pow(1-t,3)}
+function renderStatic(board,status){
+  const {ox,oy}=layout(board);
+  ctx.fillStyle=P.bg;ctx.fillRect(0,0,320,240);
+  drawBase(board);
+  const e=entities(board);
+  for(const c of e.crates) drawCrate(ox+c.c*TILE,oy+c.r*TILE,c.goal);
+  if(e.player) drawPlayer(ox+e.player.c*TILE,oy+e.player.r*TILE);
+  drawHUD(status||outcomeLabel(trace[idx].outcome));
+}
+function renderAnim(u){
+  const {info,toBoard}=anim;
+  const {ox,oy}=layout(toBoard);
+  ctx.fillStyle=P.bg;ctx.fillRect(0,0,320,240);
+  drawBase(toBoard);
+  for(const c of info.finalCrates) drawCrate(ox+c.c*TILE,oy+c.r*TILE,c.goal);
+  for(const m of info.moves){
+    const x=ox+(m.from.c+(m.to.c-m.from.c)*u)*TILE;
+    const y=oy+(m.from.r+(m.to.r-m.from.r)*u)*TILE;
+    drawCrate(x,y,m.to.goal);
+  }
+  const pm=info.playerMove;
+  let px,py;
+  if(pm){px=ox+(pm.from.c+(pm.to.c-pm.from.c)*u)*TILE;py=oy+(pm.from.r+(pm.to.r-pm.from.r)*u)*TILE;}
+  else if(info.te.player){px=ox+info.te.player.c*TILE;py=oy+info.te.player.r*TILE;}
+  drawPlayer(px,py);
+  drawHUD('MOVING');
+}
+
+function updateSide(){
+  const _pct = (trace.length>1) ? (idx/(trace.length-1))*100 : 0;
+  document.getElementById('bar').style.left = _pct+'%';
+  document.getElementById('mk').textContent=DATA.moves;
+  document.getElementById('ak').textContent=DATA.attempted;
+  document.getElementById('bk').textContent=DATA.blocked;
+  document.getElementById('dk').textContent=DATA.distinctBoards;
+  document.getElementById('ended').textContent=DATA.ended;
+  document.getElementById('freeze').textContent=DATA.freeze.slice(0,8).toUpperCase();
+  document.getElementById('fent').textContent=DATA.entrant;
+  document.getElementById('flvl').textContent=DATA.level;
+  document.getElementById('ffreeze').textContent=DATA.freeze;
+  const stream=document.getElementById('stream'); let h='';
+  for(let i=0;i<trace.length;i++){const t=trace[i];h+='<div class="row'+(i===idx?' cur':'')+'"><span>'+String(t.ply).padStart(2,'0')+'</span><span class="tag '+t.outcome+'">'+t.token+'</span><span>'+outcomeLabel(t.outcome)+'</span></div>';}
+  stream.innerHTML=h;
+  const cur=stream.querySelector('.cur'); if(cur)cur.scrollIntoView({block:'nearest'});
+}
+
+function shake(){const m=document.querySelector('.monitor');m.animate([{transform:'translate(0,0)'},{transform:'translate(4px,2px)'},{transform:'translate(-3px,1px)'},{transform:'translate(2px,-2px)'},{transform:'translate(0,0)'}],{duration:170});}
+
+function goto(i){
+  if(i<0)i=0; if(i>=trace.length)i=trace.length-1;
+  const prevBoard=currentBoard;
+  const newBoard=trace[i].board;
+  const outcome=trace[i].outcome;
+  idx=i; currentBoard=newBoard;
+  updateSide();
+  if(anim){cancelAnimationFrame(rafId);anim=null;}
+  if(i===0 || prevBoard===newBoard){
+    renderStatic(newBoard,outcomeLabel(outcome));
+    if(outcome==='blocked'){ /* no cue: legal wall-bump, not an illegal move (RENDER_SPEC cue map reserves buzz for illegal) */ }
+    else if(outcome==='pushed'){AUDIO.push();} else if(outcome==='moved'){AUDIO.clack();}
+  }else{
+    const info=crateMoves(prevBoard,newBoard);
+    const movedPlayer = info.playerMove && (info.playerMove.from.r!==info.playerMove.to.r||info.playerMove.from.c!==info.playerMove.to.c);
+    const movedCrate = info.moves.length>0;
+    if(!movedPlayer && !movedCrate){
+      renderStatic(newBoard,outcomeLabel(outcome));
+      if(outcome==='blocked'){ /* no cue: legal wall-bump, not an illegal move (RENDER_SPEC cue map reserves buzz for illegal) */ }
+    }else{
+      anim={start:performance.now(),dur:movedCrate?280:180,outcome,info,toBoard:newBoard};
+      rafId=requestAnimationFrame(tick);
+    }
+  }
+}
+function tick(now){
+  if(!anim)return;
+  const t=Math.min(1,(now-anim.start)/anim.dur);
+  renderAnim(easeOutCubic(t));
+  if(t<1) rafId=requestAnimationFrame(tick);
+  else {
+    const outcome=anim.outcome; anim=null;
+    renderStatic(currentBoard,outcomeLabel(outcome));
+    if(outcome==='blocked'){ /* no cue: legal wall-bump, not an illegal move (RENDER_SPEC cue map reserves buzz for illegal) */ }
+    else if(outcome==='pushed'){AUDIO.push();} else if(outcome==='moved'){AUDIO.clack();}
+  }
+}
+
+let playing=false,timer=null;
+function playStep(){if(anim)return;if(idx>=trace.length-1){playing=false;clearInterval(timer);timer=null;document.getElementById('play').textContent='PLAY';return;}goto(idx+1);}
+document.getElementById('play').onclick=()=>{playing=!playing;document.getElementById('play').textContent=playing?'PAUSE':'PLAY';if(playing)timer=setInterval(playStep,420);else{clearInterval(timer);timer=null;}};
+document.getElementById('step').onclick=()=>{if(timer){clearInterval(timer);timer=null;playing=false;document.getElementById('play').textContent='PLAY';}playStep();};
+document.getElementById('back').onclick=()=>{if(idx>0)goto(idx-1);};
+document.getElementById('reset').onclick=()=>{if(timer){clearInterval(timer);timer=null;playing=false;document.getElementById('play').textContent='PLAY';}goto(0);};
+document.addEventListener('keydown',e=>{if(e.key===' '){e.preventDefault();document.getElementById('play').click();} if(e.key==='ArrowRight')document.getElementById('step').click(); if(e.key==='ArrowLeft')document.getElementById('back').click();});
+
+goto(0);
+</script>
+</body>
+</html>
