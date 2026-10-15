@@ -13,6 +13,14 @@ darts/DARTS_AMBIGUITIES.md.
 Standard library ONLY -- argparse json os re sys time hashlib datetime.
 No third-party import, so `python3 darts.py --self-test` runs on either box.
 
+ONE QUALIFIER, added when this harness came INTO the results declaration (t_86fa52a2): the WRITE SCOPE
+is resolved through the repository's single declaration, `cabinet_root.py`, so the file now has one
+repo-local import. The arithmetic, the oracle, the scoring and --self-test are unchanged and still
+need nothing but the standard library; what changed is WHERE a bundle may land. `--out` used to
+default to this file's own directory plus `results/` -- i.e. INSIDE the git working tree -- which is
+what the declaration exists to refuse, and naming the directory explicitly does not change what the
+destination is.
+
   python3 darts.py --self-test
   python3 darts.py instrument-check   # prove the HARNESS with a solver; enters nothing
   python3 darts.py run --entrant reference
@@ -30,8 +38,66 @@ import sys
 import time
 from datetime import datetime, timezone
 
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.dirname(HERE))
+import cabinet_root as _root                                          # noqa: E402
+
 HARNESS = "handicap-arena"
 VERSION = "1.1"
+
+# ---------------------------------------------------------------------------
+# 0. THE WRITE SCOPE -- declared, resolved at the run, and it REFUSES
+# ---------------------------------------------------------------------------
+
+def default_out_dir():
+    """-> <declared ROOT>/<this worktree's cabinet>/darts. THE DEFAULT DESTINATION, or a refusal.
+
+    THE ROOT IS NOT THIS FILE'S TO NAME. `cabinet_root.results_dir()` is the ONE definition: it reads
+    the declaration from git (`git config --local arena.cabinetResults`, which lives in the git COMMON
+    dir, so it is the same for every worktree and outside all of them), and it RAISES -- a SystemExit
+    naming the remedy, nothing written -- when there is no declaration, or when the declaration
+    resolves inside a git working tree or the repository's git directory.
+
+    WHY A NAMED SUBTREE UNDER THE SCOPE AND NOT A NEW ROOT: the five bundles this harness already
+    produced are RECORDS (tracked control evidence cited by darts/DARTS_AMBIGUITIES.md -- a record is
+    something a reader may treat as evidence about what happened, which is exactly what they are), and
+    their bytes do not move. So new bundles must not land beside a legacy record's basename either;
+    `darts/` is a subtree OF the declared write scope. A second declared root would be a second
+    definition of the same thing.
+    """
+    return os.path.join(_root.results_dir(), "darts")
+
+
+def resolve_out(explicit=None):
+    """-> the directory this run writes its bundle into, or a REFUSAL. There is no third answer.
+
+    NO --out: the declared write scope's `darts/` subtree (above). Nothing is caught -- a run that
+    cannot declare where its bundle goes must not write one somewhere else.
+
+    --out GIVEN: it still OVERRIDES -- it is a flag, not a fallback -- but a destination that resolves
+    inside any git working tree, or inside the repository's own git directory, is REFUSED rather than
+    honoured. That is a property of the DESTINATION, not of how it was named, so it is checked with
+    the same two functions `declared_root()` uses: `git rev-parse --show-toplevel` for a working tree,
+    and the git dirs SEPARATELY, because --show-toplevel does not cover a path under .git/ at all (it
+    fails outright there, and a check that cannot see a case is not a check).
+    """
+    if explicit is None:
+        return default_out_dir()
+    p = os.path.realpath(os.path.abspath(os.path.expanduser(explicit)))
+    top = _root.git_toplevel(p)
+    if top:
+        raise _root.Refusal(
+            f"--out {p} is INSIDE a git working tree: {top}. A bundle written into a git tree is a "
+            f"result bundle in the matchable tree -- the defect the declared write scope exists to "
+            f"refuse -- and naming the directory explicitly does not change what the destination is. "
+            f"Write to the declared write scope (omit --out) or to a path outside every worktree. "
+            f"NOTHING WAS WRITTEN. ({_root.DOC})")
+    for gd in _root.git_dirs():
+        if p == gd or p.startswith(gd + os.sep):
+            raise _root.Refusal(
+                f"--out {p} is INSIDE the repository's git directory {gd}. Results are not repository "
+                f"metadata. NOTHING WAS WRITTEN. ({_root.DOC})")
+    return p
 
 # ---------------------------------------------------------------------------
 # 1. THE BOARD -- the oracle is this table and nothing else
@@ -470,6 +536,12 @@ def build_bundle(entrant_name, result, items, items_path, reasoning="unset"):
 
 
 def cmd_run(args):
+    # THE DESTINATION FIRST. A run that cannot declare where its bundle goes must not run at all, and
+    # resolving here (rather than as a parser default) is what lets an explicit --out stand on its
+    # own: the default is only evaluated when no --out was given.
+    out_dir = resolve_out(args.out)
+    print("destination dir  %s   %s" % (out_dir, "(--out, explicit)" if args.out
+                                       else "(the declared write scope: results_dir()/darts)"))
     items = load_items(args.tasks)
     if args.entrant not in ENTRANTS:
         print("unknown entrant %r; choose from %s" % (
@@ -478,8 +550,8 @@ def cmd_run(args):
     result = run_entrant(ENTRANTS[args.entrant](), items)
     bundle = build_bundle(args.entrant, result, items, args.tasks,
                           reasoning=getattr(args, "reasoning", "unset"))
-    os.makedirs(args.out, exist_ok=True)
-    path = os.path.join(args.out, "darts_v1_%s.json" % args.entrant)
+    os.makedirs(out_dir, exist_ok=True)
+    path = os.path.join(out_dir, "darts_v1_%s.json" % args.entrant)
     with open(path, "w") as fh:
         json.dump(bundle, fh, indent=2)
         fh.write("\n")
@@ -703,7 +775,11 @@ def main():
     r.add_argument("--entrant", default="reference", choices=sorted(ENTRANTS))
     r.add_argument("--tasks", default=os.path.join(os.path.dirname(__file__),
                                                   "tasks", "darts_v1.json"))
-    r.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "results"))
+    r.add_argument("--out", default=None,
+                   help="destination DIRECTORY for the bundle. DEFAULT: the declared write scope's "
+                        "darts/ subtree -- cabinet_root.results_dir()/darts, resolved at the run. An "
+                        "explicit value still overrides; a destination inside any git working tree is "
+                        "REFUSED, explicitly given or not.")
     # [A11] the reasoning setting is DECLARED here and RECORDED in the bundle.
     # It is a launch-flag instrument choice, so it must be named before the run,
     # not inferred afterwards. 'unset' is the honest default: not 'off'.
@@ -712,7 +788,11 @@ def main():
                         "recorded in the bundle. 'unset' is NOT 'off'.")
     ic = sub.add_parser("instrument-check",
                         help="prove the harness with a solver entrant; enters nothing")
-    ic.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "results"))
+    ic.add_argument("--out", default=None,
+                    help="destination DIRECTORY for the instrument-check bundle. DEFAULT: the declared "
+                         "write scope's darts/ subtree -- cabinet_root.results_dir()/darts, resolved "
+                         "at the run. As for `run`: explicit still overrides, an in-tree destination "
+                         "is REFUSED.")
     # [A11] the SAME declared instrument field as `run`: the instrument check
     # must record the reasoning setting it establishes the harness under, so its
     # bundle is comparable to the reference run (both 'on' for DARTS).
@@ -725,7 +805,15 @@ def main():
     if args.cmd == "run":
         return cmd_run(args)
     if args.cmd == "instrument-check":
-        return instrument_check(args.out, reasoning=getattr(args, "reasoning", "unset"))
+        # THE SAME RULE AS `run`: the destination is resolved through the one declaration, or the
+        # refusal propagates and nothing is written. Resolved here so the check obeys the same
+        # call-time rule, and so an explicit --out can stand on its own. Resolved ONCE: a second
+        # call would be a second answer to the same question.
+        out_dir = resolve_out(args.out)
+        print("destination dir  %s   %s" % (
+            out_dir, "(--out, explicit)" if args.out
+            else "(the declared write scope: results_dir()/darts)"))
+        return instrument_check(out_dir, reasoning=getattr(args, "reasoning", "unset"))
     ap.print_help()
     return 0
 
