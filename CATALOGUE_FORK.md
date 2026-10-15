@@ -55,11 +55,19 @@ What actually happened is **a fork that was never declared**, which is a third t
 that needs a decision. The Chair reached the same reading independently and added two things worth
 keeping:
 
-**1. What the 101 lines ARE.** The arena's copy runs **League A through K**. All three cabinet copies
-stop at **J**. So the delta is League K — with one correction from re-deriving it: it is **103 added
-lines and 2 removed**, of which exactly **one** is a league header. The rest is League K's body plus
-the count-discipline note added to the header the same day. "League K is exactly the delta" is right
-about the substance and slightly too tidy about the arithmetic.
+**1. What the extra lines ARE.** (The gap is a live length, not a constant — re-derive it with the command below.) The arena's copy runs **League A through K**. All three cabinet copies
+stop at **J**. So the delta is League K — with one correction from re-deriving it: it was **103 added and 2 removed** when measured at `f527da2`, of which exactly **one** is a league
+header. The rest is League K's body plus the count-discipline note added the same day. **Those figures
+are already stale and will keep moving** — the arena's copy is growing at roughly 14 lines every two
+hours while the cabinets' copies are unchanged since the fork. *"League K is exactly the delta"* is
+right about the substance and slightly too tidy about the arithmetic.
+
+  ```
+  git -C ~/workspace/ocho_arena diff --shortstat f42026b origin/main -- GAMES.md
+  ```
+
+  The one figure that has NOT moved is structural: **exactly one added line is a league header.**
+  A length is a live reading; a header count is a fact about the shape of the change.
 
 **2. The cabinets are not stale mirrors.** They are **64 to 82 commits AHEAD** of the trunk as well as
 behind it — **working documents seeded from this file that have since grown their own content.**
@@ -76,8 +84,8 @@ behind it — **working documents seeded from this file that have since grown th
 
 Three consequences follow from the fork being undeclared rather than chosen:
 
-1. **The fork point is invisible.** A reader of a cabinet's `GAMES.md` cannot tell it is 101 lines
-   behind the arena's, or that the arena has a league the cabinets have never seen. Both documents
+1. **The fork point is invisible.** A reader of a cabinet's `GAMES.md` cannot tell how far
+   behind the arena's it is (115 lines and one league at the last reading, or that the arena has a league the cabinets have never seen. Both documents
    look complete and neither says it is partial.
 2. **Divergence is silent by construction.** Each cabinet has **both** commits the trunk lacks and
    lacks commits the trunk has — they have **diverged**, not merely fallen behind:
@@ -110,8 +118,8 @@ Three consequences follow from the fork being undeclared rather than chosen:
   documented as such, with new games authored per cabinet and never merged back.
   **RECOMMENDED: C-plus — and the "plus" is three things, not one.**
   1. **Declare the fork point.** C alone declares the *relationship*.
-  2. **Declare the per-file sync rule.** The four files are not on one rule: `GAMES.md` is 101 lines
-     behind while `DECISION_oracle_depth.md`, `FROZEN_CONSTANTS.json` and `FROZEN_PROMPT.txt` are
+  2. **Declare the per-file sync rule.** The four files are not on one rule: `GAMES.md` is behind by a
+     length that keeps changing (115 at the last reading, while `DECISION_oracle_depth.md`, `FROZEN_CONSTANTS.json` and `FROZEN_PROMPT.txt` are
      **in sync with the arena's current copies.** Nobody chose that split, and a single fork-point line
      would hide it rather than record it.
   3. **Fix the masthead claim.** A cabinet's `GAMES.md` prints `# THE GAMES REFERENCE … Public
