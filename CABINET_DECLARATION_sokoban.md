@@ -28,9 +28,23 @@ anything out.**
 > **`104425` is superseded by strict containment: 5 cells; every `(entrant, level)` key is also in
 > `105455`; A-only = `[]`; all five counters are identical on the 5/5 shared cells.**
 
-**A pilot is not "superseded" because someone says so** — it is superseded because **its entire content
-is present in another artifact with identical counters and nothing of its own left over.** That is a
-measurement, and it is the only form this label should ever take.
+**A pilot is not "superseded" because someone says so** — it is superseded because **it carries no
+population of its own: every `(entrant, level)` key is also in `105455`, A-only is `[]`, and all five
+counters are identical on the 5/5 shared cells.** That is a measurement, and it is the only form this
+label should ever take.
+
+**Containment of KEYS and COUNTERS is not containment of CONTENT — and the difference is the reason this
+file is tracked.** Re-derived on every field rather than on `trace` alone (2026-10-15): **4 of the 5 shared
+cells differ at turn level.** `LFM2/02`, `granite/01` and `granite/02` differ in `turns` **and**
+`budget_signature` (`LFM2/02`: 64 vs 56 `gen_tokens` at the ceiling); `granite/02` diverges across 27 of
+its 40 turns and in `trace`; `LFM2/01` differs across turns 2, 17, 18, 20 and 28; **`LFM2/03` is the only
+identical cell.** **Those turns exist in no other artifact** — this file is their sole copy, and deleting
+it would delete them, which is the `SOKOBAN_VERDICT_1` / FINDING 020 failure.
+
+So the label is narrower than it reads: `104425` is superseded **as a population to count** — never sum its
+5 cells with `105455`'s 7 — and it is **not redundant**. A reader must not take the first fact as licence
+for the second. An earlier version of this paragraph claimed the file's *entire content* was contained;
+that was stronger than its measurement, and the correction is recorded here rather than silently applied.
 
 **AND: its 5 cells must NEVER be summed with `105455`'s 7.** Two overlapping populations summed is 12
 cells where there are 7 — the pool-by-accident error, in arithmetic.
