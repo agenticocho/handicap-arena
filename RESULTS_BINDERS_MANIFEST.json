@@ -515,8 +515,8 @@
    "edges": [
     {
      "kind": "results-write",
-     "status": "deferred:t_86fa52a2",
-     "why": "`--out` defaults to os.path.join(os.path.dirname(__file__), 'results') -> <worktree>/darts/results (5 tracked darts_v1_*.json). MAIN ONLY -- darts/ is absent from all three cabinets, so it is parity by DECLARED ABSENCE. t_86fa52a2"
+     "status": "migrated:9fcffb1",
+     "why": "WAS `--out` defaulting to os.path.join(os.path.dirname(__file__), 'results') -- i.e. <worktree>/darts/results, INSIDE the git working tree -- with 5 tracked darts_v1_*.json. NOW `--out` defaults to the DECLARED write scope's darts/ subtree (cabinet_root.results_dir()/darts), resolved at the run, with an explicit --out still overriding and a destination inside any git working tree or the git directory REFUSED. The five tracked bundles are DECLARED IN PLACE in cabinet_root.py (DARTS_ARCHIVE + DARTS_ARCHIVE_WHY) and closed to new bytes by the ignore rule (git check-ignore darts/results/x). MAIN ONLY -- darts/ is absent from all three cabinets, so it is parity by DECLARED ABSENCE. Landed by t_86fa52a2; the entry flips in its OWN commit."
     }
    ]
   }
