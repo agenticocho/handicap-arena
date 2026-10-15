@@ -6,8 +6,8 @@ under exactly these rules. Changing them after a number exists makes the number 
 > **AMENDED 2026-10-15 -- §2, §2a, §5, §6, §7.** This text now carries the RATIFIED amendments **R1, R2 and
 > R3** (`RULINGS_independent_implementations.md` `f0eba6e`; ratified by the Chair 2026-10-13 in
 > `2026-10-13-chair-ratification-r1-r2-r3-six-item-rulings.md`). **FUTURE RUNS ONLY -- no published number
-> is retro-fitted or reinterpreted.** What moved, what the moved lines said before they moved, and the two
-> things this amendment does NOT settle: **§7.**
+> is retro-fitted or reinterpreted.** What moved, what the moved lines said before they moved, and what this
+> amendment settles and what it does not: **§7.**
 
 ## WHY THIS DOCUMENT EXISTS, AND IT IS NOT THEORY
 
@@ -92,11 +92,23 @@ find an answer in text that does not contain one.
     PERMITTED   the board in ASCII, with a legend; the move history so far; the move count; solved or not
     FORBIDDEN   the word "schema"; any key-value framing; any JSON example; any "fill in" language
 
-**The legend is PROSE, and this is measured rather than stylistic: a legend formatted as key-value pairs
-reads as a FORM to a model whose training is schema-filling, and that model transcribes the prompt instead
-of playing.** The legend fix is an INSTRUMENT CHANGE and carries its own pre-registered prediction.
-**§5's FORMAT claim is what the A/B measured; its MECHANISM sentence is NOT established, and it is not
-settled by the 2026-10-15 amendment -- see §7, item 1.**
+**The legend is PROSE, and this is measured rather than stylistic.** The measurement is three-part, and
+the parts are not interchangeable:
+
+```
+TRUE AND MEASURED   the legend's FORMAT is a carrier defect that changed the task
+                    (0/3 -> 3/3, repeated, with the arms provably different)
+TRUE AND MEASURED   schema-filling is REAL but INTRINSIC to the extraction model, and the legend
+                    change does NOT reach it (40 -> 40)
+NOT ESTABLISHED     that the legend's format causes SCHEMA-FILLING. That is one entrant's failure mode
+                    and not the mechanism of the 0/3 -> 3/3 result. The A/B varies the whole legend,
+                    so it cannot separate the list format from the FIRST LINE label from the
+                    key-value symbol line. A three-arm follow-up would, and has not been run.
+```
+
+The legend fix is an INSTRUMENT CHANGE and carries its own pre-registered prediction. **The mechanism
+sentence this section carried until 2026-10-15 is REPLACED, not deleted -- see §7, item 1, which quotes
+what it said.**
 
 **AND WHAT §5 PERMITS THE HARNESS TO SHOW IS CONTEXT, NOT AN ANSWER SHAPE (R3, ratified 2026-10-13).**
 The history and the move count are **CONTEXT**; the harness's own `play(level_text, tokens)` signature is
@@ -109,13 +121,25 @@ of the spec; it is a disproof of it.*
 ## 6. FROZEN IDENTITY
 
     simulator    sokoban.py · self-test is the contract: `python3 sokoban.py --self-test`
-    levels       levels/01_one_push.txt · levels/02_two_boxes.txt  (sha256 with the run)
+    levels       levels/01_one_push.txt · levels/02_two_boxes.txt · levels/03_the_corner_waiting.txt
+                 (sha256 with the run; the frozen set is THREE and the roster is read from the RUN's own
+                 `levels` field or cells, never from this line)
+    roster       the ROSTER IS PER POPULATION and the two are NEVER POOLED:
+                   2026-10-09 A/B (`..._1245`, `..._1247`)        TWO levels (01, 02) -- `03` did not exist
+                                                                  until `7e8cdad`, 2026-10-09 17:56:38
+                   2026-10-10 population (`probes/SOKOBAN_RUN_20261010-072252.json`)
+                                                                  THREE levels -- its own `levels` field
+                                                                  pins `03` = `77d18407a001da29…`;
+                                                                  15 cells, 12 played
+                   2026-10-11 pilots (`..._104425`, `..._105455`)  THREE levels each
+                 a cell count taken on one roster is not a cell count on the other
     controls     49, all passing -- `--self-test` prints the line; a stale count in prose is not the instrument
     host         recorded per bundle, WITH the host's hardware state (see the box rule, below)
     zero rule    enforced, not described
-    this text    AMENDED 2026-10-15 (§7). The 2026-10-10 population was read under the PRE-amendment text,
-                 sha256 `6f4d72319ec6f87…` (commit `744ae42`) -- **a number taken under that text is not a
-                 number taken under this one**, and the two are never pooled.
+    this text    AMENDED 2026-10-15 (§7) · SECOND AMENDMENT 2026-10-15 (§7). The 2026-10-10 population
+                 was read under the PRE-amendment text, sha256 `6f4d72319ec6f87…` (commit `744ae42`) --
+                 **a number taken under that text is not a number taken under this one**, and the two are
+                 never pooled.
 
 ## 7. THE AMENDMENT -- 2026-10-15. WHAT MOVED, AND WHAT THE MOVED LINES SAID BEFORE THEY MOVED
 
@@ -131,6 +155,13 @@ that names the artifact that changes is satisfied when THAT ARTIFACT'S BYTES MOV
                is NOT a licence for
     §5 SAYS    the history is CONTEXT, the harness signature is the INTERFACE, and §1 controls:
                ONE ACTION LETTER PER TURN                                                           <- R3
+    §6 SAID    "levels  levels/01_one_push.txt · levels/02_two_boxes.txt  (sha256 with the run)"
+               -- landed at `99681cc` (2026-10-09 17:12:42), 44 minutes BEFORE `levels/03` was created
+               (`7e8cdad`, 17:56:38): TRUE when written, stale after, and the line did not say which it was
+    §5 SAID    "a legend formatted as key-value pairs reads as a FORM to a model whose training is
+               schema-filling, and that model transcribes the prompt instead of playing"
+    §5 SAYS    the three-part measurement above                                              <- ITEM 1
+    §6 SAYS    the frozen set is THREE and the roster is named PER POPULATION                <- ITEM 2
 
 **WHY THE GRAMMAR MOVES AND NOT THE CODE:** the code is already frozen, already scored, and already the path
 every published number went through; naming its existing list here repairs the divergence **without touching
@@ -143,12 +174,18 @@ NAMED RATHER THAN QUIETLY LEFT:** `THE_ARCADE_CABINET_SOKOBAN_tech-and-promo.md`
 `moves` THE SCORE and print the same four counters. **That is a different artifact, it is NOT edited by this
 amendment, and until it moves it is the second place where R2 disagrees with a current text.**
 
-**AND TWO THINGS THIS AMENDMENT DOES NOT SETTLE, named so that a reader does not read them as settled:**
+**AND THE PRE-AMENDMENT TEXT STILL EXISTS AT THE FREEZE RECORD'S OWN PINNED PATH:**
+`/home/chilly1/.hermes/workspace/SOKOBAN_READ_GRAMMAR.md`, **3730 B, sha256 `6f4d72319ec6f87…`** -- that
+is the text the 2026-10-10 population was read under, it is NOT the live rule, and it is NAMED here
+rather than overwritten, because overwriting it would make `SOKOBAN_FREEZE_RECORD.md`'s own header false.
 
-    1  §5's MECHANISM. The legend's FORMAT is a measured carrier defect; the SCHEMA-FILLING mechanism §5
-       states is NOT established for the entrant the A/B measured (40 -> 40 on the extraction model), and
-       the replacement text is prescribed at `SOKOBAN_FREEZE_RECORD.md` §1. **This amendment does not carry
-       it; §5's mechanism sentence stands as written until a second amendment moves it.**
+**AND TWO THINGS NAMED HERE, ONE SETTLED BY THIS AMENDMENT AND ONE NOT, named so that neither is read as
+the other:**
+
+    1  (SETTLED BY THIS AMENDMENT) §5's MECHANISM. The replacement prescribed at `SOKOBAN_FREEZE_RECORD.md`
+       §1 is IN §5; §7 quotes what §5 said before the move. WHAT REMAINS OUTSTANDING IS THE MEASUREMENT,
+       NOT THE TEXT: the three-arm follow-up the prescribed text calls for has NOT been run, and this
+       amendment does not read as if it had.
     2  R1's RECORD-side requirement -- a LOOSE-MATCH COUNT as a diagnostic only, NEVER scored -- is **not
        emitted by `sokoban.py` at `7134c3e8fc59fe02…`**, read from `play()`'s own return keys, and this
        amendment adds nothing to the code. **Which token fired IS carried; how much the strict reading
