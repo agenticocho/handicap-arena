@@ -52,7 +52,29 @@ measurement says neither is what is happening:
 - **Not separate.** They are byte-identical to a common ancestor; they began as the same document.
 
 What actually happened is **a fork that was never declared**, which is a third thing and the one
-that needs a decision. Three consequences follow from the fork being undeclared rather than chosen:
+that needs a decision. The Chair reached the same reading independently and added two things worth
+keeping:
+
+**1. What the 101 lines ARE.** The arena's copy runs **League A through K**. All three cabinet copies
+stop at **J**. So the delta is League K — with one correction from re-deriving it: it is **103 added
+lines and 2 removed**, of which exactly **one** is a league header. The rest is League K's body plus
+the count-discipline note added to the header the same day. "League K is exactly the delta" is right
+about the substance and slightly too tidy about the arithmetic.
+
+**2. The cabinets are not stale mirrors.** They are **64 to 82 commits AHEAD** of the trunk as well as
+behind it — **working documents seeded from this file that have since grown their own content.**
+`GAMES.md` is the one file they have not touched.
+
+> **Quote the command, not the numbers.** These divergence counts move: measured at 191/64 and
+> 133/82 in the afternoon, the same branches read 197/64 and 139/82 an hour later, because the trunk
+> advanced six commits in between. A divergence figure is a **changing state** and travels as the
+> command that reads it:
+>
+> `for b in cabinet/zork cabinet/sokoban cabinet/missile-command; do git rev-list --count main..$b; done`
+>
+> This is the same rule the day produced for run artifacts, applied to a repository fact.
+
+Three consequences follow from the fork being undeclared rather than chosen:
 
 1. **The fork point is invisible.** A reader of a cabinet's `GAMES.md` cannot tell it is 101 lines
    behind the arena's, or that the arena has a league the cabinets have never seen. Both documents
@@ -80,6 +102,11 @@ that needs a decision. Three consequences follow from the fork being undeclared 
   cadence, with the fork point named. Requires a mechanism, since none exists today.
 - **C — the fork stands and is declared.** Each cabinet's copy is frozen at `f42026b` on purpose and
   documented as such, with new games authored per cabinet and never merged back.
+  **RECOMMENDED: C, plus one header line in each of the four files** naming the fork point and which
+  document the reader is holding. C alone declares the *relationship*; the header line fixes the thing
+  that actually bites — that **both copies look complete to a reader**, and the cabinets' copy prints
+  the arena's own masthead. Four lines of text, in the place the reader already is. The Chair's
+  recommendation, arrived at independently and now carried here.
 
 **The one thing that is not viable is the present state**: four copies, no relationship, and no
 document that says so. That is the state in which an addition to either is unreadable later.
