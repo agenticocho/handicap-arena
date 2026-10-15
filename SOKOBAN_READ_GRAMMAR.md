@@ -289,3 +289,29 @@ diagnostic is `0` in every published cell as well. **Nothing is re-scored, resta
 scope is FUTURE RUNS ONLY**, and the carriers §7a names that cannot move -- the pin-time snapshot with its
 `MANIFEST.txt`, the proposal diff, `PREREG_sokoban.md`, `PREREG_sokoban_instrument1.md` and the SUPERSEDED
 promo -- are UNTOUCHED, each keeping its own digest and its own date.
+
+**AND THE CENSUS AT THE LANDED BYTES, EACH HIT DISPOSED -- so the set is auditable rather than asserted.**
+The command above, run over the whole tree (the ruling's case-insensitive pattern, `.git`/`.worktrees`/
+`results`/`logs`/`__pycache__` excluded), returns **18 hits in 9 files on `main`** and **10 hits in 5 files on
+`cabinet/sokoban`**, and **every one of them is a carrier §7a names or a quotation a landing document
+declares:**
+
+```
+sokoban/sokoban.py :9, :31, :347                  §7a row 2 -- the pin-time snapshot, NEVER CORRECTED (main only)
+sokoban/PROPOSED-FIX-line348.diff :6              §7a row 3 -- a diff's context, NEVER CORRECTED (main only)
+PREREG_sokoban.md :18, :45                        §7a row 4 -- the frozen contract, NEVER CORRECTED
+PREREG_sokoban_instrument1.md :165                §7a row 5 -- a dated prereg, NEVER CORRECTED
+...SUPERSEDED-1c90e564.md :81, :137                §7a row 6 -- already SUPERSEDED (main only)
+THE_ARCADE_CABINET_SOKOBAN_tech-and-promo.md      §7a's own two MOVED carriers, present only as the dated
+  :155, :156                                      SAID quotation of the pre-correction text (main only)
+CABINET_SOKOBAN_DOSSIER.md :155, :156             the same dated SAID quotation, in the file both trees carry
+SOKOBAN_READ_GRAMMAR.md :271, :272                THE COMMAND ABOVE, quoted in this block: the pattern quoting
+                                                  itself is this block's claim, not a carrier of the rule
+PREREG_sokoban_instrument2.md :67, :70, :73       the pre-registration's SAYS NOW lines -- the lines it named
+                                                  BEFORE the change, which is what a pre-registration is
+```
+
+**AND THE CARRIER THIS LANDING MOVED IS ABSENT FROM THE CENSUS, WHICH IS THE ACCEPTANCE:** `sokoban.py` does
+not appear at all -- its `:9`, `:31` and its printed legend are corrected at `00996929972b9483…`, and `:49`'s
+past-tense *"it used to be counted as `unrecognised`"* is not the pattern and is named as staying. **No hit is
+unnamed, and no carrier is disposed of silently in either tree.**
