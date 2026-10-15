@@ -496,8 +496,8 @@
    "edges": [
     {
      "kind": "results-write",
-     "status": "deferred:t_86fa52a2",
-     "why": "same as depth_test.py, :32"
+     "status": "migrated:69df598",
+     "why": "same shape as depth_test.py (the ABSOLUTE literal at :32, open(OUT,'w') at :199 and :223, in ALL FOUR trees at the same line), and for THIS file the call-time rule is a requirement on its importers: it is ALSO a library (source_probe3.py:19, source_probe4.py:21, acceptance_smoke.py:20), and all three still import it -- verified with the declaration made to resolve inside a git working tree, which results_dir() refuses, so an import-time resolution would have aborted them. Now resolves <declared write scope>/depth at the CALL, refuses rather than falls back. Landed by t_86fa52a2; the entry flips in its OWN commit."
     }
    ]
   },
