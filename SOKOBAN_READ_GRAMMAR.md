@@ -218,3 +218,74 @@ identity move carded as `t_b439b167` (child of the landing card `t_9802b2cc`), w
 and `:397` in the same commit as R1's record-side loose-match diagnostic. **Until then a reader who greps
 `sokoban.py:9` still finds the pre-R2 sentence, and that is the correct outcome: the sentence is DATED, not
 deleted.** `SOKOBAN_FREEZE_RECORD.md`'s pin block carries the matching note and holds that pin.
+
+---
+
+**7b. R1'S RECORD-SIDE ITEM LANDS, AND THE TWO CITATIONS ABOVE ARE CONVERTED TO SETTLED -- 2026-10-15.**
+This block is the LANDING of the Chair's ruling `2026-10-15-a-text-correction-does-not-move-a-pinned-identity`
+§3 corollary 3 (filed from card `t_31c14a0d`, sha256 `168e89b91e48d2f6…`), carried by card `t_b439b167`. **It
+is an APPEND: §7's text and §7a's table above are not edited, and §7's items are not renumbered.** The two
+citations it converts are quoted verbatim below rather than rewritten in place, for this document's own
+reason: *"This text is frozen, so the lines below are not silently replaced: what they SAID is quoted, and
+what they SAY now is beside it."*
+
+**SETTLED -- §2a's `FIRED` line.** It said: *"What is NOT recorded, and is scored neither way: R1's LOOSE-MATCH
+COUNT as a diagnostic only -- measured absent from `sokoban.py`'s record at `7134c3e8`."* **That measurement
+was TRUE and it is superseded by its own NAMED TRIGGER, not by prose: `sokoban.py`'s record now CARRIES it.**
+`play()` returns `loose_match_diagnostic_only_never_scored` -- a name that says what it is, a DIAGNOSTIC and
+never a score, in no rate, no gate and no denominator -- beside `loose_match_diagnostic_note`; and `gave_up_at`
+above already carries WHICH token fired. **Both halves of R1's record-side item are therefore in the record.**
+
+**SETTLED -- §7's item 2.** It said: *"R1's RECORD-side requirement -- a LOOSE-MATCH COUNT as a diagnostic
+only, NEVER scored -- is **not emitted by `sokoban.py` at `7134c3e8fc59fe02…`**, read from `play()`'s own
+return keys, and this amendment adds nothing to the code."* **Item 2 keeps its number and its text above; what
+it recorded as absent is now emitted**, by a change that MOVED the identity -- so nothing about it is inferred
+here. Item 2's second half, *"Which token fired IS carried; how much the strict reading throws away is not"*,
+is now **both carried.**
+
+**THE IDENTITY MOVED ONCE, FOR A MEASUREMENT REASON, AND THE TEXT CAME WITH IT -- NOT FOR IT.**
+
+```
+sokoban.py    7134c3e8fc59fe02…    21325 B   ->   00996929972b9483…    24872 B
+```
+
+- **THE MEASUREMENT REASON** is R1's diagnostic, above. It is why the bytes moved; the prose below rides the
+  move rather than buying it, which is what the ruling refused to allow the other way round.
+- **THE FOUR TEXT LINES THE RULING NAMED, in the same commit:** `:9`, `:31`, `:396`, `:397` at the pre-image
+  → **`:9`, `:31`, `:443`, `:444`** now. The module docstring's pre-R2 score claim, the RUNTIME PRINTED
+  LEGEND's same claim, and that legend's retired `unrecognised` for the counter the code names
+  `not_an_action`. **§7a's row 1 is therefore DISCHARGED:** its *"CORRECTED AT THE NEXT IDENTITY MOVE, never
+  for prose"* has happened, at the digest above.
+- **TWO FURTHER LINES INSIDE THE SAME FILE, NAMED because the ruling's four were a CENSUS:** `play()`'s
+  docstring `:189` and `:194` at the pre-image → **`:220` and `:226`** now. They state the same two retired
+  claims in words the ruling's pattern could not reach (`the number` for the score; `unrecognised` for
+  `not_an_action`), and a false present-tense sentence left inside the instrument could only ever have been
+  corrected by moving this identity a SECOND time for prose. **`sokoban.py:49` is NOT corrected:**
+  *"it used to be counted as `unrecognised`"* is past tense and true.
+- **NOTHING ELSE RIDES IT.** The runtime printed legend gains no line; **no control is added or removed
+  (`--self-test` still prints 49/49)**; no rate, gate or denominator changes.
+
+**THE CENSUS THAT SHOWS §7a's ROW 1 IS DISCHARGED -- the pattern is part of the claim:**
+
+```bash
+grep -n -i -e "the score is a move counter" -e "the score is the move counter" \
+           -e "successful actions -- the score" -e "unrecognised" sokoban.py
+```
+
+**It returns exactly ONE line at the new bytes: `:49`** -- *"it used to be counted as `unrecognised`"* -- which
+is dated, true, and stays. **`sokoban.py` is no longer a carrier of the retired score rule or of the retired
+counter name in the present tense.**
+
+**AND §7a's OTHER PLAIN STATEMENT IS DISCHARGED FOR THIS FILE ONLY, THE REST STANDING:** *"R2 IS NOT LANDED ON
+`sokoban.py`, ON `PREREG_sokoban.md` OR ON `PREREG_sokoban_instrument1.md`"* -- **R2 is now LANDED on
+`sokoban.py`** (the lines above say `solved` IS the score and `moves` is a COST, and the retired counter name
+is gone), and it remains **NOT LANDED on both preregs, BY DESIGN**, for the reason §7a gives: the pre-R2 text
+there is dated evidence of what published numbers were read under, and it will never move.
+
+**NO CELL MOVES, MEASURED RATHER THAN ASSERTED:** all 25 played cells -- the 2026-10-10 population's 12, the two
+pilots' 5 and 7, and the single-cell evidence file's 1 -- re-derive under the NEW bytes to their recorded
+counters, final boards and traces, entry for entry; `give_up` is `0` in every one of them, so the new
+diagnostic is `0` in every published cell as well. **Nothing is re-scored, restated or reinterpreted: the
+scope is FUTURE RUNS ONLY**, and the carriers §7a names that cannot move -- the pin-time snapshot with its
+`MANIFEST.txt`, the proposal diff, `PREREG_sokoban.md`, `PREREG_sokoban_instrument1.md` and the SUPERSEDED
+promo -- are UNTOUCHED, each keeping its own digest and its own date.
