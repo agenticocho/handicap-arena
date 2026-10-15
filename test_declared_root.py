@@ -220,11 +220,26 @@ def probes():
     _man5, _sha5 = results_manifest()
     _always = ["test_bind_control.py", "test_game_states.py", "reconcile_and_backfill.py"]
     _mig = sorted(e["script"] for e in migrated_entries(_man5))
+    # A FILE THIS TREE DOES NOT HAVE CANNOT TAKE ITS SCOPE FROM ANYTHING. `declared_absent` is a
+    # declaration about a FILE, and the manifest is ONE file mirrored in four trees: the entry reads
+    # `migrated` (the repository migrated it) while `presence[<this tree>]` is false and
+    # `declared_absent` names it. Reading only half of that -- migrated, therefore the file must
+    # carry the idiom -- is the same defect as counting an absence as residue: it reports an
+    # unfinished landing for a file that is not here. Named here, not failed. A file that is ABSENT
+    # WITHOUT BEING DECLARED still FAILS, on the line below this one.
+    _br5 = _root.branch(HERE)
+    _absent5 = {s2 for s2, trees in (_man5 or {}).get("declared_absent", {}).items() if _br5 in trees}
     if _man5 is None:
         check(False, "RESULTS_BINDERS_MANIFEST.json could not be read, so only the three mechanism "
                      "files were checked", RESULTS_MANIFEST)
     for f in _always + [f for f in _mig if f not in _always]:
         path = os.path.join(HERE, f)
+        if not os.path.exists(path) and f in _absent5:
+            check(True,
+                  f"{f} is DECLARED ABSENT from {_br5}: there is nothing HERE to take a scope from, "
+                  f"and an absence is not an unfinished landing",
+                  f"declared_absent[{f}] = {json.dumps(_man5['declared_absent'][f])}")
+            continue
         text = open(path, encoding="utf-8").read() if os.path.exists(path) else ""
         live = live_binder_lines(path)
         check("import cabinet_root" in text and not live,
