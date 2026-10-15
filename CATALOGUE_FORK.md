@@ -60,8 +60,12 @@ stop at **J**. So the delta is League K — with one correction from re-deriving
 header. The rest is League K's body plus the count-discipline note added the same day. **Those figures
 are already stale and will keep moving** — the arena's copy is growing while the cabinets' copies are
 unchanged since the fork. *(The rate once printed here — "14 lines every two hours" — was a single early
-reading quoted as a constant, and re-measuring it across the fork-to-now window gives roughly double
-that. Both the figure and its window are gone; the command above produces both.)* *"League K is exactly the delta"* is
+reading quoted as a constant. **So was my first replacement for it: this paragraph briefly said the
+window average is "roughly double", which was itself unmeasured and wrong in the other direction.**
+Measured properly, the growth is BURSTY and no single rate describes it: 123 lines across the whole
+fork-to-now window is **0.7 lines/hour**, while the same file moved ~15 lines/hour during a single
+evening's work. A rate is a reading with a window, and a bursty series has no rate without one. Both
+figures and their windows are removed; the command above produces the only honest pair.)* *"League K is exactly the delta"* is
 right about the substance and slightly too tidy about the arithmetic.
 
   ```
