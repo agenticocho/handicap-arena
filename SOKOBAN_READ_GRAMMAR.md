@@ -190,3 +190,31 @@ the other:**
        emitted by `sokoban.py` at `7134c3e8fc59fe02…`**, read from `play()`'s own return keys, and this
        amendment adds nothing to the code. **Which token fired IS carried; how much the strict reading
        throws away is not.**
+
+---
+
+**7a. THE CARRIERS THAT CANNOT MOVE -- NAMED, DATED, WITH THEIR REASONS.** This block is the LANDING of the
+Chair's ruling `2026-10-15-a-text-correction-does-not-move-a-pinned-identity` (filed from card `t_31c14a0d`,
+sha256 `168e89b91e48d2f6…`, landed by card `t_9802b2cc`), and it is an **APPEND**: §7's text above is not
+edited and its items are not renumbered. **A text correction does not move a pinned identity** -- so the two
+carriers that COULD move have moved, and every carrier that cannot is named here rather than left silently.
+The two moved, both now reading `solved` as the score and `moves` as a cost beside a dated correction record
+quoting what they said before: `THE_ARCADE_CABINET_SOKOBAN_tech-and-promo.md` `:81`, `:137` (main only) and
+`CABINET_SOKOBAN_DOSSIER.md` `:81`, `:137` (both trees, and byte-identical in both).
+
+| # | carrier | lines | digest | line dated | disposition, with its reason |
+|---|---------|-------|--------|-----------|------------------------------|
+| 1 | `sokoban.py` | `:9`, `:31`, `:396` (+`:397`'s retired `unrecognised`) | `7134c3e8fc59fe02…` | 2026-10-09 (`cac0849`) | **CORRECTED AT THE NEXT IDENTITY MOVE, never for prose** -- its bytes ARE the instrument: pinned at `SOKOBAN_FREEZE_RECORD.md:75`, asserted by `sokoban_solver.py`'s control [6], and required for `CABINET_DECLARATION_sokoban.md:42-44`'s live equality with the run of record's recorded `simulator_digest`. Carried by card `t_b439b167`. |
+| 2 | `sokoban/sokoban.py` + `sokoban/MANIFEST.txt` | `:9`, `:31`, `:347` (+`:348`); `MANIFEST.txt:5` pins those bytes | `46c01c9b9380d6f4…` / `fd20901a47da2606…` | 2026-10-09 (`dd412da`) | **NEVER CORRECTED** -- a pin-time snapshot BY ITS OWN DECLARATION ("Hashes read from disk at pin time"; "Frozen bytes are UNCHANGED"). Correcting a snapshot destroys the thing it exists to be. |
+| 3 | `sokoban/PROPOSED-FIX-line348.diff` | `:6` (+`:7`) | `34bcd4f75d53c262…` | 2026-10-09 (`dd412da`) | **NEVER CORRECTED** -- a diff's context must quote the file it patches; editing it falsifies the proposal. |
+| 4 | `PREREG_sokoban.md` | `:18`, `:45` (+`:35`, `:48`, `:54`) | `625c07ad7c8792db…` | 2026-10-09 (`cac0849`) | **NEVER CORRECTED** -- the frozen contract the 2026-10-10 population was READ under, self-declared "fixed at this commit" and digest-pinned at `SOKOBAN_CONFORMANCE_PACKAGE.md:90`. A prereg's text is a text numbers were read under. |
+| 5 | `PREREG_sokoban_instrument1.md` | `:165` (+`:159`) | `15bc4b5d6b8d150d…` | 2026-10-09 (`b6a8231`) | **NEVER CORRECTED** -- a dated prereg whose predictions were measured; the house pattern is to NAME a change to a frozen prereg IN ITS SUCCESSOR ("`unrecognised` WAS SPLIT ... named here so the extra column is read as the intended change"), never to edit it in. |
+| 6 | `THE_ARCADE_CABINET_SOKOBAN_tech-and-promo.SUPERSEDED-1c90e564.md` | `:81`, `:137` (+`:124`, `:140`, `:165`, `:229`) | `1c90e56450e90fb9…` | 2026-10-09 (`4eb2a28`) | **NAMED, already SUPERSEDED** -- a superseded revision is evidence of what the pre-correction text said. |
+
+**SAID PLAINLY, SO IT IS NOT READ AS SETTLED: R2 IS NOT LANDED ON `sokoban.py`, ON `PREREG_sokoban.md` OR ON
+`PREREG_sokoban_instrument1.md`.** For the two preregs BY DESIGN -- the pre-R2 text there is DATED EVIDENCE of
+what published numbers were read under, and it WILL NEVER MOVE. For `sokoban.py` at its NAMED TRIGGER: the
+identity move carded as `t_b439b167` (child of the landing card `t_9802b2cc`), which carries `:9`, `:31`, `:396`
+and `:397` in the same commit as R1's record-side loose-match diagnostic. **Until then a reader who greps
+`sokoban.py:9` still finds the pre-R2 sentence, and that is the correct outcome: the sentence is DATED, not
+deleted.** `SOKOBAN_FREEZE_RECORD.md`'s pin block carries the matching note and holds that pin.
