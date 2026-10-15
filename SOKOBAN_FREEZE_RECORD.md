@@ -71,10 +71,11 @@ digest cost an A/B and a repeat test to recover a fact that should have been on 
 **NOW CARRIED:** level digests, the simulator digest, and the host with its hardware state.
 
 ```
-grammar        b25d59567255c937…      the instrument's own text
+grammar        c2124f17a6bdaaa8…      the instrument's own text
 sokoban.py     7134c3e8fc59fe02…     the simulator (§6: self-test is the contract)
 01_one_push    db6ca59655f0d7d1…     the level, as an INPUT with a digest
 02_two_boxes   7549657f1768607c…     the level, as an INPUT with a digest
+levels/03_the_corner_waiting   77d18407a001da292b2f1dcf8054ed40ddc2038563f23b96861a362c78cf23d6
 ```
 
 **RE-FROZEN 2026-10-14.** `sokoban.py` advanced `186f561f…` -> `7134c3e8fc59fe02…` when the ruled fixes
@@ -93,6 +94,21 @@ population was produced under `6f4d7231…`, and no cell of it is re-scored by t
 in all 12 cells), so nothing above is rewritten, only superseded forward. **AND §1's ITEM IS NOT SETTLED BY
 IT:** the amendment moves the abstention list and the score wording, **not §5's schema-filling mechanism**,
 which still awaits its own amendment.
+
+**RE-FROZEN 2026-10-15 (SECOND AMENDMENT).** The grammar pin advanced again,
+`b25d59567255c937…` -> `c2124f17a6bdaaa8…`, when the read-grammar's SECOND amendment landed on `main` (§5's
+three-part measurement replaces the unsupported mechanism sentence; §6's `levels` line names THREE and gains
+the per-population `roster` line; §7 records both moves). **The pin block above is the CURRENT instrument, a
+precondition for any future run; the HEADER of this record -- 3730 bytes, `6f4d72319ec6f87…` -- is the text
+§1, §2 and §3 above were READ AGAINST, and it is left exactly as read.** The 2026-10-10 population was produced
+under `6f4d7231…` and `give_up` is `0` in all 12 of its cells, so the second amendment moves no cell of it:
+**no cell of the 2026-10-10 population is re-scored**, and nothing above is rewritten, only superseded
+forward. **AND §2 ABOVE NOW AGREES WITH THE RUN IT PINS:** `levels/03_the_corner_waiting` is added to the pin
+block because that run carries `03` = `77d18407a001da29…` and §2's own item already records that level
+digests are *"NOW CARRIED"* -- a pin block naming two of three levels is the stale list this record exists to
+prevent. **AND §1's ITEM IS SETTLED IN THE TEXT:** the prescribed three-part replacement is now §5, quoted
+back in the grammar's §7 -- **while the MEASUREMENT its text calls for, the three-arm follow-up, has still
+NOT been run.**
 
 ## 3. WHAT THE GRAMMAR GOT RIGHT, CHECKED RATHER THAN ASSUMED
 
