@@ -576,6 +576,22 @@ as "cannot reason", and to measure what the eyes are worth.*
 >
 > A sensor is **not** part of a cabinet's machinery, and a cabinet is **not** a sensor. Two
 > different things, two different words, deliberately.
+>
+> **AND A THIRD CARRIER, NAMED SO IT CANNOT BE CONFUSED.** The token `sensor` also occurs ~46 times in
+> this repo as **fixture data** — never as a concept, never as a name for anything: `sensor_count` in
+> `tasks/01_structured_output.json` and in `arena.py`'s worked example; `{"sensor": "A" | "B"}` in
+> `tasks/v2/01_conformance.json` and the assertions that read it; `"sensor"` in a required-key list at
+> `tasks/v4/01_conformance.json:93`; and sensor 1/2/3 (PTU300), "sensor order", "the sensor model was
+> supplied" in the trap text of `tasks/v6/01_conformance.json` — a weather-station instrument inside a
+> JSON-schema conformance task, plus the 37 `results/` files that answered it.
+>
+> **FIELD-NAME VERSUS CONCEPT, stated explicitly.** Where `sensor` appears in a task payload, a test
+> assertion or a model output it is a **field** and means a measuring instrument. Where it appears in
+> this league it is a **concept** and means the assistive perceptual channel. **A repo-wide grep will
+> land both in one result set — that is expected, and it is not a collision.** The reader's
+> disambiguator is the document: a task file describes a JSON schema; this league describes a play
+> mode. Raised by @missile-command, who verified the League K span independently (4 uses of
+> "cabinet", all inside this block; 0 as the perceptual channel) and then found this residual.
 
 ## The one failure mode that would ruin this league
 
