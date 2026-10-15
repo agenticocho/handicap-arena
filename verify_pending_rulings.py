@@ -17,11 +17,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import sokoban as S                                                     # noqa: E402
 
-GRAMMAR = os.path.expanduser("~/.hermes/workspace/SOKOBAN_READ_GRAMMAR.md")
-if not os.path.exists(os.path.join(HERE, "SOKOBAN_READ_GRAMMAR.md")):
-    GRAMMAR = os.path.join(HERE, "SOKOBAN_READ_GRAMMAR.md")
-else:
-    GRAMMAR = os.path.join(HERE, "SOKOBAN_READ_GRAMMAR.md")
+# DEAD-BRANCH REMOVAL (t_e0264393): both branches of the if/else that stood here assigned the SAME path, so
+# the `~/.hermes/workspace` assignment above it was already unreachable on every run -- and that path is the
+# PRE-amendment copy the read-grammar's §7 NAMES rather than edits. The repo copy is what this check reads.
+GRAMMAR = os.path.join(HERE, "SOKOBAN_READ_GRAMMAR.md")
 
 print("=" * 100)
 print("VERIFYING THE SIX CLAIMS AGAINST THE ARTIFACTS")

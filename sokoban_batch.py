@@ -82,9 +82,9 @@ def main():
     # =============================================================================================
     # ONE RUN, ONE PATH. Mechanised, because the alternative is a rule I state and then forget.
     #
-    # Two runs shared `probes/SOKOBAN_FIRST_RUN.json` and the LAST WRITER WON: the re-run finished first,
-    # the still-live first run finished second, and the re-run's record was destroyed. Its numbers survived
-    # only because its STDOUT went to a different file. SEE FINDING 020.
+    # Two runs shared ONE artifact path and the LAST WRITER WON: the re-run finished first, the still-live
+    # first run finished second, and the re-run's record was destroyed. Its numbers survived only because
+    # its STDOUT went to a different file. SEE FINDING 020, which names the old path.
     #
     # SO THE PATH CARRIES THE RUN, and the run refuses to start if its own path already exists -- a second
     # launch against a live path is not a retry, it is an OVERWRITE, and it should fail loudly rather than
@@ -218,10 +218,14 @@ def main():
             print(f"  {os.path.basename(lv):22s} played {len(sub):2d}  solved {sol:2d}  "
                   f"gave_up {gv:2d}  not_an_action {na:2d}")
     print()
-    print("  LEVEL SET: 2 of 3. The third level is ABSENT and is reported as ABSENT -- a level nobody can")
-    print("  solve needs a solver to PROVE it, and a level that merely LOOKS lost is a trap for the reader,")
-    print("  not a control for the entrant. C1 is scored on the levels that exist, per outcome row 6.")
-    print(f"\n  artifact: probes/SOKOBAN_FIRST_RUN.json")
+    # R3's HAND-TYPED TWIN, fixed 2026-10-15 (t_e0264393). This block TYPED both of its claims on main()'s
+    # SUCCESS path -- the level-set sentence and the artifact name -- so the population run's own log
+    # asserts the level set twice, 45 lines apart (logs/sokoban_pop3.out:11 and :55), and names an artifact
+    # (:59) that the ONE-RUN-ONE-PATH rule above refuses to write. Both claims are DERIVED now, the same
+    # discipline as the header line above: a run's log cannot contradict its own header.
+    print(f"  LEVEL SET: {len(LEVELS)} of the verified set. Whether the set is COMPLETE is stated by the")
+    print(f"  registry (verify_levels.py), never by a sentence in the runner.")
+    print(f"\n  artifact: {os.path.relpath(out_path, HERE)}")
     return 0
 
 
