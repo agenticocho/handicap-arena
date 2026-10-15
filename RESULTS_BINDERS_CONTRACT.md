@@ -28,12 +28,13 @@ use**; `cabinet_root.Refusal` is a `SystemExit`, so it exits non-zero, names the
 | `annotate_superseded.py` | `results_dir()/supersessions` | landed (`t_fdf55800`, `2528a48`) |
 | `canonicalise_filenames.py` | rewrites ONLY inside `results_dir()`; the legacy-record bytes are never a target | landed (`t_fdf55800`, `73b680f`) |
 | `chess_game.py` | `results_dir()` | landed (`t_fdf55800`, `16381bc`) |
-| `depth_test.py`, `depth_test2.py` | `results_dir()/depth` | **DECIDED, NOT LANDED** — `t_86fa52a2`; their `OUT` still names the legacy record by ABSOLUTE literal |
-| `darts/darts.py` | `results_dir()/darts` | **DECIDED, NOT LANDED** — `t_86fa52a2`; `--out` still defaults into `<worktree>/darts/results` |
+| `depth_test.py`, `depth_test2.py` | `results_dir()/depth` | landed (`t_86fa52a2`, `a0e712f`, `69df598`) |
+| `darts/darts.py` | `results_dir()/darts` | landed (`t_86fa52a2`, `9fcffb1`) |
 
-The two rows marked **DECIDED, NOT LANDED** are decisions of the Chair, carried in
-`RESULTS_BINDERS_MANIFEST.json` as `deferred:t_86fa52a2`. They are named here so that a reader of this
-contract is not told a destination the code does not yet resolve to.
+Every row above is carried in `RESULTS_BINDERS_MANIFEST.json`, which is the ONE file that states a
+writer's destination and the commit that landed it (`migrated:<commit>`, one per file). This table is a
+reader's summary of that file, not a second copy of it: where the two disagree, the manifest is what the
+instruments read, and the disagreement is a defect here.
 
 ## NO NEW WRITE LANDS IN A GIT TREE
 
