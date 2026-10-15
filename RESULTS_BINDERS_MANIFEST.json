@@ -477,8 +477,8 @@
    "edges": [
     {
      "kind": "results-write",
-     "status": "deferred:t_86fa52a2",
-     "why": "a WRITER into main's legacy record by ABSOLUTE literal (depth_test.py:27, open(OUT,'w')), in a form the counter's two os.path.join patterns could not see: a writer is bound by its DESTINATION, not its syntax. Present in ALL FOUR trees at the same line. Routed by the Chair to t_86fa52a2 (ruling 2026-10-14-a-writer-is-bound-by-its-destination-not-its-syntax.md, sha256 6309d8a467ccdbc2317e904f98a6222c37f2678f17f2c4e8567d87b5f52232f9); STILL COUNTED AS RESIDUE, because a deferral is declared and never silent"
+     "status": "migrated:a0e712f",
+     "why": "WAS an absolute literal into main's legacy record (depth_test.py:27, open(OUT,'w')) -- the same literal at the same line in all four trees, so running the file from ANY of them overwrote a TRACKED file inside main's checkout. NOW the destination resolves AT THE WRITE as <declared write scope>/depth, through cabinet_root.results_dir(), which REFUSES rather than falling back (nothing written, remedy named). The published artifact stays declared in place inside the record and is written by nothing; a re-run reproduces it byte-for-byte in the declared subtree. Landed by t_86fa52a2; the entry flips in its OWN commit, so the script stays independently revertible."
     }
    ]
   },
