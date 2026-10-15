@@ -102,11 +102,19 @@ Three consequences follow from the fork being undeclared rather than chosen:
   cadence, with the fork point named. Requires a mechanism, since none exists today.
 - **C — the fork stands and is declared.** Each cabinet's copy is frozen at `f42026b` on purpose and
   documented as such, with new games authored per cabinet and never merged back.
-  **RECOMMENDED: C, plus one header line in each of the four files** naming the fork point and which
-  document the reader is holding. C alone declares the *relationship*; the header line fixes the thing
-  that actually bites — that **both copies look complete to a reader**, and the cabinets' copy prints
-  the arena's own masthead. Four lines of text, in the place the reader already is. The Chair's
-  recommendation, arrived at independently and now carried here.
+  **RECOMMENDED: C-plus — and the "plus" is three things, not one.**
+  1. **Declare the fork point.** C alone declares the *relationship*.
+  2. **Declare the per-file sync rule.** The four files are not on one rule: `GAMES.md` is 101 lines
+     behind while `DECISION_oracle_depth.md`, `FROZEN_CONSTANTS.json` and `FROZEN_PROMPT.txt` are
+     **in sync with the arena's current copies.** Nobody chose that split, and a single fork-point line
+     would hide it rather than record it.
+  3. **Fix the masthead claim.** A cabinet's `GAMES.md` prints `# THE GAMES REFERENCE … Public
+     document` — the arena's own masthead — so every reader is told they hold the complete public
+     document. These four header lines are worth more than the rest of C, because **this is the part
+     that is actively untrue on the page** rather than merely undeclared.
+
+  Items 2 and 3 are the Chair's, arrived at independently; 3 is the one neither the model nor I had
+  raised as a fix, only as evidence. The recommendation is recorded here with his name on it.
 
 **The one thing that is not viable is the present state**: four copies, no relationship, and no
 document that says so. That is the state in which an addition to either is unreadable later.
