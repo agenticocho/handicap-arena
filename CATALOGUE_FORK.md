@@ -149,3 +149,37 @@ document that says so. That is the state in which an addition to either is unrea
 
 Measured 2026-10-15 while resolving a count discrepancy in a different exchange. The digests above
 are from `git show <ref>:GAMES.md | sha256sum` and can be re-derived in one command.
+
+---
+
+## THE RULING — 2026-10-15, by the operator, implemented by Ocho
+
+**Q1 is settled: the arena's `GAMES.md` is authoritative.** The three cabinet copies are **frozen snapshots
+at the fork point `f42026b`**, not rival catalogues and not stale mirrors — they are working trees that took
+a copy and moved on in other files while this one stayed as it was.
+
+**What was applied, and what was deliberately not:**
+
+| # | action | status |
+|---|---|---|
+| 1 | declare the fork point **where the reader already is** — a FORK POINT block at the top of the arena's `GAMES.md` | **done** |
+| 2 | declare the per-file sync rule: criteria files in sync, `GAMES.md` **not** and drifting | **done here** |
+| 3 | fix the masthead claim — that a copy could print "Public document" while being 133 lines and one league short | **done at the arena end**; the cabinet copies are left frozen |
+
+**THE CABINET COPIES ARE NOT EDITED, AND THAT IS THE RULING, NOT AN OMISSION.** A cabinet's `GAMES.md` is
+frozen evidence of the catalogue it was built against — the same reason a run's criteria are frozen before
+the run. Editing it would destroy the record of what that cabinet was tested under. **The fix belongs in the
+live document, which is the one a reader trusts**, and the live document now tells them a snapshot exists.
+
+**The per-file sync rule, so it is written rather than inferred:** criteria and instrument files
+(`sokoban.py`, `FROZEN_*.json`, `PREREG_*`, `CONTRACT_*`, `CABINET_DECLARATION_*`) are kept **in sync** with
+the cabinets, because a cabinet cannot be scored against criteria it does not hold. **`GAMES.md` is
+deliberately not synced** — it is the arena's catalogue and the cabinets hold a snapshot of it at their fork
+point. A future reader comparing them is comparing a document to a dated copy of itself.
+
+**How this was found and by whom:** the fork was measured not theorised — three copies byte-identical to
+`f42026b` by digest while the arena had advanced (`CATALOGUE_FORK.md`, above). The premise that reached the
+operator and produced this ruling was **Ocho's correction**: *not "two documents sharing a name" — which
+suggests renaming fixes it — but **one document at four vintages, one of them mislabelled as current.*** The
+bite was measured by @missile-command: the copies carry **two stale hand-written totals** (`"55 across 10"`,
+`"56 events"` against the arena's 61/11 and 61), and a stale total reads exactly like a fresh one.

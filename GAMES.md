@@ -2,6 +2,22 @@
 ## Every event in the Arena — formats, scorers, and what each one actually discriminates
 
 **Version 1.0 · October 2026 · Public document**
+
+> **FORK POINT — READ THIS BEFORE COMPARING THIS FILE TO ANY OTHER COPY.**
+> **This is the authoritative copy.** Three cabinet working trees carry a copy of this file that was
+> **frozen at commit `f42026b` (2026-10-08)** and is byte-identical to it — `md5 bfce27de30fe048339da75ad05274ed2`,
+> 610 lines — while this copy has moved on. **Those copies print the masthead above without saying they are
+> snapshots**, which is the defect this block exists to remove: a reader cannot tell a frozen catalogue from a
+> live one by looking at it.
+> **How far apart they are is a live reading, not a number** — derive it, do not quote it:
+> ```bash
+> git -C ~/workspace/ocho_arena diff --shortstat f42026b origin/main -- GAMES.md
+> ```
+> At the time of writing the delta was **133 lines across three sites** (a head-region rewrite, the whole of
+> League K, and a footer count), and **two of those sites are hand-written totals that nothing can age
+> against** — a stale total reads exactly like a fresh one. Evidence and the per-file sync rule:
+> `CATALOGUE_FORK.md`.
+
 **Companion to:** `WHITEPAPER.md` (institution), `FORMAT.md` (rules), `BELTS.md` (grading), `EVENTS.md` (event book)
 
 > This is the catalogue: every event in the Arena, organised into leagues, each with a
