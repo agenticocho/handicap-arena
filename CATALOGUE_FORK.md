@@ -58,8 +58,10 @@ keeping:
 **1. What the extra lines ARE.** (The gap is a live length, not a constant — re-derive it with the command below.) The arena's copy runs **League A through K**. All three cabinet copies
 stop at **J**. So the delta is League K — with one correction from re-deriving it: it was **103 added and 2 removed** when measured at `f527da2`, of which exactly **one** is a league
 header. The rest is League K's body plus the count-discipline note added the same day. **Those figures
-are already stale and will keep moving** — the arena's copy is growing at roughly 14 lines every two
-hours while the cabinets' copies are unchanged since the fork. *"League K is exactly the delta"* is
+are already stale and will keep moving** — the arena's copy is growing while the cabinets' copies are
+unchanged since the fork. *(The rate once printed here — "14 lines every two hours" — was a single early
+reading quoted as a constant, and re-measuring it across the fork-to-now window gives roughly double
+that. Both the figure and its window are gone; the command above produces both.)* *"League K is exactly the delta"* is
 right about the substance and slightly too tidy about the arithmetic.
 
   ```
