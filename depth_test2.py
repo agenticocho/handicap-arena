@@ -20,8 +20,13 @@ WHAT IT REPORTS
     Below 5 per edge the verdict is ONE-EDGED or INADMISSIBLE and NO sensitivity is reported.
 """
 import json
+import os
 import subprocess
 import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import cabinet_root as _root                                          # noqa: E402
 
 BIN = "/home/chilly1/chess_oracle/stockfish/stockfish-linux-x86-64-universal"
 D_REF, D_ALT = 18, 12
@@ -29,7 +34,13 @@ THREADS, HASH = 1, 64
 LOST_CP, HOLD_CP, WINDOW = -300, -100, 60
 MIN_PER_EDGE = 5
 WALK_DEPTH = 6
-OUT = "/home/chilly1/workspace/ocho_arena/results/DEPTH_TEST2.json"
+
+# NO DESTINATION IS BOUND HERE, AND FOR THIS FILE THAT IS ALSO A REQUIREMENT ON ITS IMPORTERS. The
+# line that used to sit here was a module-level ABSOLUTE LITERAL naming main's legacy record -- the
+# same literal, at the same line, in all four trees -- and main() opens it for writing twice. THIS
+# FILE IS ALSO A LIBRARY: source_probe3.py:19, source_probe4.py:21 and acceptance_smoke.py:20 import
+# it for its uci/eval/fen helpers. A resolution at module level would make those three refuse over a
+# write they never make, so the destination is resolved at the CALL -- see depth_dir().
 
 # deterministic handicap ladder: removal from BLACK's side of the start position, plus engine moves.
 # Each entry is (label, [squares removed from the black side]).
@@ -149,10 +160,43 @@ def side_of(cp):
     return "GREY"
 
 
+def depth_dir():
+    """-> <declared ROOT>/<this worktree's cabinet>/depth -- THE ONE DESTINATION for this test's output.
+
+    RESOLVED AT THE CALL, NOT AT THE IMPORT. This file is ALSO a library -- source_probe3.py:19,
+    source_probe4.py:21 and acceptance_smoke.py:20 import it for its uci/eval/fen helpers -- so a
+    resolution at module level would make three importers refuse over a write they never make. The
+    three importers ARE the control for that rule: they must still import this module successfully.
+
+    AND IT REFUSES RATHER THAN FALLS BACK. cabinet_root.results_dir() is a Refusal -- a SystemExit
+    that names the remedy -- when there is no declared root, or when the declaration resolves inside
+    a git working tree or the repository's own git directory. It is NOT caught: a run that cannot
+    declare where its result goes must not write one somewhere else.
+
+    WHY A NAMED SUBTREE AND NOT THE FLAT LEVEL -- the naming is the Chair's, not this file's. Both
+    published depth artifacts stay DECLARED IN PLACE inside the legacy record, which is ONE tree
+    object (0bcaaa0188b35f0bdd17e3ca824a977cac2d94a1) that a removal would change, so a flat-level
+    write would put a second file of the same basename under a different domain entry -- a basename
+    collision across entries, which the tools that flatten the domain are required to refuse.
+    `depth/` is a subtree OF THE DECLARED WRITE SCOPE, not a second root.
+    """
+    return os.path.join(_root.results_dir(), "depth")
+
+
+def out_path():
+    """-> <declared write scope>/depth/DEPTH_TEST2.json, or a refusal. This creates nothing."""
+    return os.path.join(depth_dir(), "DEPTH_TEST2.json")
+
+
 def main():
+    dest = out_path()                    # the destination, resolved where it is written
     print("=" * 96)
     print("TEST 2 -- DEPTH SENSITIVITY. Source: a handicap ladder plus engine-directed moves.")
     print("=" * 96)
+    print(f"  destination            {dest}")
+    print("                         resolved at the CALL through cabinet_root.results_dir(), which "
+          "REFUSES")
+    print("                         rather than falling back to a worktree-local path")
     cands = []
     for label, squares in LADDER:
         base = fen_without(squares)
@@ -195,8 +239,10 @@ def main():
         print(f"\n  *** {which} -- NOT ADMISSIBLE. ***")
         print(f"  Per the pre-registration: no sensitivity is reported, and NO conclusion about the")
         print(f"  unreached edge follows, in either direction.")
+        os.makedirs(depth_dir(), exist_ok=True)
         json.dump({"admissible": False, "which": which, "near_lost": len(near_lost),
-                   "near_hold": len(near_hold), "rows": rows}, open(OUT, "w"), indent=1)
+                   "near_hold": len(near_hold), "rows": rows}, open(dest, "w"), indent=1)
+        print(f"\n  written: {dest}")
         return 0
 
     print(f"    -> ADMISSIBLE")
@@ -217,11 +263,12 @@ def main():
     print(f"    'Moving the depth from 18 to 12 moves a decisive position's evaluation by a median")
     print(f"     of {med:+d} cp (range {shifts[0]:+d} to {shifts[-1]:+d}) and flips the band on "
           f"{rc_}/{len(risk)} = {100*rc_/len(risk):.0f}% of at-risk positions.'")
+    os.makedirs(depth_dir(), exist_ok=True)
     json.dump({"admissible": True, "rows": rows, "crossings_at_risk": rc_, "crossings_far": fc,
                "n_at_risk": len(risk), "near_lost": len(near_lost), "near_hold": len(near_hold),
                "shift_min": shifts[0] if shifts else None, "shift_median": med,
-               "shift_max": shifts[-1] if shifts else None}, open(OUT, "w"), indent=1)
-    print(f"\n  written: {OUT}")
+               "shift_max": shifts[-1] if shifts else None}, open(dest, "w"), indent=1)
+    print(f"\n  written: {dest}")
     return 0
 
 
