@@ -127,6 +127,26 @@ def main():
         print("     reader compare across freezes and read the instrument change as a result.")
         print("     The line must carry its freeze. (This is the declaration's own finding.)")
 
+    # --- check 3: which runs are on the freeze that is on disk NOW -----------------------
+    cur = sha256(os.path.join(ROOT, "sokoban.py"))
+    print("\nCHECK 3 -- the freeze on disk now vs what each run records")
+    print(f"  sokoban.py on disk : {cur[:16]}")
+    for p in declared:
+        fp = os.path.join(ROOT, p)
+        if not os.path.exists(fp):
+            continue
+        d, c, _ = cells_of(fp)
+        sim = d.get("simulator_digest")
+        if sim is None:
+            state = "NO DIGEST -- cannot be placed against any freeze"
+        elif sim == cur:
+            state = "on the CURRENT freeze"
+        else:
+            state = "a HISTORICAL freeze -- not comparable to a current run"
+        print(f"    {os.path.basename(p)[:50]:50s} {state}")
+    print("  => a run from a historical freeze is not stale: it is a measurement of a different")
+    print("     instrument. Comparing it to a current run measures the instrument change.")
+
     print()
     if fails:
         print("CONTRADICTIONS:", *fails, sep="\n  ")
