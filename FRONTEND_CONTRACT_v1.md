@@ -21,6 +21,13 @@ not a signed contract, and a draft that reads as in force is worse than a draft.
 | **Mike** | the contract as a whole — the instrument, its four items, its frozen ground truth. Commission: build the Arcade against it. | 2026-10-14 |
 | **Ocho** | **§8's four clauses only** (`FRONTEND_CONTRACT_ACCEPTANCE.md`). Layout, aesthetics, interaction and every product decision are Chair's and are not his to gate. | 2026-10-14 |
 
+**RE-SIGN, 2026-10-15 — Mike, on the §7.2 erratum only.** §7.2's measured passage, §10.1's derivation
+line, and the erratum note in §11 are corrected to the re-measured figures: **85** missed weights
+(`results == []`), the `EMPTY` marker covering **60 of 85**, **25** unmarked, and **310 / 85 / 225** for
+the derivation. **Scope: those passages and nothing else** — the rest of the instrument is unchanged and
+carries its 2026-10-14 signature. Made by the Chair under the direction Mike gave; **the figures were
+re-measured from the trunk's own `results/` at `ad3c27e`, not carried from any report.**
+
 **Ocho's verification, flags and holds:** `FRONTEND_CONTRACT_SIGN_OFF_OCHO.md` — the signer's own
 record, which carries what this table cannot: the artifacts behind the gates at their revisions, the
 five flags, and the two holds.
@@ -488,12 +495,13 @@ score of zero.
 - **Key `scratched` off `results == []`, and nothing else. Never off the filename.**
 - A scratched entrant renders as **"did not serve"**, visually distinct from a scored zero, and is
   **excluded from every average, ranking and comparison.**
-- **Measured:** 16 bundles have `results == []` (§10.1). The `EMPTY` filename marker currently covers
-  **16 of 16**, but the marker is a **convenience, not the data** — for a period it covered only 9 of
-  16, and the 7 unmarked were exactly the v1 counterparts, which a filename-keyed UI would have
-  rendered as **zeros**.
+- **Measured (re-measured 2026-10-15, at the re-sign):** **85** bundles have `results == []` (§10.1). The
+  `EMPTY` filename marker currently covers **60 of 85**, but the marker is a **convenience, not the
+  data** — for a period it covered only 9 of 16 of that era's total, and the unmarked ones were exactly
+  the v1 counterparts, which a filename-keyed UI would have rendered as **zeros**. Today the **25**
+  unmarked are the same shape.
 - **Check:** delete the filename convention in your head and re-derive. The view must still treat all
-  16 correctly.
+  **85** correctly.
 
 ### 7.3 Clause 3 — `card_version` is a hard partition, and is not the release version
 
@@ -612,7 +620,11 @@ absence of `card_version` maps to 1.
     print("certification    :", dict(Counter(e.get("certification") for e in rows)))
     EOF
 
-    bundles 91 | scratched 16 | graded 75
+    bundles 310 | scratched 85 | graded 225        <- first line re-measured 2026-10-15, at the re-sign;
+                                                      every line BELOW this one is the 2026-10-14
+                                                      transcript and was NOT re-measured -- read those
+                                                      as of that date, and the certification count is
+                                                      75 in the transcript and 225 measured today
     card_version mapped: {2: 33, 1: 42}
     raw card_version : {'2': 33, 'None': 42}
     certification    : {'OPEN (self-reported) — re-run by the arena to become CERTIFIED': 75}
@@ -808,6 +820,15 @@ that the `EMPTY` filename marker covers **16 of 16** is measured false: it disag
 `results == []` on **25 of 310** bundles. That erratum is flagged in the signer's record and is **not**
 fixed in this text, because fixing it would move a passage under Mike's signature. It is named here so
 no reader inherits the wrong number.
+
+**SUPERSEDED 2026-10-15.** The erratum named above **has now been corrected in this text**, under a
+re-sign from Mike scoped to §7.2's measured passage, §10.1's derivation line and this note. The
+sentence *"not fixed in this text"* was true at its own date and is left standing above so a reader
+can see what was claimed and when. **And the gates are no longer merely named:**
+`check_frontend_clauses.py` landed on `main` at `ad3c27e`, runs standalone against the trunk
+(`C1/C2/C3/C4 over 310 bundles, 225 entrant rows`; `--selftest` → controls caught 5/5), **and exits
+non-zero on the record — `rc=1` with `FAILED -- 85 failure(s)`** — so a caller can key on its status
+rather than parse its text.
 
 ---
 
