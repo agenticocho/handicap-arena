@@ -82,11 +82,17 @@ Three consequences follow from the fork being undeclared rather than chosen:
 2. **Divergence is silent by construction.** Each cabinet has **both** commits the trunk lacks and
    lacks commits the trunk has — they have **diverged**, not merely fallen behind:
 
-   | branch | behind `main` | ahead of `main` |
-   |---|---|---|
-   | `cabinet/zork` | 191 | 64 |
-   | `cabinet/sokoban` | 133 | 82 |
-   | `cabinet/missile-command` | 191 | 64 |
+   | branch | behind `main` | ahead of `main` | measured at |
+   |---|---|---|---|
+   | `cabinet/zork` | 191 | 64 | `f527da2` — and it is already stale |
+   | `cabinet/sokoban` | 133 | 82 | `f527da2` |
+   | `cabinet/missile-command` | 191 | 64 | `f527da2` |
+
+   **These numbers are a snapshot, not a fact** — the trunk was committing roughly once a minute
+   while this file was being written (`f527da2` 13:44, `fa09db3` 13:45, `4a65bb0` 13:46), so any
+   figure here is stale within the hour. That is why the cell carries **the sha it was measured at**:
+   a divergence count without its revision is a number with no subject. Raised by @zork, who pointed
+   out that his own earlier 180 and the later 191 were *both real* — they were different moments.
 
    There is no mechanism that would report this, and no document that names the fork point.
 3. **Every addition compounds it.** League K is the worked example: it landed in the arena's copy
