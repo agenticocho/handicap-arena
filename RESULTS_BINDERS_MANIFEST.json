@@ -34,6 +34,24 @@
   "landed_by": "the Chair's ruling on t_5742bdac, 2026-10-14-a-writer-is-bound-by-its-destination-not-its-syntax.md, sha256 6309d8a467ccdbc2317e904f98a6222c37f2678f17f2c4e8567d87b5f52232f9",
   "how_measured": "sokoban / missile-command / zork measured directly at their travel commit; main measured with the one un-migrated file stashed, and derived = sokoban + render_state_contract.py."
  },
+ "AC1_after_counts": {
+  "counts": {
+   "main": 0,
+   "cabinet/sokoban": 0,
+   "cabinet/missile-command": 0,
+   "cabinet/zork": 0
+  },
+  "named_write_destinations": {
+   "main": 0,
+   "cabinet/sokoban": 0,
+   "cabinet/missile-command": 0,
+   "cabinet/zork": 0
+  },
+  "measured_at": "2026-10-15T00:23:27Z",
+  "how_measured": "python3 scripts/list_results_binders.py <tree>, run in each of the four trees at the heads this card landed. Every one prints '0 record_binders + 0 named_write_destinations + 2 log_coordinates' and 'STATE: RESIDUE ZERO', exit 0. The two remaining rows are the DECLARED log coordinates (deferred:log-coordinate:t_c442023d), which are not residue. NO HASH OF THIS FILE IS CITED HERE, and none may be: the manifest's own bytes change with this block, so a hash typed beside it would be false for the file that carries it -- the command above prints the path and sha256 it read, per tree, and the four values are equal by measurement.",
+  "what_moved": "depth_test.py:27 and depth_test2.py:32 (absolute literals into main's legacy record, present at the same line in ALL FOUR trees) now resolve the declared write scope's depth/ subtree at the write; darts/darts.py:706,715 (os.path.join(dirname(__file__), 'results')) now resolves the declared write scope's darts/ subtree at the run, and refuses in-tree destinations. The three BEFORE-numbers were 24 / 23 / 22 / 22 record binders (22 migrated by t_fdf55800 + these two files) and 1 named write destination in main -- see AC1_before_counts_CORRECTED.",
+  "landed_by": "t_86fa52a2"
+ },
  "status_classes": [
   "migrated:<commit>",
   "deferred:<card-id>",
