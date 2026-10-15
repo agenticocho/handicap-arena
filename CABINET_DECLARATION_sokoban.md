@@ -39,7 +39,7 @@ file is tracked.** Re-derived on every field rather than on `trace` alone, **wit
 **and** `budget_signature` (`LFM2/02`: 64 vs 56 `gen_tokens` at the ceiling); `granite/02` diverges across
 **24 of its 40 turns** and in `trace` — with 3 further turns differing *only* in wall-clock `secs`,
 so their timing-inclusive union is 27. **The count in this paragraph excludes timing because line 37 says it
-does**; an earlier version read 27 here, the union, one line from its own stated rule.; **`LFM2/01` and `LFM2/03` are the identical cells.** **Those turns exist
+does**; an earlier version read 27 here, the union, one line from its own stated rule.**  **`LFM2/01` and `LFM2/03` are the identical cells.** **Those turns exist
 in no other artifact** — this file is their sole copy, and deleting it would delete them, which is the
 `SOKOBAN_VERDICT_1` / FINDING 020 failure.
 
