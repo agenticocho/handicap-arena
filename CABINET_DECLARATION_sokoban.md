@@ -39,9 +39,10 @@ cells where there are 7 — the pool-by-accident error, in arithmetic.
 
 - **Every cell of all three files replays through the on-disk frozen simulator to its recorded counters
   and final boards: `5/5`, `7/7`, `1/1`.**
-- **On-disk digests re-derived and equal to what the pilots record:** `sokoban.py`
-  **`7134c3e8fc59fe02`** (= the pilots' `simulator_digest`); `levels/01` `db6ca59655f0d7d1`,
-  `levels/02` `7549657f1768607c`, `levels/03` `77d18407…`.
+- **On-disk digests re-derived — and the line now CARRIES THE FREEZE each population was produced under:**
+  since 2026-10-15 the on-disk simulator is **NO LONGER** the pilots' recorded `simulator_digest`. On disk
+  `sokoban.py` is **`00996929972b9483`**; the pilots RECORD `7134c3e8fc59fe02` (= commit `f0eba6e`) and the
+  2026-10-10 population RECORDS `186f561f`. The three level digests and the full statement: the LAST SECTION.
 
 ## DO NOT COLLAPSE THESE TWO — the run-of-record line must say WHICH meaning it carries
 
@@ -59,3 +60,35 @@ a result.
 `…_01_one_push.json` is **evidence, not a superseded pilot** — and it is **the older shape, carrying no
 simulator or level digests.** So it can be replayed but **it cannot be checked against a freeze by
 digest**, and that limitation is part of the declaration rather than a footnote to it.
+
+## 2026-10-15 — THE ON-DISK INSTRUMENT MOVED (card `t_b439b167`), AND THE FREEZE THIS FILE NOW CARRIES
+
+**The equality this file asserted is spent, and it is recorded rather than discovered later.** Until today
+the digest line above could assert a LIVE equality: the on-disk `sokoban.py` WAS the pilots' recorded
+`simulator_digest`. **R1's record-side loose-match diagnostic (ratified 2026-10-13, never landed) cannot be
+landed without moving that digest** — so the identity moved, once, for that MEASUREMENT reason, with
+`sokoban.py`'s six retired-text lines riding the same commit rather than buying it
+(`SOKOBAN_FREEZE_RECORD.md`'s RE-FROZEN note names every subject it carries; the read-grammar's §2a and §7
+item 2 citations about that diagnostic are converted to SETTLED in its §7b).
+
+```
+                                the pilots' instrument   the population's instrument   ON DISK
+sokoban.py                      7134c3e8fc59fe02…        186f561facd44916…             00996929972b9483…
+recoverable as                  commit f0eba6e           commit 6be5bbb                HEAD, this tree
+levels/01_one_push.txt            db6ca59655f0d7d1      db6ca59655f0d7d1              db6ca59655f0d7d1
+levels/02_two_boxes.txt           7549657f1768607c      7549657f1768607c              7549657f1768607c
+levels/03_the_corner_waiting.txt  77d18407a001da29…     77d18407a001da29…             77d18407a001da29…
+```
+
+**NO POPULATION HAS BEEN RUN UNDER `00996929972b9483…`, and that is stated rather than implied:** it is the
+CURRENT instrument and a precondition for any future run; R1/R2's own scope is *future runs only*. **A reader
+who compares a 7134c3e8-era cell against a 00996929-era one reads the difference of two instruments and must
+say which is which** — the same rule as §"DO NOT COLLAPSE THESE TWO" above, one freeze further on. The three
+level digests are identical in all three columns, which is why the level inputs are not the thing that moved.
+
+**AND THE REPLAY CLAIM ABOVE IS RE-MEASURED, NOT CARRIED OVER: all 25 played cells still re-derive under the
+NEW bytes to their recorded counters, their recorded final boards and their recorded traces, entry for entry
+— the two pilots' `5` and `7`, the evidence file's `1`, and the tracked population's `12` (its three
+`never_started` cells are still not cells) — and no cell is re-scored, restated or reinterpreted.**
+`sokoban.py --self-test` is **49/49, exit 0**, with no control added or removed; `sokoban_solver.py`'s
+control [6] asserts the new digest and passes.
