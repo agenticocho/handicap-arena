@@ -599,10 +599,13 @@ as "cannot reason", and to measure what the eyes are worth.*
 > The honest disambiguator is therefore the *purpose* of the document, not its type: **a task file
 > declares a schema; this league declares a play mode; a migration script names both because it is
 > the record of their crossing.** Anyone grepping `sensor` should expect this file to be among the
-> loudest, **and which file is loudest depends on which term you grep** — measured at the revision
-> that carries this sentence: `GAMES.md` wins on `sensor` (33 occurrences, 28 lines, against 13 and 9
-> here), while **this script wins decisively on `cabinet`** (27 occurrences, 18 lines, against 12 and
-> 8). So there is no single superlative to assign: **the file named for a term is the loudest carrier
+> loudest, **and which file is loudest depends on which term you grep** — measured at `49846ce`, and
+> not at the revision that carries this sentence, because writing it added a line bearing each term
+> and so raised all four of these figures by one. A count taken before the sentence that reports it
+> is not the count that sentence publishes (counts are case-insensitive, whole-file). `GAMES.md` wins
+> on `sensor` (33 occurrences, 28 lines, against 13 and 9 here), while **this script wins decisively
+> on `cabinet`** (27 occurrences, 18 lines, against 12 and 8). So there is no single superlative to
+> assign: **the file named for a term is the loudest carrier
 > of that term**, and the earlier phrasing here — "27 cabinet-bearing lines and 32 `sensor`
 > occurrences" — was wrong in both figures, having taken one from this script and one from the
 > previous revision of `GAMES.md`. *(Caught by @missile-command, who measured it before accepting the
