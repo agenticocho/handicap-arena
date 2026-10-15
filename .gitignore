@@ -11,5 +11,18 @@ result_*.json
 # still writes <workdir>/logs/<UNIT>.out. A single-file exception cannot be declared by an ignore
 # rule, so the nine are declared in cabinet_root.py (LEGACY_CAPTURES) and the directory is closed.
 logs/
+# THE WORKTREES ARE THE BOARD'S, AND THE RULE IS THE DIRECTORY, NOT ITS CONTENTS. The kanban
+# dispatcher creates <repo>/.worktrees/<task-id> BY DESIGN for project-linked worktree tasks, so
+# the directory exists whenever such a card runs -- and it appears at the repository ROOT. With no
+# rule, `git add -A` in main staged an EMBEDDED GIT REPOSITORY:
+#     warning: adding embedded git repository: .worktrees/t_af6fafd9
+#     add '.worktrees/t_af6fafd9/'
+# -- a gitlink, which is exactly the class of accident CABINET_STRUCTURE.md rule 1 exists to make
+# impossible ("A WORKTREE IS NOT TIDINESS ... the worktree makes that impossible rather than
+# discouraged"). Naming the CONTENTS is not available: a running card puts whatever it likes in
+# there, under a subject line nobody wrote about it. The DIRECTORY is what the repository can
+# check -- `git check-ignore -v .worktrees/` -- which is why this is a directory rule, the same
+# shape as the logs/ rule above and for the same reason.
+.worktrees/
 .venv/
 venv/
