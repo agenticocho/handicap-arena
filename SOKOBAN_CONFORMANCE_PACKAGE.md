@@ -120,6 +120,48 @@ config block was actually the cell record's keys. **A field-name extractor that 
 false-verification machine: it produces a list that looks checked and is wrong.** It now identifies each dict
 by a distinguishing key, and **reports a miss as a MISS rather than as an empty list.**
 
+### 2a. THE SAME READING, TAKEN AGAIN — 2026-10-16, BY THE CHAIR
+
+**THE LISTS ABOVE ARE LEFT EXACTLY AS THEY WERE READ AND ARE NOT EDITED.** They are a reading of the writer
+taken on 2026-10-10 (`744ae42`, last touched by `6d77696` at 09:17:35 that day); **a reading is dated, and
+rewriting it would destroy the date.** What follows is the same reading taken again, which is the only thing
+that can make a census true of the record the writer emits today:
+
+```
+MEASURED (measure_census.py and census_names_now.py at the results root cabinet_results/t_8dc430a7/),
+against THREE carriers -- a cell record written after instrument 3, a load-failure record and a
+replacement record written by instrument 4, because two of the names exist only on the last two:
+
+  the census names 70 names across its six blocks; the records carry 77, and 13 ARE NEVER NAMED BY IT:
+    artifact_replaced                      <- c015995  2026-10-16  (instrument 4)
+    load_failure_class                     <- c015995  2026-10-16  (instrument 4)
+    why                                    <- on load-failure records since the failure path existed
+    server_binary_digest  server_binary_digest_scope  server_binary_source   <- f1c0c5d  2026-10-16
+    loose_match_diagnostic_note  loose_match_diagnostic_only_never_scored    <- afbebf6  2026-10-15
+    entrant_digest  entrant_digest_scope                                     <- 3923a52  2026-10-10
+    attempted_consumed  attempted_emitted  attempted_note                    <- f0eba6e  2026-10-10
+
+  AND THE TEN NAMES THIS CENSUS CARRIES THAT THE CELL DOES NOT -- NEITHER ONE IS DRIFT:
+    config  reasoning_probe  budget_signature  dead_end  turns   <- the five nested blocks, listed BY NAME
+                                                                   at their parent's level, as blocks
+    budget  proof_kind  proof_rule  reachable_states_enumerated  states_expanded  unknown
+                                                                <- the DEAD-END block, which is
+                                                                   CONDITIONAL: its keys exist only on a
+                                                                   cell that ended in a proven dead end
+```
+
+**AND THE DRIFT BEGAN THREE MINUTES AFTER THE CENSUS WAS LAST DERIVED.** `git log -S <name> -- <file>`, first
+commit each name appears in, against the census's own last touch (`6d77696`, 2026-10-10 **09:17:35**):
+`entrant_digest` and `entrant_digest_scope` land in `3923a52` at **09:20:01**. **So for all but three minutes
+of its life this census has described an instrument that no longer exists, and nothing has re-derived it in the
+eight days since** -- ten names, and nothing in the tree that would have said so.
+
+**THE THREE THE PACKAGE IS ABOUT HERE, AND WHY THEY DO NOT MOVE THE SPLIT:** `server_binary_digest`,
+`server_binary_digest_scope` and `server_binary_source` are FORMAT-shaped — a digest, a scope sentence and a
+selector name, **and no path**, which is why instrument 3 could add them without publishing a coordinate. Extending
+LIST 1 and `make_conformance_package.py`'s `FORMAT` list is a decision on card `t_8dc430a7`, recorded in
+`DECISION_four_dispositions_of_instrument_3.md`, **and it is not taken by editing this document**.
+
 **CELL COUNTERS — `sokoban.py`, `play()`**
 
 ```
