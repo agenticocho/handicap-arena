@@ -10,18 +10,28 @@ WHY THIS EXISTS
     So this script does not merely copy. It copies, then re-reads both files and compares digests,
     and refuses to report success if they differ. A copy that is not verified is a claim.
 
+AND THE GATE THAT HAS TO COME FIRST
+    2026-10-16: a cabinet demo was held back because one misplaced parenthesis made the browser
+    discard its whole script at parse time -- the page did not run, and every check we had passed.
+    A digest gate cannot see that: a parse error moves no digest, no size and no reference count.
+    THE COPY PROOF ESTABLISHES THAT THE COPY IS THE OBJECT; IT NEVER ESTABLISHES THAT THE OBJECT
+    WORKS. So this script now runs verify_docs.py (a syntax gate on every inline script) UPSTREAM
+    of the copy, and publishes nothing if that gate fails.
+
 WHAT IT DOES NOT DO
     It never edits docs/index.html -- that is authored, not generated. It refuses if an artifact it
     publishes is missing at the source rather than writing an empty or stale file over a good one.
+    And it does not DRIVE the page -- see verify_docs.py's own stated limit.
 
 USAGE
-    python3 publish_docs.py            # publish + verify
+    python3 publish_docs.py            # syntax-check, publish, verify copies
     python3 publish_docs.py --check    # verify only, change nothing (for CI or a pre-commit run)
 
 EXIT
     0 all published copies are byte-identical to their sources
     1 a copy differs after writing
-    2 a source artifact is missing, or docs/ is unreadable -- REFUSES rather than guessing
+    2 a source artifact is missing, docs/ is unreadable, or a source FAILED THE FUNCTION GATE --
+      REFUSES rather than publishing something that cannot run
 """
 import hashlib
 import pathlib
@@ -46,6 +56,36 @@ def main() -> int:
         return 2
 
     bad = 0
+
+    # FUNCTION GATE, upstream of the copy gate -- a parse error moves no digest.
+    sys.path.insert(0, str(HERE))
+    import verify_docs
+
+    node = shutil.which("node") or shutil.which("nodejs")
+    if not node:
+        print("publish_docs: no node/nodejs -- the function gate cannot run -- REFUSING",
+              file=sys.stderr)
+        return 2
+    gate = []
+    for name in PUBLISH:
+        src = HERE / name
+        if not src.is_file():
+            print(f"publish_docs: source missing: {name} -- REFUSING", file=sys.stderr)
+            return 2
+        try:
+            problems, _n = verify_docs.check_file(src, node)
+        except OSError as e:
+            print(f"publish_docs: {name}: {e} -- REFUSING", file=sys.stderr)
+            return 2
+        gate += problems
+    if gate:
+        for pr in gate:
+            print(f"  PARSE ERROR  {pr}", file=sys.stderr)
+        print("publish_docs: a source FAILED the function gate -- REFUSING to publish",
+              file=sys.stderr)
+        return 2
+    print("  function gate: every published source parses (syntax only -- see verify_docs.py)")
+
     for name in PUBLISH:
         src = HERE / name
         dst = DOCS / name
