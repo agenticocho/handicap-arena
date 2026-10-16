@@ -217,3 +217,83 @@ written after this change.
 **IT IS NOT A CLAIM ABOUT THE MODELS.** Nothing here says what a Bonsai entrant can do. The 4B solving level
 01 in one move is one SOKOBAN level that **every** prior winner has solved; `02_two_boxes` remains unpassed
 by any entrant, as the card's own last section records.
+
+---
+
+# LANDED — 2026-10-16. THE PREDICTIONS BELOW WERE WRITTEN FIRST AND ARE VERIFIED, NOT RESTATED.
+
+**APPENDED, NOT REWRITTEN:** everything above is the pre-registration as it was committed, before the code
+change. This note is added after it, and it is dated.
+
+**THE DIGEST, BEFORE → AFTER, WITH THE REASON AGAINST BOTH SUBJECTS:**
+
+```
+sokoban_run.py  35909 B  sha256 2d3da54d1446cef7f08adf4c...  ->  43989 B  sha256 8fe19d2441227e8d964ff24911c9a19fcee38faee5ab907f6f231a53c048a410
+   commit f1c0c5d, ordered AFTER this file's commit b61a80f and AFTER nothing else
+   (a) S1, the flag --llama-server PATH, default UNCHANGED
+   (b) S2, the record's binary identity: server_binary_digest + _digest_scope + _source, in the cell record's
+       config and at the top level of BOTH load-failure records
+NO PINNED SET MOVED, and none exists for this file: FROZEN_DIGESTS still names sokoban.py (00996929972b9483)
+and the three levels, byte for byte, and no cell of any population is re-scored.
+```
+
+**EVERY PREDICTION HELD, WITH THE MEASUREMENT THAT SAYS SO:**
+
+```
+1  DEFAULT BYTE-IDENTICAL          server_argv('M', 4096, 8751) pre-image and landed: the SAME 12-element
+                                   list, byte for byte, and pre-image vs new-image records show server_argv
+                                   identical: True on all three arms. config values that MOVED: [].
+2  NO MEASURED QUANTITY MOVES      three arms, pre-image driver vs landed driver, same file, same binary,
+                                   same ports: counters, final_board, trace, budget_signature, dead_end,
+                                   unreadable, missing_values and every pre-existing config value identical
+                                   (0 drifted on the two deterministic arms: the 4B refusal and the 4B-solved-
+                                   on-the-fork). THE THIRD ARM DRIFTED AND THIS PREREG SAID IT WOULD: on the
+                                   2B the two runs emitted 0 and 64 tokens of salad respectively -- §2(b),
+                                   which is why the salad is not a measurement of the model.
+3  THE FLAG HOSTS THE FAMILY       --llama-server <prism b10777>, 4B, level 01: rc=0, solved, moves=1,
+                                   token R, artifact carries server_binary_digest 3c7090fb24b84615 and
+                                   server_binary_source "--llama-server". The same command WITHOUT the flag:
+                                   rc=3, DID NOT LOAD, failure record carries 0d5393431782ddf8 and
+                                   "no selector given: the module constant LLAMA".
+                                   THE TWO RUNS CARRY THEMSELVES, as files, at the results root below:
+                                   accept_C_flag_prism.json  sha256 4cd400dad4a8500a8341128e27e7f32d...
+                                   accept_D_default.json     sha256 d5819fbfe88217d674fbadd4f07167d1...
+                                   (full digests: re-run sha256sum on the files; a prefix is a pointer, not
+                                   an identity, and the files are the carriers.)
+```
+
+*(the two binary digests above are the digests RECORDED IN THE ARTIFACTS themselves, which is where this change
+puts them; they were never typed from memory -- they were read out of the records and re-checked against
+`sha256sum` of the two binary files.)*
+
+```
+4  A BAD PATH IS REFUSED          --llama-server /nope/llama-server -> rc 2, "BINARY ABSENT OR NOT
+                                   EXECUTABLE", and no server is started.
+5  NOTHING ELSE MOVES             the repo's controls: 16/16 rc-IDENTICAL before and after; 11 of them byte-
+                                   identical; the 5 that differ differ ONLY in a worktree-name string inside
+                                   their own output (the two worktrees the comparison runs in are named
+                                   PREIMAGE_dc1375b and t_33042da0) or in ONE solver timing line
+                                   (0.0073s vs 0.0059s, 67/67 both). test_declared_root.py is rc=1 in BOTH
+                                   and is rc=1 on main as well -- measured, pre-existing, not caused here.
+                                   Untouched and re-measured: sokoban.py 24872 B 00996929972b9483, the three
+                                   levels, FROZEN_DIGESTS, SOKOBAN_FREEZE_RECORD.md, SOKOBAN_READ_GRAMMAR.md,
+                                   CABINET_DECLARATION_sokoban.md, SOKOBAN_CONFORMANCE_PACKAGE.md, both
+                                   earlier preregs, and every artifact under probes/ -- one of which the
+                                   acceptance run DID overwrite and which was restored to its committed
+                                   bytes, which is §4(a) happening to me while I was measuring it.
+```
+
+**THE EVIDENCE, AT THE DECLARED RESULTS ROOT** (`/home/chilly1/workspace/cabinet_results/t_33042da0/`,
+outside every git tree): `pre_*.json` / `new_*.json` (the three paired arms, pre-image vs landed),
+`arm_2B_mainline.json` and `arm_2B_prism.json` (the hazard and the fork's abort), `arm_default_before.json`
+and `arm_mainline11540.json` (the two load refusals), `accept_C_flag_prism.json` and
+`accept_D_default.json` (the flag end to end, and the default unchanged), `controls_pre.json`,
+`controls_new.json` and the three scripts that produced them.
+
+**AND THE FOUR THINGS THE CARD DID NOT ASK FOR STAY OUT OF THIS LANDING** -- the artifact-name collision, the
+GPU-holder sentence on a CPU load refusal, the conformance package's field census and the note's false
+sentence -- each named and disposed of in §4 and in `FINDINGS/024_two_runs_one_path_on_the_binary_axis.md`.
+**One of them is the Chair's to move and is not mine:** the naming flip in §4(a) is a published-convention
+change, and it is where I would look next, because without it the record this change makes legible is still
+the record a second run deletes.
+
