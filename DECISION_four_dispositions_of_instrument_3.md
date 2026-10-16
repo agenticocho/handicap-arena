@@ -152,12 +152,16 @@ and the fix for a stale reading is a NEW reading, not an edit to the old one** �
 about its digests (*"still cites 186f561f… deliberately — it is a record of the package produced under that
 instrument, not a live pin"*, `SOKOBAN_FREEZE_RECORD.md`) applied to its field lists.
 
-**AND WHAT THE CARD'S "make_conformance_package.py NEEDS NO CHANGE" GETS RIGHT AND WRONG.** Right: the three new
-names carry no path, so **the LOCAL/FORMAT split stays true and the tripwire stays clean** — measured, and it is
-the tool's own output, not an inference. Wrong, if read as *nothing needs to change*: **`FORMAT` is also a census,
-and the three names are absent from it, so the tool reports CLEAN over fields it never examined** — the same shape
-as its own documented defect (*"a check that skips what it cannot read reports clean for the same reason a dead
-probe reports success"*). **A tool cannot be extended by a document edit; see the follow-up below.**
+**AND WHAT THE CARD'S "make_conformance_package.py NEEDS NO CHANGE" GETS RIGHT AND WRONG.** Right, **and measured
+as far as it goes**: the tool still runs rc-identical, and its output is **BYTE-IDENTICAL** before and after —
+it reads the run of record, `probes/SOKOBAN_RUN_20261010-072252.json`, which predates instrument 3. And the three
+new names carry no path, so the split stays true **by construction** (a digest, a scope sentence and a selector
+name are FORMAT-shaped values). **BUT THAT IS AN ARGUMENT AND NOT A MEASUREMENT, and here the difference matters:
+the tool cannot check them at all** — they are not in its `FORMAT` list, and the artifact it reads does not
+contain them. Wrong, if read as *nothing needs to change*: **`FORMAT` is also a census, so the tool reports CLEAN
+over names it never examined** — the same shape as its own documented defect (*"a check that skips what it cannot
+read reports clean for the same reason a dead probe reports success"*). **A tool cannot be extended by a document
+edit; see the follow-up below.**
 
 **WHAT IS DELIBERATELY NOT DONE HERE:** `make_conformance_package.py`, `LIST 1` and the package's own source
 list are **not** amended by this ruling. The measurement is landed, the decision is stated, and the edit belongs
