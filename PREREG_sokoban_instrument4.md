@@ -183,3 +183,110 @@ prereg, freeze record, grammar or declaration is edited.**
 No arm below changes a published number. The two refusals cost nothing (they run before `exec`); the three real
 runs are on a small entrant and one level each. **Evidence lands at the declared results root,
 `/home/chilly1/workspace/cabinet_results/t_8dc430a7/`, outside every git tree.**
+
+---
+
+# LANDED — 2026-10-16. THE PREDICTIONS ABOVE WERE WRITTEN FIRST AND ARE VERIFIED, NOT RESTATED.
+
+**APPENDED, NOT REWRITTEN:** everything above is the pre-registration as it was committed, before the code
+change. This note is added after it, and it is dated.
+
+**THE DIGEST, BEFORE → AFTER:**
+
+```
+sokoban_run.py  43989 B  sha256 8fe19d2441227e8d964ff24911c9a19fcee38faee5ab907f6f231a53c048a410
+             -> 58642 B  sha256 e3f20b3ba561376197ca0cea8dc64ac33a515f7015e99518002314ca02beed62
+   commit c015995, ordered AFTER this file's commit c6cd542 and AFTER nothing else
+   (a) S1 the artifact gate at admission, and its reason-carrying override
+   (b) S2 the failure class, quoted from the server's own log, with vram_holder.py UNTOUCHED
+NO PINNED SET MOVED, and none exists for this file: FROZEN_DIGESTS still names sokoban.py and the three
+levels, byte for byte, and no cell of any population is re-scored. vram_holder.py is byte-identical to
+its committed blob (it is not in the diff).
+```
+
+**EVERY PREDICTION HELD, WITH THE MEASUREMENT THAT SAYS SO** — `arms.py`, `arms2.py`, `final_checks.py`,
+`classifier_control.py` and `controls.py` at the results root; each row below is a line one of them printed:
+
+```
+1  THE ORDINARY FIRST RUN IS UNCHANGED. Paired fresh-path arm, one cell (4B Bonsai, level 03), one
+   instrument (prism b10777), one port, pre-image driver vs this change: keys only in the new record
+   [], keys only in the pre record [], config values that MOVED {}, server_argv identical True. The
+   ONLY difference anywhere is one turn's timing (secs 1.0 -> 0.9, same token R, same board, same
+   gen_tokens 2) -- the class the last card's landing note also enumerated, and the reason it is
+   named here rather than waved away.
+2  A SECOND RUN ON A LIVE PATH IS REFUSED AND CONSUMES NOTHING. rc 4, wall 0.06-0.09 s, the record's
+   sha256 UNTOUCHED, logs+0, and the process table identical across the refusal (7 llama-server
+   processes before and after, none started) -- MEASURED, because "nothing has been written" is a
+   sentence the gate prints and a sentence is not a measurement.
+3  A RECORD THAT NAMES NO INSTRUMENT IS PROTECTED. The committed Bonsai 4B level-01 record (no
+   server_binary_digest) -> rc 4, and the file is BYTE-IDENTICAL to `git show b36ea6a:` of it
+   (93ed747458525cf62ce6e17748813fc3a012fc560b2c9939f396f52eb59b72c0). This is the arm the narrower,
+   digest-only gate the card proposed WOULD NOT HAVE CAUGHT.
+4  THE REFUSAL NAMES BOTH SIDES AND THE AXIS. Measured text: "it says about itself
+   server_binary_digest='3c7090fb24b84615' ... this run would write server_binary_digest='0d5393431782ddf8'
+   ... AND THESE DO NOT MATCH: server_binary_digest (record '3c7090fb24b84615' -> this run
+   '0d5393431782ddf8')" -- and on the same-instrument arm it says so instead: "THE TWO ARE THE SAME
+   INSTRUMENT AND THE SAME ARMS ... AND THE REPLACEMENT IS STILL REFUSED".
+5  THE OVERRIDE IS A NAMED TOKEN AND ITS REASON TRAVELS. --overwrite-artifact "<reason>" -> rc 0 and the
+   new record carries artifact_replaced whose sha256 EQUALS the record it replaced (8499ecd7ae5e6d78...,
+   4438 B, mtime 2026-10-16T17:09:02Z -- the same three values the refusal arm had printed for that
+   record), plus it_named {server_binary_digest 3c7090fb24b84615, legend_digest 0d86057c46d4c83b,
+   reasoning off} and the reason verbatim. An EMPTY reason -> rc 2, nothing written.
+6  THE FAILURE LINE NAMES THE CONDITION. One refused file (27B Bonsai, level 01, the default binary),
+   two records: PRE-IMAGE `why` = "server exited rc=1." + "AND THE CARD IS HELD BY: pid 2418 (134 MiB)
+   ... Tenants total 4754 MiB"; THIS CHANGE `why` = "server exited rc=1." + "THE BINARY REFUSED THE
+   FILE -- log line 10, quoted verbatim: 0.00.103.582 E gguf_init_from_reader: tensor 'output.weight'
+   has invalid ggml type 142. should be in [0, 43)" + the sentence saying the holder sentence is not
+   reported here and why. The record also carries load_failure_class. The quoted line and its number
+   are checkable against the log itself, and the CLASSIFIER CONTROL (`classifier_control.py`) runs both
+   directions over SIX inputs and can fail: 3 real logs that name a reader's refusal -> no holder
+   sentence; RULING 82's transcribed `failed to load`-only log, an empty log, and an unreadable log ->
+   the holder sentence, verbatim, as ratified. 6/6 as predicted, exit 0. IT FAILED ON ITS FIRST RUN,
+   on an expectation table I had written wrong -- which is the only reason to believe it can fail at all.
+7  NOTHING ELSE MOVES. The repo's controls: 16/16 rc-IDENTICAL (controls_pre2.json vs controls_new.json).
+   Three are byte-different with rc identical, and each was DIFFED rather than characterised: one solver
+   TIMING (0.0071s -> 0.0075s, same moves/pushes/solution/expanded), and worktree-name strings inside
+   two checks' own output. `sokoban_report.py` runs rc 0 and its output on the run of record
+   (probes/SOKOBAN_RUN_20261010-072252.json) is BYTE-IDENTICAL before and after.
+```
+
+**AND THREE THINGS THIS MEASUREMENT GOT WRONG ON THE WAY, RECORDED RATHER THAN TIDIED:**
+
+```
+(i)  `arms.py` MEASURED THE ARTIFACT AT THE WRONG PATH. It handed its state reader the artifact NAME
+     instead of `probes/<name>`, so every before/after was None == None and it printed UNCHANGED for
+     arms that had just written a file. The rc of every arm, the log-directory deltas and the wall
+     times survived; the artifact claims did NOT and were RE-MEASURED in arms2.py. A measurement that
+     reports "unchanged" because it looked at nothing is the class this project keeps finding, caught
+     this time in my own harness.
+(ii) THE FIRST CONTROL COMPARISON WAS CONTAMINATED BY MY CHOICE OF PRE-IMAGE WORKTREE. It was on a
+     DETACHED HEAD, and two of the sixteen controls (`check_field_semantics.py`, `verify_scope.py`)
+     refuse to run without a branch because the branch is how a worktree is known to be a cabinet --
+     so they returned rc 1 in the pre-image tree and rc 0 in the new one, for a reason that has nothing
+     to do with this change. Re-run in a pre-image worktree ON A BRANCH: 16/16 rc-identical.
+     `cabinet_root.cabinet()` is the enforcer, and it was right.
+(iii) THE REPORT'S REASON BUCKET MOVES, AND THE REPORT WAS DELIBERATELY NOT CHANGED. `sokoban_report.py`
+     buckets a non-loading cell by `why.split(" -- ")[0][:44]`; the new prose contains " -- " INSIDE the
+     sentence (so the bucket label becomes "server exited rc=1.\nTHE BINARY REFUSED"), where before it
+     was the first 44 characters of the holder sentence. The report still runs (rc 0, rc-identical on
+     the run of record) and its numbers do not move -- it is a LABEL. **It is not fixed here because
+     prediction 7 predicted this file stays as it is**, and a fix landed after its own prereg would be
+     a change nobody predicted. It is filed as a follow-up: the record now carries
+     `load_failure_class`, so the bucket should READ THE FIELD rather than split the prose.
+```
+
+**THE EVIDENCE, AT THE DECLARED RESULTS ROOT** (`/home/chilly1/workspace/cabinet_results/t_8dc430a7/`,
+outside every git tree): `arm_*.json` and `arm2_*.json` (every arm's rc, stdout, artifact state before and
+after, log delta, wall time), `pre_4B03.json`, `pre_4B03_p8792.json`, `new_4B03.json`,
+`override_4B03.json`, `override2_4B03.json`, `s2_pair.json` (the two failure records side by side),
+`classifier_control.py` + `classifier_raw.json` + `classifier_verdict.json`, `controls_pre2.json`,
+`controls_new.json`, `controls_diff2.txt`, `controls_diff_detail2.txt`, `final_checks_out.txt`, the census
+measurement (`measure_census.py`, `census_measure.txt`) and `git_committed_4B01_sha.txt`.
+
+**AND THE TWO RECORDS THESE ARMS WROTE INTO THIS WORKTREE'S `probes/` ARE DELIBERATELY NOT COMMITTED** — the
+27B level-01 failure record and the 4B level-03 record (the override's replacement). They are RECORDS OF RUNS
+ON CELLS NO CRITERIA ARE FROZEN FOR: committing them would add entries to the domain every sweep reads, after
+the sixteen controls above were measured against it. Their content is in the evidence (`s2_pair.json`,
+`override2_4B03.json`), and the digest of the one the last card's acceptance run destroyed is in the chapter
+above.
+
