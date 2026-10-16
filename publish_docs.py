@@ -41,8 +41,17 @@ import sys
 HERE = pathlib.Path(__file__).resolve().parent
 DOCS = HERE / "docs"
 
-# generated artifacts at the repo root that are served. Add here, never hand-copy.
-PUBLISH = ["arcade_wall.html"]
+# artifacts at the repo root that are served. Add here, never hand-copy.
+#   generated here   : arcade_wall.html -- produced by build_arcade_wall.py from this repo's results
+#   received, certified: missile_command_in_action_DRIVEN_AND_WORKING.html -- built by the visuals
+#     agent on the peer box and DRIVEN there, where the only working driver lives. It arrives with a
+#     sha256 certificate (47c461ec59...) and this side's job is the complementary half: prove the
+#     published object IS that object. The certificate travels as a digest because the driver cannot
+#     read our pages' schema, and a durable certificate needs no shared instrument.
+PUBLISH = [
+    "arcade_wall.html",
+    "missile_command_in_action_DRIVEN_AND_WORKING.html",
+]
 
 
 def digest(p: pathlib.Path) -> str:
