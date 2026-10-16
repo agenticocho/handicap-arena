@@ -128,6 +128,197 @@ def binary_provenance():
                                            "path alone: a path can name one build and hold another."),
             "server_binary_source": binary_source()}
 
+
+# ==================================================================================================
+# THE ARTIFACT PATH IS OWNED BY ONE RUN (card t_8dc430a7, S1).
+#
+# FINDING 020's rule -- "a run must OWN its artifact path: one run, one file ... launching a second run
+# against a live path is not a retry, it is an OVERWRITE" -- on the axis the last fix did not cover.
+# MEASURED on the pre-image driver: two runs on one (entrant, level), fork then mainline, wrote ONE
+# artifact path and ONE log path; the first run's record is gone, and its log was overwritten with it.
+# NO FIELD COULD CLOSE THAT: the record that would carry the field is the record that gets overwritten.
+# So the fix is a REFUSAL, and it is taken AT ADMISSION, before Popen -- a refusal that costs a whole
+# model load is not a refusal (a refusal must consume nothing), and the run that never starts overwrites
+# neither the artifact nor the log.
+#
+# IT REFUSES ON ANY EXISTING RECORD, NOT ONLY ON A DIFFERING server_binary_digest. Three measured
+# reasons, and the wider form is a Chair decision rather than the card's one-liner:
+#   (a) a record written before f1c0c5d carries NO DIGEST TO COMPARE -- measured at this commit: both
+#       committed Bonsai artifacts carry no server_binary_digest, and one of them is the very record the
+#       last card's acceptance run destroyed;
+#   (b) the artifact NAME never carried the legend or the reasoning arm -- only the LOG name did
+#       (FINDING 024 §1) -- so a same-binary run on the other arm of the A/B would still delete arm A;
+#   (c) the same instrument twice is not the same record: measured on the 2B Bonsai, two runs of one
+#       driver on one binary emitted 0 and 64 tokens.
+# THE NAME IS NOT MOVED: probes/SOKOBAN_<entrant>_<level>.json is a PUBLISHED convention (cited in
+# GAMES.md and in the conformance package's census), so every existing citation still resolves to the
+# same path and the fix is a refusal rather than a rename.
+# ==================================================================================================
+ARTIFACT_OVERRIDE = None                 # the reason given on this command line, or None. Read by main().
+IDENTITY_IN_RECORD = ("server_binary_digest", "legend_digest", "reasoning")
+
+
+def cell_labels(entrant, level_path):
+    return (os.path.basename(entrant).replace(".gguf", ""),
+            os.path.basename(level_path).replace(".txt", ""))
+
+
+def artifact_path(entrant, level_path):
+    """THE ONE DEFINITION OF THE ARTIFACT'S COORDINATE -- used by the gate and by the writer both, so the
+    path the gate refuses on and the path the run writes cannot be two different paths."""
+    label, lname = cell_labels(entrant, level_path)
+    return os.path.join(HERE, "probes", f"SOKOBAN_{label}_{lname}.json")
+
+
+def run_identity():
+    """WHAT THIS RUN IS, in the three values the RECORD can carry and the NAME cannot: the instrument,
+    and the two arms whose names were put into the LOG filename and never into the artifact's."""
+    return {"server_binary_digest": binary_digest(), "legend_digest": legend_digest(),
+            "reasoning": REASONING}
+
+
+def carried_identity(d):
+    """-> THE SAME THREE VALUES AS AN EXISTING RECORD CARRIES THEM, or None for one it does not carry.
+
+    None IS NOT A MATCH AND IS NOT TREATED AS ONE: PRECEDENCE.md -- when the disagreement is a MISSING
+    record, the winner is nothing -- so a run cannot show it is the same instrument as a record that
+    names no instrument. The three live at different levels by construction (the load-failure records
+    carry them at their top level, the cell record inside `config`), so the reader takes either.
+    """
+    cfg = d.get("config") if isinstance(d.get("config"), dict) else {}
+    return {k: (d[k] if k in d else cfg.get(k)) for k in IDENTITY_IN_RECORD}
+
+
+def artifact_gate(out, reason, old_bytes=None):
+    """-> (ok, message, replaced). REFUSES to write over a record this run did not take.
+
+    THE MESSAGE IS THE GATE'S OTHER HALF: it names the path, what the record on disk says about itself,
+    what THIS run would write, and which of the two the reader is looking at -- because the person who
+    hits this at 2am is the person who needs to read it, and the remedy is one token whose text lands in
+    the record (a gate with an override that is not written down is a gate nobody can audit).
+    """
+    if not os.path.exists(out):
+        return True, "", None
+    if old_bytes is None:
+        old_bytes = open(out, "rb").read()
+    try:
+        old = json.loads(old_bytes.decode())
+    except (OSError, ValueError):
+        old = None
+    rel = os.path.relpath(out, HERE)
+    mtime = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(os.path.getmtime(out)))
+    if reason is not None:
+        return True, "", {
+            "path": rel,
+            "sha256": hashlib.sha256(old_bytes).hexdigest(),
+            "bytes": len(old_bytes),
+            "mtime": mtime,
+            "it_named": carried_identity(old) if isinstance(old, dict) else "UNREADABLE AS JSON",
+            "reason_given": reason,
+            "reading": ("THIS RUN REPLACED THE RECORD AT THIS PATH. The replaced record is NOT "
+                        "recoverable from this file: what survives is that it existed, the digest of the "
+                        "bytes it was, and what it said about its own instrument. The reason above is "
+                        "the operator's, verbatim, and is checked against nothing.")}
+    this = run_identity()
+    if not isinstance(old, dict):
+        theirs = {k: "UNREADABLE" for k in IDENTITY_IN_RECORD}
+        verdict = "THE RECORD ON DISK COULD NOT BE READ AS JSON, so it cannot be shown to be this run's."
+    else:
+        theirs = carried_identity(old)
+        diff = [k for k in IDENTITY_IN_RECORD if theirs[k] != this[k]]
+        verdict = ("THE TWO ARE THE SAME INSTRUMENT AND THE SAME ARMS -- nothing in these three values "
+                   "differs -- AND THE REPLACEMENT IS STILL REFUSED, because the same instrument twice "
+                   "is not the same record." if not diff else
+                   "AND THESE DO NOT MATCH: " + "; ".join(
+                       f"{k} (record {theirs[k]!r} -> this run {this[k]!r})" for k in diff))
+    pairs_old = "  ".join(f"{k}={theirs[k]!r}" for k in IDENTITY_IN_RECORD)
+    pairs_new = "  ".join(f"{k}={this[k]!r}" for k in IDENTITY_IN_RECORD)
+    return False, (
+        f"REFUSED: {rel} ALREADY HOLDS A RECORD, AND A RUN DOES NOT REPLACE A RECORD IT DID NOT TAKE "
+        f"(FINDING 020).{os.linesep}"
+        f"  record on disk        {rel}  ({len(old_bytes)} B, mtime {mtime}){os.linesep}"
+        f"  it says about itself  {pairs_old}{os.linesep}"
+        f"  this run would write  {pairs_new}{os.linesep}"
+        f"  {verdict}{os.linesep}"
+        f"  A MISSING VALUE IS NOT A MATCH: a record that names no instrument cannot be shown to be this "
+        f"run's instrument (PRECEDENCE.md: when the disagreement is a missing record, the winner is "
+        f"nothing).{os.linesep}"
+        f"  THE REMEDY IS NOT TO IGNORE THIS EXIT CODE, AND IT IS NOT A BARE FORCE. If the replacement "
+        f"is intended, say why, and the reason is written into the record that does the replacing:{os.linesep}"
+        f"      --overwrite-artifact \"<why this record should be replaced>\"{os.linesep}"
+        f"  NOTHING HAS BEEN WRITTEN, NO SERVER HAS BEEN STARTED AND NOTHING HAS BEEN CONSUMED."), None
+
+
+# ==================================================================================================
+# WHICH CONDITION IS THIS FAILURE REPORTING? (card t_8dc430a7, S2)
+#
+# RULING 82's holder sentence is appended to EVERY load failure, so a file the binary cannot PARSE is
+# reported as a card-tenancy condition. MEASURED: a CPU-only run of the 4B Bonsai printed "AND THE CARD
+# IS HELD BY: pid 2418 (134 MiB) ... Tenants total 7146 MiB" while the cause was two lines further down
+# the log the record did not quote:
+#     E gguf_init_from_reader: tensor 'token_embd.weight' has invalid ggml type 142. should be in [0, 43)
+# THE SENTENCE IS NOT WRONG, IT IS UNCONDITIONAL, AND TWO CONDITIONS PRINTED ONE SENTENCE.
+#
+# RULING 82 IS NOT WEAKENED AND ITS CARRIER IS UNTOUCHED -- vram_holder.py is NOT edited here: the
+# sentence is kept verbatim for the case the ruling was ratified for, a log that names no cause of its
+# own. What this adds is the OTHER case, decided by a READING of the server's own log, with the matched
+# line QUOTED WITH ITS LINE NUMBER so a reader can overrule the class from the carrier.
+#
+# THE SIGNATURE LIST IS A SNAPSHOT OF ONE BUILD'S WORDING, WHICH IS WHY THE LINE TRAVELS WITH THE CLASS.
+# Measured on this box: `invalid ggml type 142` (the 4B and the 27B Bonsai files), `invalid magic
+# characters` (a file that is not a gguf), `done_getting_tensors: wrong number of tensors` (a file whose
+# tensors do not match its own header). A check written against ONE of those would have called the other
+# two "no cause named" -- so the class is never asserted alone.
+# ==================================================================================================
+FILE_REFUSAL_SIGNATURES = ("gguf_init_from_reader", "llama_model_loader", "invalid ggml type",
+                           "invalid magic characters", "failed to read tensor info",
+                           "done_getting_tensors", "unknown model architecture")
+
+
+def log_file_refusal(log_path):
+    """-> (kind, line, lineno), kind in {"file_refusal", "no_cause", "log_unreadable"}.
+
+    A MISS IS REPORTED AS ITS OWN KIND: an unreadable log is not "the log says nothing", the same way an
+    unreadable cause is never reported as an absent one.
+    """
+    try:
+        lines = open(log_path, encoding="utf-8", errors="replace").read().splitlines()
+    except OSError:
+        return "log_unreadable", None, None
+    for i, ln in enumerate(lines, 1):
+        if any(sig in ln for sig in FILE_REFUSAL_SIGNATURES):
+            return "file_refusal", ln.strip(), i
+    return "no_cause", None, None
+
+
+def load_failure(log_path, status):
+    """-> {"why": ..., "load_failure_class": ...} for a load that did not finish.
+
+    ONE DEFINITION, SO THE TWO FAILURE RETURNS CANNOT DRIFT APART IN WORDING OR IN CLASS. The status is
+    the first line, exactly as it read before this change; what follows says WHICH CONDITION is being
+    reported, which is what one sentence for two conditions could not say.
+    """
+    kind, line, lineno = log_file_refusal(log_path)
+    if kind == "file_refusal":
+        return {"load_failure_class": "the binary refused the FILE (the log names the cause)",
+                "why": (f"{status}.{os.linesep}"
+                        f"THE BINARY REFUSED THE FILE -- log line {lineno}, quoted verbatim: "
+                        f"{line}{os.linesep}"
+                        f"  AND THE HOLDER SENTENCE IS NOT REPORTED HERE: RULING 82's sentence is "
+                        f"appended when the log names no cause of its own, and this log names one. An "
+                        f"unconditional tenancy report for a file the binary cannot read points the "
+                        f"reader at the wrong subsystem.")}
+    if kind == "log_unreadable":
+        return {"load_failure_class": "unknown -- the server's log could not be read",
+                "why": (f"{status}.{os.linesep}"
+                        f"  THE SERVER'S LOG COULD NOT BE READ ({os.path.basename(log_path)}), so WHICH "
+                        f"CONDITION THIS IS CANNOT BE DECIDED FROM HERE -- an unreadable cause is "
+                        f"reported as unreadable, never as absent.{os.linesep}{holder_sentence()}")}
+    return {"load_failure_class": "no cause named by the log: the card at failure is what is reported",
+            "why": (f"{status}.{os.linesep}{holder_sentence()}{os.linesep}"
+                    f"  AND THE LOG NAMES NO CAUSE OF ITS OWN: it was scanned for a reader's refusal of "
+                    f"the file and carries none, which is the condition RULING 82 was ratified for.")}
+
 # THE ENTRANT IS THE THING BEING MEASURED, AND A NAME IS NOT AN IDENTITY.
 #
 # The record digested the INSTRUMENT (simulator_digest, legend_digest) and named the ENTRANT by a filename with
@@ -512,8 +703,9 @@ ACTIONS_UDLR = ("U", "D", "L", "R")
 
 def run(entrant, level_path, cap, port):
     level = open(level_path).read()
-    label = os.path.basename(entrant).replace(".gguf", "")
-    lname = os.path.basename(level_path).replace(".txt", "")
+    # THE LABELS COME FROM ONE DEFINITION, because the artifact's coordinate is derived from them too and
+    # the gate must refuse on the SAME path the writer writes.
+    label, lname = cell_labels(entrant, level_path)
     st = S.parse(level)
 
     os.makedirs(os.path.join(HERE, "logs"), exist_ok=True)
@@ -534,13 +726,13 @@ def run(entrant, level_path, cap, port):
             if srv.poll() is not None:
                 return {"entrant": label, "entrant_digest": model_digest(entrant),
                         "level": lname, "loaded": False,
-                        # RULING 82: THE FAILURE NAMES THE HOLDER, NOT THE MODEL. A bare `failed to load` is
-                        # indistinguishable from a broken model, a bad preset or a corrupt file -- and an agent
-                        # will retry forever while the operator reads a load error. Measured on this box: five
-                        # failed loads whose real cause was a live seat lease holding 5.5 of 8 GB under a policy
-                        # that never reclaims it. ONE SENTENCE IS THE DIFFERENCE BETWEEN AN INFRASTRUCTURE
-                        # CONDITION AND A MODEL FAILURE, and the record is the only place that sentence lives.
-                        "why": f"server exited rc={srv.returncode}.{os.linesep}{holder_sentence()}",
+                        # WHICH CONDITION THIS IS -- RULING 82's sentence is KEPT for the case it was
+                        # ratified for, and the file-refusal case quotes the binary's own line instead of
+                        # pointing the reader at the card. MEASURED: a CPU-only run of a file the binary
+                        # cannot parse printed the tenant list while the cause was in the log it did not
+                        # quote. Both branches come from ONE definition (load_failure), so the two
+                        # failure returns cannot drift apart, and the class travels in the record.
+                        **load_failure(log, f"server exited rc={srv.returncode}"),
                         # WHICH BINARY REFUSED IT -- the failure path is where this matters most (the
                         # same file is REFUSED by the default and runs on the fork), so the failure record
                         # carries the binary's identity too, from the one definition.
@@ -554,7 +746,10 @@ def run(entrant, level_path, cap, port):
         if not up:
             return {"entrant": label, "entrant_digest": model_digest(entrant),
                     "level": lname, "loaded": False,
-                    "why": f"never answered /health in 600 s.{os.linesep}{holder_sentence()}",
+                    # SAME DEFINITION AS THE EXIT BRANCH, so the two can only differ by the status they
+                    # are handed. A /health timeout is the case where the log usually names nothing, so
+                    # this is where RULING 82's sentence normally appears.
+                    **load_failure(log, "never answered /health in 600 s"),
                     **binary_provenance()}
         load_s = time.time() - t0
 
@@ -673,12 +868,20 @@ def run(entrant, level_path, cap, port):
 
 
 def main():
-    global LLAMA_SELECTED
+    global LLAMA_SELECTED, ARTIFACT_OVERRIDE
     ap = argparse.ArgumentParser()
     ap.add_argument("--entrant")
     ap.add_argument("--level")
     ap.add_argument("--cap", type=int, default=40)
     ap.add_argument("--port", type=int, default=8751)
+    # THE ESCAPE HATCH, AND IT CARRIES A REASON RATHER THAN A FORCE. The gate below refuses to write over
+    # a record this run did not take (FINDING 020: a second run on a live path is an OVERWRITE, not a
+    # retry). A replacement still has to be possible -- instruments change and cells get re-measured --
+    # but a gate with an override that is not written down is a gate nobody can audit, so the token takes
+    # the reason as its VALUE and the reason is written into the record that does the replacing.
+    ap.add_argument("--overwrite-artifact", dest="overwrite_artifact", default=None, metavar="REASON",
+                    help="replace the record already at this cell's artifact path, saying WHY. The reason "
+                         "is written into the replacement beside the digest of the record it replaced.")
     # THE BINARY THE RUN IS TAKEN ON. DEFAULT: the declared constant in this file, so every existing
     # record keeps the instrument it was taken under and no published number moves. NEEDED FOR A
     # FORK-ONLY FAMILY: on the Bonsai ternary files the default binary either REFUSES the file or
@@ -702,6 +905,23 @@ def main():
     p = a.entrant if os.path.exists(a.entrant) else os.path.join(MODELS, a.entrant)
     if not os.path.exists(p):
         print(f"  ENTRANT ABSENT: {a.entrant}"); return 2
+
+    # ---- THE ARTIFACT GATE, AT ADMISSION -- BEFORE ANY SERVER IS SPAWNED -------------------------
+    # At admission rather than at the write, for the reason the game-contract gate is at admission: a
+    # refusal that costs a whole model load is not a refusal, it is a report filed afterwards. It also
+    # makes the LOG axis safe with no change to the log's name -- the run that would overwrite the log
+    # never opens it. THE NAME IS NOT MOVED: probes/SOKOBAN_<entrant>_<level>.json is published.
+    out = artifact_path(p, a.level)
+    if a.overwrite_artifact is not None and not a.overwrite_artifact.strip():
+        print("  --overwrite-artifact WAS GIVEN AN EMPTY REASON: a replacement has to say why. Nothing "
+              "written."); return 2
+    ARTIFACT_OVERRIDE = a.overwrite_artifact
+    gate_ok, gate_msg, replaced = artifact_gate(out, ARTIFACT_OVERRIDE)
+    if not gate_ok:
+        for line in gate_msg.splitlines():
+            print(f"  {line}")
+        return 4
+
     r = run(p, a.level, a.cap, a.port)
     print(f"  entrant   {r['entrant']}")
     print(f"  level     {r['level']}")
@@ -716,10 +936,17 @@ def main():
     # and the tenant list is exactly what the tenancy decision needs to survive. THE FAILURE PATH WAS ALSO THE
     # ONE PATH WHERE THE RECORD MATTERED MOST, because a failure nobody can read later is a failure that gets
     # re-diagnosed from scratch.
-    out = os.path.join(HERE, "probes", f"SOKOBAN_{r['entrant']}_{r['level']}.json")
     os.makedirs(os.path.join(HERE, "probes"), exist_ok=True)
+    if replaced is not None:
+        # THE REPLACEMENT CARRIES THE FACT THAT IT IS ONE, AND WHAT IT DESTROYED. The replaced record is
+        # gone; what survives is that it existed, the digest of its bytes, and what it said about its own
+        # instrument -- beside the operator's reason, verbatim.
+        r["artifact_replaced"] = replaced
     json.dump(r, open(out, "w"), indent=1)
     print(f"  artifact  {os.path.relpath(out, HERE)}")
+    if replaced is not None:
+        print(f"  REPLACED  {replaced['path']}  ({replaced['bytes']} B, sha256 "
+              f"{replaced['sha256'][:16]}...) -- reason given: {replaced['reason_given']!r}")
     if not r.get("loaded"):
         print(f"  DID NOT LOAD -- {r['why']}")
         return 3
