@@ -207,3 +207,98 @@ freeze record, grammar or declaration is edited.
 copies in a scratch directory; the 16 repo controls are the same list the last card ran and take ~1.3 s.
 **Evidence lands at the declared results root, `/home/chilly1/workspace/cabinet_results/t_bba8182e/`, outside
 every git tree.**
+# LANDED — 2026-10-16 10:40 -0700. THE PREDICTIONS ABOVE WERE WRITTEN FIRST AND ARE VERIFIED, NOT RESTATED.
+
+```
+main            a057d1a prereg        a6acf19 the check + its control        de778b4 the two carriers
+after           make_conformance_package.py  10894 B  sha256 73408d666a07ac9ec8743f7cf7c8cd360eed7cbbef8c026b4e7901a2d30a9e7e
+                SOKOBAN_CONFORMANCE_PACKAGE.md 16085 B sha256 b63996d2fb8939562261d699e18d53ccd5d4710a670e8084b413a08234f416d6
+                check_conformance_census.py    36076 B sha256 ff4b8d20bb1a054fb2d38650ec3d27f7afe7899814ff6bd7b6ee65e9488f3da6
+                check_conformance_census_control.py 7460 B sha256 3e247a60894298d26b9fbac10f861fd4b32d94e9f047c84ddb4c9834ed9075e3
+UNCHANGED       sokoban.py   00996929972b9483223bf54f4dcef007162134289c5cdb76a58533ac875e8a7c
+                sokoban_run.py e3f20b3ba561376197ca0cea8dc64ac33a515f7015e99518002314ca02beed62
+                sokoban_batch.py d6604f398b6f6afb9e84998d4a1f3417427af22a914f170b24eeb183d6dee75c
+EVIDENCE        /home/chilly1/workspace/cabinet_results/t_bba8182e/  (outside every git tree)
+```
+
+**1. THE CHECK FAILS ON THE PRE-IMAGE — rc 1, 21 names in one direction, none in the other, each with its
+`file:line`.** VERIFIED: `check_pre.txt` (captured at `d6f6011`, before the lists moved) lists 21 names across
+6 blocks; DIRECTION 2 is empty; the card's 13 are all inside the 21. **The prediction said exactly 21 and it was
+21** — which is itself worth stating plainly, because the number was written down before the reader existed.
+
+**2. THE ENFORCER FINDS NAMES NO CARRIER CARRIES.** VERIFIED, and it is the strongest single result on this card:
+`ended_why` (`sokoban_run.py:805`) and `error` (`sokoban_run.py:591`) are absent from all three carriers the last
+card measured (`leak_scan.txt`: `NOT PRESENT ON ANY CARRIER`). **The card's own measurement could not have found
+them, not because it was careless but because it read RECORDS and a record cannot show a path it never took.**
+Six more names — the inner keys of the `artifact_replaced` block — were invisible to it for a smaller reason: the
+measurement read the record's top level and the four envelope blocks, and `artifact_replaced` is a fifth.
+
+**3. BOTH DIRECTIONS GO TO ZERO. rc 1 -> rc 0.** VERIFIED: `check_post.txt`, DIRECTION 1 none, DIRECTION 2 none.
+**AND DIRECTION 2 WAS INDEED EMPTY ON THE PRE-IMAGE**, which is why §2.6's injection is not decoration: on this
+tree a check that only ever compared the writer against the package would never have exercised the other way.
+
+**4. THE TRIPWIRE STAYS TRUE, AND ITS OUTPUT BYTES CHANGE.** VERIFIED: `make_conformance_package.py` rc **0**,
+closing with **THE SPLIT IS CLEAN**; 14 lines print `UNRESOLVED: not checked, not clean` because the run of
+record predates the names — predicted, not discovered. **AND THE PATTERNS WERE RUN OVER THE VALUES THEMSELVES**
+(`leak_scan_new_format_fields.py`, importing the split's own `LEAK`/`leak_in` rather than copying them): the three
+`server_binary_*` carry a digest, a scope sentence and a selector name and **no path**; no pattern matches any of
+the twelve new FORMAT fields on the three carriers that carry them.
+
+**5. PARITY FAILED BEFORE AND PASSES AFTER.** VERIFIED: pre-image the two carriers differed by 22 names
+(`LIST 1` bare `reasoning` vs `FORMAT`'s `config.reasoning`); after, `identical: LIST 1 and FORMAT both name 52;
+LIST 2 and LOCAL both name 16`.
+
+**6. THE CONTROL FAILS WHERE IT MUST AND PASSES WHERE IT MUST — FIVE ARMS, ALL AS PRE-REGISTERED**
+(`control_post.txt`, rc 0): C the unmutated copies pass (rc 0); A an injected package name fails and is named
+under DIRECTION 2 (rc 1); B a renamed writer key fails with the new name under DIRECTION 1 and the old under
+DIRECTION 2 (rc 1); D a deleted census header is a MISS (rc 2); E a literal whose identifying key is renamed is a
+MISS (rc 2). **BECAUSE OF C, the failures are shown to be caused by the mutation — not by the copy, the temp
+directory, or the run.**
+
+**7. A MISS IS NOT A PASS.** VERIFIED: arms D and E. **Arm E exists because arm B's FIRST CUT was wrong and the
+check was right:** it renamed `final_board`, which is one of the keys the check identifies that literal BY, so
+the site vanished and the check reported a MISS (rc 2) while my arm expected DRIFT (rc 1). See "what the
+prediction got wrong" below.
+
+**8. NOTHING ELSE MOVES.** VERIFIED: the three writer files are byte-identical to the pre-image; the repo's
+controls are **rc-IDENTICAL 16/16** before and after. **OUTPUT BYTES differ on 7 of the 16** and each is
+accounted for: five were already non-byte-stable at the parent's own run (`sokoban_solver.py`,
+`test_no_silent_zero.py`, `test_declared_root.py`, `check_field_semantics.py`, `verify_scope.py`),
+`make_conformance_package.py` differs because of prediction 4, and `check_one_reader.py` differs because it
+scans `*.py` files and this card ADDS TWO — `files scanned 91` where the pre-image said 89, measured, not
+assumed.
+
+**9. FALSIFIERS: NONE FIRED**, with one of them firing against me rather than against the check (§2.6's "an arm
+that does not fail where it should"), which is recorded below rather than tidied away.
+
+---
+
+## AND THE THREE THINGS THIS MEASUREMENT GOT WRONG, RECORDED BECAUSE A RECORD THAT ONLY REPORTS ITS SUCCESSES IS NOT A RECORD
+
+**(a) MY FIRST CONTROL ARM EXPECTED THE WRONG RC, AND THE CHECK WAS RIGHT.** Renaming `final_board` in
+`sokoban.py` makes the CELL COUNTERS literal unfindable, because `final_board` is part of the fingerprint that
+identifies it — so the check reported a MISS (rc 2) and my arm insisted on DRIFT (rc 1). **The arm was wrong.**
+It was re-cut onto a key that identifies nothing, and the fingerprint case became its own arm (E) so that the
+two failure modes can never again be mistaken for one another.
+
+**(b) THE FIRST VERSION OF THE READER DOUBLE-COUNTED THE NESTED BLOCKS.** Expanding every block-by-reference
+name's value named the config block's keys TWICE — once bare under CONFIG BLOCK and once dotted under CELL
+RECORD — and a census that names a field twice can disagree with itself. The four names whose keys are another
+declared site's block (`config`, `reasoning_probe`, `budget_signature`, `dead_end`) are now read THERE and only
+there.
+
+**(c) THE FIRST DIRECTION-1 MATCH WAS BY NAME ALONE, AND THE TWO CENSUSES ARE WRITTEN IN TWO NOTATIONS.** A
+census names a sub-block's keys BARE under the parent's block (`freeze :: simulator verifier ...`); this reader
+gives dotted paths (`freeze.dead_end_verifier`). Matching on the bare name alone would have reported those keys
+as drift of one notation against the other — **and matching on the LEAF ALONE would have been worse: it would
+have let the cell record's `legend` answer for the config block's, which is a different field that happens to
+share a name.** The match is at the leaf WITHIN THE OWNING BLOCK, in both directions, and the rule is written
+where it is applied.
+
+**AND ONE THING IS DELIBERATELY NOT READ, NAMED IN THE CHECK'S OWN OUTPUT** so it cannot be mistaken for a
+clean result: the inner shape of `turns` and `levels`, whose values are a variable and a dict comprehension
+rather than literals. `turns` is named by the census and by the split as a BLOCK; nothing in the package names
+its keys, and this check does not pretend to have read them.
+
+**IT IS NOT A CLAIM ABOUT THE MODELS. No counter, rate, criterion, cell, prereg, freeze record, grammar,
+declaration or artifact is touched, and no published number moves.**
