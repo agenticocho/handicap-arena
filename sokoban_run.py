@@ -40,6 +40,94 @@ from vram_holder import holder_sentence                                 # noqa: 
 LLAMA = "/home/chilly1/llama.cpp/build/bin/llama-server"
 MODELS = os.environ.get("ARENA_MODELS") or os.path.expanduser("~/moltbook_pipeline/models")
 
+# ==================================================================================================
+# THE BINARY IS PART OF THE INSTRUMENT, SO IT IS SELECTABLE -- AND IT TRAVELS WITH THE NUMBER.
+#
+# WHAT THIS FIXES, MEASURED RATHER THAN ARGUED (card t_33042da0, five arms, two files, one box):
+#
+#   Ternary-Bonsai-2-4B-PQ2_0-MTP-Q8_0    mainline b10931 = THE DECLARED DEFAULT   rc=1, model REFUSED
+#                                         mainline b11540                           rc=1, model REFUSED
+#                                         prism fork b10777                         loads, SOLVES level 01 in 1 move
+#   Ternary-Bonsai-2-2B-Q2_0              mainline b10931 = THE DECLARED DEFAULT   LOADS, and answers
+#                                         each turn with 64 tokens of multilingual token salad -- three
+#                                         turns, zero moves, `not_an_action` 3 -- FILED AS THE MODEL'S
+#                                         NUMBER, because nothing in the run said which binary answered.
+#                                         prism fork b10777                         rc=-6 (ggml_abort)
+#
+# So `python3 sokoban_run.py --entrant <bonsai>` measured MAINLINE and filed it under the model's name, and
+# the ONLY way to run the fork was to set the module constant in memory at the call site -- an override
+# performed outside the artifact is an override the artifact cannot report. A driver that can only be
+# pointed at another instrument by monkey-patching it cannot host that family.
+#
+# THE DEFAULT IS THE CONSTANT ABOVE, UNCHANGED, so every existing record keeps the instrument it was taken
+# under and no published number moves. And the flag takes a PATH, deliberately: choosing between a fork and
+# mainline is a choice of INSTRUMENT, not a setting of the model.
+#
+# AND A PATH IS NOT AN IDENTITY -- the rule the ENTRANT gets further down this file, applied one layer down
+# the instrument. MEASURED ON THIS BOX: `~/.hermes/runtimes/llamacpp/b10931/cuda/llama-server` reports
+# `build 10964, commit b29c606e2`; a record carrying only that path names 10931 and describes 10964. So the
+# record carries the binary's FILE DIGEST and the selector that chose it: portable-shaped values, and NO
+# new path is published (`server_argv` already carries the path, and is already classified LOCAL in
+# `make_conformance_package.py`).
+# ==================================================================================================
+LLAMA_SELECTED = None                    # --llama-server PATH. None = the declared default above.
+_BINARY_DIGEST_CACHE = {}
+
+
+def llama_server():
+    """THE BINARY THAT WILL ACTUALLY BE EXECUTED -- read at CALL TIME, so a selection made in main()
+    reaches the launch AND the record, rather than only the launch."""
+    return LLAMA_SELECTED or LLAMA
+
+
+def binary_digest(path=None):
+    """sha256 of the BINARY FILE, first 16 hex. Cached per path, streamed, so a large binary is fine.
+
+    AN UNREADABLE BINARY GETS null AND A REASON, NEVER A FABRICATED DIGEST -- the same rule, and the same
+    reason, as `model_digest` above: a made-up hash is worse than a missing one because it verifies.
+    """
+    p = path or llama_server()
+    if p not in _BINARY_DIGEST_CACHE:
+        h = hashlib.sha256()
+        try:
+            with open(p, "rb") as f:
+                for chunk in iter(lambda: f.read(1 << 20), b""):
+                    h.update(chunk)
+            _BINARY_DIGEST_CACHE[p] = h.hexdigest()[:16]
+        except OSError:
+            _BINARY_DIGEST_CACHE[p] = None
+    return _BINARY_DIGEST_CACHE[p]
+
+
+def binary_source():
+    """WHICH SELECTOR CHOSE THE BINARY -- and the wording is exact, because only one of the two answers is
+    knowable from in here.
+
+    MEASURED, and this is why the field is worded this way: the pre-image way of running the fork was to
+    set `LLAMA` in memory at the call site, and a module cannot tell that its own constant was patched --
+    so any field claiming `is_the_declared_default` would have answered TRUE for a fork run, which is a
+    false statement made out of a true measurement. The DIGEST says which binary ran; this says which
+    selector was used. Two fields, two different facts, and neither is an inference.
+    """
+    return "--llama-server" if LLAMA_SELECTED else "no selector given: the module constant LLAMA"
+
+
+def binary_provenance():
+    """WHICH BINARY, IN THREE VALUES: the digest, what the digest is a digest OF, and which selector chose
+    it. All three are portable-shaped, and no path is added -- `server_argv` already carries the path and is
+    already classified LOCAL in `make_conformance_package.py`.
+
+    CARRIED BY THE CELL RECORD AND BY BOTH LOAD-FAILURE RECORDS. The failure path is the one where the
+    binary is decisive -- the 4B file above is REFUSED by the default binary and runs on the fork -- and a
+    failure record that cannot say which binary refused it is exactly the record this change exists for, on
+    its worst day. One definition, so the two records cannot drift apart.
+    """
+    return {"server_binary_digest": binary_digest(),
+            "server_binary_digest_scope": ("sha256 of the BINARY FILE, first 16 hex. THE BINARY IS PART OF "
+                                           "THE INSTRUMENT, so it is identified by a digest and not by a "
+                                           "path alone: a path can name one build and hold another."),
+            "server_binary_source": binary_source()}
+
 # THE ENTRANT IS THE THING BEING MEASURED, AND A NAME IS NOT AN IDENTITY.
 #
 # The record digested the INSTRUMENT (simulator_digest, legend_digest) and named the ENTRANT by a filename with
@@ -142,8 +230,13 @@ def reasoning_argv():
 
 
 def server_argv(entrant, ctx, port):
-    """THE WHOLE LAUNCH, in one place, so what is recorded is what was run."""
-    return ([LLAMA, "-m", entrant, "-c", str(ctx), "-ngl", "0", "--port", str(port), "--no-webui"]
+    """THE WHOLE LAUNCH, in one place, so what is recorded is what was run.
+
+    THE BINARY COMES FROM `llama_server()`, NOT FROM THE CONSTANT DIRECTLY: with `--llama-server` given,
+    the launch and `config.server_argv` both take the selection, so the record cannot show the default and
+    name the fork.
+    """
+    return ([llama_server(), "-m", entrant, "-c", str(ctx), "-ngl", "0", "--port", str(port), "--no-webui"]
             + reasoning_argv())
 
 
@@ -447,7 +540,11 @@ def run(entrant, level_path, cap, port):
                         # failed loads whose real cause was a live seat lease holding 5.5 of 8 GB under a policy
                         # that never reclaims it. ONE SENTENCE IS THE DIFFERENCE BETWEEN AN INFRASTRUCTURE
                         # CONDITION AND A MODEL FAILURE, and the record is the only place that sentence lives.
-                        "why": f"server exited rc={srv.returncode}.{os.linesep}{holder_sentence()}"}
+                        "why": f"server exited rc={srv.returncode}.{os.linesep}{holder_sentence()}",
+                        # WHICH BINARY REFUSED IT -- the failure path is where this matters most (the
+                        # same file is REFUSED by the default and runs on the fork), so the failure record
+                        # carries the binary's identity too, from the one definition.
+                        **binary_provenance()}
             try:
                 urllib.request.urlopen(base + "/health", timeout=3).read()
                 up = True
@@ -457,7 +554,8 @@ def run(entrant, level_path, cap, port):
         if not up:
             return {"entrant": label, "entrant_digest": model_digest(entrant),
                     "level": lname, "loaded": False,
-                    "why": f"never answered /health in 600 s.{os.linesep}{holder_sentence()}"}
+                    "why": f"never answered /health in 600 s.{os.linesep}{holder_sentence()}",
+                    **binary_provenance()}
         load_s = time.time() - t0
 
         # THE PROBE RUNS BEFORE A SINGLE GAME TURN. Ask once, briefly: what setting is this model ACTUALLY
@@ -535,7 +633,10 @@ def run(entrant, level_path, cap, port):
                              "command_cap": cap,
                              "ctx": 4096, "n_gpu_layers": 0, "temperature": 0.0,
                              "legend": legend(), "legend_digest": legend_digest(),
-                             "server_argv": server_argv(entrant, 4096, port)},
+                             "server_argv": server_argv(entrant, 4096, port),
+                             # WHICH BINARY: the digest, whether it is the declared default, and which
+                             # selector chose it (see binary_provenance()). Portable-shaped -- no new path.
+                             **binary_provenance()},
                   # WHAT HAPPENED, not what was asked for.
                   "reasoning_probe": probe,
                   # THE FORMAT FIELDS (A7), AND A NAMING RELATIONSHIP NAMED RATHER THAN LEFT TO BE GUESSED:
@@ -572,20 +673,42 @@ def run(entrant, level_path, cap, port):
 
 
 def main():
+    global LLAMA_SELECTED
     ap = argparse.ArgumentParser()
     ap.add_argument("--entrant")
     ap.add_argument("--level")
     ap.add_argument("--cap", type=int, default=40)
     ap.add_argument("--port", type=int, default=8751)
+    # THE BINARY THE RUN IS TAKEN ON. DEFAULT: the declared constant in this file, so every existing
+    # record keeps the instrument it was taken under and no published number moves. NEEDED FOR A
+    # FORK-ONLY FAMILY: on the Bonsai ternary files the default binary either REFUSES the file or
+    # answers with token salad, and the fork is the only instrument that measures the model -- see the
+    # block above `LLAMA_SELECTED`. Without this flag the only way in was to set that constant in memory
+    # at the call site, which is an override the artifact cannot report.
+    ap.add_argument("--llama-server", dest="llama_server", default=None,
+                    help="path to the llama-server BINARY to run (default: the declared default, "
+                         "unchanged). The binary's digest is recorded with the run.")
     a = ap.parse_args()
     if not a.entrant or not a.level:
         ap.error("--entrant and --level are required")
+    if a.llama_server:
+        # A PATH THAT DOES NOT EXIST OR IS NOT EXECUTABLE IS REFUSED HERE RATHER THAN HANDED TO exec --
+        # the guard `arena.py` already carries at :152, for the same reason: `--llama-server /typo` would
+        # otherwise surface as a launch failure and read like a broken model.
+        sel = os.path.expanduser(a.llama_server)
+        if not (os.path.exists(sel) and os.access(sel, os.X_OK)):
+            print(f"  BINARY ABSENT OR NOT EXECUTABLE: {a.llama_server}"); return 2
+        LLAMA_SELECTED = sel
     p = a.entrant if os.path.exists(a.entrant) else os.path.join(MODELS, a.entrant)
     if not os.path.exists(p):
         print(f"  ENTRANT ABSENT: {a.entrant}"); return 2
     r = run(p, a.level, a.cap, a.port)
     print(f"  entrant   {r['entrant']}")
     print(f"  level     {r['level']}")
+    # ONLY ON THE SELECTED PATH, so a run on the declared default prints exactly what it printed before
+    # this change, byte for byte: the default's own stdout stays its own control.
+    if LLAMA_SELECTED:
+        print(f"  binary    {LLAMA_SELECTED}  (server_binary_digest {binary_digest()})")
     # THE RECORD, NOT JUST THE CONSOLE -- ruling 82's unverified half, closed.
     #
     # A LOAD FAILURE RETURNED BEFORE THIS POINT, SO THE SENTENCE NAMING THE HOLDER EXISTED ONLY IN STDOUT. That
