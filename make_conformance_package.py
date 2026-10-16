@@ -16,6 +16,12 @@ device name. A FORMAT field whose value looks local is a HARD FAILURE, not a war
 leak the two lists exist to prevent.
 
     python3 make_conformance_package.py
+
+AND THE TWO LISTS ARE ENFORCED RATHER THAN BELIEVED: `check_conformance_census.py` reads the writer that OWNS
+these names, by `ast`, and fails on drift in BOTH directions -- a name the writer emits that these lists do not
+carry, and a name these lists carry that the writer does not emit. It also cross-checks this file's `FORMAT` and
+`LOCAL` against the package's §1 `LIST 1`/`LIST 2`, because they are ONE LIST IN TWO CARRIERS and two carriers
+can disagree. Run it after every change here.
 """
 import json
 import os
@@ -24,16 +30,37 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
-# LOCAL: meaningful only on the machine that wrote it.
+# LOCAL: meaningful only on the machine that wrote it. A PATH, not a pair: a tuple of length 1 is a TOP-LEVEL
+# field (`why`), a tuple of length 2 is a field inside a block (`host.node`). A split that can only name nested
+# fields cannot name a top-level local one.
 LOCAL = {
     ("host", "node"), ("host", "platform"), ("host", "cpu_count"), ("host", "nvidia_smi"),
     ("config", "server_argv"),
     ("config", "n_gpu_layers"),          # a property of THIS box's VRAM, not of the measurement
+    # ---- ARTIFACT REPLACED: a block, and it is LOCAL as a block. It records a LOCAL EVENT at a LOCAL
+    # coordinate -- the repo-relative path of the record this run destroyed, when it was last written, its
+    # size -- and what that record claimed about its own instrument. Only the fact that it existed is
+    # meaningful elsewhere, and that is not what these keys carry.
+    ("artifact_replaced",),
+    ("artifact_replaced", "path"), ("artifact_replaced", "sha256"), ("artifact_replaced", "bytes"),
+    ("artifact_replaced", "mtime"), ("artifact_replaced", "it_named"),
+    ("artifact_replaced", "reason_given"), ("artifact_replaced", "reading"),
+    # ---- `why` QUOTES THIS BOX. Two of its three branches embed the holder's tenancy reading -- pid and MiB,
+    # read off this machine -- and every branch quotes the local server's own log line with its line number.
+    # THE PORTABLE HALF OF THE SAME FACT TRAVELS BESIDE IT as `load_failure_class`, which is FORMAT.
+    # AND THE TRIPWIRE WOULD NOT HAVE CAUGHT THIS: no pattern in LEAK matches `pid 2418 (134 MiB)`. The
+    # classification is made by the TEST, and the tripwire's blind spot is recorded here rather than left
+    # as a false sense of cover.
+    ("why",),
+    # ---- the probe's failure text, verbatim from the local socket. UNBOUNDED: it is whatever the exception
+    # says, so no other implementation can be promised a value that means the same thing. The portable half is
+    # `observed: None` -- the probe recorded no reading.
+    ("reasoning_probe", "error"),
 }
 
 # FORMAT: an independent implementation produces it with an equivalent value. Grouped by what it IS.
 FORMAT = [
-    ("IDENTITY", ["run_id", "entrant", "level", "kind", "cap",
+    ("IDENTITY", ["run_id", "entrant", "entrant_digest", "entrant_digest_scope", "level", "kind", "cap",
                   "simulator_digest", "legend_digest", "freeze"]),
     ("CONFIG -- DECLARED, PORTABLE", ["config.reasoning", "config.reasoning_source",
                                       "config.reasoning_declared", "config.reasoning_declared_in",
@@ -42,11 +69,26 @@ FORMAT = [
                                       "config.reasoning_argv", "config.ctx",
                                       "config.temperature", "config.max_tokens_ceiling",
                                       "config.command_cap", "config.legend"]),
-    ("COUNTERS -- THE MEASUREMENT", ["solved", "moves", "attempted", "blocked",
-                                     "not_an_action", "give_up", "gave_up_at", "ended", "trace"]),
+    # WHICH BINARY, WITHOUT A PATH. `server_argv` already carries the absolute path and is already LOCAL;
+    # these three are what the record can say about the instrument without publishing a coordinate -- a
+    # digest, what the digest is a digest OF, and which selector chose it. Measured, not asserted: the
+    # tripwire is run over them.
+    ("INSTRUMENT -- WHICH BINARY", ["config.server_binary_digest", "config.server_binary_digest_scope",
+                                    "config.server_binary_source"]),
+    ("COUNTERS -- THE MEASUREMENT", ["solved", "moves", "attempted", "attempted_emitted",
+                                     "attempted_consumed", "attempted_note", "blocked",
+                                     "not_an_action", "give_up", "gave_up_at", "ended", "trace",
+                                     # A DIAGNOSTIC THAT CANNOT BE READ AS A COUNTER, because a diagnostic read
+                                     # as a counter is how a diagnostic becomes a score. It is in no rate, no
+                                     # gate and no denominator, and its own NAME says so.
+                                     "loose_match_diagnostic_only_never_scored",
+                                     "loose_match_diagnostic_note"]),
     ("HONESTY FIELDS -- THE ONES THAT SAY WHAT IS MISSING",
      ["loaded", "load_s", "never_started", "unreadable", "missing_values",
       "unreadable_is_the_aggregate_of", "missing_values_are_a_subset_of"]),
+    # WHICH CONDITION A FAILURE IS REPORTING, and the caveat on a cell the harness confounded. The PROSE that
+    # quotes this box is LOCAL (`why`); the CLASS travels.
+    ("FAILURE -- WHICH CONDITION IT REPORTS", ["load_failure_class", "ended_why"]),
     ("INSTRUMENT READINGS", ["reasoning_probe", "budget_signature", "dead_end", "turns"]),
 ]
 
@@ -128,13 +170,21 @@ def main():
                 problems.append((n, leaks))
 
     print("\n  LIST 2 -- LOCAL BOOKKEEPING. A conforming implementation does NOT produce these.\n")
-    for parent, key in sorted(LOCAL):
-        blk = d.get(parent) or cell.get(parent) or {}
-        if isinstance(blk, dict) and key in blk:
-            v = blk[key]
-            print(f"      {parent}.{key:26s} = {str(v)[:58]}")
+    for path in sorted(LOCAL):
+        # A PATH: one name for a TOP-LEVEL field (`why`), two for a field inside a block (`host.node`).
+        if len(path) == 1:
+            top = path[0]
+            found = top in d or top in cell
+            value = d.get(top, cell.get(top))
         else:
-            print(f"      {parent}.{key:26s} (not present in this artifact)")
+            parent, key = path
+            blk = d.get(parent) or cell.get(parent) or {}
+            found = isinstance(blk, dict) and key in blk
+            value = blk[key] if found else None
+        if found:
+            print(f"      {'.'.join(path):34s} = {str(value)[:58]}")
+        else:
+            print(f"      {'.'.join(path):34s} (not present in this artifact)")
 
     print()
     print("=" * 100)
