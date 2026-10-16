@@ -24,20 +24,36 @@ field carrying a local value is a HARD FAILURE. Result on the run of record: THE
 ### LIST 1 — THE FORMAT
 
 ```
-IDENTITY                       run_id  entrant  level  kind  cap  simulator_digest  legend_digest  freeze
+IDENTITY                       run_id  entrant  entrant_digest  entrant_digest_scope  level  kind  cap
+                               simulator_digest  legend_digest  freeze
 
-CONFIG, DECLARED AND PORTABLE  reasoning  reasoning_source  reasoning_declared  reasoning_declared_in
-                               reasoning_rationale  reasoning_changed_from_declaration  reasoning_argv
-                               ctx  temperature  max_tokens_ceiling  command_cap  legend
+CONFIG, DECLARED AND PORTABLE  config.reasoning  config.reasoning_source  config.reasoning_declared
+                               config.reasoning_declared_in  config.reasoning_rationale
+                               config.reasoning_changed_from_declaration  config.reasoning_argv
+                               config.ctx  config.temperature  config.max_tokens_ceiling
+                               config.command_cap  config.legend
 
-COUNTERS, THE MEASUREMENT      solved  moves  attempted  blocked  not_an_action  give_up  gave_up_at
-                               ended  trace
+INSTRUMENT, WHICH BINARY       config.server_binary_digest  config.server_binary_digest_scope
+                               config.server_binary_source
+
+COUNTERS, THE MEASUREMENT      solved  moves  attempted  attempted_emitted  attempted_consumed
+                               attempted_note  blocked  not_an_action  give_up  gave_up_at  ended  trace
+                               loose_match_diagnostic_only_never_scored  loose_match_diagnostic_note
 
 HONESTY FIELDS, WHICH SAY      loaded  load_s  never_started  unreadable  missing_values
 WHAT IS MISSING                unreadable_is_the_aggregate_of  missing_values_are_a_subset_of
 
+FAILURE, WHICH CONDITION       load_failure_class  ended_why
+IT REPORTS
+
 INSTRUMENT READINGS            reasoning_probe  budget_signature  dead_end  turns
 ```
+
+**AND THE CONFIG GROUP IS RESPELLED, DOTTED, IN THIS READING OF `LIST 1`** — `config.reasoning`, not
+`reasoning` under a group header. **This list and `make_conformance_package.py`'s `FORMAT` are ONE LIST IN TWO
+CARRIERS, and they were in two notations**; `check_conformance_census.py` compares them as SETS, so a check that
+normalised the difference would be a check that excuses it. The names are the same names; only their carrier now
+says which block each one lives in.
 
 ### LIST 2 — THE LOCAL BOOKKEEPING A CONFORMING IMPLEMENTATION DOES NOT PRODUCE
 
@@ -48,6 +64,18 @@ host.cpu_count      = 12                                          this box
 host.nvidia_smi     = True                                        whether this box has the tool
 config.server_argv  = ['/home/chilly1/llama.cpp/build/bin/...']   ABSOLUTE LOCAL PATHS
 config.n_gpu_layers = 0                                           a property of THIS box's VRAM
+artifact_replaced   = (a BLOCK: the record a run destroyed to write this one)  a LOCAL event at a LOCAL coordinate
+artifact_replaced.path         = probes/SOKOBAN_<entrant>_<level>.json   the coordinate on THIS box
+artifact_replaced.sha256       = the replaced record's bytes, digested    it is gone; this is what it was
+artifact_replaced.bytes        = its size in bytes
+artifact_replaced.mtime        = when it was last written, on THIS box
+artifact_replaced.it_named     = what it claimed about its own instrument
+artifact_replaced.reason_given = the operator's reason, verbatim
+artifact_replaced.reading      = the sentence saying it is not recoverable from this file
+why                            = the failure PROSE: quotes THIS box's server log line, and on two of its three
+                                 branches the holder's tenancy reading (pid, MiB); the portable half of the same
+                                 fact travels beside it as load_failure_class, which is FORMAT
+reasoning_probe.error          = the local socket's exception text, verbatim and UNBOUNDED; the portable half sits beside it as observed None, the probe recording that it recorded no reading
 ```
 
 **AND THE LINE BETWEEN `ctx` AND `n_gpu_layers` IS DELIBERATE: `ctx` is a CHOICE made about the measurement
