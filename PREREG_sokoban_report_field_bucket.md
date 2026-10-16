@@ -227,3 +227,113 @@ them is recorded as the pre-image behaviour it is.
 No arm below changes a published number. No model is loaded, no GPU is used, no server is started. **Evidence
 lands at the declared results root, `/home/chilly1/workspace/cabinet_results/t_7d2eb103/`, outside every git
 tree.**
+
+---
+
+# LANDED — 2026-10-16. THE PREDICTIONS ABOVE WERE WRITTEN FIRST AND ARE VERIFIED, NOT RESTATED.
+
+**APPENDED, NOT REWRITTEN:** everything above is the pre-registration as it was committed, before the code
+change. This note is added after it, and it is dated.
+
+**THE DIGEST, BEFORE → AFTER:**
+
+```
+sokoban_report.py   4155 B  sha256 59ff2408f163adbd28ad8f1f7c54005b45e90be15d7dee00b590d14318c04d3d
+                -> 13088 B  sha256 04966f23fcaa91e6326e55f658b7e3fef1462c00fb5d55e856537e46d8b0f8d4
+   commit 1886d04, ordered AFTER this file's commit bef4602 and AFTER nothing else
+      S1 the bucket reads the field, the prose split is the named fallback, the rule is printed
+      S2 the four shapes, named in the output, and a refusal with a sentence for anything else
+      S3 --self-test, five cases, measured against an inverted copy of the rule
+   git hash-object and HEAD:sokoban_report.py are the SAME object (1a1cb99c7d49e0412dd44a358af9e8baec89967e),
+   and the matrix below was run against the file whose sha256 is that digest -- read back, not assumed.
+```
+
+**THE CARD'S ACCEPTANCE, ANSWERED WITH THE MEASURED BUCKET AND THE RULE FOR EACH:**
+
+```
+(a) the run of record, probes/SOKOBAN_RUN_20261010-072252.json (216011 B,
+    05084c8e7ca9ed94c5a82ed62917ecb8b6e2e1f9667a04953591d66a38a1d447, 15 cells / 12 played / 3 no-load)
+      rc 0 on both trees; counts line BYTE-IDENTICAL.
+      did not load    3   [prose] server exited rc=1          <- pre-image: the same label, no rule tag
+      [field]  0 of 3 / [prose]  3 of 3   -- all three records predate instrument 4; not one carries a class.
+      COUNTERS AND FRACTIONS: identical, and identical as BLOBS -- PER CELL 18 lines sha 2faf6060c0602275,
+      PER LEVEL 6 lines sha 54793cb15a4771f5, the PER-LEVEL FRACTIONS 5 lines sha 88a6b3192c626384,
+      HEAD-READ 13 lines sha 56a93ea7617952c3, on both trees.
+(b) the instrument-4 load-failure record, cabinet_results/t_8dc430a7/s2_pair.json `new` (bare,
+    sha256 d4c11d295ccd4644567af1346db1c68fac745f811dfc76f691da65cd5dfaf03b)
+      did not load    1   [field] the binary refused the FILE (the log names the cause)
+      THE CLASS, VERBATIM, UNCUT; the prose fragment appears nowhere as the bucket.
+(c) a pre-instrument-4 failure record, the same pair's `pre`
+    (bare, sha256 48b2b75fbcb51288ea6da73b43732b7e26cc4385dd69662b9755910c23bb3ce0)
+      did not load    1   [prose] server exited rc=1.
+      AND THE CARD IS HELD B                     <- EXACTLY the pre-image label on the same bytes
+      (a) and (c) print the label they always printed, plus the rule; (b) is the one that MOVES, and it moves
+      to the field.
+PAIRED, on the same bytes as a one-cell run (both trees can read the wrapper, neither can read the bare
+record -- see (iii)):
+      (b) wrapper  pre-image: server exited rc=1.\nTHE BINARY REFUSED THE F   |   new: [field] the class
+      (c) wrapper  pre-image: server exited rc=1.\n  AND THE CARD IS HELD B    |   new: [prose] the same label
+      and the field-REMOVED copy of (b): pre-image and new both print the PROSE label above, the pre-image
+      with the SAME recorded stdout sha as the un-removed record (2a988c4a9168e3d2) -- which is what a rule
+      that ignores the field looks like from inside.
+```
+
+**PREDICTIONS 1–10, EACH VERIFIED AGAINST AN ARM RATHER THAN RESTATED:**
+
+```
+1  (a) unmoved                              VERIFIED -- blobs above; 6 of 6 compared sections identical.
+2  (a) labels/counts kept, rule added        VERIFIED -- (3, 'server exited rc=1') on both; tally 0/3, 3/3.
+3  (b) the bucket IS the class              VERIFIED -- character for character, uncut.
+4  (b) the two trees DISAGREE               VERIFIED -- prose fragment vs the class, same bytes.
+5  (c) the fallback, label unchanged        VERIFIED -- 44 chars, indentation and all.
+6  no silent pooling                        VERIFIED -- s2_pair.json verbatim: two lines, field 1 of 2,
+                                              prose 1 of 2, one container read in KEY order.
+7  the fallback is not dead code            VERIFIED -- class removed -> prose, and the pre-image cannot
+                                              tell that copy from the record it came from (same sha).
+8  a refusal is a sentence, not a traceback VERIFIED -- rc 1, four lines, empty stderr, on a dict of
+                                              non-records; pre-image answered the same input with a traceback.
+9  the self-test can fail                   VERIFIED -- shipped rc 0 (5 cases as predicted), the copy with the
+                                              preference INVERTED rc 1, first failure named.
+10 nothing else moves                       VERIFIED -- 16/16 controls rc-identical; the two trees differ in
+                                              ONE file (git diff --stat bef4602 1886d04: sokoban_report.py,
+                                              160 insertions / 5 deletions); FROZEN_DIGESTS untouched;
+                                              sokoban_run.py, vram_holder.py and sokoban.py byte-identical.
+```
+
+**AND THREE THINGS THIS MEASUREMENT GOT WRONG ON THE WAY, RECORDED RATHER THAN TIDIED:**
+
+```
+(i)  THE ACCEPTANCE COMPARISON READ A LABEL AS ITS FIRST PHYSICAL LINE. A bucket label can span lines (the
+     pre-image prose is multi-line and its continuation is INDENTED, like every report line), so the first
+     version of `bucket_entries` cut one label at its newline. THE CHECKS THAT COMPARED THE TWO PARSERS
+     PASSED ON THE TRUNCATED FRAGMENT -- two parsings by the same broken parser cannot disagree -- and it was
+     the comparison against the 44-character label WRITTEN DOWN IN THIS FILE, read out of the raw output,
+     that failed and exposed it. Fixed by bounding the block first (from `played` to the rule tally or
+     `(A POPULATION`); the function's docstring now records it.
+(ii) MY FIRST DISPOSAL OF THE SIXTEEN CONTROLS UNDERSTATED NOTHING AND MY SECOND OVERSTATED IT. Normalising
+     only the literal worktree path left 5 of 5 movements labelled SUBSTANTIVE, because these checks DERIVE a
+     cabinet name and a results root from the worktree leaf (PREBRANCH_7d2eb103 vs ocho_arena) and count the
+     *.json in their own cabinet directory. Disposed of by normalising the derived names, the count, and the
+     line order those names imply -- and the residue after that is ONE solver TIMING and nothing else. Every
+     moved byte is named in controls_verdict.txt.
+(iii) THE PRE-IMAGE READER CANNOT READ EITHER RECORD THE ACCEPTANCE NAMES, so the paired arms had to be
+     one-cell runs. That is not a workaround, it is the second subject of this change: rc 1, empty stdout,
+     `AttributeError: 'str' object has no attribute 'get'` on s2_pair.json and on both members, recorded in
+     matrix_preimage.json; the new tree reads all three, rc 0.
+```
+
+**THE EVIDENCE, AT THE DECLARED RESULTS ROOT** (`/home/chilly1/workspace/cabinet_results/t_7d2eb103/`,
+outside every git tree): `wrap.py` + `wrap_out.json` (the records extracted and compared back, the wrappers,
+the class-removed control, the non-record control, with every digest), `run_matrix.py` + `matrix_preimage.json`
++ `matrix_new.json` + `out_*.txt` (rc, full stdout, its sha256, stderr, input sha256, per input per tree),
+`compare.py` + `compare_out.txt` + `compare_out.json` + `diff_a_run_of_record.txt` (the 15 checks, each with
+the text it compared), `mutate_and_test.py` + `mutate_out.json` + `selftest_shipped.txt` +
+`selftest_inverted.txt`, `sokoban_report_INVERTED.py` (outside the tree, never committed), `controls.py` +
+`controls_pre.json` + `controls_new.json`, `diff_controls.py` + `diff_controls_out.txt` +
+`diffctl_*.txt` (the five moved outputs, diffed), `controls_verdict.py` + `controls_verdict.txt`,
+`not_a_record_run.json`, `s2_new.json`, `s2_pre.json`, `s2_*_run.json`.
+
+**AND TWO THINGS THIS LANDING DOES NOT CLAIM.** It does not claim the report's shapes are now complete: a
+record shape nobody has written yet will be refused by name, which is the correct failure and not coverage.
+And it does not claim an enforcer: nothing runs `sokoban_report.py` in CI, so the controls above are the
+sixteen repo checks plus the file's own `--self-test`, and §3(f) says so rather than leaving it to be found.
