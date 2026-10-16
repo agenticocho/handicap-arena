@@ -155,3 +155,150 @@ card `t_7d2eb103`'s evidence, not here.
 
 No model is loaded, no GPU is used, no server is started, no record is read from the domain. **Evidence lands
 at the declared results root, `/home/chilly1/workspace/cabinet_results/t_36948d45/`, outside every git tree.**
+
+---
+
+# LANDED — 2026-10-16. THE PREDICTIONS ABOVE WERE WRITTEN FIRST AND ARE VERIFIED, NOT RESTATED.
+
+**APPENDED, NOT REWRITTEN:** everything above is the pre-registration as it was committed, before the check
+existed on disk. This note is added after it, and it is dated.
+
+**THE DIGEST, BEFORE → AFTER:**
+
+```
+check_report_buckets.py   DID NOT EXIST
+                       -> 18412 B  sha256 f8745f1fa7e2dd5626b222259f11aaa7968cd4e5e3bbca0b86cf94cc175b8867
+                          blob 7a9470a57a24d67338bd59846b8d09e010c6a3de
+   git hash-object and HEAD:check_report_buckets.py are the SAME object (7a9470a5...), read back.
+PREREG (this file)    9742 B  sha256 c0f7a4e89de93339 (full: c0f7a4e89de9333943d43af897762a907068e0c6475825319087401dce3fc532)
+                              (commit a31b9f2, the pre-registration as committed)
+                       -> THE AFTER DIGEST IS NOT WRITTEN HERE, AND CANNOT BE: a file's digest is a
+                          function of the bytes that would have to contain it. It is read out of
+                          sha256sum at the landing commit into the evidence root (prereg_after.txt) and
+                          repeated in the landing commit's message -- never typed from memory.
+commits               a31b9f2 prereg  ->  4b5c6cd check_report_buckets.py  ->  <the commit carrying this
+                      note; ITS hash is likewise read back out of `git log` into the evidence root
+                      rather than written into the file it names>
+                      (prereg FIRST, the check second, this note last; `gcommit -F` from files, so no shell
+                       touched a message, and every message read back out of the commit)
+```
+
+**A CONCURRENT CARD, SAID OUT LOUD RATHER THAN DISCOVERED LATER.** This tree has another writer. At the time
+the pre-registration above was written, `HEAD` was `d275389` and card `t_bba8182e` held four files
+MODIFIED-UNCOMMITTED in the same directory; by the time this check was committed, that card's work had
+landed (`de80b97` and its predecessors) and these two commits sit ON TOP OF IT. So **"the clean tree at the
+landing commit" includes another card's work**, and the control comparison in §2 P6 was therefore run as a
+PAIRED experiment rather than before-and-after in time: this card's two files are moved OUT of the tree and
+back IN, in the same directory, and the sixteen controls are run in each arm. **One variable.** The four
+files of the other card were fingerprinted before and after both arms and were STABLE across them.
+
+**THE CARD'S ACCEPTANCE, ANSWERED WITH THE RUN AND THE TEXT IT COMPARED:**
+
+```
+(a) rc 0 AT THE LANDING COMMIT.  `python3 check_report_buckets.py` -> rc 0, run_clean.txt.
+      writer  sokoban_run.py: load_failure() returns the key(s) ['load_failure_class', 'why']
+      writer  the value it returns is "unknown -- the server's log could not be read"  (READ OUT OF THE
+              WRITER, not copied into this file)
+      writer  line(s) [735, 752]: the failure record is built with **load_failure(...), so the return
+              reaches the record
+      reader  line(s) [99]: the reader gets `load_failure_class` out of the record
+    AND THE READER, DRIVEN OVER ONE FIXTURE OF EACH GENERATION -- the label, the tag and the tally:
+      class.json        did not load  1  [field] unknown -- the server's log could not be read
+                        [field] 1 of 1   [prose] 0 of 1     SHAPE cell -- one record
+      preclass.json     did not load  1  [prose] PRE: the check's own prose fixture
+                        [field] 0 of 1   [prose] 1 of 1     SHAPE cell -- one record
+      container.json    did not load  1  [field] unknown -- the server's log could not be read
+                        did not load  1  [prose] PRE: the check's own prose fixture
+                        [field] 1 of 2   [prose] 1 of 2     SHAPE container of 2 named cell record(s)
+    (b) THE CONTROL, IN THE SAME RUN, AND IT FIRED ON BOTH SIDES:
+      reader copy  CONTROL_reader_literal_renamed.py   (4 literal(s) renamed)  -> complaints 7   FIRED
+      writer copy  CONTROL_writer_key_renamed.py       (4 literal(s) renamed)  -> complaints 1   FIRED
+    (c) THE EVIDENCE ROOT AND ITS DIGESTS, ALL READ BACK RATHER THAN TYPED: every digest in this note
+        comes out of `sha256sum`, `git hash-object`, `git rev-parse <commit>:<path>` and the check's own
+        printed output, taken at the landing commit. Evidence root:
+        /home/chilly1/workspace/cabinet_results/t_36948d45/ (outside every git tree).
+    (d) A RENAME OF THE WRITER'S KEY MAKES IT FAIL. The mutation is applied to a COPY in the evidence root,
+        never to the tree's own file -- MUTANT_writer_key_renamed.py, 4 occurrences of the key renamed,
+        sha256 df0dd04173c4d58ea3516b4959b42d7006ba819bd9f78829586f47be71bcbea5 -- and the check run against
+        it exits 1, its own first complaint being:
+          THE WRITER NO LONGER PUTS `load_failure_class` INTO ITS LOAD-FAILURE RECORD -- load_failure()
+          returns ['load_failure_class_RENAMED_BY_THE_CONTROL', 'why']. Every bucket would take the PROSE
+          rule, every reason line would read `[prose] ...`, and THE REPORT WOULD STILL EXIT 0. This is the
+          rename the check exists for.
+        (run_mut_writer.txt; the reader-literal mutant MUTANT_reader_literal_renamed.py, sha256
+         f2b7da4711d3132ce096dfe6ec0bc6e2f03ef048ded83f42036d262f72559c0f, is rc 1 too, run_mut_reader.txt,
+         and both run files sit beside run_clean.txt.)
+```
+
+**PREDICTIONS 1–7, EACH VERIFIED AGAINST AN ARM RATHER THAN RESTATED:**
+
+```
+1  clean rc 0, one executable + one document   VERIFIED -- rc 0; git diff --stat of the two commits is
+                                               two files, 157 + 346 insertions, no other file touched.
+2  the three fixtures, label + tag + tally      VERIFIED -- the block above, read out of the report's own
+                                               `did not load ... [rule] label` and `[rule] N of M` lines.
+3  the control fires on BOTH mutations          VERIFIED -- 7 and 1 complaints, in the clean run itself.
+4  the writer's key renamed -> rc 1             VERIFIED -- (d) above, complaint quoted verbatim.
+5  no second copy of the values                 VERIFIED -- no_values_copied.py reads the writer's THREE
+                                               dict literals out of sokoban_run.py and finds all three
+                                               ABSENT from the check, while the KEY is present in the check
+                                               and in the reader; rc 0.
+6  nothing else moves                           VERIFIED -- the paired run: 13 of 16 rc AND
+                                               output-digest identical; the 3 that moved are disposed of by
+                                               name below, and sokoban_report.py and sokoban_run.py carry
+                                               their base digests unchanged (04966f23... / e3f20b3b...).
+7  the check reads and does not own             VERIFIED -- its only write is tempfile.mkdtemp(), removed
+                                               on exit; probes/ and results/ untouched (git status).
+```
+
+**THE THREE CONTROLS THE PAIRED RUN MOVED, EACH DISPOSED OF BY NAME — NOT BY RE-RUNNING UNTIL THE DIGESTS
+AGREED:**
+
+```
+check_one_reader.py    rc 0 BOTH ARMS. Diffed line by line, the ONLY moved line is its own count:
+                           files scanned      90        ->        files scanned      91
+                       MY FILE IS SCANNED BY IT. No complaint is added; the count is the check's own
+                       denominator. This is the movement a new check is SUPPOSED to cause, said out loud.
+sokoban_solver.py      rc 0 BOTH ARMS. The only moved text is two TIMINGS --
+                           02_two_boxes: ... 0.0013s -> 0.0017s
+                           S1_built_solvable: ... 0.0054s -> 0.0050s
+                       and the SAME command on the UNCHANGED tree three times gives three digests
+                       (0365e2261cb4be33 / 3f0f29d71430d836 / 46d66dc2797955c3). NOT DETERMINISTIC: not
+                       evidence about any file.
+test_no_silent_zero.py rc 1 BOTH ARMS (it fails on the records as they stand, which is its written
+                       purpose), and in the disposal run the two arms are BYTE-IDENTICAL. The paired-run
+                       movement is a COUNT OF THIS CARD'S OWN EVIDENCE ROOT, demonstrated rather than
+                       argued: adding ONE json file to it moves exactly one line, and removing it restores
+                       the digest exactly --
+                           scope  live:t_36948d45     7 *.json  ->  8 *.json
+                       (dispose_no_silent_zero.py, 48a564efbefef9fe -> 77e31933cef8e70d -> 48a564efbefef9fe)
+```
+
+**AND THREE THINGS THIS MEASUREMENT GOT WRONG OR DID NOT EXPECT, RECORDED RATHER THAN TIDIED:**
+
+```
+(i)  THE FIRST VERSION OF THE CHECK PRINTED ITS TALLY MISMATCH AS A PYTHON TUPLE -- `got `[field]
+     (0, 1)``. The mutation had fired, the finding was right, and the SENTENCE A HUMAN READS was wrong:
+     it named the defect in a form that cannot be compared to the tally it disagrees with. Fixed to
+     `got `[field] 0 of 1`` BEFORE the landing commit, and every run file kept in evidence is from the
+     landed file (sha256 f8745f1f...).
+(ii) I PREDICTED THE CONTROL COMPARISON COULD BE RUN BEFORE-AND-AFTER IN TIME. It cannot in a shared tree
+     with a concurrent writer, and the first attempt (controls_pre.json against controls_after.json)
+     differed in two variables at once. It is recorded here as the wrong instrument, not deleted, and the
+     paired arm moving two files in and out of ONE directory is what replaced it.
+(iii) A CHECK THAT COUNTS FILES IN ITS OWN EVIDENCE ROOT MOVES THE CONTROLS THAT COUNT THAT DIRECTORY.
+     That is not a defect of this check -- it is the same residue card t_7d2eb103 disposed of -- but it
+     means the number of json files in cabinet_results/t_36948d45/ is now part of two controls' output,
+     and the next card that touches this tree should expect it.
+```
+
+**AND TWO THINGS THIS LANDING DOES NOT CLAIM.** It does not claim the report is enforced end to end: one
+contract is checked -- the writer's key reaching the reader's rule -- and the four input shapes rest on the
+reader's own `--self-test` plus card `t_7d2eb103`'s evidence, not here. And it does not claim the check
+would have caught a rename that was ACCOMPANIED by a matching edit on the reader's side: it reads one key
+against one key, which is exactly the contract §1 E1 names and exactly the whole of it.
+
+**WHERE THE NAME IS ADDED, SAID RATHER THAN LEFT TO BE FOUND:** `check_report_buckets.py` is added to NO list
+inside the tree -- there is no in-tree list of checks (`check_one_reader.py` is in none either). It is added
+as a **seventeenth command to this card's own evidence-root `controls.py`** (`python3 check_report_buckets.py`),
+where the sixteen live, because an enforcer nothing runs is not an enforcer.
