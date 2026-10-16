@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Handicap Arena — demo shelf</title>
+<style>
+  :root { --bg:#0d0f12; --panel:#15181d; --ink:#e6e9ee; --dim:#9aa3af; --line:#252a31; --amber:#ffb02e; --ok:#4ee08a; --bad:#ff5a5a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+  main { max-width:880px; margin:0 auto; padding:48px 24px 80px; }
+  h1 { font-size:30px; margin:0 0 4px; letter-spacing:-.01em; }
+  h2 { font-size:19px; margin:40px 0 12px; }
+  .sub { color:var(--dim); margin:0 0 28px; }
+  .card { display:block; background:var(--panel); border:1px solid var(--line); border-radius:10px;
+          padding:18px 20px; margin:12px 0; text-decoration:none; color:inherit; }
+  a.card:hover { border-color:var(--amber); }
+  .t { font-weight:600; }
+  .m { color:var(--dim); font-size:14px; margin-top:4px; }
+  .st { display:inline-block; font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+        border:1px solid var(--line); border-radius:999px; padding:2px 10px; margin-top:10px; }
+  .has { color:var(--ok); border-color:#20402f; }
+  .none { color:var(--dim); }
+  code { background:#1b1f25; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+  footer { color:var(--dim); font-size:14px; border-top:1px solid var(--line); margin-top:44px; padding-top:18px; }
+  .warn { border-left:2px solid var(--amber); padding-left:14px; color:var(--dim); }
+</style>
+</head>
+<body>
+<main>
+
+  <h1>The Handicap Arena</h1>
+  <p class="sub">Cabinet-sized evaluation tasks for local models. Each cabinet has <em>frozen criteria</em> and a
+  deterministic or ground-truthed oracle. This page is a shelf of demo artifacts.</p>
+
+  <h2>Demos</h2>
+
+  <a class="card" href="arcade_wall.html">
+    <span class="t">The Arcade Wall</span>
+    <div class="m">The full run population rendered as a cabinet floor: every entrant row, its grade,
+    and the runs that were scratched. Generated from this repository's own results directory.</div>
+    <span class="st has">runs exist</span>
+  </a>
+
+  <h2>Status — stated, not implied</h2>
+  <p class="warn">A drawing is not a result. Cabins below are listed with what actually exists.</p>
+
+  <div class="card">
+    <span class="t">Sokoban</span>
+    <div class="m">Simulator, frozen criteria and a <strong>run of record</strong>. The wall above
+    includes its entrants.</div>
+    <span class="st has">has a run</span>
+  </div>
+
+  <div class="card">
+    <span class="t">Missile Command</span>
+    <div class="m">Simulator and frozen criteria exist. <strong>No run has been made.</strong>
+    Concept graphics describe the intended cabinet, not a result.</div>
+    <span class="st none">no run yet</span>
+  </div>
+
+  <div class="card">
+    <span class="t">Zork</span>
+    <div class="m">Instrument built and self-testing. <strong>Not started.</strong>
+    Concept graphics describe the intended cabinet, not a result.</div>
+    <span class="st none">no run yet</span>
+  </div>
+
+  <h2>What this page is not</h2>
+  <p class="warn">The graded events run locally, on the host that owns the models and the GPU.
+  <strong>No model runs in your browser</strong>, and nothing here is an entrant. These pages are the
+  spectator surface: what happened, rendered.</p>
+
+  <footer>
+    Source: <code>docs/</code> in the arena repository, generated — never hand-edited.
+    The wall is regenerated from the trunk's own results, so its figures belong to the commit that
+    produced it rather than to this page. See <code>publish_docs.py</code>.
+  </footer>
+
+</main>
+</body>
+</html>
