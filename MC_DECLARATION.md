@@ -17,8 +17,8 @@ reasoning_rationale This cabinet's answer is TWO CHARACTERS -- a silo number and
 protocol step_locked
 clock none -- the state's own `tick` integer, advanced by exactly one per action
 artifact probes/MC_<entrant>_<level>.json
-legend_arm example
-legend_arm_note the RECORDED legend for this cabinet is the one with the `3W` format example. The second arm (`plain`, no example) exists ONLY as the A/B below; the driver records which arm a record was taken under, digests BOTH arms, and reads the arm at call time via --legend/MC_LEGEND.
+legend_arm plain
+legend_arm_note THE RECORDED ARM MOVED TO `plain` ON 2026-10-17 (see the amendment below; before that date it was `example`, digest ec59f2dc5fd35518). BOTH arms are kept VERBATIM and both are selectable at call time via --legend/MC_LEGEND; the driver records which arm a record was taken under and digests both, so a reader can sort the records taken either side of the move. `example` remains the arm of the population run and of every record taken before this date.
 legend_arms_registered example ec59f2dc5fd35518 plain d8ee3da099c1a0c2
 
 ## 3. AMENDMENT 2026-10-17 — THE LEGEND ARMS, AND THE DIGEST THAT MOVED (RECORDED, NOT HIDDEN)
@@ -113,3 +113,42 @@ levels/mc_02_scarcity.txt 327d2157bd0b8a83
 record is imported and never reimplemented, so the driver loads them **from the shared tree** and records
 the **path and digest of the file that actually answered** — one definition, imported, identified. A second
 copy in this cabinet would be the one-definition defect.
+
+## 4. AMENDMENT 2026-10-17 (THE SECOND, LATER THE SAME DAY) — THE RECORDED ARM MOVES TO `plain`
+
+**Decided by Ocho, for the card `t_027bf647`, which named this decision as Ocho's and not this cabinet's.
+Enacted HERE, in the machine-readable key above, as its own commit with its own reason. The full reasoning
+is `DECISION_mc_legend_arm.md`; the measurement behind it is `MC_VERDICT_1.md` and
+`probes/MC_POPULATION_20261017-184752.json`.**
+
+```
+legend_arm   example   ->   plain        (example ec59f2dc5fd35518 remains on disk, verbatim, and selectable)
+this file    c7a60f1d6b4e4030   ->   the digest of the version carrying this paragraph
+```
+
+**THE REASON, AND IT IS A MEASUREMENT RATHER THAN A PREFERENCE.** `PREREG_mc_population.md` (`70f8077`,
+digest `a999788483656143`) predicted, BEFORE the second arm ran, that if the example clause is the carrier
+the `plain` arm would move `unknown` down and `fired` up. Over six entrants and two states: **`unknown`
+27 → 7, `fired` 2 → 8, mc_01 engagement 1 of 6 cells → 4 of 6, mc_02 score total 0 → 1 — BRANCH 1 as
+pre-registered.** The mechanism is in the tokens: **one entrant names the legend's own example digit `3` in
+all nine of its firing tokens while reading the threat letters correctly from the state.** And the effect
+survives the confound that could explain it away: of the 5 entrant×state pairs where neither arm was cut at
+the ceiling, **4 improved**.
+
+**WHAT THIS DOES NOT DO.** No frozen criterion moves (`missile_command.py` `eb5ed36591b3`, the two states,
+C1–C3 and the outcome rows in `PREREG_missile_command.md` `01548e9a866df03e` are untouched). **No record is
+re-scored:** the population verdict stands as computed on the arm of record — **C1 MET, C2 FAILED, C3
+FAILED, `FAILED ON THIS POPULATION`** — and **C3 fails under BOTH arms**, so this move is not a route to a
+better verdict. C2's outcome differs between the arms ([0] against [0,1]) and that difference is recorded in
+the verdict as a difference; it is **not** applied backwards.
+
+**AND THE TWO CONSEQUENCES A READER NEEDS.** (1) Records taken before this paragraph and after it are
+**different instruments by digest**; each artifact carries `legend` + `legend_digest`, so they can be sorted,
+and a comparison across the move must say which arm each side was taken under. (2) **The published
+coordinates hold `example`-arm records** (this cabinet's earlier field, and the six population entrants).
+They are not rewritten: one run, one path. A later run that wants a coordinate under the new arm **states a
+reason** and the gate records what it replaced, digest and claimed instrument included.
+
+**`example` IS NOT WITHDRAWN.** It is the arm every record before this date was taken under — including all
+twelve cells of the population run — it stays byte-identical on disk, and it is still reachable with
+`--legend example` / `MC_LEGEND=example`.
