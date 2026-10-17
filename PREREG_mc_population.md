@@ -202,3 +202,19 @@ rates are the index — a rate over a denominator an entrant can shrink is not a
 counter is reported beside every rate. **This is not a rate of model performance**: it is a field of six at
 a spread of the low-and-middle size range, and a verdict about the STATE and the INSTRUMENT. The upper tail
 is out of the run and named above as out.
+
+---
+
+## CORRECTION, APPENDED 2026-10-17 AFTER THE RUN (RECORDED, NOT REWRITTEN ABOVE)
+
+**One arithmetic slip in this file's own breakdown sentence, found by the runner's removal list and
+corrected here rather than edited into the sentence above.** The paragraph on the exclusion says *"17
+removed by the rule above (12 by `mmproj`, 4 by `-vl-`, 1 by `qwen-image`), 58 kept"*. **The artifact's own
+removal list counts 11 by `mmproj`, 1 by `audio`, 4 by `-vl-` and 1 by `qwen-image` — 17 in total**: the
+`audio` file was folded into `mmproj` in that sentence.
+
+**WHAT IS UNCHANGED, STATED SO THE CORRECTION IS NOT READ AS BIGGER THAN IT IS:** the total (17), the kept
+count (58), the sample it produces (six entrants, 0.229–8.071 GB), the rule the runner actually applied
+(the list, with the reason per file, is printed by the runner and stored in the run artifact), and the
+finding (five PROJECTOR files survive a prefix-shaped test) are all exactly as written. **The rule was
+never in the sentence; the sentence was wrong about the rule's arithmetic, and the run was not.**
