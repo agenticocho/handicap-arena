@@ -3,7 +3,9 @@
 **Run of record:** `probes/MC_POPULATION_20261017-184752.json` (run id `20261017-184752`)
 **Population run under:** `scripts/run_guarded.sh mc-population` (ceiling 24G/32G/1G) — never a bare run
 **Pre-registration:** `PREREG_mc_population.md`, digest `a999788483656143`, **committed at `70f8077` BEFORE the
-run**; the runner `missile_command_population.py` at `c0dbe28`.
+run**; the runner `missile_command_population.py` at `c0dbe28`. *(`a999788483656143` is the file AS THE RUNNER
+READ IT. The correction note appended after the run moved it to `34d5d6042b017bfa` — same file, two moments,
+and every number below was computed under the first one.)*
 **Frozen artifacts, untouched:** `missile_command.py` `eb5ed36591b300e6`, `PREREG_missile_command.md`
 `01548e9a866df03e`, `levels/mc_01_one_shot.txt` `ab101ca955c1c853`, `levels/mc_02_scarcity.txt`
 `327d2157bd0b8a83`. **No frozen criterion moved, and no shared file was touched.**

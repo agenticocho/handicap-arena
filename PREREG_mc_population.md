@@ -218,3 +218,10 @@ count (58), the sample it produces (six entrants, 0.229–8.071 GB), the rule th
 (the list, with the reason per file, is printed by the runner and stored in the run artifact), and the
 finding (five PROJECTOR files survive a prefix-shaped test) are all exactly as written. **The rule was
 never in the sentence; the sentence was wrong about the rule's arithmetic, and the run was not.**
+
+**AND THE DIGEST DRIFT THIS NOTE ITSELF CAUSED, RECORDED WITH IT:** the run artifact carries
+`prereg_digest a999788483656143` — **the file as the runner read it, which is the version that was
+committed before the run.** Appending this correction moved the file to **`34d5d6042b017bfa`**
+(`sha256sum PREREG_mc_population.md | cut -c1-16`). **Neither value is wrong; they are the same file at two
+moments, and a reader comparing them must say which one a record was taken under** — the rule this cabinet
+already applies to `MC_DECLARATION.md`. Nothing above is re-scored under either.
