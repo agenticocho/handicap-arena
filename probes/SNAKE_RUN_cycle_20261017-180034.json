@@ -1,0 +1,57 @@
+{
+ "kind": "snake-run",
+ "agent": "cycle",
+ "seeds": [
+  1,
+  7,
+  13,
+  42
+ ],
+ "ticks": 120,
+ "death_ends": true,
+ "at_utc": "20261017-180034",
+ "totals": {
+  "eaten": 0,
+  "best_life": 0,
+  "deaths": 0,
+  "episodes": 3
+ },
+ "episodes": [
+  {
+   "seed": 7,
+   "score": {
+    "eaten": 0,
+    "best_life": 0,
+    "deaths": 0,
+    "ticks": 120
+   },
+   "ended": "tick_cap",
+   "artifact": "probes/SNAKE_baseline-cycle_s7.json",
+   "chain_digest": "af12a0c5d14ce52f"
+  },
+  {
+   "seed": 13,
+   "score": {
+    "eaten": 0,
+    "best_life": 0,
+    "deaths": 0,
+    "ticks": 120
+   },
+   "ended": "tick_cap",
+   "artifact": "probes/SNAKE_baseline-cycle_s13.json",
+   "chain_digest": "af12a0c5d14ce52f"
+  },
+  {
+   "seed": 42,
+   "score": {
+    "eaten": 0,
+    "best_life": 0,
+    "deaths": 0,
+    "ticks": 120
+   },
+   "ended": "tick_cap",
+   "artifact": "probes/SNAKE_baseline-cycle_s42.json",
+   "chain_digest": "af12a0c5d14ce52f"
+  }
+ ]
+}

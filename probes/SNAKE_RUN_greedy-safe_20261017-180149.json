@@ -1,0 +1,30 @@
+{
+ "kind": "snake-run",
+ "agent": "greedy-safe",
+ "seeds": [
+  1
+ ],
+ "ticks": 120,
+ "death_ends": true,
+ "at_utc": "20261017-180149",
+ "totals": {
+  "eaten": 9,
+  "best_life": 9,
+  "deaths": 0,
+  "episodes": 1
+ },
+ "episodes": [
+  {
+   "seed": 1,
+   "score": {
+    "eaten": 9,
+    "best_life": 9,
+    "deaths": 0,
+    "ticks": 120
+   },
+   "ended": "tick_cap",
+   "artifact": "probes/SNAKE_baseline-greedy-safe_s1.json",
+   "chain_digest": "05ec38c631bad848"
+  }
+ ]
+}

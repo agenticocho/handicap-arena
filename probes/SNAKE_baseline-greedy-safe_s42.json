@@ -1,0 +1,13864 @@
+{
+ "kind": "snake-episode",
+ "agent": "baseline-greedy-safe",
+ "seed": 42,
+ "ended": "tick_cap",
+ "moves": [
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "U",
+  "L",
+  "L",
+  "L",
+  "L",
+  "L",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "R",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "U",
+  "U",
+  "U",
+  "R",
+  "D",
+  "D",
+  "R",
+  "U",
+  "U",
+  "U",
+  "L",
+  "L",
+  "L",
+  "L",
+  "L",
+  "L",
+  "L",
+  "L",
+  "L",
+  "L",
+  "U",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "D",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "D",
+  "D",
+  "D"
+ ],
+ "score": {
+  "eaten": 8,
+  "best_life": 8,
+  "deaths": 0,
+  "ticks": 120
+ },
+ "score_readings": {
+  "ticks": 120,
+  "ticks_with_respawn": 8,
+  "maxCells_reading_used": 120,
+  "rng_reading_used": 0,
+  "both_readings_compared": 120
+ },
+ "score_disagreements": [],
+ "score_notes": [],
+ "score_problems": [],
+ "trace": [
+  {
+   "tick": 0,
+   "before": {
+    "tick": 0,
+    "head": [
+     160,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [],
+    "length": 0,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "2f242033978d54f4",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 1,
+    "head": [
+     160,
+     176
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      176
+     ]
+    ],
+    "length": 1,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "5af9bb76818c7b48",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 1,
+   "before": {
+    "tick": 1,
+    "head": [
+     160,
+     176
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      176
+     ]
+    ],
+    "length": 1,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "5af9bb76818c7b48",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 2,
+    "head": [
+     160,
+     192
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      192
+     ],
+     [
+      160,
+      176
+     ]
+    ],
+    "length": 2,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "657fef7565c0944c",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 2,
+   "before": {
+    "tick": 2,
+    "head": [
+     160,
+     192
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      192
+     ],
+     [
+      160,
+      176
+     ]
+    ],
+    "length": 2,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "657fef7565c0944c",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 3,
+    "head": [
+     160,
+     208
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      208
+     ],
+     [
+      160,
+      192
+     ],
+     [
+      160,
+      176
+     ]
+    ],
+    "length": 3,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "ddf611ee7984d1c1",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 3,
+   "before": {
+    "tick": 3,
+    "head": [
+     160,
+     208
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      208
+     ],
+     [
+      160,
+      192
+     ],
+     [
+      160,
+      176
+     ]
+    ],
+    "length": 3,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "ddf611ee7984d1c1",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 4,
+    "head": [
+     160,
+     224
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      224
+     ],
+     [
+      160,
+      208
+     ],
+     [
+      160,
+      192
+     ],
+     [
+      160,
+      176
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "316b4e4dfff788f1",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 4,
+   "before": {
+    "tick": 4,
+    "head": [
+     160,
+     224
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      224
+     ],
+     [
+      160,
+      208
+     ],
+     [
+      160,
+      192
+     ],
+     [
+      160,
+      176
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "316b4e4dfff788f1",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 5,
+    "head": [
+     160,
+     240
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      240
+     ],
+     [
+      160,
+      224
+     ],
+     [
+      160,
+      208
+     ],
+     [
+      160,
+      192
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "995671125d66ed98",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 5,
+   "before": {
+    "tick": 5,
+    "head": [
+     160,
+     240
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      240
+     ],
+     [
+      160,
+      224
+     ],
+     [
+      160,
+      208
+     ],
+     [
+      160,
+      192
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "995671125d66ed98",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 6,
+    "head": [
+     160,
+     256
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      256
+     ],
+     [
+      160,
+      240
+     ],
+     [
+      160,
+      224
+     ],
+     [
+      160,
+      208
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "6a612621607e0191",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 6,
+   "before": {
+    "tick": 6,
+    "head": [
+     160,
+     256
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      256
+     ],
+     [
+      160,
+      240
+     ],
+     [
+      160,
+      224
+     ],
+     [
+      160,
+      208
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "6a612621607e0191",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 7,
+    "head": [
+     160,
+     272
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      272
+     ],
+     [
+      160,
+      256
+     ],
+     [
+      160,
+      240
+     ],
+     [
+      160,
+      224
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "87820625630ab94a",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 7,
+   "before": {
+    "tick": 7,
+    "head": [
+     160,
+     272
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      272
+     ],
+     [
+      160,
+      256
+     ],
+     [
+      160,
+      240
+     ],
+     [
+      160,
+      224
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "87820625630ab94a",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 8,
+    "head": [
+     160,
+     288
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      288
+     ],
+     [
+      160,
+      272
+     ],
+     [
+      160,
+      256
+     ],
+     [
+      160,
+      240
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "f3cad0be04af893f",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 8,
+   "before": {
+    "tick": 8,
+    "head": [
+     160,
+     288
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      288
+     ],
+     [
+      160,
+      272
+     ],
+     [
+      160,
+      256
+     ],
+     [
+      160,
+      240
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "f3cad0be04af893f",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 9,
+    "head": [
+     160,
+     304
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      304
+     ],
+     [
+      160,
+      288
+     ],
+     [
+      160,
+      272
+     ],
+     [
+      160,
+      256
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "4f162e1c6fd8ee47",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 9,
+   "before": {
+    "tick": 9,
+    "head": [
+     160,
+     304
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      304
+     ],
+     [
+      160,
+      288
+     ],
+     [
+      160,
+      272
+     ],
+     [
+      160,
+      256
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "4f162e1c6fd8ee47",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 10,
+    "head": [
+     160,
+     320
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      320
+     ],
+     [
+      160,
+      304
+     ],
+     [
+      160,
+      288
+     ],
+     [
+      160,
+      272
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "24a5de9d24d36fd9",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 10,
+   "before": {
+    "tick": 10,
+    "head": [
+     160,
+     320
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      160,
+      320
+     ],
+     [
+      160,
+      304
+     ],
+     [
+      160,
+      288
+     ],
+     [
+      160,
+      272
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "24a5de9d24d36fd9",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 11,
+    "head": [
+     176,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      176,
+      320
+     ],
+     [
+      160,
+      320
+     ],
+     [
+      160,
+      304
+     ],
+     [
+      160,
+      288
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "95b63e213804cc13",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 11,
+   "before": {
+    "tick": 11,
+    "head": [
+     176,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      176,
+      320
+     ],
+     [
+      160,
+      320
+     ],
+     [
+      160,
+      304
+     ],
+     [
+      160,
+      288
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "95b63e213804cc13",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 12,
+    "head": [
+     192,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      192,
+      320
+     ],
+     [
+      176,
+      320
+     ],
+     [
+      160,
+      320
+     ],
+     [
+      160,
+      304
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "1bab4f242dce0cf3",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 12,
+   "before": {
+    "tick": 12,
+    "head": [
+     192,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      192,
+      320
+     ],
+     [
+      176,
+      320
+     ],
+     [
+      160,
+      320
+     ],
+     [
+      160,
+      304
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "1bab4f242dce0cf3",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 13,
+    "head": [
+     208,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      208,
+      320
+     ],
+     [
+      192,
+      320
+     ],
+     [
+      176,
+      320
+     ],
+     [
+      160,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "6c1df7e3d7cc0456",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 13,
+   "before": {
+    "tick": 13,
+    "head": [
+     208,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      208,
+      320
+     ],
+     [
+      192,
+      320
+     ],
+     [
+      176,
+      320
+     ],
+     [
+      160,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "6c1df7e3d7cc0456",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 14,
+    "head": [
+     224,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      224,
+      320
+     ],
+     [
+      208,
+      320
+     ],
+     [
+      192,
+      320
+     ],
+     [
+      176,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "a30825b2afc8f031",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 14,
+   "before": {
+    "tick": 14,
+    "head": [
+     224,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      224,
+      320
+     ],
+     [
+      208,
+      320
+     ],
+     [
+      192,
+      320
+     ],
+     [
+      176,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "a30825b2afc8f031",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 15,
+    "head": [
+     240,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      320
+     ],
+     [
+      224,
+      320
+     ],
+     [
+      208,
+      320
+     ],
+     [
+      192,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "3b74eacfdadb17e8",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 15,
+   "before": {
+    "tick": 15,
+    "head": [
+     240,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      320
+     ],
+     [
+      224,
+      320
+     ],
+     [
+      208,
+      320
+     ],
+     [
+      192,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "3b74eacfdadb17e8",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 16,
+    "head": [
+     256,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      320
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      224,
+      320
+     ],
+     [
+      208,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "ce15f7a23fda7be4",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 16,
+   "before": {
+    "tick": 16,
+    "head": [
+     256,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      320
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      224,
+      320
+     ],
+     [
+      208,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "ce15f7a23fda7be4",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 17,
+    "head": [
+     272,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      320
+     ],
+     [
+      256,
+      320
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      224,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "d9b73b9f89e41ebe",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 17,
+   "before": {
+    "tick": 17,
+    "head": [
+     272,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      320
+     ],
+     [
+      256,
+      320
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      224,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "d9b73b9f89e41ebe",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 18,
+    "head": [
+     288,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      320
+     ],
+     [
+      272,
+      320
+     ],
+     [
+      256,
+      320
+     ],
+     [
+      240,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "5f4f46dae46b50e6",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 18,
+   "before": {
+    "tick": 18,
+    "head": [
+     288,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      320
+     ],
+     [
+      272,
+      320
+     ],
+     [
+      256,
+      320
+     ],
+     [
+      240,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "5f4f46dae46b50e6",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 19,
+    "head": [
+     304,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      304,
+      320
+     ],
+     [
+      288,
+      320
+     ],
+     [
+      272,
+      320
+     ],
+     [
+      256,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "1e1640a1dbc91164",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 19,
+   "before": {
+    "tick": 19,
+    "head": [
+     304,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      304,
+      320
+     ],
+     [
+      288,
+      320
+     ],
+     [
+      272,
+      320
+     ],
+     [
+      256,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "1e1640a1dbc91164",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 20,
+    "head": [
+     320,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      320,
+      320
+     ],
+     [
+      304,
+      320
+     ],
+     [
+      288,
+      320
+     ],
+     [
+      272,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "after_digest": "028ae774155504c6",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 20,
+   "before": {
+    "tick": 20,
+    "head": [
+     320,
+     320
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      320,
+      320
+     ],
+     [
+      304,
+      320
+     ],
+     [
+      288,
+      320
+     ],
+     [
+      272,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "before_digest": "028ae774155504c6",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 21,
+    "head": [
+     320,
+     304
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      320,
+      304
+     ],
+     [
+      320,
+      320
+     ],
+     [
+      304,
+      320
+     ],
+     [
+      288,
+      320
+     ],
+     [
+      272,
+      320
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "after_digest": "591e78cd6c9f0bbe",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 21,
+   "before": {
+    "tick": 21,
+    "head": [
+     320,
+     304
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      320,
+      304
+     ],
+     [
+      320,
+      320
+     ],
+     [
+      304,
+      320
+     ],
+     [
+      288,
+      320
+     ],
+     [
+      272,
+      320
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "before_digest": "591e78cd6c9f0bbe",
+   "requested": "L",
+   "intended_dir": [
+    -16,
+    0
+   ],
+   "after": {
+    "tick": 22,
+    "head": [
+     304,
+     304
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      304,
+      304
+     ],
+     [
+      320,
+      304
+     ],
+     [
+      320,
+      320
+     ],
+     [
+      304,
+      320
+     ],
+     [
+      288,
+      320
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "after_digest": "53148cf30c0bdd91",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 22,
+   "before": {
+    "tick": 22,
+    "head": [
+     304,
+     304
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      304,
+      304
+     ],
+     [
+      320,
+      304
+     ],
+     [
+      320,
+      320
+     ],
+     [
+      304,
+      320
+     ],
+     [
+      288,
+      320
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "before_digest": "53148cf30c0bdd91",
+   "requested": "L",
+   "intended_dir": [
+    -16,
+    0
+   ],
+   "after": {
+    "tick": 23,
+    "head": [
+     288,
+     304
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      304
+     ],
+     [
+      304,
+      304
+     ],
+     [
+      320,
+      304
+     ],
+     [
+      320,
+      320
+     ],
+     [
+      304,
+      320
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "after_digest": "b6ae667d2e13c6c2",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 23,
+   "before": {
+    "tick": 23,
+    "head": [
+     288,
+     304
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      304
+     ],
+     [
+      304,
+      304
+     ],
+     [
+      320,
+      304
+     ],
+     [
+      320,
+      320
+     ],
+     [
+      304,
+      320
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "before_digest": "b6ae667d2e13c6c2",
+   "requested": "L",
+   "intended_dir": [
+    -16,
+    0
+   ],
+   "after": {
+    "tick": 24,
+    "head": [
+     272,
+     304
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      304
+     ],
+     [
+      288,
+      304
+     ],
+     [
+      304,
+      304
+     ],
+     [
+      320,
+      304
+     ],
+     [
+      320,
+      320
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "after_digest": "e159a76fc0d34880",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 24,
+   "before": {
+    "tick": 24,
+    "head": [
+     272,
+     304
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      304
+     ],
+     [
+      288,
+      304
+     ],
+     [
+      304,
+      304
+     ],
+     [
+      320,
+      304
+     ],
+     [
+      320,
+      320
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "before_digest": "e159a76fc0d34880",
+   "requested": "L",
+   "intended_dir": [
+    -16,
+    0
+   ],
+   "after": {
+    "tick": 25,
+    "head": [
+     256,
+     304
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      304
+     ],
+     [
+      272,
+      304
+     ],
+     [
+      288,
+      304
+     ],
+     [
+      304,
+      304
+     ],
+     [
+      320,
+      304
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "after_digest": "f43505e8356ba06f",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 25,
+   "before": {
+    "tick": 25,
+    "head": [
+     256,
+     304
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      304
+     ],
+     [
+      272,
+      304
+     ],
+     [
+      288,
+      304
+     ],
+     [
+      304,
+      304
+     ],
+     [
+      320,
+      304
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "before_digest": "f43505e8356ba06f",
+   "requested": "L",
+   "intended_dir": [
+    -16,
+    0
+   ],
+   "after": {
+    "tick": 26,
+    "head": [
+     240,
+     304
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      304
+     ],
+     [
+      256,
+      304
+     ],
+     [
+      272,
+      304
+     ],
+     [
+      288,
+      304
+     ],
+     [
+      304,
+      304
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "after_digest": "261fdae3114e171c",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 26,
+   "before": {
+    "tick": 26,
+    "head": [
+     240,
+     304
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      304
+     ],
+     [
+      256,
+      304
+     ],
+     [
+      272,
+      304
+     ],
+     [
+      288,
+      304
+     ],
+     [
+      304,
+      304
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "before_digest": "261fdae3114e171c",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 27,
+    "head": [
+     240,
+     288
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      256,
+      304
+     ],
+     [
+      272,
+      304
+     ],
+     [
+      288,
+      304
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "after_digest": "6b9abd113de24c6e",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 27,
+   "before": {
+    "tick": 27,
+    "head": [
+     240,
+     288
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      256,
+      304
+     ],
+     [
+      272,
+      304
+     ],
+     [
+      288,
+      304
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "before_digest": "6b9abd113de24c6e",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 28,
+    "head": [
+     240,
+     272
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      256,
+      304
+     ],
+     [
+      272,
+      304
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "after_digest": "167c18d4d50dd837",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 28,
+   "before": {
+    "tick": 28,
+    "head": [
+     240,
+     272
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      256,
+      304
+     ],
+     [
+      272,
+      304
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "before_digest": "167c18d4d50dd837",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 29,
+    "head": [
+     240,
+     256
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      256,
+      304
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "after_digest": "846d1a2c9e69115a",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 29,
+   "before": {
+    "tick": 29,
+    "head": [
+     240,
+     256
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      256,
+      304
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "before_digest": "846d1a2c9e69115a",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 30,
+    "head": [
+     240,
+     240
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "after_digest": "a071de3c1e4de236",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 30,
+   "before": {
+    "tick": 30,
+    "head": [
+     240,
+     240
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "before_digest": "a071de3c1e4de236",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 31,
+    "head": [
+     240,
+     224
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "after_digest": "6c8d0cec9f13d878",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 31,
+   "before": {
+    "tick": 31,
+    "head": [
+     240,
+     224
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "before_digest": "6c8d0cec9f13d878",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 32,
+    "head": [
+     240,
+     208
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "after_digest": "8174777ce5d4c8a4",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 32,
+   "before": {
+    "tick": 32,
+    "head": [
+     240,
+     208
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "before_digest": "8174777ce5d4c8a4",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 33,
+    "head": [
+     240,
+     192
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "after_digest": "a32620d6dd05f323",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 33,
+   "before": {
+    "tick": 33,
+    "head": [
+     240,
+     192
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ]
+    ],
+    "length": 5,
+    "maxCells": 5,
+    "apple": [
+     240,
+     176
+    ],
+    "rng_calls": 2
+   },
+   "before_digest": "a32620d6dd05f323",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 34,
+    "head": [
+     240,
+     176
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ]
+    ],
+    "length": 5,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "after_digest": "5803778b0f80d375",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 34,
+   "before": {
+    "tick": 34,
+    "head": [
+     240,
+     176
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ]
+    ],
+    "length": 5,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "before_digest": "5803778b0f80d375",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 35,
+    "head": [
+     256,
+     176
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      176
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "after_digest": "ecc3c0e7b4a8a618",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 35,
+   "before": {
+    "tick": 35,
+    "head": [
+     256,
+     176
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      176
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "before_digest": "ecc3c0e7b4a8a618",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 36,
+    "head": [
+     256,
+     192
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      256,
+      192
+     ],
+     [
+      256,
+      176
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "after_digest": "631b8e3ff8ca6440",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 36,
+   "before": {
+    "tick": 36,
+    "head": [
+     256,
+     192
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      256,
+      192
+     ],
+     [
+      256,
+      176
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "before_digest": "631b8e3ff8ca6440",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 37,
+    "head": [
+     256,
+     208
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      256,
+      208
+     ],
+     [
+      256,
+      192
+     ],
+     [
+      256,
+      176
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "after_digest": "2b8d2857d0c6e062",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 37,
+   "before": {
+    "tick": 37,
+    "head": [
+     256,
+     208
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      256,
+      208
+     ],
+     [
+      256,
+      192
+     ],
+     [
+      256,
+      176
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "before_digest": "2b8d2857d0c6e062",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 38,
+    "head": [
+     256,
+     224
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      256,
+      224
+     ],
+     [
+      256,
+      208
+     ],
+     [
+      256,
+      192
+     ],
+     [
+      256,
+      176
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "after_digest": "48683559436cd74a",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 38,
+   "before": {
+    "tick": 38,
+    "head": [
+     256,
+     224
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      256,
+      224
+     ],
+     [
+      256,
+      208
+     ],
+     [
+      256,
+      192
+     ],
+     [
+      256,
+      176
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "before_digest": "48683559436cd74a",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 39,
+    "head": [
+     256,
+     240
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      256,
+      240
+     ],
+     [
+      256,
+      224
+     ],
+     [
+      256,
+      208
+     ],
+     [
+      256,
+      192
+     ],
+     [
+      256,
+      176
+     ],
+     [
+      240,
+      176
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "after_digest": "25281a2dab08918c",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 39,
+   "before": {
+    "tick": 39,
+    "head": [
+     256,
+     240
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      256,
+      240
+     ],
+     [
+      256,
+      224
+     ],
+     [
+      256,
+      208
+     ],
+     [
+      256,
+      192
+     ],
+     [
+      256,
+      176
+     ],
+     [
+      240,
+      176
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "before_digest": "25281a2dab08918c",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 40,
+    "head": [
+     256,
+     256
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      256,
+      256
+     ],
+     [
+      256,
+      240
+     ],
+     [
+      256,
+      224
+     ],
+     [
+      256,
+      208
+     ],
+     [
+      256,
+      192
+     ],
+     [
+      256,
+      176
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "after_digest": "81036c7a76f8ff88",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 40,
+   "before": {
+    "tick": 40,
+    "head": [
+     256,
+     256
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      256,
+      256
+     ],
+     [
+      256,
+      240
+     ],
+     [
+      256,
+      224
+     ],
+     [
+      256,
+      208
+     ],
+     [
+      256,
+      192
+     ],
+     [
+      256,
+      176
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "before_digest": "81036c7a76f8ff88",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 41,
+    "head": [
+     272,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      256
+     ],
+     [
+      256,
+      256
+     ],
+     [
+      256,
+      240
+     ],
+     [
+      256,
+      224
+     ],
+     [
+      256,
+      208
+     ],
+     [
+      256,
+      192
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "after_digest": "440e91ea8b8294d6",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 41,
+   "before": {
+    "tick": 41,
+    "head": [
+     272,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      256
+     ],
+     [
+      256,
+      256
+     ],
+     [
+      256,
+      240
+     ],
+     [
+      256,
+      224
+     ],
+     [
+      256,
+      208
+     ],
+     [
+      256,
+      192
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "before_digest": "440e91ea8b8294d6",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 42,
+    "head": [
+     288,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      256
+     ],
+     [
+      272,
+      256
+     ],
+     [
+      256,
+      256
+     ],
+     [
+      256,
+      240
+     ],
+     [
+      256,
+      224
+     ],
+     [
+      256,
+      208
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "after_digest": "73eb037d37dd8d78",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 42,
+   "before": {
+    "tick": 42,
+    "head": [
+     288,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      256
+     ],
+     [
+      272,
+      256
+     ],
+     [
+      256,
+      256
+     ],
+     [
+      256,
+      240
+     ],
+     [
+      256,
+      224
+     ],
+     [
+      256,
+      208
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "before_digest": "73eb037d37dd8d78",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 43,
+    "head": [
+     304,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      304,
+      256
+     ],
+     [
+      288,
+      256
+     ],
+     [
+      272,
+      256
+     ],
+     [
+      256,
+      256
+     ],
+     [
+      256,
+      240
+     ],
+     [
+      256,
+      224
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "after_digest": "4296f5643782b557",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 43,
+   "before": {
+    "tick": 43,
+    "head": [
+     304,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      304,
+      256
+     ],
+     [
+      288,
+      256
+     ],
+     [
+      272,
+      256
+     ],
+     [
+      256,
+      256
+     ],
+     [
+      256,
+      240
+     ],
+     [
+      256,
+      224
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "before_digest": "4296f5643782b557",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 44,
+    "head": [
+     320,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      320,
+      256
+     ],
+     [
+      304,
+      256
+     ],
+     [
+      288,
+      256
+     ],
+     [
+      272,
+      256
+     ],
+     [
+      256,
+      256
+     ],
+     [
+      256,
+      240
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "after_digest": "0fc8c5e02bc6331e",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 44,
+   "before": {
+    "tick": 44,
+    "head": [
+     320,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      320,
+      256
+     ],
+     [
+      304,
+      256
+     ],
+     [
+      288,
+      256
+     ],
+     [
+      272,
+      256
+     ],
+     [
+      256,
+      256
+     ],
+     [
+      256,
+      240
+     ]
+    ],
+    "length": 6,
+    "maxCells": 6,
+    "apple": [
+     336,
+     256
+    ],
+    "rng_calls": 4
+   },
+   "before_digest": "0fc8c5e02bc6331e",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 45,
+    "head": [
+     336,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      336,
+      256
+     ],
+     [
+      320,
+      256
+     ],
+     [
+      304,
+      256
+     ],
+     [
+      288,
+      256
+     ],
+     [
+      272,
+      256
+     ],
+     [
+      256,
+      256
+     ]
+    ],
+    "length": 6,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "after_digest": "57d0add2939766c7",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 45,
+   "before": {
+    "tick": 45,
+    "head": [
+     336,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      336,
+      256
+     ],
+     [
+      320,
+      256
+     ],
+     [
+      304,
+      256
+     ],
+     [
+      288,
+      256
+     ],
+     [
+      272,
+      256
+     ],
+     [
+      256,
+      256
+     ]
+    ],
+    "length": 6,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "before_digest": "57d0add2939766c7",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 46,
+    "head": [
+     352,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      352,
+      256
+     ],
+     [
+      336,
+      256
+     ],
+     [
+      320,
+      256
+     ],
+     [
+      304,
+      256
+     ],
+     [
+      288,
+      256
+     ],
+     [
+      272,
+      256
+     ],
+     [
+      256,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "after_digest": "d0317d6f8db2a87d",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 46,
+   "before": {
+    "tick": 46,
+    "head": [
+     352,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      352,
+      256
+     ],
+     [
+      336,
+      256
+     ],
+     [
+      320,
+      256
+     ],
+     [
+      304,
+      256
+     ],
+     [
+      288,
+      256
+     ],
+     [
+      272,
+      256
+     ],
+     [
+      256,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "before_digest": "d0317d6f8db2a87d",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 47,
+    "head": [
+     368,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      368,
+      256
+     ],
+     [
+      352,
+      256
+     ],
+     [
+      336,
+      256
+     ],
+     [
+      320,
+      256
+     ],
+     [
+      304,
+      256
+     ],
+     [
+      288,
+      256
+     ],
+     [
+      272,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "after_digest": "a4b10179eea8a32c",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 47,
+   "before": {
+    "tick": 47,
+    "head": [
+     368,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      368,
+      256
+     ],
+     [
+      352,
+      256
+     ],
+     [
+      336,
+      256
+     ],
+     [
+      320,
+      256
+     ],
+     [
+      304,
+      256
+     ],
+     [
+      288,
+      256
+     ],
+     [
+      272,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "before_digest": "a4b10179eea8a32c",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 48,
+    "head": [
+     384,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      384,
+      256
+     ],
+     [
+      368,
+      256
+     ],
+     [
+      352,
+      256
+     ],
+     [
+      336,
+      256
+     ],
+     [
+      320,
+      256
+     ],
+     [
+      304,
+      256
+     ],
+     [
+      288,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "after_digest": "741791728b4e40af",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 48,
+   "before": {
+    "tick": 48,
+    "head": [
+     384,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      384,
+      256
+     ],
+     [
+      368,
+      256
+     ],
+     [
+      352,
+      256
+     ],
+     [
+      336,
+      256
+     ],
+     [
+      320,
+      256
+     ],
+     [
+      304,
+      256
+     ],
+     [
+      288,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "before_digest": "741791728b4e40af",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 49,
+    "head": [
+     0,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      0,
+      256
+     ],
+     [
+      384,
+      256
+     ],
+     [
+      368,
+      256
+     ],
+     [
+      352,
+      256
+     ],
+     [
+      336,
+      256
+     ],
+     [
+      320,
+      256
+     ],
+     [
+      304,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "after_digest": "046eb64fdd69e85a",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 49,
+   "before": {
+    "tick": 49,
+    "head": [
+     0,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      0,
+      256
+     ],
+     [
+      384,
+      256
+     ],
+     [
+      368,
+      256
+     ],
+     [
+      352,
+      256
+     ],
+     [
+      336,
+      256
+     ],
+     [
+      320,
+      256
+     ],
+     [
+      304,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "before_digest": "046eb64fdd69e85a",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 50,
+    "head": [
+     16,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      16,
+      256
+     ],
+     [
+      0,
+      256
+     ],
+     [
+      384,
+      256
+     ],
+     [
+      368,
+      256
+     ],
+     [
+      352,
+      256
+     ],
+     [
+      336,
+      256
+     ],
+     [
+      320,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "after_digest": "3e40cf94286c0173",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 50,
+   "before": {
+    "tick": 50,
+    "head": [
+     16,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      16,
+      256
+     ],
+     [
+      0,
+      256
+     ],
+     [
+      384,
+      256
+     ],
+     [
+      368,
+      256
+     ],
+     [
+      352,
+      256
+     ],
+     [
+      336,
+      256
+     ],
+     [
+      320,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "before_digest": "3e40cf94286c0173",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 51,
+    "head": [
+     32,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      32,
+      256
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      0,
+      256
+     ],
+     [
+      384,
+      256
+     ],
+     [
+      368,
+      256
+     ],
+     [
+      352,
+      256
+     ],
+     [
+      336,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "after_digest": "6ba7600d5dce0003",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 51,
+   "before": {
+    "tick": 51,
+    "head": [
+     32,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      32,
+      256
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      0,
+      256
+     ],
+     [
+      384,
+      256
+     ],
+     [
+      368,
+      256
+     ],
+     [
+      352,
+      256
+     ],
+     [
+      336,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "before_digest": "6ba7600d5dce0003",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 52,
+    "head": [
+     48,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      48,
+      256
+     ],
+     [
+      32,
+      256
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      0,
+      256
+     ],
+     [
+      384,
+      256
+     ],
+     [
+      368,
+      256
+     ],
+     [
+      352,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "after_digest": "83f72957a3329d11",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 52,
+   "before": {
+    "tick": 52,
+    "head": [
+     48,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      48,
+      256
+     ],
+     [
+      32,
+      256
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      0,
+      256
+     ],
+     [
+      384,
+      256
+     ],
+     [
+      368,
+      256
+     ],
+     [
+      352,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "before_digest": "83f72957a3329d11",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 53,
+    "head": [
+     64,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      64,
+      256
+     ],
+     [
+      48,
+      256
+     ],
+     [
+      32,
+      256
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      0,
+      256
+     ],
+     [
+      384,
+      256
+     ],
+     [
+      368,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "after_digest": "e75b6726f35c6348",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 53,
+   "before": {
+    "tick": 53,
+    "head": [
+     64,
+     256
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      64,
+      256
+     ],
+     [
+      48,
+      256
+     ],
+     [
+      32,
+      256
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      0,
+      256
+     ],
+     [
+      384,
+      256
+     ],
+     [
+      368,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "before_digest": "e75b6726f35c6348",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 54,
+    "head": [
+     64,
+     240
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      64,
+      240
+     ],
+     [
+      64,
+      256
+     ],
+     [
+      48,
+      256
+     ],
+     [
+      32,
+      256
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      0,
+      256
+     ],
+     [
+      384,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "after_digest": "f108a48b54f7bd3f",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 54,
+   "before": {
+    "tick": 54,
+    "head": [
+     64,
+     240
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      64,
+      240
+     ],
+     [
+      64,
+      256
+     ],
+     [
+      48,
+      256
+     ],
+     [
+      32,
+      256
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      0,
+      256
+     ],
+     [
+      384,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "before_digest": "f108a48b54f7bd3f",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 55,
+    "head": [
+     64,
+     224
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      64,
+      224
+     ],
+     [
+      64,
+      240
+     ],
+     [
+      64,
+      256
+     ],
+     [
+      48,
+      256
+     ],
+     [
+      32,
+      256
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      0,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "after_digest": "2946c0f3f2de4508",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 55,
+   "before": {
+    "tick": 55,
+    "head": [
+     64,
+     224
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      64,
+      224
+     ],
+     [
+      64,
+      240
+     ],
+     [
+      64,
+      256
+     ],
+     [
+      48,
+      256
+     ],
+     [
+      32,
+      256
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      0,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 7,
+    "apple": [
+     64,
+     208
+    ],
+    "rng_calls": 6
+   },
+   "before_digest": "2946c0f3f2de4508",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 56,
+    "head": [
+     64,
+     208
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      64,
+      208
+     ],
+     [
+      64,
+      224
+     ],
+     [
+      64,
+      240
+     ],
+     [
+      64,
+      256
+     ],
+     [
+      48,
+      256
+     ],
+     [
+      32,
+      256
+     ],
+     [
+      16,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 8,
+    "apple": [
+     96,
+     240
+    ],
+    "rng_calls": 8
+   },
+   "after_digest": "81d6535a687c38ac",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 56,
+   "before": {
+    "tick": 56,
+    "head": [
+     64,
+     208
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      64,
+      208
+     ],
+     [
+      64,
+      224
+     ],
+     [
+      64,
+      240
+     ],
+     [
+      64,
+      256
+     ],
+     [
+      48,
+      256
+     ],
+     [
+      32,
+      256
+     ],
+     [
+      16,
+      256
+     ]
+    ],
+    "length": 7,
+    "maxCells": 8,
+    "apple": [
+     96,
+     240
+    ],
+    "rng_calls": 8
+   },
+   "before_digest": "81d6535a687c38ac",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 57,
+    "head": [
+     80,
+     208
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      80,
+      208
+     ],
+     [
+      64,
+      208
+     ],
+     [
+      64,
+      224
+     ],
+     [
+      64,
+      240
+     ],
+     [
+      64,
+      256
+     ],
+     [
+      48,
+      256
+     ],
+     [
+      32,
+      256
+     ],
+     [
+      16,
+      256
+     ]
+    ],
+    "length": 8,
+    "maxCells": 8,
+    "apple": [
+     96,
+     240
+    ],
+    "rng_calls": 8
+   },
+   "after_digest": "c51943f2874132cb",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 57,
+   "before": {
+    "tick": 57,
+    "head": [
+     80,
+     208
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      80,
+      208
+     ],
+     [
+      64,
+      208
+     ],
+     [
+      64,
+      224
+     ],
+     [
+      64,
+      240
+     ],
+     [
+      64,
+      256
+     ],
+     [
+      48,
+      256
+     ],
+     [
+      32,
+      256
+     ],
+     [
+      16,
+      256
+     ]
+    ],
+    "length": 8,
+    "maxCells": 8,
+    "apple": [
+     96,
+     240
+    ],
+    "rng_calls": 8
+   },
+   "before_digest": "c51943f2874132cb",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 58,
+    "head": [
+     80,
+     224
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      80,
+      224
+     ],
+     [
+      80,
+      208
+     ],
+     [
+      64,
+      208
+     ],
+     [
+      64,
+      224
+     ],
+     [
+      64,
+      240
+     ],
+     [
+      64,
+      256
+     ],
+     [
+      48,
+      256
+     ],
+     [
+      32,
+      256
+     ]
+    ],
+    "length": 8,
+    "maxCells": 8,
+    "apple": [
+     96,
+     240
+    ],
+    "rng_calls": 8
+   },
+   "after_digest": "421d905634143284",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 58,
+   "before": {
+    "tick": 58,
+    "head": [
+     80,
+     224
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      80,
+      224
+     ],
+     [
+      80,
+      208
+     ],
+     [
+      64,
+      208
+     ],
+     [
+      64,
+      224
+     ],
+     [
+      64,
+      240
+     ],
+     [
+      64,
+      256
+     ],
+     [
+      48,
+      256
+     ],
+     [
+      32,
+      256
+     ]
+    ],
+    "length": 8,
+    "maxCells": 8,
+    "apple": [
+     96,
+     240
+    ],
+    "rng_calls": 8
+   },
+   "before_digest": "421d905634143284",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 59,
+    "head": [
+     80,
+     240
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      80,
+      240
+     ],
+     [
+      80,
+      224
+     ],
+     [
+      80,
+      208
+     ],
+     [
+      64,
+      208
+     ],
+     [
+      64,
+      224
+     ],
+     [
+      64,
+      240
+     ],
+     [
+      64,
+      256
+     ],
+     [
+      48,
+      256
+     ]
+    ],
+    "length": 8,
+    "maxCells": 8,
+    "apple": [
+     96,
+     240
+    ],
+    "rng_calls": 8
+   },
+   "after_digest": "de53fd3fd563a280",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 59,
+   "before": {
+    "tick": 59,
+    "head": [
+     80,
+     240
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      80,
+      240
+     ],
+     [
+      80,
+      224
+     ],
+     [
+      80,
+      208
+     ],
+     [
+      64,
+      208
+     ],
+     [
+      64,
+      224
+     ],
+     [
+      64,
+      240
+     ],
+     [
+      64,
+      256
+     ],
+     [
+      48,
+      256
+     ]
+    ],
+    "length": 8,
+    "maxCells": 8,
+    "apple": [
+     96,
+     240
+    ],
+    "rng_calls": 8
+   },
+   "before_digest": "de53fd3fd563a280",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 60,
+    "head": [
+     96,
+     240
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      96,
+      240
+     ],
+     [
+      80,
+      240
+     ],
+     [
+      80,
+      224
+     ],
+     [
+      80,
+      208
+     ],
+     [
+      64,
+      208
+     ],
+     [
+      64,
+      224
+     ],
+     [
+      64,
+      240
+     ],
+     [
+      64,
+      256
+     ]
+    ],
+    "length": 8,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "after_digest": "f8738f5f89cd90e8",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 60,
+   "before": {
+    "tick": 60,
+    "head": [
+     96,
+     240
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      96,
+      240
+     ],
+     [
+      80,
+      240
+     ],
+     [
+      80,
+      224
+     ],
+     [
+      80,
+      208
+     ],
+     [
+      64,
+      208
+     ],
+     [
+      64,
+      224
+     ],
+     [
+      64,
+      240
+     ],
+     [
+      64,
+      256
+     ]
+    ],
+    "length": 8,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "before_digest": "f8738f5f89cd90e8",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 61,
+    "head": [
+     96,
+     224
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      96,
+      224
+     ],
+     [
+      96,
+      240
+     ],
+     [
+      80,
+      240
+     ],
+     [
+      80,
+      224
+     ],
+     [
+      80,
+      208
+     ],
+     [
+      64,
+      208
+     ],
+     [
+      64,
+      224
+     ],
+     [
+      64,
+      240
+     ],
+     [
+      64,
+      256
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "after_digest": "bbbdf7e54fe70ab8",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 61,
+   "before": {
+    "tick": 61,
+    "head": [
+     96,
+     224
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      96,
+      224
+     ],
+     [
+      96,
+      240
+     ],
+     [
+      80,
+      240
+     ],
+     [
+      80,
+      224
+     ],
+     [
+      80,
+      208
+     ],
+     [
+      64,
+      208
+     ],
+     [
+      64,
+      224
+     ],
+     [
+      64,
+      240
+     ],
+     [
+      64,
+      256
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "before_digest": "bbbdf7e54fe70ab8",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 62,
+    "head": [
+     96,
+     208
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      96,
+      208
+     ],
+     [
+      96,
+      224
+     ],
+     [
+      96,
+      240
+     ],
+     [
+      80,
+      240
+     ],
+     [
+      80,
+      224
+     ],
+     [
+      80,
+      208
+     ],
+     [
+      64,
+      208
+     ],
+     [
+      64,
+      224
+     ],
+     [
+      64,
+      240
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "after_digest": "559778ed503bbf67",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 62,
+   "before": {
+    "tick": 62,
+    "head": [
+     96,
+     208
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      96,
+      208
+     ],
+     [
+      96,
+      224
+     ],
+     [
+      96,
+      240
+     ],
+     [
+      80,
+      240
+     ],
+     [
+      80,
+      224
+     ],
+     [
+      80,
+      208
+     ],
+     [
+      64,
+      208
+     ],
+     [
+      64,
+      224
+     ],
+     [
+      64,
+      240
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "before_digest": "559778ed503bbf67",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 63,
+    "head": [
+     96,
+     192
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      96,
+      192
+     ],
+     [
+      96,
+      208
+     ],
+     [
+      96,
+      224
+     ],
+     [
+      96,
+      240
+     ],
+     [
+      80,
+      240
+     ],
+     [
+      80,
+      224
+     ],
+     [
+      80,
+      208
+     ],
+     [
+      64,
+      208
+     ],
+     [
+      64,
+      224
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "after_digest": "2aebe21c07542518",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 63,
+   "before": {
+    "tick": 63,
+    "head": [
+     96,
+     192
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      96,
+      192
+     ],
+     [
+      96,
+      208
+     ],
+     [
+      96,
+      224
+     ],
+     [
+      96,
+      240
+     ],
+     [
+      80,
+      240
+     ],
+     [
+      80,
+      224
+     ],
+     [
+      80,
+      208
+     ],
+     [
+      64,
+      208
+     ],
+     [
+      64,
+      224
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "before_digest": "2aebe21c07542518",
+   "requested": "L",
+   "intended_dir": [
+    -16,
+    0
+   ],
+   "after": {
+    "tick": 64,
+    "head": [
+     80,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      80,
+      192
+     ],
+     [
+      96,
+      192
+     ],
+     [
+      96,
+      208
+     ],
+     [
+      96,
+      224
+     ],
+     [
+      96,
+      240
+     ],
+     [
+      80,
+      240
+     ],
+     [
+      80,
+      224
+     ],
+     [
+      80,
+      208
+     ],
+     [
+      64,
+      208
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "after_digest": "e506f8638602a774",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 64,
+   "before": {
+    "tick": 64,
+    "head": [
+     80,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      80,
+      192
+     ],
+     [
+      96,
+      192
+     ],
+     [
+      96,
+      208
+     ],
+     [
+      96,
+      224
+     ],
+     [
+      96,
+      240
+     ],
+     [
+      80,
+      240
+     ],
+     [
+      80,
+      224
+     ],
+     [
+      80,
+      208
+     ],
+     [
+      64,
+      208
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "before_digest": "e506f8638602a774",
+   "requested": "L",
+   "intended_dir": [
+    -16,
+    0
+   ],
+   "after": {
+    "tick": 65,
+    "head": [
+     64,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      64,
+      192
+     ],
+     [
+      80,
+      192
+     ],
+     [
+      96,
+      192
+     ],
+     [
+      96,
+      208
+     ],
+     [
+      96,
+      224
+     ],
+     [
+      96,
+      240
+     ],
+     [
+      80,
+      240
+     ],
+     [
+      80,
+      224
+     ],
+     [
+      80,
+      208
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "after_digest": "4a3818f862c15ac9",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 65,
+   "before": {
+    "tick": 65,
+    "head": [
+     64,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      64,
+      192
+     ],
+     [
+      80,
+      192
+     ],
+     [
+      96,
+      192
+     ],
+     [
+      96,
+      208
+     ],
+     [
+      96,
+      224
+     ],
+     [
+      96,
+      240
+     ],
+     [
+      80,
+      240
+     ],
+     [
+      80,
+      224
+     ],
+     [
+      80,
+      208
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "before_digest": "4a3818f862c15ac9",
+   "requested": "L",
+   "intended_dir": [
+    -16,
+    0
+   ],
+   "after": {
+    "tick": 66,
+    "head": [
+     48,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      48,
+      192
+     ],
+     [
+      64,
+      192
+     ],
+     [
+      80,
+      192
+     ],
+     [
+      96,
+      192
+     ],
+     [
+      96,
+      208
+     ],
+     [
+      96,
+      224
+     ],
+     [
+      96,
+      240
+     ],
+     [
+      80,
+      240
+     ],
+     [
+      80,
+      224
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "after_digest": "6940355d470ed217",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 66,
+   "before": {
+    "tick": 66,
+    "head": [
+     48,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      48,
+      192
+     ],
+     [
+      64,
+      192
+     ],
+     [
+      80,
+      192
+     ],
+     [
+      96,
+      192
+     ],
+     [
+      96,
+      208
+     ],
+     [
+      96,
+      224
+     ],
+     [
+      96,
+      240
+     ],
+     [
+      80,
+      240
+     ],
+     [
+      80,
+      224
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "before_digest": "6940355d470ed217",
+   "requested": "L",
+   "intended_dir": [
+    -16,
+    0
+   ],
+   "after": {
+    "tick": 67,
+    "head": [
+     32,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ],
+     [
+      64,
+      192
+     ],
+     [
+      80,
+      192
+     ],
+     [
+      96,
+      192
+     ],
+     [
+      96,
+      208
+     ],
+     [
+      96,
+      224
+     ],
+     [
+      96,
+      240
+     ],
+     [
+      80,
+      240
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "after_digest": "6d934cde32887159",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 67,
+   "before": {
+    "tick": 67,
+    "head": [
+     32,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ],
+     [
+      64,
+      192
+     ],
+     [
+      80,
+      192
+     ],
+     [
+      96,
+      192
+     ],
+     [
+      96,
+      208
+     ],
+     [
+      96,
+      224
+     ],
+     [
+      96,
+      240
+     ],
+     [
+      80,
+      240
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "before_digest": "6d934cde32887159",
+   "requested": "L",
+   "intended_dir": [
+    -16,
+    0
+   ],
+   "after": {
+    "tick": 68,
+    "head": [
+     16,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ],
+     [
+      64,
+      192
+     ],
+     [
+      80,
+      192
+     ],
+     [
+      96,
+      192
+     ],
+     [
+      96,
+      208
+     ],
+     [
+      96,
+      224
+     ],
+     [
+      96,
+      240
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "after_digest": "89c62f3e7c820793",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 68,
+   "before": {
+    "tick": 68,
+    "head": [
+     16,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ],
+     [
+      64,
+      192
+     ],
+     [
+      80,
+      192
+     ],
+     [
+      96,
+      192
+     ],
+     [
+      96,
+      208
+     ],
+     [
+      96,
+      224
+     ],
+     [
+      96,
+      240
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "before_digest": "89c62f3e7c820793",
+   "requested": "L",
+   "intended_dir": [
+    -16,
+    0
+   ],
+   "after": {
+    "tick": 69,
+    "head": [
+     0,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ],
+     [
+      64,
+      192
+     ],
+     [
+      80,
+      192
+     ],
+     [
+      96,
+      192
+     ],
+     [
+      96,
+      208
+     ],
+     [
+      96,
+      224
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "after_digest": "4eed6f74d718bdce",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 69,
+   "before": {
+    "tick": 69,
+    "head": [
+     0,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ],
+     [
+      64,
+      192
+     ],
+     [
+      80,
+      192
+     ],
+     [
+      96,
+      192
+     ],
+     [
+      96,
+      208
+     ],
+     [
+      96,
+      224
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "before_digest": "4eed6f74d718bdce",
+   "requested": "L",
+   "intended_dir": [
+    -16,
+    0
+   ],
+   "after": {
+    "tick": 70,
+    "head": [
+     384,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ],
+     [
+      64,
+      192
+     ],
+     [
+      80,
+      192
+     ],
+     [
+      96,
+      192
+     ],
+     [
+      96,
+      208
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "after_digest": "465f89c41f9f6ba0",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 70,
+   "before": {
+    "tick": 70,
+    "head": [
+     384,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ],
+     [
+      64,
+      192
+     ],
+     [
+      80,
+      192
+     ],
+     [
+      96,
+      192
+     ],
+     [
+      96,
+      208
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "before_digest": "465f89c41f9f6ba0",
+   "requested": "L",
+   "intended_dir": [
+    -16,
+    0
+   ],
+   "after": {
+    "tick": 71,
+    "head": [
+     368,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ],
+     [
+      64,
+      192
+     ],
+     [
+      80,
+      192
+     ],
+     [
+      96,
+      192
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "after_digest": "5bbf3b6c556eb84d",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 71,
+   "before": {
+    "tick": 71,
+    "head": [
+     368,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ],
+     [
+      64,
+      192
+     ],
+     [
+      80,
+      192
+     ],
+     [
+      96,
+      192
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "before_digest": "5bbf3b6c556eb84d",
+   "requested": "L",
+   "intended_dir": [
+    -16,
+    0
+   ],
+   "after": {
+    "tick": 72,
+    "head": [
+     352,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ],
+     [
+      64,
+      192
+     ],
+     [
+      80,
+      192
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "after_digest": "31ee95fff9ca633a",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 72,
+   "before": {
+    "tick": 72,
+    "head": [
+     352,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ],
+     [
+      64,
+      192
+     ],
+     [
+      80,
+      192
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "before_digest": "31ee95fff9ca633a",
+   "requested": "L",
+   "intended_dir": [
+    -16,
+    0
+   ],
+   "after": {
+    "tick": 73,
+    "head": [
+     336,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ],
+     [
+      64,
+      192
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "after_digest": "8803a12767332fee",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 73,
+   "before": {
+    "tick": 73,
+    "head": [
+     336,
+     192
+    ],
+    "dir": [
+     -16,
+     0
+    ],
+    "cells": [
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ],
+     [
+      64,
+      192
+     ]
+    ],
+    "length": 9,
+    "maxCells": 9,
+    "apple": [
+     336,
+     176
+    ],
+    "rng_calls": 10
+   },
+   "before_digest": "8803a12767332fee",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 74,
+    "head": [
+     336,
+     176
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ]
+    ],
+    "length": 9,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "f6da9e39e1108b54",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 74,
+   "before": {
+    "tick": 74,
+    "head": [
+     336,
+     176
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ]
+    ],
+    "length": 9,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "f6da9e39e1108b54",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 75,
+    "head": [
+     352,
+     176
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "91e7b6793b3807e6",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 75,
+   "before": {
+    "tick": 75,
+    "head": [
+     352,
+     176
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ],
+     [
+      48,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "91e7b6793b3807e6",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 76,
+    "head": [
+     368,
+     176
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "4a37b95311334290",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 76,
+   "before": {
+    "tick": 76,
+    "head": [
+     368,
+     176
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      32,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "4a37b95311334290",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 77,
+    "head": [
+     384,
+     176
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "a30e7110cf322b76",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 77,
+   "before": {
+    "tick": 77,
+    "head": [
+     384,
+     176
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ],
+     [
+      16,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "a30e7110cf322b76",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 78,
+    "head": [
+     0,
+     176
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "24aab863f4466c3b",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 78,
+   "before": {
+    "tick": 78,
+    "head": [
+     0,
+     176
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ],
+     [
+      0,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "24aab863f4466c3b",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 79,
+    "head": [
+     16,
+     176
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "2aa8155a0ca0e835",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 79,
+   "before": {
+    "tick": 79,
+    "head": [
+     16,
+     176
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ],
+     [
+      384,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "2aa8155a0ca0e835",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 80,
+    "head": [
+     16,
+     192
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "29344f78efd4ffaa",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 80,
+   "before": {
+    "tick": 80,
+    "head": [
+     16,
+     192
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ],
+     [
+      368,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "29344f78efd4ffaa",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 81,
+    "head": [
+     16,
+     208
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "3667d8e67c54b43a",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 81,
+   "before": {
+    "tick": 81,
+    "head": [
+     16,
+     208
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ],
+     [
+      352,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "3667d8e67c54b43a",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 82,
+    "head": [
+     16,
+     224
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "49fd8d684c086478",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 82,
+   "before": {
+    "tick": 82,
+    "head": [
+     16,
+     224
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ],
+     [
+      336,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "49fd8d684c086478",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 83,
+    "head": [
+     16,
+     240
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "2c736ad20ee2b67b",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 83,
+   "before": {
+    "tick": 83,
+    "head": [
+     16,
+     240
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ],
+     [
+      336,
+      176
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "2c736ad20ee2b67b",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 84,
+    "head": [
+     16,
+     256
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "e7bb22471ea85b2a",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 84,
+   "before": {
+    "tick": 84,
+    "head": [
+     16,
+     256
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ],
+     [
+      352,
+      176
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "e7bb22471ea85b2a",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 85,
+    "head": [
+     16,
+     272
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "c84cbe431a178522",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 85,
+   "before": {
+    "tick": 85,
+    "head": [
+     16,
+     272
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ],
+     [
+      368,
+      176
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "c84cbe431a178522",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 86,
+    "head": [
+     16,
+     288
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "6b5d093d1720327f",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 86,
+   "before": {
+    "tick": 86,
+    "head": [
+     16,
+     288
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ],
+     [
+      384,
+      176
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "6b5d093d1720327f",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 87,
+    "head": [
+     16,
+     304
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "9d5e83ba1b376ff8",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 87,
+   "before": {
+    "tick": 87,
+    "head": [
+     16,
+     304
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ],
+     [
+      0,
+      176
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "9d5e83ba1b376ff8",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 88,
+    "head": [
+     16,
+     320
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "4a926a8dd585bad0",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 88,
+   "before": {
+    "tick": 88,
+    "head": [
+     16,
+     320
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ],
+     [
+      16,
+      176
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "4a926a8dd585bad0",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 89,
+    "head": [
+     16,
+     336
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "1fba4afcc86a35b1",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 89,
+   "before": {
+    "tick": 89,
+    "head": [
+     16,
+     336
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ],
+     [
+      16,
+      192
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "1fba4afcc86a35b1",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 90,
+    "head": [
+     16,
+     352
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "f690bfc033bb5359",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 90,
+   "before": {
+    "tick": 90,
+    "head": [
+     16,
+     352
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ],
+     [
+      16,
+      208
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "f690bfc033bb5359",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 91,
+    "head": [
+     32,
+     352
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "cf78767509ce2cda",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 91,
+   "before": {
+    "tick": 91,
+    "head": [
+     32,
+     352
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ],
+     [
+      16,
+      224
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "cf78767509ce2cda",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 92,
+    "head": [
+     48,
+     352
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "3879230c6014e6f9",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 92,
+   "before": {
+    "tick": 92,
+    "head": [
+     48,
+     352
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ],
+     [
+      16,
+      240
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "3879230c6014e6f9",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 93,
+    "head": [
+     64,
+     352
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "45dd51c66d60c3bf",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 93,
+   "before": {
+    "tick": 93,
+    "head": [
+     64,
+     352
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ],
+     [
+      16,
+      256
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "45dd51c66d60c3bf",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 94,
+    "head": [
+     80,
+     352
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "after_digest": "5a49b5b5fd383c8a",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 94,
+   "before": {
+    "tick": 94,
+    "head": [
+     80,
+     352
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ],
+     [
+      16,
+      272
+     ]
+    ],
+    "length": 10,
+    "maxCells": 10,
+    "apple": [
+     96,
+     352
+    ],
+    "rng_calls": 12
+   },
+   "before_digest": "5a49b5b5fd383c8a",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 95,
+    "head": [
+     96,
+     352
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ]
+    ],
+    "length": 10,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "d14a97c970e559c8",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 95,
+   "before": {
+    "tick": 95,
+    "head": [
+     96,
+     352
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ]
+    ],
+    "length": 10,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "d14a97c970e559c8",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 96,
+    "head": [
+     96,
+     368
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "b37bb6a7ab250c88",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 96,
+   "before": {
+    "tick": 96,
+    "head": [
+     96,
+     368
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ],
+     [
+      16,
+      288
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "b37bb6a7ab250c88",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 97,
+    "head": [
+     96,
+     384
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "883abaef86c08169",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 97,
+   "before": {
+    "tick": 97,
+    "head": [
+     96,
+     384
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ],
+     [
+      16,
+      304
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "883abaef86c08169",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 98,
+    "head": [
+     96,
+     0
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "50116313cf14eff6",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 98,
+   "before": {
+    "tick": 98,
+    "head": [
+     96,
+     0
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ],
+     [
+      16,
+      320
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "50116313cf14eff6",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 99,
+    "head": [
+     96,
+     16
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "48b303ac7cf8c00a",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 99,
+   "before": {
+    "tick": 99,
+    "head": [
+     96,
+     16
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ],
+     [
+      16,
+      336
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "48b303ac7cf8c00a",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 100,
+    "head": [
+     96,
+     32
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "7bc26548b3e87a82",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 100,
+   "before": {
+    "tick": 100,
+    "head": [
+     96,
+     32
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ],
+     [
+      16,
+      352
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "7bc26548b3e87a82",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 101,
+    "head": [
+     96,
+     48
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "9a1234c037cb737c",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 101,
+   "before": {
+    "tick": 101,
+    "head": [
+     96,
+     48
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ],
+     [
+      32,
+      352
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "9a1234c037cb737c",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 102,
+    "head": [
+     96,
+     64
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "e786e42be5c27771",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 102,
+   "before": {
+    "tick": 102,
+    "head": [
+     96,
+     64
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ],
+     [
+      48,
+      352
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "e786e42be5c27771",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 103,
+    "head": [
+     96,
+     80
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "9d9df34cdb825346",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 103,
+   "before": {
+    "tick": 103,
+    "head": [
+     96,
+     80
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ],
+     [
+      64,
+      352
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "9d9df34cdb825346",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 104,
+    "head": [
+     96,
+     96
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "cf9762eb7c76c7a5",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 104,
+   "before": {
+    "tick": 104,
+    "head": [
+     96,
+     96
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ],
+     [
+      80,
+      352
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "cf9762eb7c76c7a5",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 105,
+    "head": [
+     96,
+     112
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "dca01825082d6f65",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 105,
+   "before": {
+    "tick": 105,
+    "head": [
+     96,
+     112
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ],
+     [
+      96,
+      352
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "dca01825082d6f65",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 106,
+    "head": [
+     112,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "3e75062d2c76e700",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 106,
+   "before": {
+    "tick": 106,
+    "head": [
+     112,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ],
+     [
+      96,
+      368
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "3e75062d2c76e700",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 107,
+    "head": [
+     128,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "c290982ba67f87fb",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 107,
+   "before": {
+    "tick": 107,
+    "head": [
+     128,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      384
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "c290982ba67f87fb",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 108,
+    "head": [
+     144,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "10a5d1fa3d2650c5",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 108,
+   "before": {
+    "tick": 108,
+    "head": [
+     144,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ],
+     [
+      96,
+      0
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "10a5d1fa3d2650c5",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 109,
+    "head": [
+     160,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "335e3b93a717a3a3",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 109,
+   "before": {
+    "tick": 109,
+    "head": [
+     160,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ],
+     [
+      96,
+      16
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "335e3b93a717a3a3",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 110,
+    "head": [
+     176,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "8345d79d003effd8",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 110,
+   "before": {
+    "tick": 110,
+    "head": [
+     176,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ],
+     [
+      96,
+      32
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "8345d79d003effd8",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 111,
+    "head": [
+     192,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "8e4499c40355082b",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 111,
+   "before": {
+    "tick": 111,
+    "head": [
+     192,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ],
+     [
+      96,
+      48
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "8e4499c40355082b",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 112,
+    "head": [
+     208,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "d29d153705c1dd6f",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 112,
+   "before": {
+    "tick": 112,
+    "head": [
+     208,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ],
+     [
+      96,
+      64
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "d29d153705c1dd6f",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 113,
+    "head": [
+     224,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      224,
+      112
+     ],
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "4f7e999523578d05",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 113,
+   "before": {
+    "tick": 113,
+    "head": [
+     224,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      224,
+      112
+     ],
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ],
+     [
+      96,
+      80
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "4f7e999523578d05",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 114,
+    "head": [
+     240,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      112
+     ],
+     [
+      224,
+      112
+     ],
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "65c9e1610013e07b",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 114,
+   "before": {
+    "tick": 114,
+    "head": [
+     240,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      112
+     ],
+     [
+      224,
+      112
+     ],
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ],
+     [
+      96,
+      96
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "65c9e1610013e07b",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 115,
+    "head": [
+     256,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      112
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      224,
+      112
+     ],
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "7e5a210f740b9937",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 115,
+   "before": {
+    "tick": 115,
+    "head": [
+     256,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      112
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      224,
+      112
+     ],
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ],
+     [
+      96,
+      112
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "7e5a210f740b9937",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 116,
+    "head": [
+     272,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      112
+     ],
+     [
+      256,
+      112
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      224,
+      112
+     ],
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "after_digest": "54ed4e4aae231a6f",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 116,
+   "before": {
+    "tick": 116,
+    "head": [
+     272,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      112
+     ],
+     [
+      256,
+      112
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      224,
+      112
+     ],
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ],
+     [
+      112,
+      112
+     ]
+    ],
+    "length": 11,
+    "maxCells": 11,
+    "apple": [
+     288,
+     112
+    ],
+    "rng_calls": 14
+   },
+   "before_digest": "54ed4e4aae231a6f",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 117,
+    "head": [
+     288,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      112
+     ],
+     [
+      272,
+      112
+     ],
+     [
+      256,
+      112
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      224,
+      112
+     ],
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ]
+    ],
+    "length": 11,
+    "maxCells": 12,
+    "apple": [
+     64,
+     192
+    ],
+    "rng_calls": 16
+   },
+   "after_digest": "cd3fa6a63254e567",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 117,
+   "before": {
+    "tick": 117,
+    "head": [
+     288,
+     112
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      112
+     ],
+     [
+      272,
+      112
+     ],
+     [
+      256,
+      112
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      224,
+      112
+     ],
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ]
+    ],
+    "length": 11,
+    "maxCells": 12,
+    "apple": [
+     64,
+     192
+    ],
+    "rng_calls": 16
+   },
+   "before_digest": "cd3fa6a63254e567",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 118,
+    "head": [
+     288,
+     128
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      288,
+      128
+     ],
+     [
+      288,
+      112
+     ],
+     [
+      272,
+      112
+     ],
+     [
+      256,
+      112
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      224,
+      112
+     ],
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ]
+    ],
+    "length": 12,
+    "maxCells": 12,
+    "apple": [
+     64,
+     192
+    ],
+    "rng_calls": 16
+   },
+   "after_digest": "a410bae24e379013",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 118,
+   "before": {
+    "tick": 118,
+    "head": [
+     288,
+     128
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      288,
+      128
+     ],
+     [
+      288,
+      112
+     ],
+     [
+      272,
+      112
+     ],
+     [
+      256,
+      112
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      224,
+      112
+     ],
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ],
+     [
+      128,
+      112
+     ]
+    ],
+    "length": 12,
+    "maxCells": 12,
+    "apple": [
+     64,
+     192
+    ],
+    "rng_calls": 16
+   },
+   "before_digest": "a410bae24e379013",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 119,
+    "head": [
+     288,
+     144
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      288,
+      144
+     ],
+     [
+      288,
+      128
+     ],
+     [
+      288,
+      112
+     ],
+     [
+      272,
+      112
+     ],
+     [
+      256,
+      112
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      224,
+      112
+     ],
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ]
+    ],
+    "length": 12,
+    "maxCells": 12,
+    "apple": [
+     64,
+     192
+    ],
+    "rng_calls": 16
+   },
+   "after_digest": "43bb82e5e8c816b9",
+   "tick_calls": 4,
+   "accepted": true
+  },
+  {
+   "tick": 119,
+   "before": {
+    "tick": 119,
+    "head": [
+     288,
+     144
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      288,
+      144
+     ],
+     [
+      288,
+      128
+     ],
+     [
+      288,
+      112
+     ],
+     [
+      272,
+      112
+     ],
+     [
+      256,
+      112
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      224,
+      112
+     ],
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ],
+     [
+      144,
+      112
+     ]
+    ],
+    "length": 12,
+    "maxCells": 12,
+    "apple": [
+     64,
+     192
+    ],
+    "rng_calls": 16
+   },
+   "before_digest": "43bb82e5e8c816b9",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 120,
+    "head": [
+     288,
+     160
+    ],
+    "dir": [
+     0,
+     16
+    ],
+    "cells": [
+     [
+      288,
+      160
+     ],
+     [
+      288,
+      144
+     ],
+     [
+      288,
+      128
+     ],
+     [
+      288,
+      112
+     ],
+     [
+      272,
+      112
+     ],
+     [
+      256,
+      112
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      224,
+      112
+     ],
+     [
+      208,
+      112
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      176,
+      112
+     ],
+     [
+      160,
+      112
+     ]
+    ],
+    "length": 12,
+    "maxCells": 12,
+    "apple": [
+     64,
+     192
+    ],
+    "rng_calls": 16
+   },
+   "after_digest": "322cdc072e553724",
+   "tick_calls": 4,
+   "accepted": true
+  }
+ ],
+ "chain_digest": "8e62988746306f50",
+ "instrument": {
+  "kind": "stepped-browser-wrapper",
+  "wrapper": {
+   "file": "snake_page.py",
+   "harness_source_digest": "69f062d23415ecef",
+   "harness_installs": [
+    "requestAnimationFrame -> recorder (THE TICK IS HELD)",
+    "Math.random -> mulberry32(seed) (THE RUN REPLAYS)",
+    "window.__SNAKE__ = {state, step, game_source}"
+   ],
+   "tick_definition": "step() calls the game's own loop() until the game's own throttle counter `window.count` returns to 0 -- the tick length is READ FROM THE GAME, not assumed",
+   "input_path": "a move is a dispatched `keydown` (keyCode/which 37..40), so it passes through the game's own handler and its no-backtrack rule",
+   "state_path": "read from the live page's top-level vars (snake, apple, grid, canvas, count); NOT scraped from pixels",
+   "rng": {
+    "algorithm": "mulberry32",
+    "period": 4294967296,
+    "seed": 42,
+    "call_site": "Math.random, whose only consumer in the page is getRandomInt"
+   }
+  },
+  "browser": {
+   "binary": "/home/chilly1/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+   "binary_digest": "0b20b130e7edd9dd",
+   "version": "Google Chrome for Testing 151.0.7922.34",
+   "headless": true,
+   "launch_flags": [
+    "--headless=new",
+    "--no-sandbox",
+    "--no-first-run",
+    "--no-default-browser-check",
+    "--disable-extensions",
+    "--disable-background-networking",
+    "--disable-sync",
+    "--disable-gpu",
+    "--allow-file-access-from-files",
+    "--mute-audio",
+    "--remote-debugging-port=0",
+    "about:blank"
+   ],
+   "digest_scope": "sha256 of the browser BINARY FILE, first 16 hex"
+  },
+  "subject": {
+   "path": "snake/snake.html",
+   "source_digest_on_disk": "a441de57c63a66c5",
+   "source_digest_from_live_dom": "a441de57c63a66c5",
+   "source_modified_by_harness": false,
+   "live_constants": {
+    "grid": 16,
+    "canvas": [
+     400,
+     400
+    ]
+   }
+  },
+  "episode_clock": "one step == one tick; no wall-clock time enters the game"
+ },
+ "baseline": {
+  "name": "baseline-greedy-safe",
+  "cycle_digest": "b18dc8872ac3b759",
+  "cycle_cells": 625,
+  "safety": "follows the torus's Hamiltonian cycle; the shortcut only ever enters the free window between the head and the tail"
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "kind": "snake-run",
+ "agent": "Ternary-Bonsai-2-4B-PQ2_0-MTP-Q8_0",
+ "seeds": [
+  1
+ ],
+ "ticks": 120,
+ "death_ends": true,
+ "at_utc": "20261017-181214",
+ "totals": {
+  "eaten": 0,
+  "best_life": 0,
+  "deaths": 0,
+  "episodes": 1
+ },
+ "episodes": [
+  {
+   "seed": 1,
+   "score": {
+    "eaten": 0,
+    "best_life": 0,
+    "deaths": 0,
+    "ticks": 120
+   },
+   "ended": "tick_cap",
+   "artifact": "probes/SNAKE_Ternary-Bonsai-2-4B-PQ2_0-MTP-Q8_0_leg-order_s1.json",
+   "chain_digest": "4618e6e4b23a76f2",
+   "not_an_action": 0
+  }
+ ]
+}

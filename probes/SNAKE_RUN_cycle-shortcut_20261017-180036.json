@@ -1,0 +1,69 @@
+{
+ "kind": "snake-run",
+ "agent": "cycle-shortcut",
+ "seeds": [
+  1,
+  7,
+  13,
+  42
+ ],
+ "ticks": 120,
+ "death_ends": true,
+ "at_utc": "20261017-180036",
+ "totals": {
+  "eaten": 18,
+  "best_life": 5,
+  "deaths": 0,
+  "episodes": 4
+ },
+ "episodes": [
+  {
+   "seed": 1,
+   "score": {
+    "eaten": 4,
+    "best_life": 4,
+    "deaths": 0,
+    "ticks": 120
+   },
+   "ended": "tick_cap",
+   "artifact": "probes/SNAKE_baseline-cycle-shortcut_s1.json",
+   "chain_digest": "fac415da16f41e61"
+  },
+  {
+   "seed": 7,
+   "score": {
+    "eaten": 5,
+    "best_life": 5,
+    "deaths": 0,
+    "ticks": 120
+   },
+   "ended": "tick_cap",
+   "artifact": "probes/SNAKE_baseline-cycle-shortcut_s7.json",
+   "chain_digest": "3dfb51dcfe5fec73"
+  },
+  {
+   "seed": 13,
+   "score": {
+    "eaten": 4,
+    "best_life": 4,
+    "deaths": 0,
+    "ticks": 120
+   },
+   "ended": "tick_cap",
+   "artifact": "probes/SNAKE_baseline-cycle-shortcut_s13.json",
+   "chain_digest": "23a36b19086ad0c4"
+  },
+  {
+   "seed": 42,
+   "score": {
+    "eaten": 5,
+    "best_life": 5,
+    "deaths": 0,
+    "ticks": 120
+   },
+   "ended": "tick_cap",
+   "artifact": "probes/SNAKE_baseline-cycle-shortcut_s42.json",
+   "chain_digest": "ecb834081e96a411"
+  }
+ ]
+}

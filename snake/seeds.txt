@@ -1,0 +1,15 @@
+# THE SEED LIST -- the "level list" this game has.
+#
+# WHAT A SEED CONTROLS, measured from snake/snake.html rather than assumed: the board is 25x25 cells, the
+# snake starts at cell (10,10) moving right, and the first apple is fixed at cell (20,20) BY THE FILE.
+# Nothing about the geometry is random. The only randomness in the game is `getRandomInt`, called from
+# exactly two places -- when an apple is EATEN and when the board RESETS after a self-collision -- and
+# the wrapper replaces `Math.random` with a seeded PRNG before the page's script runs. So the seed fixes
+# the apple respawn sequence, and (seed, move list) fixes the whole episode.
+#
+# THESE FOUR ARE FROZEN AS THE LIST. The deterministic baselines are scored on this same file, so an
+# entrant's number has a floor taken on the identical list rather than on a luckier sample.
+1
+7
+13
+42

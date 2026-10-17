@@ -1,0 +1,35 @@
+THE SUBJECT -- snake/snake.html
+
+    title        "Basic Snake HTML Game"
+    licence      CC0 1.0
+    origin       straker, "Basic Games" gist ff00b4b49669ad3dec890306d348adc4
+    sha256       808a2772e668cd9fc5d837317417c4da0c0bc67a303b664c14a2959d2ffa7746
+    bytes        4123
+    committed    verbatim, byte for byte
+
+WHERE THIS COPY CAME FROM, because the path the card named is gone
+---------------------------------------------------------------
+The card (t_401ee1d7) names
+
+    /home/chilly1/.hermes/profiles/tiel/cache/scratch/snake-arena/snake.html    4,123 B
+
+THAT PATH NO LONGER EXISTS. It is a Hermes scratch directory with a 24-hour idle sweep, and it was pruned
+between the card being written and the card being worked. Recovered from the two surviving copies, which
+agree byte for byte:
+
+    /home/chilly1/.hermes/profiles/tiel/cache/scratch/games-survey/src/snake.html
+    /home/chilly1/.hermes/workspace/snake.html
+
+    A THIRD FILE OF THE SAME NAME IS NOT THE SAME FILE:
+    /home/chilly1/.hermes/profiles/tiel/cache/scratch/games-survey/raw/snake.html   2,821 B
+    sha256 3a1aa00db4edc15119a361fcb7503af923f9fa5f8ba171aa1ad5a688a9ea3dc5
+    -- the raw gist payload, not the working copy. It is NOT the subject: the interface facts the card
+    measured (grid = 16, canvas 400x400, snake.x/y, snake.dx/dy, snake.cells, snake.maxCells, apple.x/y)
+    are facts about the 4,123-byte file, and that is the file committed here.
+
+WHAT THE HARNESS READS OUT OF IT, live, rather than from this note
+----------------------------------------------------------------
+Every record carries the subject's digest twice -- once computed from this file on disk, once read back
+out of the running page's DOM -- and a flag saying whether the two differ. Both are a441de57c63a66c5 (the
+inline game script) with source_modified_by_harness = false, so "the harness did not modify the game" is
+checkable from the bundle rather than asserted here.
