@@ -220,3 +220,44 @@ edited by this card.**
 **3. The archive is a new file in `probes/`, and it is NOT a coordinate.** It is not one of the 22 cells, it
 is never read by the driver, and it is not a second definition of anything: it is the pre-move field as it
 was, with digests, so the two arms can be compared after the coordinates moved.
+
+---
+
+## LANDING NOTE, APPENDED 2026-10-17 — THE INSTRUMENT FIX LANDED, WITH ONE PREDICTION AND ONE COUNT CORRECTED
+
+**The fix landed in the commit that carries this note (`missile_command_run.py` `4018f0262498eb3e`), and this
+file's frozen version was `c89d8ad21fe1ed04` at `b4a6323`.** F1, F2 and F3 are as pre-registered. **Two
+corrections are recorded here rather than quietly absorbed:**
+
+**1. THE SELF-TEST COUNT — P1 PREDICTED 52/52 AND THE MEASURED COUNT IS 53/53.** Three controls were added,
+not two (`[9b]`: the driver is identified as its own instrument; every instrument digest the record carries is
+named in the code that builds the record; and every failure return in the driver spreads the same block).
+**The controls were not trimmed to fit the prediction** — the prediction was wrong by one and is corrected
+here. P1's second half is confirmed verbatim: `--dry-run` reports
+`legend plain  digest d8ee3da099c1a0c2  (arms {'example': 'ec59f2dc5fd35518', 'plain': 'd8ee3da099c1a0c2'},
+source the recorded default (plain))`.
+
+**2. THE COUNT IN SECTION 5 IS WRONG AND THE ARCHIVE IS WHAT MEASURED IT.** This file says *"Six of the eleven
+entrants' `example`-arm records exist nowhere else"*. **It is FIVE entrants (ten cells)**: `Llama-3.2-3B`,
+`Phi-3.5`, `Qwen3-1.7B`, `Bonsai-4B` and `granite-3.3-2b`. The sixth earlier-field entrant the card names,
+`Qwen3.5-2B`, is ALSO a population entrant, so its `example` cells already travel in the population artifact.
+**The sentence was written from the card's two lists rather than from the coordinates**, which is exactly the
+mistake the "derived, not typed" rule exists to prevent; the archive's own cell list is what makes it
+checkable, and *"six of eleven"* is corrected here rather than edited into the sentence above. **The reason to
+archive is strongest for the five, not weaker.**
+
+**DRIFT RECORDED — BOTH VALUES, WITH THE COMMAND THAT READS THEM:**
+
+```
+missile_command_run.py      b726188380ce681c  ->  4018f0262498eb3e   the fix above; self-test 50/50 -> 53/53
+PREREG_mc_field_plain.md    c89d8ad21fe1ed04  ->  the digest of the version carrying this note
+MC_DECLARATION.md           2ada03ee2ad1f60b      UNCHANGED by this card (the arm's own move was t_027bf647)
+missile_command.py          eb5ed36591b300e6      UNCHANGED, and it is the digest the records carry
+```
+
+**A RECORD TAKEN AFTER THIS NOTE AND ONE TAKEN BEFORE IT ARE THE SAME INSTRUMENT ONLY IF THE DRIVER DIGEST IS
+READ** — which is the whole point of F2: before it, that comparison was not possible at all.
+
+**STILL OPEN, AND NOT FIXED HERE (F3):** the identity triple the gate and the population runner's adoption
+rule compare still omits the driver's digest, for the measurable reason given above. It is named as an open
+consequence rather than left as an unstated one.

@@ -42,7 +42,9 @@ repo-wide grep for `REALTIME`/`mouse`/`timed` finds it in no file of any of the 
 * ONE RUN, ONE PATH: the artifact gate refuses a path that already holds a record, at admission, before a
   single byte of a model is loaded.
 * THE RECORD CARRIES THE DIGESTS OF THE INPUTS IT WAS PRODUCED UNDER: the simulator, the state, the legend,
-  the entrant, the server binary, the reader of record and the declaration.
+  the entrant, the server binary, the reader of record, the declaration -- and, since 2026-10-17, **THE
+  DRIVER ITSELF** (it renders the screen, derives the cap and reads the answer, so a change to it is a
+  change to the measurement; until that date it was the one input whose digest did not travel).
 * THE RECORDED STATE IS A SUFFICIENT STATISTIC FOR THE SCORE -- and `sufficiency_check` re-derives the
   score and every screen from `(state_text, tokens)` afterwards and reports the re-derivation as a control.
 
@@ -53,6 +55,7 @@ repo-wide grep for `REALTIME`/`mouse`/`timed` finds it in no file of any of the 
 import argparse
 import hashlib
 import importlib.util
+import inspect
 import json
 import os
 import re
@@ -106,6 +109,25 @@ def file_digest(path):
         except OSError:
             _DIGEST_CACHE[path] = None
     return _DIGEST_CACHE[path]
+
+
+def driver_digest():
+    """sha256 of THIS FILE, first 16 hex -- THE DRIVER IS PART OF THE INSTRUMENT.
+
+    It renders the screen the entrant reads, derives the command cap, reads the answer and mints the record,
+    so a change to it is a change to the measurement. MEASURED 2026-10-17 (card t_ec0b0420): every other
+    input of a record was identified by a digest -- simulator, states, legend, entrant, server binary, reader
+    of record, declaration -- AND THE DRIVER WAS NOT, so a driver change was invisible in the records it
+    produced. It is named the same way they are, from one definition, and it travels on every return path.
+    """
+    return file_digest(os.path.join(HERE, "missile_command_run.py"))
+
+
+# THE INSTRUMENT DIGESTS A RECORD IS EXPECTED TO CARRY, named once so that the SELF-TEST CAN READ THEM
+# AGAINST THE CODE THAT BUILDS THE RECORD: a digest that is computed and then not stored is exactly the gap
+# this list exists to catch, and a control that only compares a function with itself cannot catch it.
+INSTRUMENT_DIGEST_KEYS = ("simulator_digest", "driver_digest", "state_digest", "entrant_digest",
+                          "legend_digest", "declaration_digest")
 
 
 # ==================================================================================================
@@ -427,8 +449,14 @@ def server_argv(entrant, ctx, port):
 #
 # SO THE TWO ARMS ARE AN A/B, NOT A REPLACEMENT: the old arm is kept VERBATIM (a paraphrased control is
 # not a control), the prediction is pre-registered in `PREREG_mc_legend_ab.md` BEFORE the second arm was
-# ever run, and the arm is selected at CALL TIME so one process can do both. `example` remains the
-# DEFAULT, so every existing record keeps the instrument it was taken under and no published number moves.
+# ever run, and the arm is selected at CALL TIME so one process can do both.
+#
+# `example` WAS THE DEFAULT UNTIL 2026-10-17, AND THIS COMMENT SAID SO IN THE PRESENT TENSE FOR A DAY. The
+# default is now READ FROM THE DECLARATION (`LEGEND_DEFAULT = DECL["legend_arm"]`, `plain` since that date --
+# `DECISION_mc_legend_arm.md`, card t_027bf647), so every existing record keeps the instrument it was taken
+# under and no published number moves. Corrected here rather than left standing, for the reason control [9]
+# gives below: A COMMENT IS PROSE ABOVE CODE, AND PROSE THAT IS NOT RE-READ IS A CAPTION THAT LIES (card
+# t_ec0b0420).
 # ==================================================================================================
 PROMPT_EXAMPLE = (
     "You are playing Missile Command. Enemy missiles are falling towards a line of positions numbered "
@@ -494,6 +522,27 @@ def legend_digest(arm=None):
 def legend_arm_digests():
     """BOTH ARMS' DIGESTS, so a reader can see the two files differ and by which instrument."""
     return {a: legend_digest(a) for a in LEGEND_ARMS}
+
+
+def instrument_block():
+    """THE INSTRUMENT AN ATTEMPT WAS MADE UNDER, in one place, FOR THE RETURN PATHS THAT USED TO SKIP IT.
+
+    `run()` returns early when the server exits or never answers /health, and those returns left the function
+    BEFORE the arm, the declaration and the driver were named -- MEASURED on the two `Llama-3.2-3B` coordinates
+    in this tree, which carry no `legend_digest` at all (card t_ec0b0420). So an ATTEMPT could not be sorted by
+    the arm it was attempted under, and the driver that made it was invisible in it. **An attempt is not a
+    measurement; it is still a record, and a record names its instrument.**
+    """
+    return {"legend": legend(), "legend_digest": legend_digest(), "legend_arms": legend_arm_digests(),
+            "legend_source": legend_source(),
+            "simulator_digest": file_digest(os.path.join(HERE, "missile_command.py")),
+            "driver_digest": driver_digest(),
+            "declaration_file": os.path.relpath(DECLARATION_FILE, HERE),
+            "declaration_digest": file_digest(DECLARATION_FILE),
+            "instrument_block_scope": ("THE INSTRUMENT THIS ATTEMPT WAS MADE UNDER: the arm, the declaration "
+                                       "and the driver, named as a measured record names them, so a refusal "
+                                       "can be read beside the reading it belongs to -- and a reader can see "
+                                       "WHICH arm was refused, which the earlier shape did not say.")}
 
 
 def prompt_for(screen, history):
@@ -857,6 +906,7 @@ def run(entrant, state_path, cap, port):
                         "level": sname, "loaded": False,
                         "state_digest": file_digest(state_path),
                         "state_path": os.path.relpath(state_path, HERE),
+                        **instrument_block(),
                         **load_failure(log, f"server exited rc={srv.returncode}"), **binary_provenance()}
             try:
                 urllib.request.urlopen(base + "/health", timeout=3).read()
@@ -868,7 +918,8 @@ def run(entrant, state_path, cap, port):
             return {"entrant": label, "entrant_digest": file_digest(entrant), "level": sname,
                     "state_digest": file_digest(state_path),
                     "state_path": os.path.relpath(state_path, HERE),
-                    "loaded": False, **load_failure(log, "never answered /health in 600 s"),
+                    "loaded": False, **instrument_block(),
+                    **load_failure(log, "never answered /health in 600 s"),
                     **binary_provenance()}
         load_s = time.time() - t0
 
@@ -931,6 +982,11 @@ def run(entrant, state_path, cap, port):
             "state_digest": file_digest(state_path),
             "simulator_digest": file_digest(os.path.join(HERE, "missile_command.py")),
             "simulator_digest_scope": "sha256 of missile_command.py, first 16 hex -- THE SIMULATOR IS PART OF THE INSTRUMENT",
+            "driver_digest": driver_digest(),
+            "driver_digest_scope": ("sha256 of missile_command_run.py, first 16 hex -- THE DRIVER IS PART OF "
+                                    "THE INSTRUMENT: it renders the screen, derives the cap and reads the "
+                                    "answer. Added 2026-10-17, when it was measured to be the one input whose "
+                                    "digest did not travel in the records it produced (card t_ec0b0420)."),
             "legend": legend(), "legend_digest": legend_digest(),
             "legend_arms": legend_arm_digests(),
             "legend_source": legend_source(),
@@ -1161,9 +1217,16 @@ def _self_test():
         ck("...and a REASON gets past, carrying the digest of what it replaced",
            (ok, rep is not None and len(rep["sha256"]) == 64), (True, True))
 
-    print("\n[9] THE LEGEND HAS TWO ARMS, AND THE ONE THE RECORDS WERE TAKEN UNDER HAS NOT MOVED")
+    # THE CAPTION MOVED ON 2026-10-17 AND THE CONTROL DID NOT. It read "THE LEGEND HAS TWO ARMS, AND THE ONE
+    # THE RECORDS WERE TAKEN UNDER HAS NOT MOVED" -- which became FALSE the day the declaration's key moved
+    # to `plain`, while this control stayed TRUE the whole time, because it compares the driver's default
+    # against the DECLARATION rather than against a constant (card t_027bf647 named it stale; t_ec0b0420
+    # corrects it). The caption now states what is checked, so the prose and the check cannot drift apart
+    # again without one of them being wrong on its face.
+    print("\n[9] THE LEGEND HAS TWO ARMS, EITHER MAY BE RECORDED, AND THE ONE OF RECORD IS THE ONE THE "
+          "DECLARATION NAMES")
     ck("the RECORDED arm is the one the declaration names", LEGEND_DEFAULT, DECL["legend_arm"])
-    ck("...and its digest is the one the records already taken carry",
+    ck("...and its digest is the one every record taken BEFORE the move carries (the legacy label included)",
        legend_digest("example"), "ec59f2dc5fd35518")
     ck("...and the plain arm is a DIFFERENT template", legend_digest("plain") != legend_digest("example"),
        True)
@@ -1177,6 +1240,21 @@ def _self_test():
        == PROMPT_EXAMPLE.split("{state}")[1].split("{recent}")[0], True)
     ck("...so the ONLY difference between the arms is the instruction clause",
        PROMPT_PLAIN.split("{recent}")[1] != PROMPT_EXAMPLE.split("{recent}")[1], True)
+
+    # [9b] THE DRIVER IS AN INSTRUMENT TOO, AND THESE THREE CONTROLS ARE WHY IT CANNOT GO MISSING AGAIN.
+    # (This pre-registered "two new controls, 50 -> 52" and lands three, 50 -> 53: the prediction is
+    # corrected in the landing note rather than the controls being trimmed to fit it.)
+    print("\n[9b] THE DRIVER'S OWN DIGEST IS RECORDED, ON EVERY RETURN PATH")
+    ck("the driver is identified as its OWN instrument (not folded into the simulator's)",
+       (driver_digest() != file_digest(os.path.join(HERE, "missile_command.py")), len(driver_digest() or "")),
+       (True, 16))
+    ck("...and every instrument digest THE RECORD CARRIES is named in the code that builds the record "
+       "(a digest computed and not stored is invisible, which is the gap this control catches)",
+       [k for k in INSTRUMENT_DIGEST_KEYS if k not in inspect.getsource(run)], [])
+    ck("...and every FAILURE return in the driver spreads the same block (an ATTEMPT used to leave before "
+       "the legend was named)",
+       [b.splitlines()[0][:40] for b in inspect.getsource(run).split("return {")[1:]
+        if "\"loaded\": False" in b and "**instrument_block()" not in b], [])
 
     print("\n" + "=" * 96)
     print(f"{'ALL CONTROLS PASS' if not fails else str(len(fails)) + ' FAILED'}   --  "
