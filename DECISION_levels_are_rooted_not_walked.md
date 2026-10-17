@@ -1,8 +1,14 @@
 # DECISION — THE LEVELS ARE ROOTED, NOT WALKED
 
-**Raised by Chilly (2026-10-15), after he swept the stale-looking copy first and ran two levels where three
-exist.** Ours to settle because this is the cabinet's instrument layout, and because a newcomer reading the
-tree has no way to tell the two directories apart.
+**Raised by Chilly on 2026-10-17, about a sweep that dates from 2026-10-16** — its surviving artifact is
+`probes/SOKOBAN_Ternary-Bonsai-2-4B-PQ2_0-MTP-Q8_0_01_one_push.json`, mtime **2026-10-16 09:33:45**,
+verified on disk. **He swept the stale-looking copy first and ran two levels where three exist.** Ours to
+settle because this is the cabinet's instrument layout, and because a newcomer reading the tree has no way
+to tell the two directories apart.
+
+**This header's first version said 2026-10-15, which was the session's own belief and not a measurement.**
+A date in a durable file is a claim a reader will trust six months from now, so it is corrected here and the
+error is named rather than silently replaced.
 
 ---
 
