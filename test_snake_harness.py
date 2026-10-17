@@ -22,6 +22,7 @@ import os
 import shutil
 import subprocess
 import sys
+import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -199,6 +200,29 @@ def test_the_prompt_varies(bundle_paths):
                 len(answers) == 1)
 
 
+def test_the_failure_gets_a_record(tmpdir):
+    """THE FAILURE PATH'S OWN CONTROL, because a failure record is written on the one path nobody exercises
+    twice. The fixture is a log with the 9B's decisive lines buried among warnings, and the assertions are
+    that the record QUOTES the decisive line and that it does not claim to be a transcript."""
+    log = os.path.join(tmpdir, "fake-failure.log")
+    with open(log, "w") as f:
+        f.write("0.01.031.761 W common_fit_params: failed to fit params to free device memory: warning noise\n")
+        f.write("/home/runner/work/llama.cpp/ggml/src/ggml-backend.cpp:179: GGML_ASSERT(buffer) failed\n")
+        f.write("0.03.440.371 E ggml_backend_cuda_buffer_type_alloc_buffer: allocating 595.33 MiB on device "
+                "0: cudaMalloc failed: out of memory\n")
+        f.write("0.04.000.000 I some unrelated line nobody needs\n")
+    rec = R.load_failure_record("FAKE-MODEL", ["/bin/llama-server", "-m", "x"], "/tmp/fake-mmproj.gguf",
+                                "auto", log, -6, "server exited rc=-6", 1234)
+    joined = " ".join(rec["log"]["quoted_lines"])
+    ctl("a load failure quotes the line that STATES the failure",
+        "cudaMalloc failed" in joined and "GGML_ASSERT(buffer)" in joined)
+    ctl("...and says plainly that the quote is a filter, not a transcript",
+        rec["log"]["log_is_complete"] is False and rec["log"]["scratch"] is True)
+    ctl("...and carries the instrument, not only the complaint",
+        rec["exit_code"] == -6 and rec["server_argv"][0] == "/bin/llama-server"
+        and rec["server_binary_digest"] is not None and rec["mmproj_digest"] is None)
+
+
 def main():
     bundle = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
         HERE, "probes", "SNAKE_baseline-cycle-shortcut_s1.json")
@@ -219,6 +243,8 @@ def main():
         ctl("bundle present (%s)" % bundle, False, "run a baseline first")
     print("  the question the entrant is asked:")
     test_the_prompt_varies([bundle] + model_bundles)
+    print("  the path nobody exercises twice:")
+    test_the_failure_gets_a_record(tempfile.mkdtemp(prefix="snake-test-"))
     print("=" * 100)
     print("  %d control(s) FAILED" % len(FAILS))
     return 1 if FAILS else 0

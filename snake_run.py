@@ -201,10 +201,21 @@ def llama_server():
     return LLAMA_SELECTED or LLAMA_FORK
 
 
-def mmproj_for(entrant):
-    """-> (path, how) for the multimodal projector, or (None, reason). The card's launch line carries
-    `--mmproj`; this picks it by LONGEST COMMON PREFIX with the weight file's name rather than by a
-    hand-kept table, and records which rule fired."""
+def mmproj_for(entrant, mode="auto", explicit=None):
+    """-> (path, how) for the multimodal projector, or (None, reason).
+
+    THE PROJECTOR IS PART OF THE INSTRUMENT AND IS NOW SELECTABLE, because MEASURED: the 9B's arm ABORTED
+    inside `clip_model_loader::load_tensors` -> `ggml_backend_buffer_set_usage` -> `ggml_abort` while loading
+    THIS cabinet's mmproj, with `-ngl 0` (from the crate's own backtrace, in
+    logs/SNAKE_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_rea-off.log). The abort was in the VISION path, not in the
+    weights -- and this cabinet asks its question in TEXT and reads its answer in TEXT, so the projector is
+    carried for the launch line the card declares and can be dropped when it is the thing that breaks.
+    `auto` picks by LONGEST COMMON PREFIX with the weight filename rather than by a hand-kept table.
+    """
+    if mode == "off":
+        return None, "--no-mmproj: the projector is not loaded (this cabinet reads text; the flag is recorded)"
+    if mode == "path" and explicit:
+        return explicit, "--mmproj given on the command line"
     label = os.path.basename(entrant)
     best, blen = None, 0
     try:
@@ -477,9 +488,45 @@ def run_baseline(name, seeds, ticks, death_ends, overwrite):
         page.stop()
 
 
-def run_model(entrant, seeds, ticks, death_ends, overwrite, port):
+def load_failure_record(label, argv, mmproj, mmproj_mode, log_path, exit_code, why, port):
+    """THE FAILURE PATH GETS A RECORD TOO, because that is the path where the record matters most.
+
+    MEASURED, on this card: the 9B's first arm died inside `clip_model_loader::load_tensors` and the ONLY
+    surviving evidence was a line in `logs/`, which this repository declares SCRATCH (DECISION_logs_are_scratch.md)
+    and which `git check-ignore logs/` confirms is not committable. A finding whose only carrier is a scratch
+    file is a finding that evaporates -- and a code comment CITING that file is the stand-in outliving its
+    thing, one step removed. So the failure carries its own artifact, with the abort quoted in it.
+
+    The quoted tail is bounded and FILTERED to the lines that state the failure, so the bundle stays
+    readable; the whole log is not carried, and the record says so rather than pretending to be complete.
+    """
+    lines = []
+    try:
+        with open(log_path, "r", errors="replace") as f:
+            raw = f.read().splitlines()
+        keys = ("abort", "assert", "error", "failed", "unable", "cannot", "no such", "exception",
+                "terminate", "refus", "not supported", "out of memory")
+        lines = [ln for ln in raw if any(k in ln.lower() for k in keys)][:40] or raw[-40:]
+    except OSError as e:
+        lines = ["log unreadable: %s" % e]
+    return {"kind": "snake-load-failure", "entrant": label, "loaded": False, "why": why,
+            "exit_code": exit_code, "port": port, "server_argv": argv,
+            "server_binary": llama_server(), "server_binary_digest": P.file_digest(llama_server()),
+            "server_binary_digest_scope": "sha256 of the BINARY FILE, first 16 hex",
+            "mmproj": mmproj, "mmproj_mode": mmproj_mode,
+            "mmproj_digest": model_digest(mmproj) if mmproj else None,
+            "entrant_digest": model_digest(os.path.join(MODELS, label + ".gguf")),
+            "log": {"path": os.path.relpath(log_path, HERE),
+                    "scratch": True,
+                    "why_quoted_here": ("logs/ is scratch by repository rule; the lines that state the "
+                                        "failure are quoted so the finding survives the directory"),
+                    "quoted_lines": lines,
+                    "log_is_complete": False}}
+
+
+def run_model(entrant, seeds, ticks, death_ends, overwrite, port, mmproj_mode="auto", mmproj_path=None):
     label = os.path.basename(entrant).replace(".gguf", "")
-    mmproj, mmproj_how = mmproj_for(entrant)
+    mmproj, mmproj_how = mmproj_for(entrant, mmproj_mode, mmproj_path)
     port = port or free_port()
     alias = "snake-" + label[:40].lower().replace("_", "-")
     argv = server_argv(entrant, mmproj, port, alias)
@@ -491,7 +538,16 @@ def run_model(entrant, seeds, ticks, death_ends, overwrite, port):
     try:
         ok, note = wait_ready(base, proc, log)
         if not ok:
-            print("  DID NOT LOAD -- %s  (log: %s)" % (note, os.path.relpath(log, HERE)))
+            print("  DID NOT LOAD -- %s" % note)
+            rec = load_failure_record(label, argv, mmproj, mmproj_mode, log, proc.returncode, note, port)
+            out = os.path.join(PROBES, "SNAKE_LOADFAIL_%s_mm-%s_%s.json"
+                               % (label, mmproj_mode, time.strftime("%Y%m%d-%H%M%S", time.gmtime())))
+            os.makedirs(PROBES, exist_ok=True)
+            with open(out, "w") as f:
+                json.dump(rec, f, indent=1)
+            print("  FAILURE RECORD  %s" % os.path.relpath(out, HERE))
+            for ln in rec["log"]["quoted_lines"][:3]:
+                print("    %s" % ln[:150])
             return None
         probe = probe_reasoning(base)
         print("  loaded in %ss   reasoning probe: %s" % (note, probe.get("observed")))
@@ -529,6 +585,7 @@ def run_model(entrant, seeds, ticks, death_ends, overwrite, port):
                                "ctx": CTX, "n_gpu_layers": 0, "temperature": TEMPERATURE,
                                "max_tokens_ceiling": MAX_TOKENS, "server_seed": SERVER_SEED,
                                "alias": alias, "mmproj": mmproj, "mmproj_how": mmproj_how,
+                               "mmproj_mode": mmproj_mode,
                                "mmproj_digest": model_digest(mmproj) if mmproj else None,
                                "reasoning": REASONING, "reasoning_argv": reasoning_argv(),
                                "reasoning_declared": REASONING_DECLARED,
@@ -576,6 +633,15 @@ def run_model(entrant, seeds, ticks, death_ends, overwrite, port):
 # ==================================================================================================
 def verify_bundle(path):
     b = json.load(open(path))
+    if b.get("kind") == "snake-load-failure":
+        # A LOAD FAILURE IS A RECORD WITH NO TRACE, so there is nothing here to reconstruct and the exit
+        # code has to say so in a way a reader can act on rather than a KeyError.
+        print("  bundle    %s" % path)
+        print("  THIS IS A LOAD-FAILURE RECORD, not an episode: %s (exit code %s). Nothing was played and "
+              "there is no trace to reconstruct." % (b.get("why"), b.get("exit_code")))
+        print("  the failure lines are carried in log.quoted_lines (%d of them)"
+              % len(b.get("log", {}).get("quoted_lines", [])))
+        return False
     ok, reasons, live = SC.verify(b)
     print("  bundle    %s" % path)
     print("  recorded  %s" % json.dumps(b.get("score")))
@@ -662,6 +728,13 @@ def main():
     ap.add_argument("--no-death-ends", dest="death_ends", action="store_false")
     ap.add_argument("--llama-server", dest="llama_server", default=None)
     ap.add_argument("--overwrite-artifact", dest="overwrite_artifact", default=None, metavar="REASON")
+    ap.add_argument("--mmproj", default=None,
+                    help="path to the multimodal projector (default: picked by longest common prefix with "
+                         "the weight filename, and recorded)")
+    ap.add_argument("--no-mmproj", dest="no_mmproj", action="store_true",
+                    help="load no projector at all. MEASURED REASON THIS EXISTS: the 9B's projector aborts "
+                         "this fork inside clip_model_loader while its weights load fine, and this cabinet "
+                         "asks its question and reads its answer in TEXT.")
     ap.add_argument("--legend", choices=sorted(LEGENDS), default=None,
                     help="which arm of the legend A/B to play under (default: %s, always recorded)"
                          % LEGEND_DEFAULT)
@@ -701,7 +774,9 @@ def main():
         if not os.path.exists(p):
             print("  ENTRANT ABSENT: %s" % a.entrant)
             return 2
-        res = run_model(p, seeds, a.ticks, a.death_ends, a.overwrite_artifact, a.port)
+        res = run_model(p, seeds, a.ticks, a.death_ends, a.overwrite_artifact, a.port,
+                        mmproj_mode=("off" if a.no_mmproj else ("path" if a.mmproj else "auto")),
+                        mmproj_path=a.mmproj)
     else:
         print("  pick one: --baseline cycle-shortcut | --entrant <gguf> | --verify F | --replay F")
         return 2

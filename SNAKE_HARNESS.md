@@ -133,10 +133,16 @@ loaded, `--reasoning off` (declared, with a reason: a one-letter answer; the pro
 | `prose` (U D L R) | 1, 7, 13, 42 | **0** | 120 each | `R` on 120/120 | 0.92–1.19 s | 2 |
 | `order` (D R U L) | 1 | **0** | 120 | `D` on 120/120 | 0.88 s | 2 |
 | `first` (R U D L) | 1 | **0** | 120 | `R` on 120/120 | 0.93 s | 2 |
+| `prose`, **9B** | 1, 7 | **0** | 120 each | `R` on 120/120 | 1.14–2.22 s | 2 |
 
 **The model is beaten by every baseline at the same horizon, and it is not close: 0 apples in 480 turns,
 with `not_an_action` 0 and `missing_values` 0** — the answers were all legal, immediate, and never the
 apple's direction.
+
+**And it is not a size effect at these sizes.** The 9B (`Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0`, digest
+`c79fcdfaf6b7bf47`) answered `R` 120/120 on both seeds it played, and the two 9B episodes and all four 4B
+episodes produced the **identical state chain** `7f46665eb1a91edf` — identical, because none of them ever
+ate an apple, so the seed never reached the game. Two sizes, one behaviour.
 
 ### What the constant answer is, and what it is not
 
@@ -165,6 +171,35 @@ is a function of the prompt's wording and NOT of the board.** Three arms with n=
 rules above and nothing more; a fourth arm could still find one, and the honest count of what this run
 establishes is *that the tool does not play snake and its letters come from the question's phrasing*.
 
+### The 9B, the projector, and why a failure now carries an artifact
+
+The 9B's first arm **aborted at load** (`rc=-6`, `ggml_abort`). The crate's own backtrace names the path —
+`clip_model_loader::load_tensors` → `ggml_backend_buffer_set_usage` → `ggml_abort` — and the log names the
+reason, which is not the weights:
+
+```
+/home/runner/work/llama.cpp/llama.cpp/ggml/src/ggml-backend.cpp:179: GGML_ASSERT(buffer) failed
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 595.33 MiB on device 0: cudaMalloc failed: out of memory
+alloc_tensor_range: failed to allocate CUDA0 buffer of size 624252928
+```
+
+**The projector is allocated on CUDA0 regardless of `-ngl 0`.** Measured concurrently: 8,192 MiB of card,
+another tenant's `llama-server` holding 5,290 MiB, ~1 GiB free. The 4B's projector (0.37 GiB) had loaded
+fine earlier in the same tenancy; the 9B's (595 MiB, digest `e0cb6f6988cea323`) did not. With
+`--no-mmproj` — which this cabinet does not need, because it asks its question and reads its answer **in
+text** — the 9B loads in 6 s and plays.
+
+So the flag exists, it is recorded (`config.mmproj_mode`), and its reason is a measurement rather than a
+workaround.
+
+**AND THE FAILURE WAS ALMOST LOST, WHICH IS WHY IT NOW HAS ITS OWN RECORD.** `logs/` is scratch by this
+repository's own rule (`DECISION_logs_are_scratch.md`; `git check-ignore logs/` confirms it), so the one
+line that explained a twelve-minute dead end would have been swept away, and the note in the source that
+cited it would have been a stand-in outliving its thing. The driver now writes
+`probes/SNAKE_LOADFAIL_<agent>_mm-<mode>_<utc>.json` on that path, carrying the exit code, the full argv,
+the binary and entrant digests, the projector digest — and the failure lines **quoted inside the record**,
+with the field `log.log_is_complete: false` saying plainly that the quote is a filter and not a transcript.
+
 ## The controls
 
 `python3 test_snake_harness.py` — 18 checks, exit 1 on any failure. Two of them found real things while
@@ -184,6 +219,7 @@ being written, and both are kept rather than tidied:
 python3 snake_run.py --self-test                                   # wrapper + solver controls
 python3 snake_run.py --baseline greedy-safe --ticks 120            # the floor on the frozen seed list
 python3 snake_run.py --entrant <gguf> --ticks 120                  # the model arm (fork binary by default)
+python3 snake_run.py --entrant <gguf> --no-mmproj --ticks 120      # text-only: no projector is loaded
 python3 snake_run.py --legend order --entrant <gguf> --seeds 1     # the second arm of the legend A/B
 python3 snake_run.py --verify probes/SNAKE_<agent>_s1.json         # score from the bundle alone
 python3 snake_run.py --replay probes/SNAKE_<agent>_s1.json         # re-enter the run in the real page
@@ -198,8 +234,12 @@ digest of what it replaced — that gate fired twice during this work and both r
 
 ## What is NOT established
 
-* **One model, one size.** Three Bonsai sizes exist; only the 4B was recorded. The 2B refuses or crashes on
-  this family's fork per the sibling dossier, and the 9B is untried here. This is a first run, not a series.
+* **Two models, not three, and not a series.** The 4B (four seeds) and the 9B (two seeds) were recorded. The
+  2B is not tried here; the sibling dossier records it refusing or crashing on this family's fork, and per
+  the 9B's own result that claim would need its projector/CPU split stated before it meant anything.
+* **The 9B ran without its projector.** Its numbers are for a TEXT-only launch, which is the launch this
+  cabinet needs; the same model with `--mmproj` aborted on a CUDA allocation (see above). That is a
+  difference in the instrument, and the record carries it (`config.mmproj_mode`).
 * **No oracle.** Unlike the sibling cabinet's levels, snake has no solved reference, so `best_life` and
   `eaten` are floors against heuristics, not against optimality.
 * **The baselines' safety is argued, not proven** for `greedy-safe` and `cycle-shortcut` (0 deaths on 4
