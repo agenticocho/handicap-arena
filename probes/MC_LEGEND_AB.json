@@ -1,0 +1,443 @@
+{
+ "what": "THE LEGEND A/B -- one entrant, two states, two arms, ONE CLAUSE APART",
+ "prereg": "PREREG_mc_legend_ab.md",
+ "prereg_digest": "49784e02849a401f",
+ "entrant": "Qwen3.5-2B-UD-Q4_K_XL",
+ "entrant_digest": "0d5cb2e1b6c4e484",
+ "legend_arms": {
+  "example": "ec59f2dc5fd35518",
+  "plain": "d8ee3da099c1a0c2"
+ },
+ "arms": {
+  "example": "You are playing Missile Command. Enemy missiles are falling towards a line of positions numbered 0 to 9. Your cities sit at fixed positions on that line and each threat line tells you the position where that missile will land and the tick it lands on. A missile that lands on a city destroys it. A missile that lands on empty ground does nothing at all, so a threat you leave alone may cost you nothing.\n\nYou have silos on their own fixed positions, each holding a limited number of interceptors, and a silo can only reach a landing position within four of its own position. Each turn you may fire one interceptor from one silo at one threat, or you may fire nothing. Interceptors are scarce: spending one on a threat that could not have hurt you means it is not there when a city needs it. Every turn the tick advances by one, and any missile whose landing tick has arrived lands.\n\n{state}\n\nThe actions you have already taken are: {recent}\n\nAnswer with exactly two characters: the number of the silo first, then the letter of the threat. 3W would mean fire from silo 3 at a threat called W -- no silo 3 and no threat W exist here, that is only the shape of an answer. If you want to fire nothing this turn, answer with the single word PASS. You may add an explanation after your answer, and it will be ignored.",
+  "plain": "You are playing Missile Command. Enemy missiles are falling towards a line of positions numbered 0 to 9. Your cities sit at fixed positions on that line and each threat line tells you the position where that missile will land and the tick it lands on. A missile that lands on a city destroys it. A missile that lands on empty ground does nothing at all, so a threat you leave alone may cost you nothing.\n\nYou have silos on their own fixed positions, each holding a limited number of interceptors, and a silo can only reach a landing position within four of its own position. Each turn you may fire one interceptor from one silo at one threat, or you may fire nothing. Interceptors are scarce: spending one on a threat that could not have hurt you means it is not there when a city needs it. Every turn the tick advances by one, and any missile whose landing tick has arrived lands.\n\n{state}\n\nThe actions you have already taken are: {recent}\n\nAnswer with exactly two characters: the number of the silo you are firing from first, then the letter of the threat you are firing at. Those two values are in the state above -- use the silo numbers and the threat letters exactly as they are written there. If you want to fire nothing this turn, answer with the single word PASS. You may add an explanation after your answer, and it will be ignored."
+ },
+ "protocol": {
+  "play_mode": "step_locked",
+  "clock_audit": {
+   "simulator": "missile_command.py",
+   "simulator_digest": "eb5ed36591b300e6",
+   "wall_clock_terms_found": [],
+   "reading": "NO WALL-CLOCK TERM EXISTS IN THE FROZEN SIMULATOR -- the play mode is turn-based by construction, so step-locking the clock is not a change this cabinet could make: there is nothing to lock. The only clock is the state's own `tick` integer, advanced one per action."
+  },
+  "reasoning": "off",
+  "reasoning_argv": [
+   "--reasoning",
+   "off"
+  ],
+  "fit_argv": [
+   "--fit",
+   "off"
+  ],
+  "max_tokens_ceiling": 64
+ },
+ "binary": {
+  "server_binary_digest": "0d5393431782ddf8",
+  "server_binary_digest_scope": "sha256 of the BINARY FILE, first 16 hex. THE BINARY IS PART OF THE INSTRUMENT: a path can name one build and hold another.",
+  "server_binary_source": "no selector given: the module constant LLAMA",
+  "server_binary_path": "/home/chilly1/llama.cpp/build/bin/llama-server"
+ },
+ "reader": {
+  "reader_of_record_path": "/home/chilly1/workspace/ocho_arena/answer_reader.py",
+  "reader_of_record_digest": "450050761099e93c",
+  "reader_of_record_scope": "sha256 of the READER FILE, first 16 hex. RULING 79: the reader of record is imported, never reimplemented; this cabinet's tree does not carry it, so it is loaded from the shared tree and the file that answered is named here.",
+  "reader_of_record_in_this_tree": false
+ },
+ "cells": [
+  {
+   "arm": "example",
+   "state": "mc_01_one_shot",
+   "loaded": true,
+   "legend_digest": "ec59f2dc5fd35518",
+   "confidence": null,
+   "tokens": [
+    "3P",
+    "3P",
+    "3P"
+   ],
+   "score": 0,
+   "cities_total": 1,
+   "counts": {
+    "fired": 0,
+    "passed": 0,
+    "no_ammo": 0,
+    "out_of_range": 0,
+    "unknown": 3,
+    "malformed": 0,
+    "late": 0,
+    "hit": 1,
+    "spared": 0
+   },
+   "fired": 0,
+   "passed": 0,
+   "no_ammo": 0,
+   "out_of_range": 0,
+   "unknown": 3,
+   "malformed": 0,
+   "late": 0,
+   "hit": 1,
+   "spared": 0,
+   "silos_that_exist": [
+    "1"
+   ],
+   "threats_total": 1,
+   "silo_digits_in_the_tokens": [
+    "3"
+   ],
+   "entrant_digest": "0d5cb2e1b6c4e484",
+   "server_binary_digest": "0d5393431782ddf8",
+   "server_argv": [
+    "/home/chilly1/llama.cpp/build/bin/llama-server",
+    "-m",
+    "/home/chilly1/moltbook_pipeline/models/Qwen3.5-2B-UD-Q4_K_XL.gguf",
+    "-c",
+    "4096",
+    "-ngl",
+    "0",
+    "--port",
+    "8762",
+    "--no-webui",
+    "--reasoning",
+    "off",
+    "--fit",
+    "off"
+   ],
+   "sufficiency": {
+    "score_recomputed_from_state_and_actions": 0,
+    "score_matches_the_record": true,
+    "screens_rebuilt": "4/4",
+    "screens_reproduce": true,
+    "reading": "THE RECORD IS SUFFICIENT: the score and every screen the entrant saw recompute from (state_text, tokens) under the frozen simulator."
+   },
+   "budget_signature": {
+    "turns": 3,
+    "turns_that_hit_the_ceiling": 0,
+    "ceiling": 64,
+    "fraction_capped": 0.0,
+    "all_turns_capped": false,
+    "reading": "no turn hit the ceiling -- the answers are the model's own endings"
+   },
+   "controls": {
+    "tokens": 3,
+    "per_token_outcomes": 3,
+    "every_token_has_exactly_one_outcome": true,
+    "threats_in_the_state": 1,
+    "destroyed_plus_hit_plus_spared": 1,
+    "every_threat_is_accounted_for": true
+   }
+  },
+  {
+   "arm": "example",
+   "state": "mc_02_scarcity",
+   "loaded": true,
+   "legend_digest": "ec59f2dc5fd35518",
+   "confidence": null,
+   "tokens": [
+    "3X",
+    "3X",
+    "3X",
+    "3Q",
+    "3P",
+    "3T"
+   ],
+   "score": 0,
+   "cities_total": 4,
+   "counts": {
+    "fired": 0,
+    "passed": 0,
+    "no_ammo": 0,
+    "out_of_range": 0,
+    "unknown": 6,
+    "malformed": 0,
+    "late": 0,
+    "hit": 4,
+    "spared": 4
+   },
+   "fired": 0,
+   "passed": 0,
+   "no_ammo": 0,
+   "out_of_range": 0,
+   "unknown": 6,
+   "malformed": 0,
+   "late": 0,
+   "hit": 4,
+   "spared": 4,
+   "silos_that_exist": [
+    "1",
+    "2"
+   ],
+   "threats_total": 8,
+   "silo_digits_in_the_tokens": [
+    "3"
+   ],
+   "entrant_digest": "0d5cb2e1b6c4e484",
+   "server_binary_digest": "0d5393431782ddf8",
+   "server_argv": [
+    "/home/chilly1/llama.cpp/build/bin/llama-server",
+    "-m",
+    "/home/chilly1/moltbook_pipeline/models/Qwen3.5-2B-UD-Q4_K_XL.gguf",
+    "-c",
+    "4096",
+    "-ngl",
+    "0",
+    "--port",
+    "8762",
+    "--no-webui",
+    "--reasoning",
+    "off",
+    "--fit",
+    "off"
+   ],
+   "sufficiency": {
+    "score_recomputed_from_state_and_actions": 0,
+    "score_matches_the_record": true,
+    "screens_rebuilt": "7/7",
+    "screens_reproduce": true,
+    "reading": "THE RECORD IS SUFFICIENT: the score and every screen the entrant saw recompute from (state_text, tokens) under the frozen simulator."
+   },
+   "budget_signature": {
+    "turns": 6,
+    "turns_that_hit_the_ceiling": 0,
+    "ceiling": 64,
+    "fraction_capped": 0.0,
+    "all_turns_capped": false,
+    "reading": "no turn hit the ceiling -- the answers are the model's own endings"
+   },
+   "controls": {
+    "tokens": 6,
+    "per_token_outcomes": 6,
+    "every_token_has_exactly_one_outcome": true,
+    "threats_in_the_state": 8,
+    "destroyed_plus_hit_plus_spared": 8,
+    "every_threat_is_accounted_for": true
+   }
+  },
+  {
+   "arm": "plain",
+   "state": "mc_01_one_shot",
+   "loaded": true,
+   "legend_digest": "d8ee3da099c1a0c2",
+   "confidence": null,
+   "tokens": [
+    "1P"
+   ],
+   "score": 1,
+   "cities_total": 1,
+   "counts": {
+    "fired": 1,
+    "passed": 0,
+    "no_ammo": 0,
+    "out_of_range": 0,
+    "unknown": 0,
+    "malformed": 0,
+    "late": 0,
+    "hit": 0,
+    "spared": 0
+   },
+   "fired": 1,
+   "passed": 0,
+   "no_ammo": 0,
+   "out_of_range": 0,
+   "unknown": 0,
+   "malformed": 0,
+   "late": 0,
+   "hit": 0,
+   "spared": 0,
+   "silos_that_exist": [
+    "1"
+   ],
+   "threats_total": 1,
+   "silo_digits_in_the_tokens": [
+    "1"
+   ],
+   "entrant_digest": "0d5cb2e1b6c4e484",
+   "server_binary_digest": "0d5393431782ddf8",
+   "server_argv": [
+    "/home/chilly1/llama.cpp/build/bin/llama-server",
+    "-m",
+    "/home/chilly1/moltbook_pipeline/models/Qwen3.5-2B-UD-Q4_K_XL.gguf",
+    "-c",
+    "4096",
+    "-ngl",
+    "0",
+    "--port",
+    "8762",
+    "--no-webui",
+    "--reasoning",
+    "off",
+    "--fit",
+    "off"
+   ],
+   "sufficiency": {
+    "score_recomputed_from_state_and_actions": 1,
+    "score_matches_the_record": true,
+    "screens_rebuilt": "2/2",
+    "screens_reproduce": true,
+    "reading": "THE RECORD IS SUFFICIENT: the score and every screen the entrant saw recompute from (state_text, tokens) under the frozen simulator."
+   },
+   "budget_signature": {
+    "turns": 1,
+    "turns_that_hit_the_ceiling": 0,
+    "ceiling": 64,
+    "fraction_capped": 0.0,
+    "all_turns_capped": false,
+    "reading": "no turn hit the ceiling -- the answers are the model's own endings"
+   },
+   "controls": {
+    "tokens": 1,
+    "per_token_outcomes": 1,
+    "every_token_has_exactly_one_outcome": true,
+    "threats_in_the_state": 1,
+    "destroyed_plus_hit_plus_spared": 1,
+    "every_threat_is_accounted_for": true
+   }
+  },
+  {
+   "arm": "plain",
+   "state": "mc_02_scarcity",
+   "loaded": true,
+   "legend_digest": "d8ee3da099c1a0c2",
+   "confidence": null,
+   "tokens": [
+    "1X",
+    "1X",
+    "1X",
+    "1Q",
+    "1S",
+    "1T"
+   ],
+   "score": 0,
+   "cities_total": 4,
+   "counts": {
+    "fired": 0,
+    "passed": 0,
+    "no_ammo": 0,
+    "out_of_range": 2,
+    "unknown": 0,
+    "malformed": 0,
+    "late": 4,
+    "hit": 4,
+    "spared": 4
+   },
+   "fired": 0,
+   "passed": 0,
+   "no_ammo": 0,
+   "out_of_range": 2,
+   "unknown": 0,
+   "malformed": 0,
+   "late": 4,
+   "hit": 4,
+   "spared": 4,
+   "silos_that_exist": [
+    "1",
+    "2"
+   ],
+   "threats_total": 8,
+   "silo_digits_in_the_tokens": [
+    "1"
+   ],
+   "entrant_digest": "0d5cb2e1b6c4e484",
+   "server_binary_digest": "0d5393431782ddf8",
+   "server_argv": [
+    "/home/chilly1/llama.cpp/build/bin/llama-server",
+    "-m",
+    "/home/chilly1/moltbook_pipeline/models/Qwen3.5-2B-UD-Q4_K_XL.gguf",
+    "-c",
+    "4096",
+    "-ngl",
+    "0",
+    "--port",
+    "8762",
+    "--no-webui",
+    "--reasoning",
+    "off",
+    "--fit",
+    "off"
+   ],
+   "sufficiency": {
+    "score_recomputed_from_state_and_actions": 0,
+    "score_matches_the_record": true,
+    "screens_rebuilt": "7/7",
+    "screens_reproduce": true,
+    "reading": "THE RECORD IS SUFFICIENT: the score and every screen the entrant saw recompute from (state_text, tokens) under the frozen simulator."
+   },
+   "budget_signature": {
+    "turns": 6,
+    "turns_that_hit_the_ceiling": 0,
+    "ceiling": 64,
+    "fraction_capped": 0.0,
+    "all_turns_capped": false,
+    "reading": "no turn hit the ceiling -- the answers are the model's own endings"
+   },
+   "controls": {
+    "tokens": 6,
+    "per_token_outcomes": 6,
+    "every_token_has_exactly_one_outcome": true,
+    "threats_in_the_state": 8,
+    "destroyed_plus_hit_plus_spared": 8,
+    "every_threat_is_accounted_for": true
+   }
+  }
+ ],
+ "totals": {
+  "example": {
+   "cells": 2,
+   "score": 0,
+   "cities_total": 5,
+   "tokens_generated": 9,
+   "threats_total": 9,
+   "best_cell_score": 0,
+   "fired": 0,
+   "passed": 0,
+   "no_ammo": 0,
+   "out_of_range": 0,
+   "unknown": 9,
+   "malformed": 0,
+   "late": 0,
+   "hit": 5,
+   "spared": 4,
+   "sum_of_per_token_outcomes": 9,
+   "every_token_has_exactly_one_outcome": true,
+   "destroyed_plus_hit_plus_spared": 9,
+   "every_threat_is_accounted_for": true,
+   "controls_pass": true
+  },
+  "plain": {
+   "cells": 2,
+   "score": 1,
+   "cities_total": 5,
+   "tokens_generated": 7,
+   "threats_total": 9,
+   "best_cell_score": 1,
+   "fired": 1,
+   "passed": 0,
+   "no_ammo": 0,
+   "out_of_range": 2,
+   "unknown": 0,
+   "malformed": 0,
+   "late": 4,
+   "hit": 4,
+   "spared": 4,
+   "sum_of_per_token_outcomes": 7,
+   "every_token_has_exactly_one_outcome": true,
+   "destroyed_plus_hit_plus_spared": 9,
+   "every_threat_is_accounted_for": true,
+   "controls_pass": true
+  }
+ },
+ "branch": "BRANCH 1 -- THE EXAMPLE WAS THE CARRIER: `unknown` DOWN and `fired` UP, exactly as the pre-registration predicted.",
+ "reading": "The prediction and its three branches are in the pre-registration; the branch above is selected BY THE COUNTERS, not by a preference. Scope: ONE entrant, TWO states, n=1 per cell -- a demonstration, not a field. The DECLARED ARM DOES NOT MOVE: `example` remains the recorded instrument, and changing it is a separate act with its own reason.",
+ "artifact_replaced": {
+  "path": "probes/MC_LEGEND_AB.json",
+  "sha256": "fa2603d1ea8547b777098a34a6fb2d8d9ddd678a46e6adad1696d3c61de88b6a",
+  "bytes": 12995,
+  "mtime": "2026-10-17T18:27:48Z",
+  "it_named": {
+   "server_binary_digest": null,
+   "legend_digest": null,
+   "reasoning": null
+  },
+  "reason_given": "the two previous AB records carried a MIS-SPECIFIED control: it compared the sum of ALL counters (including the impact resolutions hit/spared) with the token count, so it read False on a correct record -- 18 outcomes against 9 tokens. The per-token counters and the impact counters obey two different equalities and both now travel per cell. The replaced record's digest is in artifact_replaced",
+  "reading": "THIS RUN REPLACED THE RECORD AT THIS PATH. The replaced record is NOT recoverable from this file: what survives is that it existed, the digest of the bytes it was, and what it said about its own instrument."
+ }
+}

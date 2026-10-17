@@ -1,0 +1,14 @@
+{
+ "entrant": "Llama-3.2-3B-Instruct-Q4_K_M",
+ "entrant_digest": "d92b55c61c649a0d",
+ "level": "mc_02_scarcity",
+ "loaded": false,
+ "state_digest": "327d2157bd0b8a83",
+ "state_path": "levels/mc_02_scarcity.txt",
+ "load_failure_class": "the DEVICE has no room -- a TENANCY condition, not a model condition",
+ "why": "server exited rc=1.\nTHE LOG NAMES THE CAUSE -- log line 10, quoted verbatim: 0.00.921.604 E ggml_backend_cuda_buffer_type_alloc_buffer: allocating 84.56 MiB on device 0: cudaMalloc failed: out of memory\n  THIS IS NOT A STATEMENT ABOUT THE MODEL: the cabinet runs CPU-ONLY (-ngl 0), and the log shows the failure inside the fit/memory probe rather than in a tensor read. The driver passes `--fit off` when the build carries it (see config.fit_scope), so a failure that survives that is a genuine device-memory condition.\n  AND THE CARD AT FAILURE IS HELD BY (RULING 82):   AND THE CARD IS HELD BY: pid 2396 (1142 MiB) holding the card with NO LEASE TRACED TO IT; pid 2398 (134 MiB) holding the card with NO LEASE TRACED TO IT; pid 681892 (5290 MiB) holding the card with NO LEASE TRACED TO IT; pid 724486 (1084 MiB) holding the card with NO LEASE TRACED TO IT.  Tenants total 7650 MiB.",
+ "server_binary_digest": "0d5393431782ddf8",
+ "server_binary_digest_scope": "sha256 of the BINARY FILE, first 16 hex. THE BINARY IS PART OF THE INSTRUMENT: a path can name one build and hold another.",
+ "server_binary_source": "no selector given: the module constant LLAMA",
+ "server_binary_path": "/home/chilly1/llama.cpp/build/bin/llama-server"
+}
