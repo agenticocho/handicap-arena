@@ -1,26 +1,28 @@
 {
- "cities_surviving": 0,
- "cities_alive": [],
- "score": 0,
+ "cities_surviving": 1,
+ "cities_alive": [
+  "A"
+ ],
+ "score": 1,
  "cities_total": 4,
  "actions": 6,
  "counts": {
-  "fired": 0,
+  "fired": 1,
   "passed": 0,
   "no_ammo": 0,
-  "out_of_range": 0,
-  "unknown": 6,
+  "out_of_range": 2,
+  "unknown": 0,
   "malformed": 0,
-  "late": 0,
-  "hit": 4,
+  "late": 3,
+  "hit": 3,
   "spared": 4
  },
  "trace": [
   {
    "tick": 0,
-   "token": "0X",
-   "outcome": "unknown",
-   "note": "no silo '0' or no threat 'X'",
+   "token": "1X",
+   "outcome": "out_of_range",
+   "note": "silo 1 at 0 cannot reach impact 7 (range 4)",
    "cities_alive": [
     "A",
     "B",
@@ -44,9 +46,9 @@
   },
   {
    "tick": 1,
-   "token": "0X",
-   "outcome": "unknown",
-   "note": "no silo '0' or no threat 'X'",
+   "token": "1X",
+   "outcome": "out_of_range",
+   "note": "silo 1 at 0 cannot reach impact 7 (range 4)",
    "cities_alive": [
     "A",
     "B",
@@ -70,9 +72,9 @@
   },
   {
    "tick": 2,
-   "token": "0P",
-   "outcome": "unknown",
-   "note": "no silo '0' or no threat 'P'; X hit empty ground; Y hit empty ground; Z hit empty ground",
+   "token": "2X",
+   "outcome": "late",
+   "note": "threat X impacted at tick 2; X hit empty ground; Y hit empty ground; Z hit empty ground",
    "cities_alive": [
     "A",
     "B",
@@ -93,31 +95,32 @@
   },
   {
    "tick": 3,
-   "token": "0P",
-   "outcome": "unknown",
-   "note": "no silo '0' or no threat 'P'; Q hit B; R hit C",
+   "token": "1P",
+   "outcome": "fired",
+   "note": "P destroyed; Q hit B; R hit C",
    "cities_alive": [
     "A",
     "D"
    ],
    "ammo": {
-    "1": 2,
+    "1": 1,
     "2": 2
    },
    "threats_remaining": [
-    "P",
     "S",
     "T"
    ]
   },
   {
    "tick": 4,
-   "token": "0P",
-   "outcome": "unknown",
-   "note": "no silo '0' or no threat 'P'; P hit A; S hit D",
-   "cities_alive": [],
+   "token": "1S",
+   "outcome": "late",
+   "note": "threat S impacted at tick 4; S hit D",
+   "cities_alive": [
+    "A"
+   ],
    "ammo": {
-    "1": 2,
+    "1": 1,
     "2": 2
    },
    "threats_remaining": [
@@ -126,19 +129,21 @@
   },
   {
    "tick": 5,
-   "token": "0W",
-   "outcome": "unknown",
-   "note": "no silo '0' or no threat 'W'; T hit empty ground",
-   "cities_alive": [],
+   "token": "1T",
+   "outcome": "late",
+   "note": "threat T impacted at tick 5; T hit empty ground",
+   "cities_alive": [
+    "A"
+   ],
    "ammo": {
-    "1": 2,
+    "1": 1,
     "2": 2
    },
    "threats_remaining": []
   }
  ],
  "entrant": "OculusMind-ToolCall-8B-v2.i1-Q4_K_M",
- "entrant_digest": "d1af691a3d294be7",
+ "entrant_digest": "1ef540cf173f8d86",
  "entrant_digest_scope": "sha256 of the model FILE, first 16 hex. THE ENTRANT IS THE SUBJECT OF THE MEASUREMENT, so it is identified by a digest; `entrant` beside it is a LABEL, for reading, not for checking.",
  "level": "mc_02_scarcity",
  "state_path": "levels/mc_02_scarcity.txt",
@@ -146,31 +151,33 @@
  "state_digest": "327d2157bd0b8a83",
  "simulator_digest": "eb5ed36591b300e6",
  "simulator_digest_scope": "sha256 of missile_command.py, first 16 hex -- THE SIMULATOR IS PART OF THE INSTRUMENT",
- "legend": "example",
- "legend_digest": "ec59f2dc5fd35518",
+ "driver_digest": "4018f0262498eb3e",
+ "driver_digest_scope": "sha256 of missile_command_run.py, first 16 hex -- THE DRIVER IS PART OF THE INSTRUMENT: it renders the screen, derives the cap and reads the answer. Added 2026-10-17, when it was measured to be the one input whose digest did not travel in the records it produced (card t_ec0b0420).",
+ "legend": "plain",
+ "legend_digest": "d8ee3da099c1a0c2",
  "legend_arms": {
   "example": "ec59f2dc5fd35518",
   "plain": "d8ee3da099c1a0c2"
  },
- "legend_source": "selected at call time (--legend or MC_LEGEND)",
+ "legend_source": "the recorded default (plain)",
  "legend_scope": "sha256 of the PROMPT TEMPLATE, first 16 hex; the state is filled in per turn. BOTH arms are digested, because a comparison between two records whose difference is invisible is a comparison between two files taken on trust.",
- "prompt_turn0": "You are playing Missile Command. Enemy missiles are falling towards a line of positions numbered 0 to 9. Your cities sit at fixed positions on that line and each threat line tells you the position where that missile will land and the tick it lands on. A missile that lands on a city destroys it. A missile that lands on empty ground does nothing at all, so a threat you leave alone may cost you nothing.\n\nYou have silos on their own fixed positions, each holding a limited number of interceptors, and a silo can only reach a landing position within four of its own position. Each turn you may fire one interceptor from one silo at one threat, or you may fire nothing. Interceptors are scarce: spending one on a threat that could not have hurt you means it is not there when a city needs it. Every turn the tick advances by one, and any missile whose landing tick has arrived lands.\n\ntick 0\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5\nthreat X impact 7 tick 2\nthreat Y impact 8 tick 2\nthreat Z impact 9 tick 2\n\nThe actions you have already taken are: none yet\n\nAnswer with exactly two characters: the number of the silo first, then the letter of the threat. 3W would mean fire from silo 3 at a threat called W -- no silo 3 and no threat W exist here, that is only the shape of an answer. If you want to fire nothing this turn, answer with the single word PASS. You may add an explanation after your answer, and it will be ignored.",
+ "prompt_turn0": "You are playing Missile Command. Enemy missiles are falling towards a line of positions numbered 0 to 9. Your cities sit at fixed positions on that line and each threat line tells you the position where that missile will land and the tick it lands on. A missile that lands on a city destroys it. A missile that lands on empty ground does nothing at all, so a threat you leave alone may cost you nothing.\n\nYou have silos on their own fixed positions, each holding a limited number of interceptors, and a silo can only reach a landing position within four of its own position. Each turn you may fire one interceptor from one silo at one threat, or you may fire nothing. Interceptors are scarce: spending one on a threat that could not have hurt you means it is not there when a city needs it. Every turn the tick advances by one, and any missile whose landing tick has arrived lands.\n\ntick 0\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5\nthreat X impact 7 tick 2\nthreat Y impact 8 tick 2\nthreat Z impact 9 tick 2\n\nThe actions you have already taken are: none yet\n\nAnswer with exactly two characters: the number of the silo you are firing from first, then the letter of the threat you are firing at. Those two values are in the state above -- use the silo numbers and the threat letters exactly as they are written there. If you want to fire nothing this turn, answer with the single word PASS. You may add an explanation after your answer, and it will be ignored.",
  "loaded": true,
  "load_s": 3.0,
  "tokens": [
-  "0X",
-  "0X",
-  "0P",
-  "0P",
-  "0P",
-  "0W"
+  "1X",
+  "1X",
+  "2X",
+  "1P",
+  "1S",
+  "1T"
  ],
  "turns": [
   {
    "ply": 0,
-   "raw": "0X",
-   "token": "0X",
-   "secs": 0.9,
+   "raw": "1X",
+   "token": "1X",
+   "secs": 1.0,
    "gen_tokens": 3,
    "budget_hit": false,
    "cap_cut": "nothing -- the model stopped on its own",
@@ -178,8 +185,8 @@
    "missing_value": false,
    "screen_before": "tick 0\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5\nthreat X impact 7 tick 2\nthreat Y impact 8 tick 2\nthreat Z impact 9 tick 2",
    "tick": 0,
-   "outcome": "unknown",
-   "outcome_note": "no silo '0' or no threat 'X'",
+   "outcome": "out_of_range",
+   "outcome_note": "silo 1 at 0 cannot reach impact 7 (range 4)",
    "cities_alive": [
     "A",
     "B",
@@ -203,9 +210,9 @@
   },
   {
    "ply": 1,
-   "raw": "0X",
-   "token": "0X",
-   "secs": 0.9,
+   "raw": "1X",
+   "token": "1X",
+   "secs": 1.0,
    "gen_tokens": 3,
    "budget_hit": false,
    "cap_cut": "nothing -- the model stopped on its own",
@@ -213,8 +220,8 @@
    "missing_value": false,
    "screen_before": "tick 0\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5\nthreat X impact 7 tick 2\nthreat Y impact 8 tick 2\nthreat Z impact 9 tick 2",
    "tick": 1,
-   "outcome": "unknown",
-   "outcome_note": "no silo '0' or no threat 'X'",
+   "outcome": "out_of_range",
+   "outcome_note": "silo 1 at 0 cannot reach impact 7 (range 4)",
    "cities_alive": [
     "A",
     "B",
@@ -238,9 +245,9 @@
   },
   {
    "ply": 2,
-   "raw": "0P",
-   "token": "0P",
-   "secs": 0.9,
+   "raw": "2X",
+   "token": "2X",
+   "secs": 1.0,
    "gen_tokens": 3,
    "budget_hit": false,
    "cap_cut": "nothing -- the model stopped on its own",
@@ -248,8 +255,8 @@
    "missing_value": false,
    "screen_before": "tick 1\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5\nthreat X impact 7 tick 2\nthreat Y impact 8 tick 2\nthreat Z impact 9 tick 2",
    "tick": 2,
-   "outcome": "unknown",
-   "outcome_note": "no silo '0' or no threat 'P'; X hit empty ground; Y hit empty ground; Z hit empty ground",
+   "outcome": "late",
+   "outcome_note": "threat X impacted at tick 2; X hit empty ground; Y hit empty ground; Z hit empty ground",
    "cities_alive": [
     "A",
     "B",
@@ -270,8 +277,8 @@
   },
   {
    "ply": 3,
-   "raw": "0P",
-   "token": "0P",
+   "raw": "1P",
+   "token": "1P",
    "secs": 0.9,
    "gen_tokens": 3,
    "budget_hit": false,
@@ -280,39 +287,40 @@
    "missing_value": false,
    "screen_before": "tick 2\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5",
    "tick": 3,
-   "outcome": "unknown",
-   "outcome_note": "no silo '0' or no threat 'P'; Q hit B; R hit C",
+   "outcome": "fired",
+   "outcome_note": "P destroyed; Q hit B; R hit C",
    "cities_alive": [
     "A",
     "D"
    ],
    "ammo": {
-    "1": 2,
+    "1": 1,
     "2": 2
    },
    "threats_remaining": [
-    "P",
     "S",
     "T"
    ]
   },
   {
    "ply": 4,
-   "raw": "0P",
-   "token": "0P",
-   "secs": 0.8,
+   "raw": "1S",
+   "token": "1S",
+   "secs": 0.9,
    "gen_tokens": 3,
    "budget_hit": false,
    "cap_cut": "nothing -- the model stopped on its own",
    "answer_field": "content",
    "missing_value": false,
-   "screen_before": "tick 3\ncity A at 2\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat P impact 2 tick 4\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5",
+   "screen_before": "tick 3\ncity A at 2\ncity D at 6\nsilo 1 at 0 ammo 1\nsilo 2 at 9 ammo 2\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5",
    "tick": 4,
-   "outcome": "unknown",
-   "outcome_note": "no silo '0' or no threat 'P'; P hit A; S hit D",
-   "cities_alive": [],
+   "outcome": "late",
+   "outcome_note": "threat S impacted at tick 4; S hit D",
+   "cities_alive": [
+    "A"
+   ],
    "ammo": {
-    "1": 2,
+    "1": 1,
     "2": 2
    },
    "threats_remaining": [
@@ -321,21 +329,23 @@
   },
   {
    "ply": 5,
-   "raw": "0W",
-   "token": "0W",
-   "secs": 0.8,
+   "raw": "1T",
+   "token": "1T",
+   "secs": 0.9,
    "gen_tokens": 3,
    "budget_hit": false,
    "cap_cut": "nothing -- the model stopped on its own",
    "answer_field": "content",
    "missing_value": false,
-   "screen_before": "tick 4\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat T impact 4 tick 5",
+   "screen_before": "tick 4\ncity A at 2\nsilo 1 at 0 ammo 1\nsilo 2 at 9 ammo 2\nthreat T impact 4 tick 5",
    "tick": 5,
-   "outcome": "unknown",
-   "outcome_note": "no silo '0' or no threat 'W'; T hit empty ground",
-   "cities_alive": [],
+   "outcome": "late",
+   "outcome_note": "threat T impacted at tick 5; T hit empty ground",
+   "cities_alive": [
+    "A"
+   ],
    "ammo": {
-    "1": 2,
+    "1": 1,
     "2": 2
    },
    "threats_remaining": []
@@ -346,10 +356,10 @@
   "tick 0\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5\nthreat X impact 7 tick 2\nthreat Y impact 8 tick 2\nthreat Z impact 9 tick 2",
   "tick 1\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5\nthreat X impact 7 tick 2\nthreat Y impact 8 tick 2\nthreat Z impact 9 tick 2",
   "tick 2\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5",
-  "tick 3\ncity A at 2\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat P impact 2 tick 4\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5",
-  "tick 4\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat T impact 4 tick 5"
+  "tick 3\ncity A at 2\ncity D at 6\nsilo 1 at 0 ammo 1\nsilo 2 at 9 ammo 2\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5",
+  "tick 4\ncity A at 2\nsilo 1 at 0 ammo 1\nsilo 2 at 9 ammo 2\nthreat T impact 4 tick 5"
  ],
- "final_screen": "tick 5\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2",
+ "final_screen": "tick 5\ncity A at 2\nsilo 1 at 0 ammo 1\nsilo 2 at 9 ammo 2",
  "command_cap": 7,
  "command_cap_source": "max impact tick in the state + 2",
  "ended": "threats_resolved",
@@ -379,7 +389,7 @@
    "reading": "NO WALL-CLOCK TERM EXISTS IN THE FROZEN SIMULATOR -- the play mode is turn-based by construction, so step-locking the clock is not a change this cabinet could make: there is nothing to lock. The only clock is the state's own `tick` integer, advanced one per action."
   },
   "declaration_file": "MC_DECLARATION.md",
-  "declaration_digest": "c7a60f1d6b4e4030",
+  "declaration_digest": "2ada03ee2ad1f60b",
   "declaration": {
    "cabinet": "missile-command",
    "reasoning_arm": "off",
@@ -388,11 +398,11 @@
    "protocol": "step_locked",
    "clock": "none -- the state's own `tick` integer, advanced by exactly one per action",
    "artifact": "probes/MC_<entrant>_<level>.json",
-   "legend_arm": "example"
+   "legend_arm": "plain"
   }
  },
  "sufficiency": {
-  "score_recomputed_from_state_and_actions": 0,
+  "score_recomputed_from_state_and_actions": 1,
   "score_matches_the_record": true,
   "screens_rebuilt": "7/7",
   "screens_reproduce": true,
@@ -422,13 +432,13 @@
   "ctx": 4096,
   "n_gpu_layers": 0,
   "temperature": 0.0,
-  "legend": "example",
-  "legend_digest": "ec59f2dc5fd35518",
+  "legend": "plain",
+  "legend_digest": "d8ee3da099c1a0c2",
   "legend_arms": {
    "example": "ec59f2dc5fd35518",
    "plain": "d8ee3da099c1a0c2"
   },
-  "legend_source": "selected at call time (--legend or MC_LEGEND)",
+  "legend_source": "the recorded default (plain)",
   "server_argv": [
    "/home/chilly1/llama.cpp/build/bin/llama-server",
    "-m",
@@ -438,7 +448,7 @@
    "-ngl",
    "0",
    "--port",
-   "8763",
+   "8761",
    "--no-webui",
    "--reasoning",
    "off",
@@ -467,5 +477,18 @@
   "inference_caveat": "a LONG answer is not necessarily deliberation -- a model that echoes the question in a schema produces a long answer too, and this probe cannot tell them apart",
   "requested": "off",
   "disagrees_with_config": false
+ },
+ "artifact_replaced": {
+  "path": "probes/MC_OculusMind-ToolCall-8B-v2.i1-Q4_K_M_mc_02_scarcity.json",
+  "sha256": "46c70c2950d08b79508d28a50bcdd627ce35aa575781da2eaebbdd06b673b803",
+  "bytes": 18595,
+  "mtime": "2026-10-17T18:50:48Z",
+  "it_named": {
+   "server_binary_digest": "0d5393431782ddf8",
+   "legend_digest": "ec59f2dc5fd35518",
+   "reasoning": "off"
+  },
+  "reason_given": "THE COORDINATE HELD AN example-ARM RECORD AND THE DECLARATION NOW NAMES plain (MC_DECLARATION.md 2ada03ee2ad1f60b, DECISION_mc_legend_arm.md, card t_ec0b0420): the cabinet's field is re-taken under the arm it declares. The replaced record's exact bytes are archived in probes/MC_FIELD_EXAMPLE_ARM_ARCHIVE_20261017.json with their sha256, so the replacement is recorded rather than silent.",
+  "reading": "THIS RUN REPLACED THE RECORD AT THIS PATH. The replaced record is NOT recoverable from this file: what survives is that it existed, the digest of the bytes it was, and what it said about its own instrument."
  }
 }

@@ -1,59 +1,33 @@
 {
- "cities_surviving": 0,
- "cities_alive": [],
- "score": 0,
+ "cities_surviving": 1,
+ "cities_alive": [
+  "A"
+ ],
+ "score": 1,
  "cities_total": 1,
- "actions": 3,
+ "actions": 1,
  "counts": {
-  "fired": 0,
+  "fired": 1,
   "passed": 0,
   "no_ammo": 0,
   "out_of_range": 0,
-  "unknown": 3,
+  "unknown": 0,
   "malformed": 0,
   "late": 0,
-  "hit": 1,
+  "hit": 0,
   "spared": 0
  },
  "trace": [
   {
    "tick": 0,
-   "token": "We",
-   "outcome": "unknown",
-   "note": "no silo 'W' or no threat 'E'",
+   "token": "1P",
+   "outcome": "fired",
+   "note": "P destroyed",
    "cities_alive": [
     "A"
    ],
    "ammo": {
-    "1": 1
-   },
-   "threats_remaining": [
-    "P"
-   ]
-  },
-  {
-   "tick": 1,
-   "token": "We",
-   "outcome": "unknown",
-   "note": "no silo 'W' or no threat 'E'",
-   "cities_alive": [
-    "A"
-   ],
-   "ammo": {
-    "1": 1
-   },
-   "threats_remaining": [
-    "P"
-   ]
-  },
-  {
-   "tick": 2,
-   "token": "We",
-   "outcome": "unknown",
-   "note": "no silo 'W' or no threat 'E'; P hit A",
-   "cities_alive": [],
-   "ammo": {
-    "1": 1
+    "1": 0
    },
    "threats_remaining": []
   }
@@ -67,114 +41,66 @@
  "state_digest": "ab101ca955c1c853",
  "simulator_digest": "eb5ed36591b300e6",
  "simulator_digest_scope": "sha256 of missile_command.py, first 16 hex -- THE SIMULATOR IS PART OF THE INSTRUMENT",
- "legend": "example",
- "legend_digest": "ec59f2dc5fd35518",
+ "driver_digest": "4018f0262498eb3e",
+ "driver_digest_scope": "sha256 of missile_command_run.py, first 16 hex -- THE DRIVER IS PART OF THE INSTRUMENT: it renders the screen, derives the cap and reads the answer. Added 2026-10-17, when it was measured to be the one input whose digest did not travel in the records it produced (card t_ec0b0420).",
+ "legend": "plain",
+ "legend_digest": "d8ee3da099c1a0c2",
  "legend_arms": {
   "example": "ec59f2dc5fd35518",
   "plain": "d8ee3da099c1a0c2"
  },
- "legend_source": "selected at call time (--legend or MC_LEGEND)",
+ "legend_source": "the recorded default (plain)",
  "legend_scope": "sha256 of the PROMPT TEMPLATE, first 16 hex; the state is filled in per turn. BOTH arms are digested, because a comparison between two records whose difference is invisible is a comparison between two files taken on trust.",
- "prompt_turn0": "You are playing Missile Command. Enemy missiles are falling towards a line of positions numbered 0 to 9. Your cities sit at fixed positions on that line and each threat line tells you the position where that missile will land and the tick it lands on. A missile that lands on a city destroys it. A missile that lands on empty ground does nothing at all, so a threat you leave alone may cost you nothing.\n\nYou have silos on their own fixed positions, each holding a limited number of interceptors, and a silo can only reach a landing position within four of its own position. Each turn you may fire one interceptor from one silo at one threat, or you may fire nothing. Interceptors are scarce: spending one on a threat that could not have hurt you means it is not there when a city needs it. Every turn the tick advances by one, and any missile whose landing tick has arrived lands.\n\ntick 0\ncity A at 2\nsilo 1 at 2 ammo 1\nthreat P impact 2 tick 2\n\nThe actions you have already taken are: none yet\n\nAnswer with exactly two characters: the number of the silo first, then the letter of the threat. 3W would mean fire from silo 3 at a threat called W -- no silo 3 and no threat W exist here, that is only the shape of an answer. If you want to fire nothing this turn, answer with the single word PASS. You may add an explanation after your answer, and it will be ignored.",
+ "prompt_turn0": "You are playing Missile Command. Enemy missiles are falling towards a line of positions numbered 0 to 9. Your cities sit at fixed positions on that line and each threat line tells you the position where that missile will land and the tick it lands on. A missile that lands on a city destroys it. A missile that lands on empty ground does nothing at all, so a threat you leave alone may cost you nothing.\n\nYou have silos on their own fixed positions, each holding a limited number of interceptors, and a silo can only reach a landing position within four of its own position. Each turn you may fire one interceptor from one silo at one threat, or you may fire nothing. Interceptors are scarce: spending one on a threat that could not have hurt you means it is not there when a city needs it. Every turn the tick advances by one, and any missile whose landing tick has arrived lands.\n\ntick 0\ncity A at 2\nsilo 1 at 2 ammo 1\nthreat P impact 2 tick 2\n\nThe actions you have already taken are: none yet\n\nAnswer with exactly two characters: the number of the silo you are firing from first, then the letter of the threat you are firing at. Those two values are in the state above -- use the silo numbers and the threat letters exactly as they are written there. If you want to fire nothing this turn, answer with the single word PASS. You may add an explanation after your answer, and it will be ignored.",
  "loaded": true,
  "load_s": 3.0,
  "tokens": [
-  "We",
-  "We",
-  "We"
+  "1P"
  ],
  "turns": [
   {
    "ply": 0,
-   "raw": "We need to parse the problem. It's a Missile Command game. There's a line positions 0-9. Cities at fixed positions. Threats have impact position and tick. We have silos at fixed positions with ammo. Each silo can only reach a landing position within four of its own position.",
-   "token": "We",
-   "secs": 5.6,
-   "gen_tokens": 64,
-   "budget_hit": true,
-   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "raw": "1P",
+   "token": "1P",
+   "secs": 1.2,
+   "gen_tokens": 3,
+   "budget_hit": false,
+   "cap_cut": "nothing -- the model stopped on its own",
    "answer_field": "content",
    "missing_value": false,
    "screen_before": "tick 0\ncity A at 2\nsilo 1 at 2 ammo 1\nthreat P impact 2 tick 2",
    "tick": 0,
-   "outcome": "unknown",
-   "outcome_note": "no silo 'W' or no threat 'E'",
+   "outcome": "fired",
+   "outcome_note": "P destroyed",
    "cities_alive": [
     "A"
    ],
    "ammo": {
-    "1": 1
-   },
-   "threats_remaining": [
-    "P"
-   ]
-  },
-  {
-   "ply": 1,
-   "raw": "We need to parse the problem. It's a Missile Command game. There's a line positions 0-9. Cities at fixed positions. Threats have impact position and tick. We have silos at fixed positions with ammo. Each silo can only reach landing position within four of its own position. Each turn",
-   "token": "We",
-   "secs": 4.6,
-   "gen_tokens": 64,
-   "budget_hit": true,
-   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
-   "answer_field": "content",
-   "missing_value": false,
-   "screen_before": "tick 0\ncity A at 2\nsilo 1 at 2 ammo 1\nthreat P impact 2 tick 2",
-   "tick": 1,
-   "outcome": "unknown",
-   "outcome_note": "no silo 'W' or no threat 'E'",
-   "cities_alive": [
-    "A"
-   ],
-   "ammo": {
-    "1": 1
-   },
-   "threats_remaining": [
-    "P"
-   ]
-  },
-  {
-   "ply": 2,
-   "raw": "We need to parse the problem. It's a Missile Command game. There's a line positions 0-9. Cities at fixed positions. Threats have impact position and tick. We have silos at fixed positions with ammo. Each silo can only reach a landing position within four of its own position.",
-   "token": "We",
-   "secs": 5.2,
-   "gen_tokens": 64,
-   "budget_hit": true,
-   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
-   "answer_field": "content",
-   "missing_value": false,
-   "screen_before": "tick 1\ncity A at 2\nsilo 1 at 2 ammo 1\nthreat P impact 2 tick 2",
-   "tick": 2,
-   "outcome": "unknown",
-   "outcome_note": "no silo 'W' or no threat 'E'; P hit A",
-   "cities_alive": [],
-   "ammo": {
-    "1": 1
+    "1": 0
    },
    "threats_remaining": []
   }
  ],
  "screens": [
-  "tick 0\ncity A at 2\nsilo 1 at 2 ammo 1\nthreat P impact 2 tick 2",
-  "tick 0\ncity A at 2\nsilo 1 at 2 ammo 1\nthreat P impact 2 tick 2",
-  "tick 1\ncity A at 2\nsilo 1 at 2 ammo 1\nthreat P impact 2 tick 2"
+  "tick 0\ncity A at 2\nsilo 1 at 2 ammo 1\nthreat P impact 2 tick 2"
  ],
- "final_screen": "tick 2\nsilo 1 at 2 ammo 1",
+ "final_screen": "tick 0\ncity A at 2\nsilo 1 at 2 ammo 0",
  "command_cap": 4,
  "command_cap_source": "max impact tick in the state + 2",
  "ended": "threats_resolved",
- "ended_why": "every threat has been resolved by tick 2",
+ "ended_why": "every threat has been resolved by tick 0",
  "missing_values": 0,
  "missing_values_are_not_tokens": "a missing value is never passed to the simulator, so it can never be scored as a wrong move -- the empty-list rule",
  "unreadable": 0,
  "unreadable_is_a_simulator_outcome": "`malformed` is the simulator's own outcome for a token that is not an action: COUNTED, NEVER SCORED AS A WRONG MOVE -- the board is unchanged and the tick advances. `unknown`, `late`, `out_of_range` and `no_ammo` are four DIFFERENT claims and are never merged into it.",
  "never_started": 0,
  "budget_signature": {
-  "turns": 3,
-  "turns_that_hit_the_ceiling": 3,
+  "turns": 1,
+  "turns_that_hit_the_ceiling": 0,
   "ceiling": 64,
-  "fraction_capped": 1.0,
-  "all_turns_capped": true,
-  "reading": "BUDGET-CONFOUNDED -- every answer was cut off at the ceiling, so this is NOT a capability result until it is re-run with room"
+  "fraction_capped": 0.0,
+  "all_turns_capped": false,
+  "reading": "no turn hit the ceiling -- the answers are the model's own endings"
  },
  "protocol": {
   "play_mode": "step_locked",
@@ -188,7 +114,7 @@
    "reading": "NO WALL-CLOCK TERM EXISTS IN THE FROZEN SIMULATOR -- the play mode is turn-based by construction, so step-locking the clock is not a change this cabinet could make: there is nothing to lock. The only clock is the state's own `tick` integer, advanced one per action."
   },
   "declaration_file": "MC_DECLARATION.md",
-  "declaration_digest": "c7a60f1d6b4e4030",
+  "declaration_digest": "2ada03ee2ad1f60b",
   "declaration": {
    "cabinet": "missile-command",
    "reasoning_arm": "off",
@@ -197,13 +123,13 @@
    "protocol": "step_locked",
    "clock": "none -- the state's own `tick` integer, advanced by exactly one per action",
    "artifact": "probes/MC_<entrant>_<level>.json",
-   "legend_arm": "example"
+   "legend_arm": "plain"
   }
  },
  "sufficiency": {
-  "score_recomputed_from_state_and_actions": 0,
+  "score_recomputed_from_state_and_actions": 1,
   "score_matches_the_record": true,
-  "screens_rebuilt": "4/4",
+  "screens_rebuilt": "2/2",
   "screens_reproduce": true,
   "reading": "THE RECORD IS SUFFICIENT: the score and every screen the entrant saw recompute from (state_text, tokens) under the frozen simulator."
  },
@@ -231,13 +157,13 @@
   "ctx": 4096,
   "n_gpu_layers": 0,
   "temperature": 0.0,
-  "legend": "example",
-  "legend_digest": "ec59f2dc5fd35518",
+  "legend": "plain",
+  "legend_digest": "d8ee3da099c1a0c2",
   "legend_arms": {
    "example": "ec59f2dc5fd35518",
    "plain": "d8ee3da099c1a0c2"
   },
-  "legend_source": "selected at call time (--legend or MC_LEGEND)",
+  "legend_source": "the recorded default (plain)",
   "server_argv": [
    "/home/chilly1/llama.cpp/build/bin/llama-server",
    "-m",
@@ -247,7 +173,7 @@
    "-ngl",
    "0",
    "--port",
-   "8763",
+   "8761",
    "--no-webui",
    "--reasoning",
    "off",
@@ -276,5 +202,18 @@
   "inference_caveat": "a LONG answer is not necessarily deliberation -- a model that echoes the question in a schema produces a long answer too, and this probe cannot tell them apart",
   "requested": "off",
   "disagrees_with_config": false
+ },
+ "artifact_replaced": {
+  "path": "probes/MC_Mellum2.1-12B-A2.5B-Thinking-Q4_K_M_mc_01_one_shot.json",
+  "sha256": "fa2fe89de097bd0e574f96ccc93a8e1e616b865250a938652b9079154db09cf5",
+  "bytes": 13080,
+  "mtime": "2026-10-17T18:54:56Z",
+  "it_named": {
+   "server_binary_digest": "0d5393431782ddf8",
+   "legend_digest": "ec59f2dc5fd35518",
+   "reasoning": "off"
+  },
+  "reason_given": "THE COORDINATE HELD AN example-ARM RECORD AND THE DECLARATION NOW NAMES plain (MC_DECLARATION.md 2ada03ee2ad1f60b, DECISION_mc_legend_arm.md, card t_ec0b0420): the cabinet's field is re-taken under the arm it declares. The replaced record's exact bytes are archived in probes/MC_FIELD_EXAMPLE_ARM_ARCHIVE_20261017.json with their sha256, so the replacement is recorded rather than silent.",
+  "reading": "THIS RUN REPLACED THE RECORD AT THIS PATH. The replaced record is NOT recoverable from this file: what survives is that it existed, the digest of the bytes it was, and what it said about its own instrument."
  }
 }
