@@ -225,3 +225,28 @@ separate act the cabinet named: `unknown` 27 -> 7, `fired` 2 -> 8, mc_01 scores 
 pre-registered**, with the mechanism audited per entrant and the ceiling confound stated. **The decision is
 taken separately, dated, with its own reason and its own record of the declaration's digest drift** — see
 `DECISION_mc_legend_arm.md`, landed in the next commit, and `MC_DECLARATION.md` after it.
+
+---
+
+## AMENDMENT 2026-10-17 (card `t_cdd433bb`) — WHAT AN `entrant_digest` IN THIS ARTIFACT IS
+
+**Every `entrant_digest` this run artifact carries is ONE READING AT ONE INSTANT, not the identity of a
+stable artifact.** Measured the same day by Ocho: repeated readings of the same unchanged paths in
+`ARENA_MODELS` differ at **~1 single bit per 0.3-1.5 GB of data moved**, in bursts, in RAM as well as on
+the read path, on both LVM volumes — while the files' `size`, `mtime` (ns), `ctime` (ns) and `inode` never
+moved (all 75 `*.gguf` files; a 2.4 GB entrant across ten minutes of continuous reading). The mechanism is
+a fault in the box, not in this artifact: `DECISION_entrant_identity.md` (main, 2026-10-17), whose §1 is
+re-derivable by the command in its §6.
+
+**This changes nothing about the run.** The gate, `C1`-`C3`, the criteria, the outcome rows and the verdict
+are not re-read, re-scored or re-scoped; `FAILED ON THIS POPULATION` stands exactly as attached to C2 and
+C3; and the artifact itself is NOT rewritten, because its own digest `9335b2a39b4d1d38` is cited in
+`PREREG_mc_field_plain.md` — an artifact rewritten to explain itself would break its own citation.
+
+**What it changes is what a reader may claim from the field.** The scope of `entrant_digest` and the rule
+for identity comparisons are fixed in `DECISION_entrant_identity.md` §3: the entrant is identified by the
+FILE (whose metadata this box keeps), a digest is a reading, and a digest disagreement between two records
+is INCONCLUSIVE — never "a different file". The two runner edits and the checker amendment this decision
+defers are named in its §5 with their cards.
+
+**The annotation is here, and not in the artifact. A record is not edited to say what it meant.**
