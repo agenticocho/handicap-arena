@@ -20,6 +20,14 @@ written 2026-10-17 11:31:43 -0700; the key moved later the same day, after the p
              patched in memory to the OTHER arm, the constructed `reading` must follow it. A "fix" that swaps
              the literal `example` for the literal `plain` passes the first check and fails this one -- which
              is the whole reason this card is not a tidy-up.
+             ROUND 2 (the Chair's comment 71) adds four more, because two claims in the SAME FIELD were
+             asserted rather than measured. F7 reads the digest clause against the cells the script actually
+             CONSTRUCTED: a cell that did not load is written by `cell_summary` (:69-71) with NO
+             `legend_digest`, and the branch cascade treats that state as expected, so an unqualified "every
+             cell carries the digest" is FALSE in a reachable run state. F8 reads that the field NAMES the
+             declaration's arm at all -- F3 passes on a `legend_source()` that names no arm, which is exactly
+             what it returns inside the run's arm loop -- and F8b/F8c are F8's non-vacuity control and the
+             instant check that the field is built with no arm selected.
   READING 3  THE STALE SENTENCE'S CARRIERS. Every tracked file that contains the phrase is listed. After the
              edit the only carriers may be the PUBLISHED RECORD and PRE-REGISTRATIONS (which record what was
              true when written); a live script among them is the defect. **The needle is assembled from
@@ -54,6 +62,14 @@ PUB_DIGEST = "029244b6e5232a6b77e67cf5e21dea342c7da336a932386b3a16015e96b286c8"
 # THE NEEDLE, ASSEMBLED FROM FRAGMENTS ON PURPOSE: an instrument that contains the sentence it hunts is a
 # carrier of the defect it is measuring (and the carrier sweep below would find its own source).
 STALE = "remains the " + "recorded instrument"
+
+# THE DIGEST CLAUSE, IN ITS TWO FORMS (round 2, the Chair's comment 71 correction 1). A cell that did not load
+# is written by `cell_summary` (:69-71) as `{"arm","state","loaded","why","load_failure_class"}` -- NO
+# `legend_digest` -- and the branch cascade treats that state as a documented outcome ("NO VERDICT -- one arm
+# did not load"). So the unqualified form is FALSE of a reachable run, and it was in the field a run publishes.
+# The probe reads WHICH form the live text carries and measures it against the cells the script constructs.
+DIGEST_Q = "every cell that loaded carries the digest of the arm it was taken under"
+DIGEST_U = "every cell carries the digest of the arm it was taken under"
 
 # THE RECORD'S OWN WORDS, PINNED. This is the `reading` the published artifact carries; it is pinned here so
 # that a reader can see the edit did not reach into the record, and so that a MOVED record fails a check rather
@@ -121,6 +137,40 @@ def patched(**patches):
     finally:
         for k, v in saved.items():
             setattr(R, k, v)
+
+
+@contextlib.contextmanager
+def legend_source_watch(sink):
+    """Record `(R.LEGEND_ARM, the returned string)` at EVERY instant `legend_source()` is called while the
+    artifact is built, and return the driver's own answer unchanged. Restored in `finally`.
+
+    WHY THIS IS A CHECK AND NOT A COMMENT (round 2, the Chair's comment 71 correction 2): `legend_source()`
+    returns "selected at call time (--legend or MC_LEGEND)" -- naming NO arm -- whenever `R.LEGEND_ARM` is
+    set, and the run clears it only at :184, AFTER the arm loop. A refactor that built the artifact inside that
+    loop would publish a field with no arm of record while every check that only asked "does the string
+    contain legend_source()?" still passed. This reads the instant instead of trusting the line order."""
+    real = R.legend_source
+
+    def watched():
+        at_call = R.LEGEND_ARM
+        out = real()
+        sink.append((at_call, out))
+        return out
+
+    R.legend_source = watched
+    try:
+        yield sink
+    finally:
+        R.legend_source = real
+
+
+def cell_digest_counts(cells):
+    """-> (cells, loaded, carrying a `legend_digest`, not-loaded but carrying a `load_failure_class`).
+    The second and third counts are what the digest clause's SCOPE is measured against; the fourth is what a
+    not-loaded cell carries INSTEAD of a digest (`cell_summary`, :69-71)."""
+    loaded = [c for c in cells if c.get("loaded")]
+    return (len(cells), len(loaded), sum(1 for c in cells if c.get("legend_digest")),
+            sum(1 for c in cells if not c.get("loaded") and c.get("load_failure_class")))
 
 
 def stub_run(*_a, **_k):
@@ -226,7 +276,9 @@ def main():
     # ---------------------------------------------------------------- READING 1: the two copies
     print("\nREADING 1  THE TWO COPIES -- the published RECORD, and the `reading` the LIVE script would publish")
     out1 = os.path.join(scratch, "ab_live.json")
-    rc1, art1 = stub_main(out1)
+    watch = []
+    with legend_source_watch(watch):
+        rc1, art1 = stub_main(out1)
     if art1 is None:
         raise SystemExit(f"PROBE DEFECT: main() produced no artifact at {out1} (rc {rc1})")
     live = art1["reading"]
@@ -240,7 +292,8 @@ def main():
     ck("R2  the published artifact's `reading` is the record's own words, unchanged", PUB_READING, pub["reading"])
 
     # ---------------------------------------------------------------- READING 2: the live field
-    print("\nREADING 2  THE FIELD THE LIVE SCRIPT WOULD PUBLISH -- five claims, and whether it TRACKS the declaration")
+    print("\nREADING 2  THE FIELD THE LIVE SCRIPT WOULD PUBLISH -- nine checks, and whether it TRACKS the "
+          "declaration")
     other = next(a for a in R.LEGEND_ARMS if a != R.LEGEND_DEFAULT)
     out2 = os.path.join(scratch, "ab_patched.json")
     with patched(LEGEND_DEFAULT=other):
@@ -264,6 +317,50 @@ def main():
             and f"({other})" not in patched_reading.replace(patched_source, "")))
     ck("F5  and the TRUE claim is KEPT: both arms stay selectable at the driver's call time",
        True, all(tok in live for tok in ("--legend", "MC_LEGEND", "example")))
+
+    # ---------------------------------------------------------------- ROUND 2: the two clauses this field
+    # ASSERTED and did not MEASURE (the Chair's comment 71, corrections 1 and 2). Both sit inside the SAME
+    # sentence, and neither is a new defect class: both are "a caption that will lie on the next run".
+    print("\n  -- CORRECTION 1: the digest clause is measured against the cells this run CONSTRUCTED")
+    c_cells, c_loaded, c_with, c_fail = cell_digest_counts(art1["cells"])
+    p_cells, p_loaded, p_with, _p_fail = cell_digest_counts(pub["cells"])
+    print(f"      constructed {c_cells} cell(s): {c_loaded} loaded, {c_with} carrying a legend_digest, "
+          f"{c_fail} not-loaded carrying a load_failure_class   (run() STUBBED: this is the NO-VERDICT state)")
+    print(f"      published   {p_cells} cell(s): {p_loaded} loaded, {p_with} carrying a legend_digest")
+    ck("F7  the digest clause is SCOPED and TRUE: it claims a digest only of the cells that LOADED, and that "
+       "claim is measured true of the constructed cells (none carried one) and of the published record's (all "
+       "did) -- the UNQUALIFIED form, which the field carried, would be FALSE of the constructed cells",
+       {"qualified form present": True, "unqualified form present": False,
+        "cells loaded in the constructed run (stubbed: 0)": 0,
+        "unqualified claim would be true of the constructed cells": False,
+        "qualified claim true of the constructed cells": True,
+        "qualified claim true of the published record's cells": True,
+        "published cells carry a digest AND there is at least one (non-vacuity)": True,
+        "constructed not-loaded cells all carry a load_failure_class": True},
+       {"qualified form present": DIGEST_Q in live, "unqualified form present": DIGEST_U in live,
+        "cells loaded in the constructed run (stubbed: 0)": c_loaded,
+        "unqualified claim would be true of the constructed cells": c_with == c_cells,
+        "qualified claim true of the constructed cells": c_with == c_loaded,
+        "qualified claim true of the published record's cells": p_with == p_loaded,
+        "published cells carry a digest AND there is at least one (non-vacuity)": p_with == p_cells and p_with > 0,
+        "constructed not-loaded cells all carry a load_failure_class": c_fail == c_cells - c_loaded})
+
+    print("\n  -- CORRECTION 2: the field NAMES the arm of record, and the instant it is built from")
+    print(f"      the declaration's arm {R.DECL.get('legend_arm')!r};  legend_source() calls while the "
+          f"artifact was built: {watch}")
+    ck("F8  the constructed `reading` NAMES the declaration's arm -- F4's shape read the OTHER way (F4 asks "
+       "whether the text FOLLOWS the driver; this asks whether an arm is named at all)",
+       True, R.DECL["legend_arm"] in live)
+    with patched(LEGEND_ARM=R.DECL["legend_arm"]):
+        in_loop = R.legend_source()
+    print(f"      CONTROL -- with R.LEGEND_ARM set (the state the run's own arm loop is in) the driver's "
+          f"reading is {in_loop!r}: it names NO arm of {tuple(R.LEGEND_ARMS)}")
+    ck("F8b AND F8 IS NOT VACUOUS: in the arm-loop state `legend_source()` names no arm at all, so an artifact "
+       "built there would carry no arm of record and F8 would fail -- the check is not passing by accident",
+       (False, False), (any(a in in_loop for a in R.LEGEND_ARMS), R.DECL["legend_arm"] in in_loop))
+    ck("F8c AND THE FIELD IS BUILT WITH NO ARM SELECTED: R.LEGEND_ARM was None at EVERY instant the reading "
+       "was taken (an instrument that read the line order instead would not know)",
+       (True, True), (len(watch) > 0, all(arm is None for arm, _s in watch)))
 
     # ---------------------------------------------------------------- READING 3: the carriers
     print("\nREADING 3  THE STALE SENTENCE'S CARRIERS -- every tracked file that contains the phrase")
