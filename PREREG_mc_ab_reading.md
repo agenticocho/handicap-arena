@@ -351,3 +351,197 @@ interchangeable: a record taken under `example` carries `ec59f2dc5fd35518` and s
 declaration moves. A reader who wants "which arm was of record on the day of THIS run" reads this field; a
 reader who wants "which arm was this CELL taken under" reads the cell. Both are in the artifact, and after
 this card they cannot be confused by a stale sentence.
+
+---
+
+# LANDING NOTE — APPENDED AFTER THE WORK, WITH THE READINGS AND EVERY PREDICTION DISCHARGED BY NAME
+
+**Written after E5 and after every command in §5, 2026-10-19 ~07:39 PDT.** This note is appended; nothing
+above it is rewritten. **No record, no artifact, no criterion and no frozen file was touched**, no model was
+loaded and no lease was taken — the whole of this card is one sentence, one check of the script's own source,
+and reads.
+
+**THE EDIT, AS LANDED** (`missile_command_legend_ab.py:222-230`; the third sentence of `reading`, and only
+the third):
+
+```
+THE DECLARED ARM DOES NOT MOVE AND IS NOT ASSERTED HERE: this A/B writes nothing but this artifact, the arm
+of record is named by `MC_DECLARATION.md`'s `legend_arm` and read by the driver (it reported it as `the
+recorded default (plain)` when this artifact was written), and changing it is a separate act with its own
+reason (`DECISION_mc_legend_arm.md`). BOTH ARMS REMAIN SELECTABLE at the driver's call time (`--legend
+example` / `MC_LEGEND=example`): this A/B runs both, and every cell carries the digest of the arm it was
+taken under.
+```
+
+**The `the recorded default (plain)` inside it is an f-string interpolation of `R.legend_source()`**, evaluated
+when the artifact is built — the driver's own reading of `MC_DECLARATION.md`'s `legend_arm`, not a literal in
+this file. It is the only part of the sentence that can move between runs.
+
+## 1. THE READINGS, EACH WITH ITS UNIT AND ITS INSTANT
+
+```
+07:34:11  mc-ab-reading-probe-smoke1     probe (run 1 of the instrument)      7/14, rc 3  -- RUN 1 AND 2 BELOW
+07:35:37  mc-ab-reading-probe-smoke2     probe (run 2, one defect corrected)   8/15, rc 3     ARE EVIDENCE ABOUT
+AFTER THE PRE-REGISTRATION, BEFORE THE EDIT (the governed counterfactual)
+  07:36:16  mc-ab-reading-probe-pre        scripts/probe_ab_reading.py         9/15, F1-F6 FAIL, rc 3 (P2)
+  07:36:50  mc-ab-reading-selftest-pre     missile_command_run.py --self-test  ALL CONTROLS PASS 53/53
+  07:37:02  mc-ab-reading-dryrun-pre       missile_command_population.py --dry-run
+                                                                               coordinate arm plain (READ from
+                                                                               MC_DECLARATION.md `legend_arm`)
+AFTER THE EDIT
+  07:37:35  mc-ab-reading-probe-post       scripts/probe_ab_reading.py         15/15, rc 0             (P3)
+  07:38:15  mc-ab-reading-selftest-post    missile_command_run.py --self-test  ALL CONTROLS PASS 53/53   (P7)
+  07:38:27  mc-ab-reading-dryrun-post      missile_command_population.py --dry-run
+                                                                               coordinate arm plain (READ from
+                                                                               MC_DECLARATION.md `legend_arm`)
+every one of the six governed runs under scripts/run_guarded.sh 5e34e455b5193e89, with an ABSOLUTE workdir,
+units named above, logs under logs/<unit>.out (the times are the logs' own mtimes, which for an append-mode
+log is the last write); no lease was taken and no model was loaded by any command above
+```
+
+**THE ONE LINE THE WHOLE CARD TURNS ON — the same probe, the same published record, before and after:**
+
+```
+PRE-EDIT    THE LIVE COPY IS THE PUBLISHED COPY: True    <-- the record and the caption are the same sentence
+POST-EDIT   THE LIVE COPY IS THE PUBLISHED COPY: False   <-- the live text has moved; the record has not
+
+PRE-EDIT    with LEGEND_DEFAULT patched in memory to 'example':
+                the two constructed readings are the same string:  True   <-- the text does NOT follow the
+                                                                             declaration: it is a LITERAL
+POST-EDIT   with LEGEND_DEFAULT patched in memory to 'example':
+                the two constructed readings are the same string:  False  <-- the text FOLLOWS the declaration
+                and it names 'the recorded default (example)'
+```
+
+**That second pair is the check a swapped literal fails (F4).** `example` -> `plain` would have produced
+`True` in both rows: the sentence would be true today and false the next time the key moves.
+
+## 2. THE DRIFT, AS PREDICTED (P8)
+
+```
+missile_command_legend_ab.py   2c1c12a90e850bdf  ->  194c716114090847    E5, the third sentence. The one write
+                                                                          site moved with it: :230 -> :235
+scripts/probe_ab_reading.py    45381264df867254  ->  2e4cc73744a240d8    the instrument's own three defects
+                                                                          (§4(a) below), corrected in the CHECK
+EVERYTHING ELSE IN §4 UNCHANGED, re-read after the last command (probe R7: 12 re-read, 0 moved):
+  missile_command.py eb5ed36591b300e6 · missile_command_run.py 3bd43eed4c6e41f3 · PREREG_missile_command.md
+  01548e9a866df03e · levels/mc_01_one_shot.txt ab101ca955c1c853 · levels/mc_02_scarcity.txt 327d2157bd0b8a83
+  MC_DECLARATION.md 2ada03ee2ad1f60b · scripts/run_guarded.sh 5e34e455b5193e89 · PREREG_mc_population.md
+  cfedf8b7f5e7d57f · PREREG_mc_legend_ab.md 49784e02849a401f · PREREG_mc_ab_arm_keys.md 47db6b9368bae18c
+  PREREG_mc_ab_arm_names.md 3f670a15e8e9cb4e · probes/MC_LEGEND_AB.json 029244b6e5232a6b  (FULL sha256
+  re-computed in both runs: 029244b6e5232a6b77e67cf5e21dea342c7da336a932386b3a16015e96b286c8)
+git status --porcelain probes/ results/  ->  0 lines, read in BOTH the pre-edit and the post-edit run
+the driver's --self-test: 53/53 before and after; the runner's --dry-run: `coordinate arm plain` before and
+after
+the READING-INDEPENDENT FINGERPRINT of the constructed artifact (every field that is neither the `reading`,
+nor a function of the stubbed cells, nor the box's unreproducible `entrant_digest`):
+    PRE  b6a8fe8a192d74bb        POST  b6a8fe8a192d74bb        <- IDENTICAL: only the reading moved
+the artifact's FIELD SET: published == constructed, in both runs (minus `artifact_replaced`, which only a
+REPLACING run writes)
+the stale phrase's carriers after the edit: **3** -- probes/MC_LEGEND_AB.json (the RECORD),
+PREREG_mc_ab_arm_names.md (the parent PRE-REGISTRATION), PREREG_mc_ab_reading.md (this file). A fourth would
+be a live copy and fails F6.
+```
+
+**The cost P8 named, now a fact, and it is not corrected:** `PREREG_mc_ab_arm_names.md` §1.3 says this sentence
+is "NOT fixed here" and quotes its line numbers as `:221-225`. Both were true of the commit that card landed;
+the sentence IS now fixed and the line numbers have moved (`:222-230`). **A pre-registration records what was
+true when it was written and is not edited to keep up** — the same rule that leaves `PREREG_mc_population.md:21`
+citing an earlier digest of this file.
+
+## 3. EVERY PREDICTION, DISCHARGED BY NAME — NONE CORRECTED, NONE TRIMMED
+
+```
+P1   the live `reading` is byte-identical to the published artifact's `reading`, while the driver reads the
+     declaration as `the recorded default (plain)` ........................................ HIT  (READING 1, pre)
+P2   pre-edit the probe fails on exactly the fix's own checks ............................. HIT IN SHAPE, COUNTS
+     DECLARED: predicted 8/14 with exactly F1-F6 FAIL; measured 9/15 with exactly F1-F6 FAIL. The denominator
+     moved by ONE because the instrument's own defect (§4(a)) was corrected by ADDING a control (R3b), not by
+     removing a check -- the six that fail are the six predicted and no other check fails.  (probe-pre)
+P3   post-edit the probe passes: 15/15, rc 0 ............................................. HIT  (probe-post)
+P4   the corrected sentence, clause by clause -- stale clause gone, MC_DECLARATION.md named, the driver's
+     reading carried, --legend/MC_LEGEND/example kept, first two sentences untouched ..... HIT  (F1-F5, R5)
+P5   NON-RECURRENCE: the reading follows the driver's default when it is patched, and names the other arm;
+     pre-edit it was INVARIANT under the same patch ...................................... HIT  (F4, both runs)
+P6   only the last sentence moves: same field set, same reading-independent fingerprint in both runs HIT  (§2)
+P7   nothing else moves: 0 lines of git status for probes/ and results/, the published artifact's full
+     sha256 unchanged in both runs, 12 frozen inputs unmoved, self-test 53/53 both sides, the runner's
+     dry-run reading `coordinate arm plain` both sides ................................... HIT  (R1, R6, R7, §2)
+P8   the module's digest moves; no other §4 digest moves; and the costs are named -- the parent
+     pre-registration now cites an earlier version of this file, and the phrase has exactly three carriers HIT (§2)
+P9   the published record's own words are still the published record's own words, and a moved record would
+     FAIL R2 rather than pass it ......................................................... HIT  (R2, both runs)
+```
+
+## 4. ADDENDUM (POST-HOC, DECLARED) — WHAT WENT WRONG IN THE INSTRUMENT, AND WHAT IT COST
+
+**(a) THE PROBE HAD THREE DEFECTS OF ITS OWN, ALL IN ONE CHECK (R3), ALL CORRECTED IN THE CHECK AND NOWHERE
+ELSE. Two governed runs are presented as evidence about the INSTRUMENT, not about the code they read:**
+
+```
+smoke1  07:34:11  logs/mc-ab-reading-probe-smoke1.out  7/14, rc 3
+        R3 FAILED while its own output showed the A/B's only WRITE-MODE open() to be `open(OUT, "w")`. Two
+        defects, both mine: (i) an `open()` with NO mode argument was counted as a WRITE -- `open(p,
+        encoding="utf-8")` at :176 is a READ, so the check failed on a file whose only write is its
+        artifact; (ii) every call named `replace` was counted as `os.replace`, and `str.replace` at :179 and
+        :210 is not a write at all. A checker that cannot read its own subject is the empty-room defect
+        aimed at a checker.
+smoke2  07:35:37  logs/mc-ab-reading-probe-smoke2.out  8/15, rc 3
+        R3 FAILED again, now for a THIRD defect: the expected value named os.makedirs' ARGUMENT while the
+        detector reported the whole CALL. Corrected by reporting the argument (the expectation was right and
+        the detector was not), and R3b was ADDED: a synthetic source that writes `MC_DECLARATION.md` must be
+        REPORTED, so the detector cannot be vacuous.
+```
+
+**The pre-edit governed run at 07:36:16 is the THIRD launch of the instrument and the first of the corrected
+one; it is the counterfactual this card stands on, and it is in `logs/` with its unit named.** No prediction,
+reading, expectation or control was changed to suit a result: the only things that changed between smoke1 and
+the governed run are two defect corrections and one added control, and P2's denominator moved for exactly that
+reason (§3).
+
+**(b) THE INSTRUMENT IS NOT A CARRIER, AND THAT WAS FOUND BY ITS OWN FIRST SELF-CHECK.** Before the fragments,
+`needle in probe: True` — the probe contained the sentence it hunts (in its docstring and in the pinned record
+text), which would have made F6 pass for the wrong reason or fail on its own source. The needle and the pinned
+record text are now ASSEMBLED FROM FRAGMENTS, and the check is:
+`needle in probe: False`. **Named because a reader who greps this tree for the phrase will not find it in the
+instrument, and should know that is deliberate rather than an oversight.**
+
+**(c) THE TREE WAS NOT QUIET WHILE THIS WAS MEASURED, AND THAT IS NOT MINE.** Another card's worker was
+writing this same cabinet during these runs: `scripts/check_mc_field_plain.py` (mtime 07:33:59) and
+`scripts/probe_mc_driver_digest.py` are modified in the working tree, and `mc-driver-*` units appear under
+`logs/`. None of it is in this card's §4, none of it is in this commit, and `git status --porcelain` showed
+**only** `missile_command_legend_ab.py` and this file as mine at commit time. **A shared worktree keeps the
+commits separable but not the tree quiet, and a reader of `git status` after this card deserves to know which
+lines are whose.**
+
+## 5. WHAT THIS LANDING DOES NOT DO, AND WHAT IT NAMES
+
+**Nothing was re-run, re-scored or re-scoped.** No A/B run was taken and no model was loaded; the two artifacts
+in this card's evidence are FIXTURES built by the script's own `main()` with `run()` stubbed — every number in
+them is zero by construction and is a measurement of nothing. **The published record's copy of the sentence is
+UNTOUCHED** (R1: full sha256 re-computed; R2: its words pinned in the instrument), because it was true of
+2026-10-17 11:31:43 and a record does not get corrected — it gets superseded.
+
+**NAMED, NOT CHANGED — the residuals, each one either carded, out of everyone's way, or the Chair's:**
+
+```
+1  THE DECISION IN §1.6 IS THE CHAIR'S TO RATIFY (§1.6). The edit is landed because an unfixed live string
+   publishes a falsehood on any re-run and a fixed one publishes a truth -- the reversible side is the one to
+   occupy while the ratification is pending. The reversal is the one string (quoted in §1.1 of the
+   pre-registration above, and in the commit that removed it); the published artifact never moved.
+2  PREREG_mc_ab_arm_names.md §1.3 and its :221-225 line numbers now cite an earlier version of the file.
+   NOT a defect and NOT corrected: a pre-registration records what was true when it was written.
+3  PREREG_mc_population.md:21 cites an earlier digest of this file. Same rule, same reason, not corrected.
+4  missile_command_run.py's `--legend` help calls the default "the recorded instrument", which is TRUE and
+   interpolated (`{LEGEND_DEFAULT}`). NOT this card's file, NOT stale, NOT touched.
+5  missile_command_run.py:1239-1240 and scripts/check_mc_field_plain.py:133 pin arm names in ASSERTIONS'
+   expected values. An expectation may be a literal and is supposed to go stale loudly. NOT touched.
+6  THE BOUND OF THIS FIX, stated rather than found later: the sentence now says what the arm of record was AT
+   THE INSTANT OF THE RUN. It says nothing about which arm an EARLIER record was taken under; that is each
+   cell's own `legend_digest`, and mixing the two is exactly the class of confusion this card removed.
+```
+
+**AND THE ONE THING A READER SHOULD CHECK FIRST, IF ONLY ONE THING IS CHECKED:** the same probe over the same
+published record returns `9/15 rc 3` before the edit and `15/15 rc 0` after it; the six checks that move are
+the six this card is about; and the row that moves most is the one where the driver's default is patched to the
+other arm — `True` (a literal that does not follow) before, `False` (a reading that does) after.

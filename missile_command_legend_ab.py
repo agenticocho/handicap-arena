@@ -221,8 +221,13 @@ def main():
         "branch": branch,
         "reading": ("The prediction and its three branches are in the pre-registration; the branch above is "
                     "selected BY THE COUNTERS, not by a preference. Scope: ONE entrant, TWO states, n=1 per "
-                    "cell -- a demonstration, not a field. The DECLARED ARM DOES NOT MOVE: `example` "
-                    "remains the recorded instrument, and changing it is a separate act with its own reason."),
+                    "cell -- a demonstration, not a field. THE DECLARED ARM DOES NOT MOVE AND IS NOT "
+                    "ASSERTED HERE: this A/B writes nothing but this artifact, the arm of record is named by "
+                    "`MC_DECLARATION.md`'s `legend_arm` and read by the driver (it reported it as "
+                    f"`{R.legend_source()}` when this artifact was written), and changing it is a separate "
+                    "act with its own reason (`DECISION_mc_legend_arm.md`). BOTH ARMS REMAIN SELECTABLE at "
+                    "the driver's call time (`--legend example` / `MC_LEGEND=example`): this A/B runs both, "
+                    "and every cell carries the digest of the arm it was taken under."),
     }
     if replaced is not None:
         art["artifact_replaced"] = replaced
