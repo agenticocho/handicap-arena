@@ -499,6 +499,16 @@ reading, expectation or control was changed to suit a result: the only things th
 the governed run are two defect corrections and one added control, and P2's denominator moved for exactly that
 reason (§3).
 
+**ERRATUM, ADDED 07:42 PDT — AND IT IS ABOUT A COMMIT MESSAGE, WHICH IS IMMUTABLE HISTORY.** Commit `5a68d09`'s
+own message ends "smoke2 (11/15) is evidence about the instrument only". **smoke2 was 8/15, not 11/15**: the
+carrier is `logs/mc-ab-reading-probe-smoke2.out`, whose last lines read `8/15 checks PASS` / `VERDICT FAIL
+(rc 3)`, and §4(a) above states 8/15. The commit message is left as pushed and is corrected HERE, because a
+count typed into prose with no carrier is exactly the defect this cabinet keeps removing. **Where the wrong
+number came from is NOT established and is not guessed: the nearest 11/15 in this tree is the PARENT card's
+pre-edit count (`PREREG_mc_ab_arm_names.md` §0, "11/15, C8/C9/C10/C11 FAIL"), which is a plausible origin and
+is not evidence that it is the cause.** **Nothing else in `5a68d09`
+changes: one line of `scripts/probe_ab_reading.py`, and the smoke2 log it describes.**
+
 **(b) THE INSTRUMENT IS NOT A CARRIER, AND THAT WAS FOUND BY ITS OWN FIRST SELF-CHECK.** Before the fragments,
 `needle in probe: True` — the probe contained the sentence it hunts (in its docstring and in the pinned record
 text), which would have made F6 pass for the wrong reason or fail on its own source. The needle and the pinned
