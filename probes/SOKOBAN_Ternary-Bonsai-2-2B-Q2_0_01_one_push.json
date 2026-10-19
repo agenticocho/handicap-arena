@@ -1,0 +1,11 @@
+{
+ "entrant": "Ternary-Bonsai-2-2B-Q2_0",
+ "entrant_digest": "5e73082776339cd4",
+ "level": "01_one_push",
+ "loaded": false,
+ "load_failure_class": "no cause named by the log: the card at failure is what is reported",
+ "why": "server exited rc=-6.\n  AND THE CARD IS HELD BY: pid 2396 (1142 MiB) holding the card with NO LEASE TRACED TO IT; pid 2398 (134 MiB) holding the card with NO LEASE TRACED TO IT; pid 2069580 (3482 MiB) holding the card with NO LEASE TRACED TO IT.  Tenants total 4758 MiB.\n  AND THE LOG NAMES NO CAUSE OF ITS OWN: it was scanned for a reader's refusal of the file and carries none, which is the condition RULING 82 was ratified for.",
+ "server_binary_digest": "3c7090fb24b84615",
+ "server_binary_digest_scope": "sha256 of the BINARY FILE, first 16 hex. THE BINARY IS PART OF THE INSTRUMENT, so it is identified by a digest and not by a path alone: a path can name one build and hold another.",
+ "server_binary_source": "--llama-server"
+}
