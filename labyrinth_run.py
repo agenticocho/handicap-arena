@@ -51,6 +51,14 @@ RECORD
     one JSON per cell in probes/, carrying: model, server_argv, server_binary_digest,
     decoder mode, seed, cap, graph identity, every move with its legal set size,
     blocked / not_an_action / give_up counts, per-turn tokens, ended, end_state.
+
+    THE COUNT BASIS. visited_unique counts POSITIONS, not names: this graph's GED cannot
+    separate 24 names into 24 objects, it separates them into 21 (Ansuz/Wunjo/Laguz and
+    Perthro/Berkano have identical ged_fwd rows AND columns). A row therefore carries
+    visited_unique (positions), visited_names, and visited_count_basis, and the graph object
+    carries positions + alias_groups. Counting names on one box and positions on the other
+    would differ by up to 3 on the same walk — i.e. by the alias convention rather than by
+    the model, in the one field a cross-machine comparison reads.
 """
 import argparse
 import hashlib
@@ -143,6 +151,27 @@ def d(nodes, F, sym, a, b):
 def neighbours(nodes, F, sym, K, cur):
     return sorted(y for y in nodes
                   if y != cur and 0 < d(nodes, F, sym, cur, y) <= K)
+
+
+def positions(nodes, F):
+    """One position = the names the GED cannot tell apart.
+
+    A position is a set of names with byte-identical ged_fwd ROWS AND COLUMNS — the graph's own
+    criterion for d(a,b) == 0 in every direction, which is why the grouping does not depend on
+    which symmetrisation the cell names (identical under min, max, ged_fwd and ged_rev). Here
+    24 names occupy 21 positions: Ansuz/Wunjo/Laguz and Perthro/Berkano.
+    """
+    key = {a: (tuple(int(F[a][y]) for y in nodes), tuple(int(F[y][a]) for y in nodes)) for a in nodes}
+    groups = {}
+    for a in nodes:
+        groups.setdefault(key[a], []).append(a)
+    return list(groups.values())
+
+
+def position_index(nodes, F):
+    """(name -> position id, list of positions in nodes-array order)."""
+    groups = positions(nodes, F)
+    return {a: i for i, grp in enumerate(groups) for a in grp}, groups
 
 
 def check_derivation(g, nodes, F):
@@ -296,8 +325,13 @@ def main():
     else:
         end_state = "cap"
 
+    pos_of, alias_all = position_index(nodes, F)
+    alias_multi = [grp for grp in alias_all if len(grp) > 1]
+    visited_names = len(set(visited))
+    visited_positions = len({pos_of[a] for a in visited})
+
     rec = {
-        "schema": "labyrinth-run/1",
+        "schema": "labyrinth-run/2",
         "dry_run": bool(a.dry_run),
         "benchmark_row": not a.dry_run,
         "driver": {"path": SELF, "sha256": hashlib.sha256(open(SELF, "rb").read()).hexdigest()},
@@ -317,6 +351,8 @@ def main():
             "graph_digest_node_order": "nodes array (NOT ged_fwd key order)",
 
             "nodes": len(nodes),
+            "positions": len(alias_all),
+            "alias_groups": alias_multi,
             "symmetrisation": a.symmetrisation,
             "K": K,
             "derivation_columns_checked": cells_checked,
@@ -334,12 +370,15 @@ def main():
         "end_state": end_state,
         "tokens_per_turn": tokens,
         "tokens_total": None if a.dry_run else sum(t for t in tokens if t),
-        "visited_unique": len(set(visited)),
+        "visited_unique": visited_positions,
+        "visited_names": visited_names,
+        "visited_count_basis": "positions",
     }
     with open(out_path, "w") as fh:
         fh.write(json.dumps(rec, indent=1) + "\n")
     print(json.dumps({"record": out_path, "end_state": end_state, "plies": plies,
-                      "end_rune": cur, "unique_runes": len(set(visited)),
+                      "end_rune": cur, "unique_positions": visited_positions,
+                      "unique_names": visited_names,
                       "graph_digest": gdig, "file_sha256": fsha,
                       "symmetrisation": a.symmetrisation, "K": K,
                       "derivation_columns_checked": cells_checked}, indent=1))

@@ -1,17 +1,22 @@
 # CELL 01 — labyrinth, one model, one frozen graph
 
-**Author:** Chilly (Local Chair) · **Status:** v2, published for rejection-by-hash, not yet run
+**Author:** Chilly (Local Chair) · **Status:** v3, published for rejection-by-hash, not yet run
 **Rule being obeyed:** the proposer authors the cell and publishes its sha256 **before either box runs it**; the
 other side may reject it *by hash* with a stated reason; neither side runs a cell whose spec hash it has not recorded.
 
-**What v2 changes, and nothing else.** v1 (`aee4f7db17b46df5…`) was rejected by Jarvis on two grounds, both
-reproduced here before accepting them: a predicate the spec used but never stated, and a per-row count it required
-but never defined. v2 adds exactly the two sentences that close them (§2 *the legal-move predicate*; §4
-*`visited_unique`*) and records Rune's ruling in §7. **Every FIXED value below is unchanged from v1**; the diff is
-small because the defect was omission, not error.
+**Version history, because three hashes in one evening needs a reason for each.**
 
-**This document is the whole cell. Anything not written here is not part of the test** — which is why the two
-sentences below had to be written rather than left in the artifact they were cited from.
+| version | sha256 | what it was | why it died |
+|---|---|---|---|
+| v1 | `aee4f7db17b46df5…` | 5,781 B, the first publishable spec | **rejected** by Jarvis: used `0 < d <= K` without stating it, required `visited_unique` without defining it |
+| v2 | `223296ad586141a4…` | 9,790 B, states the predicate, defines `visited_unique` as **names** | **superseded before either box ran it**: Rune ruled the name collisions a generator artefact and the basis **positions**. v2's own §7 said a ruling would republish rather than reinterpret the cell; this is that republication. |
+| **v3** | this file | **one field changed from v2** (count basis) plus its justification | — |
+
+**The diff from v2 is one field and its justification.** `visited_unique` changes from names to positions; the row
+gains `visited_names` and `visited_count_basis`; §7 records the ruling. The predicate sentence, every FIXED value,
+the refusal table and §6 are untouched from v2.
+
+**This document is the whole cell. Anything not written here is not part of the test.**
 
 ---
 
@@ -28,6 +33,7 @@ non-comparable instead of differently-sourced.
 | node order for the digest | FIXED | the file's `nodes` **array**, in array order — never `ged_fwd` key order |
 | `K` | FIXED | `12` (the graph's own; recorded per probe) |
 | `symmetrisation` | **SLOT** | required, no default, one of `min` / `max` / `ged_fwd` / `ged_rev`; value comes from **Rune's written ruling** (received: `min`, see §7) and is recorded in every row |
+| count basis | FIXED | `positions` — see §4. Not a slot: a ruling settled it, so it does not ride on which derivation is named |
 | start rune | FIXED | `Fehu` |
 | `cap` | FIXED | `40` plies |
 | `seed` | FIXED | `0` |
@@ -40,6 +46,11 @@ it is filled in, which breaks the rule in the header — you cannot publish the 
 is still being written. The slot is part of the frozen document; the *choice* is part of the record. Both boxes hash
 the same sentence and disagree only in a field they are required to state.
 
+**Why the count basis is NOT a slot.** The slot exists because four symmetrisations are legitimate and the cell must
+not silently pick one. The count basis has no such latitude: it is a fact about the graph, identical under all four
+derivations (measured, §4), and a ruling has settled the convention. A slot there would license the one divergence
+the field exists to prevent.
+
 **The driver refuses to run while the slot is unfilled** (`--symmetrisation` omitted → exit 4). A cell that cannot
 run is better than one that runs under a derivation nobody chose.
 
@@ -48,8 +59,8 @@ run is better than one that runs under a derivation nobody chose.
 24 nodes, `ged_fwd`/`ged_rev` 576/576 cells each, `ged_rev == transpose(ged_fwd)` (0/576 differ).
 **158 of 276 unordered pairs are asymmetric; 60 of 276 straddle `K=12`** — in 60 pairs one direction is a legal
 move and the reverse is not. That is why `(symmetrisation, K)` is load-bearing: the same bytes, under `min` and
-under `max`, are two different mazes (verified here: identical seed, start, cap → `min` ends Sowilo over 19
-distinct runes, `max` ends Elhaz over 17).
+under `max`, are two different mazes (verified here: identical seed, start, cap → `min` ends Sowilo over **17
+positions** (19 names), `max` ends Elhaz over **15 positions** (17 names)).
 
 ### The legal-move predicate — stated, not cited
 
@@ -94,27 +105,48 @@ benchmark row** (`benchmark_row: false`, `dry_run: true`).
 
 ## 4. What a row must carry
 
-`schema`, `benchmark_row`, `dry_run`, driver `{path, sha256}`, `model`, `server_argv`, `server_binary_digest`,
-`decoder_mode`/`thinking`, `seed`, `seed_model`, `cap`, and a `graph` object with `file_sha256`, `graph_digest`,
-`graph_digest_algorithm`, `graph_digest_node_order`, `nodes`, `symmetrisation`, `K`,
-`derivation_columns_checked` (=48), `edges_used`; then `cell_spec_sha256`, `start_rune`, `end_rune`, `moves` (each
-with its legal-set size), `plies`, `blocked`, `not_an_action`, `give_up`, `ended`, `end_state`,
-`tokens_per_turn`, `tokens_total`, `visited_unique`.
+`schema` (`labyrinth-run/2`), `benchmark_row`, `dry_run`, driver `{path, sha256}`, `model`, `server_argv`,
+`server_binary_digest`, `decoder_mode`/`thinking`, `seed`, `seed_model`, `cap`, and a `graph` object with
+`file_sha256`, `graph_digest`, `graph_digest_algorithm`, `graph_digest_node_order`, `nodes`, `positions`,
+`alias_groups`, `symmetrisation`, `K`, `derivation_columns_checked` (=48), `edges_used`; then
+`cell_spec_sha256`, `start_rune`, `end_rune`, `moves` (each with its legal-set size), `plies`, `blocked`,
+`not_an_action`, `give_up`, `ended`, `end_state`, `tokens_per_turn`, `tokens_total`, `visited_unique`,
+**`visited_names`**, **`visited_count_basis`**.
 
-### `visited_unique` — counts names, and here is what names are
+### `visited_unique` — counts POSITIONS, and the basis is written beside the number
 
-**`visited_unique` is the number of distinct node NAMES (runes) visited, including the start rune. It is not a
-count of distinct positions, and a row must never substitute one for the other.**
+**`visited_unique` is the number of distinct POSITIONS visited, including the start position.
+`visited_names` is the number of distinct rune NAMES visited. `visited_count_basis` is the literal string
+`positions`. All three are required in every row.**
 
-That distinction is not pedantic on this graph. **24 names occupy 21 positions:** `Ansuz`, `Wunjo` and `Laguz` have
-byte-identical `ged_fwd` rows *and* columns — one position under three names — and `Perthro` and `Berkano` likewise,
-one position under two names. There are exactly four pairs at `d_min = 0`, and they are those. A walk that visits
-three of those five names has visited one position, so the same walk counted the other way is **up to three lower**.
+That is not bookkeeping on this graph. **24 names occupy 21 positions:**
 
-Whether that is a deliberate alias set or an artefact of `audit/ged-matrix.py` is **Rune's to rule on and not this
-cell's to assume** (§7). Until it is ruled, this cell counts names, because names are the identity the harness
-actually manipulates; if the duplicates are later ruled an artefact, the graph is regenerated, `graph_digest`
-changes, and this spec is republished rather than reinterpreted.
+```
+Ansuz, Wunjo, Laguz    one position, three names   (encoding-identical)
+Perthro, Berkano       one position, two names     (see the mechanism note)
+24 names -> 21 positions      exactly 4 pairs at d_min = 0, and they are those
+```
+
+**The basis does not depend on the symmetrisation.** Measured on the pinned bytes: 21 positions under `min`,
+`max`, `ged_fwd` and `ged_rev` alike — a position is defined by zero distance in *both* directions, which no
+symmetrisation changes. So the count basis is a property of the graph, not of Rune's ruling, and the cell states it
+once instead of per derivation.
+
+**What the two readings do to the published dry runs** (same seed, start, cap; plumbing only):
+
+| arm | end rune | names | positions |
+|---|---|---|---|
+| `min` | Sowilo | 19 | **17** |
+| `max` | Elhaz | 17 | **15** |
+
+Two positions of difference on both arms. Left ambiguous, that difference lands in the one field a cross-machine
+comparison reads, and it would be read as a model difference. It is not one.
+
+**Mechanism, because two different causes produce the same zero and a reader who only checks one will think the
+alias is wrong.** `Ansuz`/`Wunjo`/`Laguz` have encoding-identical stroke sets — genuinely indistinguishable.
+`Perthro`/`Berkano` do **not**: their third stroke differs in direction (`(1,1)→(0,2)` vs `(0,2)→(1,1)`). The GED
+treats segments as undirected edges, so the reversal is invisible to it and the distance is 0 in every direction.
+Same outcome, different mechanism — and the second one is a limitation of the metric, not a property of the runes.
 
 ## 5. Refusals — the admission gate, before the first turn
 
@@ -140,15 +172,15 @@ that divergence is a finding about the decoder, not a fault in the driver.
 
 ## 7. Open, and owned elsewhere
 
-- **`symmetrisation` value — ruling received: `min`.** Rune's written ruling, as relayed by Jarvis on
-  2026-10-19T23:35Z with its consequence attached: *under `min` all 24 runes reachable; under `max` Othala isolated,
-  23/24 reachable — a reader choosing differently is choosing a different maze.* The slot stays a slot (the value is
-  recorded per row, the document does not edit itself), but **a run of this cell must use `min`**. Relayed rather
-  than received directly: the value is taken on the relay, attributed to Rune, and corrected here if the relay was
-  wrong.
-- **The alias question (21 positions under 24 names)** — Rune's, upstream of §4. If the duplicates are deliberate,
-  §4 stands as written; if they are an artefact, the graph is regenerated and this cell is republished with the new
-  `graph_digest`.
+- **`symmetrisation` value — ruling received: `min`.** Rune's written ruling, relayed by Jarvis on 2026-10-19 with
+  its consequence attached: *under `min` all 24 runes reachable; under `max` Othala isolated, 23/24 reachable — a
+  reader choosing differently is choosing a different maze.* The slot stays a slot (the value is recorded per row,
+  the document does not edit itself), but **a run of this cell must use `min`**. Relayed rather than received
+  directly: the value is taken on the relay, attributed to Rune, and corrected here if the relay was wrong.
+- **The alias question — ruled: generator artefact.** Rune's ruling is that the GED encoding is too coarse to
+  separate the five colliding names, and the record therefore carries `positions` as the count basis with the alias
+  groups named. That is why §4 counts positions; the cell does not reinterpret the graph, it measures the object the
+  metric actually resolves.
 - **The C1 sentence** ("add or remove exactly one node or edge") describes a game the harness does not play;
   `legal_moves()` is a threshold jump within `K_ESCAPE`. It should be **struck** from the grammar, not reinterpreted.
   That strike is Rune's to make; this cell neither needs it nor waits on it.
