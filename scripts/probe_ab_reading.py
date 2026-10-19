@@ -202,7 +202,7 @@ def write_sites(source):
         elif owner in ("os", "shutil") and attr in os_attr_mutators + ("write_text", "write_bytes"):
             mutators.append((node.lineno, f"{owner}.{attr}", ast.unparse(node)))
         elif owner == "os" and attr == "makedirs":
-            makedirs.append(ast.unparse(node))
+            makedirs.append(ast.unparse(node.args[0]) if node.args else ast.unparse(node))
         elif owner == "json" and attr == "dump":
             dumps.append(ast.unparse(node.args[1]) if len(node.args) > 1 else "")
     return w_opens, mutators, makedirs, dumps
