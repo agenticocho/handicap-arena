@@ -349,3 +349,28 @@ this note is where the next card will find it.**
 `record["entrant_digest"] == file_digest(path)` and its comment still carries the sentence this card removed
 from the record — that is card `t_77f73033` (`DECISION_entrant_identity.md` §5), the cabinet's file, and it
 is not touched here.
+
+## 5. ADDENDUM (POST-HOC, NOT PRE-REGISTERED) — E1's TWO REFUSALS WERE EXERCISED AFTER THE FACT
+
+**Declared as an addition rather than folded into §1, because it is not pre-registered:** E1 added four lines
+that `raise`, and nothing in §5's order could reach them — the declaration on disk names a real arm, so both
+refusals are unreachable through the commands the pre-registration fixed. **Untested code inside a
+measurement instrument is a liability**, so a scratch fixture (outside the tree, writing nothing into it) was
+run under the guard at 06:54 (`mc-entrant-id-refusal-fixture`) which execs the runner's source **in memory**
+with one value substituted at test time — not an edit to the frozen declaration, not an edit to the module:
+
+```
+CONTROL  the unmodified module imports, COORD_ARM='plain' COMPARISON_ARM='example'          PASS
+REFUSAL  (a) COORD_ARM = "nope"  -> REFUSED: the declaration names legend_arm 'nope';
+                                    this runner's arms are ('example', 'plain').            PASS
+REFUSAL  (b) ARMS = ("plain",)   -> REFUSED: the driver defines 1 legend arm(s) ('plain',);
+                                    this runner needs an arm of record and one comparison
+                                    arm, and it will not invent the second.                 PASS
+VERDICT PASS
+```
+
+**What this addendum does NOT do:** it changes no control the pre-registration fixed, it moves no number in §3,
+and **it does not make the two governed probe runs any less equal to each other** — `scripts/probe_coord_arm_adoption.py`
+was NOT touched between them and is byte-identical in both (the fixture lives outside the tree and is not
+committed, so the instrument a reader re-runs today is the instrument that produced both readings above).
+**The refusal branches are now measured rather than merely written.**
