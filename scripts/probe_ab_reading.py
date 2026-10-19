@@ -173,16 +173,25 @@ def carriers(needle):
 
 def write_sites(source):
     """THE SCRIPT'S ONLY WRITE, read from its OWN SOURCE (AST) rather than from the sentence that promises it.
-    -> (opens with a write mode, other mutating calls, makedirs targets, json.dump targets)"""
+    -> (opens with a write mode, other mutating calls, makedirs targets, json.dump targets)
+
+    TWO DEFECTS THIS FUNCTION HAD IN ITS FIRST VERSION, NAMED HERE BECAUSE THEY ARE THE CLASS THIS CABINET
+    KEEPS CATCHING: (a) an `open()` with NO mode argument was counted as a WRITE -- it is a READ (`open(p,
+    encoding="utf-8")` at :176), so the check failed on a file whose only write is its artifact; (b) every
+    call named `replace` was counted as `os.replace`, and `str.replace` is not a write at all (:179, :210).
+    A checker that cannot read its own subject is the empty-room defect aimed at a checker."""
     tree = ast.parse(source)
     w_opens, mutators, makedirs, dumps = [], [], [], []
+    os_attr_mutators = ("remove", "unlink", "replace", "rename", "rmtree", "truncate", "chmod", "symlink")
     for node in ast.walk(tree):
         if not isinstance(node, ast.Call):
             continue
         fn = node.func
-        name = getattr(fn, "id", None) or getattr(fn, "attr", None)
-        if name == "open":
-            mode = None
+        owner = getattr(getattr(fn, "value", None), "id", None)
+        attr = getattr(fn, "attr", None)
+        bare = getattr(fn, "id", None)
+        if bare == "open":
+            mode = "r"                          # NO mode argument IS a read, not a write
             if len(node.args) > 1 and isinstance(node.args[1], ast.Constant):
                 mode = node.args[1].value
             for kw in node.keywords:
@@ -190,14 +199,11 @@ def write_sites(source):
                     mode = kw.value.value
             if isinstance(mode, str) and any(c in mode for c in "wax+"):
                 w_opens.append((node.lineno, mode, ast.unparse(node.args[0]) if node.args else ""))
-            elif mode is None:
-                w_opens.append((node.lineno, mode, ast.unparse(node.args[0]) if node.args else ""))
-        elif name in ("remove", "unlink", "replace", "rename", "rmtree", "write_text", "write_bytes",
-                      "truncate", "chmod", "symlink"):
-            mutators.append((node.lineno, name, ast.unparse(node)))
-        elif name == "makedirs":
+        elif owner in ("os", "shutil") and attr in os_attr_mutators + ("write_text", "write_bytes"):
+            mutators.append((node.lineno, f"{owner}.{attr}", ast.unparse(node)))
+        elif owner == "os" and attr == "makedirs":
             makedirs.append(ast.unparse(node))
-        elif name == "dump":
+        elif owner == "json" and attr == "dump":
             dumps.append(ast.unparse(node.args[1]) if len(node.args) > 1 else "")
     return w_opens, mutators, makedirs, dumps
 
@@ -279,6 +285,13 @@ def main():
        ([("w", "OUT")], [], ["os.path.dirname(OUT)"], ["open(OUT, 'w')"]),
        ([(mode, target) for (_ln, mode, target) in w_opens], mutators, makedirs, dumps))
     print(f"      the one write sits at source line(s) {[ln for ln, _m, _t in w_opens]}")
+    synth = 'import json\njson.dump({}, open("MC_DECLARATION.md", "a"), indent=1)\n'
+    sw, sm, sd, sdp = write_sites(synth)
+    print(f"  the detector's own control (a SYNTHETIC source that writes the declaration): {sw} {sd} {sdp}")
+    synth_ok = bool(len(sw) == 1 and sw[0][1] == "a" and "MC_DECLARATION.md" in sw[0][2]
+                    and sd == [] and sdp == ["open('MC_DECLARATION.md', 'a')"])
+    ck("R3b AND THE DETECTOR IS NOT VACUOUS: a write to another path IS reported, and its open() is not a read",
+       True, synth_ok)
     state = {"declaration_and_driver_agree": R.DECL.get("legend_arm") == R.LEGEND_DEFAULT,
              "default_is_an_arm": R.LEGEND_DEFAULT in R.LEGEND_ARMS,
              "two_arms": len(R.LEGEND_ARMS)}
