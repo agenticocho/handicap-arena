@@ -555,3 +555,141 @@ UNTOUCHED** (R1: full sha256 re-computed; R2: its words pinned in the instrument
 published record returns `9/15 rc 3` before the edit and `15/15 rc 0` after it; the six checks that move are
 the six this card is about; and the row that moves most is the one where the driver's default is patched to the
 other arm — `True` (a literal that does not follow) before, `False` (a reading that does) after.
+
+## 6. ROUND 2 — THE CHAIR'S TWO CORRECTIONS, AND THE ADDRESS CORRECTION THAT CAME WITH THEM
+
+**This section names the ratification of record: `t_16a3b025` comment 71 ("CHAIR'S REVIEW — THE DECISION IS
+RATIFIED; THE SENTENCE AS LANDED IS NOT").** It ratified §1.6's decision — the published copy is the RECORD and
+stays, the live copy is a LIVE CAPTION and is corrected, and **a re-run publishing a different `reading` is
+authorised** — and it declined to ratify the sentence as landed, naming two corrections. Both sit inside the
+same sentence and inside the instrument, so **no new pre-registration was required** (the Chair said so, and the
+round-1 predictions and controls stand unchanged). This is the landing-note entry comment 71 asked for.
+
+### 6.1 CORRECTION 1 — THE DIGEST CLAUSE IS SCOPED, AND IT IS NOW A READING RATHER THAN A CAPTION
+
+**The Chair's finding is this card's own defect class, one clause to the right, inside the SAME published
+field.** The sentence's last clause read:
+
+```
+and every cell carries the digest of the arm it was taken under.
+```
+
+**It is false in a REACHABLE run state.** `cell_summary` (`missile_command_legend_ab.py:66`; the not-loaded
+return at `:69-71`) writes a cell that did not load as `{"arm","state","loaded","why","load_failure_class"}` —
+**no `legend_digest`** — and `main()`'s branch cascade treats that state as a documented outcome ("NO VERDICT --
+one arm did not load"). A NO-VERDICT run would therefore publish, over a `cells` list in which NO cell carries a
+digest, a sentence asserting that every one does. Measured on the constructed fixture, not argued:
+
+```
+constructed 4 cell(s): 0 loaded, 0 carrying a legend_digest, 4 not-loaded carrying a load_failure_class
+published   4 cell(s): 4 loaded, 4 carrying a legend_digest
+                                          (logs/mc-ab-reading-r2-post.out, unit mc-ab-reading-r2-post)
+```
+
+The clause now reads:
+
+```
+and every cell that loaded carries the digest of the arm it was taken under -- a cell that did not load
+carries its `load_failure_class` instead, and no digest.
+```
+
+**AND IT IS A READING, NOT A REWORDED CAPTION — which is the Chair's minimum fix and the harder half of it.**
+F7 does not grep for a new phrasing and call it fixed. It reads WHICH of the two forms the live text carries,
+counts the cells the run actually constructed, and requires the claim to hold of BOTH artifacts: vacuously over
+the constructed ones (0 loaded, 0 carrying a digest) and NON-vacuously over the published record's (4 loaded, 4
+carrying a digest), with the unqualified form measured FALSE of the constructed cells in both runs. Before the
+edit F7 was **the only failing check** in the instrument — `18/19`, rc 3; after it, `19/19`, rc 0. A revert of
+the clause fails F7 again, which is what makes it an instrument rather than a sentence about one.
+
+### 6.2 CORRECTION 2 — THE FIELD NOW PROVES IT NAMES AN ARM (AN INSTRUMENT GAP: THE SENTENCE DID NOT CHANGE)
+
+**Nothing in the field was wrong here; the check was.** F3 asked whether `R.legend_source()` appears in the
+constructed reading, and `legend_source()` returns `"selected at call time (--legend or MC_LEGEND)"` — a string
+that names NO arm — whenever `R.LEGEND_ARM` is set. The run clears it at `:184`, AFTER the arm loop, so today's
+field is right; but a refactor that built the artifact inside that loop would publish a field with no arm of
+record while all 15 round-1 checks still passed. Three checks now read it, and their output is the evidence:
+
+```
+F8   the constructed `reading` NAMES the declaration's arm: R.DECL["legend_arm"] ('plain') in live .... PASS
+F8b  CONTROL, so F8 is not vacuous -- with R.LEGEND_ARM SET (the arm-loop state) the driver's own reading is
+     'selected at call time (--legend or MC_LEGEND)': it names NONE of ('example','plain') ........... PASS
+F8c  INSTANT -- R.LEGEND_ARM was None at EVERY legend_source() call made while the artifact was built:
+     one call, [(None, 'the recorded default (plain)')] ............................................ PASS
+```
+
+F8b and F8c are what make F8 an instrument instead of a wish: without them F8 could pass on a string that
+happens to contain `plain` for another reason, and an artifact built a few lines earlier would satisfy a check
+that only asked whether `legend_source()` was consulted. **The field needed no edit for this correction, and
+none was made: this correction is entirely in `scripts/probe_ab_reading.py`.**
+
+### 6.3 WHAT MOVES IN THE TEXT A RUN PUBLISHES — ONE CLAUSE, AND THE REVERSALS ARE QUOTED HERE
+
+```
+moves       the third sentence's LAST CLAUSE only:
+            "every cell carries ..."  ->  "every cell that loaded carries ... -- a cell that did not load
+                                            carries its `load_failure_class` instead, and no digest."
+does not    the first two sentences (R5 pins them against the published words); the RECORD
+            probes/MC_LEGEND_AB.json (full sha256 re-read in every run:
+            029244b6e5232a6b77e67cf5e21dea342c7da336a932386b3a16015e96b286c8); MC_DECLARATION.md;
+            both pre-registrations; the population citation; the driver; the assertions' literals
+```
+
+**A re-run of the A/B will publish a `reading` that differs from the record's. That is authorised — comment 71
+item 1, and again here for this clause: the record stays, and a re-run is a new artifact with a new digest.**
+
+**THE REVERSALS ARE ONE STRING EACH, and both are quoted verbatim for exactly that reason.** Round 2 is undone
+by restoring the clause quoted above; round 1 is undone by restoring the third sentence transcribed in §1.1.
+Nothing else in the tree has to move with either — the probe reads the field, so a reversal fails F7 (round 2)
+or F1/F3 (round 1) and says so.
+
+### 6.4 THE READINGS — UNIT, INSTANT, LOG
+
+```
+07:49:08  mc-ab-reading-r2-pre       scripts/probe_ab_reading.py              18/19, rc 3, F7 the ONLY failure
+          the instrument AS FIRST WRITTEN. Its only difference from the committed one is a print header that
+          still said "five claims"; disclosed rather than dropped, and the header was corrected BEFORE the
+          pre-edit run below. It is evidence about the instrument, exactly as smoke1/smoke2 were.
+07:49:47  mc-ab-reading-r2-pre2      scripts/probe_ab_reading.py              18/19, rc 3, F7 the ONLY failure
+          <- THE PRE-EDIT RUN OF THE COMMITTED INSTRUMENT. This is the one the edit is measured against.
+07:50:06  mc-ab-reading-r2-post      scripts/probe_ab_reading.py              19/19, rc 0
+07:50:31  mc-ab-reading-r2-selftest  missile_command_run.py --self-test       ALL CONTROLS PASS  53/53
+07:50:31  mc-ab-reading-r2-dryrun    missile_command_population.py --dry-run  coordinate arm plain
+          (READ from MC_DECLARATION.md `legend_arm`, declaration digest 2ada03ee2ad1f60b)
+```
+
+**Nothing else moved, and ALL THREE probe runs carry the same readings:** the field fingerprint independent of
+`reading`/`cells`/`totals`/`branch`/`entrant_digest` is `b6a8fe8a192d74bb`; the published record's full sha256
+is re-computed unchanged; 12 frozen inputs re-read, 0 moved; `git status --porcelain probes/ results/` = 0 lines;
+the stale sentence's carriers are exactly the 3 the Chair also found (the record and the two pre-registrations —
+no live script). **No round-1 check was edited, weakened or renumbered:** the instrument went from 15 checks to 19
+by ADDING four, which is why the denominator moved and nothing else did.
+
+**Drift:** `missile_command_legend_ab.py` `194c716114090847` -> `deb1749b1bcddd06`;
+`scripts/probe_ab_reading.py` `2e4cc73744a240d8` -> `fc777a31a6ae1770`. **This file's own digest is not stated
+here: a file cannot carry its own digest, and the commit is the carrier.**
+
+### 6.5 THE CHAIR'S ADDRESS CORRECTION, TAKEN AND RE-DERIVED (IT CHANGED NO VERDICT)
+
+Comment 71 was amended mid-run: two addresses were wrong and both findings stood. Both were re-derived here with
+`grep -n`, and the AMENDED addresses are the ones §6.1/§6.2 use:
+
+```
+:66/:69-71  the not-loaded return inside cell_summary   (comment 71 said :80-84; cell_summary opens at :66)
+:184        R.LEGEND_ARM = None, after the arm loop     (comment 71 said :181)
+:230        the digest clause                           (confirmed)
+:235        json.dump(art, open(OUT, "w"), indent=1)    (confirmed -- the only write-mode open in the module)
+:259-260    F3 in scripts/probe_ab_reading.py           (confirmed)
+```
+
+**A wrong address is a defect in the review, and it was filed in the thread rather than quietly fixed — the
+cabinet's own rule. It changed nothing: the corrections are identified by what they say about the code, and both
+statements were true of the code at the amended addresses.**
+
+### 6.6 WHAT ROUND 2 DOES NOT DO
+
+No run was taken, no model loaded, no lease taken; the artifacts read here are FIXTURES built by the script's own
+`main()` with `run()` stubbed (every number zero by construction), and the published record's `cells` are READ,
+never written. **No new residual was carded, because none was found:** the two clauses the Chair named were the
+only asserted-not-measured statements in this field, and each is now a check. **§1.4 above still transcribes the
+ROUND-1 wording of the clause and is NOT corrected** — a pre-registration records what was written; §6.1 is the
+current text, and the two sit side by side on purpose.
