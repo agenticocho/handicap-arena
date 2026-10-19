@@ -162,11 +162,11 @@ def main():
        (len(m0["driver_fails"]), m0["reading_inconclusive"]), (0, True))
     ck("C4  M1, a digest belonging to no committed driver: TWO driver checks fail and BOTH name the "
        "coordinate and the value",
-       [(RECORD_TO_MUTATE in h, GARBAGE in (h + " " + d)) for h, d in m1["driver_fails"]],
+       [(RECORD_TO_MUTATE in (h + " " + d), GARBAGE in (h + " " + d)) for h, d in m1["driver_fails"]],
        [(True, True), (True, True)])
     ck("C5  M2, a record that disagrees with its 21 siblings: ONE driver check fails and it names the "
        "coordinate",
-       [(RECORD_TO_MUTATE in h, OLDER in (h + " " + d)) for h, d in m2["driver_fails"]],
+       [(RECORD_TO_MUTATE in (h + " " + d), OLDER in (h + " " + d)) for h, d in m2["driver_fails"]],
        [(True, True)])
     ck("C6  the totals, stated honestly: 115 checks in all three runs, and the driver failure count is the "
        "ONLY thing that differs -- 2/4/3 failures overall, the two known findings plus 0/2/1 driver failures",

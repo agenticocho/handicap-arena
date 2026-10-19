@@ -304,3 +304,161 @@ probes/MC_POPULATION_20261017-184752.json          9335b2a39b4d1d38
 probes/MC_LEGEND_AB.json                           029244b6e5232a6b
 the 22 coordinates, aggregate over sorted (path, sha256)   318739354497d7cf…   (full value in the landing note)
 ```
+
+---
+
+## LANDING NOTE, APPENDED 2026-10-19 — THE READING LANDED, AND TWO OF THIS CARD'S OWN INSTRUMENTS WERE CORRECTED BY THE GOVERNED RUN
+
+**The edit landed in the commit that carries this note (`scripts/check_mc_field_plain.py` `e0740e47f39a5e74` ->
+`186088accaa409aa`).** §2a-§2c are as pre-registered: the docstring's claim about the driver was corrected, the
+one failing assertion became a READING plus three mutation checks, and two controls were added to [6b]. The
+entrant block is untouched (§7's fence, measured below).
+
+**THE TWO COUNTS, BOTH TAKEN UNDER THE GUARD AND BOTH READ FROM THE UNIT'S OWN LOG:**
+
+```
+mc-driver-field-pre   108/111, 3 CHECKS FAILED, rc 1    the same 108/111 as logs/mc-field-check-ocho.out, and
+                                                        the same failing line at the same address (23-25)
+mc-driver-field-post2 113/115, 2 CHECKS FAILED, rc 1    the driver failure is GONE, and the two that remain are
+                                                        the two named findings: the entrant digest's
+                                                        non-reproducibility, and Finding B's two cells
+                                                        4018f0262498eb3e (all 22 records)  vs  3bd43eed4c6e41f3 (disk)
+                                                        reading: INCONCLUSIVE FROM THE RECORD'S SIDE
+mc-driver-probe-pre   3/7,  C3-C6 FAIL, rc 1            one indistinguishable driver failure in all three shadows
+mc-driver-probe-post4 7/7,  C1-C7 PASS, rc 0
+mc-driver-selftest-pre / -post   53/53, rc 0, before and after (the driver is not edited by this card)
+```
+
+**Run of record.** Four post-edit units exist because the governed run found defects in this card's own
+instruments; each is named, with what it showed, in the corrections below. **`mc-driver-field-post2` and
+`mc-driver-probe-post4` are the runs of record**; `-post` and `-post2`/`-post3` (probe) are the superseded ones
+and are kept rather than deleted, because a correction with its counterfactual is worth more than a clean log:
+
+```
+mc-driver-probe-post   4/7   M1 109/115, 3 driver failures   <- the [6b] control was absolute   (correction 1)
+mc-driver-probe-post2  4/7   M1 111/115, 2; M2 112/115, 0    <- D2's failure was unclassifiable (correction 2)
+mc-driver-probe-post3  5/7   M1 111/115, 2; M2 112/115, 1    <- C4/C5 looked in the headline     (correction 3)
+mc-driver-probe-post4  7/7   M1 111/115, 2; M2 112/115, 1    <- the run of record
+```
+
+### EVERY PREDICTION, DISCHARGED BY NAME — TWO CORRECTED, NONE TRIMMED
+
+**P1 — HIT.** The probe's own git read returns exactly
+`{b726188380ce681c, 4018f0262498eb3e, 3bd43eed4c6e41f3}`, the file on disk is the third, the 22 records carry
+`4018f0262498eb3e`, and **22/22 pre-move records carry no `driver_digest` at all**. The premise is what the card
+said it was.
+
+**P2 — HIT.** Pre-edit: **3/7, C3-C6 FAIL, rc 1**, and the three shadow cabinets are indistinguishable — one
+failure each, the same line, the same two digests:
+
+```
+M0 the field as published          got ['4018f0262498eb3e']                        want ['3bd43eed4c6e41f3']
+M1 one record: deadbeefdeadbeef    got ['4018f0262498eb3e', 'deadbeefdeadbeef']    want ['3bd43eed4c6e41f3']
+M2 one record: b726188380ce681c    got ['4018f0262498eb3e', 'b726188380ce681c']    want ['3bd43eed4c6e41f3']
+```
+
+`ids()` quotes a VALUE and never a COORDINATE, so the published field sits on the same line as both mutations.
+That is the defect as a measurement, and it is what the card asked to be made sayable.
+
+**P3 — HIT.** `mc-driver-field-post2`: the three driver checks PASS, **zero** driver failures, and the reading
+prints `READING the records name ['4018f0262498eb3e'] the driver ON DISK is 3bd43eed4c6e41f3 committed versions
+['3bd43eed4c6e41f3', '4018f0262498eb3e', 'b726188380ce681c']` followed by
+`INCONCLUSIVE FROM THE RECORD'S SIDE, AND THIS IS NOT A FAILURE OF THE RECORD.` and the consequence paragraph.
+The same output appears in the unmutated shadow (probe M0, 113/115, 0 driver failures).
+
+**P4 — HIT, AFTER ONE CORRECTION OF THE PROBE'S OWN EXPECTATION (correction 3).** Post-edit:
+`deadbeefdeadbeef` in one record fails **two** driver checks and both name
+`probes/MC_Qwen3-1.7B-Q8_0_mc_01_one_shot.json` and the value; `b726188380ce681c` in one record fails
+**exactly one**, naming the coordinate (it IS a committed driver, so only the split check can catch it). The
+probe is **7/7, rc 0**.
+
+**P5 — HIT, AFTER ONE CORRECTION OF THE IN-CHECKER CONTROL (correction 1).** Shadows from the run of record:
+**M0 113/115 (0 driver failures), M1 111/115 (2), M2 112/115 (1)** — value for value what §3 P5 predicted. The
+field run: **113/115**, total **115** in every run.
+
+**P6 — HIT, MEASURED.** (a) **The entrant block is byte-identical**: its sha256 is
+`dbf8b477959d3e59…` in both versions (20 lines each), taken of the block from
+`# THE ENTRANT IS THE SUBJECT OF THE MEASUREMENT` through the `MEASURED, AND IT IS A FINDING ABOUT THE PRE-MOVE
+RECORDS` print — a **hash of the block, not a line number**, so `t_77f73033` will find it where it left it.
+(b) Sections `[1]`, `[2]`, `[4]`, `[5]`, `[7]`, `[8]` are **identical verdict line for verdict line** between
+`mc-driver-field-pre` and `mc-driver-field-post2` (3, 3, 6, 88, 2, 0 lines respectively; compared by the strings,
+not by count). Section `[3]` moved exactly as designed: the one failing driver assertion → three passing checks,
+and `[6b]` is new with two passing controls.
+
+**P7 — HIT, READ BACK.** The 22 coordinates' aggregate over sorted `(path, sha256)` is
+`318739354497d7cfcf6c30c3d189bf08987227d478264f7108e778b8923bab9a` **before and after**; `git status
+--porcelain probes/ results/` is empty after every run (and after the probe's three shadow runs);
+`MC_DECLARATION.md` `2ada03ee2ad1f60b`, `missile_command.py` `eb5ed36591b300e6`, `missile_command_run.py`
+`3bd43eed4c6e41f3`, `MC_FIELD_PLAIN.md` `d991c234024ce2e7`, `PREREG_mc_field_plain.md` `e40ac17826d2f87a`, the
+archive `edf414eaa1a8997f`, the population artifact `9335b2a39b4d1d38`, `MC_LEGEND_AB.json`
+`029244b6e5232a6b`, `PREREG_mc_ab_arm_names.md` `3f670a15e8e9cb4e`, `scripts/run_guarded.sh` `5e34e455b5193e89`,
+both levels `ab101ca955c1c853` / `327d2157bd0b8a83` and `PREREG_missile_command.md` `01548e9a866df03e` — **all
+unmoved**. The driver's `--self-test` is **53/53** on both sides.
+
+**P8 — HIT, WITH THE COST PAID WHERE IT WAS NAMED.** `scripts/check_mc_field_plain.py` `e0740e47f39a5e74` ->
+**`186088accaa409aa`**; `scripts/probe_mc_driver_digest.py` `1007f3e53224a3e2` (as committed) ->
+**`c592d45e1b7d1e03`** with the two expectation corrections below and nothing else; this file `8a3fb91e4188bf68`
+(as committed) -> the digest of the version carrying this note. `MC_FIELD_PLAIN.md` is **not touched**
+(`d991c234024ce2e7`), so its *"111 checks"* (`:11`) and `PREREG_mc_field_plain.md:168`'s expectation remain what
+they were on the day they were written: **the total is 115 now, and the place to learn that is the checker's
+own last line and this note.** A reader who counts three failures in `logs/mc-field-check-ocho.out` and two in
+`logs/mc-driver-field-post2.out` is looking at one cause removed and nothing else moved.
+
+### CORRECTIONS — ALL THREE FOUND BY THE GOVERNED RUN, EACH RECORDED WITH ITS COUNTERFACTUAL
+
+**1. THE IN-CHECKER CONTROL [6b] WAS WRITTEN WITH AN ABSOLUTE EXPECTATION, AND THE SHADOW CABINETS CAUGHT IT.**
+Its first version expected `[(cells[0], 'deadbeefdeadbeef')]` — correct on a sound field, **wrong on a tree whose
+field is itself mutated**: in the probe's M1 it fired a SECOND time, reporting the field's real mutation beside
+its own demo mutation. `mc-driver-probe-post` **4/7**, M1 **109/115 with 3 driver failures**. **The checks
+themselves were right** — their expectations are already relative (`[]`) — so what was corrected was the
+CONTROL's expectation, now `base_missing + [(cells[0], the mutation)]`, i.e. relative to the field it is
+demonstrating on, and the comment says why. After it, M1 is 111/115 with 2 driver failures, as P5 predicted.
+**This is the control doing its job**: a demonstration that assumes a sound field is a demonstration that cannot
+be trusted on a dirty one.
+
+**2. D2's FAILURE WAS INVISIBLE TO ANYONE LOOKING FOR THE DIGEST'S NAME — SO THE CHECK WAS RENAMED.** Its first
+wording was *"...and the 22 records name ONE of them between them"*, which does not contain `driver_digest`;
+the probe classifies driver failures by that name, and `mc-driver-probe-post2` reported M2 as **112/115 with 0
+driver failures** — a failure line the instrument could not see, which is the same defect the card exists to
+remove, one level up. The rename states the property in the check's own name (*"name ONE `driver_digest` value
+between them"*); **no expectation, threshold or result moved** — the check passed and failed on exactly the same
+values before and after it (M2's 112/115 is 3 failures either way).
+
+**3. THE PROBE'S C4/C5 LOOKED FOR THE COORDINATE IN THE WRONG PLACE.** The `FAIL` HEADLINE names the property;
+the record is named on the `got` line beneath it. C4/C5 required the coordinate on the headline
+(`mc-driver-probe-post3`: **5/7**, C4/C5 failing on `(False, True)` — **the value matched, the coordinate did**).
+Corrected in the expectation, not in the checker and not in the reading: `(h + " " + d)`, i.e. "the failure
+BLOCK names the record", which is what "the failure has an address" means.
+
+**None of the three touches an expectation about the FIELD, a record, a count or a criterion.** All are defects
+in this card's own instruments, found by running them, and named here rather than absorbed — the same discipline
+as `PREREG_mc_field_plain.md`'s `52/52 -> 53/53` correction.
+
+### NAMED GAPS, RATHER THAN LEFT TO BE FOUND
+
+```
+1  run_guarded.sh's `systemd-run` does NOT propagate the command's exit status (the parent card's appendix
+   named the same gap). The governed runs capture it INSIDE the unit, `/bin/bash -c '...; echo "EXIT $?"'`, so
+   every rc above is read from the log; the smoke run (mc-driver-probe-smoke) has no captured rc.
+2  the driver-history read needs git. Run outside a git checkout the checker FAILS the D1 check with the error
+   printed -- "cannot check" is never a pass -- and MC_DRIVER_HISTORY_REPO points it at another checkout.
+3  the ONE way D1 can fail on a correct record: a run taken from an UNCOMMITTED driver. The remedy is to commit
+   the driver, never to re-take the digest. Stated in the function's own docstring.
+0  what is NOT done, and is deliberately not done here: the field is NOT re-taken (option 2 of the card, the
+   Chair's); t_77f73033's entrant block is NOT touched (byte-identical, above); MC_FIELD_PLAIN.md is NOT edited;
+   no criterion, verdict, record, archive or count is moved; `FAILED ON THIS POPULATION` stands as attached to
+   C2 and C3.
+```
+
+### THE ARTIFACTS OF THIS CARD
+
+```
+scripts/check_mc_field_plain.py   186088accaa409aa   the reading + D1/D2/D3 + the [6b] controls
+scripts/probe_mc_driver_digest.py c592d45e1b7d1e03   three shadow cabinets, model-free, outside the tree
+logs/mc-driver-field-pre.out      108/111, 3 failures, rc 1      (the "before" of record)
+logs/mc-driver-field-post2.out    113/115, 2 failures, rc 1      (the "after" of record)
+logs/mc-driver-probe-pre.out      3/7,  C3-C6 FAIL, rc 1
+logs/mc-driver-probe-post4.out    7/7,  C1-C7 PASS, rc 0
+logs/mc-driver-probe-smoke.out / -post.out / -post2.out / -post3.out   the superseded runs, kept
+logs/mc-driver-selftest-pre.out / -post.out   53/53 rc 0, both sides
+```

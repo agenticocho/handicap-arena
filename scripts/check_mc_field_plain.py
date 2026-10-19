@@ -3,9 +3,18 @@
 
 WHY THIS EXISTS, AND WHAT IT IS NOT. The field's numbers are read from the 22 coordinates after the run, so
 "the arm is plain" and "the replacement is recorded" are CLAIMS until something re-derives them from the files
-that are on disk NOW -- including the digest of the declaration, the driver and the simulator, which are read
-from disk rather than compared against a copy carried in the record. It re-derives each cell's score, counts
-and every screen with the FROZEN SIMULATOR (`missile_command.play`), independently of what the record claims.
+that are on disk NOW -- the declaration's digest and the frozen simulator's are read from disk and CHECKED,
+because a frozen input that moves is a defect. It re-derives each cell's score, counts and every screen with
+the FROZEN SIMULATOR (`missile_command.play`), independently of what the record claims.
+
+AND THE DRIVER'S DIGEST IS A READING, NOT A CHECK (card t_d68e29ba, pre-registered in
+PREREG_mc_driver_digest_reading.md). A record's `driver_digest` names the instrument OF ITS DAY. The driver was
+legitimately edited after this field was taken, so comparing it with the file on disk asserts that no
+legitimate edit to the driver may ever happen again -- and it failed on all 22 CORRECT records the day after
+the edit. What IS checked is everything that would make it a mutation: that the digest names a version of the
+driver this cabinet actually committed (read from git), that the 22 records name ONE of them (the field was
+taken in one pass), and that it is well formed and correctly scoped. The reading prints both digests and says
+INCONCLUSIVE -- never FAILED -- when they differ, with the consequence stated.
 
 THE CHECKER'S OWN CONTROL: with a MUTATED action stream the same comparison must FAIL. A checker whose test
 cannot fail is a checker that reports its own input back.
@@ -16,6 +25,7 @@ import hashlib
 import json
 import os
 import re
+import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -58,6 +68,64 @@ def d16(path):
 
 def squash(s):
     return re.sub(r"\s+", " ", s or "").strip()
+
+
+def committed_driver_digests():
+    """EVERY VERSION OF THE DRIVER THIS REPOSITORY HAS COMMITTED, the working tree's own version included --
+    a record taken between an edit and its commit legitimately names a version no commit holds yet, and that is
+    the ONE stated way this check can fail on a correct record (the remedy is to commit the driver, never to
+    re-take a digest).
+
+    THE HISTORY IS THE ONLY TREE-LOCAL SOURCE THAT ANSWERS "does this digest belong to a file?": the instrument
+    of the day is no longer on disk, the pre-move records carry no driver digest at all, and a registry typed
+    into this file would be a second copy of a fact git already holds. The read does not trust the file's
+    content: it hashes every committed blob of the path and adds the file on disk. MC_DRIVER_HISTORY_REPO points
+    the read at another checkout -- the probe uses it for the shadow cabinets it builds -- and the repository
+    that answered is PRINTED, so a reader can see which history this was checked against.
+    """
+    repo = os.environ.get("MC_DRIVER_HISTORY_REPO") or CAB
+    rel = "missile_command_run.py"
+    try:
+        shas = subprocess.run(["git", "-C", repo, "log", "--all", "--format=%H", "--", rel],
+                              capture_output=True, text=True, check=True).stdout.split()
+        out = {d16(os.path.join(CAB, rel))}
+        for sha in shas:
+            blob = subprocess.run(["git", "-C", repo, "show", f"{sha}:{rel}"],
+                                  capture_output=True, check=True).stdout
+            out.add(hashlib.sha256(blob).hexdigest()[:16])
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise RuntimeError(f"git could not read the history of {rel} in {repo}: {exc}") from exc
+    return out
+
+
+def uncommitted_driver_digests(cells, committed):
+    """(coordinate, digest) for every record whose digest names no committed driver -- NAMED, not counted, so a
+    mutation is a line a reader can follow to the file."""
+    return sorted((c["coordinate"], i["driver_digest"]) for c, _, i in cells
+                  if i["driver_digest"] not in committed)
+
+
+def non_majority_driver_digests(cells):
+    """(coordinate, digest) for every record that disagrees with the field's majority digest. The siblings that
+    exist for this field are THE OTHER 21 RECORDS OF THE SAME PASS: `driver_digest` is a top-level record field
+    with no second copy inside its own record, so a disagreement can only be measured across the field."""
+    seen = [i["driver_digest"] for _, _, i in cells]
+    if not seen:
+        return []
+    top = max(sorted(set(seen)), key=seen.count)
+    return sorted((c["coordinate"], i["driver_digest"]) for c, _, i in cells if i["driver_digest"] != top)
+
+
+def driver_digest_shape_violations(cells):
+    """A record that cannot say what its own digest digests."""
+    bad = []
+    for c, _, i in cells:
+        value, scope = i["driver_digest"], i.get("driver_digest_scope") or ""
+        if not (isinstance(value, str) and re.fullmatch(r"[0-9a-f]{16}", value)):
+            bad.append((c["coordinate"], "not 16 lowercase hex", value))
+        elif "missile_command_run.py" not in scope:
+            bad.append((c["coordinate"], "scope does not name the driver file", scope[:60]))
+    return bad
 
 
 def coordinates_on_disk():
@@ -124,7 +192,8 @@ def main():
         proto = d.get("protocol") if isinstance(d.get("protocol"), dict) else {}
         ident = {"legend": d.get("legend"), "legend_digest": d.get("legend_digest"),
                  "declaration_digest": proto.get("declaration_digest"),
-                 "driver_digest": d.get("driver_digest"), "simulator_digest": d.get("simulator_digest"),
+                 "driver_digest": d.get("driver_digest"), "driver_digest_scope": d.get("driver_digest_scope"),
+                 "simulator_digest": d.get("simulator_digest"),
                  "legend_source": d.get("legend_source")}
         cells.append((c, d, ident))
 
@@ -135,8 +204,40 @@ def main():
     ck("...and none of them names the arm of record before the move", EXAMPLE_DIGEST in ids("legend_digest"), False)
     ck("...every record carries the declaration digest OF THE FILE ON DISK", ids("declaration_digest"),
        [live["declaration"]])
-    ck("...and the DRIVER digest of the driver that is on disk -- the gap F2 closed", ids("driver_digest"),
-       [live["driver"]])
+    # THE DRIVER DIGEST IS A READING, NOT AN IDENTITY OF THE FILE ON DISK -- decided and pre-registered in
+    # PREREG_mc_driver_digest_reading.md (card t_d68e29ba) after this check FAILED ON ALL 22 CORRECT RECORDS:
+    # they were taken under 4018f0262498eb3e and card t_8edaaf2d then edited the driver to 3bd43eed4c6e41f3.
+    # The three checks below keep everything about the digest that CAN be a mutation, and none of them goes
+    # stale when the driver is edited.
+    try:
+        committed = committed_driver_digests()
+    except RuntimeError as exc:
+        committed = set()
+        print(f"  DRIVER HISTORY UNREADABLE -- {exc}\n          (the checks below cannot pass on an unread "
+              f"history: 'cannot check' is never a pass)")
+    ck("...and every record's driver_digest NAMES A DRIVER THIS CABINET HAS COMMITTED "
+       f"({len(committed)} versions read from git) -- a digest that belongs to no file fails here, and the "
+       "failure names the record", uncommitted_driver_digests(cells, committed), [])
+    ck("...and the 22 records name ONE driver_digest value between them (the field was taken in one pass), "
+       "so a record that disagrees with its own siblings is NAMED (a split field is a re-take's business, "
+       "never one record's error)", non_majority_driver_digests(cells), [])
+    ck("...and every record's driver_digest is 16 lowercase hex whose scope names missile_command_run.py "
+       "(a record that cannot say what its own digest digests)", driver_digest_shape_violations(cells), [])
+    driver_names = ids("driver_digest")
+    print(f"  READING  the records name {driver_names}   the driver ON DISK is {live['driver']}   "
+          f"committed versions {sorted(committed)}")
+    if driver_names == [live["driver"]]:
+        print("           THE RECORDS NAME THE DRIVER ON DISK TODAY -- which is all this reading can say: it "
+              "is not a promise that these are the bytes the next reader will find.")
+    else:
+        print("  " + "-" * 96)
+        print("           INCONCLUSIVE FROM THE RECORD'S SIDE, AND THIS IS NOT A FAILURE OF THE RECORD.")
+        print("           A record's driver_digest identifies the instrument OF ITS DAY, not the instrument on")
+        print("           disk today: a later, legitimate edit to the driver makes the two differ and falsifies")
+        print("           nothing about the record. THE FIELD IS NOT RE-TAKEN ON ACCOUNT OF IT -- that would")
+        print("           move 22 published coordinates for a file that will be edited again. What WOULD fail is")
+        print("           above: a digest belonging to no committed driver, a split field, a malformed digest.")
+        print("  " + "-" * 96)
     ck("...and the simulator digest of the frozen simulator", ids("simulator_digest"), [live["simulator"]])
     ck("...read from the declaration rather than named on the command line",
        ids("legend_source"), [f"the recorded default ({R.legend()})"])
@@ -212,6 +313,31 @@ def main():
         if (r["cities_surviving"], r["counts"]) == (d["score"], d["counts"]):
             worse.append((c["entrant"], c["level"]))
     ck("a MUTATED action stream does NOT reproduce the record's score and counters (22 cells)", worse, [])
+
+    print("\n[6b] THE DRIVER READING'S OWN CONTROL -- THE CHECKS ABOVE CAN FAIL, ON A MUTATED RECORD")
+    # THE SAME PREDICATES the driver checks call, on a copy of the field with ONE record mutated IN MEMORY: the
+    # control tests the code path, not a description of it. Nothing on disk is written, and no digest is
+    # re-taken: a control that changed the field to demonstrate itself would be the defect this card removes.
+    # ITS EXPECTATION IS RELATIVE TO THE FIELD, not absolute: on a tree whose field is itself mutated, an
+    # absolute expectation would fail here as well and report the same record twice -- measured (the probe's
+    # M1), stated, and corrected in the pre-registration's landing note rather than absorbed.
+    c0, _, i0 = cells[0]
+    other = sorted(committed - {i0["driver_digest"]})
+    base_missing = uncommitted_driver_digests(cells, committed)
+    base_split = non_majority_driver_digests(cells)
+    mut_none = [(c0, None, dict(i0, driver_digest="deadbeefdeadbeef"))] + cells[1:]
+    ck("a record whose driver_digest belongs to NO committed driver is caught, and NAMED (the predicate the "
+       "check above reads)",
+       uncommitted_driver_digests(mut_none, committed),
+       sorted(set(base_missing + [(c0["coordinate"], "deadbeefdeadbeef")])))
+    if other:
+        mut_older = [(c0, None, dict(i0, driver_digest=other[0]))] + cells[1:]
+        ck("...and a record naming a DIFFERENT committed driver than its 21 siblings is caught, and NAMED "
+           "(the predicate the check above reads)", non_majority_driver_digests(mut_older),
+           sorted(set(base_split + [(c0["coordinate"], other[0])])))
+    else:
+        ck("...and a record naming a DIFFERENT committed driver than its 21 siblings is caught, and NAMED -- "
+           "UNTESTABLE HERE: this history holds one version of the driver only", ["no second version"], [])
 
     print("\n[7] THE REPLICATION CONTROL -- THE CELLS THE POPULATION RUN ALREADY MEASURED UNDER `plain`")
     pcells = {(c["entrant"], c["level"]): c for c in pop["cells"] if c["arm"] == "plain"}
