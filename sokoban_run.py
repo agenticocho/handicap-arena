@@ -867,6 +867,55 @@ def run(entrant, level_path, cap, port):
             srv.kill()
 
 
+# ==================================================================================================
+# THE REFUSAL: A TERNARY ENTRANT UNDER A BINARY THAT CANNOT READ IT IS NOT A RUN, IT IS A MISFILING.
+#
+# The flag above makes the RIGHT instrument possible. This makes the WRONG one impossible -- because
+# possible-and-documented was not enough: on 2026-10-17 a sweep took the default binary anyway and
+# produced nine records, five of them failure records and one of them naming mainline outright. Its card
+# said so in prose. A warning in a card body is not a gate.
+#
+# THE TEST IS THE FILE'S OWN DECLARATION, NOT ITS NAME -- "a name is not an identity", applied one layer
+# down from the entrant rule. These ggufs declare `prism.hadamard.*` in their header; a non-ternary model
+# declares none of it (measured: 4B 11 occurrences, 2B 10, Ministral-3-3B 0). A rename cannot smuggle one
+# past this, and a false positive is not reachable from a file that does not carry the metadata.
+#
+# AND THE REFUSAL NAMES WHAT IT WOULD HAVE MEASURED. The consequence is not "it fails": on the 2B the
+# default binary LOADED the file and answered with 64 tokens of multilingual token salad -- three turns,
+# zero moves, not_an_action 3 -- FILED AS THE MODEL'S NUMBER. A message that said "incompatible" would
+# hide exactly the thing that makes this worth refusing.
+# ==================================================================================================
+def refuse_a_ternary_entrant_under_a_blind_binary(entrant_path):
+    """-> None when the pair is runnable, or a refusal message when it is not.
+
+    Fail-SAFE BY CONSTRUCTION: an unreadable file raises no objection here -- a genuine load failure
+    reports itself later, with its own class -- so this gate can never be the reason a runnable pair is
+    blocked. It can only refuse a pair whose model declares prism metadata and whose binary does not.
+    """
+    try:
+        with open(entrant_path, "rb") as f:
+            head = f.read(1 << 20)
+    except OSError:
+        return None
+    if b"prism.hadamard" not in head:
+        return None
+    binary = llama_server()
+    if "prism" in binary.lower():
+        return None
+    return (
+        f"  REFUSED: {os.path.basename(entrant_path)} DECLARES prism.hadamard -- a ternary file that\n"
+        f"  needs the prism fork.\n"
+        f"    selected binary : {binary}\n"
+        f"    selected by     : {binary_source()}\n"
+        f"    WHAT IT WOULD MEASURE: the default binary either refuses the file, or loads it and answers\n"
+        f"    with tokens that are not moves -- measured on the 2B as three turns, zero moves, 64 tokens\n"
+        f"    of multilingual token salad, FILED AS THE MODEL'S NUMBER.\n"
+        f"    RUN IT PROPERLY:\n"
+        f"      --llama-server /home/chilly1/src/PrismML-Bonsai-demo-20261016/bin/cuda/llama-server\n"
+        f"    This is a gate, not a limitation: pass the fork and the same command runs."
+    )
+
+
 def main():
     global LLAMA_SELECTED, ARTIFACT_OVERRIDE
     ap = argparse.ArgumentParser()
@@ -905,6 +954,16 @@ def main():
     p = a.entrant if os.path.exists(a.entrant) else os.path.join(MODELS, a.entrant)
     if not os.path.exists(p):
         print(f"  ENTRANT ABSENT: {a.entrant}"); return 2
+
+    # ---- THE BINARY GATE, AT ADMISSION -- BEFORE THE ARTIFACT GATE, BEFORE ANY SERVER IS SPAWNED ----
+    # Before the artifact gate because the instrument is the more basic question: a run refused here
+    # could not have been a measurement of this model under any file name. Before the spawn because a
+    # refusal costing a 1.2 GB model load is a report filed afterwards, not a refusal. Exit 4, distinct
+    # from 2 (a bad argument) and from the load-failure codes, so a caller can tell "this pair must not
+    # run" from "this pair did not run".
+    refusal = refuse_a_ternary_entrant_under_a_blind_binary(p)
+    if refusal:
+        print(refusal); return 4
 
     # ---- THE ARTIFACT GATE, AT ADMISSION -- BEFORE ANY SERVER IS SPAWNED -------------------------
     # At admission rather than at the write, for the reason the game-contract gate is at admission: a
