@@ -227,7 +227,8 @@ def main():
                     f"`{R.legend_source()}` when this artifact was written), and changing it is a separate "
                     "act with its own reason (`DECISION_mc_legend_arm.md`). BOTH ARMS REMAIN SELECTABLE at "
                     "the driver's call time (`--legend example` / `MC_LEGEND=example`): this A/B runs both, "
-                    "and every cell carries the digest of the arm it was taken under."),
+                    "and every cell that loaded carries the digest of the arm it was taken under -- a cell "
+                    "that did not load carries its `load_failure_class` instead, and no digest."),
     }
     if replaced is not None:
         art["artifact_replaced"] = replaced
