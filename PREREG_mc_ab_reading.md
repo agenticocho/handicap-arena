@@ -677,9 +677,18 @@ Comment 71 was amended mid-run: two addresses were wrong and both findings stood
 :66/:69-71  the not-loaded return inside cell_summary   (comment 71 said :80-84; cell_summary opens at :66)
 :184        R.LEGEND_ARM = None, after the arm loop     (comment 71 said :181)
 :230        the digest clause                           (confirmed)
-:235        json.dump(art, open(OUT, "w"), indent=1)    (confirmed -- the only write-mode open in the module)
-:259-260    F3 in scripts/probe_ab_reading.py           (confirmed)
+:236        json.dump(art, open(OUT, "w"), indent=1)    (:235 before THIS round's edit -- the `reading` string
+                                                        gained one line, so the module's ONLY write moved one
+                                                        line down with it; named rather than left to drift)
+:312-313    F3 in scripts/probe_ab_reading.py           (:259-260 in the ROUND-1 instrument -- F3 moved because
+                                                        this round's four checks were added ABOVE it; the
+                                                        Chair's address was right for the file it read)
 ```
+
+**AN ADDRESS IS A READING OF A FILE AT AN INSTANT, NOT A PROPERTY OF THE CODE, AND TWO OF THESE MOVED BECAUSE
+THIS ROUND'S OWN EDIT MOVED THEM.** Both are stated against the digests in §6.4 (module `deb1749b1bcddd06`,
+probe `fc777a31a6ae1770`) rather than as bare line numbers, because the bare number is the carrier that rotted —
+three times in this card's thread already (`:221-225` in the card body, comment 71's `:80-84` and `:181`).
 
 **A wrong address is a defect in the review, and it was filed in the thread rather than quietly fixed — the
 cabinet's own rule. It changed nothing: the corrections are identified by what they say about the code, and both
