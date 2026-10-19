@@ -11,14 +11,28 @@ No daemon, no socket, no resident process.
 TEST IDENTITY
     A cell is identified by (graph_digest, symmetrisation, K) + cell_spec_sha256.
     graph_digest is a CONTENT digest, not a byte digest, so re-serialising the JSON
-    cannot silently change the test:
+    cannot silently change the test. DEFINITION, ged-v2 (the only accepted form):
 
-        sha256( b"ged-v1\n" + for each node a in file order:
-                    a + "\t" + ",".join(str(ged_fwd[a][y]) for y in nodes) + "\n" )
+        sha256( b"ged-v2\n"
+                + for each node a in the file's "nodes" ARRAY, in ARRAY ORDER:
+                      a.encode("utf-8") + b"\t"
+                    + b",".join(str(int(ged_fwd[a][y])) for y in the SAME array order) + b"\n" )
+
+    THE NODE ORDER IS THE "nodes" ARRAY. NOT the insertion order of the ged_fwd object,
+    not sorted order, not any order a JSON serialiser happens to emit. ged-v1 said "file
+    order" and that was ambiguous: the file carries TWO orders, the "nodes" array (the
+    declared order) and the ged_fwd key order (an artefact of json.dump(sort_keys=True),
+    which coincides with alphabetical). Two boxes computed two values under the v1 label
+    (798db390… over the array, c7f5eecb… over the keys), so v1 is RETIRED, not adopted.
+    Only the array order is content-stable: reverse the ged_fwd keys without changing a
+    single distance and the key-order digest moves to 36df4b8e…, while the array-order
+    digest does not move at all.
 
     The file's byte digest is recorded separately (file_sha256) as transport evidence.
     Neither pins the test alone: two boxes can hold byte-identical graphs and derive
     different neighbour sets if symmetrisation or K differ. All of it is recorded.
+    Run --self-test for the 2-node test vector; a definition without a test vector is a
+    description, and a description is what just cost a day.
 
 ADMISSION (refuses BEFORE the first turn, with a distinguishable exit code)
     2  bad arguments
@@ -52,6 +66,7 @@ EXIT_DIGEST_MISMATCH = 5
 EXIT_DERIVATION_MISMATCH = 6
 EXIT_RECORD_EXISTS = 7
 EXIT_UNREACHABLE = 8
+EXIT_SELF_TEST_FAIL = 9
 
 SELF = os.path.abspath(__file__)
 
@@ -90,12 +105,26 @@ def file_sha256(raw):
 
 
 def graph_digest(nodes, F):
+    """ged-v2. `nodes` MUST be the graph's own "nodes" array, in array order.
+
+    Anything else is a different number under the same name, which is the defect this
+    function exists to prevent. Callers pass load_graph()'s nodes; nothing else may.
+    """
     h = hashlib.sha256()
-    h.update(b"ged-v1\n")
+    h.update(b"ged-v2\n")
     for a in nodes:
         h.update(a.encode("utf-8") + b"\t")
-        h.update(",".join(str(F[a][y]) for y in nodes).encode("utf-8") + b"\n")
+        h.update(",".join(str(int(F[a][y])) for y in nodes).encode("utf-8") + b"\n")
     return h.hexdigest()
+
+
+# The test vector. Two nodes, one asymmetric pair, no graph file needed: if a definition
+# cannot reproduce THIS, the argument about the 24-node file never needed to happen.
+SELF_TEST_GRAPH = {"nodes": ["A", "B"],
+                   "ged_fwd": {"A": {"A": 0, "B": 3}, "B": {"A": 9, "B": 0}}}
+SELF_TEST_BYTES = b'{"ged_fwd":{"A":{"A":0,"B":3},"B":{"A":9,"B":0}},"nodes":["A","B"]}'
+SELF_TEST_FILE_SHA = "f700d57a5894fc83e82af4494040b21dc92943d57674c8831b1262707f2535c8"
+SELF_TEST_GRAPH_DIGEST = "56a2b3e4ebcf0f7ad0e41c72950c7b9e5dfe00a7d69b3acd2856918dcdeb8714"
 
 
 def d(nodes, F, sym, a, b):
@@ -139,14 +168,32 @@ def stdout_argv():
     return [os.path.basename(sys.executable), SELF] + sys.argv[1:]
 
 
+def self_test():
+    """Reproduce the 2-node test vector from the definition alone. Exit 0 iff both match."""
+    fx = SELF_TEST_GRAPH
+    fsha = hashlib.sha256(SELF_TEST_BYTES).hexdigest()
+    gdig = graph_digest(fx["nodes"], fx["ged_fwd"])
+    ok = (fsha == SELF_TEST_FILE_SHA and gdig == SELF_TEST_GRAPH_DIGEST)
+    print(json.dumps({"self_test": "ged-v2",
+                      "fixture_bytes": SELF_TEST_BYTES.decode(),
+                      "preimage": (b"ged-v2\n" + b"".join(
+                          a.encode() + b"\t" +
+                          ",".join(str(int(fx["ged_fwd"][a][y])) for y in fx["nodes"]).encode() + b"\n"
+                          for a in fx["nodes"])).decode().replace("\n", "\\n").replace("\t", "\\t"),
+                      "file_sha256": fsha, "expect_file_sha256": SELF_TEST_FILE_SHA,
+                      "graph_digest": gdig, "expect_graph_digest": SELF_TEST_GRAPH_DIGEST,
+                      "pass": ok}, indent=1))
+    return 0 if ok else EXIT_SELF_TEST_FAIL
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--graph", required=True)
+    ap.add_argument("--graph", default=None)
     ap.add_argument("--symmetrisation", default=None,
                     choices=["min", "max", "ged_fwd", "ged_rev"],
-                    help="REQUIRED. Which symmetric relation the maze uses.")
+                    help="REQUIRED to run a cell. Which symmetric relation the maze uses.")
     ap.add_argument("--K", type=int, default=None, help="legal-move threshold; default = graph's own")
-    ap.add_argument("--rune", required=True, help="sweep start node")
+    ap.add_argument("--rune", default=None, help="sweep start node (required to run a cell)")
     ap.add_argument("--cap", type=int, default=40)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--expect-graph-digest", default=None)
@@ -156,13 +203,36 @@ def main():
                     help="no model: deterministic seeded walk, proves the plumbing only")
     ap.add_argument("--model", default=None)
     ap.add_argument("--seed-model", dest="seed_model", type=int, default=None)
+    ap.add_argument("--self-test", dest="self_test", action="store_true",
+                    help="reproduce the 2-node ged-v2 test vector and exit (no --graph needed)")
+    ap.add_argument("--print-graph-digest", dest="print_graph_digest", action="store_true",
+                    help="print file_sha256 + graph_digest for --graph and exit. NOT a cell: "
+                         "needs no symmetrisation, because it runs no moves.")
 
     a = ap.parse_args()
+
+    if a.self_test:
+        return self_test()
+
+    if not a.graph:
+        die(EXIT_BAD_ARGS, "--graph is required (except with --self-test)")
+
+    if a.print_graph_digest:
+        raw, g, nodes, F = load_graph(a.graph)
+        print(json.dumps({"definition": "ged-v2",
+                          "node_order": "nodes array",
+                          "nodes": nodes,
+                          "file_sha256": file_sha256(raw),
+                          "graph_digest": graph_digest(nodes, F)}, indent=1))
+        return 0
 
     if not a.symmetrisation:
         die(EXIT_NO_SYMMETRISATION,
             "no --symmetrisation named. min/max/ged_fwd/ged_rev are four different graphs; "
             "the graph_digest alone does not pin the test, so this driver will not pick one for you.")
+
+    if not a.rune:
+        die(EXIT_BAD_ARGS, "--rune is required to run a cell")
 
     raw, g, nodes, F = load_graph(a.graph)
     fsha = file_sha256(raw)
@@ -241,7 +311,11 @@ def main():
             "path": os.path.abspath(a.graph),
             "file_sha256": fsha,
             "graph_digest": gdig,
-            "graph_digest_algorithm": "sha256(ged-v1 over nodes in file order + ged_fwd rows)",
+            "graph_digest_algorithm": "sha256(ged-v2: header 'ged-v2\\n', then for each node a in the "
+                                      "file's 'nodes' ARRAY in array order: a + '\\t' + "
+                                      "','.join(str(int(ged_fwd[a][y])) for y in array order) + '\\n')",
+            "graph_digest_node_order": "nodes array (NOT ged_fwd key order)",
+
             "nodes": len(nodes),
             "symmetrisation": a.symmetrisation,
             "K": K,
