@@ -1,0 +1,325 @@
+#!/usr/bin/env python3
+"""PROBE -- the A/B artifact's `reading` string: a RECORD of the day it was written, or a LIVE CAPTION the
+next run republishes? Model-free: no model, no lease, and no write into the tree (the two artifact fixtures
+this probe builds go to a temporary directory under TMPDIR and are deleted on exit).
+
+The subject is ONE SENTENCE inside the `reading` value `missile_command_legend_ab.py` writes into
+`probes/MC_LEGEND_AB.json` (`029244b6e5232a6b`): the sentence that asserted, in the present tense, that
+`example` WAS STILL the arm of record. `MC_DECLARATION.md` (`2ada03ee2ad1f60b`) has named
+`legend_arm plain` since 2026-10-17, so that sentence was TRUE of the day the A/B ran (the artifact was
+written 2026-10-17 11:31:43 -0700; the key moved later the same day, after the population run
+`MC_POPULATION_20261017-184752`) and FALSE of the live script, which would REPUBLISH it on the next run.
+
+  READING 1  THE TWO COPIES SIDE BY SIDE. The published artifact's `reading` (a RECORD, which the card's
+             bounds forbid moving) and the `reading` the LIVE script would publish today, built by running the
+             script's own `main()` with the driver's `run()` STUBBED -- no model, no lease, every number zero
+             by construction. What is read here is the STRING, which is not a function of the stub.
+  READING 2  THE FIELD THE LIVE SCRIPT WOULD PUBLISH, AND WHETHER IT TRACKS THE DECLARATION. Five checks on
+             the constructed string (the stale claim gone, the source named, the driver's own reading carried,
+             the true selectability claim KEPT), plus THE NON-RECURRENCE CHECK: with the driver's default
+             patched in memory to the OTHER arm, the constructed `reading` must follow it. A "fix" that swaps
+             the literal `example` for the literal `plain` passes the first check and fails this one -- which
+             is the whole reason this card is not a tidy-up.
+  READING 3  THE STALE SENTENCE'S CARRIERS. Every tracked file that contains the phrase is listed. After the
+             edit the only carriers may be the PUBLISHED RECORD and PRE-REGISTRATIONS (which record what was
+             true when written); a live script among them is the defect. **The needle is assembled from
+             fragments below so that this instrument is not itself a carrier of the sentence it searches for.**
+  READING 4  NOTHING ELSE MOVES. The script's only write is its own artifact (an AST reading, not the
+             sentence's own promise); the declaration and the driver agree; no record moved in git; the
+             published artifact's sha256 re-computed in full; every frozen input re-read.
+
+Exit 0 only if every check passes; 3 otherwise. `scripts/run_guarded.sh` is the only way this runs.
+"""
+import ast
+import contextlib
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import sys
+import tempfile
+import time
+
+HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, HERE)
+import missile_command_legend_ab as A                                           # noqa: E402
+import missile_command_run as R                                                 # noqa: E402
+
+MODULE = os.path.join(HERE, "missile_command_legend_ab.py")
+PUB_REL = os.path.join("probes", "MC_LEGEND_AB.json")
+PUB = os.path.join(HERE, PUB_REL)
+PUB_DIGEST = "029244b6e5232a6b77e67cf5e21dea342c7da336a932386b3a16015e96b286c8"
+
+# THE NEEDLE, ASSEMBLED FROM FRAGMENTS ON PURPOSE: an instrument that contains the sentence it hunts is a
+# carrier of the defect it is measuring (and the carrier sweep below would find its own source).
+STALE = "remains the " + "recorded instrument"
+
+# THE RECORD'S OWN WORDS, PINNED. This is the `reading` the published artifact carries; it is pinned here so
+# that a reader can see the edit did not reach into the record, and so that a MOVED record fails a check rather
+# than passing one. The first two sentences are the ones the edit must NOT touch (R5). The third is assembled
+# around the needle for the same reason the needle is: THIS FILE IS NOT A CARRIER.
+PUB_PREFIX = ("The prediction and its three branches are in the pre-registration; the branch above is "
+              "selected BY THE COUNTERS, not by a preference. Scope: ONE entrant, TWO states, n=1 per "
+              "cell -- a demonstration, not a field.")
+PUB_READING = (PUB_PREFIX + " The DECLARED ARM DOES NOT MOVE: `example` " + STALE + ", "
+                             "and changing it is a separate act with its own reason.")
+
+# THE FROZEN INPUTS `PREREG_mc_ab_reading.md` §4 fixes. Checked, not quoted: this probe recomputes them.
+# The module under test (`missile_command_legend_ab.py`) is deliberately NOT here -- it is the drift. Nor is
+# `PREREG_mc_ab_reading.md`, which gains a landing note after the governed runs.
+FROZEN = {
+    "missile_command.py": "eb5ed36591b300e6",
+    "missile_command_run.py": "3bd43eed4c6e41f3",
+    "PREREG_missile_command.md": "01548e9a866df03e",
+    "levels/mc_01_one_shot.txt": "ab101ca955c1c853",
+    "levels/mc_02_scarcity.txt": "327d2157bd0b8a83",
+    "MC_DECLARATION.md": "2ada03ee2ad1f60b",
+    "scripts/run_guarded.sh": "5e34e455b5193e89",
+    "PREREG_mc_population.md": "cfedf8b7f5e7d57f",
+    "PREREG_mc_legend_ab.md": "49784e02849a401f",
+    "PREREG_mc_ab_arm_keys.md": "47db6b9368bae18c",
+    "PREREG_mc_ab_arm_names.md": "3f670a15e8e9cb4e",
+    "probes/MC_LEGEND_AB.json": "029244b6e5232a6b",
+}
+
+# WHERE THE PHRASE IS ALLOWED TO SURVIVE, each with its reason. Anything else that carries it is a live copy.
+EXPECTED_CARRIERS = {
+    "probes/MC_LEGEND_AB.json": "the PUBLISHED RECORD -- it was true of 2026-10-17 11:31:43 and it stays",
+    "PREREG_mc_ab_arm_names.md": "a PRE-REGISTRATION (card t_a74fee86) -- records what was true when written",
+    "PREREG_mc_ab_reading.md": "THIS card's pre-registration -- it quotes the sentence it is about",
+}
+
+CHECKS = []
+
+
+def ck(name, want, got):
+    ok = want == got
+    CHECKS.append((name, ok, want, got))
+    print(f"  CHECK  {'PASS' if ok else 'FAIL'}  {name}")
+    if not ok:
+        print(f"         want {want!r}\n         got  {got!r}")
+    return ok
+
+
+def sha256_file(path):
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+@contextlib.contextmanager
+def patched(**patches):
+    """The driver's attributes substituted AT TEST TIME, restored in `finally`. Nothing on disk is touched."""
+    saved = {k: getattr(R, k) for k in patches}
+    try:
+        for k, v in patches.items():
+            setattr(R, k, v)
+        yield
+    finally:
+        for k, v in saved.items():
+            setattr(R, k, v)
+
+
+def stub_run(*_a, **_k):
+    """NO MODEL IS LOADED. `run()` never reaches a server, so no lease is taken and no token is generated;
+    every cell below is a not-loaded row and every number in the artifact is zero BY CONSTRUCTION. The
+    `reading` string is NOT a function of the cells -- it is built from prose and from the driver's own
+    reading of the declaration -- which is why it can be read out of a stubbed run at all."""
+    return {"loaded": False, "why": "STUBBED BY THE PROBE -- no model, no lease",
+            "load_failure_class": "PROBE_STUB"}
+
+
+def stub_main(out_path):
+    """The script's own `main()`, with `run()` stubbed and OUT redirected to a scratch path. -> rc, artifact.
+    `argv` is set as a run would set it, so the argument path is the real one."""
+    saved_run, saved_out, saved_argv = R.run, A.OUT, sys.argv[:]
+    try:
+        R.run = stub_run
+        A.OUT = out_path
+        sys.argv = ["probe-ab-reading", "--entrant", A.ENTRANT]
+        rc = A.main()
+    finally:
+        R.run = saved_run
+        A.OUT = saved_out
+        sys.argv = saved_argv
+    art = json.load(open(out_path, encoding="utf-8")) if os.path.exists(out_path) else None
+    return rc, art
+
+
+def carriers(needle):
+    """Every TRACKED file containing `needle`, with the files too large to read named rather than skipped
+    silently. `git ls-files` is the domain: untracked scratch (logs/, __pycache__) is not part of the record."""
+    raw = subprocess.run(["git", "-C", HERE, "ls-files", "-z"], capture_output=True).stdout.split(b"\0")
+    hits, skipped = [], []
+    for entry in raw:
+        if not entry:
+            continue
+        rel = entry.decode()
+        path = os.path.join(HERE, rel)
+        try:
+            if os.path.getsize(path) > 8_000_000:
+                skipped.append(rel)
+                continue
+            text = open(path, encoding="utf-8", errors="replace").read()
+        except OSError:
+            continue
+        if needle in text:
+            hits.append(rel)
+    return sorted(hits), sorted(skipped)
+
+
+def write_sites(source):
+    """THE SCRIPT'S ONLY WRITE, read from its OWN SOURCE (AST) rather than from the sentence that promises it.
+    -> (opens with a write mode, other mutating calls, makedirs targets, json.dump targets)"""
+    tree = ast.parse(source)
+    w_opens, mutators, makedirs, dumps = [], [], [], []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        fn = node.func
+        name = getattr(fn, "id", None) or getattr(fn, "attr", None)
+        if name == "open":
+            mode = None
+            if len(node.args) > 1 and isinstance(node.args[1], ast.Constant):
+                mode = node.args[1].value
+            for kw in node.keywords:
+                if kw.arg == "mode" and isinstance(kw.value, ast.Constant):
+                    mode = kw.value.value
+            if isinstance(mode, str) and any(c in mode for c in "wax+"):
+                w_opens.append((node.lineno, mode, ast.unparse(node.args[0]) if node.args else ""))
+            elif mode is None:
+                w_opens.append((node.lineno, mode, ast.unparse(node.args[0]) if node.args else ""))
+        elif name in ("remove", "unlink", "replace", "rename", "rmtree", "write_text", "write_bytes",
+                      "truncate", "chmod", "symlink"):
+            mutators.append((node.lineno, name, ast.unparse(node)))
+        elif name == "makedirs":
+            makedirs.append(ast.unparse(node))
+        elif name == "dump":
+            dumps.append(ast.unparse(node.args[1]) if len(node.args) > 1 else "")
+    return w_opens, mutators, makedirs, dumps
+
+
+def main():
+    print(f"PROBE ab-reading -- the A/B's `reading` string: does the LIVE script still assert the arm of record?")
+    print(f"  taken      {time.strftime('%Y-%m-%dT%H:%M:%S%z')}")
+    print("=" * 106)
+    pub = json.load(open(PUB, encoding="utf-8"))
+    src = open(MODULE, encoding="utf-8").read()
+    if not PUB_READING.startswith(PUB_PREFIX):
+        raise SystemExit("PROBE DEFECT: PUB_PREFIX is not a prefix of PUB_READING -- fix the probe, not the code")
+    print(f"  instrument  {os.path.relpath(MODULE, HERE)}  digest {sha256_file(MODULE)[:16]}")
+    print(f"  published   {PUB_REL}  sha256 RE-COMPUTED here: {sha256_file(PUB)}")
+    print(f"  driver      arms {tuple(R.LEGEND_ARMS)}  LEGEND_DEFAULT {R.LEGEND_DEFAULT!r}  "
+          f"declaration legend_arm {R.DECL.get('legend_arm')!r}")
+    print(f"              legend_source() -> {R.legend_source()!r}   digests {R.legend_arm_digests()}")
+    scratch = tempfile.mkdtemp(prefix="mc-ab-reading-")
+
+    # ---------------------------------------------------------------- READING 1: the two copies
+    print("\nREADING 1  THE TWO COPIES -- the published RECORD, and the `reading` the LIVE script would publish")
+    out1 = os.path.join(scratch, "ab_live.json")
+    rc1, art1 = stub_main(out1)
+    if art1 is None:
+        raise SystemExit(f"PROBE DEFECT: main() produced no artifact at {out1} (rc {rc1})")
+    live = art1["reading"]
+    print(f"  main() rc {rc1}  artifact built at {os.path.relpath(out1, HERE)}  (run() STUBBED: no model, no lease)")
+    print(f"\n  PUBLISHED (the record, 2026-10-17 11:31:43 -0700)\n    {pub['reading']}\n")
+    print(f"  LIVE SCRIPT would publish TODAY\n    {live}\n")
+    print(f"  THE LIVE COPY IS THE PUBLISHED COPY: {live == pub['reading']}"
+          + ("   <-- the record and the caption are the same sentence, which is the defect" if live == pub["reading"]
+             else "   <-- they differ: the live text has already moved away from the record"))
+    ck("R1  the published artifact's sha256 is the one the card quotes", PUB_DIGEST, sha256_file(PUB))
+    ck("R2  the published artifact's `reading` is the record's own words, unchanged", PUB_READING, pub["reading"])
+
+    # ---------------------------------------------------------------- READING 2: the live field
+    print("\nREADING 2  THE FIELD THE LIVE SCRIPT WOULD PUBLISH -- five claims, and whether it TRACKS the declaration")
+    other = next(a for a in R.LEGEND_ARMS if a != R.LEGEND_DEFAULT)
+    out2 = os.path.join(scratch, "ab_patched.json")
+    with patched(LEGEND_DEFAULT=other):
+        patched_source = R.legend_source()
+        rc2, art2 = stub_main(out2)
+    if art2 is None:
+        raise SystemExit(f"PROBE DEFECT: the patched-default run produced no artifact at {out2} (rc {rc2})")
+    patched_reading = art2["reading"]
+    print(f"  the driver's own reading of the declaration, AS ON DISK: {R.legend_source()!r}")
+    print(f"  and with the driver's default patched IN MEMORY to {other!r}: {patched_source!r}")
+    print(f"  the two constructed readings are the same string: {live == patched_reading}"
+          + ("   <-- the text does NOT follow the declaration" if live == patched_reading else
+             "   <-- the text follows the declaration"))
+    ck("F1  the live `reading` no longer asserts that `example` is the arm of record", True, STALE not in live)
+    ck("F2  and it NAMES the file the arm of record is read from", True, "MC_DECLARATION.md" in live)
+    ck("F3  and it carries the driver's own reading of that key at the instant of the run",
+       True, R.legend_source() in live)
+    ck("F4  NON-RECURRENCE: with the default patched to the other arm the constructed `reading` follows it "
+       "(a swapped literal would not)", True,
+       bool(live != patched_reading and patched_source in patched_reading
+            and f"({other})" not in patched_reading.replace(patched_source, "")))
+    ck("F5  and the TRUE claim is KEPT: both arms stay selectable at the driver's call time",
+       True, all(tok in live for tok in ("--legend", "MC_LEGEND", "example")))
+
+    # ---------------------------------------------------------------- READING 3: the carriers
+    print("\nREADING 3  THE STALE SENTENCE'S CARRIERS -- every tracked file that contains the phrase")
+    hits, skipped = carriers(STALE)
+    for rel in hits:
+        print(f"      {rel:<38} {EXPECTED_CARRIERS.get(rel, '*** NOT ACCOUNTED FOR ***')}")
+    print(f"      {len(hits)} carrier(s); files too large to read: {skipped}")
+    ck("F6  the stale sentence survives ONLY where a record or a pre-registration keeps it -- "
+       "nowhere in a live script", sorted(EXPECTED_CARRIERS), hits)
+
+    # ---------------------------------------------------------------- READING 4: nothing else moves
+    print("\nREADING 4  NOTHING ELSE MOVES -- the script's only write, the state, the record, the inputs")
+    w_opens, mutators, makedirs, dumps = write_sites(src)
+    print(f"  write-mode open() call sites   {w_opens}")
+    print(f"  other mutating calls           {mutators}")
+    print(f"  os.makedirs                    {makedirs}")
+    print(f"  json.dump targets              {dumps}")
+    ck("R3  the A/B's only write is its own artifact -- read from its SOURCE, not from its sentence",
+       ([("w", "OUT")], [], ["os.path.dirname(OUT)"], ["open(OUT, 'w')"]),
+       ([(mode, target) for (_ln, mode, target) in w_opens], mutators, makedirs, dumps))
+    print(f"      the one write sits at source line(s) {[ln for ln, _m, _t in w_opens]}")
+    state = {"declaration_and_driver_agree": R.DECL.get("legend_arm") == R.LEGEND_DEFAULT,
+             "default_is_an_arm": R.LEGEND_DEFAULT in R.LEGEND_ARMS,
+             "two_arms": len(R.LEGEND_ARMS)}
+    ck("R4  the reachable state: the declaration's key IS the driver's default, and it is an arm",
+       {"declaration_and_driver_agree": True, "default_is_an_arm": True, "two_arms": 2}, state)
+    ck("R5  the edit did not reach the first two sentences -- they are still the published words",
+       PUB_PREFIX, live[:len(PUB_PREFIX)])
+    pub_keys = sorted(set(pub) - {"artifact_replaced"})
+    art_keys = sorted(set(art1) - {"artifact_replaced"})
+    print(f"  published fields {pub_keys}\n  constructed      {art_keys}")
+    print("  (artifact_replaced excluded: it is written only by a REPLACING run, and this fixture writes to a "
+          "fresh path -- the published artifact's own replacement is part of the record)")
+    ck("R8  the field set the script publishes is the published field set (minus the replacement marker)",
+       pub_keys, art_keys)
+    stable = {k: art1[k] for k in art1
+              if k not in ("reading", "cells", "totals", "branch", "entrant_digest", "artifact_replaced")}
+    print("  FINGERPRINT of every field that is neither the reading nor a function of the stub "
+          "(reading, cells, totals, branch) nor the box's unreproducible entrant digest:")
+    print(f"      sha256[:16] = {hashlib.sha256(json.dumps(stable, sort_keys=True).encode()).hexdigest()[:16]}"
+          "   <- IDENTICAL before and after the edit is the claim; both logs carry it")
+    st = subprocess.run(["git", "-C", HERE, "status", "--porcelain", "--", "probes/", "results/"],
+                        capture_output=True, text=True)
+    dirty = [ln for ln in st.stdout.splitlines() if ln.strip()]
+    print(f"  git status --porcelain probes/ results/  ->  {len(dirty)} line(s)"
+          + ("" if not dirty else "\n" + "\n".join("    " + ln for ln in dirty)))
+    ck("R6  no record moved", 0, len(dirty))
+    moved = {k: (v, sha256_file(os.path.join(HERE, k))[:16]) for k, v in FROZEN.items()
+             if sha256_file(os.path.join(HERE, k))[:16] != v}
+    print(f"  frozen inputs: {len(FROZEN)} re-read, {len(moved)} moved"
+          + ("" if not moved else f": {moved}"))
+    ck("R7  every frozen input is unchanged", {}, moved)
+
+    shutil.rmtree(scratch, ignore_errors=True)
+    bad = [n for n, ok, *_ in CHECKS if not ok]
+    print("\n" + "=" * 106)
+    print(f"  {len(CHECKS) - len(bad)}/{len(CHECKS)} checks PASS"
+          + ("" if not bad else "\n  FAILED: " + "; ".join(bad)))
+    print(f"  VERDICT {'PASS' if not bad else 'FAIL'}  (rc {0 if not bad else 3})")
+    print(f"  PROBE EXIT rc={0 if not bad else 3}")
+    return 0 if not bad else 3
+
+
+if __name__ == "__main__":
+    sys.exit(main())
