@@ -543,3 +543,55 @@ treats it as one.**
 published cells, returns `11/15 rc 3` before the edit and `15/15 rc 0` after it, and the four checks that
 move are the four the fix is about. Both runs are in `logs/` with their units named in §1.**
 
+---
+
+## APPENDIX — THE CABINET'S FIELD CHECKER, RUN FOR INFORMATION (NOT A CHECK ON THIS CARD)
+
+**Run after the edit, so that a reader meeting the name of this card in the checker's output — or meeting the
+checker at all — can tell what is and is not mine.**
+
+```
+07:22:29  mc-field-check-ocho  scripts/check_mc_field_plain.py  108/111, 3 CHECKS FAILED
+          logs/mc-field-check-ocho.out      (its EXIT STATUS was not captured -- the unit's log was read,
+                                             not its return code; named as a gap in this reading)
+          read-only: git status --porcelain probes/ results/ -> 0 lines, read after it
+```
+
+**The checker does not read this card's file, and that is checkable rather than argued:**
+`grep -c legend_ab scripts/check_mc_field_plain.py` is **0** and `git show --stat 047aded` names exactly two
+files (`missile_command_legend_ab.py`, `PREREG_mc_ab_arm_names.md`). Its arm checks PASS in this run —
+*"every record names the arm the declaration declares"*, *"by the digest the driver computes for it"*,
+*"...and none of them names the arm of record before the move"* — which is the one thing it could have said
+about this card, and it says the records are consistent with the declaration.
+
+**The three failures, each traced, and only the third is named here for the first time:**
+
+```
+1  "every measured record's entrant digest IS the digest of the model file on disk"  got 8 records where
+   the fresh reading disagrees, want []
+   -> the cabinet's known finding, with a settled mechanism: THE BOX DOES NOT HASH LARGE FILES
+      REPRODUCIBLY (card t_cdd433bb, ~1 bit per 0.3-1.5 GB of data in motion, episodic). Its checker
+      amendment is card t_77f73033 (currently blocked). NOT this card's, and NOT stable in size: the same
+      check reports 8 mismatching records here and 18 in the checker's own pre-move comparison inside this
+      same run, so the COUNT of failures can move while the CAUSE does not.
+2  "over 12 cells the tokens reproduce TOKEN-FOR-TOKEN (P2)"  got 2 cells, want []
+   -> the same finding's second face (MC_FIELD_PLAIN.md Finding B): the two cells whose file reading moved
+      are the two that do not reproduce. NOT this card's.
+3  "...and the DRIVER digest of the driver that is on disk -- the gap F2 closed"
+      got ['4018f0262498eb3e'] (what all 22 published coordinates carry)  want ['3bd43eed4c6e41f3']
+   -> NEW, UNNAMED UNTIL THIS PARAGRAPH, and a consequence of card t_8edaaf2d's edit to the driver, not of
+      this card. The recorded state after the field re-take (card t_ec0b0420) was 109/111 with TWO failures;
+      4018f0262498eb3e is the driver OF THAT DAY (MC_FIELD_PLAIN.md:24, :89, :217-218) and t_8edaaf2d moved
+      it to 3bd43eed4c6e41f3. `grep -rn 4018f0262498eb3e` over the tree returns the 22 records and no
+      document, so no landing note names this consequence. **CARDED AS `t_d68e29ba`** (assignee the
+      missile-command cabinet, parent this card), with the decision written into it: either the record's
+      `driver_digest` becomes a READING (as `entrant_digest` became in DECISION_entrant_identity.md) or the
+      field is re-taken under the current driver -- and either way the check must still fail on a mutated
+      record.
+```
+
+**WHY IT IS REPORTED HERE RATHER THAN IN A CARD OF ITS OWN QUIETLY:** the field checker is the cabinet's
+instrument, and a reader who runs it now sees THREE failures where the record says two. Without this
+appendix, the third one is indistinguishable from damage done by this card — which is exactly the defect
+class this whole family of cards exists to remove, aimed at a landing note.
+
