@@ -324,3 +324,153 @@ READING 2  THE NAME IS WHAT IT READS -- every cell relabeled example<->plain
 **The reading that mattered in it was READING 3's, which PASSED** (the block unchanged under the
 declaration's other arm) — the readings about the runner's code were sound; the five that failed were the
 probe's own. That is why the correction is in the probe and the expectations are not.
+
+---
+
+# LANDING NOTE — APPENDED AFTER THE WORK, WITH THE READINGS AND EVERY PREDICTION DISCHARGED BY NAME
+
+**Written after E3 and after every command in §5, 2026-10-19 ~07:05 PDT.** This note is appended; nothing
+above it is rewritten. **No record, no artifact, no criterion and no frozen file was touched**, and no model
+was loaded — the whole of this card is a caption, a refusal and reads.
+
+## 1. THE READINGS, EACH WITH ITS UNIT AND ITS INSTANT
+
+```
+BEFORE THE PRE-REGISTRATION (the instrument's own history; §0)
+  06:59:58  mc-ab-keys-smoke          probe (run 1, probe defective)          5/11, C6+C7 FAIL, rc 3
+  07:00:37  mc-ab-keys-smoke2         probe (run 2, corrected)               9/11, C6+C7 FAIL, rc 3
+AFTER THE PRE-REGISTRATION, BEFORE THE EDIT (the governed counterfactual)
+  07:01:58  mc-ab-keys-probe-pre      scripts/probe_ab_arm_keys.py           9/11, C6+C7 FAIL, rc 3   (P4)
+  07:02:17  mc-ab-self-test-pre       missile_command_run.py --self-test     ALL CONTROLS PASS 53/53
+  07:02:30  mc-ab-dryrun-pre          missile_command_population.py --dry-run coordinate arm plain
+AFTER THE EDIT
+  07:03:03  mc-ab-keys-probe-post     scripts/probe_ab_arm_keys.py           11/11, rc 0              (P5)
+  07:03:21  mc-ab-self-test-post      missile_command_run.py --self-test     ALL CONTROLS PASS 53/53  (P9)
+  07:03:35  mc-ab-dryrun-post         missile_command_population.py --dry-run coordinate arm plain    (P10)
+  07:04:11  mc-ab-p6-posthoc          scratch fixture (POST-HOC, see §4)      P6 IDENTICAL, rc 0
+every one of the nine under scripts/run_guarded.sh 5e34e455b5193e89, in units under logs/<unit>.out
+no lease was taken and no model was loaded by any command above
+```
+
+**The one line the whole card turns on, before and after, same probe, same 24 cells:**
+
+```
+PRE-EDIT   4a  `plain` -> `terse`:  {"unknown": {"example": 27, "plain": 0}, "fired": {"example": 2, "plain": 0},
+                                     "mc02_score_total": {"example": 0, "plain": 0},
+                                     "branch": "NO BRANCH -- one arm has no measured cell..."}
+           4b  `example` -> `worked`:  KeyError: 'example'
+POST-EDIT  4a  REFUSED: `arm_effect` reports the A/B comparison PUBLISHED in
+                     probes/MC_POPULATION_20261017-184752.json (9335b2a39b4d1d38) between the arms
+                     'example' and 'plain'; the driver defines ('example', 'terse'). Those keys are the
+                     names of arms that no longer exist ... RE-PUBLISH the comparison as a NEW artifact
+                     with a NEW digest; do not re-key this block to the declaration.
+           4b  REFUSED:  (the same message, the driver defining ('worked', 'plain'))
+```
+
+**A name that is no longer an arm was reported as a NUMBER — `plain: 0` beside an `unknown` of 27 — and the
+only thing standing between that and a reader was a branch sentence. It is now a refusal that names the
+artifact, its digest and what to do instead.**
+
+## 2. THE DRIFT, AS PREDICTED (P7)
+
+```
+missile_command_population.py  e588199faf5bbbaa  ->  1a28fe9456983e80     E3, the caption + the refusal
+EVERYTHING ELSE IN §4 UNCHANGED, re-read after the last command (probe C10: 9 re-read, 0 moved):
+  missile_command.py eb5ed36591b300e6 · missile_command_run.py 3bd43eed4c6e41f3 · PREREG_missile_command.md
+  01548e9a866df03e · mc_01 ab101ca955c1c853 · mc_02 327d2157bd0b8a83 · MC_DECLARATION.md 2ada03ee2ad1f60b
+  scripts/run_guarded.sh 5e34e455b5193e89 · PREREG_mc_population.md cfedf8b7f5e7d57f ·
+  probes/MC_LEGEND_AB.json 029244b6e5232a6b · PREREG_mc_entrant_identity.md 34c5c2f4c6492eef ·
+  probes/MC_POPULATION_20261017-184752.json 9335b2a39b4d1d38  (sha256, RE-COMPUTED by the probe: C9)
+IDENTITY_IN_RECORD ("server_binary_digest", "legend_digest", "reasoning") -- untouched, the Chair's
+git status --porcelain probes/ results/  ->  0 lines   (no record moved, P8/C8)
+```
+
+## 3. EVERY PREDICTION, DISCHARGED BY NAME — NONE CORRECTED, NONE TRIMMED
+
+```
+P1   the published field is reproduced exactly, key order included, in BOTH runs, identical ...  HIT  (C1+C2, twice)
+P2   relabeling the cells mirrors all three sub-dicts and moves the branch to BRANCH 3, both runs  HIT  (C3+C4, twice)
+P3   the card's stated failure mode does NOT reproduce: under LEGEND_DEFAULT 'example' the block is
+     UNCHANGED from the published reading (COORD_ARM 'example', COMPARISON_ARM 'plain') ..........  HIT  (C5, twice)
+P4   PRE-EDIT the renamed arms are NOT refused: unknown {"example": 27, "plain": 0}, fired
+     {"example": 2, "plain": 0}, mc02 {0,0}, branch NO BRANCH; and KeyError('example') for the other
+     rename; probe 9/11 with exactly C6+C7 FAIL, rc 3 .............................................  HIT  (probe-pre)
+P5   POST-EDIT both renames REFUSE at import, SystemExit naming the artifact and 9335b2a39b4d1d38;
+     probe 11/11, rc 0 ...........................................................................  HIT  (probe-post)
+P6   the two lines below the block keep their value -- rederived 2, matches true, identical PRE vs
+     POST and equal to the artifact's own published values .......................................  HIT  (§4, post-hoc)
+P7   the module's digest moves; no other digest in §4 moves .....................................  HIT  (§2)
+P8   no record, artifact or result is touched ...................................................  HIT  (C8, P8)
+P9   the driver's self-test is 53/53 before and after, its digest unmoved .......................  HIT  (twice)
+P10  the reachable state is unaffected: --dry-run prints `coordinate arm plain`, READ from
+     MC_DECLARATION.md, exit 0, before and after .................................................  HIT  (twice)
+```
+
+**The published artifact itself was recomputed through the runner's own function rather than trusted:
+`C1` compares `verdict_inputs()['arm_effect']` over the artifact's own 24 cells with the `arm_effect` the
+artifact carries, and `C9` re-computes its sha256. This is why "no field of
+`probes/MC_POPULATION_20261017-184752.json` can move" is measured here and not asserted.**
+
+## 4. ADDENDUM (POST-HOC, NOT PRE-REGISTERED) — P6's TWO LINES
+
+**Declared as an addition rather than folded into §1, because it is not pre-registered.** §3's C1 reads
+`arm_effect` only, so the two lines below it (`spend_on_everything_value_rederived`,
+`comparison_line_matches_the_preregistration`) — the same `"example"` literal, hunk 3 — had no check of
+their own. The instrument that reads them lives **outside this tree** (scratch) and is not committed, so the
+committed probe stays exactly the instrument that produced §1's two readings:
+
+```
+PRE-EDIT (git HEAD, before E3)   {"spend_on_everything_value_preregistered": 2,
+                                  "spend_on_everything_value_rederived": 2,
+                                  "comparison_line_matches_the_preregistration": true}
+POST-EDIT (the live file)        the same three values
+the artifact's OWN published values for those fields: the same three values
+P1 restated by the same fixture: arm_effect PRE == arm_effect POST == the published block
+VERDICT PASS
+```
+
+**Why the value cannot move** (and why it is a prediction and not a hope): `comparison_line_value` is read
+from `R.S.play(...)` over the frozen `mc_02_scarcity.txt`, i.e. from the STATE, and is computed once per arm
+before the index is written (line 420-424). The edit changed **which key the index uses**, not the thing
+indexed. **What this addendum does NOT do:** it changes no control §3 fixed, it moves no number in §3, and it
+does not make §1's two probe readings any less equal to each other.
+
+## 5. WHAT THIS LANDING DOES NOT DO, AND WHAT IT NAMES
+
+**Nothing was re-run, re-scored or re-scoped.** No population run was taken (the card forbids it); `n`, the
+states, the criteria, the ceiling and `MC_VERDICT_1.md`'s `FAILED ON THIS POPULATION` are as they were; the
+published artifact's fields are the published artifact's, and §3's C1 and §4 are the checks that say so.
+**`entrant_digest` is still not an identity, and nothing in this diff treats it as one.**
+
+**NAMED: the card's own caption is wrong, and it is not fixed here — the card body is not mine to rewrite.**
+The card (and its title) say the literals are in `aggregate()`. **They are in `verdict_inputs()`**;
+`aggregate()` (`:387-403`) contains no arm name at all. The correct address is recorded in this file's header
+and here. **A card whose address is wrong is the defect this cabinet keeps finding one layer down: a reader
+who trusts it greps the wrong function and finds nothing, which reads as "already fixed".**
+
+**NAMED, NOT CHANGED — the same two names are still literals in the A/B's OWN script, one layer further
+out.** `missile_command_legend_ab.py` carries `ARMS = ("example", "plain")` (line 28) and keys its `totals`
+by them (lines 153, 187) — that is the script that PRODUCED `probes/MC_LEGEND_AB.json` (`029244b6e5232a6b`),
+the A/B this whole card's comparison descends from. Under §1.2's decision the same treatment applies
+(caption + refusal, `AB_EXAMPLE_ARM`-style constants), and for the same reason a rename there would report
+`{"example": ex, "plain": 0}` rather than refusing. It is **out of this card's scope** (another file, another
+instrument, another artifact) and it is carded as **`t_a74fee86`** (assignee `ocho`, parent this card), not
+done here. **This card's sweep found it; leaving it unnamed would have made this landing note the silence
+that this card exists to remove.** *The other two `per_arm` lines, and the arm SET at line 28, are in that
+card's body with the same bounds.*
+
+**AND TWO PINNED LITERALS THAT ARE *NOT* DEFECTS, named here so a later reader does not "fix" them:**
+`missile_command_run.py:1239-1240` and `scripts/check_mc_field_plain.py:133` hard-code the arm name in an
+**assertion's expected value** (`legend_digest("example") == "ec59f2dc5fd35518"`; `ids("legend") == ["plain"]`).
+A control's expectation is not a second copy of a decision — it is **supposed** to go stale and FAIL LOUDLY
+when the thing it checks moves, and both of them do exactly that. The defect this card is about is the
+opposite: a literal that produces a *reading* and cannot fail. **The distinction is the whole card: an
+expectation may be a literal, a measurement may not.**
+
+**ONE BOUND THIS DECISION LEAVES, STATED RATHER THAN LEFT TO BE FOUND.** The refusal fires when a published
+arm name stops being an arm. It does **not** fire if the driver **ADDS** a third arm: `per_arm` would then
+carry three arms (it loops over `ARMS`) while `arm_effect` still reports the two the comparison was
+published between — which is **correct under §1.2** (the block is the published comparison, not an inventory
+of arms) and is why the caption in the source says so in as many words. A reader wanting the third arm's
+effect reads `per_arm`, and `arm_effect`'s keys are the two names it was published under.
+

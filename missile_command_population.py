@@ -62,6 +62,25 @@ if len(ARMS) < 2:
 # THE COMPARISON ARM IS DERIVED TOO -- "whichever arm is not of record", not a literal `plain` that goes
 # stale the day the declaration names the other one.
 COMPARISON_ARM = next(a for a in ARMS if a != COORD_ARM)
+# THE PUBLISHED A/B. `arm_effect` (in `verdict_inputs`, below) reports the comparison `PREREG_mc_population.md`
+# fixed BEFORE the population ran -- "THE PREDICTION FOR THE ARM, AND ITS BRANCHES": the arm carrying the
+# worked example against the arm without it. THAT COMPARISON IS PUBLISHED, in
+# `probes/MC_POPULATION_20261017-184752.json` (`verdict_inputs.arm_effect`; sha256
+# 9335b2a39b4d1d389b78b4a88a82f576020387bf7ed3ed21b7c2158899d54156), whose OWN `arms` block records the two
+# names of the day (`recorded` `example`, `comparison` `plain`). These two constants are therefore NOT a
+# second copy of the declaration's decision -- the declaration decides WHICH arm is of record, and this
+# block does not read it -- and NOT a second copy of `ARMS` either: they are the two arms the comparison was
+# published between. A key is right here only while the driver still defines it as an arm, so the refusal
+# below is what keeps the keys from outliving the names they name.
+AB_EXAMPLE_ARM, AB_PLAIN_ARM = "example", "plain"
+_ab_missing = [a for a in (AB_EXAMPLE_ARM, AB_PLAIN_ARM) if a not in ARMS]
+if _ab_missing:
+    raise SystemExit(
+        f"REFUSED: `arm_effect` reports the A/B comparison PUBLISHED in "
+        f"probes/MC_POPULATION_20261017-184752.json (9335b2a39b4d1d38) between the arms {AB_EXAMPLE_ARM!r} "
+        f"and {AB_PLAIN_ARM!r}; the driver defines {ARMS}. Those keys are the names of arms that no longer "
+        f"exist, and the block would report zeros under a name it does not contain. RE-PUBLISH the "
+        f"comparison as a NEW artifact with a NEW digest; do not re-key this block to the declaration.")
 # run_card.py's EXCLUDE_PAT, verbatim -- the resolution `PREREG_missile_command.md` names -- applied as a
 # case-insensitive SUBSTRING (see the pre-registration: as a PREFIX test, five PROJECTORS enter the field).
 EXCLUDE_PAT = ("qwen-image", "audio", "mmproj", "clip", "vae", "embed", "whisper")
@@ -448,8 +467,15 @@ def verdict_inputs(cells, meta):
     out["cells"] = len(cells)
     out["measured"] = len(_measured(cells))
     out["never_started"] = len([c for c in cells if c["status"] == "never_started"])
-    e = _arm_cells(cells, "example")
-    p = _arm_cells(cells, "plain")
+    # THE PUBLISHED A/B COMPARISON, KEYED BY THE NAMES IT WAS PUBLISHED UNDER -- not a reading of the
+    # declaration, and not derived from COORD_ARM/COMPARISON_ARM. The direction below is a claim about WHAT
+    # THE EXAMPLE DOES (`unknown` DOWN and `fired` UP once the example is removed), so it is keyed to which
+    # arm carries the example. Deriving it positionally would invert the claim the day the declaration names
+    # `example`: COMPARISON_ARM would then be `plain`, and "the comparison arm moved down" would read as
+    # "the example arm moved down" -- the opposite of what this block publishes. See `AB_EXAMPLE_ARM`
+    # above, where a rename of either arm is refused rather than reported as zeros.
+    e = _arm_cells(cells, AB_EXAMPLE_ARM)
+    p = _arm_cells(cells, AB_PLAIN_ARM)
     unk_e = sum((c.get("counts") or {}).get("unknown", 0) for c in _measured(e))
     unk_p = sum((c.get("counts") or {}).get("unknown", 0) for c in _measured(p))
     fir_e = sum((c.get("counts") or {}).get("fired", 0) for c in _measured(e))
@@ -468,14 +494,14 @@ def verdict_inputs(cells, meta):
     else:
         branch = ("BRANCH 3 -- THE MOVEMENT IS NOT THE PREDICTED ONE, or the example is load-bearing for "
                   "format compliance. Read the tokens; the counters alone cannot say which.")
-    out["arm_effect"] = {"unknown": {"example": unk_e, "plain": unk_p},
-                         "fired": {"example": fir_e, "plain": fir_p},
-                         "mc02_score_total": {"example": sc_e, "plain": sc_p},
+    out["arm_effect"] = {"unknown": {AB_EXAMPLE_ARM: unk_e, AB_PLAIN_ARM: unk_p},
+                         "fired": {AB_EXAMPLE_ARM: fir_e, AB_PLAIN_ARM: fir_p},
+                         "mc02_score_total": {AB_EXAMPLE_ARM: sc_e, AB_PLAIN_ARM: sc_p},
                          "branch": branch}
     out["spend_on_everything_value_preregistered"] = PREREG_LINE_VALUE
-    out["spend_on_everything_value_rederived"] = per_arm["example"]["C3_decoys_read_mc02"]["comparison_line_value"]
+    out["spend_on_everything_value_rederived"] = per_arm[AB_EXAMPLE_ARM]["C3_decoys_read_mc02"]["comparison_line_value"]
     out["comparison_line_matches_the_preregistration"] = (
-        per_arm["example"]["C3_decoys_read_mc02"]["comparison_line_value"] == PREREG_LINE_VALUE)
+        per_arm[AB_EXAMPLE_ARM]["C3_decoys_read_mc02"]["comparison_line_value"] == PREREG_LINE_VALUE)
     return out
 
 
