@@ -1,0 +1,48 @@
+# DISCARDED-MANIFEST — runs this card stopped without a record
+
+Rule this file exists for (card t_efd6df81 §7): **a discard that cannot be named afterwards is a deletion.**
+Every entry below names the run's bytes by path and digest, the binary it launched, and why it was stopped.
+Nothing here was deleted; each entry points at a file that still exists.
+
+**No probe record was written for any entry here, and none was removed.** The driver writes
+`probes/SOKOBAN_<label>_<level>.json` only after a cell returns (`sokoban_run.py:1004`), so an interrupted
+cell leaves a server log and no artifact. These are **unfinished runs, not invalid measurements**: nothing
+in them disagrees with the criterion, they simply did not reach it.
+
+---
+
+## D1 — cell 4, Triumvirate-Qwopus-MiMo-Ornith-9B-Coder.i1 on 02_two_boxes — TERMINATED BY THIS CARD, BUDGET
+
+```
+command        python3 sokoban_run.py --entrant Triumvirate-Qwopus-MiMo-Ornith-9B-Coder.i1-Q4_K_M.gguf \
+                 --level levels/02_two_boxes.txt --cap 40 --port 8774
+launched       2026-10-19 10:26:00 PDT (approx; session proc_1c6c1c992f81)
+stopped        2026-10-19 10:54:30 PDT, by this worker, ~1 700 s in
+plies served   16 of 40 (16 `launch_slot_` requests in the log)
+record         NONE WRITTEN -- probes/SOKOBAN_Triumvirate-..._02_two_boxes.json does not exist
+server log     logs/SOKOBAN_Triumvirate-Qwopus-MiMo-Ornith-9B-Coder.i1-Q4_K_M_02_two_boxes_new_rea-off.log
+               16 007 B   sha256 910379dc2e036b7c9de8ec2f706092d56e3e1218374ca123aea580d1ff0c6e00
+binary         /home/chilly1/llama.cpp/build/bin/llama-server   (the DECLARED DEFAULT; --llama-server not passed)
+model          /home/chilly1/moltbook_pipeline/models/Triumvirate-Qwopus-MiMo-Ornith-9B-Coder.i1-Q4_K_M.gguf
+               5 629 136 320 B
+```
+
+**Why it was stopped, stated as a measurement rather than as a preference.** This entrant generated at
+~0.56 tok/s on the cell's own log (`task 736: total time 126 844 ms / 286 tokens`, of which 218 were prompt),
+i.e. **~110 s per ply**, against 6–9 s per ply on the other three entrants. At that rate 40 plies need
+~4 400 s. The card's run budget was 5 400 s in total and ~2 200 s remained when the decision was taken, so
+**the cell could not finish inside the budget** and waiting would have spent the rest of the budget on a run
+that was going to be killed anyway. The card's own rule — judge the remaining iterations *before* starting
+(or continuing) a cell — is what decided it.
+
+**What this entry does NOT claim.** It does not say the entrant would have failed; at 16 plies nothing was
+solved, and 16 plies is not a cap-40 cell. There is **no row for cell 4 in the table**, and the partial
+ply-1 data from this run is NOT entered as a result. Re-running this cell is a clean action: no artifact
+exists at its path, so the instrument's artifact gate will admit a fresh run with no override.
+
+## AN EARLIER, DIFFERENT INTERRUPTION — recorded so the count is honest
+
+An earlier attempt at the same cell (10:19–10:26) was killed by the **tool harness**, not by this card: the
+foreground call hit the harness's 420 s ceiling. It also wrote no record and left no artifact; its log was
+overwritten by D1's run, which is why one log path appears here and not two. No bytes from it survive to be
+hashed, so it is named by interval only. It is not a separate cell and does not count as a row.
