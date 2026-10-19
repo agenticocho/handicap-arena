@@ -25,7 +25,40 @@ import missile_command_run as R                                               # 
 PREREG = os.path.join(HERE, "PREREG_mc_legend_ab.md")
 ENTRANT = "Qwen3.5-2B-UD-Q4_K_XL.gguf"          # the entrant whose example-arm cells are on disk already
 STATES = ("levels/mc_01_one_shot.txt", "levels/mc_02_scarcity.txt")
-ARMS = ("example", "plain")
+
+# ==================================================================================================
+# THE TWO ARMS, NAMED ONCE -- AND WHY THEY ARE NOT READ FROM THE DRIVER'S ARM SET.
+#
+# THESE TWO NAMES ARE THE COMPARISON AS PUBLISHED. They are the arms of the A/B in
+# `probes/MC_LEGEND_AB.json` (sha256
+# 029244b6e5232a6b77e67cf5e21dea342c7da336a932386b3a16015e96b286c8), whose own `arms`, `legend_arms`,
+# `cells` and `totals` fields are keyed by exactly these two strings -- the entrant's cells for both arms
+# travelled in that ONE run-level file, which is why the pair cannot be re-derived from the driver without
+# re-keying a published record (`PREREG_mc_ab_arm_keys.md`, card t_d21287e4, refused the same derivation
+# one layer in: the direction of the comparison is WHICH ARM CARRIES THE WORKED EXAMPLE, not which arm is
+# of record).
+#
+# `missile_command_run.LEGEND_ARMS` IS THE SET OF ARMS THAT EXIST; this is the PAIR THAT WAS COMPARED, and
+# deriving it from that dict would do two wrong things at once: an added third arm would silently turn a
+# two-arm A/B into a three-arm run and publish it under `PREREG_mc_legend_ab.md` (whose digest the artifact
+# carries), and the run order and the key order of the published `totals` would follow another file's dict.
+#
+# A KEY IS RIGHT ONLY WHILE THE DRIVER STILL DEFINES IT AS AN ARM. The refusal below is what stops these
+# names outliving the arms they name: without it a rename reports an arm that no longer exists as
+# `{"cells": 0, ...}` -- every counter zero and `controls_pass` TRUE, because zero cells satisfy both
+# equalities trivially -- and a publication under a name that measured nothing reads exactly like one that
+# measured something. Measured rather than argued: `scripts/probe_ab_arm_names.py`, readings 4a/4b/4c.
+AB_EXAMPLE_ARM, AB_PLAIN_ARM = "example", "plain"
+ARMS = (AB_EXAMPLE_ARM, AB_PLAIN_ARM)          # ONE COPY OF THE PAIR: run order, and the keys below
+_ab_missing = [a for a in ARMS if a not in R.LEGEND_ARMS]
+if _ab_missing:
+    raise SystemExit(
+        f"REFUSED: this script is the A/B comparison PUBLISHED in probes/MC_LEGEND_AB.json "
+        f"(029244b6e5232a6b) between the arms {AB_EXAMPLE_ARM!r} and {AB_PLAIN_ARM!r}; the driver defines "
+        f"{tuple(R.LEGEND_ARMS)}. Those two names are the arms the comparison was published under, and one "
+        f"that is no longer an arm would be published as zero cells under a label that measured nothing. "
+        f"RE-PUBLISH the A/B as a NEW artifact with a NEW digest; do not re-key this script to the "
+        f"declaration or to the driver's arm set.")
 OUT = os.path.join(HERE, "probes", "MC_LEGEND_AB.json")
 PORT = 8762
 
@@ -150,7 +183,7 @@ def main():
                               if c.get("loaded") else f"DID NOT LOAD -- {c['load_failure_class']}"))
     R.LEGEND_ARM = None
 
-    ex, pl = arm_totals(cells, "example"), arm_totals(cells, "plain")
+    ex, pl = arm_totals(cells, AB_EXAMPLE_ARM), arm_totals(cells, AB_PLAIN_ARM)
     controls_ok = all(c.get("controls", {}).get("every_token_has_exactly_one_outcome", False)
                       and c.get("controls", {}).get("every_threat_is_accounted_for", False)
                       for c in cells if c.get("loaded"))
@@ -184,7 +217,7 @@ def main():
         "binary": R.binary_provenance(),
         "reader": R.reader_provenance(),
         "cells": cells,
-        "totals": {"example": ex, "plain": pl},
+        "totals": {AB_EXAMPLE_ARM: ex, AB_PLAIN_ARM: pl},
         "branch": branch,
         "reading": ("The prediction and its three branches are in the pre-registration; the branch above is "
                     "selected BY THE COUNTERS, not by a preference. Scope: ONE entrant, TWO states, n=1 per "

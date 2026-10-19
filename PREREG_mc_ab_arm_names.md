@@ -371,4 +371,175 @@ a new pre-registration, not a re-key of this one.
    an expectation may be a literal, a measurement may not.
 3  `PREREG_mc_population.md:21` will cite an earlier version of this file after the edit (P8). A
    pre-registration records what was true when it was written; it is not edited to keep up.
+4  THE `reading` STRING'S STALE SENTENCE IS CARDED, not left silent: **`t_16a3b025`** (assignee Ocho, parent
+   this card), created by this landing because a residual named only in prose is a residual only until the
+   next reader. It carries the harder half this card could not decide: that sentence is a FIELD A FUTURE RUN
+   PUBLISHES, so correcting the live copy is the Chair's to ratify, and the published artifact's copy stays
+   the record of the day it was true.
 ```
+
+---
+
+# LANDING NOTE — APPENDED AFTER THE WORK, WITH THE READINGS AND EVERY PREDICTION DISCHARGED BY NAME
+
+**Written after E4 and after every command in §5, 2026-10-19 ~07:20 PDT.** This note is appended; nothing
+above it is rewritten. **No record, no artifact, no criterion and no frozen file was touched**, and no model
+was loaded and no lease taken — the whole of this card is a caption, a refusal and reads.
+
+## 1. THE READINGS, EACH WITH ITS UNIT AND ITS INSTANT
+
+```
+BEFORE THIS FILE EXISTED (the instrument's own history; §0)
+  07:08:52  mc-ab-recon           scratch reconnaissance (NOT committed)      the published totals recomputed
+  07:11:06  mc-ab-recon2          scratch reconnaissance (NOT committed)      (a) (b) (c) of §0, quoted there
+  07:12:45  mc-ab-recon3          scratch digest re-read (NOT committed)      §4's digests, all measured
+  07:12:50  mc-ab-selftest-pre    missile_command_run.py --self-test          ALL CONTROLS PASS 53/53
+  unrecorded  mc-ab-names-smoke    probe (run 1, C10 INVERTED -- see §4)      12/15, rc 3
+  unrecorded  mc-ab-names-smoke2   probe (run 2, corrected)                   11/15, C8/C9/C10/C11 FAIL, rc 3
+              (both smoke runs sit between 07:12:50 and 07:17:43; their OWN LOGS ARE GONE -- §4 (a))
+AFTER THE PRE-REGISTRATION, BEFORE THE EDIT (the governed counterfactual)
+  07:17:44  mc-ab-names-probe-pre     scripts/probe_ab_arm_names.py           11/15, C8/C9/C10/C11 FAIL, rc 3 (P4)
+  07:17:48  mc-ab-names-selftest-pre  missile_command_run.py --self-test      ALL CONTROLS PASS 53/53
+  07:17:52  mc-ab-names-dryrun-pre    missile_command_population.py --dry-run coordinate arm plain
+AFTER THE EDIT
+  07:18:43  mc-ab-names-probe-post    scripts/probe_ab_arm_names.py           15/15, rc 0              (P5)
+  07:18:46  mc-ab-names-selftest-post missile_command_run.py --self-test      ALL CONTROLS PASS 53/53  (P8)
+  07:18:50  mc-ab-names-dryrun-post   missile_command_population.py --dry-run coordinate arm plain
+every one of the six governed runs under scripts/run_guarded.sh 5e34e455b5193e89, units named above, logs
+under logs/<unit>.out; no lease was taken and no model was loaded by any command above
+```
+
+**THE ONE LINE THE WHOLE CARD TURNS ON, before and after, the same probe, the same published cells:**
+
+```
+PRE-EDIT   4a  `plain` -> `terse`:
+               run path      legend_digest('plain') -> KeyError: 'plain'          (bare: no artifact, no remedy)
+               totals row    arm_totals(relabeled cells, 'plain') -> {"cells": 0, ..., "controls_pass": true}
+                             arm_totals(relabeled cells, 'terse') -> the REAL plain row (cells 2, unknown 0, fired 1)
+                             ^ THE NAME THAT IS NO LONGER AN ARM IS REPORTED AS A ROW THAT PASSES ITS CONTROLS,
+                               and the name the cells actually carry gets no row from the script at all
+           4b  `example` -> `worked`: the same two halves, mirrored (KeyError: 'example'; the zero row under
+                             'example', the real row under 'worked')
+           4c  the pair moved:      main() RUNS TO COMPLETION under the stub and would publish
+                                      arms keys   ['example', 'terse']
+                                      totals keys ['example', 'plain']        <- THE SAME ARTIFACT KEYED TWO WAYS
+                                      both rows cells 0, controls_pass true
+POST-EDIT  4a/4b/4c  REFUSED AT IMPORT, SystemExit, naming probes/MC_LEGEND_AB.json (029244b6e5232a6b),
+                     naming the driver's arm set, and saying RE-PUBLISH as a NEW artifact with a NEW digest.
+```
+
+**A NAME THAT IS NO LONGER AN ARM WAS REPORTED AS A ROW THAT FAILS NOTHING BECAUSE IT HOLDS NOTHING — zero
+cells satisfy both of the script's own equalities trivially, so `controls_pass` was `true` — and with the
+pair moved the artifact came out keyed two ways. It is now a refusal that names the artifact, its digest and
+what to do instead.**
+
+## 2. THE DRIFT, AS PREDICTED (P8)
+
+```
+missile_command_legend_ab.py   e6e34d0e31d183b8  ->  2c1c12a90e850bdf     E4, the caption, the one copy and
+                                                                           the refusal. The line numbers moved
+                                                                           with it: the constants are :51-52,
+                                                                           the two key sites are :186 and :220
+EVERYTHING ELSE IN §4 UNCHANGED, re-read after the last command (probe C14: 11 re-read, 0 moved):
+  missile_command.py eb5ed36591b300e6 · missile_command_run.py 3bd43eed4c6e41f3 · PREREG_missile_command.md
+  01548e9a866df03e · levels/mc_01_one_shot.txt ab101ca955c1c853 · levels/mc_02_scarcity.txt 327d2157bd0b8a83
+  MC_DECLARATION.md 2ada03ee2ad1f60b · scripts/run_guarded.sh 5e34e455b5193e89 · PREREG_mc_population.md
+  cfedf8b7f5e7d57f · PREREG_mc_legend_ab.md 49784e02849a401f · PREREG_mc_ab_arm_keys.md 47db6b9368bae18c
+  probes/MC_LEGEND_AB.json 029244b6e5232a6b  (FULL sha256 re-computed in both runs:
+  029244b6e5232a6b77e67cf5e21dea342c7da336a932386b3a16015e96b286c8)
+git status --porcelain probes/ results/  ->  0 lines, read in BOTH the pre-edit and the post-edit run
+the driver's --self-test: 53/53 before and after; the runner's --dry-run: `coordinate arm plain` before and after
+```
+**And the cost P8 named, now a fact: `PREREG_mc_population.md:21` cites the A/B at `e6e34d0e31d183b8`, so
+that line now cites an EARLIER version of this file.** It is not edited and it is not a moved input: a
+pre-registration records what was true when it was written — that same block cites `MC_DECLARATION.md` at
+`c7a60f1d6b4e4030` (now `2ada03ee2ad1f60b`) and `missile_command_run.py` at `b726188380ce681c` (now
+`3bd43eed4c6e41f3`, the parent card's own edit).
+
+## 3. EVERY PREDICTION, DISCHARGED BY NAME — NONE CORRECTED, NONE TRIMMED
+
+```
+P1   the published totals are reproduced, value for value and key order for key order, in BOTH runs and
+     identical to each other .................................................................  HIT  (C1+C2, twice)
+P2   relabeling the cells MIRRORS the two rows, and the two published rows differ so the check is not
+     vacuous .................................................................................  HIT  (C3+C4, twice)
+P3   the script's own main(), run with run() stubbed, publishes an artifact whose `arms` and `totals` keys
+     are the published keys in the published order ...........................................  HIT  (C5/C6/C7/C7b, twice)
+P4   PRE-EDIT the renamed arms and the moved pair are NOT refused, and the failure has the two measured
+     halves: a bare `KeyError` on the run path and a zero row whose `controls_pass` is TRUE on the totals
+     path, plus an artifact keyed two ways in 4c; probe 11/15 with exactly C8/C9/C10/C11 FAIL, rc 3 ...  HIT  (probe-pre)
+P5   POST-EDIT all three setups REFUSE at import with SystemExit naming MC_LEGEND_AB.json and
+     029244b6e5232a6b; probe 15/15, rc 0 ......................................................  HIT  (probe-post)
+P6   one copy: 6 exact name constants on 3 lines (28/153/187) become 2, both on the AB_*_ARM assignment,
+     none outside it .........................................................................  HIT  (C11, both runs)
+P7   no record, artifact, criterion or frozen file moves; the published artifact re-read at full sha256 in
+     both runs ................................................................................  HIT  (C12/C13, twice)
+P8   the module's digest moves; every other §4 input unmoved; self-test 53/53 both sides; and the cost to
+     PREREG_mc_population.md:21's citation named ...............................................  HIT  (§2)
+```
+
+**Eleven of the fifteen checks are replication controls and they pass in BOTH runs with identically equal
+values; the four that move are the fix's own and they FAIL before and PASS after. The published artifact was
+re-read, not trusted: its bytes are read from disk in both runs and its full sha256 re-computed (C13).**
+
+## 4. ADDENDUM (POST-HOC, DECLARED) — TWO READINGS IN §1 WITH NO CARRIER, AND ONE MISTAKE OF MINE
+
+**Declared here rather than left to be discovered, because "a claim with no carrier is unverified" applies to
+this note's own first four lines.**
+
+```
+(a) THE TWO SMOKE RUNS' LOGS NO LONGER EXIST. `logs/mc-ab-names-smoke.out` and `logs/mc-ab-names-smoke2.out`
+    were deleted BY MY OWN `rm -f logs/mc-ab-names-*.out` at 07:17:43, before the governed runs -- a
+    housekeeping command that took the instrument's own history with it. Their numbers (12/15 with C10
+    passing while its own output said the defect was present; 11/15 with C8/C9/C10/C11 FAIL) are recorded in
+    §0 above and in §1 here, and **they can no longer be checked by a reader.** They are therefore presented
+    as UNCORROBORATED: the governed runs at 07:17:44 / 07:18:43 are the readings this card stands on, and
+    their logs exist. §0's phrase "in the tree, under logs/" is now false of those two files and is corrected
+    by this paragraph rather than left standing.
+(b) THREE UNITS AT 07:17:15-07:17:33 WROTE NO LOG ANYWHERE. `mc-ab-names-probe-pre`, `-selftest-pre` and
+    `-dryrun-pre` were launched with a RELATIVE workdir, so `run_guarded.sh`'s `StandardOutput=append:
+    ./logs/<unit>.out` was not resolved to this directory; the units are gone (collected) and no such file
+    exists under logs/ or elsewhere on this box. Whether they executed or failed at start CANNOT be
+    established from what remains, so their output is presented as evidence about nothing. **The readings
+    quoted in §1 are the SECOND launch of the same three units, with an absolute workdir, whose logs are in
+    logs/.** Nothing was written into the tree by either launch (`git status --porcelain` was read after both:
+    0 lines).
+(c) NO PREDICTION WAS ADDED, REMOVED OR REWRITTEN AFTER THE FACT. The one number that changed between the
+    smoke run and the governed run is a CHECK'S expectation (C10's, inverted -> corrected, §0), never a
+    reading and never the code.
+```
+
+## 5. WHAT THIS LANDING DOES NOT DO, AND WHAT IT NAMES
+
+**Nothing was re-run, re-scored or re-scoped.** No A/B run was taken and no model was loaded; no published
+artifact, record, coordinate, result, criterion, level, ceiling or `IDENTITY_IN_RECORD` value moved; the A/B's
+own `readings` in the published artifact are the published artifact's. **The four cells the replication
+control reads are the four cells the published artifact already carried** — `example` `{unknown 9, fired 0}`
+and `plain` `{unknown 0, fired 1}` — and they are read from the artifact, not from a fixture written here.
+**`entrant_digest` is still a reading at an instant rather than an identity (§4), and nothing in this diff
+treats it as one.**
+
+**NAMED, NOT CHANGED — the residuals, and each one is now either carded or explicitly out of everyone's way:**
+
+```
+1  THE `reading` STRING'S STALE SENTENCE (line 221-225). It asserts in the present tense that `example`
+   "remains the recorded instrument"; the declaration has named `plain` since 2026-10-17. In the published
+   artifact it is a record of the day it was written and stays; in the LIVE script it is a caption the next
+   run would republish, and correcting it moves text a run publishes -- the Chair's, per this card's bounds.
+   **CARDED AS `t_16a3b025`** (assignee Ocho, parent this card), with the harder half of the question written
+   into that card: the sentence also carries a TRUE statement (`example` is still selectable) that must not be
+   corrected away with the false one.
+2  `missile_command_run.py:1239-1240` and `scripts/check_mc_field_plain.py:133` pin arm names in ASSERTIONS'
+   expected values. NOT defects, NOT touched: an expectation is supposed to go stale and fail loudly. An
+   expectation may be a literal, a measurement may not (card t_d21287e4's landing note §5).
+3  `PREREG_mc_population.md:21` now cites an earlier A/B digest. NOT a defect and NOT corrected: a
+   pre-registration records what was true when it was written.
+4  LINE 180 (`"arms": {a_: R.LEGEND_ARMS[a_] for a_ in ARMS}`) needed no edit: it reads the pair through
+   `ARMS`, which is now the constants. It WAS a second route to the pair's staleness (a bare `KeyError` inside
+   `main()`, not a published row), and the refusal above closes it by firing before `main()` is reached.
+```
+
+**AND THE ONE THING A READER SHOULD CHECK FIRST, IF ONLY ONE THING IS CHECKED: the same probe, the same four
+published cells, returns `11/15 rc 3` before the edit and `15/15 rc 0` after it, and the four checks that
+move are the four the fix is about. Both runs are in `logs/` with their units named in §1.**
+
