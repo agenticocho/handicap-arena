@@ -40,6 +40,30 @@ solved, and 16 plies is not a cap-40 cell. There is **no row for cell 4 in the t
 ply-1 data from this run is NOT entered as a result. Re-running this cell is a clean action: no artifact
 exists at its path, so the instrument's artifact gate will admit a fresh run with no override.
 
+**D1 IS NOW SUPERSEDED AS A CELL — but it is kept, because it happened.** The cell was re-run to completion in
+the second budget window (40 plies, `commands_exhausted`, record committed `535059d`), so cell 4 has a row in
+`SOKOBAN_FRONTIER_RESULTS.md` and this entry no longer stands for a missing cell. What it still stands for is
+the terminated run itself.
+
+**D1a — D1's LOG BYTES NO LONGER EXIST, and the cause is the driver, not a deletion.** `sokoban_run.py` derives
+the server-log path from the **cell** (entrant × level × reasoning setting), not from the run, so the retake
+truncated D1's log **at the same path** at 2026-10-19 11:11:16 PDT. The digest recorded above (`910379dc…`,
+16 007 B) is therefore a digest of bytes that can no longer be produced. The retake's log was copied out to a
+run-specific name before any further run could reach that path:
+
+```
+D1a  logs/CELL4-RETAKE_20261019T1111_02_two_boxes.log
+     40 794 B   sha256 6377954b4d865409fab690f8e6353575b367ae2ff86cdea5794a686154fe0e68
+     copy of logs/SOKOBAN_Triumvirate-..._02_two_boxes_new_rea-off.log after the cell returned
+     (identical sha256 at copy time), command as above but launched 2026-10-19 11:11:16 PDT
+record  probes/SOKOBAN_Triumvirate-Qwopus-MiMo-Ornith-9B-Coder.i1-Q4_K_M_02_two_boxes.json
+     29 603 B   sha256 d1f21c0c4cf25edcec759e4589cf84b441e12f98f8bf4780eba1ecf426f3e8a9   commit 535059d
+```
+
+This is recorded rather than tidied because it is a property of the instrument that will bite again: **any
+future retake of a cell overwrites that cell's previous server log.** If a log is evidence for a run, it has to
+be copied out under a run-specific name at the moment the run ends.
+
 ## AN EARLIER, DIFFERENT INTERRUPTION — recorded so the count is honest
 
 An earlier attempt at the same cell (10:19–10:26) was killed by the **tool harness**, not by this card: the
