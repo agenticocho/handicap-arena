@@ -11,11 +11,11 @@ WHAT IT DOES, IN THE ORDER THE PRE-REGISTRATION GIVES IT:
   1  DERIVES the population from $ARENA_MODELS -- every *.gguf, the exclusion list applied as a
      case-insensitive SUBSTRING with the reason recorded per file, size-sorted, step-sampled. No entrant
      is named anywhere in this file.
-  2  RUNS the recorded arm (`example`) into the PUBLISHED coordinate `probes/MC_<entrant>_<level>.json`
-     -- one run, one path -- and ADOPTS a coordinate that already holds a record taken under THIS run's
-     own identity, rather than overwriting it or re-running it.
-  3  RUNS the declared comparison arm (`plain`) whose cells have no coordinate and travel inside the run
-     artifact, which is the shape `missile_command_legend_ab.py` used and for the same reason.
+  2  RUNS the arm `MC_DECLARATION.md` NAMES (not an arm this file names) into the PUBLISHED coordinate
+     `probes/MC_<entrant>_<level>.json` -- one run, one path -- and ADOPTS a coordinate that already holds
+     a record taken under THIS run's own identity, rather than overwriting it or re-running it.
+  3  RUNS the other arm (the one that is not of record) whose cells have no coordinate and travel inside the
+     run artifact, which is the shape `missile_command_legend_ab.py` used and for the same reason.
   4  COMPUTES the frozen gate (coverage / yield / never_started), C1-C3 as the pre-registration defines
      them, the two per-cell controls, the C3 comparison line re-derived at run time, and the replication
      control against the A/B's own record of the same cell.
@@ -39,8 +39,29 @@ PREREG = os.path.join(HERE, "PREREG_mc_population.md")
 LEVELS = ("levels/mc_01_one_shot.txt", "levels/mc_02_scarcity.txt")
 # THE RECORDED ARM OCCUPIES THE PUBLISHED COORDINATE. The comparison arm has no coordinate and travels in
 # the run artifact -- the A/B's shape, and for its reason: a second arm at the same path destroys the first.
-ARMS = ("example", "plain")
-COORD_ARM = "example"
+# THE ARMS THE DRIVER DEFINES ARE READ FROM THE DRIVER. A second copy of the arms' own names is the same
+# defect as a second copy of WHICH arm is of record, one layer down.
+ARMS = tuple(R.LEGEND_ARMS)
+# THE COORDINATE ARM IS THE DECLARATION'S, READ THROUGH THE DRIVER'S OWN READ (`R.LEGEND_DEFAULT` is
+# `MC_DECLARATION.md`'s `legend_arm`, and the driver refuses at import if that key is missing). It is NOT a
+# module constant and NOT defaulted to a literal, and neither of those is a style preference:
+#   * a constant here was a SECOND COPY of a decision the declaration owns, and it went stale -- pinned at
+#     `example` after the declaration's key moved to `plain` (2ada03ee2ad1f60b, DECISION_mc_legend_arm.md);
+#   * measured, not argued (scripts/probe_coord_arm_adoption.py re-takes both arms over the 22 published
+#     coordinates): with the pin at `example`, EVERY ONE of the 22 holds a record whose `legend_digest`
+#     disagrees with `run_identity()`, so a re-run records `never_started` -- "the published coordinate holds
+#     a record taken under a DIFFERENT instrument" -- where the adoption rule exists precisely to ADOPT it;
+#   * hard-coding `plain` would be the same defect with a fresher value: stale again the day the declaration
+#     moves, and stale silently.
+COORD_ARM = R.LEGEND_DEFAULT
+if COORD_ARM not in ARMS:
+    raise SystemExit(f"REFUSED: the declaration names legend_arm {COORD_ARM!r}; this runner's arms are {ARMS}.")
+if len(ARMS) < 2:
+    raise SystemExit(f"REFUSED: the driver defines {len(ARMS)} legend arm(s) {ARMS}; this runner needs an arm "
+                     f"of record and one comparison arm, and it will not invent the second.")
+# THE COMPARISON ARM IS DERIVED TOO -- "whichever arm is not of record", not a literal `plain` that goes
+# stale the day the declaration names the other one.
+COMPARISON_ARM = next(a for a in ARMS if a != COORD_ARM)
 # run_card.py's EXCLUDE_PAT, verbatim -- the resolution `PREREG_missile_command.md` names -- applied as a
 # case-insensitive SUBSTRING (see the pre-registration: as a PREFIX test, five PROJECTORS enter the field).
 EXCLUDE_PAT = ("qwen-image", "audio", "mmproj", "clip", "vae", "embed", "whisper")
@@ -184,7 +205,9 @@ def main():
             print(f"    removed {os.path.getsize(p)/1e9:8.3f} GB  {os.path.basename(p):58s} <- {why}")
         for p, _ in pop:
             print(f"    entrant {os.path.getsize(p)/1e9:8.3f} GB  {os.path.basename(p)}")
-        print(f"  ARMS        {ARMS}   coordinate arm {COORD_ARM}   "
+        print(f"  ARMS        {ARMS}   coordinate arm {COORD_ARM}   (READ from "
+              f"{os.path.basename(R.DECLARATION_FILE)} `legend_arm`, declaration digest "
+              f"{R.file_digest(R.DECLARATION_FILE)}; comparison arm {COMPARISON_ARM})   "
               f"legend digests {R.legend_arm_digests()}")
         print(f"  BINARY      {R.llama_server()}  digest {R.server_binary_digest()}")
         print(f"  THE FORK    {R.FORK_LLAMA}  (ternary entrants are routed to it by binary_guard's rule)")
@@ -229,7 +252,7 @@ def main():
                                           "spend_on_everything_line": lines[lv]}
                    for lv in LEVELS},
         "spend_on_everything_value_preregistered": PREREG_LINE_VALUE,
-        "arms": {"recorded": COORD_ARM, "comparison": "plain", "digests": R.legend_arm_digests(),
+        "arms": {"recorded": COORD_ARM, "comparison": COMPARISON_ARM, "digests": R.legend_arm_digests(),
                  "arms_text": {a_: R.LEGEND_ARMS[a_] for a_ in ARMS}},
         "binary": R.binary_provenance(), "fork": R.FORK_LLAMA,
         "reader": R.reader_provenance(),

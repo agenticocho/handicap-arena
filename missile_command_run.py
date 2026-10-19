@@ -974,9 +974,18 @@ def run(entrant, state_path, cap, port):
         r = dict(r)
         r.update({
             "entrant": label, "entrant_digest": file_digest(entrant),
-            "entrant_digest_scope": ("sha256 of the model FILE, first 16 hex. THE ENTRANT IS THE SUBJECT OF "
-                                     "THE MEASUREMENT, so it is identified by a digest; `entrant` beside it "
-                                     "is a LABEL, for reading, not for checking."),
+            "entrant_digest_scope": ("sha256 of ONE READING of the model file, first 16 hex, taken at the "
+                                     "instant the record was minted. NOT AN IDENTITY. Measured 2026-10-17 "
+                                     "(card t_cdd433bb): repeated readings of the same unchanged path differ "
+                                     "at ~1 single bit per 0.3-1.5 GB of data moved, in bursts, while the "
+                                     "file's size, mtime, ctime and inode never move. So a multi-GB entrant's "
+                                     "digest is NOT reproducible, two records whose values differ are NOT "
+                                     "thereby different files, and two whose values agree are NOT thereby the "
+                                     "same bytes. THE ENTRANT IS IDENTIFIED BY THE FILE -- whose size, mtime, "
+                                     "ctime and inode are stable on this box and were unchanged in every "
+                                     "reading -- and this digest is the evidence that a file with these bytes "
+                                     "was read at that instant. The `entrant` beside it is a LABEL, for "
+                                     "reading, not for checking."),
             "level": sname, "state_path": os.path.relpath(state_path, HERE),
             "state_text": state_text,
             "state_digest": file_digest(state_path),
