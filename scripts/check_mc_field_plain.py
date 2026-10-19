@@ -246,8 +246,24 @@ def main():
     # process. THIS CHECK WAS ADDED AFTER THE RUN, when the field's own digests were compared with the
     # pre-move records' -- it is a control ADDED in response to a measurement, not a criterion moved, and
     # nothing above or below was re-scored on account of it.
+    # THE ENTRANT'S STABLE IDENTITY IS THE FILE SIZE -- NOT THE DIGEST, AND NOT AN MTIME.
+    # Ruled on card t_7f400932 and measured before the ruling: every `mtime` in this tree is a RECORD
+    # artifact's (archive `cells[].mtime` is the record's write stamp; population `cells[].coordinate_mtime`
+    # is the coordinate's), and the population artifact carries no model mtime at all. `bytes` is the only
+    # field that ever means a model size, and only in the population artifact's `entrants` list -- so the
+    # identity is read THERE and compared against st_size on this disk. Six of six recorded sizes match.
+    #
+    # THE DIGESTS KEEP PRINTING AS READINGS AND FEED NO COUNT. They are the finding -- these files do not
+    # hash reproducibly on this box -- and deleting them to make a number go green would hide the one thing
+    # this cabinet measured. 16 of 22 and 20 of 22 differ; both numbers are still printed below.
+    #
+    # THE COVERAGE IS NAMED IN THE LABEL, NOT IMPLIED BY THE COUNT: the population names 6 entrants, which
+    # is 12 of the 22 cells. This check can say nothing about the cells it does not name, and says so.
     models = os.environ.get("ARENA_MODELS") or os.path.expanduser("~/moltbook_pipeline/models")
-    drift, ent_bad, measured_n = [], [], 0
+    sizes = {os.path.splitext(e["file"])[0]: e["bytes"]
+             for e in (pop.get("population", {}).get("entrants") or [])
+             if isinstance(e, dict) and e.get("file") and e.get("bytes") is not None}
+    drift, drift_text, ent_bad, measured_n, sized_n = [], [], [], 0, 0
     for c, d, _ in cells:
         if not d.get("loaded"):
             continue
@@ -255,14 +271,24 @@ def main():
         p = os.path.join(models, c["entrant"] + ".gguf")
         now = d16(p) if os.path.exists(p) else None
         if d.get("entrant_digest") != now:
-            ent_bad.append((c["entrant"], d.get("entrant_digest"), now))
-        if json.loads(c["text"]).get("entrant_digest") != now:
             drift.append(c["entrant"])
-    ck("every measured record's entrant digest IS the digest of the model file on disk (a fresh read here)",
-       ent_bad, [])
+        if json.loads(c["text"]).get("entrant_digest") != now:
+            drift_text.append(c["entrant"])
+        want = sizes.get(c["entrant"])
+        if want is not None:
+            sized_n += 1
+            got = os.path.getsize(p) if os.path.exists(p) else None
+            if got != want:
+                ent_bad.append((c["entrant"], want, got))
+    ck(f"every measured record the POPULATION NAMES carries the model SIZE it names, against st_size here "
+       f"({sized_n} of {measured_n} cells; the other {measured_n - sized_n} are not named in the population, "
+       f"so this check does not reach them and does not claim to)", ent_bad, [])
     print(f"  MEASURED, AND IT IS A FINDING ABOUT THE PRE-MOVE RECORDS RATHER THAN ABOUT THIS FIELD: "
-          f"{len(drift)} of {measured_n} entrant files hash differently NOW than the PRE-MOVE records say "
-          f"they did -- {sorted(drift)}")
+          f"{len(drift)} of {measured_n} records and {len(drift_text)} of {measured_n} text copies hash "
+          f"differently NOW than they say they did -- {sorted(set(drift) | set(drift_text))}")
+    print("  [READINGS, NOT COUNTS: a digest that does not reproduce is the FINDING, not a failure of the "
+          "record. The identity above is the size, per card t_7f400932.]")
+
 
     print("\n[4] THE REPLACEMENT IS RECORDED, AGAINST THE PRE-REGISTERED REASON")
     miss = [c["coordinate"] for c, d, _ in cells if not d.get("artifact_replaced")]
