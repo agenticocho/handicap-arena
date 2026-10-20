@@ -167,6 +167,11 @@ ADMISSION (refuses BEFORE the first turn, with a distinguishable exit code)
        6 (this graph contradicts itself): the file loads and its distances are the right ones, but
        it declares them under the wrong order -- so the fix is to reorder the array, not to
        regenerate the bytes. Checked BEFORE graph_digest() is computed, and the refusal says so.
+   14  two records are NOT COMPARABLE (--compare): a named blocking difference -- a different
+       graph_digest / cell_spec_sha256 / symmetrisation / K / cap, a different max_turn_tokens, a
+       different prompt_digest, a row whose budget_binding is true, a dry row, or a compared field
+       ABSENT from one of them. Exit 0 means the comparison is native, and its legitimate
+       differences (model, decoder_mode, seed_model, endpoint) are named in the report.
 
    Exit 0 on a completed record. --dry-run exits 0 too, but writes a record marked
     dry_run=true and refuses to call it a benchmark row.
@@ -200,6 +205,47 @@ THE MODEL PATH (--model): proposal -> parse -> legal-move check -> per-turn toke
     per-turn tokens are the server's own usage.completion_tokens for that turn; tokens_total is their
     sum. A turn with no usage block is REFUSED, not recorded as 0 -- a row that cannot say what it
     spent is not a measurement.
+
+    THE MODEL-FACING HALF: prompt_digest, prompt_identity, max_turn_tokens, budget_binding
+    The graph and the cell spec fix the MAZE. They do not fix how the model was ASKED, and that half
+    is missing from the spec: CELL_01_labyrinth.md (6df7437a) names max_turn_tokens 0 times, prompt 0
+    times and prompt_digest 0 times, while this driver records all three. "Same spec, same graph"
+    therefore does NOT mean "same test" for the model-facing half, and the field that would have said
+    so did not exist. Each row now carries:
+        max_turn_tokens        the per-turn cap sent as max_tokens on EVERY request
+        prompt_digest          sha256 of the PROMPT_TEMPLATE text BEFORE .format(): the constant part
+                               of the question, and the comparability key -- two runs that differ only
+                               by start rune are the SAME test and must compare
+        prompt_identity        the template's identity and, explicitly, what it is not: the ASSEMBLED
+                               prompt's digest travels per turn (moves[].prompt_sha256) and moves
+                               with the rune, so it can never be the key
+        tokens_per_turn_mean   tokens_total / plies, with its basis object beside it
+        budget_binding         DERIVED: true iff tokens_total == plies * max_turn_tokens
+        budget_binding_basis   the comparison that produced the flag, carrying both numbers
+    Measured on the two rows this revision exists for: one cell spent 1280 tokens over 40 plies at a
+    32-token cap -- 1280 = 40 x 32.0 exactly, not_an_action 40/40, unique_positions 1, start rune
+    unmoved -- while the row under the same cap spent 177 (4.425/turn) and read 40/40. The first is a
+    valid measurement of the BUDGET and no evidence at all about the graph. budget_binding is
+    arithmetic over the record, not a guess about model behaviour, and it is the single field that
+    stops that pair being averaged into a model comparison.
+    A SMALL BUDGET IS NOT REFUSED. 32 tokens is a legitimate experiment about the harness; the fix is
+    labelling, and the label is derived from the record rather than asserted by the operator.
+
+    COMPARING TWO ROWS (--compare ROW_A ROW_B, exit 14)
+    The driver carries a comparison path so the rule is enforced by the tool instead of by a reader's
+    judgement. Two rows are NOT COMPARABLE -- each blocking difference named in the report -- when:
+        either row is a dry run, or does not claim benchmark_row
+        graph_digest, cell_spec_sha256, symmetrisation, K or cap differs (a different test)
+        max_turn_tokens differs (a different harness budget)
+        prompt_digest differs (a different question)
+        either row carries budget_binding true (the cap set the length of every answer)
+        a compared field is ABSENT from a row: absence is not agreement, and a row that cannot state
+        its model-facing half cannot be compared with one that can. budget_binding is the one field
+        an absent row does not get excused on: the row carries the three numbers it is made of, so
+        the flag is DERIVED from the record and applied exactly as if it had been written
+    Differences that are LEGITIMATE are reported as differences instead of refusals: model,
+    decoder_mode, seed_model, model_endpoint. Exit 0 = comparable, exit 14 = not comparable, and the
+    JSON report (with the reasons) is printed either way so the verdict never travels alone.
 
     OUT-DIR: EXIT 10 (EXIT_OUT_DIR_UNUSABLE)
     An out-dir that cannot hold a record used to die as a raw traceback at exit 1, which a second box
@@ -250,7 +296,10 @@ PUBLISHING: <slug>.<pid>.tmp, three tiers, and the tier in the record
 RECORD
     one JSON per cell in probes/, carrying: model, server_argv, server_binary_digest,
     decoder mode, seed, cap, graph identity, every move with its legal set size,
-    blocked / not_an_action / give_up counts, per-turn tokens, ended, end_state.
+    blocked / not_an_action / give_up counts, per-turn tokens, ended, end_state,
+    and the MODEL-FACING HALF of the test -- max_turn_tokens, prompt_digest +
+    prompt_identity, tokens_per_turn_mean with its basis, and the derived budget_binding
+    with the comparison that produced it.
 
     THE COUNT BASIS. visited_unique counts POSITIONS, not names: this graph's GED cannot
     separate 24 names into 24 objects, it separates them into 21 (Ansuz/Wunjo/Laguz and
@@ -288,6 +337,10 @@ EXIT_MODEL_TRANSPORT = 12
 # array, do not regenerate the distances. Numbers 2-10 and 11-12 were already taken, so this takes
 # the next free code rather than folding into 3 (which would lose the distinction above).
 EXIT_NODE_ORDER = 13
+# NOT COMPARABLE is not a failure of either row: it is the verdict on a pair, and it needs its own
+# code so a script cannot read "the comparison ran" as "the comparison holds". 14 takes the next
+# free number; folding it into 2 would make an argument defect and a measurement defect identical.
+EXIT_NOT_COMPARABLE = 14
 
 # THE CANONICAL NODE ORDER. Elder Futhark, the order the generator's RUNE_NAMES carries -- and the
 # order the nodes array must be in before anything is hashed, because graph_digest() hashes
@@ -351,7 +404,7 @@ UNIMPLEMENTED_ARGS = {}
 CONSUMED_DESTS = {
     "graph", "symmetrisation", "K", "rune", "cap", "seed", "seed_model", "expect_graph_digest",
     "expect_nodes_sha256", "cell_spec", "out_dir", "dry_run", "model", "model_identity", "base_url",
-    "no_think", "self_test", "print_graph_digest",
+    "no_think", "self_test", "print_graph_digest", "compare",
 }
 
 
@@ -746,6 +799,13 @@ PROMPT_TEMPLATE = (
     "If you cannot move, reply GIVE UP.\n"
 )
 
+# THE TEMPLATE'S IDENTITY, computed once so a row cannot state one number and format another. This
+# is the digest taken BEFORE .format(), i.e. of the CONSTANT part of the question: the assembled text
+# changes with every rune (moves[].prompt_sha256), and a key that moves with the step would report
+# two runs that differ only by start rune as two different tests.
+PROMPT_TEMPLATE_SHA256 = hashlib.sha256(PROMPT_TEMPLATE.encode()).hexdigest()
+PROMPT_TEMPLATE_FORMAT_FIELDS = ("K", "alphabet", "cur")
+
 
 def _first_line(text):
     for line in (text or "").splitlines():
@@ -994,6 +1054,267 @@ def model_walk(nodes, F, sym, K, rune, cap, ident, base_url, no_think, seed_mode
 
 def slug_part(s):
     return "".join(ch if ch.isalnum() or ch in "-._" else "-" for ch in s)
+
+
+def prompt_identity():
+    """The TEMPLATE's identity, and a statement of what it is NOT.
+
+    PROMPT_TEMPLATE is formatted per turn with {K}, {alphabet} and {cur}, so the ASSEMBLED text
+    changes with every step. That is why the assembled digest travels per turn (moves[].prompt_sha256)
+    and is deliberately NOT the comparability key: keyed on it, two runs that differ only by start
+    rune would be reported as two different tests, and they are the same test.
+    """
+    return {"prompt_template_sha256": PROMPT_TEMPLATE_SHA256,
+            "prompt_template_bytes": len(PROMPT_TEMPLATE.encode()),
+            "prompt_template_format_fields": list(PROMPT_TEMPLATE_FORMAT_FIELDS),
+            "prompt_assembled_digest_field": "moves[].prompt_sha256",
+            "prompt_assembled_digest_basis": ("sha256 of the text actually sent on that turn, after "
+                                              ".format(K=..., alphabet=..., cur=...); it MOVES with the "
+                                              "rune and is evidence, never the key"),
+            "comparability_key": "prompt_digest",
+            "basis": ("sha256 of the PROMPT_TEMPLATE text BEFORE .format(): the constant part of the "
+                      "question. Not the assembled prompt, and not the legal set, which is never sent")}
+
+
+def budget_facts(tokens, max_turn_tokens):
+    """The token fields of a row, EVERY one derived from the recorded per-turn numbers.
+
+    tokens is model_walk's per-turn list of server usage.completion_tokens, or None on a dry run.
+    Nothing here is asserted by the operator: budget_binding is an arithmetic comparison between two
+    numbers the record already carries, which is exactly why it can be read as a fact about the
+    HARNESS even when the walk itself says nothing about the model.
+    """
+    if tokens is None:
+        return {"tokens_total": None,
+                "tokens_per_turn_mean": None,
+                "tokens_per_turn_mean_basis": None,
+                "tokens_per_turn_max": None,
+                "turns_at_turn_cap": None,
+                "turns_at_turn_cap_basis": None,
+                "budget_binding": None,
+                "budget_binding_basis": ("not derived: a dry run consults no model and spends no "
+                                         "tokens, so there is no budget comparison to make")}
+    plies = len(tokens)
+    total = sum(tokens)
+    at_cap = sum(1 for t in tokens if t == max_turn_tokens)
+    mean_basis = {"numerator": "tokens_total", "denominator": "plies",
+                  "definition": ("tokens_total / plies over EVERY recorded turn, including turns "
+                                 "whose reply was not a readable move and turns that were blocked or "
+                                 "gave up; NOT tokens_total / moves_made"),
+                  "tokens_total": total, "plies": plies}
+    if plies == 0:
+        binding = None
+        why = ("not derived: no turn was recorded, and 0 == 0 * max_turn_tokens would be true of an "
+               "empty record for a reason that has nothing to do with the budget")
+    else:
+        budget = plies * max_turn_tokens
+        binding = (total == budget)
+        if binding:
+            why = (f"tokens_total={total} compared with plies*max_turn_tokens={plies}*"
+                   f"{max_turn_tokens}={budget}: EQUAL, so every one of the {plies} recorded turns "
+                   f"spent its ENTIRE per-turn budget ({at_cap}/{plies} turns reached the cap). The "
+                   f"harness, not the model's preference, set the length of every answer -- a row "
+                   f"this flag marks is a measurement of the cap and must not be averaged against a "
+                   f"row the cap did not bind.")
+        else:
+            why = (f"tokens_total={total} compared with plies*max_turn_tokens={plies}*"
+                   f"{max_turn_tokens}={budget}: NOT equal ({total} != {budget}), so at least one "
+                   f"turn stopped short of the per-turn budget and the cap did not set the length of "
+                   f"every answer ({at_cap}/{plies} turns reached it).")
+    return {"tokens_total": total,
+            "tokens_per_turn_mean": (round(total / plies, 6) if plies else None),
+            "tokens_per_turn_mean_basis": mean_basis,
+            "tokens_per_turn_max": (max(tokens) if plies else None),
+            "turns_at_turn_cap": at_cap,
+            "turns_at_turn_cap_basis": (f"turns whose usage.completion_tokens == max_turn_tokens "
+                                        f"({max_turn_tokens}); {at_cap} of {plies}"),
+            "budget_binding": binding,
+            "budget_binding_basis": why}
+
+
+# ==== COMPARING TWO ROWS ==========================================================================
+# A weak comparison travelling unnamed is the whole defect: one cell spent 1280 tokens over 40 plies
+# at max_turn_tokens 32 (1280 = 40 x 32 exactly, not_an_action 40/40, unique_positions 1) and was
+# read beside a 177-token row from the same cap as though the two said something about a graph. So
+# the rule lives in the tool: two rows are either comparable, and the report names the legitimate
+# axes on which they differ, or they are NOT COMPARABLE and it names every blocking difference.
+_ABSENT = object()   # a field the record does not carry -- NOT the same as a field equal to None
+
+
+def _row_field(row, dotted):
+    """Dotted lookup with NO defaulting. Absent is an object, never 0/None/'', because absence is
+    not agreement and a default would make a row that cannot state a field compare as if it had."""
+    cur = row
+    for part in dotted.split("."):
+        if not isinstance(cur, dict) or part not in cur:
+            return _ABSENT
+        cur = cur[part]
+    return cur
+
+
+def _shown(v):
+    return "<absent from the record>" if v is _ABSENT else v
+
+
+# (field, what a difference MEANS for the comparison). Everything here blocks.
+COMPARE_BLOCKING = (
+    ("dry_run", "a dry run consults no model: it is plumbing about the maze and carries no "
+                "model-facing half to compare"),
+    ("benchmark_row", "a row that does not claim benchmark_row is not a measurement"),
+    ("graph.graph_digest", "a DIFFERENT TEST GRAPH: the maze differs, so a difference between the "
+                           "rows is not a difference between models"),
+    ("cell_spec_sha256", "a different CELL SPEC"),
+    ("graph.symmetrisation", "a different legal relation: min/max/ged_fwd/ged_rev are four graphs"),
+    ("graph.K", "a different move threshold: a different legal set, so a different maze"),
+    ("cap", "a different ply cap: the walks were not asked the same number of questions"),
+    ("max_turn_tokens", "a DIFFERENT PER-TURN BUDGET: the rows were asked under different harness "
+                        "limits, so a difference between them is a difference between caps"),
+    ("prompt_digest", "a DIFFERENT PROMPT TEMPLATE: the rows were asked different questions"),
+)
+# Differences that are the POINT of an A/B: reported, never blocking.
+COMPARE_NAMED = (
+    ("model", "the weights that answered"),
+    ("model_quant", "the quantisation"),
+    ("decoder_mode", "decoder on|off -- a harness axis, named so it cannot be read as a model axis"),
+    ("seed_model", "the request seed"),
+    ("model_endpoint", "where the model was asked"),
+)
+
+
+def compare_rows(ra, rb, pa="row A", pb="row B"):
+    """-> (comparable, report). THE VETO IS HERE, not in a reader's judgement.
+
+    Absence blocks for every field that cannot be re-derived from the row (prompt_digest, the graph
+    identity, the spec, the cap): a missing field is not agreement, and reading it as agreement is
+    how "same spec" came to mean "same test" in the first place. budget_binding is the exception
+    because the row carries the three numbers it is made of, so an absent flag is DERIVED from the
+    record -- the label may never depend on the operator having written it.
+    """
+    reasons, differences = [], []
+    for field, meaning in COMPARE_BLOCKING:
+        a, b = _row_field(ra, field), _row_field(rb, field)
+        if a is _ABSENT or b is _ABSENT:
+            reasons.append({"field": field, "row_a": _shown(a), "row_b": _shown(b),
+                            "reason": f"{field} is absent from at least one row: absence is not "
+                                      f"agreement, so comparability cannot be established"})
+        elif a != b:
+            reasons.append({"field": field, "row_a": a, "row_b": b, "reason": meaning})
+    # THE DERIVED FLAG, ON EITHER SIDE. A row the cap bound every turn is a measurement of the
+    # harness; pairing it with a row the cap did not bind is the exact misreading this closes.
+    # The flag is DERIVED when a row does not state it -- the row carries tokens_total, plies and
+    # max_turn_tokens, and the label must come from the record rather than from an operator's
+    # assertion, including for rows written before the field existed.
+    budget_sources = []
+    for tag, row in (("row_a", ra), ("row_b", rb)):
+        stored = _row_field(row, "budget_binding")
+        total, plies_n, cap = (_row_field(row, "tokens_total"), _row_field(row, "plies"),
+                               _row_field(row, "max_turn_tokens"))
+        if isinstance(total, int) and isinstance(plies_n, int) and isinstance(cap, int):
+            derivable = True
+            derived = None if plies_n == 0 else (plies_n * cap == total)
+        else:
+            derivable, derived = False, None
+        if stored is True:
+            budget_sources.append({"row": tag, "value": True, "source": "stated by the row"})
+            reasons.append({"field": "budget_binding", tag: True,
+                            "reason": "budget_binding is true: tokens_total == plies * "
+                                      "max_turn_tokens, so the harness set the length of EVERY "
+                                      "answer. This row measures the cap, not the model, and cannot "
+                                      "be read as a model comparison"})
+        elif stored is False:
+            budget_sources.append({"row": tag, "value": False, "source": "stated by the row"})
+            if derived is True:
+                reasons.append({"field": "budget_binding", tag: {"stated": False,
+                                                                "derived": True},
+                                "reason": "the row states budget_binding false, but its own numbers "
+                                          "give tokens_total == plies * max_turn_tokens; the row "
+                                          "contradicts itself and cannot be compared"})
+        elif derivable:
+            budget_sources.append({"row": tag, "value": derived,
+                                   "source": "DERIVED here: tokens_total == plies * max_turn_tokens "
+                                             "(the row does not state the flag)"})
+            if derived is True:
+                reasons.append({"field": "budget_binding", tag: True,
+                                "reason": "budget_binding does not appear in this row, but it DERIVES "
+                                          "TRUE from its own tokens_total, plies and max_turn_tokens: "
+                                          "the harness set the length of every answer, so the row "
+                                          "measures the cap and not the model"})
+            elif derived is None:
+                reasons.append({"field": "budget_binding", tag: None,
+                                "reason": "the row recorded NO plies: whether the cap bound cannot be "
+                                          "established, and 0 == 0 * max is an empty-record artefact"})
+        else:
+            budget_sources.append({"row": tag, "value": None, "source": "not derivable"})
+            reasons.append({"field": "budget_binding", tag: "<absent from the record>",
+                            "reason": "budget_binding is absent AND tokens_total / plies / "
+                                      "max_turn_tokens are not all present, so it cannot be derived "
+                                      "from the record either"})
+    # IN-ROW INTEGRITY: the template digest the row states twice must be the same number twice.
+    for tag, row in (("row_a", ra), ("row_b", rb)):
+        pd = _row_field(row, "prompt_digest")
+        pi = _row_field(row, "prompt_identity.prompt_template_sha256")
+        if pd is not _ABSENT and pi is not _ABSENT and pd != pi:
+            reasons.append({"field": "prompt_digest/prompt_identity", tag: {"prompt_digest": pd,
+                                                                           "prompt_identity": pi},
+                            "reason": "the row states two different template digests; it is "
+                                      "internally inconsistent and cannot be compared at all"})
+    for field, meaning in COMPARE_NAMED:
+        a, b = _row_field(ra, field), _row_field(rb, field)
+        if a is _ABSENT or b is _ABSENT or a != b:
+            differences.append({"field": field, "row_a": _shown(a), "row_b": _shown(b),
+                                "meaning": meaning})
+    comparable = not reasons
+    report = {
+        "compare": "labyrinth-run/2",
+        "rows": [{name: _shown(_row_field(r, dotted)) for name, dotted in (
+            ("path", "path"), ("schema", "schema"), ("model", "model"),
+            ("decoder_mode", "decoder_mode"), ("max_turn_tokens", "max_turn_tokens"),
+            ("prompt_digest", "prompt_digest"), ("tokens_total", "tokens_total"),
+            ("plies", "plies"), ("budget_binding", "budget_binding"),
+            ("budget_binding_basis", "budget_binding_basis"),
+            ("graph_digest", "graph.graph_digest"),
+            ("cell_spec_sha256", "cell_spec_sha256"))}
+                 for r in (ra, rb)],
+        "comparable": comparable,
+        "verdict": "COMPARABLE" if comparable else "NOT COMPARABLE",
+        "reasons": reasons,
+        "differences": differences,
+        "basis": ("two rows compare only when they are the same test AND the same question under the "
+                  "same budget: same graph_digest, cell_spec_sha256, symmetrisation, K and cap, same "
+                  "max_turn_tokens, same prompt_digest (the TEMPLATE digest), and neither row has "
+                  "budget_binding true. Every blocking difference is named in `reasons`; the "
+                  "legitimate axes (model, quant, decoder, seed, endpoint) are named in "
+                  "`differences` so the comparison cannot travel without them"),
+    }
+    report["rows"][0]["path"] = os.path.abspath(pa)
+    report["rows"][1]["path"] = os.path.abspath(pb)
+    for entry, src in zip(report["rows"], budget_sources):
+        entry["budget_binding"] = src["value"]
+        entry["budget_binding_source"] = src["source"]
+    report["budget_binding_sources"] = budget_sources
+    return comparable, report
+
+
+def compare_main(pa, pb):
+    """--compare ROW_A ROW_B -> JSON report; 0 comparable, 14 not comparable."""
+    rows = []
+    for p in (pa, pb):
+        try:
+            with open(p, "rb") as fh:
+                row = json.loads(fh.read().decode())
+        except OSError as e:
+            die(EXIT_BAD_ARGS, f"--compare cannot read {p!r}: {e}")
+        except (json.JSONDecodeError, UnicodeDecodeError) as e:
+            die(EXIT_BAD_ARGS, f"--compare: {p!r} is not JSON: {e}")
+        schema = row.get("schema") if isinstance(row, dict) else None
+        if not isinstance(schema, str) or not schema.startswith("labyrinth-run/"):
+            die(EXIT_BAD_ARGS,
+                f"--compare: {p!r} is not a labyrinth-run record (schema={schema!r}); a row from "
+                f"another instrument cannot be compared by this one")
+        rows.append(row)
+    comparable, report = compare_rows(rows[0], rows[1], pa, pb)
+    print(json.dumps(report, indent=1))
+    return 0 if comparable else EXIT_NOT_COMPARABLE
 
 
 # ==== PUBLISHING THE RECORD =======================================================================
@@ -1503,6 +1824,146 @@ def pin_rule_test():
                 "pin": "graph_digest", "reading": "file_sha256", "pass": ok}
 
 
+def budget_binding_test():
+    """THE ARITHMETIC THAT WOULD HAVE STOPPED TONIGHT'S PAIR BEING READ AS A COMPARISON.
+
+    Each vector is a per-turn token list with the shape of a real row, and every expected value is
+    derived here rather than copied: the test proves the flag is a comparison of two numbers the
+    record carries, and that it does not fire on a run where the cap was merely REACHED once.
+    """
+    cases = []
+    # 1. the cell that was actually spent: 40 plies, every turn burned the whole 32-token budget.
+    cases.append(("tonight_every_turn_at_cap", [32] * 40, 32, 1280, True, 40))
+    # 2. the row under the same cap that read 40/40: 177 tokens over 40 plies (4.425/turn).
+    cases.append(("committed_row_177_over_40", [5] * 17 + [4] * 23, 32, 177, False, 0))
+    # 3. the cap REACHED on one turn and not binding: true only when EVERY turn equals it.
+    cases.append(("cap_reached_once", [32, 5, 5], 32, 42, False, 1))
+    # 4. nothing recorded: 0 == 0 * max is an empty-record artefact, so the flag is null, not true.
+    cases.append(("no_turns", [], 32, 0, None, 0))
+    rows, ok = [], True
+    for name, toks, cap, want_total, want_binding, want_at_cap in cases:
+        f = budget_facts(toks, cap)
+        good = (f["tokens_total"] == want_total and f["budget_binding"] is want_binding
+                and f["turns_at_turn_cap"] == want_at_cap
+                and f["budget_binding_basis"] is not None)
+        ok = ok and good
+        rows.append({"case": name, "plies": len(toks), "tokens_total": f["tokens_total"],
+                     "max_turn_tokens": cap, "plies_x_max": len(toks) * cap,
+                     "budget_binding": f["budget_binding"],
+                     "expected_budget_binding": want_binding,
+                     "tokens_per_turn_mean": f["tokens_per_turn_mean"],
+                     "turns_at_turn_cap": f["turns_at_turn_cap"],
+                     "basis": f["budget_binding_basis"], "pass": good})
+    # the dry shape: a dry row states NO token arithmetic, with a basis saying why
+    dry = budget_facts(None, 32)
+    dry_ok = (dry["tokens_total"] is None and dry["budget_binding"] is None
+              and dry["tokens_per_turn_mean"] is None and dry["budget_binding_basis"] is not None)
+    ok = ok and dry_ok
+    rows.append({"case": "dry_run_derives_nothing", "tokens_total": dry["tokens_total"],
+                 "budget_binding": dry["budget_binding"],
+                 "basis": dry["budget_binding_basis"], "pass": dry_ok})
+    return ok, rows
+
+
+def prompt_template_test():
+    """The TEMPLATE digest is the key; the ASSEMBLED digest is not.
+
+    Same graph, same cap, two different start runes: the template digest must be ONE value (they are
+    the same test and must compare) while the assembled per-turn digests differ (that digest is
+    evidence about what was sent, not an identity). The two runs are built from the template itself,
+    so the vector cannot drift from the thing it checks.
+    """
+    alphabet = ", ".join(CANONICAL_NODES)
+    assembled = {r: PROMPT_TEMPLATE.format(K=12, alphabet=alphabet, cur=r)
+                 for r in ("Fehu", "Eihwaz")}
+    digests = {r: hashlib.sha256(t.encode()).hexdigest() for r, t in assembled.items()}
+    tpl_ok = PROMPT_TEMPLATE_SHA256 == hashlib.sha256(PROMPT_TEMPLATE.encode()).hexdigest()
+    idn = prompt_identity()
+    id_ok = idn["prompt_template_sha256"] == PROMPT_TEMPLATE_SHA256
+    stable_ok = len({PROMPT_TEMPLATE_SHA256, idn["prompt_template_sha256"]}) == 1
+    moves_ok = digests["Fehu"] != digests["Eihwaz"]
+    distinct_ok = PROMPT_TEMPLATE_SHA256 not in set(digests.values())
+    ok = tpl_ok and id_ok and stable_ok and moves_ok and distinct_ok
+    return ok, {"prompt_template_sha256": PROMPT_TEMPLATE_SHA256,
+                "prompt_template_bytes": idn["prompt_template_bytes"],
+                "format_fields": idn["prompt_template_format_fields"],
+                "assembled_sha256": digests,
+                "template_digest_stable_across_start_runes": stable_ok,
+                "assembled_digest_moves_with_the_rune": moves_ok,
+                "template_digest_is_not_an_assembled_digest": distinct_ok,
+                "comparability_key": idn["comparability_key"],
+                "basis": idn["basis"], "pass": ok}
+
+
+def _compare_fixture(**over):
+    """A row with the shape a real one has, so the compare vectors exercise the fields by name."""
+    row = {"schema": "labyrinth-run/2", "dry_run": False, "benchmark_row": True,
+           "model": "ornith9b", "model_quant": "Q4_K_M", "decoder_mode": "off", "seed_model": 0,
+           "model_endpoint": "http://127.0.0.1:8080",
+           "max_turn_tokens": 32, "prompt_digest": "a" * 64,
+           "prompt_identity": {"prompt_template_sha256": "a" * 64},
+           "tokens_total": 177, "plies": 40, "budget_binding": False, "cap": 40,
+           "cell_spec_sha256": "6df7437a" + "0" * 56,
+           "graph": {"graph_digest": "d" * 64, "symmetrisation": "min", "K": 12}}
+    row.update(over)
+    return row
+
+
+def compare_test():
+    """TWO ROWS DIFFERING ONLY IN max_turn_tokens MUST COME BACK NOT COMPARABLE.
+
+    Every vector is one field away from the base row, and there is a passing CONTROL: two rows that
+    differ only on the legitimate axes (model, decoder) must still compare, or the test could not
+    tell "the refusal fired" from "this comparison path refuses everything".
+    """
+    base = _compare_fixture()
+
+    def one(name, other, want_comp, want_field=None, want_where="reasons"):
+        comp, rep = compare_rows(base, other, "row_a.json", "row_b.json")
+        where = rep[want_where]
+        hit = True if want_field is None else any(r["field"] == want_field for r in where)
+        good = comp is want_comp and hit
+        return {"case": name, "comparable": comp, "expected_comparable": want_comp,
+                "field": want_field, "found": hit, "verdict": rep["verdict"],
+                "reasons": [r["field"] for r in rep["reasons"]],
+                "differences": [d["field"] for d in rep["differences"]],
+                "budget_binding_sources": rep["budget_binding_sources"], "pass": good}
+
+    def without(**over):
+        r = {k: v for k, v in _compare_fixture().items() if k != "budget_binding"}
+        r.update(over)
+        return r
+
+    rows = [
+        # THE VECTOR THIS CARD ASKS FOR: nothing differs but the per-turn budget.
+        one("only_max_turn_tokens_differs", _compare_fixture(max_turn_tokens=64), False,
+            "max_turn_tokens"),
+        one("only_prompt_digest_differs",
+            _compare_fixture(prompt_digest="b" * 64,
+                             prompt_identity={"prompt_template_sha256": "b" * 64}),
+            False, "prompt_digest"),
+        one("one_row_budget_binding", _compare_fixture(budget_binding=True), False,
+            "budget_binding"),
+        one("different_graph", _compare_fixture(graph={"graph_digest": "e" * 64,
+                                                       "symmetrisation": "min", "K": 12}),
+            False, "graph.graph_digest"),
+        one("field_absent_from_one_row",
+            {k: v for k, v in _compare_fixture().items() if k != "prompt_digest"},
+            False, "prompt_digest"),
+        # A row written BEFORE this field existed is judged by its own numbers, not by the missing
+        # label: 177 over 40 plies at a 32-token cap derives FALSE, so it still compares...
+        one("old_row_without_flag_derives_false", without(), True),
+        # ...and the 1280-token shape is refused even with no flag to read.
+        one("old_row_without_flag_derives_true", without(tokens_total=1280, plies=40), False,
+            "budget_binding"),
+        one("control_same_test_other_model",
+            _compare_fixture(model="qwen3-8b", decoder_mode="on"), True, "model",
+            want_where="differences"),
+    ]
+    ok = all(r["pass"] for r in rows)
+    return ok, rows
+
+
 def self_test():
     """Reproduce the 2-node test vector from the definition alone. Exit 0 iff both match."""
     fx = SELF_TEST_GRAPH
@@ -1530,8 +1991,11 @@ def self_test():
     nok, node_rows = node_order_test()
     gok, audit_rows = graph_audit_test()
     rok, pin_row = pin_rule_test()
+    bbok, bb_rows = budget_binding_test()
+    ptok, pt_row = prompt_template_test()
+    cmok, cm_rows = compare_test()
     ok = (fsha == SELF_TEST_FILE_SHA and gdig == SELF_TEST_GRAPH_DIGEST and eok and aok and pok
-          and bok and qok and iok and nok and gok and rok)
+          and bok and qok and iok and nok and gok and rok and bbok and ptok and cmok)
     print(json.dumps({"self_test": "ged-v2",
                       "fixture_bytes": SELF_TEST_BYTES.decode(),
                       "preimage": (b"ged-v2\n" + b"".join(
@@ -1550,6 +2014,9 @@ def self_test():
                       "node_order": node_rows, "node_order_pass": nok,
                       "graph_audit": audit_rows, "graph_audit_pass": gok,
                       "pin_rule": pin_row, "pin_rule_pass": rok,
+                      "budget_binding": bb_rows, "budget_binding_pass": bbok,
+                      "prompt_template": pt_row, "prompt_template_pass": ptok,
+                      "compare": cm_rows, "compare_pass": cmok,
                       "pass": ok}, indent=1))
     return 0 if ok else EXIT_SELF_TEST_FAIL
 
@@ -1769,6 +2236,12 @@ def build_parser():
     ap.add_argument("--print-graph-digest", dest="print_graph_digest", action="store_true",
                     help="print file_sha256 + graph_digest for --graph and exit. NOT a cell: "
                          "needs no symmetrisation, because it runs no moves.")
+    ap.add_argument("--compare", nargs=2, metavar=("ROW_A", "ROW_B"), default=None,
+                    help="compare two published records and exit: 0 comparable, 14 NOT comparable "
+                         "with every blocking difference named (different graph/spec/symmetrisation/"
+                         "K/cap, different max_turn_tokens or prompt_digest, budget_binding true, or "
+                         "a field absent from a row). Legitimate axes (model, decoder, seed, "
+                         "endpoint) are reported as differences. Reads records; runs no cell.")
     return ap
 
 
@@ -1797,6 +2270,17 @@ def main():
 
     if a.self_test:
         return self_test()
+
+    if a.compare:
+        # A COMPARISON IS NOT A DISPATCH. It reads two published records and answers one question:
+        # are these the same test, asked the same way, under the same budget? Mixing it with a
+        # dispatch would mean writing a row and judging another in one process, so the combination
+        # is refused rather than given a precedence order.
+        if a.graph or a.dry_run or a.model or a.model_identity:
+            die(EXIT_BAD_ARGS,
+                "--compare reads two published records; it is not a dispatch, so it takes no "
+                "--graph/--dry-run/--model/--model-identity. Run it on its own.")
+        return compare_main(*a.compare)
 
     if not a.graph:
         die(EXIT_BAD_ARGS, "--graph is required (except with --self-test)")
@@ -1956,6 +2440,11 @@ def main():
     visited_names = len(set(visited))
     visited_positions = len({pos_of[a] for a in visited})
 
+    # DERIVED FROM THE RECORD, BEFORE THE RECORD IS WRITTEN: tokens_total, the mean and its basis,
+    # the number of turns that reached the cap, and budget_binding. On a dry run every one is null
+    # with a basis saying why -- a dry row may not state token arithmetic it never performed.
+    budget = budget_facts(None if a.dry_run else tokens, MAX_TURN_TOKENS)
+
     rec = {
         "schema": "labyrinth-run/2",
         "dry_run": bool(a.dry_run),
@@ -1992,9 +2481,18 @@ def main():
         "decoder_control": (None if a.dry_run or not a.no_think
                             else {"reasoning_effort": "none"}),
         "max_turn_tokens": None if a.dry_run else MAX_TURN_TOKENS,
-        "prompt_digest": (None if a.dry_run
-                          else hashlib.sha256(PROMPT_TEMPLATE.encode()).hexdigest()),
+        "max_turn_tokens_basis": (None if a.dry_run else
+                                  "sent as `max_tokens` on EVERY completion request; the server's own "
+                                  "usage.completion_tokens for the turn is what a turn is recorded as "
+                                  "spending"),
+        # THE QUESTION'S IDENTITY -- the TEMPLATE's digest, taken before .format(). See prompt_identity
+        # for why the assembled digest (moves[].prompt_sha256) can never be the comparability key.
+        "prompt_digest": None if a.dry_run else PROMPT_TEMPLATE_SHA256,
+        "prompt_digest_basis": (None if a.dry_run else
+                                "sha256(PROMPT_TEMPLATE) BEFORE .format(); the constant part of the "
+                                "question, and the comparability key for the model-facing half"),
         "prompt_template": None if a.dry_run else PROMPT_TEMPLATE,
+        "prompt_identity": None if a.dry_run else prompt_identity(),
         "read_grammar": (None if a.dry_run else
                          "one rune name alone on the first non-empty line, case-insensitive, "
                          "surrounding quotes/backticks stripped; one of the eight abstention tokens "
@@ -2044,9 +2542,11 @@ def main():
         "ended": end_state != "cap" or plies >= a.cap,
         "end_state": end_state,
         "tokens_per_turn": tokens,
-        "tokens_total": None if a.dry_run else sum(tokens),
+        **budget,
         "tokens_basis": (None if a.dry_run else
-                         "usage.completion_tokens per turn; tokens_total is their sum"),
+                         "usage.completion_tokens per turn; tokens_total is their sum. Every field "
+                         "marked *_basis carries how its number was derived, and budget_binding is "
+                         "derived from the two numbers above it, not asserted"),
         "visited_unique": visited_positions,
         "visited_names": visited_names,
         "visited_count_basis": "positions",
@@ -2068,6 +2568,15 @@ def main():
                       "unique_names": visited_names,
                       "model": rec["model"], "decoder_mode": rec["decoder_mode"],
                       "seed_model": seed_model, "tokens_total": rec["tokens_total"],
+                      # THE HARNESS SIDE OF THE SAME LINE, so a summary cannot show a token total
+                      # without showing the budget it was spent under nor the arithmetic that says
+                      # whether that budget bound. A 1280 printed without "40 x 32" is the reading
+                      # this revision exists to stop.
+                      "max_turn_tokens": rec["max_turn_tokens"],
+                      "tokens_per_turn_mean": rec["tokens_per_turn_mean"],
+                      "budget_binding": rec["budget_binding"],
+                      "budget_binding_basis": rec["budget_binding_basis"],
+                      "prompt_digest": rec["prompt_digest"],
                       "blocked": blocked, "not_an_action": not_an_action, "give_up": give_up,
                       "graph_digest": gdig, "pinned_identity": rec["pinned_identity"],
                       "file_sha256": fsha, "file_sha256_role": rec["graph"]["file_sha256_role"],
