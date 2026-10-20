@@ -34,6 +34,40 @@ TEST IDENTITY
     Run --self-test for the 2-node test vector; a definition without a test vector is a
     description, and a description is what just cost a day.
 
+THE CANONICAL NODE ORDER IS CHECKED BEFORE THE DIGEST IS COMPUTED (exit 13)
+    graph_digest() hashes the nodes array IN WHATEVER ORDER IT IS GIVEN, so the order is part of
+    the declaration and cannot be recovered from the number it produces. Measured on the arrived
+    file: the same distances with the array in canonical order hash to 596255d9..., and with the
+    array sorted alphabetically to fa26e89e.... Both are well-formed ged-v2 digests of the right
+    distances; only one of them is about the declared test. Exit 5 cannot catch that, because the
+    number it compares is computed after the order has already been lost. So:
+        CANONICAL_NODES          the elder-Futhark order the generator carries (RUNE_NAMES)
+        CANONICAL_NODES_SHA256   sha256("\n".join(nodes) + "\n") over that order
+                                 = 49fa1fb94b71bb934323b626b86ec9f76ff1a646d3a03a40ebc1eac98378cc94
+                                 FIXED BY THE RUNE SET, not by a matrix: regeneration moves
+                                 distances and re-serialises bytes, never these 24 names in this
+                                 order, so the guard survives the very repair it is watching.
+        exit 13                  the array is not that order (or --expect-nodes-sha256 names a
+                                 different declaration). Refused BEFORE graph_digest() runs, and
+                                 the refusal says the digest was NOT computed: a number produced
+                                 here would pin the wrong declaration and look correct doing it.
+    --expect-nodes-sha256 is compared on the AUDIT path too, so --print-graph-digest cannot print
+    a "verified" digest for a wrongly-ordered file.
+
+THE PIN: PIN THE GRAPH DIGEST, NEVER THE FILE HASH
+    Measured on this box on the arrived file: repairing `semantics` from a string to an object
+    carrying K:12, and regenerating the two adjacency columns, leaves graph_digest at 596255d9...
+    while file_sha256 moves off ea33eedc.... A spec pinned to the file hash would therefore die on
+    exactly the repair it asks for. So:
+        graph_digest        the PINNED IDENTITY of the test. It is what --expect-graph-digest
+                            compares, what a row carries in `pinned_identity`, and what every
+                            refusal message about the graph names.
+        file_sha256         a READING about the bytes (transport evidence, "did this file change
+                            in transit?"). Never the identity of the test, never a pin.
+    Two boxes can hold byte-identical graphs and run different tests (different symmetrisation or
+    K); one graph can arrive in two serialisations. The digest is the only field that survives
+    both, so it is the only field a spec may pin.
+
 EDGE COUNTS (record.graph.edges_used and the basis beside it)
     The record carries the edge count of the relation the run ACTUALLY uses, never a count
     derived from an assumption about symmetry:
@@ -47,6 +81,15 @@ EDGE COUNTS (record.graph.edges_used and the basis beside it)
     sum(out-degree)//2 for every symmetrisation, which reported 168 for a relation with 336
     arcs and no undirected edges. min/max numbers are unchanged by that correction, so schema
     labyrinth-run/2 still describes every row it described before.
+
+    THE ARM TRAVELS WITH THE COUNT. edges_used is arm-dependent -- measured at K=12 on the arrived
+    regeneration: min 196, max 139, ged_fwd/ged_rev 335 arcs (on the pre-correction graph the same
+    field read 198 / 138 / 336) -- so a row carries edges_used_arm beside edges_used, and an
+    edges_used_statement string that cannot be quoted without its basis:
+        edges_used=196 (basis=undirected_pairs, arm=min)
+    A count published without its arm is a value without its basis, and the two arms differ by 57
+    on this graph: enough to be read as a difference between machines when it is a difference
+    between derivations.
 
 ADMISSION (refuses BEFORE the first turn, with a distinguishable exit code)
 
@@ -91,6 +134,19 @@ ADMISSION (refuses BEFORE the first turn, with a distinguishable exit code)
     `--cap 0` with a malformed or missing graph is exit 2, not 3. With no --symmetrisation it
     is still 4, because that check precedes admission.
 
+    ONE VALIDATION PATH -- why --print-graph-digest and a dispatch cannot disagree
+    A predicate that says "this file is the test" must fail wherever a dispatch fails, or it
+    certifies what admission refuses. It did. Measured on the arrived file before this revision:
+    `--print-graph-digest` exited 0 and printed graph_digest 596255d9..., while the same file in a
+    dispatch died at exit 1 -- an UNDECLARED code, an AttributeError out of
+    `g["semantics"].get("K", 12)` because "semantics" was a STRING -- and that digest was then
+    quoted by all three parties as though it certified the file. validate_graph() is now the only
+    place a graph is accepted and BOTH paths call it, in this order:
+        structural (3) -> canonical node order (13) -> start rune (2, dispatch only)
+        -> derivation columns (6) -> digest (5)
+    No graph defect can reach a traceback: every one lands on a numbered exit, and --self-test runs
+    each malformed fixture down both paths and requires the SAME exit from each.
+
     2  bad arguments
     3  graph file unreadable / malformed
     4  symmetrisation not named                <- the whole point: no silent default
@@ -106,8 +162,13 @@ ADMISSION (refuses BEFORE the first turn, with a distinguishable exit code)
    10  the out-dir cannot hold a record (see OUT-DIR: EXIT 10 below)
    11  the model path cannot state its identity (see THE MODEL PATH below)
    12  the model path cannot complete (see THE MODEL PATH below)
+   13  the nodes array is not the canonical elder-Futhark order, or --expect-nodes-sha256 names a
+       different declaration. A DECLARATION defect, distinct from 3 (this is not a graph) and from
+       6 (this graph contradicts itself): the file loads and its distances are the right ones, but
+       it declares them under the wrong order -- so the fix is to reorder the array, not to
+       regenerate the bytes. Checked BEFORE graph_digest() is computed, and the refusal says so.
 
-    Exit 0 on a completed record. --dry-run exits 0 too, but writes a record marked
+   Exit 0 on a completed record. --dry-run exits 0 too, but writes a record marked
     dry_run=true and refuses to call it a benchmark row.
 
 THE MODEL PATH (--model): proposal -> parse -> legal-move check -> per-turn tokens -> record
@@ -222,6 +283,26 @@ EXIT_SELF_TEST_FAIL = 9
 EXIT_OUT_DIR_UNUSABLE = 10
 EXIT_MODEL_IDENTITY = 11
 EXIT_MODEL_TRANSPORT = 12
+# A DECLARATION defect, not a data defect. 3 says "this is not a graph"; 13 says "this is a graph,
+# and it declares itself under the wrong order" -- different instruction to the peer: reorder the
+# array, do not regenerate the distances. Numbers 2-10 and 11-12 were already taken, so this takes
+# the next free code rather than folding into 3 (which would lose the distinction above).
+EXIT_NODE_ORDER = 13
+
+# THE CANONICAL NODE ORDER. Elder Futhark, the order the generator's RUNE_NAMES carries -- and the
+# order the nodes array must be in before anything is hashed, because graph_digest() hashes
+# whatever order it is handed. A sorted array therefore produces a well-formed digest of the right
+# distances under the wrong declaration (measured on the arrived file: array order 596255d9...,
+# sorted fa26e89e...), which no downstream check can detect.
+CANONICAL_NODES = ("Fehu", "Uruz", "Thurisaz", "Ansuz", "Raidho", "Kenaz", "Gebo", "Wunjo",
+                   "Hagalaz", "Nauthiz", "Isa", "Jera", "Eihwaz", "Perthro", "Elhaz", "Sowilo",
+                   "Tiwaz", "Berkano", "Ehwaz", "Mannaz", "Laguz", "Ingwaz", "Dagaz", "Othala")
+
+# sha256("\n".join(nodes) + "\n") over the order above. FIXED BY THE RUNE SET, NOT BY A MATRIX:
+# regeneration moves distances and re-serialises bytes and leaves this constant alone, which is
+# what makes it usable as a guard on a graph that is still being repaired. Reproduced to the
+# character by the peer from the arrived file's own nodes array.
+CANONICAL_NODES_SHA256 = "49fa1fb94b71bb934323b626b86ec9f76ff1a646d3a03a40ebc1eac98378cc94"
 
 # HOW the record reached its name. Three values, and the value travels in every record, because a
 # weaker publish that travels unnamed is indistinguishable to a later reader from a strong one.
@@ -269,8 +350,8 @@ UNIMPLEMENTED_ARGS = {}
 # reach a record by being added and forgotten.
 CONSUMED_DESTS = {
     "graph", "symmetrisation", "K", "rune", "cap", "seed", "seed_model", "expect_graph_digest",
-    "cell_spec", "out_dir", "dry_run", "model", "model_identity", "base_url", "no_think",
-    "self_test", "print_graph_digest",
+    "expect_nodes_sha256", "cell_spec", "out_dir", "dry_run", "model", "model_identity", "base_url",
+    "no_think", "self_test", "print_graph_digest",
 }
 
 
@@ -280,6 +361,13 @@ def die(code, msg) -> NoReturn:
 
 
 def load_graph(path):
+    """Structural validity ONLY, and every failure is a numbered exit (3), never a traceback.
+
+    The type checks are not pedantry: each one is a shape this driver used to dereference before
+    checking, so a malformed file produced `AttributeError`/`TypeError` at exit 1 -- an undeclared
+    code a second box cannot key on. Measured on the arrived file: `"semantics"` was a STRING and
+    the dispatch died at `g["semantics"].get("K", 12)`.
+    """
     try:
         raw = open(path, "rb").read()
     except OSError as e:
@@ -288,19 +376,68 @@ def load_graph(path):
         g = json.loads(raw)
     except ValueError as e:
         die(EXIT_BAD_GRAPH, f"graph is not JSON: {e}")
+    if not isinstance(g, dict):
+        die(EXIT_BAD_GRAPH, f"graph is a JSON {type(g).__name__}, not an object")
     for k in ("nodes", "ged_fwd", "semantics"):
         if k not in g:
             die(EXIT_BAD_GRAPH, f"graph missing key {k!r}")
     nodes = g["nodes"]
     F = g["ged_fwd"]
+    if not isinstance(nodes, list):
+        die(EXIT_BAD_GRAPH, f"graph 'nodes' is {type(nodes).__name__}, not an array")
     if len(nodes) != 24:
         die(EXIT_BAD_GRAPH, f"graph has {len(nodes)} nodes, expected 24")
+    if any(not isinstance(a, str) for a in nodes):
+        die(EXIT_BAD_GRAPH, "graph 'nodes' carries a non-string entry")
     if len(set(nodes)) != 24:
         die(EXIT_BAD_GRAPH, "duplicate node names")
+    if not isinstance(F, dict):
+        die(EXIT_BAD_GRAPH, f"graph 'ged_fwd' is {type(F).__name__}, not an object")
     for a in nodes:
-        if a not in F or any(y not in F[a] for y in nodes):
+        if a not in F or not isinstance(F[a], dict) or any(y not in F[a] for y in nodes):
             die(EXIT_BAD_GRAPH, f"ged_fwd incomplete at {a}")
+        for y in nodes:
+            v = F[a][y]
+            # int(), not float(): graph_digest() coerces with int(), so 3.0 and 3 would hash
+            # alike while a row would record two different matrices. Bool is an int in Python
+            # and a distance of True is a defect, not a 1.
+            if isinstance(v, bool) or not isinstance(v, int):
+                die(EXIT_BAD_GRAPH,
+                    f"ged_fwd[{a!r}][{y!r}] is {type(v).__name__} ({v!r}), not an int: the digest "
+                    f"coerces with int(), so a non-int distance is a matrix this driver cannot "
+                    f"read without inventing a value")
+            if v < 0:
+                die(EXIT_BAD_GRAPH, f"ged_fwd[{a!r}][{y!r}] is {v}, a negative distance")
+    graph_semantics(g)
     return raw, g, nodes, F
+
+
+def graph_semantics(g):
+    """The graph's own `semantics` object, checked as a SHAPE, once, for every caller.
+
+    Measured defect this exists for: the arrived file carried "semantics" as a string. The audit
+    path certified it (exit 0, digest 596255d9...) and a dispatch died on it (exit 1,
+    AttributeError). A file the walk cannot load is not a file the audit may certify, so the shape
+    is a load-time fact and not a dispatch-time accident.
+    """
+    sem = g["semantics"]
+    if not isinstance(sem, dict):
+        die(EXIT_BAD_GRAPH,
+            f"graph 'semantics' is {type(sem).__name__}, not an object: {sem!r:.160}. K is read "
+            f"from it, so no dispatch can load this file -- and the audit path refuses it too, "
+            f"because a predicate may not certify what admission refuses. The repair is in the "
+            f"generator: semantics must be an object carrying K (the frozen cell uses K:12).")
+    return sem
+
+
+def semantics_K(g):
+    """The graph's declared K, or 12. Shape-checked here so no caller can meet a TypeError."""
+    K = graph_semantics(g).get("K", 12)
+    if isinstance(K, bool) or not isinstance(K, int) or K < 1:
+        die(EXIT_BAD_GRAPH,
+            f"graph semantics K={K!r} is not an int >= 1; a threshold that is absent from the "
+            f"arithmetic, or a string compared against a distance, is a graph defect")
+    return K
 
 
 def file_sha256(raw):
@@ -319,6 +456,114 @@ def graph_digest(nodes, F):
         h.update(a.encode("utf-8") + b"\t")
         h.update(",".join(str(int(F[a][y])) for y in nodes).encode("utf-8") + b"\n")
     return h.hexdigest()
+
+
+def nodes_sha256(nodes):
+    """The DECLARATION, hashed without any matrix: sha256("\\n".join(nodes) + "\\n").
+
+    Deliberately trivial and deliberately separate from graph_digest(): the point is that the
+    order can be pinned by something a regeneration cannot move, so a graph that is being repaired
+    still has a stable name for "the same runes, the same order".
+    """
+    return hashlib.sha256(("\n".join(nodes) + "\n").encode("utf-8")).hexdigest()
+
+
+def check_node_order(nodes, expect_nodes_sha256=None):
+    """The nodes array must BE the canonical order, and this runs BEFORE graph_digest().
+
+    That placement is the whole guard. graph_digest() hashes whatever array it is handed, so a
+    sorted array yields a well-formed digest of the correct distances under the wrong declaration
+    (measured: the arrived file's distances hash to 596255d9... in array order and fa26e89e... with
+    the array sorted). Nothing downstream can tell those apart -- exit 5 compares a number that was
+    computed after the order was already lost -- so the check cannot be downstream.
+    """
+    got = nodes_sha256(nodes)
+    if expect_nodes_sha256 is not None and got != expect_nodes_sha256:
+        die(EXIT_NODE_ORDER,
+            f"nodes declaration {got} != --expect-nodes-sha256 {expect_nodes_sha256}. The nodes "
+            f"array IS the declaration that graph_digest hashes, so graph_digest was NOT computed "
+            f"here: a number produced from the wrong declaration would pin the wrong test and look "
+            f"correct. file_sha256 ({'a reading about the bytes'}) is not the identity of the test "
+            f"either -- the pinned identity is graph_digest, and it cannot be stated until the "
+            f"declaration is the expected one.")
+    if got != CANONICAL_NODES_SHA256:
+        first = next((i for i, (a, b) in enumerate(zip(nodes, CANONICAL_NODES)) if a != b), None)
+        where = (f"first divergence at index {first}: file {nodes[first]!r} vs canonical "
+                 f"{CANONICAL_NODES[first]!r}" if first is not None else
+                 f"the arrays differ only in length ({len(nodes)} vs {len(CANONICAL_NODES)})")
+        same_set = sorted(nodes) == sorted(CANONICAL_NODES)
+        die(EXIT_NODE_ORDER,
+            f"nodes array is not the canonical elder-Futhark order: nodes_sha256 {got} != "
+            f"canonical {CANONICAL_NODES_SHA256}; {where}; same rune SET: {same_set}. graph_digest "
+            f"was NOT computed -- hashing a wrongly-ordered array produces a well-formed number "
+            f"about the wrong declaration, which is exactly what exit 5 can never see. The repair "
+            f"is to reorder the array to CANONICAL_NODES, not to regenerate the distances: a file "
+            f"that carries the same rune set in sorted order (same_set True) is the same matrix "
+            f"under a different declaration.")
+
+
+def validate_graph(path, expect_graph_digest=None, expect_nodes_sha256=None, rune=None):
+    """THE ONE VALIDATION PATH. Both --print-graph-digest and a dispatch call THIS function.
+
+    Order, and every step is a numbered exit -- nothing reachable from here may traceback:
+        1 structural        exit 3   unreadable / not JSON / not an object / missing key / not 24
+                                      names / duplicate or non-string names / incomplete or non-int
+                                      ged_fwd / 'semantics' not an object / malformed adjacency
+                                      column
+        2 node order        exit 13  the array must BE CANONICAL_NODES (see check_node_order)
+        3 start rune        exit 2   dispatch only: --rune must name a node
+        4 digest computed            only NOW, because only now is the declaration known
+        5 derivation        exit 6   shipped adjacency_*_K vs the matrix at the graph's K, named
+                                      by the pinned identity
+        6 digest compared   exit 5   last, and only against the declared identity
+    Step 4 sits between 3 and 5 on purpose: the digest is a READING until the declaration is
+    right, but the derivation refusal needs the pinned identity to name it, and the derivation
+    check must keep its precedence over the digest comparison (6 before 5, unchanged).
+    """
+    raw, g, nodes, F = load_graph(path)
+    fsha = file_sha256(raw)
+    check_node_order(nodes, expect_nodes_sha256)
+    if rune is not None and rune not in nodes:
+        die(EXIT_BAD_ARGS, f"start rune {rune!r} not in graph")
+    K = semantics_K(g)
+    gdig = graph_digest(nodes, F)
+    cells_checked = check_derivation(g, nodes, F, gdig)
+    if expect_graph_digest and expect_graph_digest != gdig:
+        die(EXIT_DIGEST_MISMATCH,
+            f"graph_digest {gdig} != expected {expect_graph_digest}. graph_digest is the pinned "
+            f"identity of the test; this file's file_sha256 is {fsha}, which is a reading about "
+            f"the bytes and moves whenever the serialisation does -- it is not the identity.")
+    return {"raw": raw, "g": g, "nodes": nodes, "F": F, "file_sha256": fsha,
+            "graph_digest": gdig, "nodes_sha256": nodes_sha256(nodes),
+            "canonical_nodes_sha256": CANONICAL_NODES_SHA256,
+            "graph_K": K, "derivation_columns_checked": cells_checked}
+
+
+def audit_report(f):
+    """What --print-graph-digest prints. Every field is a fact validated by validate_graph().
+
+    The report is not a summary of a different path: it is the same call a dispatch makes, so its
+    exit 0 means "a dispatch would get past every graph check", and nothing more.
+    """
+    return {
+        "definition": "ged-v2",
+        "node_order": "nodes array",
+        "nodes": f["nodes"],
+        "nodes_sha256": f["nodes_sha256"],
+        "canonical_nodes_sha256": f["canonical_nodes_sha256"],
+        "node_order_canonical": f["nodes_sha256"] == CANONICAL_NODES_SHA256,
+        "file_sha256": f["file_sha256"],
+        "file_sha256_role": "transport evidence about the bytes; NEVER the identity of the test",
+        "graph_digest": f["graph_digest"],
+        "pinned_identity": {"field": "graph_digest", "value": f["graph_digest"]},
+        "derivation_columns_checked": f["derivation_columns_checked"],
+        "derivation_basis": ("shipped adjacency_*_K columns compared with the matrix at the "
+                             "graph's K; 0 means the file carries no such column, NOT that the "
+                             "columns agreed"),
+        "checks_run": ("structural(3) -> node order(13) -> derivation(6) -> digest(5): the same "
+                       "path a dispatch runs, so this file cannot be certified here and refused "
+                       "there"),
+    }
 
 
 # The test vector. Two nodes, one asymmetric pair, no graph file needed: if a definition
@@ -418,21 +663,46 @@ def position_index(nodes, F):
     return {a: i for i, grp in enumerate(groups) for a in grp}, groups
 
 
-def check_derivation(g, nodes, F):
-    """The shipped adjacency_*_K columns must equal what the matrix says at K=12.
-    If they disagree the file is not internally consistent and must not be scored."""
-    K = g["semantics"].get("K", 12)
+def check_derivation(g, nodes, F, graph_digest_value):
+    """The shipped adjacency_*_K columns must equal what the matrix says at the graph's K.
+    If they disagree the file is not internally consistent and must not be scored.
+
+    A column that is PRESENT but the wrong shape used to raise (TypeError/KeyError) at exit 1, or
+    -- worse for a string value -- be sorted happily as characters and compared against a list of
+    names. Shape is checked before comparison, and every refusal names the PINNED IDENTITY
+    (graph_digest), not just the K: a reader who receives "the derivation disagrees at K=12" cannot
+    tell which graph was being discussed without it.
+    """
+    K = semantics_K(g)
     checked = 0
     for sym, key in (("min", "adjacency_min_K"), ("max", "adjacency_max_K")):
         if key not in g:
+            # 0 checked is a READING, not a pass: a file that carries no adjacency column has not
+            # been shown to agree with anything. The row records the count beside its basis.
             continue
+        col = g[key]
+        if not isinstance(col, dict):
+            die(EXIT_BAD_GRAPH,
+                f"{key} is {type(col).__name__}, not an object of node -> [neighbours]; a column "
+                f"this shape cannot be compared with the matrix at K={K}")
         for a in nodes:
-            want = sorted(g[key][a])
+            if a not in col:
+                die(EXIT_BAD_GRAPH,
+                    f"{key} has no entry for {a!r}: an incomplete column is not a column that "
+                    f"agrees, it is one that was never compared")
+            shipped = col[a]
+            if not isinstance(shipped, list) or any(not isinstance(y, str) for y in shipped):
+                die(EXIT_BAD_GRAPH,
+                    f"{key}[{a!r}] is {type(shipped).__name__}, not an array of node names; "
+                    f"sorting a string compares characters, not neighbours")
+            want = sorted(shipped)
             got = neighbours(nodes, F, sym, K, a)
             if want != got:
                 die(EXIT_DERIVATION_MISMATCH,
-                    f"{key}[{a}] disagrees with the matrix at K={K}: "
-                    f"shipped {len(want)} neighbours, derived {len(got)}")
+                    f"{key}[{a}] disagrees with the matrix at K={K} (graph_digest "
+                    f"{graph_digest_value}): shipped {len(want)} neighbours, derived {len(got)}. "
+                    f"graph_digest is the pinned identity of the graph this refusal is about; "
+                    f"file_sha256 is only a reading about the bytes.")
             checked += 1
     return checked
 
@@ -1060,6 +1330,179 @@ def publish_test():
     return ok, rows
 
 
+def _quiet(fn, *args, **kwargs):
+    """Run fn, capturing both streams. Returns (result, exit_code_or_None, stderr_text).
+
+    The suite must be able to ASSERT on a refusal without the refusal printing into the JSON on
+    stdout, and it must be able to read the exit code a refusal chose.
+    """
+    import contextlib
+    import io
+    said, buf = io.StringIO(), io.StringIO()
+    try:
+        with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(said):
+            return fn(*args, **kwargs), None, said.getvalue().strip()
+    except SystemExit as e:
+        return None, e.code, said.getvalue().strip()
+
+
+def _run_main(argv):
+    """main() with a fresh sys.argv, captured. (result, exit_code, stderr).
+
+    A normal return carries main()'s own value as the exit code (0 for a completed dispatch), so the
+    two paths are compared on the number a shell would see either way.
+    """
+    saved = sys.argv
+    sys.argv = [SELF] + list(argv)
+    try:
+        result, code, said = _quiet(main)
+    finally:
+        sys.argv = saved
+    if code is None:
+        code = result if isinstance(result, int) else 0
+    return result, code, said
+
+
+def node_order_test():
+    """The canonical-order guard, exercised on a file it must REFUSE.
+
+    A guard tested only on files it passes is decoration. The failing vector is the one the peer
+    would have shipped: the same 24 runes, the same distances, the array sorted alphabetically. Its
+    ged-v2 digest is a well-formed 64-hex number -- that is precisely the point, exit 5 could never
+    catch it -- and the guard must stop it at 13 before any digest is computed.
+    """
+    canon = list(CANONICAL_NODES)
+    sorted_nodes = sorted(CANONICAL_NODES)
+    F = {a: {b: (0 if a == b else (i * 7 + j * 3) % 20 + 1) for j, b in enumerate(canon)}
+         for i, a in enumerate(canon)}
+    got = nodes_sha256(canon)
+    sorted_sha = nodes_sha256(sorted_nodes)
+    digest_canon = graph_digest(canon, F)
+    digest_sorted = graph_digest(sorted_nodes, F)
+    const_ok = got == CANONICAL_NODES_SHA256
+    distinct_ok = sorted_sha != CANONICAL_NODES_SHA256 and len(sorted_sha) == 64
+    digest_ok = (digest_canon != digest_sorted and len(digest_sorted) == 64
+                 and all(c in "0123456789abcdef" for c in digest_sorted))
+    pass_ok = check_node_order(canon) is None
+    _, refused_exit, _ = _quiet(check_node_order, sorted_nodes)
+    refused_ok = refused_exit == EXIT_NODE_ORDER
+    _, pin_exit, _ = _quiet(check_node_order, canon, sorted_sha)
+    pin_ok = pin_exit == EXIT_NODE_ORDER
+    ok = const_ok and distinct_ok and digest_ok and pass_ok and refused_ok and pin_ok
+    return ok, {
+        "canonical_nodes_sha256": got, "expect": CANONICAL_NODES_SHA256,
+        "constant_reproduces": const_ok,
+        "sorted_nodes_sha256": sorted_sha, "sorted_declaration_differs": distinct_ok,
+        "graph_digest_canonical": digest_canon, "graph_digest_sorted": digest_sorted,
+        "sorted_digest_well_formed_but_about_the_wrong_declaration": digest_ok,
+        "canonical_passes": pass_ok,
+        "sorted_refused_exit": refused_exit, "expect_exit": EXIT_NODE_ORDER,
+        "sorted_refused_at_13": refused_ok,
+        "wrong_expect_pin_refused_exit": pin_exit, "wrong_expect_pin_refused": pin_ok,
+        "failing_vector": "the same 24 runes and the same distances with the nodes array sorted "
+                          "alphabetically: a well-formed ged-v2 digest that no exit-5 check can "
+                          "distinguish from the real one",
+        "pass": ok}
+
+
+def graph_audit_test():
+    """THE AUDIT PATH MUST NOT CERTIFY WHAT ADMISSION REFUSES -- asserted as an end-to-end PAIR.
+
+    Every fixture is fed to BOTH paths (--print-graph-digest and a real --dry-run dispatch) and
+    the two must return the SAME exit, that exit must be the declared one, and the refusal must be
+    a `labyrinth_run: exit N:` line rather than a traceback. This is the defect in the shape it
+    actually took: the audit exited 0 and printed a digest for a file the dispatch died on, and the
+    digest was then quoted as a certificate by all three parties.
+    """
+    import tempfile
+
+    root = tempfile.mkdtemp(prefix="labyrinth-audit-")
+    canon = list(CANONICAL_NODES)
+    F = {a: {b: (0 if a == b else (i * 7 + j * 3) % 20 + 1) for j, b in enumerate(canon)}
+         for i, a in enumerate(canon)}
+    base = {"nodes": canon, "ged_fwd": F, "semantics": {"K": 12}}
+
+    def write(name, obj):
+        p = os.path.join(root, name)
+        with open(p, "w") as fh:
+            json.dump(obj, fh)
+        return p
+
+    good_min = {a: neighbours(canon, F, "min", 12, a) for a in canon}
+    bad_min = dict(good_min)
+    bad_min[canon[0]] = []          # a shipped column that contradicts the matrix
+    fixtures = [
+        # the shape the arrived bytes actually have: semantics is a STRING
+        ("semantics_is_a_string", write("sem.json", dict(base, semantics="Raw directed GED.")),
+         EXIT_BAD_GRAPH, []),
+        # the peer's second instance: same runes, same distances, array SORTED
+        ("nodes_sorted", write("sorted.json", {"nodes": sorted(canon), "ged_fwd": F,
+                                               "semantics": {"K": 12}}), EXIT_NODE_ORDER, []),
+        # a shipped adjacency column that contradicts the matrix
+        ("adjacency_contradicts", write("der.json", dict(base, adjacency_min_K=bad_min)),
+         EXIT_DERIVATION_MISMATCH, []),
+        # --expect-nodes-sha256 names a different declaration: refused on BOTH paths
+        ("wrong_declaration_pin", write("ok2.json", dict(base, adjacency_min_K=good_min)),
+         EXIT_NODE_ORDER, ["--expect-nodes-sha256", "0" * 64]),
+        # control: a valid file, 0 on both paths, and the dispatch really does write a record
+        ("valid_control", write("ok.json", dict(base, adjacency_min_K=good_min)), 0, []),
+    ]
+    ok = True
+    rows = []
+    for name, path, want, extra in fixtures:
+        _, audit_code, audit_said = _run_main(["--graph", path, "--print-graph-digest"] + extra)
+        out = os.path.join(root, "out_" + name)
+        _, disp_code, disp_said = _run_main(["--graph", path, "--symmetrisation", "min",
+                                             "--rune", canon[0], "--cap", "1", "--dry-run",
+                                             "--out-dir", out] + extra)
+        made = os.path.isdir(out)
+        if want == 0:
+            declared = True
+        else:
+            prefix = f"labyrinth_run: exit {want}:"
+            declared = audit_said.startswith(prefix) and disp_said.startswith(prefix)
+        good = (audit_code == want and disp_code == want
+                and declared and (want == 0 or not made))
+        ok = ok and good
+        rows.append({"case": name, "audit_exit": audit_code, "dispatch_exit": disp_code,
+                     "expected_exit": want, "out_dir_created": made,
+                     "no_traceback": declared,
+                     "audit_said": audit_said.splitlines()[:1],
+                     "dispatch_said": disp_said.splitlines()[-1:], "pass": good})
+    return ok, rows
+
+
+def pin_rule_test():
+    """PIN THE GRAPH DIGEST, NEVER THE FILE HASH -- shown on two serialisations of ONE graph.
+
+    `before` is the arrived shape (semantics a string); `after` is the repair the spec asks for
+    (semantics an object with K:12, the adjacency columns regenerated, keys re-serialised). The two
+    are two file_sha256 values and ONE graph_digest. A spec pinned to the bytes would die on exactly
+    the repair it asks for, which is why the pin is the digest.
+    """
+    canon = list(CANONICAL_NODES)
+    F = {a: {b: (0 if a == b else (i + 1) * (j + 1) % 15 + 1) for j, b in enumerate(canon)}
+         for i, a in enumerate(canon)}
+    before = {"nodes": canon, "ged_fwd": F, "semantics": "Raw directed GED."}
+    after = {"semantics": {"K": 12}, "ged_fwd": F, "nodes": canon,
+             "adjacency_min_K": {a: neighbours(canon, F, "min", 12, a) for a in canon}}
+    raw_b, raw_a = json.dumps(before, sort_keys=True).encode(), json.dumps(
+        after, sort_keys=True).encode()
+    sha_b, sha_a = file_sha256(raw_b), file_sha256(raw_a)
+    dig_b = graph_digest(before["nodes"], before["ged_fwd"])
+    dig_a = graph_digest(after["nodes"], after["ged_fwd"])
+    digest_ok = dig_b == dig_a and len(dig_b) == 64
+    bytes_ok = sha_b != sha_a
+    ok = digest_ok and bytes_ok
+    return ok, {"file_sha256_before": sha_b, "file_sha256_after": sha_a,
+                "file_sha256_moves_with_the_repair": bytes_ok,
+                "graph_digest_before": dig_b, "graph_digest_after": dig_a,
+                "graph_digest_unchanged_by_the_repair": digest_ok,
+                "repair": "semantics string -> object with K:12, adjacency_min_K added, keys "
+                          "re-serialised",
+                "pin": "graph_digest", "reading": "file_sha256", "pass": ok}
+
+
 def self_test():
     """Reproduce the 2-node test vector from the definition alone. Exit 0 iff both match."""
     fx = SELF_TEST_GRAPH
@@ -1084,8 +1527,11 @@ def self_test():
     bok, publish_rows = publish_test()
     qok, parse_rows = parse_test()
     iok, identity_rows = identity_test()
+    nok, node_rows = node_order_test()
+    gok, audit_rows = graph_audit_test()
+    rok, pin_row = pin_rule_test()
     ok = (fsha == SELF_TEST_FILE_SHA and gdig == SELF_TEST_GRAPH_DIGEST and eok and aok and pok
-          and bok and qok and iok)
+          and bok and qok and iok and nok and gok and rok)
     print(json.dumps({"self_test": "ged-v2",
                       "fixture_bytes": SELF_TEST_BYTES.decode(),
                       "preimage": (b"ged-v2\n" + b"".join(
@@ -1101,11 +1547,11 @@ def self_test():
                       "publish": publish_rows, "publish_pass": bok,
                       "read_grammar": parse_rows, "parse_pass": qok,
                       "model_identity": identity_rows, "identity_pass": iok,
+                      "node_order": node_rows, "node_order_pass": nok,
+                      "graph_audit": audit_rows, "graph_audit_pass": gok,
+                      "pin_rule": pin_row, "pin_rule_pass": rok,
                       "pass": ok}, indent=1))
     return 0 if ok else EXIT_SELF_TEST_FAIL
-
-
-ADMIT_TEST_NODES = ["N%02d" % i for i in range(24)]
 
 
 def admit_test():
@@ -1129,7 +1575,11 @@ def admit_test():
     """
     import tempfile
 
-    nodes = ADMIT_TEST_NODES
+    # CANONICAL NAMES on purpose: admission is checked before the graph is loaded, so these
+    # vectors never needed a loadable file -- but the CONTROL case walks past admission and does
+    # load, and the canonical node order (exit 13) would refuse invented names. A control that
+    # cannot reach the write path tests nothing.
+    nodes = list(CANONICAL_NODES)
     F = {a: {b: (0 if a == b else 1) for b in nodes} for a in nodes}
     root = tempfile.mkdtemp(prefix="labyrinth-admit-")
     gp = os.path.join(root, "g.json")
@@ -1292,6 +1742,10 @@ def build_parser():
     ap.add_argument("--cap", type=int, default=40)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--expect-graph-digest", default=None)
+    ap.add_argument("--expect-nodes-sha256", dest="expect_nodes_sha256", default=None,
+                    help="pin the DECLARATION: sha256('\\n'.join(nodes) + '\\n') must equal this, "
+                         "checked BEFORE graph_digest is computed and on --print-graph-digest too, "
+                         "so the audit path cannot certify a wrongly-ordered file")
     ap.add_argument("--cell-spec", default=None, help="path to the frozen cell spec both boxes hash")
     ap.add_argument("--out-dir", default="probes")
     ap.add_argument("--dry-run", action="store_true",
@@ -1348,12 +1802,11 @@ def main():
         die(EXIT_BAD_ARGS, "--graph is required (except with --self-test)")
 
     if a.print_graph_digest:
-        raw, g, nodes, F = load_graph(a.graph)
-        print(json.dumps({"definition": "ged-v2",
-                          "node_order": "nodes array",
-                          "nodes": nodes,
-                          "file_sha256": file_sha256(raw),
-                          "graph_digest": graph_digest(nodes, F)}, indent=1))
+        # THE AUDIT PATH IS THE ADMISSION PATH: the same call, the same checks, the same exits.
+        # Before this revision this branch printed graph_digest 596255d9... and exited 0 for a file
+        # no dispatch could load ("semantics" was a string; the dispatch died at exit 1).
+        facts = validate_graph(a.graph, a.expect_graph_digest, a.expect_nodes_sha256)
+        print(json.dumps(audit_report(facts), indent=1))
         return 0
 
     if not a.symmetrisation:
@@ -1389,19 +1842,15 @@ def main():
         # existed because the value was dropped while the slug could not tell two dispatches apart.
         seed_model = 0 if a.seed_model is None else a.seed_model
 
-    raw, g, nodes, F = load_graph(a.graph)
-    fsha = file_sha256(raw)
-    gdig = graph_digest(nodes, F)
-    K = a.K if a.K is not None else g["semantics"].get("K", 12)
-
-    if a.rune not in nodes:
-        die(EXIT_BAD_ARGS, f"start rune {a.rune!r} not in graph")
-
-    cells_checked = check_derivation(g, nodes, F)
-
-    if a.expect_graph_digest and a.expect_graph_digest != gdig:
-        die(EXIT_DIGEST_MISMATCH,
-            f"graph_digest {gdig} != expected {a.expect_graph_digest}")
+    # THE ONE GRAPH VALIDATION PATH, shared with --print-graph-digest: structural (3), canonical
+    # node order (13), start rune (2), derivation columns (6), digest comparison (5). No graph
+    # defect can reach a traceback any more, and the audit path cannot certify what this refuses.
+    facts = validate_graph(a.graph, a.expect_graph_digest, a.expect_nodes_sha256, a.rune)
+    raw, g, nodes, F = facts["raw"], facts["g"], facts["nodes"], facts["F"]
+    fsha = facts["file_sha256"]
+    gdig = facts["graph_digest"]
+    cells_checked = facts["derivation_columns_checked"]
+    K = a.K if a.K is not None else facts["graph_K"]
 
     cell_sha = None
     if a.cell_spec:
@@ -1417,8 +1866,21 @@ def main():
             f"(the graph is disconnected from the start node)")
 
     # Counted once, from the relation the run actually uses, and carried into the record with
-    # its basis beside it (edges_used_basis) -- not derived from a symmetry assumption.
+    # its basis beside it (edges_used_basis) -- not derived from a symmetry assumption. The ARM is
+    # written beside the number as well (edges_used_arm) and again in one quotable string
+    # (edges_used_statement), because edges_used is arm-dependent: a count that travels without its
+    # arm is a value without its basis, and the four arms differ by up to 57 edges on this graph.
     ec = edge_counts(nodes, F, a.symmetrisation, K)
+    ec_named = {
+        "edges_used": ec["edges_used"],
+        "edges_used_arm": a.symmetrisation,
+        "edges_used_basis": ec["edges_used_basis"],
+        "edges_used_statement": (f"edges_used={ec['edges_used']} "
+                                 f"(basis={ec['edges_used_basis']}, arm={a.symmetrisation})"),
+        "edges_directed": ec["edges_directed"],
+        "edges_undirected_pairs": ec["edges_undirected_pairs"],
+        "edges_one_way": ec["edges_one_way"],
+    }
 
     # THE NAME OF THE RECORD IS THE IDENTITY OF THE DISPATCH. The dry slug is UNCHANGED (records
     # already published under it are still the same test); the model slug leads with the model,
@@ -1505,6 +1967,14 @@ def main():
         # filesystem was thought capable of. A reader comparing two boxes can see whether the
         # exclusivity held, instead of assuming every `exit 7` came from the same guarantee.
         "publish": publish,
+        # THE PINNED IDENTITY OF THE TEST. graph_digest, never file_sha256: measured on the arrived
+        # file, repairing `semantics` and regenerating the adjacency columns leaves graph_digest at
+        # 596255d9... while file_sha256 moves off ea33eedc.... A spec pinned to the bytes would die
+        # on exactly the repair it asks for, so the pin travels here, named, in every row.
+        "pinned_identity": {"field": "graph_digest", "value": gdig},
+        "pinned_identity_rule": ("pin the GRAPH DIGEST, never the FILE HASH: graph_digest is the "
+                                 "identity of the test; file_sha256 is transport evidence about "
+                                 "the bytes and moves with a repair that leaves the test unchanged"),
         # MODEL IDENTITY, spec §3, four fields and none substitutable. On a dry run all four are null
         # and the model field says 'dry-run/none' -- a dry row is plumbing and may not name weights.
         "model": "dry-run/none" if a.dry_run else ident["api_model_id"],
@@ -1535,11 +2005,17 @@ def main():
         "graph": {
             "path": os.path.abspath(a.graph),
             "file_sha256": fsha,
+            "file_sha256_role": "transport evidence about the bytes; NEVER the identity of the test",
             "graph_digest": gdig,
+            "graph_digest_pinned": True,
             "graph_digest_algorithm": "sha256(ged-v2: header 'ged-v2\\n', then for each node a in the "
                                       "file's 'nodes' ARRAY in array order: a + '\\t' + "
                                       "','.join(str(int(ged_fwd[a][y])) for y in array order) + '\\n')",
             "graph_digest_node_order": "nodes array (NOT ged_fwd key order)",
+            # THE DECLARATION, pinned by the rune set rather than by the matrix: the order check
+            # refuses anything else (exit 13), so these two are equal in every row that exists.
+            "nodes_sha256": facts["nodes_sha256"],
+            "canonical_nodes_sha256": CANONICAL_NODES_SHA256,
 
             "nodes": len(nodes),
             "positions": len(alias_all),
@@ -1547,7 +2023,10 @@ def main():
             "symmetrisation": a.symmetrisation,
             "K": K,
             "derivation_columns_checked": cells_checked,
-            **ec,
+            "derivation_basis": ("shipped adjacency_*_K columns compared with the matrix at the "
+                                 "graph's K; 0 means the file carries no such column, NOT that "
+                                 "the columns agreed"),
+            **ec_named,
         },
         "cell_spec_sha256": cell_sha,
         "start_rune": a.rune,
@@ -1590,11 +2069,19 @@ def main():
                       "model": rec["model"], "decoder_mode": rec["decoder_mode"],
                       "seed_model": seed_model, "tokens_total": rec["tokens_total"],
                       "blocked": blocked, "not_an_action": not_an_action, "give_up": give_up,
-                      "graph_digest": gdig, "file_sha256": fsha,
+                      "graph_digest": gdig, "pinned_identity": rec["pinned_identity"],
+                      "file_sha256": fsha, "file_sha256_role": rec["graph"]["file_sha256_role"],
                       "symmetrisation": a.symmetrisation, "K": K,
                       "derivation_columns_checked": cells_checked,
-                      "edges_used": ec["edges_used"], "edges_used_basis": ec["edges_used_basis"],
-                      "edges_directed": ec["edges_directed"], "edges_one_way": ec["edges_one_way"]}, indent=1))
+                      # the count with its arm and basis beside it, so a one-line summary cannot
+                      # be quoted as a bare number either
+                      "edges_used": ec_named["edges_used"],
+                      "edges_used_arm": ec_named["edges_used_arm"],
+                      "edges_used_basis": ec_named["edges_used_basis"],
+                      "edges_used_statement": ec_named["edges_used_statement"],
+                      "edges_directed": ec_named["edges_directed"],
+                      "edges_undirected_pairs": ec_named["edges_undirected_pairs"],
+                      "edges_one_way": ec_named["edges_one_way"]}, indent=1))
     return 0
 
 
