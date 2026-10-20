@@ -73,10 +73,11 @@ ADMISSION (refuses BEFORE the first turn, with a distinguishable exit code)
       --out-dir ""                exit 2  an empty path names no directory. Without the check the
                                           dispatch reaches os.makedirs and dies with exit 1 and a
                                           traceback -- an unmapped code for an argument defect.
-                                          (--out-dir naming an existing FILE is still an I/O
-                                          error and still unmapped: that one is a filesystem fact,
-                                          not an argument, and a code for it is a two-box
-                                          decision rather than a patch.)
+                                          (--out-dir naming an existing FILE, or a path with a file
+                                          in its middle, or a directory that refuses a write, is a
+                                          filesystem fact rather than an argument fact: it is
+                                          ADMITTED and then refused at 10, after the slug is named.
+                                          See OUT-DIR: EXIT 10.)
       no --model-identity (live)  exit 11 the weights that answered cannot be stated: spec §3
                                           wants model id + quant + argv + binary digest and the
                                           api id names no quant. A row that cannot say which
@@ -99,7 +100,10 @@ ADMISSION (refuses BEFORE the first turn, with a distinguishable exit code)
     7  output path already exists and this record did not take it
        THE ONE DISPATCH THAT CAN WRITE IS NOW REACHABLE: a live run with a verified identity
        writes to (and therefore guards) a slug. A repeated cell is exit 7, measured, not asserted.
+       The slug is CLAIMED, not overwritten: see PUBLISHING below. Exit 7 survives in every
+       publish tier -- the prohibition is a rule; only the exclusivity is a capability.
     8  graph disconnected from --rune (no legal move at start)
+   10  the out-dir cannot hold a record (see OUT-DIR: EXIT 10 below)
    11  the model path cannot state its identity (see THE MODEL PATH below)
    12  the model path cannot complete (see THE MODEL PATH below)
 
@@ -136,10 +140,46 @@ THE MODEL PATH (--model): proposal -> parse -> legal-move check -> per-turn toke
     sum. A turn with no usage block is REFUSED, not recorded as 0 -- a row that cannot say what it
     spent is not a measurement.
 
-    EXIT 10 (EXIT_OUT_DIR_UNUSABLE) IS AGREED IN PRINCIPLE AND DELIBERATELY NOT BUILT HERE. The cell
-    authorisation names driver c41df799 and both boxes verified that hash this hour; moving the hash
-    now to close a hole a fresh out-dir cannot step in would unpin a verified revision. It is recorded
-    as deferred, not implemented, and the constant is not defined below on purpose.
+    OUT-DIR: EXIT 10 (EXIT_OUT_DIR_UNUSABLE)
+    An out-dir that cannot hold a record used to die as a raw traceback at exit 1, which a second box
+    cannot key on. Measured on this box, all three shapes come out of os.makedirs -- and one out of
+    the file write -- with no code of their own:
+        FileExistsError     [Errno 17]  --out-dir IS an existing regular file
+        NotADirectoryError  [Errno 20]  --out-dir has a file in its middle (<file>/sub)
+        PermissionError     [Errno 13]  --the directory exists and refuses a new file
+        OSError EFBIG/ENOSPC from the record write itself, on a full or limited filesystem
+    All of them are exit 10, decided AFTER admission (an admitted dispatch with a bad out-dir is a
+    different fact from a refused dispatch, and refusal codes do not move) and BEFORE the walk (a
+    directory that cannot hold the record must not cost a model forty plies). The guard covers both
+    os.makedirs and the publish, and covers the WHOLE `with open(...)` block rather than write()
+    alone. That scope is measured, not assumed: the record is buffered text -- 2,370 B for a dry
+    record here, 17,508 B for the first real row -- against a text buffer of io.DEFAULT_BUFFER_SIZE
+    (8,192 B on most builds, 131,072 B on this box). On this box the dry record's failure surfaces
+    at the CLOSE (measured: write() returns, close() raises EFBIG), which a guard around write()
+    would not catch; a record larger than the buffer would fail at write() instead. Covering the
+    block covers both boundaries.
+
+PUBLISHING: <slug>.<pid>.tmp, three tiers, and the tier in the record
+    Two dispatches of one cell must not be able to splice one record out of two runs. A FIXED temp
+    name allows exactly that: both writers open the same inode and the rename publishes whichever
+    tail landed last (measured on the peer box: an exit-0 slug holding {"writer":"B"} + NULs +
+    another writer's tail). The temp is therefore <slug>.<pid>.tmp -- one inode per writer -- and
+    the SLUG is claimed exclusively, by the strongest mechanism the out-dir's filesystem supports:
+
+        link-exclusive                os.link(tmp, slug): one syscall, no window, the kernel
+                                      refuses to create over an existing name
+        excl-claim                    os.link is ENOTSUP (exFAT): CLAIM the slug with
+                                      O_CREAT|O_EXCL|O_WRONLY -- which exFAT does support -- then
+                                      os.replace(tmp, slug). A second claim is EEXIST.
+        replace-no-exclusive-support  neither works: os.replace alone, with the duplicate check on
+                                      the slug immediately before it. The weakest publish this
+                                      driver will make, and it says so in the row.
+
+    The tier is PROBED in the record's own directory before the walk, recorded as `publish`, and then
+    the mechanism that runs IS that one -- so the field names what this process invoked, not what the
+    filesystem was thought capable of. os.replace alone is never the only mechanism, because it
+    returns None and silently overwrites: something that can be made exclusive, is. And exit 7 holds
+    in ALL THREE tiers: exclusivity is a capability that may degrade, the prohibition is a rule.
 
    11  the model path cannot state its identity: missing or incomplete card, api id mismatch with
        --model, an argv that is not an array, a binary whose digest does not match the card, an api id
@@ -160,6 +200,7 @@ RECORD
     the model, in the one field a cross-machine comparison reads.
 """
 import argparse
+import errno
 import hashlib
 import json
 import os
@@ -178,12 +219,36 @@ EXIT_DERIVATION_MISMATCH = 6
 EXIT_RECORD_EXISTS = 7
 EXIT_UNREACHABLE = 8
 EXIT_SELF_TEST_FAIL = 9
-# 10 is RESERVED BY AGREEMENT AND NOT DEFINED HERE: EXIT_OUT_DIR_UNUSABLE is agreed in principle and
-# deliberately deferred to the next revision the cell forces (see the docstring). Defining it now
-# would move the driver hash the cell authorisation is pinned to, for a hole a fresh out-dir cannot
-# step in.
+EXIT_OUT_DIR_UNUSABLE = 10
 EXIT_MODEL_IDENTITY = 11
 EXIT_MODEL_TRANSPORT = 12
+
+# HOW the record reached its name. Three values, and the value travels in every record, because a
+# weaker publish that travels unnamed is indistinguishable to a later reader from a strong one.
+#   link-exclusive                os.link(tmp, slug) -- one syscall, and a slug cannot be created
+#                                 over an existing one: the kernel does the exclusivity
+#   excl-claim                    os.link is ENOTSUP here (exFAT). So CLAIM the slug with
+#                                 O_CREAT|O_EXCL (which exFAT does support), then publish the bytes
+#                                 from <slug>.<pid>.tmp with os.replace. A second claim is EEXIST.
+#   replace-no-exclusive-support  neither works: os.replace alone, which returns None and silently
+#                                 overwrites. The duplicate check is therefore made on the slug
+#                                 first, and that is the weakest this driver ever publishes.
+# IN EVERY TIER A SLUG THAT ALREADY EXISTS IS STILL REFUSED WITH EXIT 7. Exclusivity is a
+# capability the filesystem may lack; the prohibition on overwriting a record you did not take is a
+# rule, and only the capability degrades.
+PUBLISH_LINK_EXCLUSIVE = "link-exclusive"
+PUBLISH_EXCL_CLAIM = "excl-claim"
+PUBLISH_REPLACE_ONLY = "replace-no-exclusive-support"
+PUBLISH_TIERS = (PUBLISH_LINK_EXCLUSIVE, PUBLISH_EXCL_CLAIM, PUBLISH_REPLACE_ONLY)
+
+# The errnos that mean "this filesystem does not implement hard links", as distinct from "you may
+# not write here" (EACCES/EROFS/ENOSPC), which must NOT degrade the tier: a directory that refuses
+# the probe is exit 10, not a weaker publish. ENOTSUP is what the exFAT driver returns (measured on
+# a real exFAT image); ENOSYS/EPERM are the shapes other kernels and FUSE mounts use for the same
+# fact, and they are listed so the fallback is a decision rather than an accident.
+LINK_UNSUPPORTED_ERRNOS = frozenset({errno.ENOTSUP, errno.EOPNOTSUPP, errno.ENOSYS, errno.EPERM})
+CLAIM_UNSUPPORTED_ERRNOS = frozenset({errno.ENOTSUP, errno.EOPNOTSUPP, errno.ENOSYS, errno.EPERM,
+                                      errno.EINVAL})
 
 SELF = os.path.abspath(__file__)
 
@@ -661,6 +726,126 @@ def slug_part(s):
     return "".join(ch if ch.isalnum() or ch in "-._" else "-" for ch in s)
 
 
+# ==== PUBLISHING THE RECORD =======================================================================
+# Two writers on one cell must not be able to splice one record out of two runs, and the reason is
+# measured, not theoretical: with a FIXED temp name both writers open the same inode, and the rename
+# that follows publishes whichever tail was written last. The peer box produced an exit-0 slug whose
+# bytes were {"writer":"B"} + NULs + the other writer's tail. So:
+#   the temp is <slug>.<pid>.tmp -- one inode per writer, no shared buffer, nothing to splice
+#   the SLUG is claimed exclusively, by the strongest mechanism the out-dir's filesystem supports
+#   WHICH mechanism is decided by a probe of that same directory, recorded in the row as "publish",
+#   and then used -- so the value in the row is not a claim about what the filesystem can do, it is
+#   the mechanism that this run actually invoked.
+# The probe happens before the walk, so an out-dir that cannot hold a record refuses BEFORE the
+# model is asked anything: 40 plies of GPU time spent on a record with nowhere to go is a cost this
+# driver does not need to pay, and the refusal is a property of the out-dir, not of the run.
+
+def probe_publish_tier(out_path, link=None, claim_open=None):
+    """Which exclusive-publish mechanism the record's own directory supports.
+
+    Probes the directory the slug lives in, not a temp dir: hard-link support is a property of that
+    filesystem, and it is the one the record is published onto.
+
+    Raises OSError when the directory cannot hold a file at all (EACCES on a read-only dir, ENOSPC
+    on a full one, ENOTDIR); the caller maps that to EXIT_OUT_DIR_UNUSABLE. It deliberately does
+    NOT swallow those into a weaker tier: "link is not implemented here" (ENOTSUP) is a capability
+    answer, "you may not write here" is not.
+    """
+    link = os.link if link is None else link
+    claim_open = os.open if claim_open is None else claim_open
+    # A short, pid-scoped name in the record's own directory: the directory is what is under test,
+    # and a name derived from the slug would add ~20 bytes to a slug that is already long.
+    src = os.path.join(os.path.dirname(out_path) or ".", f".labyrinth-publish-probe.{os.getpid()}")
+    lnk = src + ".link"
+    claim = src + ".claim"
+    try:
+        with open(src, "wb") as fh:
+            fh.write(b"publish-probe\n")
+        try:
+            link(src, lnk)
+        except OSError as e:
+            if e.errno not in LINK_UNSUPPORTED_ERRNOS:
+                raise
+        else:
+            return PUBLISH_LINK_EXCLUSIVE
+        try:
+            fd = claim_open(claim, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o666)
+        except OSError as e:
+            if e.errno not in CLAIM_UNSUPPORTED_ERRNOS:
+                raise
+        else:
+            os.close(fd)
+            return PUBLISH_EXCL_CLAIM
+        return PUBLISH_REPLACE_ONLY
+    finally:
+        for p in (src, lnk, claim):
+            try:
+                os.unlink(p)
+            except OSError:
+                pass
+
+
+def publish_record(out_path, payload, tier, pid=None):
+    """Publish `payload` at `out_path` with the exclusivity `tier` allows.
+
+    The whole `with open(tmp, "w")` block is inside the caller's OSError guard ON PURPOSE, and the
+    scope is measured rather than assumed. The record is buffered text: this box's dry record is
+    2,370 B and the first real row was 17,508 B, while the text buffer is io.DEFAULT_BUFFER_SIZE --
+    8,192 B on most CPython builds, 131,072 B on this one. Which call fails therefore depends on the
+    record size AND the build: on this box a 2,370 B record's failure surfaces at the CLOSE (write()
+    returns, close() raises EFBIG under RLIMIT_FSIZE), and a record over the buffer's size would fail
+    at write() instead. A guard around write() alone misses the first; a guard around the open/close
+    but not the write misses the second. So the guard covers the block.
+
+    Exit 7 in every tier: an existing slug is refused, never replaced, whether the exclusivity came
+    from link, from a claim, or from neither.
+    """
+    if tier not in PUBLISH_TIERS:
+        raise ValueError(f"unknown publish tier {tier!r}")
+    pid = os.getpid() if pid is None else pid
+    tmp = f"{out_path}.{pid}.tmp"
+    try:
+        with open(tmp, "w") as fh:
+            fh.write(payload)
+        if tier == PUBLISH_LINK_EXCLUSIVE:
+            try:
+                os.link(tmp, out_path)
+            except FileExistsError:
+                die(EXIT_RECORD_EXISTS,
+                    f"{out_path} already exists; a record you did not take is not yours to "
+                    f"overwrite (publish={tier})")
+            return
+        if tier == PUBLISH_EXCL_CLAIM:
+            try:
+                fd = os.open(out_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o666)
+            except FileExistsError:
+                die(EXIT_RECORD_EXISTS,
+                    f"{out_path} already exists; a record you did not take is not yours to "
+                    f"overwrite (publish={tier})")
+            # The slug is OURS now (an empty file, created by the exclusive claim). Publishing the
+            # bytes over it is a replace of a file this process owns. If we die before the replace,
+            # what is left behind is an EMPTY slug -- visibly not a record -- which is a far better
+            # failure than a slug holding somebody else's tail.
+            os.close(fd)
+            os.replace(tmp, out_path)
+            return
+        # replace-no-exclusive-support: os.replace cannot refuse, so the refusal is made here, on
+        # the slug, immediately before the replace.
+        if os.path.exists(out_path):
+            die(EXIT_RECORD_EXISTS,
+                f"{out_path} already exists; a record you did not take is not yours to overwrite "
+                f"(publish={tier}: this filesystem supports neither a hard link nor an exclusive "
+                f"claim, so the check is a check and not a guarantee)")
+        os.replace(tmp, out_path)
+    finally:
+        # The temp must never survive -- not on success, not on a refusal, not on an exception.
+        # A leftover <slug>.<pid>.tmp is not a record and nothing downstream may mistake it for one.
+        try:
+            os.unlink(tmp)
+        except OSError:
+            pass
+
+
 # ==== THE MODEL PATH'S TWO TEST VECTORS ===========================================================
 # A read grammar is a promise about bytes, so it gets read out loud on bytes that were chosen to be
 # awkward: a trailing full stop, two names, a fence, JSON, an alias of itself (distance 0, so NOT a
@@ -752,6 +937,129 @@ def identity_test():
     return ok, rows
 
 
+def publish_test():
+    """The three tiers, the exit-7 rule in EACH of them, and the no-splice property, on real bytes.
+
+    Each case asserts BOTH halves, because either alone is uninformative: "the refusal fired" and
+    "nothing ever ran" are the same observation unless the control case is also shown to publish.
+    That is why every tier has a fresh-slug control (record written, bytes exact, temp gone) beside
+    its existing-slug refusal (exit 7, the existing bytes untouched, temp gone).
+
+    The two weaker tiers are reached by INJECTING the errno the filesystem would raise: ext4 and
+    tmpfs -- the only filesystems this box mounts without root -- both implement hard links, so the
+    fallback cannot be reached by configuring a directory here. What is under test is the driver's
+    DECISION on a real OSError object, and a decision cannot be tested by the capability the test
+    box happens to have. The exFAT measurement itself is the peer's: link ENOTSUP, claim OK, second
+    claim EEXIST, replace works.
+    """
+    import contextlib
+    import io
+    import tempfile
+
+    root = tempfile.mkdtemp(prefix="labyrinth-publish-")
+    rows, ok = [], True
+
+    def link_enotsup(src, dst):
+        raise OSError(errno.ENOTSUP, "Operation not supported")
+
+    def claim_enotsup(path, flags, mode=0o666):
+        raise OSError(errno.ENOTSUP, "Operation not supported")
+
+    def link_eacces(src, dst):
+        raise OSError(errno.EACCES, "Permission denied")
+
+    def attempt(fn, *a, **k):
+        err = io.StringIO()
+        try:
+            with contextlib.redirect_stderr(err):
+                v = fn(*a, **k)
+            return ("ok", v), err.getvalue().strip()
+        except SystemExit as e:
+            return ("exit", e.code), err.getvalue().strip()
+        except OSError as e:
+            return ("oserror", e.errno), err.getvalue().strip()
+        except ValueError as e:
+            return ("valueerror", str(e)), err.getvalue().strip()
+
+    def fresh(name):
+        d = os.path.join(root, name)
+        os.makedirs(d)
+        return d, os.path.join(d, "S.json")
+
+    def residue(d):
+        return sorted(f for f in os.listdir(d) if f.endswith(".tmp") or "publish-probe" in f)
+
+    def case(name, got, want, **extra):
+        nonlocal ok
+        good = got == want
+        ok = ok and good
+        rows.append({"case": name, "got": list(got) if isinstance(got, tuple) else got,
+                     "expected": list(want) if isinstance(want, tuple) else want,
+                     "pass": good, **extra})
+
+    A = '{"writer": "A"}\n'
+    B = '{"writer": "B"}\n'
+
+    # --- tier 1: link-exclusive, on a filesystem that has real hard links ---
+    d, p = fresh("tier1")
+    case("probe_tier1", attempt(probe_publish_tier, p)[0], ("ok", PUBLISH_LINK_EXCLUSIVE))
+    case("publish_tier1", attempt(publish_record, p, A, PUBLISH_LINK_EXCLUSIVE)[0], ("ok", None))
+    case("publish_tier1_bytes", open(p).read(), A, on_disk="exact")
+    case("publish_tier1_temp_gone", residue(d), [])
+    case("publish_tier1_existing",
+         attempt(publish_record, p, B, PUBLISH_LINK_EXCLUSIVE, 4242)[0], ("exit", 7))
+    case("publish_tier1_existing_bytes_kept", open(p).read(), A, on_disk="refused_overwrite")
+    case("publish_tier1_existing_temp_gone", residue(d), [])
+
+    # --- tier 2: link is ENOTSUP (exFAT), so the slug is CLAIMED ---
+    d, p = fresh("tier2")
+    case("probe_tier2", attempt(probe_publish_tier, p, link_enotsup)[0],
+         ("ok", PUBLISH_EXCL_CLAIM))
+    case("publish_tier2", attempt(publish_record, p, A, PUBLISH_EXCL_CLAIM)[0], ("ok", None))
+    case("publish_tier2_bytes", open(p).read(), A, on_disk="exact")
+    case("publish_tier2_temp_gone", residue(d), [])
+    case("publish_tier2_existing",
+         attempt(publish_record, p, B, PUBLISH_EXCL_CLAIM, 4243)[0], ("exit", 7))
+    case("publish_tier2_existing_bytes_kept", open(p).read(), A, on_disk="refused_overwrite")
+    case("publish_tier2_existing_temp_gone", residue(d), [])
+
+    # --- tier 3: neither works; os.replace alone, with the check in front ---
+    d, p = fresh("tier3")
+    case("probe_tier3", attempt(probe_publish_tier, p, link_enotsup, claim_enotsup)[0],
+         ("ok", PUBLISH_REPLACE_ONLY))
+    case("publish_tier3", attempt(publish_record, p, A, PUBLISH_REPLACE_ONLY)[0], ("ok", None))
+    case("publish_tier3_bytes", open(p).read(), A, on_disk="exact")
+    case("publish_tier3_temp_gone", residue(d), [])
+    case("publish_tier3_existing",
+         attempt(publish_record, p, B, PUBLISH_REPLACE_ONLY, 4244)[0], ("exit", 7))
+    case("publish_tier3_existing_bytes_kept", open(p).read(), A, on_disk="refused_overwrite")
+    case("publish_tier3_existing_temp_gone", residue(d), [])
+
+    # --- the fallback must be a CAPABILITY answer only: "you may not write here" does not degrade
+    d, p = fresh("denied")
+    case("probe_link_eacces_is_error", attempt(probe_publish_tier, p, link_eacces)[0],
+         ("oserror", errno.EACCES))
+    case("probe_link_eacces_leaves_no_residue", residue(d), [])
+
+    # --- the defect this replaced: two writers, one slug, no splice ---
+    d, p = fresh("splice")
+    first = attempt(publish_record, p, A, PUBLISH_LINK_EXCLUSIVE, 5001)[0]
+    second = attempt(publish_record, p, B, PUBLISH_LINK_EXCLUSIVE, 5002)[0]
+    body = open(p, "rb").read()
+    case("splice_exactly_one_publish", (first == ("ok", None)) + (second == ("ok", None)), 1)
+    case("splice_second_refused", second, ("exit", 7))
+    case("splice_bytes_are_one_writer", body in (A.encode(), B.encode()), True,
+         on_disk="no splice")
+    case("splice_no_nul_padding", b"\x00" in body, False)
+    case("splice_temp_gone", residue(d), [])
+
+    # --- the tier is validated, not interpolated ---
+    d, p = fresh("badtier")
+    case("unknown_tier_refused", attempt(publish_record, p, A, "whatever")[0][0], "valueerror")
+    case("unknown_tier_wrote_nothing", os.listdir(d), [])
+    return ok, rows
+
+
 def self_test():
     """Reproduce the 2-node test vector from the definition alone. Exit 0 iff both match."""
     fx = SELF_TEST_GRAPH
@@ -773,10 +1081,11 @@ def self_test():
 
     aok, admit_rows = admit_test()
     pok, parser_row = parser_audit()
+    bok, publish_rows = publish_test()
     qok, parse_rows = parse_test()
     iok, identity_rows = identity_test()
     ok = (fsha == SELF_TEST_FILE_SHA and gdig == SELF_TEST_GRAPH_DIGEST and eok and aok and pok
-          and qok and iok)
+          and bok and qok and iok)
     print(json.dumps({"self_test": "ged-v2",
                       "fixture_bytes": SELF_TEST_BYTES.decode(),
                       "preimage": (b"ged-v2\n" + b"".join(
@@ -789,6 +1098,7 @@ def self_test():
                       "edge_counts_pass": eok,
                       "admission": admit_rows, "admission_pass": aok,
                       "parser_audit": parser_row, "parser_pass": pok,
+                      "publish": publish_rows, "publish_pass": bok,
                       "read_grammar": parse_rows, "parse_pass": qok,
                       "model_identity": identity_rows, "identity_pass": iok,
                       "pass": ok}, indent=1))
@@ -1122,10 +1432,28 @@ def main():
                 f"-sm{seed_model}-{'nothink' if a.no_think else 'think'}"
                 f"-{gdig[:8]}{'-cellspec' + cell_sha[:8] if cell_sha else ''}.json")
     out_path = os.path.join(a.out_dir, slug)
-    if os.path.exists(out_path):
-        die(EXIT_RECORD_EXISTS,
-            f"{out_path} already exists; a record you did not take is not yours to overwrite")
-    os.makedirs(a.out_dir, exist_ok=True)
+    # THE OUT-DIR IS NOW A MAPPED FACT, NOT A TRACEBACK. Measured on this box, all three shapes come
+    # out of os.makedirs as raw OSErrors a second machine cannot key on:
+    #     FileExistsError     [Errno 17] --out-dir names an existing FILE
+    #     NotADirectoryError  [Errno 20] --out-dir has a FILE in its middle, e.g. <file>/sub
+    #     PermissionError     [Errno 13] -- the directory exists and refuses a file
+    # So the guard covers BOTH os.makedirs AND everything that writes into the directory: the probe
+    # below (which creates a real file) and the publish at the end. It sits AFTER admission on
+    # purpose -- an admitted dispatch with a bad out-dir is a different fact from a refused
+    # dispatch, and admission refusals keep their own codes.
+    try:
+        if os.path.exists(out_path):
+            die(EXIT_RECORD_EXISTS,
+                f"{out_path} already exists; a record you did not take is not yours to overwrite")
+        os.makedirs(a.out_dir, exist_ok=True)
+        # Decided HERE, before the walk, and recorded in the row: the tier is a property of the
+        # directory, so it is knowable before a single ply is played -- and a directory that cannot
+        # hold a record must not cost a model 40 turns.
+        publish = probe_publish_tier(out_path)
+    except OSError as e:
+        die(EXIT_OUT_DIR_UNUSABLE,
+            f"--out-dir {a.out_dir!r} cannot hold a record: {type(e).__name__} "
+            f"[Errno {e.errno}] {e.strerror or e}. No record was written.")
 
     if a.dry_run:
         # THE DRY WALK: a seeded random step over the SAME legal set the model will face. Plumbing,
@@ -1171,6 +1499,12 @@ def main():
         "dry_run": bool(a.dry_run),
         "benchmark_row": not a.dry_run,
         "driver": {"path": SELF, "sha256": hashlib.sha256(open(SELF, "rb").read()).hexdigest()},
+        # HOW this record reached its name, beside the machine-readable basis fields above it in
+        # spirit: link-exclusive / excl-claim / replace-no-exclusive-support. Probed before the
+        # walk and then USED, so it names the mechanism this run invoked rather than what the
+        # filesystem was thought capable of. A reader comparing two boxes can see whether the
+        # exclusivity held, instead of assuming every `exit 7` came from the same guarantee.
+        "publish": publish,
         # MODEL IDENTITY, spec §3, four fields and none substitutable. On a dry run all four are null
         # and the model field says 'dry-run/none' -- a dry row is plumbing and may not name weights.
         "model": "dry-run/none" if a.dry_run else ident["api_model_id"],
@@ -1238,9 +1572,19 @@ def main():
         "visited_names": visited_names,
         "visited_count_basis": "positions",
     }
-    with open(out_path, "w") as fh:
-        fh.write(json.dumps(rec, indent=1) + "\n")
-    print(json.dumps({"record": out_path, "end_state": end_state, "plies": plies,
+    payload = json.dumps(rec, indent=1) + "\n"
+    try:
+        # The guard covers the WHOLE publish -- open, write, flush and close -- because the record
+        # fits the 8 kB text buffer and the failure therefore surfaces at the close, not at
+        # write(). Exit 7 comes out of publish_record as SystemExit and is not touched by this.
+        publish_record(out_path, payload, publish)
+    except OSError as e:
+        die(EXIT_OUT_DIR_UNUSABLE,
+            f"the record could not be published into {a.out_dir!r}: {type(e).__name__} "
+            f"[Errno {e.errno}] {e.strerror or e}. publish={publish}; no record was written and any "
+            f"temp has been removed.")
+    print(json.dumps({"record": out_path, "publish": publish,
+                      "end_state": end_state, "plies": plies,
                       "end_rune": cur, "unique_positions": visited_positions,
                       "unique_names": visited_names,
                       "model": rec["model"], "decoder_mode": rec["decoder_mode"],
