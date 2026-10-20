@@ -62,6 +62,24 @@ ADMISSION (refuses BEFORE the first turn, with a distinguishable exit code)
       --model with --dry-run      exit 2  a dry run consults no model, so recording one states
                                           a basis the process never had. One guard closes this
                                           and the rule above, not two.
+      --seed-model                exit 2  accepted by argparse and read by NOTHING: no dispatch
+                                          consumes it, so a row recorded under it would carry
+                                          seed 0 and no model-seed field, and its slug would be
+                                          identical to the dispatch that omitted the flag -- the
+                                          second honest run for that cell is then refused as a
+                                          duplicate (exit 7). Refused on PRESENCE, not on a
+                                          truthy value: --seed-model 0 is a value too.
+      --out-dir ""                exit 2  an empty path names no directory. Without the check the
+                                          dispatch reaches os.makedirs and dies with exit 1 and a
+                                          traceback -- an unmapped code for an argument defect.
+                                          (--out-dir naming an existing FILE is still an I/O
+                                          error and still unmapped: that one is a filesystem fact,
+                                          not an argument, and a code for it is a two-box
+                                          decision rather than a patch.)
+    The class behind --seed-model, closed rather than patched again: every dest the parser
+    accepts must be either in CONSUMED_DESTS or in UNIMPLEMENTED_ARGS, and --self-test fails if
+    one is in neither. A flag added tomorrow that nothing reads fails the suite instead of
+    landing in a record as a value the run contradicts.
     Consequence, stated rather than discovered later: a bad ARGUMENT now outranks bad I/O.
     `--cap 0` with a malformed or missing graph is exit 2, not 3. With no --symmetrisation it
     is still 4, because that check precedes admission.
@@ -111,6 +129,26 @@ EXIT_UNREACHABLE = 8
 EXIT_SELF_TEST_FAIL = 9
 
 SELF = os.path.abspath(__file__)
+
+# Arguments the parser accepts whose value no dispatch reads. Every one of them must be REFUSED at
+# admission while that is true, because a dispatch that types it gets a record contradicting it --
+# and here the contradiction is not cosmetic: the flag is absent from the slug too, so the dispatch
+# that sets it and the dispatch that omits it collide on one output path and the second is refused
+# as a duplicate.
+UNIMPLEMENTED_ARGS = {
+    "seed_model": "--seed-model is parsed and read by no dispatch: a row under it would record "
+                  "seed 0 with no model-seed field, and its slug is identical to the dispatch that "
+                  "omits the flag, so the second honest run for that cell exits 7. Refused until a "
+                  "model path reads it.",
+}
+
+# Every dest the cell semantics actually consume. Anything outside this set must be declared in
+# UNIMPLEMENTED_ARGS; parser_audit() fails --self-test otherwise, so a flag nobody reads cannot
+# reach a record by being added and forgotten.
+CONSUMED_DESTS = {
+    "graph", "symmetrisation", "K", "rune", "cap", "seed", "expect_graph_digest",
+    "cell_spec", "out_dir", "dry_run", "model", "self_test", "print_graph_digest",
+}
 
 
 def die(code, msg):
@@ -300,7 +338,8 @@ def self_test():
     eok = (got == want and halving_would_report != got["ged_fwd"]["edges_used"])
 
     aok, admit_rows = admit_test()
-    ok = (fsha == SELF_TEST_FILE_SHA and gdig == SELF_TEST_GRAPH_DIGEST and eok and aok)
+    pok, parser_row = parser_audit()
+    ok = (fsha == SELF_TEST_FILE_SHA and gdig == SELF_TEST_GRAPH_DIGEST and eok and aok and pok)
     print(json.dumps({"self_test": "ged-v2",
                       "fixture_bytes": SELF_TEST_BYTES.decode(),
                       "preimage": (b"ged-v2\n" + b"".join(
@@ -312,6 +351,7 @@ def self_test():
                       "edge_counts": got, "expect_edge_counts": want,
                       "edge_counts_pass": eok,
                       "admission": admit_rows, "admission_pass": aok,
+                      "parser_audit": parser_row, "parser_pass": pok,
                       "pass": ok}, indent=1))
     return 0 if ok else EXIT_SELF_TEST_FAIL
 
@@ -382,6 +422,17 @@ def admit_test():
                               # test on a string, so "" slipped through and wrote a row. The guard
                               # is the PRESENCE of the argument, not its content.
                               ("dry_empty_model", ["--cap", "2", "--dry-run", "--model", ""],
+                               EXIT_BAD_ARGS),
+                              # the argument the per-flag guards did not know about: accepted by
+                              # argparse, read by no dispatch. Presence is the defect, so 0 is
+                              # refused exactly like 7 -- `if seed_model:` would have admitted it.
+                              ("seed_model_7", ["--cap", "2", "--dry-run", "--seed-model", "7"],
+                               EXIT_BAD_ARGS),
+                              ("seed_model_0", ["--cap", "2", "--dry-run", "--seed-model", "0"],
+                               EXIT_BAD_ARGS),
+                              # an argument that names nothing: without this the dispatch reaches
+                              # os.makedirs and exits 1 with a traceback, an unmapped code
+                              ("empty_out_dir", ["--cap", "2", "--dry-run", "--out-dir", ""],
                                EXIT_BAD_ARGS)):
         code, said = run(extra, name)
         files = written(name)
@@ -405,7 +456,7 @@ def admit_test():
     return ok, got
 
 
-def admission_refusal(cap, model, dry_run):
+def admission_refusal(cap, model, dry_run, seed_model=None, out_dir=None):
     """ADMISSION: refusals that are properties of the ARGUMENTS alone.
 
     None of these may live in the walk, and none may depend on the graph loading, the digest
@@ -436,10 +487,24 @@ def admission_refusal(cap, model, dry_run):
         return (EXIT_BAD_ARGS,
                 f"--dry-run consults no model, so it will not record one: got --model {model!r}; "
                 f"a dry-run row's model field is 'dry-run/none'")
+    if seed_model is not None:
+        # Presence, not truthiness: --seed-model 0 sets the model seed to zero, which is a value
+        # the record neither carries nor distinguishes. Same test as `model is not None`, for the
+        # same reason -- the argument's EXISTENCE is the defect, not its content.
+        return (EXIT_BAD_ARGS, f"--seed-model {seed_model}: {UNIMPLEMENTED_ARGS['seed_model']}")
+    if out_dir == "":
+        # An empty path names no directory. Without this the dispatch reaches os.makedirs and dies
+        # on FileNotFoundError with exit 1 and a traceback -- an unmapped code for a defect that is
+        # a property of the argument alone, which is this function's whole remit.
+        return (EXIT_BAD_ARGS,
+                "--out-dir '': an empty path names no directory, so the record has nowhere to go. "
+                "Refused at admission rather than raised out of os.makedirs.")
     return None
 
 
-def main():
+def build_parser():
+    """The one parser definition. main() and parser_audit() both use THIS object, so the audit
+    cannot drift from the dispatch surface by describing a parser nobody runs."""
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--graph", default=None)
     ap.add_argument("--symmetrisation", default=None,
@@ -461,8 +526,31 @@ def main():
     ap.add_argument("--print-graph-digest", dest="print_graph_digest", action="store_true",
                     help="print file_sha256 + graph_digest for --graph and exit. NOT a cell: "
                          "needs no symmetrisation, because it runs no moves.")
+    return ap
 
-    a = ap.parse_args()
+
+def parser_audit():
+    """Every dest the parser accepts is either consumed or declared unimplemented.
+
+    This is the class, not another instance. The two defects found by hand tonight -- `--model ""`
+    (a guard keyed on truthiness) and `--seed-model 7` (a flag nothing reads) -- are both "the
+    argument and the record disagree". A per-flag guard closes one argument each time; auditing the
+    parser's whole dest list closes the category, because a new flag cannot be added without either
+    being read or being refused, and the audit is what fails when it is neither.
+    """
+    dests = {act.dest for act in build_parser()._actions if act.dest != "help"}
+    unread = dests - CONSUMED_DESTS
+    missing = CONSUMED_DESTS - dests
+    undeclared = unread - set(UNIMPLEMENTED_ARGS)
+    ok = not undeclared and not missing
+    return ok, {"dests": sorted(dests), "consumed": sorted(CONSUMED_DESTS),
+                "declared_unimplemented": sorted(UNIMPLEMENTED_ARGS),
+                "accepted_and_undeclared": sorted(undeclared),
+                "consumed_but_not_a_dest": sorted(missing), "pass": ok}
+
+
+def main():
+    a = build_parser().parse_args()
 
     if a.self_test:
         return self_test()
@@ -489,7 +577,7 @@ def main():
 
     # ADMISSION, before the graph is loaded, before the slug is computed, before os.makedirs:
     # a dispatch that cannot write a record must never get far enough to name one.
-    refusal = admission_refusal(a.cap, a.model, a.dry_run)
+    refusal = admission_refusal(a.cap, a.model, a.dry_run, a.seed_model, a.out_dir)
     if refusal:
         die(*refusal)
 
