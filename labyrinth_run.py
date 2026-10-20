@@ -49,6 +49,23 @@ EDGE COUNTS (record.graph.edges_used and the basis beside it)
     labyrinth-run/2 still describes every row it described before.
 
 ADMISSION (refuses BEFORE the first turn, with a distinguishable exit code)
+
+    The checks that are properties of the ARGUMENTS ALONE run first -- before the graph is
+    read, before a slug is computed, before os.makedirs -- because a dispatch that can never
+    write a record must never get far enough to name one, or occupy one:
+      cap < 1                     exit 2  a cell needs a ply; cap < 1 never enters the walk,
+                                          so it can only produce a record of nothing (0 moves,
+                                          tokens_total 0) that still claims benchmark_row
+      no --dry-run                exit 2  no non-dry dispatch is implemented, with or without
+                                          --model. This is the admission check; the in-walk
+                                          refusal is an assertion that must stay unreachable
+      --model with --dry-run      exit 2  a dry run consults no model, so recording one states
+                                          a basis the process never had. One guard closes this
+                                          and the rule above, not two.
+    Consequence, stated rather than discovered later: a bad ARGUMENT now outranks bad I/O.
+    `--cap 0` with a malformed or missing graph is exit 2, not 3. With no --symmetrisation it
+    is still 4, because that check precedes admission.
+
     2  bad arguments
     3  graph file unreadable / malformed
     4  symmetrisation not named                <- the whole point: no silent default
@@ -56,6 +73,9 @@ ADMISSION (refuses BEFORE the first turn, with a distinguishable exit code)
     6  derivation check failed: at K=12 the derived adjacency disagrees with the
        shipped adjacency_*_K column, so this file is not internally consistent
     7  output path already exists and this record did not take it
+       DRY-RUN ONLY until a model path exists: every non-dry dispatch is refused at
+       admission, so no other dispatch reaches the slug this check guards. The check stays
+       as the guard on the one dispatch that can actually write.
     8  graph disconnected from --rune (no legal move at start)
 
     Exit 0 on a completed record. --dry-run exits 0 too, but writes a record marked
@@ -309,6 +329,14 @@ def admit_test():
     tokens_total=0. The only admission fixture in the suite exercised a cell that runs a ply, so
     a cell that runs none slipped past every check. Hence the control case: without one, this
     test could not tell "the refusal fired" from "nothing ever runs".
+
+    Then the same defect from the other direction: `if model and not dry_run` refused only a
+    dispatch that NAMED a model, so the dispatch naming neither --model nor --dry-run walked
+    past admission, computed a non-dry slug, created the out-dir, and died inside the walk --
+    exit 7 if that slug already existed. A guard whose condition is narrower than its reason has
+    a reachable argument on the side it does not cover. Hence `no_model_no_dry`, and hence the
+    vector checks the out-dir does not exist as well as the exit code: a refusal that still
+    creates the directory has already done the thing admission exists to prevent.
     """
     import tempfile
 
@@ -343,20 +371,34 @@ def admit_test():
     for name, extra, want in (("cap0_model", ["--cap", "0", "--model", "dummy"], EXIT_BAD_ARGS),
                               ("capneg_model", ["--cap", "-1", "--model", "dummy"], EXIT_BAD_ARGS),
                               ("cap0_dry", ["--cap", "0", "--dry-run"], EXIT_BAD_ARGS),
-                              ("model_cap40", ["--cap", "40", "--model", "dummy"], EXIT_BAD_ARGS)):
+                              ("model_cap40", ["--cap", "40", "--model", "dummy"], EXIT_BAD_ARGS),
+                              # neither --model nor --dry-run: the direction the old condition
+                              # left uncovered
+                              ("no_model_no_dry", [], EXIT_BAD_ARGS),
+                              # a dry run that names a model it never consults
+                              ("dry_with_model", ["--cap", "2", "--dry-run", "--model", "dummy"],
+                               EXIT_BAD_ARGS),
+                              # the same flag given an empty value: `if model:` is a truthiness
+                              # test on a string, so "" slipped through and wrote a row. The guard
+                              # is the PRESENCE of the argument, not its content.
+                              ("dry_empty_model", ["--cap", "2", "--dry-run", "--model", ""],
+                               EXIT_BAD_ARGS)):
         code, said = run(extra, name)
         files = written(name)
-        good = (code == want and not files)
+        made_dir = os.path.isdir(os.path.join(root, name))
+        good = (code == want and not files and not made_dir)
         ok = ok and good
         got.append({"case": name, "exit": code, "expected_exit": want,
-                    "records_written": files, "said": said, "pass": good})
+                    "records_written": files, "out_dir_created": made_dir,
+                    "said": said, "pass": good})
 
     ctrl, said = run(["--cap", "2", "--dry-run"], "control")
     cfiles = written("control")
     cok = False
     if ctrl == 0 and len(cfiles) == 1:
         rec = json.load(open(os.path.join(root, "control", cfiles[0])))
-        cok = (rec["plies"] == 2 and rec["dry_run"] is True and rec["benchmark_row"] is False)
+        cok = (rec["plies"] == 2 and rec["dry_run"] is True and rec["benchmark_row"] is False
+               and rec["model"] == "dry-run/none")
     ok = ok and cok
     got.append({"case": "control_cap2_dry", "exit": ctrl, "expected_exit": 0,
                 "records_written": cfiles, "said": said, "pass": cok})
@@ -366,24 +408,34 @@ def admit_test():
 def admission_refusal(cap, model, dry_run):
     """ADMISSION: refusals that are properties of the ARGUMENTS alone.
 
-    Both of these are checks no reachable argument may walk past. They cannot live in the walk,
-    and they cannot depend on the graph loading, the digest matching, or the out-dir's contents,
-    because a dispatch that cannot write a record has no business computing that record's slug or
-    creating its directory -- and because a fabricated row that DOES get written then occupies the
-    slug and turns the honest run for that cell into exit 7.
+    None of these may live in the walk, and none may depend on the graph loading, the digest
+    matching, or the out-dir's contents: a dispatch that cannot write a record has no business
+    computing that record's slug or creating its directory, and a fabricated row that DOES get
+    written then occupies the slug and turns the honest run for that cell into exit 7.
 
-    `model` is refused only for a dispatch that would claim to be a benchmark row; --dry-run is the
-    one implemented path and marks itself dry. Once a model path exists, this is the line to delete,
-    and the bound on `cap` stays.
+    The condition is the ARGUMENT, not the out-dir. `not dry_run` refuses every dispatch that
+    would call itself a benchmark row, because no model path exists to stand behind one -- and
+    that includes the dispatch that names no --model at all, which is the direction the older
+    `model and not dry_run` guard was walked past from. `model` is refused under --dry-run too:
+    a dry run consults no model, so a row naming one states a basis the process never had.
+
+    When a model path lands, delete the `not dry_run` branch and keep the rest; the bound on
+    `cap` stays regardless.
     """
     if cap < 1:
         return (EXIT_BAD_ARGS,
                 f"--cap {cap}: a cell needs at least one ply, and cap < 1 never enters the walk, "
                 f"so it can only produce a record of nothing (0 moves, tokens_total 0) that still "
                 f"claims benchmark_row")
-    if model and not dry_run:
+    if not dry_run:
         return (EXIT_BAD_ARGS,
-                "model path not implemented yet: run --dry-run until a cell spec hash exists")
+                "no non-dry dispatch exists yet: run --dry-run until a model path is implemented "
+                "and a cell spec hash exists. Refused at admission, before the slug is computed "
+                "and before the out-dir is created -- not inside the walk.")
+    if model is not None:
+        return (EXIT_BAD_ARGS,
+                f"--dry-run consults no model, so it will not record one: got --model {model!r}; "
+                f"a dry-run row's model field is 'dry-run/none'")
     return None
 
 
@@ -519,7 +571,10 @@ def main():
         "dry_run": bool(a.dry_run),
         "benchmark_row": not a.dry_run,
         "driver": {"path": SELF, "sha256": hashlib.sha256(open(SELF, "rb").read()).hexdigest()},
-        "model": a.model if a.model else ("dry-run/none" if a.dry_run else None),
+        # a.model is unreachable: admission refuses --model under --dry-run and refuses every
+        # non-dry dispatch outright. Kept as a ternary rather than the argument so a future model
+        # path cannot restore a model name here without editing admission as well.
+        "model": "dry-run/none" if a.dry_run else None,
         "server_argv": None if a.dry_run else None,
         "server_binary_digest": None,
         "decoder_mode": "none" if a.dry_run else None,
