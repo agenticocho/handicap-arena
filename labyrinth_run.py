@@ -56,19 +56,20 @@ ADMISSION (refuses BEFORE the first turn, with a distinguishable exit code)
       cap < 1                     exit 2  a cell needs a ply; cap < 1 never enters the walk,
                                           so it can only produce a record of nothing (0 moves,
                                           tokens_total 0) that still claims benchmark_row
-      no --dry-run                exit 2  no non-dry dispatch is implemented, with or without
-                                          --model. This is the admission check; the in-walk
-                                          refusal is an assertion that must stay unreachable
+      no --model, no --dry-run    exit 2  a non-dry dispatch is ONE MODEL'S ANSWER per ply and
+                                          there is no other instrument. (Was the blanket
+                                          `not dry_run` refusal until the model path landed; the
+                                          thing refused -- a row with no model behind it -- is
+                                          the same.)
       --model with --dry-run      exit 2  a dry run consults no model, so recording one states
-                                          a basis the process never had. One guard closes this
-                                          and the rule above, not two.
-      --seed-model                exit 2  accepted by argparse and read by NOTHING: no dispatch
-                                          consumes it, so a row recorded under it would carry
-                                          seed 0 and no model-seed field, and its slug would be
-                                          identical to the dispatch that omitted the flag -- the
-                                          second honest run for that cell is then refused as a
-                                          duplicate (exit 7). Refused on PRESENCE, not on a
-                                          truthy value: --seed-model 0 is a value too.
+                                          a basis the process never had.
+      --model-identity with
+      --dry-run                   exit 2  same rule: the card exists only to say which weights
+                                          answered, and none did.
+      --seed-model (dry)          exit 2  a dry run has no model seed. CONSUMED since the model
+                                          path landed (sent as the request seed, recorded in the
+                                          row and in the slug); refused under --dry-run on
+                                          PRESENCE, not truthiness -- 0 is a value too.
       --out-dir ""                exit 2  an empty path names no directory. Without the check the
                                           dispatch reaches os.makedirs and dies with exit 1 and a
                                           traceback -- an unmapped code for an argument defect.
@@ -76,10 +77,15 @@ ADMISSION (refuses BEFORE the first turn, with a distinguishable exit code)
                                           error and still unmapped: that one is a filesystem fact,
                                           not an argument, and a code for it is a two-box
                                           decision rather than a patch.)
+      no --model-identity (live)  exit 11 the weights that answered cannot be stated: spec §3
+                                          wants model id + quant + argv + binary digest and the
+                                          api id names no quant. A row that cannot say which
+                                          weights answered is not a benchmark row.
     The class behind --seed-model, closed rather than patched again: every dest the parser
     accepts must be either in CONSUMED_DESTS or in UNIMPLEMENTED_ARGS, and --self-test fails if
     one is in neither. A flag added tomorrow that nothing reads fails the suite instead of
-    landing in a record as a value the run contradicts.
+    landing in a record as a value the run contradicts. UNIMPLEMENTED_ARGS is EMPTY now, and the
+    audit still runs: an empty dict is a passing audit, not an absent one.
     Consequence, stated rather than discovered later: a bad ARGUMENT now outranks bad I/O.
     `--cap 0` with a malformed or missing graph is exit 2, not 3. With no --symmetrisation it
     is still 4, because that check precedes admission.
@@ -91,13 +97,54 @@ ADMISSION (refuses BEFORE the first turn, with a distinguishable exit code)
     6  derivation check failed: at K=12 the derived adjacency disagrees with the
        shipped adjacency_*_K column, so this file is not internally consistent
     7  output path already exists and this record did not take it
-       DRY-RUN ONLY until a model path exists: every non-dry dispatch is refused at
-       admission, so no other dispatch reaches the slug this check guards. The check stays
-       as the guard on the one dispatch that can actually write.
+       THE ONE DISPATCH THAT CAN WRITE IS NOW REACHABLE: a live run with a verified identity
+       writes to (and therefore guards) a slug. A repeated cell is exit 7, measured, not asserted.
     8  graph disconnected from --rune (no legal move at start)
+   11  the model path cannot state its identity (see THE MODEL PATH below)
+   12  the model path cannot complete (see THE MODEL PATH below)
 
     Exit 0 on a completed record. --dry-run exits 0 too, but writes a record marked
     dry_run=true and refuses to call it a benchmark row.
+
+THE MODEL PATH (--model): proposal -> parse -> legal-move check -> per-turn tokens -> record
+    A non-dry dispatch is ONE MODEL'S ANSWER PER PLY. `--model` names the API id; because the api id
+    carries NO quant, the row's weight identity comes from `--model-identity CARD`, a JSON card with
+    the four fields spec §3 makes required and none substitutable:
+        api_model_id            must equal --model
+        quant                   e.g. "Q4_K_M"; must appear in the gguf name the argv loads
+        server_argv             the argv ARRAY of the server that answers. A string is refused: it
+                                cannot be checked, and an unchecked argv is a claim, not evidence.
+        server_binary_digest    sha256 of that binary, RECOMPUTED here, never trusted as given.
+    A lease-wrapped server (gpu-lease.sh ... -- llama-server ...) may also carry an optional
+    `server_binary`: the binary further down the argv that actually answers. Without it argv[0] is the
+    subject, and an argv that does not launch the digest's subject is refused either way.
+    The driver additionally refuses to run if the api id is not served by --base-url, and checks on
+    EVERY turn that the weights the server reports answering are the file the argv names -- a swap
+    mid-cell is the one way a row can quietly stop being about the model it names.
+
+    THE READ GRAMMAR (this paragraph is the whole rule; nothing is inferred from a prompt):
+        exactly one rune name, alone on the first non-empty line, case-insensitive, surrounding
+        quotes/backticks stripped          -> a proposal; the legal set decides moved vs blocked
+        one of the eight abstention tokens  -> give_up; the cell ENDS and the row says so
+        anything else -- prose, punctuation, a trailing full stop, two names, fences, JSON --
+        -> not_an_action. NEVER truncated, and never read for a move.
+    The prompt names the rune ALPHABET (24 invented names are not derivable from anything) and NEVER
+    the legal set: a position that arrives with its candidates listed is a menu, and choosing from a
+    menu measures the menu. Its text and its digest travel in every row.
+
+    per-turn tokens are the server's own usage.completion_tokens for that turn; tokens_total is their
+    sum. A turn with no usage block is REFUSED, not recorded as 0 -- a row that cannot say what it
+    spent is not a measurement.
+
+    EXIT 10 (EXIT_OUT_DIR_UNUSABLE) IS AGREED IN PRINCIPLE AND DELIBERATELY NOT BUILT HERE. The cell
+    authorisation names driver c41df799 and both boxes verified that hash this hour; moving the hash
+    now to close a hole a fresh out-dir cannot step in would unpin a verified revision. It is recorded
+    as deferred, not implemented, and the constant is not defined below on purpose.
+
+   11  the model path cannot state its identity: missing or incomplete card, api id mismatch with
+       --model, an argv that is not an array, a binary whose digest does not match the card, an api id
+       this server does not serve, or a reply from weights the argv does not name
+   12  the model path cannot complete: no answer, an HTTP error, or no per-turn token count
 
 RECORD
     one JSON per cell in probes/, carrying: model, server_argv, server_binary_digest,
@@ -117,7 +164,11 @@ import hashlib
 import json
 import os
 import random
+import shutil
 import sys
+import urllib.error
+import urllib.request
+from typing import NoReturn
 
 EXIT_BAD_ARGS = 2
 EXIT_BAD_GRAPH = 3
@@ -127,6 +178,12 @@ EXIT_DERIVATION_MISMATCH = 6
 EXIT_RECORD_EXISTS = 7
 EXIT_UNREACHABLE = 8
 EXIT_SELF_TEST_FAIL = 9
+# 10 is RESERVED BY AGREEMENT AND NOT DEFINED HERE: EXIT_OUT_DIR_UNUSABLE is agreed in principle and
+# deliberately deferred to the next revision the cell forces (see the docstring). Defining it now
+# would move the driver hash the cell authorisation is pinned to, for a hole a fresh out-dir cannot
+# step in.
+EXIT_MODEL_IDENTITY = 11
+EXIT_MODEL_TRANSPORT = 12
 
 SELF = os.path.abspath(__file__)
 
@@ -135,23 +192,24 @@ SELF = os.path.abspath(__file__)
 # and here the contradiction is not cosmetic: the flag is absent from the slug too, so the dispatch
 # that sets it and the dispatch that omits it collide on one output path and the second is refused
 # as a duplicate.
-UNIMPLEMENTED_ARGS = {
-    "seed_model": "--seed-model is parsed and read by no dispatch: a row under it would record "
-                  "seed 0 with no model-seed field, and its slug is identical to the dispatch that "
-                  "omits the flag, so the second honest run for that cell exits 7. Refused until a "
-                  "model path reads it.",
-}
+#
+# EMPTY NOW, AND THE EMPTINESS IS THE POINT: its one member (--seed-model) graduated into
+# CONSUMED_DESTS when the model path landed and started sending it as the request seed. The DICT stays
+# because the CLASS it guards does not go away: a flag added tomorrow that nothing reads must still
+# fail --self-test instead of landing in a record as a value the run contradicts.
+UNIMPLEMENTED_ARGS = {}
 
 # Every dest the cell semantics actually consume. Anything outside this set must be declared in
 # UNIMPLEMENTED_ARGS; parser_audit() fails --self-test otherwise, so a flag nobody reads cannot
 # reach a record by being added and forgotten.
 CONSUMED_DESTS = {
-    "graph", "symmetrisation", "K", "rune", "cap", "seed", "expect_graph_digest",
-    "cell_spec", "out_dir", "dry_run", "model", "self_test", "print_graph_digest",
+    "graph", "symmetrisation", "K", "rune", "cap", "seed", "seed_model", "expect_graph_digest",
+    "cell_spec", "out_dir", "dry_run", "model", "model_identity", "base_url", "no_think",
+    "self_test", "print_graph_digest",
 }
 
 
-def die(code, msg):
+def die(code, msg) -> NoReturn:
     print(f"labyrinth_run: exit {code}: {msg}", file=sys.stderr)
     raise SystemExit(code)
 
@@ -318,6 +376,382 @@ def stdout_argv():
     return [os.path.basename(sys.executable), SELF] + sys.argv[1:]
 
 
+# ==================================================================================================
+# THE MODEL PATH. proposal -> parse -> legal-move check -> per-turn tokens -> record.
+#
+# The frozen spec fixes THE TEST (graph, min, K=12, cap, seed, the decoder pair) and records THE MODEL
+# per box. Everything below is the part the spec leaves to the driver: how a question is asked, how a
+# reply is read, and what makes a reply a MOVE rather than a wish. The read grammar is stated in one
+# place (read_proposal's docstring + the module docstring) because two readers of one record is how a
+# field and its meaning drift apart.
+# ==================================================================================================
+TURN_TIMEOUT_S = 300
+MAX_TURN_TOKENS = 32
+DEFAULT_BASE_URL = "http://127.0.0.1:8080"
+IDENTITY_FIELDS = ("api_model_id", "quant", "server_argv", "server_binary_digest")
+
+# The eight abstention tokens, BORROWED VERBATIM from the sokoban read-grammar §2a list (R1, ratified
+# 2026-10-13) because a second list would be a second convention for the same act: a model that is
+# offered nine ways to abstain on one cabinet and eight on another is being measured on two rules
+# under one name. One token, whitespace removed, matched case-insensitively.
+ABSTENTION_TOKENS = ("RESIGN", "RESIGNS", "RESIGNED", "GIVEUP", "SURRENDER",
+                     "IQUIT", "QUIT", "FORFEIT")
+
+# The question. It names the rune ALPHABET -- 24 invented names are not derivable, and a model asked
+# to guess them would be measured on its vocabulary rather than on its walk -- and NEVER the legal
+# set. A position that arrives with its candidates listed is a menu; choosing from a menu measures
+# the menu. The text and its digest travel in every row, so a prompt cannot move silently.
+PROMPT_TEMPLATE = (
+    "You are walking a labyrinth of runes.\n"
+    "A move from one rune to another is legal when the graph distance between them is more than 0 "
+    "and at most {K}. Both directions use the same rule.\n"
+    "The runes are: {alphabet}.\n"
+    "You are at {cur}.\n"
+    "Reply with exactly one rune name from that list and nothing else.\n"
+    "If you cannot move, reply GIVE UP.\n"
+)
+
+
+def _first_line(text):
+    for line in (text or "").splitlines():
+        line = line.strip()
+        if line:
+            return line
+    return ""
+
+
+def _undelimit(s):
+    """Strip ONE layer of surrounding quotes/backticks: a delimiter is not content."""
+    while len(s) >= 2 and s[0] == s[-1] and s[0] in "\"'`":
+        s = s[1:-1].strip()
+    return s
+
+
+def read_proposal(text, names, legal):
+    """-> (kind, canonical name or None, what was actually read).
+
+    THE GRAMMAR, stated once and applied without rescue: exactly one rune name, alone on the first
+    non-empty line, case-insensitive, surrounding quotes/backticks stripped. A name that exists but is
+    NOT in `legal` is `blocked` -- a legal ACT the maze refused, which is a different finding from an
+    unreadable turn. One of the abstention tokens is `give_up` and ENDS the cell. Anything else is
+    `not_an_action`: prose, punctuation, a trailing full stop, two names, fences, JSON. NEVER
+    truncated, never first-token, never fuzzy-matched -- every one of those rescues turns a reading
+    rule into a guess, and the record has no field for "a guess".
+    """
+    line = _undelimit(_first_line(text))
+    if "".join(line.split()).upper() in ABSTENTION_TOKENS:
+        return "give_up", None, line
+    canon = {n.upper(): n for n in names}
+    if line.upper() in canon:
+        name = canon[line.upper()]
+        return ("move" if name in legal else "blocked"), name, line
+    return "not_an_action", None, line
+
+
+def _argv_gguf(argv):
+    for i, x in enumerate(argv[:-1]):
+        if x in ("--model", "-m"):
+            return argv[i + 1]
+    return None
+
+
+def verify_model_identity(path, model):
+    """-> (identity dict, None) or (None, (exit, message)). THE CARD IS CHECKED, NOT BELIEVED.
+
+    Spec §3 makes four fields required and none substitutable, because the api id carries no quant:
+    a row naming only `ornith9b` does not say which weights answered. So this function does not copy
+    the card into the row -- it RE-DERIVES what can be re-derived on this box (the binary's digest,
+    the quant in the gguf name the argv loads) and refuses on any disagreement. Every refusal is exit
+    11 and names the missing or contradicted field: the alternative is a row that claims weights
+    nothing named, which is the one thing a benchmark row may never do.
+    """
+    if not path:
+        return None, (EXIT_MODEL_IDENTITY,
+                      "a non-dry dispatch must name the weights that answered (spec §3: model id, "
+                      "quant, server_argv, server_binary_digest). --model names only the api id, and "
+                      "the api id carries NO quant. Missing: --model-identity")
+    try:
+        card = json.loads(open(path, "rb").read())
+    except OSError as e:
+        return None, (EXIT_MODEL_IDENTITY, f"cannot read the model identity card {path}: {e}")
+    except ValueError as e:
+        return None, (EXIT_MODEL_IDENTITY, f"the model identity card {path} is not JSON: {e}")
+    if not isinstance(card, dict):
+        return None, (EXIT_MODEL_IDENTITY, f"the model identity card {path} is not a JSON object")
+    missing = [k for k in IDENTITY_FIELDS if card.get(k) in (None, "", [], {})]
+    if missing:
+        return None, (EXIT_MODEL_IDENTITY,
+                      f"the model identity card {path} is missing {', '.join(missing)}; spec §3 makes "
+                      f"all four required and none substitutable")
+    if card["api_model_id"] != model:
+        return None, (EXIT_MODEL_IDENTITY,
+                      f"the card names api_model_id {card['api_model_id']!r} but --model is {model!r}; "
+                      f"one of the two is not the model that will answer")
+    argv = card["server_argv"]
+    if not isinstance(argv, list) or not argv or not all(isinstance(x, str) and x for x in argv):
+        return None, (EXIT_MODEL_IDENTITY,
+                      "server_argv must be the argv ARRAY (a non-empty list of non-empty strings). A "
+                      "one-line string cannot be checked against anything, and an unchecked argv is a "
+                      "claim, not evidence")
+    gguf = _argv_gguf(argv)
+    if not gguf:
+        return None, (EXIT_MODEL_IDENTITY,
+                      "server_argv names no --model/-m file, so which weights it loads is stated "
+                      "nowhere in the card")
+    if card["quant"] not in os.path.basename(gguf):
+        return None, (EXIT_MODEL_IDENTITY,
+                      f"the card's quant {card['quant']!r} does not appear in the gguf name {gguf!r}: "
+                      f"the argv does not load the quant the card claims")
+    binary = card.get("server_binary") or argv[0]
+    # A LEASE-WRAPPED SERVER IS THE NORMAL CASE ON THIS BOX: the argv starts at gpu-lease.sh and the
+    # binary that actually answers is further down the array. So the binary is named explicitly when
+    # the card can, and the check is that the argv really launches it -- not that it is argv[0].
+    bpath = binary if os.path.isabs(binary) else shutil.which(binary)
+    if not bpath or not os.path.isfile(bpath):
+        return None, (EXIT_MODEL_IDENTITY,
+                      f"the card's server binary {binary!r} is not a file on this box, so the "
+                      f"binary's digest cannot be recomputed -- and a digest nobody recomputed is a "
+                      f"quotation")
+    if not any(x == binary or os.path.basename(x) == os.path.basename(bpath) for x in argv):
+        return None, (EXIT_MODEL_IDENTITY,
+                      f"the card's server binary {binary!r} does not appear in server_argv: the argv "
+                      f"recorded is not the argv that launches the binary whose digest is claimed")
+    got = hashlib.sha256(open(bpath, "rb").read()).hexdigest()
+    if got != card["server_binary_digest"]:
+        return None, (EXIT_MODEL_IDENTITY,
+                      f"server_argv[0] {bpath} hashes to {got}, not the card's "
+                      f"{card['server_binary_digest']}: the binary that would answer is not the one "
+                      f"the card names")
+    return {"api_model_id": card["api_model_id"], "quant": card["quant"],
+            "server_argv": argv, "server_binary_digest": card["server_binary_digest"],
+            "server_binary_path": os.path.abspath(bpath), "model_file": gguf}, None
+
+
+def preflight_models(base_url, api_id, timeout=60):
+    """The api id must be one this endpoint actually serves. -> refusal (exit, msg) or None."""
+    url = base_url.rstrip("/") + "/v1/models"
+    try:
+        with urllib.request.urlopen(url, timeout=timeout) as r:
+            j = json.loads(r.read().decode())
+    except Exception as e:                                             # noqa: BLE001
+        return (EXIT_MODEL_TRANSPORT,
+                f"the model path could not complete: cannot reach {url} to list models "
+                f"({type(e).__name__}: {e})")
+    ids = [m.get("id") for m in (j.get("data") or []) if isinstance(m, dict)]
+    if api_id not in ids:
+        return (EXIT_MODEL_IDENTITY,
+                f"api id {api_id!r} is not served by {url}; served: {', '.join(map(str, ids))}")
+    return None
+
+
+def check_served(served, ident, ply):
+    """The weights that ANSWERED must be the file the argv names. Checked every turn: a swapping
+    server (llama-swap) can put a different model behind the same api id between two plies, and that
+    is the one way a row quietly stops being about the model it names."""
+    if not served:
+        die(EXIT_MODEL_IDENTITY,
+            f"ply {ply}: the server did not report which model answered; the row would claim weights "
+            f"nothing named")
+    ok = (served == ident["api_model_id"]
+          or served == os.path.basename(ident["model_file"])
+          or os.path.realpath(served) == os.path.realpath(ident["model_file"]))
+    if not ok:
+        die(EXIT_MODEL_IDENTITY,
+            f"ply {ply}: the server reports {served!r} answered, but the card's argv loads "
+            f"{ident['model_file']!r}. A row about one model measured from another is not a row")
+
+
+def model_turn(base_url, api_id, prompt, no_think, seed_model, timeout=TURN_TIMEOUT_S):
+    """One ply's question -> dict(text, field, completion_tokens, prompt_tokens, finish_reason,
+    served_model). Dies 12 rather than returning a partial answer: a turn with no answer or no token
+    count cannot become a row honestly, and a 0 would be a measurement we did not make."""
+    body = {"model": api_id,
+            "messages": [{"role": "user", "content": prompt}],
+            "max_tokens": MAX_TURN_TOKENS, "temperature": 0.0, "seed": seed_model}
+    if no_think:
+        # The build's own switch: llama.cpp server-common parses OAI `reasoning_effort`, and "none"
+        # disables reasoning (the --reasoning flag's per-request form). Recorded as decoder_mode
+        # "off". Nothing is sent for "on": `on` IS the harness default, and a decoder recorded by
+        # what was SENT is a fact, while one recorded by what was hoped is a wish.
+        body["reasoning_effort"] = "none"
+    url = base_url.rstrip("/") + "/v1/chat/completions"
+    req = urllib.request.Request(url, data=json.dumps(body).encode(),
+                                 headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            j = json.loads(r.read().decode())
+    except urllib.error.HTTPError as e:
+        detail = e.read()[:400].decode("utf-8", "replace")
+        die(EXIT_MODEL_TRANSPORT,
+            f"the model path could not complete: HTTP {e.code} from {url}: {detail}")
+    except Exception as e:                                             # noqa: BLE001
+        die(EXIT_MODEL_TRANSPORT,
+            f"the model path could not complete: {type(e).__name__} from {url}: {e}")
+    if not isinstance(j, dict) or not j.get("choices"):
+        die(EXIT_MODEL_TRANSPORT, "the model path could not complete: the answer carries no choices")
+    usage = j.get("usage") or {}
+    ct = usage.get("completion_tokens")
+    if not isinstance(ct, int):
+        die(EXIT_MODEL_TRANSPORT,
+            "the model path could not complete: the answer carries no usage.completion_tokens, so "
+            "the turn's cost cannot be recorded and a 0 would be invented")
+    msg = j["choices"][0].get("message") or {}
+    text, field = msg.get("content") or "", "content"
+    if not text.strip() and (msg.get("reasoning_content") or "").strip():
+        # Some templates put the only text in the reasoning field. WHICH FIELD IT CAME FROM travels
+        # in the row: "the model answered" and "the model thought and did not answer" are different
+        # findings, and a reader who cannot tell them will call the second one the first.
+        text, field = msg["reasoning_content"], "reasoning_content"
+    return {"text": text, "field": field, "completion_tokens": ct,
+            "prompt_tokens": usage.get("prompt_tokens"),
+            "finish_reason": j["choices"][0].get("finish_reason"),
+            "served_model": j.get("model")}
+
+
+def model_walk(nodes, F, sym, K, rune, cap, ident, base_url, no_think, seed_model):
+    """The cell, played by one model. -> the pieces main() puts in the record."""
+    alphabet = ", ".join(nodes)
+    cur = rune
+    visited = [cur]
+    moves, tokens = [], []
+    blocked = not_an_action = give_up = 0
+    end_state, plies = "cap", 0
+    while plies < cap:
+        nb = neighbours(nodes, F, sym, K, cur)
+        if not nb:
+            # The MAZE offers nothing. Counted in `blocked` exactly where the dry path counts it, so
+            # one field means one thing on both paths.
+            blocked += 1
+            end_state = "dead_end"
+            break
+        prompt = PROMPT_TEMPLATE.format(K=K, alphabet=alphabet, cur=cur)
+        ans = model_turn(base_url, ident["api_model_id"], prompt, no_think, seed_model)
+        check_served(ans["served_model"], ident, plies)
+        kind, name, read_as = read_proposal(ans["text"], nodes, nb)
+        entry = {"ply": plies, "from": cur, "to": None, "legal_moves": len(nb),
+                 "read": kind, "proposal": ans["text"], "proposal_field": ans["field"],
+                 "read_as": read_as,
+                 "completion_tokens": ans["completion_tokens"],
+                 "prompt_tokens": ans["prompt_tokens"],
+                 "finish_reason": ans["finish_reason"],
+                 "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest()}
+        if kind == "move":
+            entry["to"] = name
+            cur = name
+            visited.append(name)
+        elif kind == "blocked":
+            entry["proposed"] = name
+            blocked += 1
+        elif kind == "give_up":
+            give_up += 1
+            end_state = "give_up"
+        else:
+            not_an_action += 1
+        moves.append(entry)
+        tokens.append(ans["completion_tokens"])
+        plies += 1
+        if kind == "give_up":
+            break
+    return {"cur": cur, "visited": visited, "moves": moves, "tokens": tokens,
+            "blocked": blocked, "not_an_action": not_an_action, "give_up": give_up,
+            "end_state": end_state, "plies": plies}
+
+
+def slug_part(s):
+    return "".join(ch if ch.isalnum() or ch in "-._" else "-" for ch in s)
+
+
+# ==== THE MODEL PATH'S TWO TEST VECTORS ===========================================================
+# A read grammar is a promise about bytes, so it gets read out loud on bytes that were chosen to be
+# awkward: a trailing full stop, two names, a fence, JSON, an alias of itself (distance 0, so NOT a
+# move), and the eight abstentions. If a future edit "improves" the reader by trimming a full stop or
+# taking the first token, `Uruz.` and `I move to Uruz` stop being not_an_action and this fails.
+PARSE_TEST_NAMES = ("Fehu", "Uruz", "Othala")
+PARSE_TEST_LEGAL = ("Uruz",)
+PARSE_TEST_VECTOR = [
+    ("Uruz", "move", "Uruz"),
+    ("  uruz  \n", "move", "Uruz"),
+    ('"Uruz"', "move", "Uruz"),
+    ("`Uruz`", "move", "Uruz"),
+    ("Othala", "blocked", "Othala"),
+    ("Fehu", "blocked", "Fehu"),
+    ("Uruz.", "not_an_action", None),
+    ("I move to Uruz", "not_an_action", None),
+    ("Uruz, then Othala", "not_an_action", None),
+    ("```\nUruz\n```", "not_an_action", None),
+    ("{\n  \"rune\": \"Uruz\"\n}", "not_an_action", None),
+    ("", "not_an_action", None),
+    ("GIVE UP", "give_up", None),
+    ("give up", "give_up", None),
+    ("I QUIT", "give_up", None),
+    ("resign", "give_up", None),
+]
+
+
+def parse_test():
+    rows, ok = [], True
+    for text, want_kind, want_name in PARSE_TEST_VECTOR:
+        kind, name, read_as = read_proposal(text, PARSE_TEST_NAMES, PARSE_TEST_LEGAL)
+        good = (kind == want_kind and name == want_name)
+        ok = ok and good
+        rows.append({"input": text, "read_as": read_as, "kind": kind, "name": name,
+                     "expect_kind": want_kind, "expect_name": want_name, "pass": good})
+    return ok, rows
+
+
+def identity_test():
+    """The card is CHECKED, not believed. One card that should pass, five that must be refused.
+
+    The binary digest is recomputed against a real file (this interpreter), so the check that matters
+    most -- "the binary that would answer is the one the card names" -- is exercised for real, not
+    asserted. No network, no model.
+    """
+    import tempfile
+    root = tempfile.mkdtemp(prefix="labyrinth-identity-")
+    gguf = os.path.join(root, "SMOKE-Test-Model-Q4_K_M.gguf")
+    with open(gguf, "w") as fh:
+        fh.write("not weights\n")
+    binary = sys.executable
+    digest = hashlib.sha256(open(binary, "rb").read()).hexdigest()
+    base = {"api_model_id": "smoke-test", "quant": "Q4_K_M",
+            "server_argv": [binary, "--model", gguf, "--port", "9999"],
+            "server_binary_digest": digest}
+
+    def card(name, **over):
+        c = dict(base)
+        c.update(over)
+        path = os.path.join(root, name + ".json")
+        with open(path, "w") as fh:
+            json.dump(c, fh)
+        return path
+
+    rows, ok = [], True
+    for name, path, want_exit in (
+            ("good", card("good"), None),
+            # the lease-wrapped shape this box actually runs: argv[0] is a wrapper, the binary that
+            # answers is further down, and it must be named or the digest check has no subject
+            ("good_lease_wrapped",
+             card("good_lease_wrapped",
+                  server_argv=["/bin/sh", "gpu-lease.sh", "run", "--", binary, "--model", gguf],
+                  server_binary=binary), None),
+            ("binary_not_in_argv",
+             card("binary_not_in_argv", server_argv=["/bin/sh", "--model", gguf],
+                  server_binary=binary), EXIT_MODEL_IDENTITY),
+            ("digest_lie", card("digest_lie", server_binary_digest="0" * 64), EXIT_MODEL_IDENTITY),
+            ("quant_lie", card("quant_lie", quant="Q8_0"), EXIT_MODEL_IDENTITY),
+            ("argv_string", card("argv_string", server_argv="llama-server --model x"),
+             EXIT_MODEL_IDENTITY),
+            ("missing_quant", card("missing_quant", quant=""), EXIT_MODEL_IDENTITY),
+            ("api_id_mismatch", card("api_id_mismatch", api_model_id="other"), EXIT_MODEL_IDENTITY)):
+        ident, refusal = verify_model_identity(path, base["api_model_id"])
+        code = refusal[0] if refusal else None
+        good = (code == want_exit) and ((ident is not None) == (want_exit is None))
+        ok = ok and good
+        rows.append({"case": name, "exit": code, "expected_exit": want_exit,
+                     "said": (refusal[1][:150] if refusal else ""), "pass": good})
+    return ok, rows
+
+
 def self_test():
     """Reproduce the 2-node test vector from the definition alone. Exit 0 iff both match."""
     fx = SELF_TEST_GRAPH
@@ -339,7 +773,10 @@ def self_test():
 
     aok, admit_rows = admit_test()
     pok, parser_row = parser_audit()
-    ok = (fsha == SELF_TEST_FILE_SHA and gdig == SELF_TEST_GRAPH_DIGEST and eok and aok and pok)
+    qok, parse_rows = parse_test()
+    iok, identity_rows = identity_test()
+    ok = (fsha == SELF_TEST_FILE_SHA and gdig == SELF_TEST_GRAPH_DIGEST and eok and aok and pok
+          and qok and iok)
     print(json.dumps({"self_test": "ged-v2",
                       "fixture_bytes": SELF_TEST_BYTES.decode(),
                       "preimage": (b"ged-v2\n" + b"".join(
@@ -352,6 +789,8 @@ def self_test():
                       "edge_counts_pass": eok,
                       "admission": admit_rows, "admission_pass": aok,
                       "parser_audit": parser_row, "parser_pass": pok,
+                      "read_grammar": parse_rows, "parse_pass": qok,
+                      "model_identity": identity_rows, "identity_pass": iok,
                       "pass": ok}, indent=1))
     return 0 if ok else EXIT_SELF_TEST_FAIL
 
@@ -411,21 +850,30 @@ def admit_test():
     for name, extra, want in (("cap0_model", ["--cap", "0", "--model", "dummy"], EXIT_BAD_ARGS),
                               ("capneg_model", ["--cap", "-1", "--model", "dummy"], EXIT_BAD_ARGS),
                               ("cap0_dry", ["--cap", "0", "--dry-run"], EXIT_BAD_ARGS),
-                              ("model_cap40", ["--cap", "40", "--model", "dummy"], EXIT_BAD_ARGS),
+                              # a non-dry dispatch that NAMES a model but cannot state its weights:
+                              # 11, not 2. The refusal moved code when the model path landed; the
+                              # thing refused (a row about weights nothing named) did not move.
+                              ("model_no_identity", ["--cap", "40", "--model", "dummy"],
+                               EXIT_MODEL_IDENTITY),
                               # neither --model nor --dry-run: the direction the old condition
                               # left uncovered
                               ("no_model_no_dry", [], EXIT_BAD_ARGS),
                               # a dry run that names a model it never consults
                               ("dry_with_model", ["--cap", "2", "--dry-run", "--model", "dummy"],
                                EXIT_BAD_ARGS),
+                              # ...and the same rule for the identity card, which exists only to
+                              # say which weights answered
+                              ("dry_with_identity",
+                               ["--cap", "2", "--dry-run", "--model-identity", "card.json"],
+                               EXIT_BAD_ARGS),
                               # the same flag given an empty value: `if model:` is a truthiness
                               # test on a string, so "" slipped through and wrote a row. The guard
                               # is the PRESENCE of the argument, not its content.
                               ("dry_empty_model", ["--cap", "2", "--dry-run", "--model", ""],
                                EXIT_BAD_ARGS),
-                              # the argument the per-flag guards did not know about: accepted by
-                              # argparse, read by no dispatch. Presence is the defect, so 0 is
-                              # refused exactly like 7 -- `if seed_model:` would have admitted it.
+                              # --seed-model is CONSUMED by the model path now, so under --dry-run
+                              # the reason has changed but the refusal has not: no model answered,
+                              # so no model seed. Presence, not truthiness -- 0 is refused like 7.
                               ("seed_model_7", ["--cap", "2", "--dry-run", "--seed-model", "7"],
                                EXIT_BAD_ARGS),
                               ("seed_model_0", ["--cap", "2", "--dry-run", "--seed-model", "0"],
@@ -456,7 +904,7 @@ def admit_test():
     return ok, got
 
 
-def admission_refusal(cap, model, dry_run, seed_model=None, out_dir=None):
+def admission_refusal(cap, model, dry_run, seed_model=None, out_dir=None, model_identity=None):
     """ADMISSION: refusals that are properties of the ARGUMENTS alone.
 
     None of these may live in the walk, and none may depend on the graph loading, the digest
@@ -464,34 +912,47 @@ def admission_refusal(cap, model, dry_run, seed_model=None, out_dir=None):
     computing that record's slug or creating its directory, and a fabricated row that DOES get
     written then occupies the slug and turns the honest run for that cell into exit 7.
 
-    The condition is the ARGUMENT, not the out-dir. `not dry_run` refuses every dispatch that
-    would call itself a benchmark row, because no model path exists to stand behind one -- and
-    that includes the dispatch that names no --model at all, which is the direction the older
-    `model and not dry_run` guard was walked past from. `model` is refused under --dry-run too:
-    a dry run consults no model, so a row naming one states a basis the process never had.
+    The condition is the ARGUMENT, not the out-dir. `not dry_run and model is None` replaces the
+    older blanket `not dry_run`: a non-dry dispatch is a MODEL's answer and there is no other
+    instrument, so naming no model is still refused (2) -- but naming one is now the path that
+    exists. `model` is still refused under --dry-run, because a dry run consults no model and a row
+    naming one would state a basis the process never had; the same rule now covers --model-identity,
+    whose only purpose is to say which weights answered.
 
-    When a model path lands, delete the `not dry_run` branch and keep the rest; the bound on
-    `cap` stays regardless.
+    --seed-model is NO LONGER REFUSED as unimplemented: the model path sends it as the request seed
+    and the row records it, which is what its old refusal said it was waiting for. Under --dry-run it
+    is still refused, for the same reason as --model: nothing consulted a model, so a model seed is a
+    setting the run never had.
+
+    The identity CARD is a file, not an argument, so its contents are checked later (exit 11) -- but
+    its ABSENCE is an argument fact and is refused HERE, at 11, before any path is named.
     """
     if cap < 1:
         return (EXIT_BAD_ARGS,
                 f"--cap {cap}: a cell needs at least one ply, and cap < 1 never enters the walk, "
                 f"so it can only produce a record of nothing (0 moves, tokens_total 0) that still "
                 f"claims benchmark_row")
-    if not dry_run:
+    if not dry_run and model is None:
         return (EXIT_BAD_ARGS,
-                "no non-dry dispatch exists yet: run --dry-run until a model path is implemented "
-                "and a cell spec hash exists. Refused at admission, before the slug is computed "
-                "and before the out-dir is created -- not inside the walk.")
-    if model is not None:
+                "a non-dry dispatch needs --model: a benchmark row is one model's answer per ply, "
+                "and there is no other instrument. Refused at admission, before the slug is computed "
+                "and before the out-dir is created. (A dry run is --dry-run.)")
+    if model is not None and dry_run:
         return (EXIT_BAD_ARGS,
                 f"--dry-run consults no model, so it will not record one: got --model {model!r}; "
                 f"a dry-run row's model field is 'dry-run/none'")
-    if seed_model is not None:
-        # Presence, not truthiness: --seed-model 0 sets the model seed to zero, which is a value
-        # the record neither carries nor distinguishes. Same test as `model is not None`, for the
-        # same reason -- the argument's EXISTENCE is the defect, not its content.
-        return (EXIT_BAD_ARGS, f"--seed-model {seed_model}: {UNIMPLEMENTED_ARGS['seed_model']}")
+    if model_identity is not None and dry_run:
+        return (EXIT_BAD_ARGS,
+                f"--dry-run consults no model, so it will not record a model's identity: got "
+                f"--model-identity {model_identity!r}. A dry-run row names no weights because none "
+                f"answered.")
+    if seed_model is not None and dry_run:
+        # Presence, not truthiness: --seed-model 0 is still a value the run never used. The test is
+        # `is not None`, the same one the old unimplemented-flag refusal used -- only the reason has
+        # changed, from "nothing reads it" to "nothing consulted a model to read it for".
+        return (EXIT_BAD_ARGS,
+                f"--seed-model {seed_model} under --dry-run: a dry run consults no model, so it has "
+                f"no model seed and will not record one")
     if out_dir == "":
         # An empty path names no directory. Without this the dispatch reaches os.makedirs and dies
         # on FileNotFoundError with exit 1 and a traceback -- an unmapped code for a defect that is
@@ -499,6 +960,12 @@ def admission_refusal(cap, model, dry_run, seed_model=None, out_dir=None):
         return (EXIT_BAD_ARGS,
                 "--out-dir '': an empty path names no directory, so the record has nowhere to go. "
                 "Refused at admission rather than raised out of os.makedirs.")
+    if not dry_run and model_identity is None:
+        return (EXIT_MODEL_IDENTITY,
+                "a non-dry dispatch must name the weights that answered: spec §3 requires model id, "
+                "quant, server_argv and server_binary_digest, and --model carries only the api id, "
+                "which names NO quant. Missing: --model-identity. No record is written and no "
+                "out-dir is created until the weights can be stated.")
     return None
 
 
@@ -519,8 +986,20 @@ def build_parser():
     ap.add_argument("--out-dir", default="probes")
     ap.add_argument("--dry-run", action="store_true",
                     help="no model: deterministic seeded walk, proves the plumbing only")
-    ap.add_argument("--model", default=None)
-    ap.add_argument("--seed-model", dest="seed_model", type=int, default=None)
+    ap.add_argument("--model", default=None,
+                    help="API model id to play the cell. Required for a non-dry dispatch; the id "
+                         "carries NO quant, so --model-identity must name the weights as well.")
+    ap.add_argument("--model-identity", dest="model_identity", default=None,
+                    help="JSON card naming the weights that answer (spec §3): api_model_id, quant, "
+                         "server_argv, server_binary_digest. Required with --model; checked, not "
+                         "believed.")
+    ap.add_argument("--base-url", dest="base_url", default=DEFAULT_BASE_URL,
+                    help=f"OpenAI-compatible endpoint for --model (default {DEFAULT_BASE_URL})")
+    ap.add_argument("--no-think", dest="no_think", action="store_true",
+                    help="decoder `thinking: off` -- sends reasoning_effort=none per turn. Without "
+                         "it the decoder is `on`, the harness default, and nothing is sent.")
+    ap.add_argument("--seed-model", dest="seed_model", type=int, default=None,
+                    help="seed sent with every model turn; spec fixes it at 0")
     ap.add_argument("--self-test", dest="self_test", action="store_true",
                     help="reproduce the 2-node ged-v2 test vector and exit (no --graph needed)")
     ap.add_argument("--print-graph-digest", dest="print_graph_digest", action="store_true",
@@ -577,9 +1056,28 @@ def main():
 
     # ADMISSION, before the graph is loaded, before the slug is computed, before os.makedirs:
     # a dispatch that cannot write a record must never get far enough to name one.
-    refusal = admission_refusal(a.cap, a.model, a.dry_run, a.seed_model, a.out_dir)
+    refusal = admission_refusal(a.cap, a.model, a.dry_run, a.seed_model, a.out_dir,
+                                a.model_identity)
     if refusal:
         die(*refusal)
+
+    # THE MODEL'S IDENTITY, before any path is named. A dispatch whose weights cannot be stated must
+    # not create an out-dir or occupy a slug -- what it would write there is not a benchmark row.
+    ident: dict = {}
+    seed_model = None
+    if not a.dry_run:
+        checked, refusal = verify_model_identity(a.model_identity, a.model)
+        if refusal:
+            die(*refusal)
+        assert checked is not None
+        ident = checked
+        refusal = preflight_models(a.base_url, a.model)
+        if refusal:
+            die(*refusal)
+        # Spec §1 fixes seed_model at 0. Not naming it is not a different run, it is the same value
+        # unstated -- and now that the model path READS it, defaulting is honest. The old refusal
+        # existed because the value was dropped while the slug could not tell two dispatches apart.
+        seed_model = 0 if a.seed_model is None else a.seed_model
 
     raw, g, nodes, F = load_graph(a.graph)
     fsha = file_sha256(raw)
@@ -612,42 +1110,56 @@ def main():
     # its basis beside it (edges_used_basis) -- not derived from a symmetry assumption.
     ec = edge_counts(nodes, F, a.symmetrisation, K)
 
-    tag = "DRYRUN_" if a.dry_run else ""
-    slug = (f"{tag}{a.symmetrisation}-K{K}-{a.rune}-cap{a.cap}-seed{a.seed}"
-            f"-{gdig[:8]}{'-cellspec' + cell_sha[:8] if cell_sha else ''}.json")
+    # THE NAME OF THE RECORD IS THE IDENTITY OF THE DISPATCH. The dry slug is UNCHANGED (records
+    # already published under it are still the same test); the model slug leads with the model,
+    # because that is the field a reader sorts by, and carries the decoder pair and seed_model,
+    # because two runs that differ in either are two measurements and must not collide on exit 7.
+    if a.dry_run:
+        slug = (f"DRYRUN_{a.symmetrisation}-K{K}-{a.rune}-cap{a.cap}-seed{a.seed}"
+                f"-{gdig[:8]}{'-cellspec' + cell_sha[:8] if cell_sha else ''}.json")
+    else:
+        slug = (f"{slug_part(a.model)}-{a.symmetrisation}-K{K}-{a.rune}-cap{a.cap}-seed{a.seed}"
+                f"-sm{seed_model}-{'nothink' if a.no_think else 'think'}"
+                f"-{gdig[:8]}{'-cellspec' + cell_sha[:8] if cell_sha else ''}.json")
     out_path = os.path.join(a.out_dir, slug)
     if os.path.exists(out_path):
         die(EXIT_RECORD_EXISTS,
             f"{out_path} already exists; a record you did not take is not yours to overwrite")
     os.makedirs(a.out_dir, exist_ok=True)
 
-    rng = random.Random(a.seed)
-    cur = a.rune
-    visited = [cur]
-    moves = []
-    blocked = not_an_action = give_up = 0
-    tokens = []
-    end_state = "cap"
-    plies = 0
-    while plies < a.cap:
-        nb = neighbours(nodes, F, a.symmetrisation, K, cur)
-        if not nb:
-            blocked += 1
-            end_state = "dead_end"
-            break
-        if a.dry_run:
-            nxt = nb[rng.randrange(len(nb))]
-        else:
-            # Unreachable by argument: admission_refusal() refuses every non-dry dispatch. Kept as
-            # an assertion so a future model path cannot fall through to a row with no model turn.
-            die(EXIT_BAD_ARGS, "internal: non-dry dispatch reached the walk; admission must refuse it")
-        moves.append({"ply": plies, "from": cur, "to": nxt, "legal_moves": len(nb)})
-        tokens.append(None)
-        cur = nxt
-        visited.append(cur)
-        plies += 1
-    else:
+    if a.dry_run:
+        # THE DRY WALK: a seeded random step over the SAME legal set the model will face. Plumbing,
+        # not data -- and named DRYRUN_ so it cannot be mistaken for a row about a model. The random
+        # step is not a stand-in for a model here: it is the control that proves the maze is walkable.
+        rng = random.Random(a.seed)
+        cur = a.rune
+        visited = [cur]
+        moves = []
+        blocked = not_an_action = give_up = 0
+        tokens = []
         end_state = "cap"
+        plies = 0
+        while plies < a.cap:
+            nb = neighbours(nodes, F, a.symmetrisation, K, cur)
+            if not nb:
+                blocked += 1
+                end_state = "dead_end"
+                break
+            nxt = nb[rng.randrange(len(nb))]
+            moves.append({"ply": plies, "from": cur, "to": nxt, "legal_moves": len(nb)})
+            tokens.append(None)
+            cur = nxt
+            visited.append(cur)
+            plies += 1
+    else:
+        # THE MODEL WALK: proposal -> parse -> legal-move check, one turn per ply. No randomness and
+        # no fallback step: if the model cannot answer, the row records what it did instead of
+        # substituting a move the model never made.
+        w = model_walk(nodes, F, a.symmetrisation, K, a.rune, a.cap, ident, a.base_url,
+                       a.no_think, seed_model)
+        cur, visited, moves, tokens = w["cur"], w["visited"], w["moves"], w["tokens"]
+        blocked, not_an_action, give_up = w["blocked"], w["not_an_action"], w["give_up"]
+        end_state, plies = w["end_state"], w["plies"]
 
     pos_of, alias_all = position_index(nodes, F)
     alias_multi = [grp for grp in alias_all if len(grp) > 1]
@@ -659,14 +1171,32 @@ def main():
         "dry_run": bool(a.dry_run),
         "benchmark_row": not a.dry_run,
         "driver": {"path": SELF, "sha256": hashlib.sha256(open(SELF, "rb").read()).hexdigest()},
-        # a.model is unreachable: admission refuses --model under --dry-run and refuses every
-        # non-dry dispatch outright. Kept as a ternary rather than the argument so a future model
-        # path cannot restore a model name here without editing admission as well.
-        "model": "dry-run/none" if a.dry_run else None,
-        "server_argv": None if a.dry_run else None,
-        "server_binary_digest": None,
-        "decoder_mode": "none" if a.dry_run else None,
+        # MODEL IDENTITY, spec §3, four fields and none substitutable. On a dry run all four are null
+        # and the model field says 'dry-run/none' -- a dry row is plumbing and may not name weights.
+        "model": "dry-run/none" if a.dry_run else ident["api_model_id"],
+        "model_quant": None if a.dry_run else ident["quant"],
+        "model_file": None if a.dry_run else ident["model_file"],
+        "server_argv": None if a.dry_run else ident["server_argv"],
+        "server_binary_digest": None if a.dry_run else ident["server_binary_digest"],
+        "server_binary_path": None if a.dry_run else ident["server_binary_path"],
+        # WHERE it was asked, and WHICH DECODER answered. decoder_mode is the spec's pair (on|off):
+        # 'off' sent reasoning_effort=none, 'on' sent nothing because on IS the harness default. The
+        # exact control travels beside the label so the label is checkable rather than trusted.
+        "model_endpoint": None if a.dry_run else a.base_url.rstrip("/"),
+        "decoder_mode": "none" if a.dry_run else ("off" if a.no_think else "on"),
+        "thinking": None if a.dry_run else (not a.no_think),
+        "decoder_control": (None if a.dry_run or not a.no_think
+                            else {"reasoning_effort": "none"}),
+        "max_turn_tokens": None if a.dry_run else MAX_TURN_TOKENS,
+        "prompt_digest": (None if a.dry_run
+                          else hashlib.sha256(PROMPT_TEMPLATE.encode()).hexdigest()),
+        "prompt_template": None if a.dry_run else PROMPT_TEMPLATE,
+        "read_grammar": (None if a.dry_run else
+                         "one rune name alone on the first non-empty line, case-insensitive, "
+                         "surrounding quotes/backticks stripped; one of the eight abstention tokens "
+                         "= give_up; anything else = not_an_action, never truncated"),
         "seed": a.seed,
+        "seed_model": seed_model,
         "cap": a.cap,
         "graph": {
             "path": os.path.abspath(a.graph),
@@ -693,10 +1223,17 @@ def main():
         "blocked": blocked,
         "not_an_action": not_an_action,
         "give_up": give_up,
+        "counts_basis": (None if a.dry_run else
+                         "per turn: moved = a proposal in the legal set; blocked = a named rune that is "
+                         "not a legal move from here, or a position with no legal move; give_up = an "
+                         "abstention token (the cell ends); not_an_action = anything the read grammar "
+                         "could not read"),
         "ended": end_state != "cap" or plies >= a.cap,
         "end_state": end_state,
         "tokens_per_turn": tokens,
-        "tokens_total": None if a.dry_run else sum(t for t in tokens if t),
+        "tokens_total": None if a.dry_run else sum(tokens),
+        "tokens_basis": (None if a.dry_run else
+                         "usage.completion_tokens per turn; tokens_total is their sum"),
         "visited_unique": visited_positions,
         "visited_names": visited_names,
         "visited_count_basis": "positions",
@@ -706,6 +1243,9 @@ def main():
     print(json.dumps({"record": out_path, "end_state": end_state, "plies": plies,
                       "end_rune": cur, "unique_positions": visited_positions,
                       "unique_names": visited_names,
+                      "model": rec["model"], "decoder_mode": rec["decoder_mode"],
+                      "seed_model": seed_model, "tokens_total": rec["tokens_total"],
+                      "blocked": blocked, "not_an_action": not_an_action, "give_up": give_up,
                       "graph_digest": gdig, "file_sha256": fsha,
                       "symmetrisation": a.symmetrisation, "K": K,
                       "derivation_columns_checked": cells_checked,
