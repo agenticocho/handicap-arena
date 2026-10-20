@@ -279,7 +279,8 @@ def self_test():
     halving_would_report = got["ged_fwd"]["edges_directed"] // 2
     eok = (got == want and halving_would_report != got["ged_fwd"]["edges_used"])
 
-    ok = (fsha == SELF_TEST_FILE_SHA and gdig == SELF_TEST_GRAPH_DIGEST and eok)
+    aok, admit_rows = admit_test()
+    ok = (fsha == SELF_TEST_FILE_SHA and gdig == SELF_TEST_GRAPH_DIGEST and eok and aok)
     print(json.dumps({"self_test": "ged-v2",
                       "fixture_bytes": SELF_TEST_BYTES.decode(),
                       "preimage": (b"ged-v2\n" + b"".join(
@@ -290,8 +291,100 @@ def self_test():
                       "graph_digest": gdig, "expect_graph_digest": SELF_TEST_GRAPH_DIGEST,
                       "edge_counts": got, "expect_edge_counts": want,
                       "edge_counts_pass": eok,
+                      "admission": admit_rows, "admission_pass": aok,
                       "pass": ok}, indent=1))
     return 0 if ok else EXIT_SELF_TEST_FAIL
+
+
+ADMIT_TEST_NODES = ["N%02d" % i for i in range(24)]
+
+
+def admit_test():
+    """End-to-end admission vectors: every refusal must fire on the path that writes NO record,
+    and the harness must be shown to reach the path that DOES write one.
+
+    The defect these guard, in the shape it actually took: the model refusal lived inside the
+    walk, so `--cap 0` -- a reachable argument -- never entered the loop body, never reached the
+    refusal, and wrote a record with benchmark_row=true, model="dummy", plies=0, moves=[],
+    tokens_total=0. The only admission fixture in the suite exercised a cell that runs a ply, so
+    a cell that runs none slipped past every check. Hence the control case: without one, this
+    test could not tell "the refusal fired" from "nothing ever runs".
+    """
+    import tempfile
+
+    nodes = ADMIT_TEST_NODES
+    F = {a: {b: (0 if a == b else 1) for b in nodes} for a in nodes}
+    root = tempfile.mkdtemp(prefix="labyrinth-admit-")
+    gp = os.path.join(root, "g.json")
+    with open(gp, "w") as fh:
+        json.dump({"nodes": nodes, "ged_fwd": F, "semantics": {"K": 1}}, fh)
+
+    def run(extra, out):
+        import contextlib
+        import io
+        saved = sys.argv
+        sys.argv = [SELF, "--graph", gp, "--symmetrisation", "min", "--rune", nodes[0],
+                    "--seed", "0", "--out-dir", os.path.join(root, out)] + extra
+        said, out_buf = io.StringIO(), io.StringIO()
+        try:
+            with contextlib.redirect_stdout(out_buf), contextlib.redirect_stderr(said):
+                return main(), said.getvalue().strip()
+        except SystemExit as e:
+            return e.code, said.getvalue().strip()
+        finally:
+            sys.argv = saved
+
+    def written(out):
+        d = os.path.join(root, out)
+        return sorted(os.listdir(d)) if os.path.isdir(d) else []
+
+    ok = True
+    got = []
+    for name, extra, want in (("cap0_model", ["--cap", "0", "--model", "dummy"], EXIT_BAD_ARGS),
+                              ("capneg_model", ["--cap", "-1", "--model", "dummy"], EXIT_BAD_ARGS),
+                              ("cap0_dry", ["--cap", "0", "--dry-run"], EXIT_BAD_ARGS),
+                              ("model_cap40", ["--cap", "40", "--model", "dummy"], EXIT_BAD_ARGS)):
+        code, said = run(extra, name)
+        files = written(name)
+        good = (code == want and not files)
+        ok = ok and good
+        got.append({"case": name, "exit": code, "expected_exit": want,
+                    "records_written": files, "said": said, "pass": good})
+
+    ctrl, said = run(["--cap", "2", "--dry-run"], "control")
+    cfiles = written("control")
+    cok = False
+    if ctrl == 0 and len(cfiles) == 1:
+        rec = json.load(open(os.path.join(root, "control", cfiles[0])))
+        cok = (rec["plies"] == 2 and rec["dry_run"] is True and rec["benchmark_row"] is False)
+    ok = ok and cok
+    got.append({"case": "control_cap2_dry", "exit": ctrl, "expected_exit": 0,
+                "records_written": cfiles, "said": said, "pass": cok})
+    return ok, got
+
+
+def admission_refusal(cap, model, dry_run):
+    """ADMISSION: refusals that are properties of the ARGUMENTS alone.
+
+    Both of these are checks no reachable argument may walk past. They cannot live in the walk,
+    and they cannot depend on the graph loading, the digest matching, or the out-dir's contents,
+    because a dispatch that cannot write a record has no business computing that record's slug or
+    creating its directory -- and because a fabricated row that DOES get written then occupies the
+    slug and turns the honest run for that cell into exit 7.
+
+    `model` is refused only for a dispatch that would claim to be a benchmark row; --dry-run is the
+    one implemented path and marks itself dry. Once a model path exists, this is the line to delete,
+    and the bound on `cap` stays.
+    """
+    if cap < 1:
+        return (EXIT_BAD_ARGS,
+                f"--cap {cap}: a cell needs at least one ply, and cap < 1 never enters the walk, "
+                f"so it can only produce a record of nothing (0 moves, tokens_total 0) that still "
+                f"claims benchmark_row")
+    if model and not dry_run:
+        return (EXIT_BAD_ARGS,
+                "model path not implemented yet: run --dry-run until a cell spec hash exists")
+    return None
 
 
 def main():
@@ -341,6 +434,12 @@ def main():
 
     if not a.rune:
         die(EXIT_BAD_ARGS, "--rune is required to run a cell")
+
+    # ADMISSION, before the graph is loaded, before the slug is computed, before os.makedirs:
+    # a dispatch that cannot write a record must never get far enough to name one.
+    refusal = admission_refusal(a.cap, a.model, a.dry_run)
+    if refusal:
+        die(*refusal)
 
     raw, g, nodes, F = load_graph(a.graph)
     fsha = file_sha256(raw)
@@ -399,7 +498,9 @@ def main():
         if a.dry_run:
             nxt = nb[rng.randrange(len(nb))]
         else:
-            die(EXIT_BAD_ARGS, "model path not implemented yet: run --dry-run until a cell spec hash exists")
+            # Unreachable by argument: admission_refusal() refuses every non-dry dispatch. Kept as
+            # an assertion so a future model path cannot fall through to a row with no model turn.
+            die(EXIT_BAD_ARGS, "internal: non-dry dispatch reached the walk; admission must refuse it")
         moves.append({"ply": plies, "from": cur, "to": nxt, "legal_moves": len(nb)})
         tokens.append(None)
         cur = nxt
