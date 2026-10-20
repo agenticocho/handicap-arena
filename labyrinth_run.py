@@ -34,6 +34,20 @@ TEST IDENTITY
     Run --self-test for the 2-node test vector; a definition without a test vector is a
     description, and a description is what just cost a day.
 
+EDGE COUNTS (record.graph.edges_used and the basis beside it)
+    The record carries the edge count of the relation the run ACTUALLY uses, never a count
+    derived from an assumption about symmetry:
+        edges_used              arcs under ged_fwd/ged_rev, undirected pairs under min/max
+        edges_used_basis        the literal basis of that number ("arcs" / "undirected_pairs")
+        edges_directed          sum(out-degree), always
+        edges_undirected_pairs  unordered pairs legal in at least one direction
+        edges_one_way           pairs legal in exactly one direction (0 iff symmetric)
+    On the pinned graph at K=12: min pairs 198 (arcs 396, one-way 0); max pairs 138 (arcs 276,
+    one-way 0); ged_fwd and ged_rev 336 arcs, 198 pairs, 60 one-way. The earlier reading took
+    sum(out-degree)//2 for every symmetrisation, which reported 168 for a relation with 336
+    arcs and no undirected edges. min/max numbers are unchanged by that correction, so schema
+    labyrinth-run/2 still describes every row it described before.
+
 ADMISSION (refuses BEFORE the first turn, with a distinguishable exit code)
     2  bad arguments
     3  graph file unreadable / malformed
@@ -134,6 +148,20 @@ SELF_TEST_BYTES = b'{"ged_fwd":{"A":{"A":0,"B":3},"B":{"A":9,"B":0}},"nodes":["A
 SELF_TEST_FILE_SHA = "f700d57a5894fc83e82af4494040b21dc92943d57674c8831b1262707f2535c8"
 SELF_TEST_GRAPH_DIGEST = "56a2b3e4ebcf0f7ad0e41c72950c7b9e5dfe00a7d69b3acd2856918dcdeb8714"
 
+# The EDGE-COUNT test vector, and the reason it exists: the field it guards was wrong under
+# ged_fwd/ged_rev for a whole evening because the only fixture in the suite was symmetric at
+# K=12, where sum(out-degree)//2 and the true count agree. Three nodes, distances 3 and 20
+# against K=12, so exactly two pairs are legal in ONE direction only:
+#     min      arcs 4, pairs 2, one-way 0  (min is symmetric by construction)
+#     max      arcs 0, pairs 0, one-way 0  (nothing within K=12)
+#     ged_fwd  arcs 2, pairs 2, one-way 2  <- halving reports 1 here; the relation has 2 arcs
+#     ged_rev  arcs 2, pairs 2, one-way 2
+EDGE_TEST_GRAPH = {"nodes": ["A", "B", "C"],
+                   "ged_fwd": {"A": {"A": 0, "B": 3, "C": 20},
+                               "B": {"A": 20, "B": 0, "C": 3},
+                               "C": {"A": 20, "B": 20, "C": 0}}}
+EDGE_TEST_K = 12
+
 
 def d(nodes, F, sym, a, b):
     """distance under the named symmetrisation. No default, no cache, no order dependence."""
@@ -151,6 +179,41 @@ def d(nodes, F, sym, a, b):
 def neighbours(nodes, F, sym, K, cur):
     return sorted(y for y in nodes
                   if y != cur and 0 < d(nodes, F, sym, cur, y) <= K)
+
+
+def edge_counts(nodes, F, sym, K):
+    """Count the edges of the relation actually used, and name the basis beside the number.
+
+    A DIRECTED symmetrisation is not a symmetric relation. Under min/max every legal pair is
+    legal both ways, so the relation's edge count is the number of unordered pairs and equals
+    sum(out-degree) // 2. Under ged_fwd/ged_rev that halving is wrong: this graph has 336 legal
+    arcs under each, 198 pairs legal in at least one direction, and 60 pairs legal in exactly
+    one direction -- so the old //2 reported 168 for a relation with no undirected edges.
+    Recorded per relation, never by assumption:
+        edges_used              the relation's own edge count: arcs for a directed
+                                symmetrisation, undirected pairs for a symmetric one
+        edges_used_basis        the literal basis of that number, beside it
+        edges_directed          sum(out-degree) always (== 2 x pairs when symmetric)
+        edges_undirected_pairs  unordered pairs legal in at least one direction
+        edges_one_way           pairs legal in exactly one direction (0 iff symmetric)
+    """
+    outs = {a: neighbours(nodes, F, sym, K, a) for a in nodes}
+    directed = sum(len(v) for v in outs.values())
+    one_way = pairs = 0
+    for i, a in enumerate(nodes):
+        for b in nodes[i + 1:]:
+            ab, ba = b in outs[a], a in outs[b]
+            if ab != ba:
+                one_way += 1
+                pairs += 1
+            elif ab:
+                pairs += 1
+    directed_sym = sym in ("ged_fwd", "ged_rev")
+    return {"edges_used": directed if directed_sym else pairs,
+            "edges_used_basis": "arcs" if directed_sym else "undirected_pairs",
+            "edges_directed": directed,
+            "edges_undirected_pairs": pairs,
+            "edges_one_way": one_way}
 
 
 def positions(nodes, F):
@@ -202,7 +265,21 @@ def self_test():
     fx = SELF_TEST_GRAPH
     fsha = hashlib.sha256(SELF_TEST_BYTES).hexdigest()
     gdig = graph_digest(fx["nodes"], fx["ged_fwd"])
-    ok = (fsha == SELF_TEST_FILE_SHA and gdig == SELF_TEST_GRAPH_DIGEST)
+
+    E, GE = EDGE_TEST_GRAPH["nodes"], EDGE_TEST_GRAPH["ged_fwd"]
+    got = {s: edge_counts(E, GE, s, EDGE_TEST_K) for s in ("min", "max", "ged_fwd", "ged_rev")}
+    want = {"ged_fwd": {"edges_used": 2, "edges_used_basis": "arcs", "edges_directed": 2,
+                        "edges_undirected_pairs": 2, "edges_one_way": 2},
+            "ged_rev": {"edges_used": 2, "edges_used_basis": "arcs", "edges_directed": 2,
+                        "edges_undirected_pairs": 2, "edges_one_way": 2},
+            "min": {"edges_used": 2, "edges_used_basis": "undirected_pairs", "edges_directed": 4,
+                    "edges_undirected_pairs": 2, "edges_one_way": 0},
+            "max": {"edges_used": 0, "edges_used_basis": "undirected_pairs", "edges_directed": 0,
+                    "edges_undirected_pairs": 0, "edges_one_way": 0}}
+    halving_would_report = got["ged_fwd"]["edges_directed"] // 2
+    eok = (got == want and halving_would_report != got["ged_fwd"]["edges_used"])
+
+    ok = (fsha == SELF_TEST_FILE_SHA and gdig == SELF_TEST_GRAPH_DIGEST and eok)
     print(json.dumps({"self_test": "ged-v2",
                       "fixture_bytes": SELF_TEST_BYTES.decode(),
                       "preimage": (b"ged-v2\n" + b"".join(
@@ -211,6 +288,8 @@ def self_test():
                           for a in fx["nodes"])).decode().replace("\n", "\\n").replace("\t", "\\t"),
                       "file_sha256": fsha, "expect_file_sha256": SELF_TEST_FILE_SHA,
                       "graph_digest": gdig, "expect_graph_digest": SELF_TEST_GRAPH_DIGEST,
+                      "edge_counts": got, "expect_edge_counts": want,
+                      "edge_counts_pass": eok,
                       "pass": ok}, indent=1))
     return 0 if ok else EXIT_SELF_TEST_FAIL
 
@@ -290,6 +369,10 @@ def main():
             f"{a.rune} has no legal move under symmetrisation={a.symmetrisation} K={K} "
             f"(the graph is disconnected from the start node)")
 
+    # Counted once, from the relation the run actually uses, and carried into the record with
+    # its basis beside it (edges_used_basis) -- not derived from a symmetry assumption.
+    ec = edge_counts(nodes, F, a.symmetrisation, K)
+
     tag = "DRYRUN_" if a.dry_run else ""
     slug = (f"{tag}{a.symmetrisation}-K{K}-{a.rune}-cap{a.cap}-seed{a.seed}"
             f"-{gdig[:8]}{'-cellspec' + cell_sha[:8] if cell_sha else ''}.json")
@@ -356,7 +439,7 @@ def main():
             "symmetrisation": a.symmetrisation,
             "K": K,
             "derivation_columns_checked": cells_checked,
-            "edges_used": sum(len(neighbours(nodes, F, a.symmetrisation, K, x)) for x in nodes) // 2,
+            **ec,
         },
         "cell_spec_sha256": cell_sha,
         "start_rune": a.rune,
@@ -381,7 +464,9 @@ def main():
                       "unique_names": visited_names,
                       "graph_digest": gdig, "file_sha256": fsha,
                       "symmetrisation": a.symmetrisation, "K": K,
-                      "derivation_columns_checked": cells_checked}, indent=1))
+                      "derivation_columns_checked": cells_checked,
+                      "edges_used": ec["edges_used"], "edges_used_basis": ec["edges_used_basis"],
+                      "edges_directed": ec["edges_directed"], "edges_one_way": ec["edges_one_way"]}, indent=1))
     return 0
 
 
