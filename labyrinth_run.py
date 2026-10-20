@@ -147,12 +147,24 @@ ADMISSION (refuses BEFORE the first turn, with a distinguishable exit code)
     No graph defect can reach a traceback: every one lands on a numbered exit, and --self-test runs
     each malformed fixture down both paths and requires the SAME exit from each.
 
+    AN ABSENT DERIVATION IS NOT A PASS. The same path refuses a graph whose adjacency columns are
+    MISSING, at exit 6 -- the same code as a column that disagrees, because it is the same class of
+    defect. Before this revision the absent case was counted as 0 and certified: both columns
+    absent -> exit 0 on both paths and a row written with derivation_columns_checked: 0. §4 names
+    the number (48 = 24 nodes x 2 columns), and the count is now enforced twice: at admission, and
+    again at the WRITE SITE, where a record whose derived count is not 48 is refused before a byte
+    is serialised.
+
     2  bad arguments
     3  graph file unreadable / malformed
     4  symmetrisation not named                <- the whole point: no silent default
     5  graph_digest does not match --expect-graph-digest
-    6  derivation check failed: at K=12 the derived adjacency disagrees with the
-       shipped adjacency_*_K column, so this file is not internally consistent
+    6  derivation check failed -- ONE code for ONE class of defect:
+         - an adjacency_*_K column is ABSENT (the message names which one; absence is not a count
+           of 0 and may not be certified, because a wrong column at least proves the checker ran)
+         - a shipped adjacency_*_K column disagrees with the matrix
+         - the derived comparison count is not §4's 48, checked AGAIN at the write site before the
+           record is serialised, so no row carrying 0 (or 47) can be published and averaged
     7  output path already exists and this record did not take it
        THE ONE DISPATCH THAT CAN WRITE IS NOW REACHABLE: a live run with a verified identity
        writes to (and therefore guards) a slug. A repeated cell is exit 7, measured, not asserted.
@@ -341,6 +353,24 @@ EXIT_NODE_ORDER = 13
 # code so a script cannot read "the comparison ran" as "the comparison holds". 14 takes the next
 # free number; folding it into 2 would make an argument defect and a measurement defect identical.
 EXIT_NOT_COMPARABLE = 14
+
+# SPEC §4 NAMES A NUMBER, AND IT IS NOW A REQUIREMENT RATHER THAN A READING.
+# A row must carry graph.derivation_columns_checked = 48: 24 nodes x 2 shipped columns
+# (adjacency_min_K, adjacency_max_K). Before this revision an ABSENT column was counted as zero and
+# the row was written at exit 0 with derivation_columns_checked: 0 -- so a file whose derivation had
+# never been checked was certified at least as loudly as one whose columns agreed. Silence is the
+# stronger claim, and a wrong column at least proves the checker ran.
+# The count is enforced in TWO places, on purpose:
+#   admission  (check_derivation, exit 6) an absent column is refused and NAMED; a present column
+#              that disagrees is refused exactly as before. Same code, because it is the same class
+#              of defect: a second code would imply a distinction that does not exist.
+#   write site (enforce_row_derivation, exit 6) a record whose derived count is not 48 is refused
+#              immediately before publication. Admission makes this unreachable in a live dispatch,
+#              which is the point: a row that can be written with 0 is a row a downstream reader
+#              will average, so the number §4 names is checked where the row is written, not only
+#              where its graph was admitted.
+DERIVATION_COLUMNS = ("adjacency_min_K", "adjacency_max_K")
+REQUIRED_DERIVATION_COLUMNS = 48
 
 # THE CANONICAL NODE ORDER. Elder Futhark, the order the generator's RUNE_NAMES carries -- and the
 # order the nodes array must be in before anything is hashed, because graph_digest() hashes
@@ -567,7 +597,9 @@ def validate_graph(path, expect_graph_digest=None, expect_nodes_sha256=None, run
         3 start rune        exit 2   dispatch only: --rune must name a node
         4 digest computed            only NOW, because only now is the declaration known
         5 derivation        exit 6   shipped adjacency_*_K vs the matrix at the graph's K, named
-                                      by the pinned identity
+                                      by the pinned identity. An ABSENT column is the same exit 6:
+                                      it proves nothing ran, so it may not be certified with a
+                                      count of 0. The count must be §4's 48.
         6 digest compared   exit 5   last, and only against the declared identity
     Step 4 sits between 3 and 5 on purpose: the digest is a READING until the declaration is
     right, but the derivation refusal needs the pinned identity to name it, and the derivation
@@ -610,9 +642,12 @@ def audit_report(f):
         "graph_digest": f["graph_digest"],
         "pinned_identity": {"field": "graph_digest", "value": f["graph_digest"]},
         "derivation_columns_checked": f["derivation_columns_checked"],
-        "derivation_basis": ("shipped adjacency_*_K columns compared with the matrix at the "
-                             "graph's K; 0 means the file carries no such column, NOT that the "
-                             "columns agreed"),
+        "derivation_columns_required": REQUIRED_DERIVATION_COLUMNS,
+        "derivation_basis": ("shipped adjacency_min_K + adjacency_max_K compared node by node "
+                             "with the matrix at the graph's K; §4 requires 48 (24 nodes x 2 "
+                             "columns). An absent column is exit 6 at admission -- the same code "
+                             "as a column that disagrees -- because silence proves nothing ran; "
+                             "this report can never say 0."),
         "checks_run": ("structural(3) -> node order(13) -> derivation(6) -> digest(5): the same "
                        "path a dispatch runs, so this file cannot be certified here and refused "
                        "there"),
@@ -717,22 +752,43 @@ def position_index(nodes, F):
 
 
 def check_derivation(g, nodes, F, graph_digest_value):
-    """The shipped adjacency_*_K columns must equal what the matrix says at the graph's K.
-    If they disagree the file is not internally consistent and must not be scored.
+    """The shipped adjacency_*_K columns must be PRESENT and must equal what the matrix says.
+
+    If a column is absent the file carries no derivation at all, and if a column disagrees the file
+    is not internally consistent: neither may be scored, and both are exit 6. Measured on the
+    repaired graph (596255d9...), before this revision: both columns absent -> exit 0 on BOTH paths
+    and a row written with derivation_columns_checked: 0; one column absent -> exit 0 with 24. So
+    the driver refused a column that LIED and certified a column that was MISSING, although an
+    absent column is the stronger claim -- a wrong one at least proves the checker ran.
 
     A column that is PRESENT but the wrong shape used to raise (TypeError/KeyError) at exit 1, or
     -- worse for a string value -- be sorted happily as characters and compared against a list of
     names. Shape is checked before comparison, and every refusal names the PINNED IDENTITY
     (graph_digest), not just the K: a reader who receives "the derivation disagrees at K=12" cannot
     tell which graph was being discussed without it.
+
+    The returned count is the number of (column, node) comparisons actually performed, and it must
+    be §4's 48: 24 nodes x 2 columns. check_derivation refuses anything else here, and
+    enforce_row_derivation refuses it again at the write site.
     """
     K = semantics_K(g)
+    missing = [key for key in DERIVATION_COLUMNS if key not in g]
+    if missing:
+        # NOT a `continue`. An absent column is not "0 checked, move on": it is a derivation that
+        # never ran, and reporting it as a count of zero certified it. The message names WHICH
+        # column is missing (a reader must know what to regenerate), states the number §4 requires
+        # and the arithmetic that produces it, and names the pinned identity of the graph.
+        die(EXIT_DERIVATION_MISMATCH,
+            f"{', '.join(missing)} ABSENT from the graph (graph_digest {graph_digest_value}). "
+            f"spec §4 requires derivation_columns_checked = {REQUIRED_DERIVATION_COLUMNS} "
+            f"(24 nodes x 2 shipped columns: {', '.join(DERIVATION_COLUMNS)}); the file carries "
+            f"{', '.join(k for k in DERIVATION_COLUMNS if k in g) or 'neither column'}. An absent "
+            f"column proves nothing ran -- it is not a column that agreed with the matrix, and it "
+            f"is refused with the same exit as a column that disagrees, because it is the same "
+            f"class of defect. The repair is in the generator: regenerate the named column(s) at "
+            f"K={K} from the matrix; do not delete the check.")
     checked = 0
     for sym, key in (("min", "adjacency_min_K"), ("max", "adjacency_max_K")):
-        if key not in g:
-            # 0 checked is a READING, not a pass: a file that carries no adjacency column has not
-            # been shown to agree with anything. The row records the count beside its basis.
-            continue
         col = g[key]
         if not isinstance(col, dict):
             die(EXIT_BAD_GRAPH,
@@ -757,7 +813,38 @@ def check_derivation(g, nodes, F, graph_digest_value):
                     f"graph_digest is the pinned identity of the graph this refusal is about; "
                     f"file_sha256 is only a reading about the bytes.")
             checked += 1
+    if checked != REQUIRED_DERIVATION_COLUMNS:
+        # Reachable only if the column set and node count stop agreeing with §4's arithmetic. It is
+        # an assertion with an exit code rather than an `assert`, because a certificate is at stake.
+        die(EXIT_DERIVATION_MISMATCH,
+            f"derivation_columns_checked = {checked} after comparing every shipped column against "
+            f"the matrix (graph_digest {graph_digest_value}), but spec §4 requires "
+            f"{REQUIRED_DERIVATION_COLUMNS} (24 nodes x 2 columns). A file whose comparison count "
+            f"is not §4's number is not a file this driver may certify.")
     return checked
+
+
+def enforce_row_derivation(rec):
+    """SPEC §4'S NUMBER IS ENFORCED WHERE THE ROW IS WRITTEN, not only where the graph was admitted.
+
+    The admission check makes the bad case unreachable from a live dispatch, which is exactly why
+    this exists: unreachable-by-construction is a claim about today's call graph, and the row is
+    what a downstream reader will average. A record carrying derivation_columns_checked 0 (or 47,
+    or a string) is refused here, at exit 6 -- the same class and the same code as the admission
+    refusal -- immediately before the bytes are serialised and published. Nothing is written.
+    """
+    graph = rec.get("graph")
+    got = graph.get("derivation_columns_checked") if isinstance(graph, dict) else None
+    if isinstance(got, bool) or got != REQUIRED_DERIVATION_COLUMNS:
+        gdig = graph.get("graph_digest") if isinstance(graph, dict) else None
+        die(EXIT_DERIVATION_MISMATCH,
+            f"refusing to write the record: graph.derivation_columns_checked is {got!r}, but spec "
+            f"§4 requires {REQUIRED_DERIVATION_COLUMNS} (24 nodes x 2 shipped columns). graph_digest "
+            f"{gdig}; symbol {rec.get('start_rune')!r} cap {rec.get('cap')!r}. A row with a count "
+            f"other than {REQUIRED_DERIVATION_COLUMNS} states that the derivation was not checked "
+            f"that many times -- the guard runs at the WRITE SITE because a row that can be written "
+            f"with 0 is a row a downstream reader will average. No record was written.")
+    return got
 
 
 def stdout_argv():
@@ -1734,6 +1821,14 @@ def graph_audit_test():
     a `labyrinth_run: exit N:` line rather than a traceback. This is the defect in the shape it
     actually took: the audit exited 0 and printed a digest for a file the dispatch died on, and the
     digest was then quoted as a certificate by all three parties.
+
+    THE ABSENT-DERIVATION VECTORS. Measured on the repaired graph before the fix: both adjacency
+    columns absent -> exit 0 on both paths and a row written with derivation_columns_checked: 0;
+    one column absent -> exit 0 with 24. So the guard fired on a column that lied and slept on a
+    column that was missing. The four vectors below are the card's, each of which FAILED on the
+    previous bytes: one column absent, both absent, both present but understating by one, and the
+    control (both present and correct -> 0 -> a row carrying §4's 48). Without the control, "the
+    guard fired" and "nothing ever ran" would be the same observation.
     """
     import tempfile
 
@@ -1750,27 +1845,48 @@ def graph_audit_test():
         return p
 
     good_min = {a: neighbours(canon, F, "min", 12, a) for a in canon}
+    good_max = {a: neighbours(canon, F, "max", 12, a) for a in canon}
+    both = dict(base, adjacency_min_K=good_min, adjacency_max_K=good_max)
     bad_min = dict(good_min)
-    bad_min[canon[0]] = []          # a shipped column that contradicts the matrix
+    bad_min[canon[0]] = []          # a shipped column that contradicts the matrix outright
+    # UNDERSTATING BY ONE: one name removed from one row of a column that is otherwise right. This
+    # is the shape a silent generator bug produces, and it must be caught by the row-by-row compare.
+    short_min = {a: list(v) for a, v in good_min.items()}
+    victim = next(a for a in canon if short_min[a])
+    short_min[victim] = short_min[victim][:-1]
     fixtures = [
         # the shape the arrived bytes actually have: semantics is a STRING
         ("semantics_is_a_string", write("sem.json", dict(base, semantics="Raw directed GED.")),
-         EXIT_BAD_GRAPH, []),
+         EXIT_BAD_GRAPH, [], []),
         # the peer's second instance: same runes, same distances, array SORTED
         ("nodes_sorted", write("sorted.json", {"nodes": sorted(canon), "ged_fwd": F,
-                                               "semantics": {"K": 12}}), EXIT_NODE_ORDER, []),
+                                               "semantics": {"K": 12}}), EXIT_NODE_ORDER, [], []),
         # a shipped adjacency column that contradicts the matrix
-        ("adjacency_contradicts", write("der.json", dict(base, adjacency_min_K=bad_min)),
-         EXIT_DERIVATION_MISMATCH, []),
+        ("adjacency_contradicts", write("der.json", dict(both, adjacency_min_K=bad_min)),
+         EXIT_DERIVATION_MISMATCH, [], ["adjacency_min_K"]),
+        # both columns present, one row understated by exactly one neighbour
+        ("adjacency_understates_by_one", write("short.json", dict(both, adjacency_min_K=short_min)),
+         EXIT_DERIVATION_MISMATCH, [], ["adjacency_min_K"]),
+        # ONE column absent: same exit 6 as a wrong column, and the message names the column
+        ("adjacency_min_absent", write("nomin.json",
+                                       {k: v for k, v in both.items() if k != "adjacency_min_K"}),
+         EXIT_DERIVATION_MISMATCH, [], ["adjacency_min_K"]),
+        ("adjacency_max_absent", write("nomax.json",
+                                       {k: v for k, v in both.items() if k != "adjacency_max_K"}),
+         EXIT_DERIVATION_MISMATCH, [], ["adjacency_max_K"]),
+        # BOTH columns absent: the case that used to be written at exit 0 with a count of 0
+        ("both_absent", write("none.json", base), EXIT_DERIVATION_MISMATCH, [],
+         ["adjacency_min_K", "adjacency_max_K"]),
         # --expect-nodes-sha256 names a different declaration: refused on BOTH paths
-        ("wrong_declaration_pin", write("ok2.json", dict(base, adjacency_min_K=good_min)),
-         EXIT_NODE_ORDER, ["--expect-nodes-sha256", "0" * 64]),
+        ("wrong_declaration_pin", write("ok2.json", both),
+         EXIT_NODE_ORDER, ["--expect-nodes-sha256", "0" * 64], []),
         # control: a valid file, 0 on both paths, and the dispatch really does write a record
-        ("valid_control", write("ok.json", dict(base, adjacency_min_K=good_min)), 0, []),
+        # carrying §4's 48 -- read back, not assumed
+        ("valid_control", write("ok.json", both), 0, [], []),
     ]
     ok = True
     rows = []
-    for name, path, want, extra in fixtures:
+    for name, path, want, extra, must_name in fixtures:
         _, audit_code, audit_said = _run_main(["--graph", path, "--print-graph-digest"] + extra)
         out = os.path.join(root, "out_" + name)
         _, disp_code, disp_said = _run_main(["--graph", path, "--symmetrisation", "min",
@@ -1782,15 +1898,63 @@ def graph_audit_test():
         else:
             prefix = f"labyrinth_run: exit {want}:"
             declared = audit_said.startswith(prefix) and disp_said.startswith(prefix)
-        good = (audit_code == want and disp_code == want
-                and declared and (want == 0 or not made))
+        # the refusal must NAME the column(s) that are missing/wrong -- "something is absent" is not
+        # a repair instruction, so both paths are searched for the name, not just one.
+        named_ok = all((n in audit_said and n in disp_said) for n in must_name)
+        row_checked = None
+        if want == 0:
+            made_files = sorted(f for f in os.listdir(out) if f.endswith(".json")) if made else []
+            if len(made_files) == 1:
+                with open(os.path.join(out, made_files[0])) as fh:
+                    row_checked = json.load(fh).get("graph", {}).get("derivation_columns_checked")
+        if want == 0:
+            good = (audit_code == 0 and disp_code == 0 and row_checked == REQUIRED_DERIVATION_COLUMNS)
+        else:
+            good = (audit_code == want and disp_code == want and declared and named_ok and not made)
         ok = ok and good
         rows.append({"case": name, "audit_exit": audit_code, "dispatch_exit": disp_code,
                      "expected_exit": want, "out_dir_created": made,
-                     "no_traceback": declared,
+                     "no_traceback": declared, "named_columns": must_name,
+                     "refusal_names_the_column": named_ok,
+                     "record_derivation_columns_checked": row_checked,
                      "audit_said": audit_said.splitlines()[:1],
                      "dispatch_said": disp_said.splitlines()[-1:], "pass": good})
     return ok, rows
+
+
+def derivation_write_site_test():
+    """§4'S 48 ENFORCED AT THE WRITE SITE -- on rows, not on graphs.
+
+    The admission guard makes a bad count unreachable from a live dispatch, so a test that only
+    dispatches would prove the guard exists but never that it FIRES. These vectors are rows with the
+    shape the write site receives: 0, 47, 48, and a string. 0 is the value the old driver actually
+    published; 47 is the off-by-one a hand-built record would carry; 48 is the control that must
+    pass, so "refused" and "nothing ever ran" stay distinguishable.
+    """
+    def row(value):
+        return {"graph": {"derivation_columns_checked": value, "graph_digest": "0" * 64},
+                "start_rune": "Fehu", "cap": 40}
+
+    rows = []
+    ok = True
+    for case, value, want_exit, wanted in (
+            ("zero_is_refused", 0, EXIT_DERIVATION_MISMATCH, None),
+            ("off_by_one_is_refused", REQUIRED_DERIVATION_COLUMNS - 1, EXIT_DERIVATION_MISMATCH, None),
+            ("a_string_is_refused", "48", EXIT_DERIVATION_MISMATCH, None),
+            ("required_48_is_accepted", REQUIRED_DERIVATION_COLUMNS, None,
+             REQUIRED_DERIVATION_COLUMNS)):
+        res, code, said = _quiet(enforce_row_derivation, row(value))
+        if want_exit is None:
+            good = code is None and res == wanted
+        else:
+            good = (code == want_exit and said.startswith(f"labyrinth_run: exit {want_exit}:")
+                    and "derivation_columns_checked" in said and f"{value!r}" in said)
+        ok = ok and good
+        rows.append({"case": case, "value": value,
+                     "exit": code if code is not None else 0, "accepted": code is None,
+                     "said": said.splitlines()[:1], "pass": good})
+    return ok, rows
+
 
 
 def pin_rule_test():
@@ -1990,12 +2154,13 @@ def self_test():
     iok, identity_rows = identity_test()
     nok, node_rows = node_order_test()
     gok, audit_rows = graph_audit_test()
+    wsok, ws_rows = derivation_write_site_test()
     rok, pin_row = pin_rule_test()
     bbok, bb_rows = budget_binding_test()
     ptok, pt_row = prompt_template_test()
     cmok, cm_rows = compare_test()
     ok = (fsha == SELF_TEST_FILE_SHA and gdig == SELF_TEST_GRAPH_DIGEST and eok and aok and pok
-          and bok and qok and iok and nok and gok and rok and bbok and ptok and cmok)
+          and bok and qok and iok and nok and gok and wsok and rok and bbok and ptok and cmok)
     print(json.dumps({"self_test": "ged-v2",
                       "fixture_bytes": SELF_TEST_BYTES.decode(),
                       "preimage": (b"ged-v2\n" + b"".join(
@@ -2013,6 +2178,7 @@ def self_test():
                       "model_identity": identity_rows, "identity_pass": iok,
                       "node_order": node_rows, "node_order_pass": nok,
                       "graph_audit": audit_rows, "graph_audit_pass": gok,
+                      "derivation_write_site": ws_rows, "derivation_write_site_pass": wsok,
                       "pin_rule": pin_row, "pin_rule_pass": rok,
                       "budget_binding": bb_rows, "budget_binding_pass": bbok,
                       "prompt_template": pt_row, "prompt_template_pass": ptok,
@@ -2050,8 +2216,14 @@ def admit_test():
     F = {a: {b: (0 if a == b else 1) for b in nodes} for a in nodes}
     root = tempfile.mkdtemp(prefix="labyrinth-admit-")
     gp = os.path.join(root, "g.json")
+    # BOTH DERIVATION COLUMNS, because §4 makes them required and the control must reach the WRITE
+    # path. Before that rule this fixture carried neither and the control still wrote a row; now an
+    # absent column is exit 6 at admission, so a control without them would test the refusal it is
+    # supposed to sit beside.
+    deriv = {key: {a: neighbours(nodes, F, arm, 1, a) for a in nodes}
+             for key, arm in (("adjacency_min_K", "min"), ("adjacency_max_K", "max"))}
     with open(gp, "w") as fh:
-        json.dump({"nodes": nodes, "ged_fwd": F, "semantics": {"K": 1}}, fh)
+        json.dump({"nodes": nodes, "ged_fwd": F, "semantics": {"K": 1}, **deriv}, fh)
 
     def run(extra, out):
         import contextlib
@@ -2521,9 +2693,12 @@ def main():
             "symmetrisation": a.symmetrisation,
             "K": K,
             "derivation_columns_checked": cells_checked,
-            "derivation_basis": ("shipped adjacency_*_K columns compared with the matrix at the "
-                                 "graph's K; 0 means the file carries no such column, NOT that "
-                                 "the columns agreed"),
+            "derivation_columns_required": REQUIRED_DERIVATION_COLUMNS,
+            "derivation_basis": ("shipped adjacency_min_K + adjacency_max_K compared node by node "
+                                 "with the matrix at the graph's K; §4 requires 48 (24 nodes x 2 "
+                                 "columns) and this row is refused at the write site unless the "
+                                 "derived count is 48. An absent column is exit 6 at admission, "
+                                 "never a row with 0"),
             **ec_named,
         },
         "cell_spec_sha256": cell_sha,
@@ -2551,6 +2726,12 @@ def main():
         "visited_names": visited_names,
         "visited_count_basis": "positions",
     }
+    # §4'S NUMBER IS ENFORCED HERE, WHERE THE ROW IS WRITTEN. Admission already refused every graph
+    # that could produce anything else, so this is the second lock on the same door -- and it is the
+    # one that covers a future edit to check_derivation, a record assembled from a different facts
+    # dict, or a value that was derived and then overwritten. It fires before serialisation, so a
+    # refused row leaves neither a temp file nor a slug behind.
+    enforce_row_derivation(rec)
     payload = json.dumps(rec, indent=1) + "\n"
     try:
         # The guard covers the WHOLE publish -- open, write, flush and close -- because the record
