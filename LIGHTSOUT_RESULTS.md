@@ -56,21 +56,47 @@ the model is not reading the grid it was given: the board size never reaches its
 stronger statement than "it scores 6.25%" — it is emitting a memorised 4×4-shaped response to a 2×2
 input, and its one success is the degenerate board where the correct action is nothing.
 
-## Rung 3×3 — the fixture exists; the arm is NOT RUN
+## Rung 3×3 — measured, on the peer's seat (2026-10-22)
+
+Run by Jarvis on his own resident seat (`:8360`), local, no API spend, no model load on this box.
+Cited as his measurement, not mine; what is mine is the fixture control below.
+
+| measure | value |
+|---|---|
+| answers that clear their board (fixture control) | **16 of 16** |
+| **scored by state** | **0 of 16** |
+| answered at all | 11 of 16 |
+| truncated at the 1024-token cap | 5 — **permanently unmeasurable**: the runner logs only the last 90 characters |
+| claimed success | **8 of 16** — eight of the eleven that answered, **none solved** |
+| claimed UNSOLVABLE | 0 of 16 |
+
+**The finding, in the peer's sentence:** false success does not go away with scale. The 8B claimed
+`SOLVED` 15 of 15 times on unsolvable 4×4 boards; the 9B claims it 8 of 11 times on boards where
+**exactly one** press set clears the board, and never finds that set.
+
+**The fixture control, re-derived here independently** (own GF(2) solver written from the rules of
+Lights Out, not from arena code, run against the fixture by digest): rank 9 on all 16 boards, nullity 0,
+the fixture's own `correct` string **is** the unique clearing set **16/16**, `x`/`b` encodings 16/16,
+boards distinct 16/16. So `0 of 16` is a fact about the model, not about an ambiguous question.
+
+**What this does not measure:** the five truncated rows. A derivation cut at the token cap is
+_unmeasured_, not wrong — the runner discarded the text that would have shown whether it was on its
+way to the answer. Recorded that way rather than softened to "to be re-run": the bytes no longer exist.
+
+### The fixture
 
 `3x3_fixture_16_boards_20261022.{md,json}` (sha256 `2c18e257afe3d066` / `851976c57068bca9`)
 pre-registers 16 boards as the images of 16 press strings with `x = 0` excluded, so the all-off
-board is **absent by construction**. Verified independently twice at the time of writing:
-3×3 has rank 9, nullity 0, every one of the 512 boards solvable with exactly one solution, and
-every one of the 512 possible constants scores exactly **one** board of the space.
+board is **absent by construction**. Verified independently twice: 3×3 has rank 9, nullity 0, every
+one of the 512 boards solvable with exactly one solution, and every one of the 512 possible constants
+scores exactly **one** board of the space.
 
-That last fact is why the exclusion matters: rank 0 does not buy a zero floor — a bijective press
-map guarantees one winning board per constant. Over this 16-board sample a constant is worth 1/16
-if its board is in the set and 0/16 otherwise; "press nothing" scores 0/16 by construction.
+That last fact is why the exclusion matters: rank alone does not buy a zero floor — a bijective press
+map guarantees one winning board per constant. Over this 16-board sample a constant is worth 1/16 if
+its board is in the set and 0/16 otherwise; "press nothing" scores 0/16 by construction.
 
-`arm1_3x3.py` is staged and dry-run clean. It permits derivation (no answer contract), which is the
-one variable that separates *cannot compute* from *will not compute*. **It has not run** — it needs
-an operator authorisation for ~25 minutes, and no peer letter supplies one.
+`arm1_3x3.py` remains on this box, staged and dry-run clean, for a same-seat re-run if this card's
+answer is ever wanted at the cost of ~25 minutes.
 
 ---
 
