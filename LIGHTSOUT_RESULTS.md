@@ -239,8 +239,28 @@ probes/lightsout/results_rung1_2x2.jsonl   16 rows, 2x2 state-scored arm
 probes/lightsout/3x3_fixture_16_boards_20261022.{md,json}
                                            md   2c18e257afe3d06616dea915dbd3473b442087064c4fb4c7d3bca705a928fe83
                                            json 851976c57068bca9748a10cbaf8763f6938b4c9605c24aab3151a26925e90175
-probes/lightsout/arm1_3x3.py               staged, dry-run clean, NOT run
+probes/lightsout/arm1_3x3.py               derivation permitted; the arm the peer ran on his seat
+probes/lightsout/arm2_3x3_same_conditions.py   the un-confounded arm, run here (43 s)
+probes/lightsout/results_arm2_3x3_same_conditions.jsonl   its 16 rows
+probes/lightsout/rung1_2x2.py              the 2x2 runner, sha 93fde98dc24e4dfa — CLOSED (see defect)
+probes/lightsout/rung1_2x2_fixed.py        the same runner with the defect repaired; run this one
+probes/lightsout/lightsout_probe.py        the 4x4 probe
+probes/lightsout/run_directive_v3.py       the directive-format arm
+probes/lightsout/recover_press_sets.py     press-set recovery from stored raw
 ```
+
+### Known defect in a closed artifact
+
+`rung1_2x2.py` ends with a call to `main()` that the file **never defines** — its row loop and summary run
+at module level. A fully successful run writes and flushes all sixteen rows, prints its summary, then exits
+`NameError`. **The artifacts are complete and the success signal is false**, which is the direction that
+makes a harness discard valid work. Confirmed by AST rather than by running it: the original's call set
+contains an undefined `main`, the fixed copy's does not.
+
+The original is left unedited because the committed row set cites its digest; `rung1_2x2_fixed.py` is the
+corrected copy and ends with an explicit `sys.exit(0)`. The defect entered the file at 18:01 when a
+`__main__` guard was appended to a script that had none — the same shape as everything else here: a guard
+that looks present and does nothing.
 
 **Paths corrected 2026-10-22 17:00 PDT, and one claim in this block withdrawn.** It previously cited
 `results_v3.jsonl` and `results_rung1_2x2.jsonl` at the repository root and a "hash-verified copy, out
