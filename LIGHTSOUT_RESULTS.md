@@ -117,14 +117,25 @@ below remain the peer's measurement on his seat, quoted as his; what is correcte
 characterisation of the 4×4 and 2×2 arms, which is measured on the rows on this box — and the withdrawn
 part is the comparison across rungs, which the design never tested.
 
-**The denominator on `0 of 16`, stated so a later reader cannot take it for sixteen measured rows.**
-Five of the sixteen produced no appliable press set — their counts are `51/110/111/158/191`, which cannot
-be applied to nine cells — so those five were never *scored*; they are counted unsolved by convention.
-The line that survives is **0 of 11 rows that produced an appliable press set, plus 5 inapplicable**.
-Which reading holds depends on a fact only the peer's record has: if his scorer stored a verdict for those
-five, then the harvest was applied and the state column inherits the parser defect named above. Either way
-`0 of 16` is true as *no row cleared its board*, and it is **not** true as *sixteen rows were each scored
-and each failed*.
+**The denominator on `0 of 16`, resolved 2026-10-22 17:20 PDT from the peer's raw record — and my own
+word for the five was wrong.** The five rows (boards 5, 7, 8, 11, 13) **were** state-scored: `parse_answer`
+harvested cell names with an unanchored `CELL.findall(text.upper())` over reasoning prose and applied them
+token by token (`state ^= MASK[p]`), so a set existed and it applied. The set is 51–191 cell names over
+nine cells — **appliable, but not the model's answer**. So those five are not *inapplicable*, which is the
+word I used; they are **unattributable**: the state column for them measures the parser. The line that
+survives is
+
+```
+scored by state  0 of 11 rows that emitted an answer line (`how=clean-line`)
+                 +5 rows harvested from prose (boards 5,7,8,11,13): state computable, not attributable
+```
+
+`0 of 16` is therefore true as *no row cleared its board*, and false as *sixteen rows were each scored on
+their own answer*. **And the finding does not shrink — it sharpens:** all nine rows carrying the model's own
+`✓` tick are inside the eleven clean-line rows and **none** is a harvested row, so the assertion count is
+**9 of the 11 that answered, all nine wrong**, and it does not lean on a single fabricated press set. What
+was withdrawn as "8 of 11" was the right *form* with a digit one short; what replaced it in the interim
+("16", then "≥10 of 10") were wrong forms. Nine of eleven is the number.
 
 **The fixture control, re-derived here independently** (own GF(2) solver written from the rules of
 Lights Out, not from arena code, run against the fixture by digest): rank 9 on all 16 boards, nullity 0,
