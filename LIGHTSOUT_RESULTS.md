@@ -65,14 +65,35 @@ Cited as his measurement, not mine; what is mine is the fixture control below.
 |---|---|
 | answers that clear their board (fixture control) | **16 of 16** |
 | **scored by state** | **0 of 16** |
-| answered at all | 11 of 16 |
-| truncated at the 1024-token cap | 5 — **permanently unmeasurable**: the runner logs only the last 90 characters |
-| claimed success | **8 of 16** — eight of the eleven that answered, **none solved** |
+| answered in one line | 11 of 16 |
+| finished (`finish_reason = stop`) | 10 of 16 |
+| hit the 1024-token cap | **6 of 16** — of these, **5** produced no answer and are **permanently unmeasurable**: the runner logs only the last 90 characters. One capped row still emitted a clean line, which is why 11 answered and 10 finished |
+| claimed success | **withdrawn — see the correction below.** The runner's own count is 16, and it is not a count of claims |
 | claimed UNSOLVABLE | 0 of 16 |
 
-**The finding, in the peer's sentence:** false success does not go away with scale. The 8B claimed
-`SOLVED` 15 of 15 times on unsolvable 4×4 boards; the 9B claims it 8 of 11 times on boards where
-**exactly one** press set clears the board, and never finds that set.
+**The finding, corrected.** The 8B half of the sentence that stood here was wrong, and it was mine:
+this file said the 8B "claimed `SOLVED` 15 of 15 times on unsolvable 4×4 boards". Measured on the 30
+rows in `probes/lightsout/results_v3.jsonl`, the 8B emitted **one** answer, `PRESSES: NONE /
+CLAIM: UNSOLVABLE`, **30 of 30** — `claim` counts to `UNSOLVABLE: 30`, `SOLVED: 0` — with verdicts
+`CORRECT_UNSOLVABLE 15` and `FALSE_UNSOLVABLE 15`. The 15 on unsolvable boards is the model being
+**right**; the 15 is a false *impossibility* count on the solvable half. There were no `SOLVED` claims
+on that rung at all. The paragraph three sections above already carries the rule that refutes the
+sentence: *a constant scores the base rate by construction*. I quoted my own rule and then read a
+`CORRECT` cell as a failure, because I carried the number and dropped the verdict name.
+
+What survives, measured. **False success is real, and it is measured at the two smaller rungs**, where
+the rows carry an explicit `CLAIM:` line: at 2×2, six rows claim `SOLVED` and **one** is correct — the
+degenerate all-off board — so `FALSE_SUCCESS 5`, with `FALSE_UNSOLVABLE 10`; at 3×3, the peer reads all
+ten completed answers as asserting the cells are off, none solved. The 4×4 arm is the opposite shape:
+a constant *impossible* that is right on half a balanced sample by construction. The honest comparison
+is therefore **not** "false success at both scales" but **a constant verdict that never varies with the
+board, and whose sign changes with the rung** — impossible at 4×4, mostly impossible at 2×2, done at
+3×3, and wrong in all three.
+
+**Corrected 2026-10-22 17:00 PDT against commit `4c130a0`, whose message repeats the withdrawn
+sentence and cannot be edited without rewriting history.** The 3×3 model numbers below remain the
+peer's measurement on his seat, quoted as his; what is corrected here is my characterisation of the
+4×4 arm, which is measured on the rows on this box.
 
 **The fixture control, re-derived here independently** (own GF(2) solver written from the rules of
 Lights Out, not from arena code, run against the fixture by digest): rank 9 on all 16 boards, nullity 0,
@@ -122,12 +143,25 @@ answer is ever wanted at the cost of ~25 minutes.
 ## Files
 
 ```
-results_v3.jsonl          30 rows, 4x4 directive arm
-results_rung1_2x2.jsonl   16 rows, 2x2 state-scored arm
-results_rung1_2x2.jsonl -> artifacts/rung1-20261022/   (hash-verified copy, out of the 24h scratch)
-3x3_fixture_16_boards_20261022.{md,json}
-arm1_3x3.py               staged, dry-run clean, NOT run
+probes/lightsout/results_v3.jsonl          30 rows, 4x4 directive arm
+                                           1bd384561062f5f0ddcc37ae38ec4e6f1469571ef2e78cc12512685f0747bf58
+probes/lightsout/results_rung1_2x2.jsonl   16 rows, 2x2 state-scored arm
+                                           bda2da4eca665fe442bb57e2fffd0bbfb113734fe374ba0a93b0d9ed29e1bad6
+probes/lightsout/3x3_fixture_16_boards_20261022.{md,json}
+                                           md   2c18e257afe3d06616dea915dbd3473b442087064c4fb4c7d3bca705a928fe83
+                                           json 851976c57068bca9748a10cbaf8763f6938b4c9605c24aab3151a26925e90175
+probes/lightsout/arm1_3x3.py               staged, dry-run clean, NOT run
 ```
+
+**Paths corrected 2026-10-22 17:00 PDT, and one claim in this block withdrawn.** It previously cited
+`results_v3.jsonl` and `results_rung1_2x2.jsonl` at the repository root and a "hash-verified copy, out
+of the 24h scratch" at `artifacts/rung1-20261022/`. None of those three paths exists: the rows live in
+`probes/lightsout/`, and no `artifacts/` directory is present anywhere in the tree, so the copy that
+was claimed to have been taken out of the expiring scratch **was never taken**. The bytes are intact —
+the two surviving copies (repo and 24h scratch) are byte-identical to each other at the digests above —
+but the arrangement was one artifact in two places, one of which expires, and a citation that could not
+be followed. A row's digest is cited here so the numbers can be checked against the rows without
+trusting this file's prose.
 
 Every row carries `max_tokens`, `completion_tokens`, `finish_reason`, `answer_block`, `parse_path`,
 `out_of_range`, `raw` and the computed truth, so a row can be checked against the text that travels
