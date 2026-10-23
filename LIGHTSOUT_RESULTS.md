@@ -71,29 +71,43 @@ Cited as his measurement, not mine; what is mine is the fixture control below.
 | claimed success | **withdrawn — see the correction below.** The runner's own count is 16, and it is not a count of claims |
 | claimed UNSOLVABLE | 0 of 16 |
 
-**The finding, corrected.** The 8B half of the sentence that stood here was wrong, and it was mine:
-this file said the 8B "claimed `SOLVED` 15 of 15 times on unsolvable 4×4 boards". Measured on the 30
-rows in `probes/lightsout/results_v3.jsonl`, the 8B emitted **one** answer, `PRESSES: NONE /
-CLAIM: UNSOLVABLE`, **30 of 30** — `claim` counts to `UNSOLVABLE: 30`, `SOLVED: 0` — with verdicts
-`CORRECT_UNSOLVABLE 15` and `FALSE_UNSOLVABLE 15`. The 15 on unsolvable boards is the model being
-**right**; the 15 is a false *impossibility* count on the solvable half. There were no `SOLVED` claims
-on that rung at all. The paragraph three sections above already carries the rule that refutes the
-sentence: *a constant scores the base rate by construction*. I quoted my own rule and then read a
-`CORRECT` cell as a failure, because I carried the number and dropped the verdict name.
+**The finding, corrected — and the sentence had a third defect: the subject was mislabelled.** It read
+*"the 8B claimed `SOLVED` 15 of 15 times on unsolvable 4×4 boards; the 9B claims it 8 of 11 times…"*.
+There is **no 8B in this work at all.** The `model` field is `prism-bonsai-9b` on **30 of 30** rows in
+`probes/lightsout/results_v3.jsonl` and on **16 of 16** in `results_rung1_2x2.jsonl`: both rungs here
+were played by *Ternary-Bonsai-2-9B*, one 9B-class model. The 3×3 arm was played by a **different**
+model, `ornith9b`, on the peer's seat. So the sentence compared two labels as if they were two sizes,
+and it did so across two models.
 
-What survives, measured. **False success is real, and it is measured at the two smaller rungs**, where
-the rows carry an explicit `CLAIM:` line: at 2×2, six rows claim `SOLVED` and **one** is correct — the
-degenerate all-off board — so `FALSE_SUCCESS 5`, with `FALSE_UNSOLVABLE 10`; at 3×3, the peer reads all
-ten completed answers as asserting the cells are off, none solved. The 4×4 arm is the opposite shape:
-a constant *impossible* that is right on half a balanced sample by construction. The honest comparison
-is therefore **not** "false success at both scales" but **a constant verdict that never varies with the
-board, and whose sign changes with the rung** — impossible at 4×4, mostly impossible at 2×2, done at
-3×3, and wrong in all three.
+Measured on the 30 stored rows, that model emitted **one** answer, `PRESSES: NONE / CLAIM: UNSOLVABLE`,
+**30 of 30** — `claim` counts to `UNSOLVABLE: 30`, `SOLVED: 0` — with verdicts `CORRECT_UNSOLVABLE 15`
+and `FALSE_UNSOLVABLE 15`. The 15 on unsolvable boards is the model being **right**; the 15 is a false
+*impossibility* count on the solvable half. There were no `SOLVED` claims on that rung at all. The
+paragraph three sections above already carries the rule that refutes the sentence: *a constant scores
+the base rate by construction*. I quoted my own rule and then read a `CORRECT` cell as a failure,
+because I carried the number and dropped the verdict name.
+
+What survives, measured, **with the model named per rung**:
+
+| rung | model | measured | shape of the failure |
+|---|---|---|---|
+| 4×4 | `prism-bonsai-9b` | 30 rows; one answer; `claim UNSOLVABLE 30/30`, `SOLVED 0`; `CORRECT_UNSOLVABLE 15`, `FALSE_UNSOLVABLE 15` | constant **impossible** — right on the unsolvable half by construction, wrong on every solvable board |
+| 2×2 | `prism-bonsai-9b` | 16 rows; `claim SOLVED 6`, `UNSOLVABLE 10`; `CORRECT 1` (the degenerate all-off board), `FALSE_SUCCESS 5`, `FALSE_UNSOLVABLE 10` | mostly **impossible**, with a memorised 4×4-shaped answer (`C1`, `D1` do not exist on 2×2) |
+| 3×3 | `ornith9b` (peer's seat) | 16 rows; `0 of 16` by state; ≥10 of 10 completed assert the cells are off, none solved | constant **done** |
+
+**The comparison the design can support, and the one it cannot.** It cannot support "false success does
+not go away with scale", because **no rung was played by both models** — model and rung are confounded,
+so the difference between the 4×4 and 3×3 rows cannot be attributed to size rather than to the model.
+What it does support, on two different models and three rungs: **the verdict is a constant that does not
+track the board**, and its sign flips between arms. That is a failure of discrimination, and every rung
+shows it without needing a scale claim at all.
 
 **Corrected 2026-10-22 17:00 PDT against commit `4c130a0`, whose message repeats the withdrawn
-sentence and cannot be edited without rewriting history.** The 3×3 model numbers below remain the
-peer's measurement on his seat, quoted as his; what is corrected here is my characterisation of the
-4×4 arm, which is measured on the rows on this box.
+sentence and cannot be edited without rewriting history; corrected a second time at 17:06 PDT when the
+`model` field showed the subject itself was mislabelled and the arms confounded.** The 3×3 model numbers
+below remain the peer's measurement on his seat, quoted as his; what is corrected here is my
+characterisation of the 4×4 and 2×2 arms, which is measured on the rows on this box — and the withdrawn
+part is the comparison across rungs, which the design never tested.
 
 **The fixture control, re-derived here independently** (own GF(2) solver written from the rules of
 Lights Out, not from arena code, run against the fixture by digest): rank 9 on all 16 boards, nullity 0,
