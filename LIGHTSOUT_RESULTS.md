@@ -28,6 +28,14 @@ Ten boards (5 solvable, 5 unsolvable) × three passes. Directive format, 256 tok
 constant scores exactly the base rate by construction. Report the two cells separately and never
 the 50%; the honest summary is **0 boards solved, one constant emitted**.
 
+**Why the balanced sample was necessary, measured here (2026-10-22 17:12 PDT, arithmetic on the rules,
+no model call):** on 4×4 the toggle matrix has **rank 12, nullity 4**, so exactly **4,096 of 65,536**
+boards are solvable — **6.25%**, confirmed by enumerating the image rather than by quoting the rank.
+A constant `CLAIM: UNSOLVABLE` is therefore **right 93.75% of the time on a random 4×4 board**. The
+unsolvable class does not merely exist at this rung; it is 15/16 of the space, which is the opposite of
+3×3 (rank 9, nullity 0, every board solvable). The informative cells on this rung are the ten solvable
+boards, where the model answered UNSOLVABLE 3 passes out of 3 on every one.
+
 ## Rung 2×2 — 16 attempts, three answers
 
 All 16 boards, which on 2×2 is the entire state space. State scoring: correct iff the presses
@@ -64,10 +72,10 @@ Cited as his measurement, not mine; what is mine is the fixture control below.
 | measure | value |
 |---|---|
 | answers that clear their board (fixture control) | **16 of 16** |
-| **scored by state** | **0 of 16** |
+| **scored by state** | **0 of 16** — carrying 5 rows that produced no appliable press set: read the denominator note below |
 | answered in one line | 11 of 16 |
 | finished (`finish_reason = stop`) | 10 of 16 |
-| hit the 1024-token cap | **6 of 16** — of these, **5** produced no answer and are **permanently unmeasurable**: the runner logs only the last 90 characters. One capped row still emitted a clean line, which is why 11 answered and 10 finished |
+| hit the 1024-token cap | **6 of 16** — of these, **5** produced no answer, and their press counts **51/110/111/158/191** cannot be press sets on nine cells: they are **coordinates harvested out of reasoning prose by the parser**, which is a parser defect and **not a token budget**. The sixth was cut off but still emitted a clean line, which is why 11 answered and 10 finished. The five are **permanently unmeasurable as claims** — the runner stored only the last 90 characters |
 | claimed success | **withdrawn — see the correction below.** The runner's own count is 16, and it is not a count of claims |
 | claimed UNSOLVABLE | 0 of 16 |
 
@@ -108,6 +116,15 @@ sentence and cannot be edited without rewriting history; corrected a second time
 below remain the peer's measurement on his seat, quoted as his; what is corrected here is my
 characterisation of the 4×4 and 2×2 arms, which is measured on the rows on this box — and the withdrawn
 part is the comparison across rungs, which the design never tested.
+
+**The denominator on `0 of 16`, stated so a later reader cannot take it for sixteen measured rows.**
+Five of the sixteen produced no appliable press set — their counts are `51/110/111/158/191`, which cannot
+be applied to nine cells — so those five were never *scored*; they are counted unsolved by convention.
+The line that survives is **0 of 11 rows that produced an appliable press set, plus 5 inapplicable**.
+Which reading holds depends on a fact only the peer's record has: if his scorer stored a verdict for those
+five, then the harvest was applied and the state column inherits the parser defect named above. Either way
+`0 of 16` is true as *no row cleared its board*, and it is **not** true as *sixteen rows were each scored
+and each failed*.
 
 **The fixture control, re-derived here independently** (own GF(2) solver written from the rules of
 Lights Out, not from arena code, run against the fixture by digest): rank 9 on all 16 boards, nullity 0,
