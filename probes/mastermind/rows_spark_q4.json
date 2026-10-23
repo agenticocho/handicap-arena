@@ -1,0 +1,3615 @@
+{
+ "run": {
+  "instrument": "mastermind_run_onefile.py",
+  "instrument_sha256": "3bc8e7685522ffa32573c1e4c197e81e1670061bb881176efda186271faea876",
+  "source_modules": {
+   "engine": "mastermind_sim.py feedback/all_codes inlined verbatim",
+   "prompt": "mastermind_prompt.py build_prompt/parse_* inlined verbatim",
+   "http": "mastermind_probe.py http_model inlined verbatim"
+  },
+  "sys_path_manipulation": "none",
+  "selector": "model reply (no scripted chooser); first-consistent-lex  (pick = cands[0]; candidates enumerated in itertools.product order) used only for --control",
+  "fixture": "fixture.txt",
+  "fixture_sha256": "ccae01aecd7c9828e8b8e99826a4879739ab23c3d8c43f2a65284be3a1fb7187",
+  "fixture_games": 16,
+  "model": "spark-4b-q4",
+  "base": "http://127.0.0.1:58610",
+  "max_tokens": 256,
+  "thinking": false,
+  "limit": 10,
+  "control": false,
+  "prompt": "inlined build_prompt (no import)",
+  "prompt_sha256": "e671e8aeaa9ba0840d3cb544edf764f14dde0d14c09bc4d7ccf499ab4f5aaf03",
+  "prompt_roundtrip": "on",
+  "exit_status_policy": {
+   "0": "self-checks passed",
+   "2": "control < 100%",
+   "3": "fixture refused",
+   "4": "prompt round-trip failed",
+   "5": "answered turn inconsistent with feedback already shown"
+  },
+  "started": "2026-10-23T14:12:23Z",
+  "rowset_sha256": "f318459145fa1a2dc5cbfddd5fd276f28121d705aa3166bcdb655724d4f56bb5",
+  "ended": "2026-10-23T14:12:57Z"
+ },
+ "summary": {
+  "games": 16,
+  "wins": 0,
+  "consistency": 0.1,
+  "answered_turns": 160,
+  "distinct_all": 11,
+  "truncated_or_empty": 0,
+  "finish_length": 0,
+  "mean_guesses_when_won": null
+ },
+ "rows": [
+  {
+   "secret": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "guesses": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     4,
+     5,
+     0,
+     2
+    ],
+    [
+     0,
+     1,
+     3,
+     5
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     0,
+     1,
+     2,
+     3
+    ]
+   ],
+   "feedback": [
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ]
+   ],
+   "consistent": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "consistent_all": false,
+   "solved": false,
+   "guesses_used": 10,
+   "distinct_guesses": 5,
+   "turns": 10,
+   "no_answer": 0,
+   "strict": 10,
+   "normalized": 0,
+   "raw": [
+    "0 1 2 3",
+    "4 5 0 2",
+    "0 1 3 5",
+    "4 0 5 1",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "0 1 2 3"
+   ],
+   "tokens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "secs": [
+    0.2,
+    0.15,
+    0.16,
+    0.19,
+    0.19,
+    0.2,
+    0.21,
+    0.23,
+    0.23,
+    0.24
+   ],
+   "finish": [
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop"
+   ],
+   "content_empty": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "remaining_candidates": 1,
+   "ended": "budget_exhausted",
+   "won_at": null,
+   "state": {
+    "ended": "budget_exhausted",
+    "remaining_candidates": 1,
+    "candidates_at_each_turn": [
+     108,
+     14,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "consistent_at_each_turn": [
+     true,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  {
+   "secret": [
+    2,
+    3,
+    0,
+    1
+   ],
+   "guesses": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     4,
+     5,
+     0,
+     2
+    ],
+    [
+     0,
+     1,
+     4,
+     5
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ]
+   ],
+   "feedback": [
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ]
+   ],
+   "consistent": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "consistent_all": false,
+   "solved": false,
+   "guesses_used": 10,
+   "distinct_guesses": 4,
+   "turns": 10,
+   "no_answer": 0,
+   "strict": 10,
+   "normalized": 0,
+   "raw": [
+    "0 1 2 3",
+    "4 5 0 2",
+    "0 1 4 5",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1"
+   ],
+   "tokens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "secs": [
+    0.2,
+    0.15,
+    0.16,
+    0.19,
+    0.2,
+    0.21,
+    0.22,
+    0.25,
+    0.24,
+    0.26
+   ],
+   "finish": [
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop"
+   ],
+   "content_empty": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "remaining_candidates": 4,
+   "ended": "budget_exhausted",
+   "won_at": null,
+   "state": {
+    "ended": "budget_exhausted",
+    "remaining_candidates": 4,
+    "candidates_at_each_turn": [
+     9,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4
+    ],
+    "consistent_at_each_turn": [
+     true,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  {
+   "secret": [
+    1,
+    5,
+    2,
+    5
+   ],
+   "guesses": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     2,
+     4
+    ],
+    [
+     4,
+     5,
+     0,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ]
+   ],
+   "feedback": [
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ]
+   ],
+   "consistent": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "consistent_all": false,
+   "solved": false,
+   "guesses_used": 10,
+   "distinct_guesses": 4,
+   "turns": 10,
+   "no_answer": 0,
+   "strict": 10,
+   "normalized": 0,
+   "raw": [
+    "0 1 2 3",
+    "0 1 2 4",
+    "4 5 0 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3"
+   ],
+   "tokens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "secs": [
+    0.2,
+    0.15,
+    0.16,
+    0.17,
+    0.18,
+    0.2,
+    0.21,
+    0.23,
+    0.24,
+    0.26
+   ],
+   "finish": [
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop"
+   ],
+   "content_empty": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "remaining_candidates": 9,
+   "ended": "budget_exhausted",
+   "won_at": null,
+   "state": {
+    "ended": "budget_exhausted",
+    "remaining_candidates": 9,
+    "candidates_at_each_turn": [
+     252,
+     72,
+     11,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9
+    ],
+    "consistent_at_each_turn": [
+     true,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  {
+   "secret": [
+    5,
+    0,
+    2,
+    0
+   ],
+   "guesses": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     2,
+     4
+    ],
+    [
+     4,
+     5,
+     0,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ]
+   ],
+   "feedback": [
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ]
+   ],
+   "consistent": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "consistent_all": false,
+   "solved": false,
+   "guesses_used": 10,
+   "distinct_guesses": 4,
+   "turns": 10,
+   "no_answer": 0,
+   "strict": 10,
+   "normalized": 0,
+   "raw": [
+    "0 1 2 3",
+    "0 1 2 4",
+    "4 5 0 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3"
+   ],
+   "tokens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "secs": [
+    0.2,
+    0.15,
+    0.16,
+    0.17,
+    0.18,
+    0.18,
+    0.21,
+    0.22,
+    0.24,
+    0.26
+   ],
+   "finish": [
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop"
+   ],
+   "content_empty": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "remaining_candidates": 10,
+   "ended": "budget_exhausted",
+   "won_at": null,
+   "state": {
+    "ended": "budget_exhausted",
+    "remaining_candidates": 10,
+    "candidates_at_each_turn": [
+     252,
+     72,
+     16,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10
+    ],
+    "consistent_at_each_turn": [
+     true,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  {
+   "secret": [
+    3,
+    2,
+    0,
+    2
+   ],
+   "guesses": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     4,
+     5,
+     0,
+     2
+    ],
+    [
+     0,
+     1,
+     4,
+     5
+    ],
+    [
+     4,
+     0,
+     5,
+     2
+    ],
+    [
+     4,
+     0,
+     5,
+     2
+    ],
+    [
+     4,
+     0,
+     5,
+     2
+    ],
+    [
+     4,
+     0,
+     5,
+     2
+    ],
+    [
+     4,
+     0,
+     5,
+     2
+    ],
+    [
+     4,
+     0,
+     5,
+     2
+    ],
+    [
+     4,
+     0,
+     5,
+     2
+    ]
+   ],
+   "feedback": [
+    [
+     0,
+     3
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ]
+   ],
+   "consistent": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "consistent_all": false,
+   "solved": false,
+   "guesses_used": 10,
+   "distinct_guesses": 4,
+   "turns": 10,
+   "no_answer": 0,
+   "strict": 10,
+   "normalized": 0,
+   "raw": [
+    "0 1 2 3",
+    "4 5 0 2",
+    "0 1 4 5",
+    "4 0 5 2",
+    "4 0 5 2",
+    "4 0 5 2",
+    "4 0 5 2",
+    "4 0 5 2",
+    "4 0 5 2",
+    "4 0 5 2"
+   ],
+   "tokens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "secs": [
+    0.2,
+    0.15,
+    0.16,
+    0.18,
+    0.18,
+    0.2,
+    0.22,
+    0.21,
+    0.24,
+    0.26
+   ],
+   "finish": [
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop"
+   ],
+   "content_empty": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "remaining_candidates": 3,
+   "ended": "budget_exhausted",
+   "won_at": null,
+   "state": {
+    "ended": "budget_exhausted",
+    "remaining_candidates": 3,
+    "candidates_at_each_turn": [
+     136,
+     11,
+     4,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "consistent_at_each_turn": [
+     true,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  {
+   "secret": [
+    2,
+    1,
+    4,
+    0
+   ],
+   "guesses": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     4,
+     5,
+     0,
+     1
+    ],
+    [
+     4,
+     5,
+     0,
+     1
+    ],
+    [
+     4,
+     5,
+     0,
+     1
+    ],
+    [
+     4,
+     5,
+     0,
+     1
+    ],
+    [
+     4,
+     5,
+     0,
+     1
+    ],
+    [
+     4,
+     5,
+     0,
+     1
+    ],
+    [
+     4,
+     5,
+     0,
+     1
+    ],
+    [
+     0,
+     1,
+     2,
+     3
+    ]
+   ],
+   "feedback": [
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     2
+    ]
+   ],
+   "consistent": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "consistent_all": false,
+   "solved": false,
+   "guesses_used": 10,
+   "distinct_guesses": 2,
+   "turns": 10,
+   "no_answer": 0,
+   "strict": 10,
+   "normalized": 0,
+   "raw": [
+    "0 1 2 3",
+    "0 1 2 3",
+    "4 5 0 1",
+    "4 5 0 1",
+    "4 5 0 1",
+    "4 5 0 1",
+    "4 5 0 1",
+    "4 5 0 1",
+    "4 5 0 1",
+    "0 1 2 3"
+   ],
+   "tokens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "secs": [
+    0.19,
+    0.15,
+    0.16,
+    0.17,
+    0.19,
+    0.2,
+    0.22,
+    0.21,
+    0.24,
+    0.25
+   ],
+   "finish": [
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop"
+   ],
+   "content_empty": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "remaining_candidates": 16,
+   "ended": "budget_exhausted",
+   "won_at": null,
+   "state": {
+    "ended": "budget_exhausted",
+    "remaining_candidates": 16,
+    "candidates_at_each_turn": [
+     132,
+     132,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "consistent_at_each_turn": [
+     true,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  {
+   "secret": [
+    5,
+    2,
+    3,
+    3
+   ],
+   "guesses": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     2,
+     4
+    ],
+    [
+     4,
+     5,
+     0,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ]
+   ],
+   "feedback": [
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ]
+   ],
+   "consistent": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "consistent_all": false,
+   "solved": false,
+   "guesses_used": 10,
+   "distinct_guesses": 4,
+   "turns": 10,
+   "no_answer": 0,
+   "strict": 10,
+   "normalized": 0,
+   "raw": [
+    "0 1 2 3",
+    "0 1 2 4",
+    "4 5 0 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3"
+   ],
+   "tokens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "secs": [
+    0.19,
+    0.15,
+    0.16,
+    0.17,
+    0.19,
+    0.19,
+    0.22,
+    0.21,
+    0.24,
+    0.25
+   ],
+   "finish": [
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop"
+   ],
+   "content_empty": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "remaining_candidates": 2,
+   "ended": "budget_exhausted",
+   "won_at": null,
+   "state": {
+    "ended": "budget_exhausted",
+    "remaining_candidates": 2,
+    "candidates_at_each_turn": [
+     252,
+     30,
+     8,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ],
+    "consistent_at_each_turn": [
+     true,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  {
+   "secret": [
+    3,
+    2,
+    5,
+    1
+   ],
+   "guesses": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     4,
+     5,
+     0,
+     2
+    ],
+    [
+     0,
+     1,
+     4,
+     5
+    ],
+    [
+     0,
+     0,
+     1,
+     4
+    ],
+    [
+     4,
+     5,
+     0,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ]
+   ],
+   "feedback": [
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     0
+    ]
+   ],
+   "consistent": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "consistent_all": false,
+   "solved": false,
+   "guesses_used": 10,
+   "distinct_guesses": 6,
+   "turns": 10,
+   "no_answer": 0,
+   "strict": 10,
+   "normalized": 0,
+   "raw": [
+    "0 1 2 3",
+    "4 5 0 2",
+    "0 1 4 5",
+    "0 0 1 4",
+    "4 5 0 1",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1"
+   ],
+   "tokens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "secs": [
+    0.19,
+    0.15,
+    0.16,
+    0.17,
+    0.19,
+    0.18,
+    0.22,
+    0.21,
+    0.24,
+    0.25
+   ],
+   "finish": [
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop"
+   ],
+   "content_empty": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "remaining_candidates": 2,
+   "ended": "budget_exhausted",
+   "won_at": null,
+   "state": {
+    "ended": "budget_exhausted",
+    "remaining_candidates": 2,
+    "candidates_at_each_turn": [
+     136,
+     32,
+     11,
+     3,
+     3,
+     2,
+     2,
+     2,
+     2,
+     2
+    ],
+    "consistent_at_each_turn": [
+     true,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  {
+   "secret": [
+    0,
+    1,
+    1,
+    4
+   ],
+   "guesses": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     4,
+     5,
+     0,
+     2
+    ],
+    [
+     0,
+     1,
+     4,
+     5
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ]
+   ],
+   "feedback": [
+    [
+     2,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ]
+   ],
+   "consistent": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "consistent_all": false,
+   "solved": false,
+   "guesses_used": 10,
+   "distinct_guesses": 4,
+   "turns": 10,
+   "no_answer": 0,
+   "strict": 10,
+   "normalized": 0,
+   "raw": [
+    "0 1 2 3",
+    "4 5 0 2",
+    "0 1 4 5",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1"
+   ],
+   "tokens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "secs": [
+    0.19,
+    0.15,
+    0.16,
+    0.17,
+    0.18,
+    0.18,
+    0.22,
+    0.22,
+    0.24,
+    0.25
+   ],
+   "finish": [
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop"
+   ],
+   "content_empty": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "remaining_candidates": 2,
+   "ended": "budget_exhausted",
+   "won_at": null,
+   "state": {
+    "ended": "budget_exhausted",
+    "remaining_candidates": 2,
+    "candidates_at_each_turn": [
+     96,
+     27,
+     4,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ],
+    "consistent_at_each_turn": [
+     true,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  {
+   "secret": [
+    3,
+    5,
+    0,
+    5
+   ],
+   "guesses": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     2,
+     4
+    ],
+    [
+     4,
+     5,
+     0,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ]
+   ],
+   "feedback": [
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ]
+   ],
+   "consistent": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "consistent_all": false,
+   "solved": false,
+   "guesses_used": 10,
+   "distinct_guesses": 4,
+   "turns": 10,
+   "no_answer": 0,
+   "strict": 10,
+   "normalized": 0,
+   "raw": [
+    "0 1 2 3",
+    "0 1 2 4",
+    "4 5 0 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3"
+   ],
+   "tokens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "secs": [
+    0.2,
+    0.15,
+    0.16,
+    0.17,
+    0.18,
+    0.2,
+    0.22,
+    0.21,
+    0.24,
+    0.25
+   ],
+   "finish": [
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop"
+   ],
+   "content_empty": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "remaining_candidates": 2,
+   "ended": "budget_exhausted",
+   "won_at": null,
+   "state": {
+    "ended": "budget_exhausted",
+    "remaining_candidates": 2,
+    "candidates_at_each_turn": [
+     312,
+     63,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ],
+    "consistent_at_each_turn": [
+     true,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  {
+   "secret": [
+    0,
+    4,
+    2,
+    1
+   ],
+   "guesses": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     4,
+     5,
+     0,
+     1
+    ],
+    [
+     4,
+     5,
+     0,
+     1
+    ],
+    [
+     4,
+     5,
+     0,
+     1
+    ],
+    [
+     4,
+     5,
+     0,
+     1
+    ],
+    [
+     4,
+     5,
+     0,
+     1
+    ],
+    [
+     4,
+     5,
+     0,
+     1
+    ],
+    [
+     4,
+     5,
+     0,
+     1
+    ],
+    [
+     4,
+     5,
+     0,
+     1
+    ]
+   ],
+   "feedback": [
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     2
+    ]
+   ],
+   "consistent": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "consistent_all": false,
+   "solved": false,
+   "guesses_used": 10,
+   "distinct_guesses": 2,
+   "turns": 10,
+   "no_answer": 0,
+   "strict": 10,
+   "normalized": 0,
+   "raw": [
+    "0 1 2 3",
+    "0 1 2 3",
+    "4 5 0 1",
+    "4 5 0 1",
+    "4 5 0 1",
+    "4 5 0 1",
+    "4 5 0 1",
+    "4 5 0 1",
+    "4 5 0 1",
+    "4 5 0 1"
+   ],
+   "tokens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "secs": [
+    0.19,
+    0.15,
+    0.16,
+    0.17,
+    0.18,
+    0.2,
+    0.21,
+    0.21,
+    0.24,
+    0.25
+   ],
+   "finish": [
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop"
+   ],
+   "content_empty": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "remaining_candidates": 4,
+   "ended": "budget_exhausted",
+   "won_at": null,
+   "state": {
+    "ended": "budget_exhausted",
+    "remaining_candidates": 4,
+    "candidates_at_each_turn": [
+     48,
+     48,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4
+    ],
+    "consistent_at_each_turn": [
+     true,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  {
+   "secret": [
+    3,
+    4,
+    4,
+    0
+   ],
+   "guesses": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     2,
+     4
+    ],
+    [
+     4,
+     5,
+     0,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ]
+   ],
+   "feedback": [
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ]
+   ],
+   "consistent": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "consistent_all": false,
+   "solved": false,
+   "guesses_used": 10,
+   "distinct_guesses": 5,
+   "turns": 10,
+   "no_answer": 0,
+   "strict": 10,
+   "normalized": 0,
+   "raw": [
+    "0 1 2 3",
+    "0 1 2 4",
+    "4 5 0 3",
+    "4 0 5 1",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3"
+   ],
+   "tokens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "secs": [
+    0.2,
+    0.15,
+    0.16,
+    0.18,
+    0.19,
+    0.18,
+    0.19,
+    0.21,
+    0.24,
+    0.25
+   ],
+   "finish": [
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop"
+   ],
+   "content_empty": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "remaining_candidates": 8,
+   "ended": "budget_exhausted",
+   "won_at": null,
+   "state": {
+    "ended": "budget_exhausted",
+    "remaining_candidates": 8,
+    "candidates_at_each_turn": [
+     312,
+     123,
+     16,
+     8,
+     8,
+     8,
+     8,
+     8,
+     8,
+     8
+    ],
+    "consistent_at_each_turn": [
+     true,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  {
+   "secret": [
+    1,
+    5,
+    3,
+    4
+   ],
+   "guesses": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     2,
+     4
+    ],
+    [
+     4,
+     5,
+     0,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ]
+   ],
+   "feedback": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ]
+   ],
+   "consistent": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "consistent_all": false,
+   "solved": false,
+   "guesses_used": 10,
+   "distinct_guesses": 4,
+   "turns": 10,
+   "no_answer": 0,
+   "strict": 10,
+   "normalized": 0,
+   "raw": [
+    "0 1 2 3",
+    "0 1 2 4",
+    "4 5 0 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3"
+   ],
+   "tokens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "secs": [
+    0.2,
+    0.15,
+    0.16,
+    0.18,
+    0.19,
+    0.19,
+    0.19,
+    0.22,
+    0.24,
+    0.25
+   ],
+   "finish": [
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop"
+   ],
+   "content_empty": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "remaining_candidates": 5,
+   "ended": "budget_exhausted",
+   "won_at": null,
+   "state": {
+    "ended": "budget_exhausted",
+    "remaining_candidates": 5,
+    "candidates_at_each_turn": [
+     312,
+     33,
+     7,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ],
+    "consistent_at_each_turn": [
+     true,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  {
+   "secret": [
+    2,
+    5,
+    4,
+    2
+   ],
+   "guesses": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     2,
+     4
+    ],
+    [
+     4,
+     5,
+     0,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ]
+   ],
+   "feedback": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     2
+    ]
+   ],
+   "consistent": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "consistent_all": false,
+   "solved": false,
+   "guesses_used": 10,
+   "distinct_guesses": 4,
+   "turns": 10,
+   "no_answer": 0,
+   "strict": 10,
+   "normalized": 0,
+   "raw": [
+    "0 1 2 3",
+    "0 1 2 4",
+    "4 5 0 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3"
+   ],
+   "tokens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "secs": [
+    0.19,
+    0.15,
+    0.16,
+    0.17,
+    0.18,
+    0.19,
+    0.19,
+    0.21,
+    0.24,
+    0.26
+   ],
+   "finish": [
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop"
+   ],
+   "content_empty": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "remaining_candidates": 6,
+   "ended": "budget_exhausted",
+   "won_at": null,
+   "state": {
+    "ended": "budget_exhausted",
+    "remaining_candidates": 6,
+    "candidates_at_each_turn": [
+     152,
+     63,
+     14,
+     6,
+     6,
+     6,
+     6,
+     6,
+     6,
+     6
+    ],
+    "consistent_at_each_turn": [
+     true,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  {
+   "secret": [
+    3,
+    1,
+    4,
+    1
+   ],
+   "guesses": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     2,
+     4
+    ],
+    [
+     4,
+     5,
+     0,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     3
+    ]
+   ],
+   "feedback": [
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     2
+    ]
+   ],
+   "consistent": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "consistent_all": false,
+   "solved": false,
+   "guesses_used": 10,
+   "distinct_guesses": 4,
+   "turns": 10,
+   "no_answer": 0,
+   "strict": 10,
+   "normalized": 0,
+   "raw": [
+    "0 1 2 3",
+    "0 1 2 4",
+    "4 5 0 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3",
+    "4 0 5 3"
+   ],
+   "tokens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "secs": [
+    0.2,
+    0.15,
+    0.16,
+    0.17,
+    0.18,
+    0.2,
+    0.19,
+    0.21,
+    0.24,
+    0.25
+   ],
+   "finish": [
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop"
+   ],
+   "content_empty": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "remaining_candidates": 4,
+   "ended": "budget_exhausted",
+   "won_at": null,
+   "state": {
+    "ended": "budget_exhausted",
+    "remaining_candidates": 4,
+    "candidates_at_each_turn": [
+     252,
+     72,
+     16,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4
+    ],
+    "consistent_at_each_turn": [
+     true,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  {
+   "secret": [
+    2,
+    4,
+    5,
+    0
+   ],
+   "guesses": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     2,
+     4
+    ],
+    [
+     4,
+     5,
+     0,
+     3
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ],
+    [
+     4,
+     0,
+     5,
+     1
+    ]
+   ],
+   "feedback": [
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     2
+    ]
+   ],
+   "consistent": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "consistent_all": false,
+   "solved": false,
+   "guesses_used": 10,
+   "distinct_guesses": 4,
+   "turns": 10,
+   "no_answer": 0,
+   "strict": 10,
+   "normalized": 0,
+   "raw": [
+    "0 1 2 3",
+    "0 1 2 4",
+    "4 5 0 3",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1",
+    "4 0 5 1"
+   ],
+   "tokens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "secs": [
+    0.19,
+    0.15,
+    0.16,
+    0.17,
+    0.18,
+    0.19,
+    0.2,
+    0.22,
+    0.24,
+    0.25
+   ],
+   "finish": [
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop",
+    "stop"
+   ],
+   "content_empty": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "remaining_candidates": 3,
+   "ended": "budget_exhausted",
+   "won_at": null,
+   "state": {
+    "ended": "budget_exhausted",
+    "remaining_candidates": 3,
+    "candidates_at_each_turn": [
+     312,
+     69,
+     8,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "consistent_at_each_turn": [
+     true,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  }
+ ]
+}
