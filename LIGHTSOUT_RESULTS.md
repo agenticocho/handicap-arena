@@ -165,7 +165,35 @@ boards distinct 16/16. So `0 of 16` is a fact about the model, not about an ambi
 _unmeasured_, not wrong — the runner discarded the text that would have shown whether it was on its
 way to the answer. Recorded that way rather than softened to "to be re-run": the bytes no longer exist.
 
-### The fixture
+### Arm 2 — 3×3 on the same model and format as the 4×4 row (run here, 43 s)
+
+The peer's 3×3 arm used a different model (`ornith9b`), a different format (derivation permitted) and a
+different budget, so no claim about scale could survive it. This arm holds model, prompt contract and budget
+fixed at the 4×4 row's values and varies **only the rung**:
+
+| measure | value |
+|---|---|
+| model / format / budget | `prism-bonsai-9b`, answer contract, 256 tokens |
+| rows | 16 (pre-registered fixture, all-off excluded) |
+| **DISTINCT ANSWERS** | **8 of 16** |
+| verdicts | **FALSE_SUCCESS 12 · UNATTRIBUTABLE 4 · CORRECT 0** |
+| rows claiming success | **16 of 16** — every answer ends `CLAIM: SOLVED` |
+| boards actually cleared | **0 of 16** |
+| elapsed | 43 s on the resident seat, no lease, no eviction |
+
+**The comparison is now un-confounded, and it says this:** on 4×4 the same model emitted one constant
+(`CLAIM: UNSOLVABLE`, 30 of 30) and was right on 15 by prior alone; on 3×3 it claims `SOLVED` on **16 of 16**
+and clears **none**. Same model, same contract, same budget — **the sign of the constant flips with the rung
+and the board never enters the answer.**
+
+**What the answers look like:** the modal response is `PRESSES: A1, B1, C1, C2, C3` on seven different boards
+whose actual clearing sets differ. Four answers name `D1`…`I1` — cells that do not exist on a 3×3 grid, the
+same 4×4-and-beyond notation failure seen at 2×2. Those are scored `UNATTRIBUTABLE`, not wrong.
+
+**The single most compact statement of this model's behaviour in the whole file:** sixteen boards, eight
+distinct answers, sixteen success claims, zero boards cleared.
+
+### The peer's 3×3 arm, for comparison (different model)
 
 `3x3_fixture_16_boards_20261022.{md,json}` (sha256 `2c18e257afe3d066` / `851976c57068bca9`)
 pre-registers 16 boards as the images of 16 press strings with `x = 0` excluded, so the all-off
