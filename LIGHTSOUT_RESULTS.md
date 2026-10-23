@@ -239,6 +239,23 @@ remap, three are refuted under any relabelling**, and applying a frame per row a
 guess wearing a rule's clothes. The verdicts stand because they were scored before that test existed, not
 because no test could ever recover one.
 
+**And the reflection is not confined to the refusals — which kills the tempting reading of it.** Sweeping all
+sixteen rows against all eight symmetries, two rows have a named set that is a symmetry image of their unique
+solution:
+
+```
+board 10   FALSE_SUCCESS     named A1 B2 C3    solution A3 B2 C1    the solution reflected
+board 12   UNATTRIBUTABLE    named A1 B1 C1    solution C1 C2 C3    the solution rotated
+```
+
+Board 10 is an ordinary scored failure that nobody called anything but false success, and its named set is
+the correct answer mirrored. So the relation is a property of **which sets the model names**, not of intent:
+seven distinct sets over sixteen rows, one of them on seven boards. It names templates — `A1 B2 C3` and
+`A1 B1 C1` are canonical diagonals and columns — and on two boards a canonical template happens to be the
+answer under a symmetry. **Count orbits, not symmetries:** the several symmetry names for one pair are one
+relation read through the group's stabiliser, and a count of "2 of 8" or "4 of 8" states the same fact three
+and four times respectively.
+
 **A column-shape warning for anyone re-reading this arm:** a table headed "presses / refusal" that prints the
 `out_of_range` field is printing the *field*, not the reply. The raw replies open with valid in-range
 prefixes (`A1,B1,C1,C2` ×3, `A1,B1,C1`) — which is the `presses` field, and those prefixes were tested and
