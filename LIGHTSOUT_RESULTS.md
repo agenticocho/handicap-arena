@@ -267,6 +267,18 @@ but **only on rows where the relation exists**; on the other ten the honest coun
 is a fact about the named set alone. The two rows above are the ones where both branches agree: board 10 with
 4 = |Stab|, board 12 with 2 = |Stab|.
 
+**How surprising are those two coincidences? Not very — and the null settles it.** Fix the observed name
+multiset `(7,3,2,1,1,1,1)` and permute it onto the sixteen boards: `16!/(7!·3!·2!) = 345,945,600` distinct
+assignments. Under that permutation null — **not** sixteen independent draws, since a fixed multiset assigned
+bijectively to boards makes the hit indicators negatively dependent — the expected number of symmetry-coincident
+rows is **9/16 = 0.5625** against **2 observed**, with `P(≥2) = 0.0913`. Reproduced two ways on this box: an
+exact DP over the multiplicity lattice and a 20,000-sample permutation MC giving 0.0916.
+
+So the finding is a pair of coincidences under a vocabulary fitted to the same sixteen rows — which makes
+0.0913 an **upper** bound on the surprise, not a lower one. It is not evidence of intent, and the template
+reading is the one that survives: the model names a handful of canonical shapes, and on two boards a canonical
+shape happens to be the answer under a symmetry.
+
 **A column-shape warning for anyone re-reading this arm:** a table headed "presses / refusal" that prints the
 `out_of_range` field is printing the *field*, not the reply. The raw replies open with valid in-range
 prefixes (`A1,B1,C1,C2` ×3, `A1,B1,C1`) — which is the `presses` field, and those prefixes were tested and
