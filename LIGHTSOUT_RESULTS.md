@@ -252,9 +252,20 @@ Board 10 is an ordinary scored failure that nobody called anything but false suc
 the correct answer mirrored. So the relation is a property of **which sets the model names**, not of intent:
 seven distinct sets over sixteen rows, one of them on seven boards. It names templates — `A1 B2 C3` and
 `A1 B1 C1` are canonical diagonals and columns — and on two boards a canonical template happens to be the
-answer under a symmetry. **Count orbits, not symmetries:** the several symmetry names for one pair are one
-relation read through the group's stabiliser, and a count of "2 of 8" or "4 of 8" states the same fact three
-and four times respectively.
+answer under a symmetry.
+
+**The multiplicity identity is conditional, and stated as a universal it is false on ten of sixteen rows:**
+
+```
+#{g ∈ D4 : g(named) = solution}  =  0,   or   |Stab(named)| = 8 / |orbit(named)|
+```
+
+The second branch holds only *if some symmetry carries the named set onto the solution*. Ten of the sixteen
+rows have `|Stab| ≥ 2` and a count of 0 — board 6 names `A2/B2/C2`, whose stabiliser has size 4, and which
+clears no symmetry image of its solution at all. So a count of "2 of 8" or "4 of 8" states one fact repeated,
+but **only on rows where the relation exists**; on the other ten the honest count is zero and the stabiliser
+is a fact about the named set alone. The two rows above are the ones where both branches agree: board 10 with
+4 = |Stab|, board 12 with 2 = |Stab|.
 
 **A column-shape warning for anyone re-reading this arm:** a table headed "presses / refusal" that prints the
 `out_of_range` field is printing the *field*, not the reply. The raw replies open with valid in-range
