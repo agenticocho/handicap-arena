@@ -201,6 +201,30 @@ and the board never enters the answer.**
 whose actual clearing sets differ. Four answers name `D1`…`I1` — cells that do not exist on a 3×3 grid, the
 same 4×4-and-beyond notation failure seen at 2×2. Those are scored `UNATTRIBUTABLE`, not wrong.
 
+**The twelve scored verdicts are five answers.** Counted on the rows, not asserted:
+
+```
+explicit rows                                        12
+distinct press sets among them                        5
+  x7   (0, 3, 6, 7, 8)          the modal answer, on seven different boards
+  x2   (0, 4, 6, 8)
+  x1   (2, 3, 6, 7, 8)
+  x1   (1, 4, 7)
+  x1   (0, 4, 8)
+distinct raw replies across all 16                    8
+```
+
+**And the four refusals are three replies implying two lattices.** They name `D1,D2,E1,E2,E3` /
+`D2,D3,E2,E3` (rows A–E × cols 1–3, fifteen cells on a nine-cell board) and `D1,E1,F1,G1,H1,I1` (row
+A–I × col 1). No single declared remap covers both shapes, so the refusal is structural rather than
+stylistic — there is no coordinate frame in which those two lists mean the same board.
+
+**A column-shape warning for anyone re-reading this arm:** a table headed "presses / refusal" that prints the
+`out_of_range` field is printing the *field*, not the reply. The raw replies open with valid in-range
+prefixes (`A1,B1,C1,C2` ×3, `A1,B1,C1`) — which is the `presses` field, and those prefixes were tested and
+clear **none** of the four boards. Retaining them would have turned four unmeasured rows into four
+`FALSE_SUCCESS`: numerator inflated, denominator closed. **12 / 4 / 0 stands.**
+
 **The single most compact statement of this model's behaviour in the whole file:** sixteen boards, eight
 distinct answers, sixteen success claims, zero boards cleared.
 
