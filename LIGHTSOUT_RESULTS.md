@@ -48,8 +48,19 @@ actually reach all-off. Same directive format, 256 tokens.
 | completion tokens | 10 (×3), 12 (×10), 20 (×3) |
 | median wall time | 1.6 s (28 s total) |
 | CORRECT | **1** — the all-off board, whose answer is "press nothing" |
-| FALSE_SUCCESS | 5 |
+| FALSE_SUCCESS | 2 |
 | FALSE_UNSOLVABLE | 10 |
+| UNATTRIBUTABLE | 3 |
+
+**Re-scored 2026-10-22 17:30 PDT by gating on out-of-range cells, and the data did not change — only the
+scoring did.** Three answers read `PRESSES: A1, B1, C1, D1`; `C1`/`D1` do not exist on a 2×2 board, so those
+answers are about a different board and cannot be scored here. The guard that flags them was added to the
+script at 12:16:00, **eight minutes after the rows were written at 12:08:43**, and the verdict function never
+read the flag — so those three rows were published as `FALSE_SUCCESS` off the truncated subset `A1, B1`.
+Gated they become `UNATTRIBUTABLE`, and `FALSE_SUCCESS` falls from 5 to 2.
+
+A re-run performed during the re-score reproduced **byte-identical answers on all 16 boards** (temperature 0),
+so this is a scoring correction against the same measurement, not a second measurement.
 
 The three answers:
 
