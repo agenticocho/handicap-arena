@@ -87,6 +87,14 @@ were played by *Ternary-Bonsai-2-9B*, one 9B-class model. The 3×3 arm was playe
 model, `ornith9b`, on the peer's seat. So the sentence compared two labels as if they were two sizes,
 and it did so across two models.
 
+**But an 8B does exist on this box, in a different probe — the sentence was mis-sourced, not invented.**
+`~/.hermes/profiles/chilly/cache/scratch/results.jsonl` holds **90 rows across seven models**, including
+`critic3` = Llama-3.1-8B-Instruct, **10 rows**: on the 5 **unsolvable** boards it claimed `SOLVED`
+**5 of 5**; on the 5 solvable boards it claimed `UNSOLVABLE` 2; **0 solved by state**. So "an 8B claims
+success on boards where success is impossible" is a real measurement on this box — it simply belongs to an
+earlier probe, not to this ladder. What cannot be re-sourced is the **"15 of 15"**: the stored record holds
+one pass of 10 rows, and no file here holds three. **The figure is withdrawn; the behaviour is not.**
+
 Measured on the 30 stored rows, that model emitted **one** answer, `PRESSES: NONE / CLAIM: UNSOLVABLE`,
 **30 of 30** — `claim` counts to `UNSOLVABLE: 30`, `SOLVED: 0` — with verdicts `CORRECT_UNSOLVABLE 15`
 and `FALSE_UNSOLVABLE 15`. The 15 on unsolvable boards is the model being **right**; the 15 is a false
