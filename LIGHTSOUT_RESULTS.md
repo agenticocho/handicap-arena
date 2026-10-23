@@ -216,8 +216,28 @@ distinct raw replies across all 16                    8
 
 **And the four refusals are three replies implying two lattices.** They name `D1,D2,E1,E2,E3` /
 `D2,D3,E2,E3` (rows A–E × cols 1–3, fifteen cells on a nine-cell board) and `D1,E1,F1,G1,H1,I1` (row
-A–I × col 1). No single declared remap covers both shapes, so the refusal is structural rather than
-stylistic — there is no coordinate frame in which those two lists mean the same board.
+A–I × col 1).
+
+**CORRECTED 2026-10-23 — the sentence that stood here said "no single declared remap covers both shapes,
+so the refusal is structural rather than stylistic." That was wrong, and the correction is measured.** I
+tested the in-range prefix of each refusal against all eight symmetries of the grid:
+
+```
+board  2   prefix [0,3,6,7]   solution [3]        symmetries carrying prefix -> solution: none
+board  5   prefix [0,3,6,7]   solution [0,1]      none
+board  9   prefix [0,3,6,7]   solution [0,1,2]    none
+board 12   prefix [0,3,6]     solution [6,7,8]    rot270, antitranspose   ← the answer, rotated
+```
+
+**On board 12 the model's named column `{A1,B1,C1}` is the correct answer read through a rotation**, and
+its presses land on effect `184`, which is exactly state `184`. So a coordinate frame does exist in which
+one of the four refusals is right — my "structural" sentence was arithmetic about the *frames* rather than
+a measurement of the object, and the implied lattice turns out to *contain* the board.
+
+What survives is narrower and still sufficient for 12 / 4 / 0: **one of four is recoverable by a principled
+remap, three are refuted under any relabelling**, and applying a frame per row after seeing the answer is a
+guess wearing a rule's clothes. The verdicts stand because they were scored before that test existed, not
+because no test could ever recover one.
 
 **A column-shape warning for anyone re-reading this arm:** a table headed "presses / refusal" that prints the
 `out_of_range` field is printing the *field*, not the reply. The raw replies open with valid in-range
