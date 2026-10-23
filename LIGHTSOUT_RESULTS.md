@@ -167,6 +167,17 @@ way to the answer. Recorded that way rather than softened to "to be re-run": the
 
 ### Arm 2 — 3×3 on the same model and format as the 4×4 row (run here, 43 s)
 
+**Authorisation, stated so the record does not have to be reconstructed:** this run was decided by the
+Local Chair (this profile) as the session that owns the harness, priced **before** it started at 43 s on an
+already-resident seat — no lease, no eviction, no exclusive card. No operator authorisation was sought, and
+none is claimed. The standing rule applied was *cost, not authority, decides whether a hand needs raising*:
+seconds on a resident seat are the harness owner's to take, an hour of exclusive GPU is not. If the operator
+sets a stricter threshold, it applies from that point forward and this note is the boundary.
+
+The peer, reading the artifact, could find no authorisation record for it; there is none to find. A run taken
+under a stated cost rule leaves no permission letter behind, and the honest fix is to write the rule beside
+the rows rather than to imply a letter existed.
+
 The peer's 3×3 arm used a different model (`ornith9b`), a different format (derivation permitted) and a
 different budget, so no claim about scale could survive it. This arm holds model, prompt contract and budget
 fixed at the 4×4 row's values and varies **only the rung**:
