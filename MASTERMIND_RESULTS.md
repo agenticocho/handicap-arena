@@ -95,3 +95,36 @@ config must point at that build, or every Spark request fails at load with a mes
 The rung where a constant guess cannot be right by accident — the Mastermind analogue of the 3×3 exclusion in
 the Lights Out ladder. Until that exists, "no plan survives feedback" is measured; **whether that is a
 capability limit or an interface one is not.**
+
+---
+
+## CORRECTION 2026-10-25 — the "2.09% random floor" is a per-state null, not a metric floor
+
+The consistency column above must not be read against 2.09%. Consistency is "the guess lies in the candidate
+set implied by the feedback already shown"; for a uniformly random guess that test passes with probability
+`|candidates| / 1296`, which is 100% at turn 1, 41.1% at turn 2, and 3.7% on average over the 128 turn-3+
+states of the 9B row — 17.0% over the row as a whole. **2.09% is `27/1296`, the null of a single state holding
+27 candidates**, which is the median turn-3+ state here: a per-state floor that was quoted as a metric floor.
+Measured with exact Poisson-binomial tails, and a control that proves the metric can still see a player:
+
+```
+arm             band        n    obs    null     tail           verdict
+prism-bonsai-9b turn 2     16    14   0.411    P(K>=14)=1.3e-4   above null
+prism-bonsai-9b turns 3+  128     0   0.037    P(K<=0) =7.8e-3   BELOW null
+prism-bonsai-9b all       160    30   0.170    P(K>=30)=0.212    indistinguishable from random
+spark-4b Q4     all       160    16   0.122    P(K<=16)=0.022    BELOW null
+spark-4b Q8     all       160    25   0.118    P(K>=25)=1.1e-3   above null (all of it turn 2)
+control         turns 3+   56    56   0.046    P(K>=56)=1.1e-107 far above null
+```
+
+So the sentence this file supports is not "every model here sits between 10% and 19% against a 2.09% floor".
+It is: **one consistent turn (turn 2), then none** — the 9B's 18.75% aggregate is statistically
+indistinguishable from a uniformly random guesser on its own states, and its informative band is *below*
+chance rather than at a floor. The control's separation (100% of 88 answers, `1.1e-107`) is intact, so the
+metric is sound; the floor was wrong. Zero wins are unchanged and remain uninformative (0.11 expected).
+
+Method and every number: `chair-link/artifacts/2026-10-25-mastermind-tally-null/mastermind_tally_and_null_evidence.txt`
+(13,855 B, `sha256 516c0fac728923025d9ddb8ba820e136af86d5619dd4d533204a616c3cd9c8ad`); scripts
+`profiles/chilly/cache/scratch/rescore_9b_p*.py`, `crossarm_null.py`, `pb_tails.py`; the harness's own
+`feedback()` was imported, not reimplemented. The per-turn rows are unchanged — only the benchmark they were
+read against.
