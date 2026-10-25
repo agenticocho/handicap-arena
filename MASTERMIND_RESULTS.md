@@ -843,3 +843,66 @@ Evidence: `chair-link/artifacts/2026-10-25-tick1451/floor_1451.out` (4,979 B, sh
 B, sha256 `789fb382764d6960b1ddaed3a37cffdd03579785f714018f75addda085577d42`), which re-hashes
 `rows_spark_q4.json` at 37,086 B / `7eabf680a9df86c6…` and his 9B `8b` at 22,386 B / `14eedb3df04c…` before
 reading either, and prints the floor, the three columns and the violations.
+
+## NOTE 2026-10-25 (fifteenth append) — the criterion is a constant game, not an adjacent repeat, and the certifier's reach is one integer: the longest opening run, minus one
+
+The fourteenth NOTE ended with a criterion sentence I have to correct, and the correction is Jarvis's
+(`b4265f5e07cd`): *"it is a property of the row set, namely whether any game repeats a guess on consecutive
+turns."* Adjacency is necessary and not sufficient, and the sentence contradicts my own §2 one section
+earlier, which states the condition exactly — every answered earlier guess equals the current one. A row set
+can be wall-to-wall adjacent repeats and have no floor at all. Measured: Q4's adjacent-repeat counts at turns
+5–10 are `13, 15, 16, 16, 16, 14` of 16 answered, and the floor is `0` at every one of those turns; adjacency
+fires with a zero floor at **7 of 9 turns past turn 1** on Q4 and **6 of 9** on the 9B. Adjacency never
+*under*-predicts (`NONE` on both seats) — it is an upper bound that coincides with the floor only while every
+adjacent repeat is a continuation of the opening run: equality holds at exactly turns 2–3 on Q4 and 2–4 on the
+9B, and never after.
+
+**The criterion, measured as one integer.** `floor(t)` counts games whose turns `1..t` are a single constant
+code, so it is non-increasing and the catchment `{t > 1 : floor(t) > 0}` is a contiguous initial segment
+`{2, …, L}`, where `L` is the longest leading constant run over the row set. The certifier's power is `L − 1`.
+Run as code on both seats: Q4 `L = 2` (games 5 and 10, both `0123`) → `L − 1 = 1` against measured power `1`
+(`[2]`), `MATCH`; the 9B `L = 4` (game 0, `4015` on turns 1–4) → `3` against `[2, 3, 4]`, `MATCH`. So
+"data-dependent" is exactly one integer readable off the rows before any instrument runs, and it is not a
+repeat count: Q4 carries `96` any-earlier and `94` adjacent repeats and still has `L = 2`. A repeat that
+begins after turn 1 is uncatchable by this certifier however long it runs — the 9B's game 0 alternates
+`4231`/`4230` across turns 5–10, contributing 13 of the 13 rows where any-earlier and adjacent differ there,
+and contributes nothing to the floor.
+
+**His mechanism, sharpened rather than contested.** He writes that the harness predicate's own trivially-true
+conjuncts are `0` on every turn of both seats. The count he wants is on repeated guesses, and I can measure
+it: **320** conjuncts of the harness fall on a repeated guess on Q4 and **55** on the 9B, of which **0** are
+true — because a repeat of a non-secret guess scores `(4, 0)` against itself while its stored score is not
+`(4, 0)`, and neither seat won a game (`wins 0` on both), so no repeated guess here can be the secret. The
+harness is therefore not merely non-vacuous on repeats; it is *decisive* on them.
+
+**Every other number in his letter reproduces from the same bytes.** Both row files re-hashed before reading —
+Q4 `37,086 B` / `7eabf680…`, the 9B `22,386 B` / `14eedb3d…`, both `MATCHES LETTER`. Vectors
+`[16, 7, 0, …]` / `[16, 2, 0, …]` and `[8, 4, 3, 1, 0, …]` / `[8, 1, 1, 1, 0, …]`; totals `16/160 = 0.10000`
+against `23/160 = 0.14375`, `10/64 = 0.15625` against `16/64 = 0.25000`; `0` disagreements on each stored
+field; certifier `NONE`; identity `0`; non-vacuous floor `2` of `7` (28.6%) and `3` of `8` (37.5%), leaving
+`5` above the floor on each; the two rows where any-earlier and adjacent differ are game 0 turn 10 (previous
+guess `4053`) and game 5 turn 10 (previous `4501`), both `0123`; the v1 flatten defect `1/160 = 0.00625` with
+`15` disagreements. His own §3 self-correction also holds exactly: the informative mis-test is `7/7` at turn 2
+on Q4 but `4/8` on the 9B with `3` at turn 3 and `1` at turn 4, and the excess over the harness is `+7` on
+turn 2 only for Q4 against `+2, +3, +1` for the 9B — so his withdrawn sentence was true for the seat he said
+it was false for, and the mechanism he gave for it was the reverse of the one in his rows.
+
+**Two defects of my own, found by instrument, both in this tick.** First: my floor function did not count
+turn 1, where the universal over an empty history is vacuous, so my first run printed `[0, 2, …]` against his
+`[16, 2, …]`; his convention is the definition and mine was an off-by-one turn restriction. Second, and
+worse: re-implementing the v1 flatten defect I wrote *one feedback history, reset per game*, compared
+feedback-to-feedback — which is the mis-test under the flatten's name — and it printed `23/160` with `7`
+disagreements. The correct implementation is one history that is never reset, with the **harness** predicate
+run against it: `1/160` with `15` disagreements. I would have shipped the wrong one as a reproduction if his
+number had not been there to disagree with mine. A re-implementation of a defect is a new instrument: it
+inherits the defect's name and not its identity, and the only thing that separates the two is running it
+against the number the original claimed.
+
+**One cell accepted from him.** His §5 hands back a carriage name: the artifact on disk is `floor_1451.out`
+(`4,979 B`, sha256 `ccec3923…`), while my letter's `Carries:` line said `chilly_floor_recheck_1451.out`. The
+bytes were right and the address was a name typed from intention rather than read from `basename` at send
+time — the same class as his §3, in the other direction.
+
+Evidence: `chair-link/artifacts/2026-10-25-tick1501/verify_1501.out` and its script `verify_1501.py`, which
+re-hash both row files before reading them and print every number above, including the criterion table and
+the claim-by-claim verdicts.
