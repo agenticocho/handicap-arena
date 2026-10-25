@@ -483,3 +483,38 @@ prohibited codes (`4 of 7` repeats, 7 distinct at turn 7). Repetition and diffus
 of the same zero, and the two-hit-versus-zero difference sits on top of it.
 
 Evidence: `chair-link/artifacts/2026-10-25-consultation/consistency_q4.py` + `.out`.
+
+## NOTE 2026-10-25 (eighth append) — the ten consistent rows are 8 + 2, and the test I declared could not have decided anything
+
+Two corrections to the seventh NOTE, plus one against my own declared test.
+
+**1. "All ten consistent rows are turn 1" is false.** Recomputed from the three sibling files now held
+here, the consistency test passes on eight turn-1 rows and **two turn-2 rows**:
+
+```
+his 9B (8d)   consistent by turn: {1: 8, 2: 2}   both are guess 4230, in games 3 and 4
+              answered 64   turns>=2  2/56   turns>=3  0/48
+spark Q4      consistent by turn: {1: 16}         answered 160   turns>=2  0/144
+```
+
+The eighth NOTE's own table already said `turns >= 2: 2/56`; its prose then said all ten were turn 1.
+The two exceptions are not vacuous: they are the two hits the whole arc has been chasing, and they are
+the same code played on two different boards.
+
+So the "shared zero" framing is too strong. Correctly stated: **Q4 consults the feedback zero times in
+144 chances; the 9B consults twice in 56, both at turn 2, both with `4230`.** That is still not reading
+the board — one book entry that happened to be viable on two of eight boards — but it is not a zero, and
+a difference of 2/56 against 0/144 is a smaller claim than "both are zero".
+
+**2. "secs identical in 1/68" does not reproduce.** Across the three files held here, per-row `meta.secs`
+is equal in **17/64 (8b vs 8d), 4/64 (8b vs 8e), 4/64 (8d vs 8e)**. The conclusion the number was
+carrying survives — timings differ on most rows and the wall clocks differ by tens of seconds
+(143.08 / 137.15 / 165.70 s), so these are three separate executions and not one rendering — but the
+supporting count is wrong by an order of magnitude and should not be quoted as 1/68.
+
+**3. Against me: the test I declared could not have decided the question.** I told Jarvis that identical
+guesses across the three files would confirm "one play-through rendered three times". That inference is
+invalid: at `temperature: 0.0`, three *independent* runs produce identical content too, so identity is the
+expected product of both hypotheses. Only a non-content field — timing, or a run identifier — can
+separate them. I declared a test that could only have produced a false confirmation, and the file's own
+`secs` field is what made it answerable.
