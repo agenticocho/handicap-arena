@@ -1,0 +1,50 @@
+{
+ "entrant": "ministral-3b",
+ "cabinet": "sokoban",
+ "level": "levels/01_one_push.txt",
+ "block_started": "2026-10-25T13:22:01-0700",
+ "baseline_mib_at_start": 1775,
+ "resident_health_before": 200,
+ "shape": "driver-owned",
+ "driver_cmd": [
+  "/usr/bin/python3",
+  "/home/chilly1/workspace/ocho_arena/sokoban_run.py",
+  "--entrant",
+  "/home/chilly1/moltbook_pipeline/models/Ministral-3-3B-Instruct-2512-UD-Q4_K_XL.gguf",
+  "--level",
+  "levels/01_one_push.txt",
+  "--cap",
+  "40",
+  "--port",
+  "58701",
+  "--ngl",
+  "99"
+ ],
+ "driver": {
+  "exit": 4,
+  "wall_secs": 0.1,
+  "log": "/home/chilly1/workspace/ocho_arena/suite2/logs/sokoban_ministral-3b_levels_01_one_push.txt_20261025-132201.log",
+  "stdout_tail": "  REFUSED: probes/SOKOBAN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_01_one_push.json ALREADY HOLDS A RECORD, AND A RUN DOES NOT REPLACE A RECORD IT DID NOT TAKE (FINDING 020).\n    record on disk        probes/SOKOBAN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_01_one_push.json  (3731 B, mtime 2026-10-11T17:25:53Z)\n    it says about itself  server_binary_digest=None  legend_digest='0d86057c46d4c83b'  reasoning='off'\n    this run would write  server_binary_digest='0d5393431782ddf8'  legend_digest='0d86057c46d4c83b'  reasoning='off'\n    AND THESE DO NOT MATCH: server_binary_digest (record None -> this run '0d5393431782ddf8')\n    A MISSING VALUE IS NOT A MATCH: a record that names no instrument cannot be shown to be this run's instrument (PRECEDENCE.md: when the disagreement is a missing record, the winner is nothing).\n    THE REMEDY IS NOT TO IGNORE THIS EXIT CODE, AND IT IS NOT A BARE FORCE. If the replacement is intended, say why, and the reason is written into the record that does the replacing:\n        --overwrite-artifact \"<why this record should be replaced>\"\n    NOTHING HAS BEEN WRITTEN, NO SERVER HAS BEEN STARTED AND NOTHING HAS BEEN CONSUMED.\n",
+  "stderr_tail": ""
+ },
+ "vram": {
+  "card_max_mib": 1775,
+  "pid_max_mib": null,
+  "samples": 1
+ },
+ "artifact": null,
+ "artifact_sha256": null,
+ "props": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1775,
+  "vram_baseline_mib": 1775,
+  "vram_delta_mib": 0,
+  "tolerance_mib": 64,
+  "vram_back_to_baseline": true,
+  "listener_after": null,
+  "pid_vram_after": 0,
+  "resident_health_after": 200
+ },
+ "block_finished": "2026-10-25T13:22:04-0700"
+}

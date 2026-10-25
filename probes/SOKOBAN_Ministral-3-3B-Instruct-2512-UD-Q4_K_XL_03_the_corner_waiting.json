@@ -1,0 +1,877 @@
+{
+ "solved": false,
+ "moves": 1,
+ "attempted_emitted": 40,
+ "attempted_consumed": 40,
+ "attempted": 40,
+ "attempted_note": "DEPRECATED -- equals attempted_consumed; future runs use the named pair",
+ "blocked": 0,
+ "not_an_action": 39,
+ "give_up": 0,
+ "gave_up_at": null,
+ "loose_match_diagnostic_only_never_scored": 0,
+ "loose_match_diagnostic_note": "DIAGNOSTIC ONLY, NEVER SCORED: the tokens an ABSTENTION-SHAPED reading would have taken and the strict whitelist did not. In no rate, gate or denominator.",
+ "ended": "commands_exhausted",
+ "final_board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######",
+ "trace": [
+  {
+   "ply": 0,
+   "token": "R",
+   "action": "R",
+   "outcome": "moved",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 1,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 2,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 3,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 4,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 5,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 6,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 7,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 8,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 9,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 10,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 11,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 12,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 13,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 14,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 15,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 16,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 17,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 18,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 19,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 20,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 21,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 22,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 23,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 24,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 25,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 26,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 27,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 28,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 29,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 30,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 31,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 32,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 33,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 34,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 35,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 36,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 37,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 38,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 39,
+   "token": "From",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  }
+ ],
+ "entrant": "Ministral-3-3B-Instruct-2512-UD-Q4_K_XL",
+ "entrant_digest": "c11f7554656fe23d",
+ "entrant_digest_scope": "sha256 of the model FILE, first 16 hex. THE ENTRANT IS THE THING BEING MEASURED, so it is identified by a digest and not by a name; `entrant` beside it is a LABEL, for reading, not for checking.",
+ "level": "03_the_corner_waiting",
+ "loaded": true,
+ "load_s": 3.0,
+ "turns": [
+  {
+   "ply": 0,
+   "raw": "R\n\n(You can push the crate to the right onto the target.)",
+   "token": "R",
+   "secs": 0.2,
+   "gen_tokens": 16,
+   "budget_hit": false,
+   "cap_cut": "nothing -- the model stopped on its own",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n# @   #\n#     #\n#######"
+  },
+  {
+   "ply": 1,
+   "raw": "From the current position after the move **R**, here's the board state:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nAfter moving **R**, the player is now at:\n```\n#######\n#. #  #\n# $",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 2,
+   "raw": "From the current position and moves made (RFrom), the player is currently at the bottom-right corner of the board, just outside the wall.\n\nThe board looks like this after the moves:\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\nAfter",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 3,
+   "raw": "From the current position and moves made (RFromFrom), let's analyze the board step-by-step:\n\n1. **Current board state after moves \"RFromFrom\"**:\n   - The moves \"RFromFrom\" are ambiguous in terms of sequence, but assuming the moves are applied in order:\n     - Start:",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 4,
+   "raw": "From the current position and moves made (RFromFromFrom), let's analyze the board step-by-step:\n\n1. **Current board state** (after moves R, F, F, O, F, F, O):\n   - The moves \"RFromFromFrom\" are likely a typo or unclear, but",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 5,
+   "raw": "From the current position and moves made (R repeated 5 times), the player is currently at the bottom-right corner of the board, but there are no crates left to push onto the targets.\n\nThe board is effectively empty of crates, so no further moves are needed to win the level.\n\n**Answer:** WIN",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 6,
+   "raw": "From the current position and moves made (R repeated), the player is currently at the bottom-right corner of the board, but there are no crates to push or targets to interact with in the visible area.\n\nSince the crates are not accessible from the current position and no crates are on targets, it appears the",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 7,
+   "raw": "From the current position and moves made (R repeated), the player is likely stuck in a dead end. Here's the analysis:\n\n- The board after 7 R moves from the initial position would look like this (assuming the player moved right repeatedly):\n```\n#######\n#. #  #\n# $   #\n#",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 8,
+   "raw": "From the current position and moves made, the board seems to be:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nAfter the moves \"RFromFromFromFromFromFromFrom\" (assuming \"From\" is a typo and should be \"",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 9,
+   "raw": "From the current position and moves made, the board seems to be:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nAfter the moves \"RFromFromFromFromFromFromFromFrom\" (assuming \"From\" is a typo and should be",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 10,
+   "raw": "From the current position and moves made, the board seems to be:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nGiven the moves \"RFromFromFromFromFromFromFromFromFrom\" (which seems to be a typo and likely means",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 11,
+   "raw": "From the current position and moves made, the board seems to be incomplete (the moves \"FromFromFromFromFromFromFromFromFromFrom\" are unclear, but assuming they don't affect the current layout), and the visible layout is:\n\n```\n#######\n#. #  #\n# $   #\n#  @",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 12,
+   "raw": "From the current position and moves made, the board seems incomplete (the moves listed are \"FromFromFromFromFromFromFromFromFromFromFrom\", which doesn't make sense in context). However, based on the initial board layout and the moves you've described (though unclear), here's the best possible move:\n\n**",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 13,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 14,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 15,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 16,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 17,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 18,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 19,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 20,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 21,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 22,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 23,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 24,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 25,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 26,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 27,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 28,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 29,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 30,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 31,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 32,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 33,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 34,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 35,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 36,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 37,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 38,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  },
+  {
+   "ply": 39,
+   "raw": "From the given board and moves, here's the current state of the board:\n\n```\n#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######\n```\n\nFrom the moves listed, it seems like the player has already made many moves, but the exact positions of the cr",
+   "token": "From",
+   "secs": 0.5,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######"
+  }
+ ],
+ "cap": 40,
+ "final_screen": "#######\n#. #  #\n# $   #\n#  @  #\n#     #\n#######",
+ "legend": "new",
+ "legend_digest": "0d86057c46d4c83b",
+ "config": {
+  "reasoning": "off",
+  "reasoning_source": "declared in PREREG_sokoban.md",
+  "reasoning_declared": "off",
+  "reasoning_declared_in": "PREREG_sokoban.md",
+  "reasoning_rationale": "Sokoban's answer is ONE LETTER. A thinking model puts deliberation where the answer belongs and the ceiling eats it -- measured on the same weights: 2314 tokens and no commitment. This cabinet is the one-letter case, so the setting is off. MISSILE COMMAND is the same case (one integer). DARTS is the opposite (exact checkout arithmetic), and a harness that proves the SHAPE should be able to prove it at either setting -- so it takes this as a PARAMETER rather than a constant.",
+  "reasoning_changed_from_declaration": false,
+  "reasoning_argv": [
+   "--reasoning",
+   "off"
+  ],
+  "reasoning_supported_by_build": true,
+  "max_tokens_ceiling": 64,
+  "command_cap": 40,
+  "ctx": 4096,
+  "n_gpu_layers": 0,
+  "temperature": 0.0,
+  "legend": "new",
+  "legend_digest": "0d86057c46d4c83b",
+  "server_argv": [
+   "/home/chilly1/llama.cpp/build/bin/llama-server",
+   "-m",
+   "/home/chilly1/moltbook_pipeline/models/Ministral-3-3B-Instruct-2512-UD-Q4_K_XL.gguf",
+   "-c",
+   "4096",
+   "-ngl",
+   "99",
+   "--port",
+   "58701",
+   "--no-webui",
+   "--parallel",
+   "1",
+   "--reasoning",
+   "off"
+  ],
+  "server_binary_digest": "0d5393431782ddf8",
+  "server_binary_digest_scope": "sha256 of the BINARY FILE, first 16 hex. THE BINARY IS PART OF THE INSTRUMENT, so it is identified by a digest and not by a path alone: a path can name one build and hold another.",
+  "server_binary_source": "no selector given: the module constant LLAMA"
+ },
+ "reasoning_probe": {
+  "question": "What is 2 + 2? Reply with just the number and nothing else.",
+  "answer": "4",
+  "answer_from_reasoning_field": false,
+  "completion_tokens": 2,
+  "finish_reason": "stop",
+  "observed_answer_shape": "short",
+  "shape_threshold_tokens": 8,
+  "observed": "off",
+  "observed_is_an_inference": true,
+  "inference_caveat": "a LONG answer is not necessarily deliberation -- a model that echoes the question in a schema produces a long answer too, and this probe cannot tell them apart",
+  "requested": "off",
+  "disagrees_with_config": false
+ },
+ "kind": "model",
+ "unreadable": 39,
+ "unreadable_is_the_aggregate_of": "not_an_action (grammar \u00a72), per turn",
+ "missing_values": 0,
+ "missing_values_are_a_subset_of": "unreadable -- the harness produced these, the model produced the rest",
+ "never_started": 0,
+ "budget_signature": {
+  "turns": 40,
+  "turns_that_hit_the_ceiling": 39,
+  "ceiling": 64,
+  "fraction_capped": 0.975,
+  "all_turns_capped": false,
+  "reading": "some turns hit the ceiling -- see the per-turn rows"
+ },
+ "dead_end": {
+  "checked": true,
+  "first_action": "R",
+  "no_solution_from_here": false,
+  "still_solvable_in": 5,
+  "reading": "still winnable after the first action"
+ },
+ "artifact_replaced": {
+  "path": "probes/SOKOBAN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_03_the_corner_waiting.json",
+  "sha256": "a72970d75e610bfa756e6600e6e4c426aec4a3ed0eb75a6cb40456c306639c90",
+  "bytes": 35024,
+  "mtime": "2026-10-25T20:22:51Z",
+  "it_named": {
+   "server_binary_digest": "0d5393431782ddf8",
+   "legend_digest": "0d86057c46d4c83b",
+   "reasoning": "off"
+  },
+  "reason_given": "suite window t_234b2387, second pass at this cell: the first pass ran with the driver's own slot count (/props total_slots=4, i.e. 1024 tokens per slot at ctx 4096); this pass runs --parallel 1 so the row is on the card's declared envelope. The superseded row's bytes are sha256 a72970d75e610bfa... and its block metadata is kept under suite2/runs/.",
+  "reading": "THIS RUN REPLACED THE RECORD AT THIS PATH. The replaced record is NOT recoverable from this file: what survives is that it existed, the digest of the bytes it was, and what it said about its own instrument. The reason above is the operator's, verbatim, and is checked against nothing."
+ }
+}

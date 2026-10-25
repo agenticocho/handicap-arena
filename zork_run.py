@@ -91,6 +91,11 @@ LLAMA_SELECTED = None                    # --llama-server PATH. None = the decla
 # travels in the argv the server is actually started with, so a row states the path it ran on.
 NGL_DECLARED = 0
 NGL = NGL_DECLARED                       # --ngl INT. Set in main(); read by server_argv().
+# `--parallel` is the SAME CLASS OF FIELD: the registered launch passes no such flag (llama-server then
+# opens its default slot count, reported by /props), and the suite's card fixes slots at 1 so a request
+# cannot silently shrink its own context. None means "pass nothing", which is the registered launch.
+PARALLEL_DECLARED = None
+PARALLEL = PARALLEL_DECLARED
 _BINARY_DIGEST_CACHE = {}
 
 
@@ -419,8 +424,10 @@ def server_argv(entrant, ctx, port):
     a cell that runs on the card when the card is free and on the CPU when it is held is two cells wearing
     one name. It also keeps a run possible while another run holds the card.
     """
-    return ([llama_server(), "-m", entrant, "-c", str(ctx), "-ngl", str(NGL), "--port", str(port), "--no-webui"]
-            + reasoning_argv())
+    argv = [llama_server(), "-m", entrant, "-c", str(ctx), "-ngl", str(NGL), "--port", str(port), "--no-webui"]
+    if PARALLEL is not None:
+        argv += ["--parallel", str(PARALLEL)]
+    return argv + reasoning_argv()
 
 
 # ==================================================================================================
@@ -1035,8 +1042,13 @@ def main():
                     help="--n-gpu-layers for the entrant's server (default: the registered %d). A "
                          "COMPUTE-PATH field only: the prompt and the scorer are untouched, and the "
                          "value travels in the argv the server is started with." % NGL_DECLARED)
+    ap.add_argument("--parallel", type=int, default=PARALLEL_DECLARED,
+                    help="--parallel for the entrant's server (default: the registered launch, which "
+                         "passes no such flag). A COMPUTE-PATH field; the value travels in the argv.")
     a = ap.parse_args()
+    global PARALLEL
     NGL = a.ngl
+    PARALLEL = a.parallel
     if a.self_test:
         return _self_test()
     if not a.entrant or not a.level:

@@ -1,0 +1,8 @@
+{
+ "original": "/home/chilly1/workspace/ocho_arena/probes/SOKOBAN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_03_the_corner_waiting.json",
+ "preserved_at": "/home/chilly1/workspace/ocho_arena/suite2/runs/published_cpu/SOKOBAN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_03_the_corner_waiting.json",
+ "sha256": "de563a646433bbf371244ee1f90a544c8438f7788252a9ee942b89737f1cae94",
+ "bytes": 31983,
+ "preserved": "2026-10-25T13:28:15-0700",
+ "why": "published CPU artifact at this cell; the GPU row is a new row, this copy is the record of the row that was already there"
+}

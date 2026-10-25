@@ -1,0 +1,11842 @@
+{
+ "kind": "snake-episode",
+ "agent": "Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0",
+ "seed": 1,
+ "ended": "tick_cap",
+ "moves": [
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R",
+  "R"
+ ],
+ "score": {
+  "eaten": 0,
+  "best_life": 0,
+  "deaths": 0,
+  "ticks": 120
+ },
+ "score_readings": {
+  "ticks": 120,
+  "ticks_with_respawn": 0,
+  "maxCells_reading_used": 120,
+  "rng_reading_used": 0,
+  "both_readings_compared": 120
+ },
+ "score_disagreements": [],
+ "score_notes": [],
+ "score_problems": [],
+ "trace": [
+  {
+   "tick": 0,
+   "before": {
+    "tick": 0,
+    "head": [
+     160,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [],
+    "length": 0,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "2f242033978d54f4",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 1,
+    "head": [
+     176,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 1,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "d19ac0f8dcea67b5",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 0,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.6,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 1,
+   "before": {
+    "tick": 1,
+    "head": [
+     176,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 1,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "d19ac0f8dcea67b5",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 2,
+    "head": [
+     192,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 2,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "a93b55665df66fea",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 1,
+    "raw": "R",
+    "token": "R",
+    "secs": 31.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 2,
+   "before": {
+    "tick": 2,
+    "head": [
+     192,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 2,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "a93b55665df66fea",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 3,
+    "head": [
+     208,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 3,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "29a99af122d9ee7a",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 2,
+    "raw": "R",
+    "token": "R",
+    "secs": 9.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 3,
+   "before": {
+    "tick": 3,
+    "head": [
+     208,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 3,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "29a99af122d9ee7a",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 4,
+    "head": [
+     224,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "3fde8eaa91ca57a8",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 3,
+    "raw": "R",
+    "token": "R",
+    "secs": 9.0,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 4,
+   "before": {
+    "tick": 4,
+    "head": [
+     224,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "3fde8eaa91ca57a8",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 5,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "02ca4d41a3b5e586",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 4,
+    "raw": "R",
+    "token": "R",
+    "secs": 9.4,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 5,
+   "before": {
+    "tick": 5,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "02ca4d41a3b5e586",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 6,
+    "head": [
+     256,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "e33ce9e687f7f291",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 5,
+    "raw": "R",
+    "token": "R",
+    "secs": 10.4,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 6,
+   "before": {
+    "tick": 6,
+    "head": [
+     256,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "e33ce9e687f7f291",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 7,
+    "head": [
+     272,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "4f835a26ac12cecc",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 6,
+    "raw": "R",
+    "token": "R",
+    "secs": 3.7,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 7,
+   "before": {
+    "tick": 7,
+    "head": [
+     272,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "4f835a26ac12cecc",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 8,
+    "head": [
+     288,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "5b8a4e27a1e523bc",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 7,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.8,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 8,
+   "before": {
+    "tick": 8,
+    "head": [
+     288,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "5b8a4e27a1e523bc",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 9,
+    "head": [
+     304,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "51d62cfa41baa1a2",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 8,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.4,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 9,
+   "before": {
+    "tick": 9,
+    "head": [
+     304,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "51d62cfa41baa1a2",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 10,
+    "head": [
+     320,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "8481753801db4f0e",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 9,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 10,
+   "before": {
+    "tick": 10,
+    "head": [
+     320,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "8481753801db4f0e",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 11,
+    "head": [
+     336,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "5e30baa52cfbda1b",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 10,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 11,
+   "before": {
+    "tick": 11,
+    "head": [
+     336,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "5e30baa52cfbda1b",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 12,
+    "head": [
+     352,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "10ba62b224e63742",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 11,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 12,
+   "before": {
+    "tick": 12,
+    "head": [
+     352,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "10ba62b224e63742",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 13,
+    "head": [
+     368,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "76ea44fe671fa9a8",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 12,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.4,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 13,
+   "before": {
+    "tick": 13,
+    "head": [
+     368,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "76ea44fe671fa9a8",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 14,
+    "head": [
+     384,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "003822c648519322",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 13,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.0,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 14,
+   "before": {
+    "tick": 14,
+    "head": [
+     384,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "003822c648519322",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 15,
+    "head": [
+     0,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "8437259d78ec61ea",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 14,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 15,
+   "before": {
+    "tick": 15,
+    "head": [
+     0,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "8437259d78ec61ea",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 16,
+    "head": [
+     16,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "92d10a3e41b76044",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 15,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 16,
+   "before": {
+    "tick": 16,
+    "head": [
+     16,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "92d10a3e41b76044",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 17,
+    "head": [
+     32,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "2a6a400dd6997916",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 16,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 17,
+   "before": {
+    "tick": 17,
+    "head": [
+     32,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "2a6a400dd6997916",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 18,
+    "head": [
+     48,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "82842f80877c47a0",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 17,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 18,
+   "before": {
+    "tick": 18,
+    "head": [
+     48,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "82842f80877c47a0",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 19,
+    "head": [
+     64,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "d1dfe0ae715faaeb",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 18,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 19,
+   "before": {
+    "tick": 19,
+    "head": [
+     64,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "d1dfe0ae715faaeb",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 20,
+    "head": [
+     80,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "db53f0d8b9ecdb93",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 19,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 20,
+   "before": {
+    "tick": 20,
+    "head": [
+     80,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "db53f0d8b9ecdb93",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 21,
+    "head": [
+     96,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "82256b05310862e8",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 20,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 21,
+   "before": {
+    "tick": 21,
+    "head": [
+     96,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "82256b05310862e8",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 22,
+    "head": [
+     112,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "4199f12df3f79dfa",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 21,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 22,
+   "before": {
+    "tick": 22,
+    "head": [
+     112,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "4199f12df3f79dfa",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 23,
+    "head": [
+     128,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "79e9dccb2ad842ca",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 22,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 23,
+   "before": {
+    "tick": 23,
+    "head": [
+     128,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "79e9dccb2ad842ca",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 24,
+    "head": [
+     144,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "f76b9ff2aa1643a8",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 23,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 24,
+   "before": {
+    "tick": 24,
+    "head": [
+     144,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "f76b9ff2aa1643a8",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 25,
+    "head": [
+     160,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "335a73b667abbc52",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 24,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 25,
+   "before": {
+    "tick": 25,
+    "head": [
+     160,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "335a73b667abbc52",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 26,
+    "head": [
+     176,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "ddfb28bd759252de",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 25,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 26,
+   "before": {
+    "tick": 26,
+    "head": [
+     176,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "ddfb28bd759252de",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 27,
+    "head": [
+     192,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "dea44b5f8ff27f06",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 26,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 27,
+   "before": {
+    "tick": 27,
+    "head": [
+     192,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "dea44b5f8ff27f06",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 28,
+    "head": [
+     208,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "c7f108eccc153d4c",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 27,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.0,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 28,
+   "before": {
+    "tick": 28,
+    "head": [
+     208,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "c7f108eccc153d4c",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 29,
+    "head": [
+     224,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "1b759c2e4df870e8",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 28,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 29,
+   "before": {
+    "tick": 29,
+    "head": [
+     224,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "1b759c2e4df870e8",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 30,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "2c5270d0638c203e",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 29,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 30,
+   "before": {
+    "tick": 30,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "2c5270d0638c203e",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 31,
+    "head": [
+     256,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "afa62d482dd76107",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 30,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 31,
+   "before": {
+    "tick": 31,
+    "head": [
+     256,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "afa62d482dd76107",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 32,
+    "head": [
+     272,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "61f4e37f9cf5fce2",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 31,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 32,
+   "before": {
+    "tick": 32,
+    "head": [
+     272,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "61f4e37f9cf5fce2",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 33,
+    "head": [
+     288,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "275883a5acf46296",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 32,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 33,
+   "before": {
+    "tick": 33,
+    "head": [
+     288,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "275883a5acf46296",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 34,
+    "head": [
+     304,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "e88654fb48ba1ac7",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 33,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 34,
+   "before": {
+    "tick": 34,
+    "head": [
+     304,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "e88654fb48ba1ac7",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 35,
+    "head": [
+     320,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "d55955f9821f5efe",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 34,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 35,
+   "before": {
+    "tick": 35,
+    "head": [
+     320,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "d55955f9821f5efe",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 36,
+    "head": [
+     336,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "f4907b8079dfb5cf",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 35,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 36,
+   "before": {
+    "tick": 36,
+    "head": [
+     336,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "f4907b8079dfb5cf",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 37,
+    "head": [
+     352,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "e05c80ff74bc6bc3",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 36,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 37,
+   "before": {
+    "tick": 37,
+    "head": [
+     352,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "e05c80ff74bc6bc3",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 38,
+    "head": [
+     368,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "3372501585bf7082",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 37,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 38,
+   "before": {
+    "tick": 38,
+    "head": [
+     368,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "3372501585bf7082",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 39,
+    "head": [
+     384,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "fd0435aff38501be",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 38,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 39,
+   "before": {
+    "tick": 39,
+    "head": [
+     384,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "fd0435aff38501be",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 40,
+    "head": [
+     0,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "85d89ce8e0e442b5",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 39,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 40,
+   "before": {
+    "tick": 40,
+    "head": [
+     0,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "85d89ce8e0e442b5",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 41,
+    "head": [
+     16,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "de271e641e1e7cbe",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 40,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 41,
+   "before": {
+    "tick": 41,
+    "head": [
+     16,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "de271e641e1e7cbe",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 42,
+    "head": [
+     32,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "2085250c3ef678d5",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 41,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 42,
+   "before": {
+    "tick": 42,
+    "head": [
+     32,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "2085250c3ef678d5",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 43,
+    "head": [
+     48,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "07d3a7c6fe3e417c",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 42,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 43,
+   "before": {
+    "tick": 43,
+    "head": [
+     48,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "07d3a7c6fe3e417c",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 44,
+    "head": [
+     64,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "18ac68635f1a9bc1",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 43,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 44,
+   "before": {
+    "tick": 44,
+    "head": [
+     64,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "18ac68635f1a9bc1",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 45,
+    "head": [
+     80,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "e088adbc916b5523",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 44,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 45,
+   "before": {
+    "tick": 45,
+    "head": [
+     80,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "e088adbc916b5523",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 46,
+    "head": [
+     96,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "99192db6303633f8",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 45,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 46,
+   "before": {
+    "tick": 46,
+    "head": [
+     96,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "99192db6303633f8",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 47,
+    "head": [
+     112,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "ee06d4a0527bac2e",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 46,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 47,
+   "before": {
+    "tick": 47,
+    "head": [
+     112,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "ee06d4a0527bac2e",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 48,
+    "head": [
+     128,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "8669fcbd55eb5626",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 47,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.0,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 48,
+   "before": {
+    "tick": 48,
+    "head": [
+     128,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "8669fcbd55eb5626",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 49,
+    "head": [
+     144,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "898dca3c8702f548",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 48,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 49,
+   "before": {
+    "tick": 49,
+    "head": [
+     144,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "898dca3c8702f548",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 50,
+    "head": [
+     160,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "4863c97c13db02f8",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 49,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 50,
+   "before": {
+    "tick": 50,
+    "head": [
+     160,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "4863c97c13db02f8",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 51,
+    "head": [
+     176,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "4dcc2acfc0f3d80b",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 50,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 51,
+   "before": {
+    "tick": 51,
+    "head": [
+     176,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "4dcc2acfc0f3d80b",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 52,
+    "head": [
+     192,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "b0de6d1bc760e648",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 51,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 52,
+   "before": {
+    "tick": 52,
+    "head": [
+     192,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "b0de6d1bc760e648",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 53,
+    "head": [
+     208,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "7e2450ad4cc701c3",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 52,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 53,
+   "before": {
+    "tick": 53,
+    "head": [
+     208,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "7e2450ad4cc701c3",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 54,
+    "head": [
+     224,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "820d4ee9040ccbec",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 53,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 54,
+   "before": {
+    "tick": 54,
+    "head": [
+     224,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "820d4ee9040ccbec",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 55,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "497cfdbe6483d3e1",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 54,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 55,
+   "before": {
+    "tick": 55,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "497cfdbe6483d3e1",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 56,
+    "head": [
+     256,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "1198230091f7b28f",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 55,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.0,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 56,
+   "before": {
+    "tick": 56,
+    "head": [
+     256,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "1198230091f7b28f",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 57,
+    "head": [
+     272,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "81696d6844b821d3",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 56,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 57,
+   "before": {
+    "tick": 57,
+    "head": [
+     272,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "81696d6844b821d3",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 58,
+    "head": [
+     288,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "6e46a9c62d7a4f37",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 57,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 58,
+   "before": {
+    "tick": 58,
+    "head": [
+     288,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "6e46a9c62d7a4f37",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 59,
+    "head": [
+     304,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "8267a80c11f847a5",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 58,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 59,
+   "before": {
+    "tick": 59,
+    "head": [
+     304,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "8267a80c11f847a5",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 60,
+    "head": [
+     320,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "21ae137f42c3ad9e",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 59,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 60,
+   "before": {
+    "tick": 60,
+    "head": [
+     320,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "21ae137f42c3ad9e",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 61,
+    "head": [
+     336,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "54a39b25af608d9b",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 60,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.4,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 61,
+   "before": {
+    "tick": 61,
+    "head": [
+     336,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "54a39b25af608d9b",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 62,
+    "head": [
+     352,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "90dac3b60a863cf0",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 61,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.7,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 62,
+   "before": {
+    "tick": 62,
+    "head": [
+     352,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "90dac3b60a863cf0",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 63,
+    "head": [
+     368,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "f70f01b3ed09b4dc",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 62,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 63,
+   "before": {
+    "tick": 63,
+    "head": [
+     368,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "f70f01b3ed09b4dc",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 64,
+    "head": [
+     384,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "c48b655d95e4e448",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 63,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 64,
+   "before": {
+    "tick": 64,
+    "head": [
+     384,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "c48b655d95e4e448",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 65,
+    "head": [
+     0,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "df1d96ea0bdd6d99",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 64,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.5,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 65,
+   "before": {
+    "tick": 65,
+    "head": [
+     0,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "df1d96ea0bdd6d99",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 66,
+    "head": [
+     16,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "f43060d44013b691",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 65,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 66,
+   "before": {
+    "tick": 66,
+    "head": [
+     16,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "f43060d44013b691",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 67,
+    "head": [
+     32,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "3244502a64df0fa8",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 66,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 67,
+   "before": {
+    "tick": 67,
+    "head": [
+     32,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "3244502a64df0fa8",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 68,
+    "head": [
+     48,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "d692d35bd26ed718",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 67,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 68,
+   "before": {
+    "tick": 68,
+    "head": [
+     48,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "d692d35bd26ed718",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 69,
+    "head": [
+     64,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "c0c3272bc41437e8",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 68,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 69,
+   "before": {
+    "tick": 69,
+    "head": [
+     64,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "c0c3272bc41437e8",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 70,
+    "head": [
+     80,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "3fae34ef4fc5a9fe",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 69,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 70,
+   "before": {
+    "tick": 70,
+    "head": [
+     80,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "3fae34ef4fc5a9fe",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 71,
+    "head": [
+     96,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "bb142416e543aa27",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 70,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 71,
+   "before": {
+    "tick": 71,
+    "head": [
+     96,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "bb142416e543aa27",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 72,
+    "head": [
+     112,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "5ce74739be8867e9",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 71,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 72,
+   "before": {
+    "tick": 72,
+    "head": [
+     112,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "5ce74739be8867e9",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 73,
+    "head": [
+     128,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "1e8d4362629572ef",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 72,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 73,
+   "before": {
+    "tick": 73,
+    "head": [
+     128,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "1e8d4362629572ef",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 74,
+    "head": [
+     144,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "1e695ad01b5719ff",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 73,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 74,
+   "before": {
+    "tick": 74,
+    "head": [
+     144,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "1e695ad01b5719ff",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 75,
+    "head": [
+     160,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "e4f6cdec1ad688d8",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 74,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 75,
+   "before": {
+    "tick": 75,
+    "head": [
+     160,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "e4f6cdec1ad688d8",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 76,
+    "head": [
+     176,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "816bf05b24cad597",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 75,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 76,
+   "before": {
+    "tick": 76,
+    "head": [
+     176,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "816bf05b24cad597",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 77,
+    "head": [
+     192,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "9fff18e32ea238d5",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 76,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 77,
+   "before": {
+    "tick": 77,
+    "head": [
+     192,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "9fff18e32ea238d5",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 78,
+    "head": [
+     208,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "c183b9e5bb2004a5",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 77,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 78,
+   "before": {
+    "tick": 78,
+    "head": [
+     208,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "c183b9e5bb2004a5",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 79,
+    "head": [
+     224,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "c25642ab50cd74c3",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 78,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.0,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 79,
+   "before": {
+    "tick": 79,
+    "head": [
+     224,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "c25642ab50cd74c3",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 80,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "b171964d1c49c54a",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 79,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 80,
+   "before": {
+    "tick": 80,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "b171964d1c49c54a",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 81,
+    "head": [
+     256,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "0e20900b75a54f81",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 80,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 81,
+   "before": {
+    "tick": 81,
+    "head": [
+     256,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "0e20900b75a54f81",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 82,
+    "head": [
+     272,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "923b5fb9c372b6a3",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 81,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 82,
+   "before": {
+    "tick": 82,
+    "head": [
+     272,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "923b5fb9c372b6a3",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 83,
+    "head": [
+     288,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "f63f5f7434ae3057",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 82,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 83,
+   "before": {
+    "tick": 83,
+    "head": [
+     288,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "f63f5f7434ae3057",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 84,
+    "head": [
+     304,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "9548d63400bafad8",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 83,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 84,
+   "before": {
+    "tick": 84,
+    "head": [
+     304,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "9548d63400bafad8",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 85,
+    "head": [
+     320,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "f9566bd2ffae8631",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 84,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 85,
+   "before": {
+    "tick": 85,
+    "head": [
+     320,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "f9566bd2ffae8631",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 86,
+    "head": [
+     336,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "76ee90f00ac62e3e",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 85,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 86,
+   "before": {
+    "tick": 86,
+    "head": [
+     336,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "76ee90f00ac62e3e",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 87,
+    "head": [
+     352,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "9548c11040d58a23",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 86,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 87,
+   "before": {
+    "tick": 87,
+    "head": [
+     352,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "9548c11040d58a23",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 88,
+    "head": [
+     368,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "a66a50663aa7b1ba",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 87,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 88,
+   "before": {
+    "tick": 88,
+    "head": [
+     368,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "a66a50663aa7b1ba",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 89,
+    "head": [
+     384,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "f18326c146e6545a",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 88,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 89,
+   "before": {
+    "tick": 89,
+    "head": [
+     384,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "f18326c146e6545a",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 90,
+    "head": [
+     0,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "381dfb476c2a0017",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 89,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 90,
+   "before": {
+    "tick": 90,
+    "head": [
+     0,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "381dfb476c2a0017",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 91,
+    "head": [
+     16,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "1f5cfc4c7ecb7156",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 90,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 91,
+   "before": {
+    "tick": 91,
+    "head": [
+     16,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "1f5cfc4c7ecb7156",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 92,
+    "head": [
+     32,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "39d15c3feaacf47e",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 91,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 92,
+   "before": {
+    "tick": 92,
+    "head": [
+     32,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "39d15c3feaacf47e",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 93,
+    "head": [
+     48,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "580a494a18849255",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 92,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 93,
+   "before": {
+    "tick": 93,
+    "head": [
+     48,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "580a494a18849255",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 94,
+    "head": [
+     64,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "931fec4ea0d9cf88",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 93,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 94,
+   "before": {
+    "tick": 94,
+    "head": [
+     64,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "931fec4ea0d9cf88",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 95,
+    "head": [
+     80,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "cb0fee2b46bb0536",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 94,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.5,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 95,
+   "before": {
+    "tick": 95,
+    "head": [
+     80,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "cb0fee2b46bb0536",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 96,
+    "head": [
+     96,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "7b582bc1161301b0",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 95,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 96,
+   "before": {
+    "tick": 96,
+    "head": [
+     96,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "7b582bc1161301b0",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 97,
+    "head": [
+     112,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "ae6cfd9585aa311b",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 96,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 97,
+   "before": {
+    "tick": 97,
+    "head": [
+     112,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "ae6cfd9585aa311b",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 98,
+    "head": [
+     128,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "29af562192339950",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 97,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.4,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 98,
+   "before": {
+    "tick": 98,
+    "head": [
+     128,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ],
+     [
+      80,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "29af562192339950",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 99,
+    "head": [
+     144,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "4ddec292bca240f0",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 98,
+    "raw": "R",
+    "token": "R",
+    "secs": 3.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 99,
+   "before": {
+    "tick": 99,
+    "head": [
+     144,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ],
+     [
+      96,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "4ddec292bca240f0",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 100,
+    "head": [
+     160,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "58e01705642c0691",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 99,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.4,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 100,
+   "before": {
+    "tick": 100,
+    "head": [
+     160,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ],
+     [
+      112,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "58e01705642c0691",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 101,
+    "head": [
+     176,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "dfa5da5fe527a5ec",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 100,
+    "raw": "R",
+    "token": "R",
+    "secs": 2.9,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 101,
+   "before": {
+    "tick": 101,
+    "head": [
+     176,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ],
+     [
+      128,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "dfa5da5fe527a5ec",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 102,
+    "head": [
+     192,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "e5f19f485a554cbe",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 101,
+    "raw": "R",
+    "token": "R",
+    "secs": 5.8,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 102,
+   "before": {
+    "tick": 102,
+    "head": [
+     192,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ],
+     [
+      144,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "e5f19f485a554cbe",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 103,
+    "head": [
+     208,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "70b89fb9a7c720fe",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 102,
+    "raw": "R",
+    "token": "R",
+    "secs": 8.0,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 103,
+   "before": {
+    "tick": 103,
+    "head": [
+     208,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ],
+     [
+      160,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "70b89fb9a7c720fe",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 104,
+    "head": [
+     224,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "256a852e3e44af5e",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 103,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.5,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 104,
+   "before": {
+    "tick": 104,
+    "head": [
+     224,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "256a852e3e44af5e",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 105,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "eab48b97c30f2cf2",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 104,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.6,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 105,
+   "before": {
+    "tick": 105,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ],
+     [
+      192,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "eab48b97c30f2cf2",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 106,
+    "head": [
+     256,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "fb7cb7719189c94d",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 105,
+    "raw": "R",
+    "token": "R",
+    "secs": 6.9,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 106,
+   "before": {
+    "tick": 106,
+    "head": [
+     256,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ],
+     [
+      208,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "fb7cb7719189c94d",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 107,
+    "head": [
+     272,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "70fd33b61968fa4a",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 106,
+    "raw": "R",
+    "token": "R",
+    "secs": 5.7,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 107,
+   "before": {
+    "tick": 107,
+    "head": [
+     272,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      224,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "70fd33b61968fa4a",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 108,
+    "head": [
+     288,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "d7b56699a85f1a47",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 107,
+    "raw": "R",
+    "token": "R",
+    "secs": 5.5,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 108,
+   "before": {
+    "tick": 108,
+    "head": [
+     288,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "d7b56699a85f1a47",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 109,
+    "head": [
+     304,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "1c2e3f42a72599f6",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 108,
+    "raw": "R",
+    "token": "R",
+    "secs": 2.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 109,
+   "before": {
+    "tick": 109,
+    "head": [
+     304,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ],
+     [
+      256,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "1c2e3f42a72599f6",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 110,
+    "head": [
+     320,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "cad636c0a09fa54c",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 109,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.9,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 110,
+   "before": {
+    "tick": 110,
+    "head": [
+     320,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ],
+     [
+      272,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "cad636c0a09fa54c",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 111,
+    "head": [
+     336,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "1dbb67962afc0b92",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 110,
+    "raw": "R",
+    "token": "R",
+    "secs": 4.5,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 111,
+   "before": {
+    "tick": 111,
+    "head": [
+     336,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ],
+     [
+      288,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "1dbb67962afc0b92",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 112,
+    "head": [
+     352,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "98308667c4e4464d",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 111,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.9,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 112,
+   "before": {
+    "tick": 112,
+    "head": [
+     352,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ],
+     [
+      304,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "98308667c4e4464d",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 113,
+    "head": [
+     368,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "aae4e32c5bcc4bbe",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 112,
+    "raw": "R",
+    "token": "R",
+    "secs": 4.0,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 113,
+   "before": {
+    "tick": 113,
+    "head": [
+     368,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ],
+     [
+      320,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "aae4e32c5bcc4bbe",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 114,
+    "head": [
+     384,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "738df87d49dfe049",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 113,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 114,
+   "before": {
+    "tick": 114,
+    "head": [
+     384,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ],
+     [
+      336,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "738df87d49dfe049",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 115,
+    "head": [
+     0,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "595d2b2b8e746431",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 114,
+    "raw": "R",
+    "token": "R",
+    "secs": 5.5,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 115,
+   "before": {
+    "tick": 115,
+    "head": [
+     0,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ],
+     [
+      352,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "595d2b2b8e746431",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 116,
+    "head": [
+     16,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "c80070c2ce6c69ea",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 115,
+    "raw": "R",
+    "token": "R",
+    "secs": 7.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 116,
+   "before": {
+    "tick": 116,
+    "head": [
+     16,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ],
+     [
+      368,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "c80070c2ce6c69ea",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 117,
+    "head": [
+     32,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "633fab3383bf5bea",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 116,
+    "raw": "R",
+    "token": "R",
+    "secs": 6.9,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 117,
+   "before": {
+    "tick": 117,
+    "head": [
+     32,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ],
+     [
+      384,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "633fab3383bf5bea",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 118,
+    "head": [
+     48,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "1e4cf37a721fe352",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 117,
+    "raw": "R",
+    "token": "R",
+    "secs": 4.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 118,
+   "before": {
+    "tick": 118,
+    "head": [
+     48,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ],
+     [
+      0,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "1e4cf37a721fe352",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 119,
+    "head": [
+     64,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "262628e0d12b04ba",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 118,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 119,
+   "before": {
+    "tick": 119,
+    "head": [
+     64,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ],
+     [
+      16,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "262628e0d12b04ba",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 120,
+    "head": [
+     80,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      80,
+      160
+     ],
+     [
+      64,
+      160
+     ],
+     [
+      48,
+      160
+     ],
+     [
+      32,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "082950de235bdf84",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 119,
+    "raw": "R",
+    "token": "R",
+    "secs": 1.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  }
+ ],
+ "chain_digest": "7f46665eb1a91edf",
+ "instrument": {
+  "kind": "stepped-browser-wrapper",
+  "wrapper": {
+   "file": "snake_page.py",
+   "harness_source_digest": "381bb695953b3eab",
+   "harness_installs": [
+    "requestAnimationFrame -> recorder (THE TICK IS HELD)",
+    "Math.random -> mulberry32(seed) (THE RUN REPLAYS)",
+    "window.__SNAKE__ = {state, step, game_source}"
+   ],
+   "tick_definition": "step() calls the game's own loop() until the game's own throttle counter `window.count` returns to 0 -- the tick length is READ FROM THE GAME, not assumed",
+   "input_path": "a move is a dispatched `keydown` (keyCode/which 37..40), so it passes through the game's own handler and its no-backtrack rule",
+   "state_path": "read from the live page's top-level vars (snake, apple, grid, canvas, count); NOT scraped from pixels",
+   "rng": {
+    "algorithm": "mulberry32",
+    "period": 4294967296,
+    "seed": 1,
+    "call_site": "Math.random, whose only consumer in the page is getRandomInt"
+   }
+  },
+  "browser": {
+   "binary": "/home/chilly1/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+   "binary_digest": "0b20b130e7edd9dd",
+   "version": "Google Chrome for Testing 151.0.7922.34",
+   "headless": true,
+   "launch_flags": [
+    "--headless=new",
+    "--no-sandbox",
+    "--no-first-run",
+    "--no-default-browser-check",
+    "--disable-extensions",
+    "--disable-background-networking",
+    "--disable-sync",
+    "--disable-gpu",
+    "--allow-file-access-from-files",
+    "--mute-audio",
+    "--remote-debugging-port=0",
+    "about:blank"
+   ],
+   "digest_scope": "sha256 of the browser BINARY FILE, first 16 hex"
+  },
+  "subject": {
+   "path": "snake/snake.html",
+   "source_digest_on_disk": "a441de57c63a66c5",
+   "source_digest_from_live_dom": "a441de57c63a66c5",
+   "source_modified_by_harness": false,
+   "live_constants": {
+    "grid": 16,
+    "canvas": [
+     400,
+     400
+    ]
+   }
+  },
+  "episode_clock": "one step == one tick; no wall-clock time enters the game"
+ },
+ "entrant": "Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0",
+ "entrant_digest": "c79fcdfaf6b7bf47",
+ "entrant_digest_scope": "sha256 of the model FILE, first 16 hex. THE ENTRANT IS THE THING BEING MEASURED, so it is identified by a digest; `entrant` is a label for reading, not for checking.",
+ "config": {
+  "server_argv": [
+   "/home/chilly1/src/PrismML-Bonsai-demo-20261016/bin/cuda/llama-server",
+   "-m",
+   "/home/chilly1/moltbook_pipeline/models/Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0.gguf",
+   "--alias",
+   "snake-ternary-bonsai-2-9b-pq2-0-mtp-q8-0",
+   "-c",
+   "65536",
+   "-ngl",
+   "0",
+   "--port",
+   "57075",
+   "--no-webui",
+   "--jinja",
+   "-s",
+   "42",
+   "--reasoning",
+   "off"
+  ],
+  "server_binary": "/home/chilly1/src/PrismML-Bonsai-demo-20261016/bin/cuda/llama-server",
+  "server_binary_digest": "3c7090fb24b84615",
+  "ctx": 65536,
+  "n_gpu_layers": 0,
+  "temperature": 0.0,
+  "max_tokens_ceiling": 64,
+  "server_seed": 42,
+  "alias": "snake-ternary-bonsai-2-9b-pq2-0-mtp-q8-0",
+  "mmproj": null,
+  "mmproj_how": "--no-mmproj: the projector is not loaded (this cabinet reads text; the flag is recorded)",
+  "mmproj_mode": "off",
+  "mmproj_digest": null,
+  "reasoning": "off",
+  "reasoning_argv": [
+   "--reasoning",
+   "off"
+  ],
+  "reasoning_declared": "off",
+  "reasoning_declared_in": "snake_run.py (declared here; the pattern and the measurement are PREREG_sokoban.md's)",
+  "reasoning_rationale": "Snake's answer is ONE LETTER, the same case as Sokoban and Missile Command: a thinking model puts its deliberation where the answer belongs and the token ceiling eats it -- measured on unchanged weights at 2,314 tokens with no move. DARTS is the opposite case (exact arithmetic) and is not this cabinet.",
+  "reasoning_changed_from_declaration": false,
+  "legend": "You are playing Snake on a board {w} cells wide and {h} cells tall. The board wraps around, so sliding off the right edge brings you back on the left and sliding off the bottom brings you back on the top. There are no walls, and the only way to lose is to run into your own body.\n\nOn the map below a dot is an empty cell, a small letter o is one segment of your body, a capital letter O is your head, and a capital letter A is the apple you are trying to eat. The first line of the map is the top row of the board and the first character of each line is its leftmost cell.\n\n{board}\n\nYour head is at row {row}, column {col}, counting from zero. You are currently moving {heading}. Your body is {length} cells long and you have eaten {eaten} apples so far.\n\nAnswer with a single letter: U to move up, D to move down, L to move left, or R to move right. You may add an explanation after your answer, and it will be ignored.",
+  "legend_arm": "prose",
+  "legend_digest": "226e585ad29a1725",
+  "legend_default_arm": "prose",
+  "legend_arms_available": [
+   "first",
+   "order",
+   "prose"
+  ]
+ },
+ "reasoning_probe": {
+  "question": "What is 2 + 2? Reply with just the number and nothing else.",
+  "text": "4",
+  "field": "content",
+  "completion_tokens": 2,
+  "finish_reason": "stop",
+  "observed": "thinking OFF -- a one-token question answered in a few tokens"
+ },
+ "not_an_action": 0,
+ "missing_values": 0
+}

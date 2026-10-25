@@ -1,0 +1,45 @@
+{
+ "kind": "snake-run",
+ "agent": "Ornith-1.5-9B-Q4_K_M",
+ "seeds": [
+  1,
+  7
+ ],
+ "ticks": 120,
+ "death_ends": true,
+ "at_utc": "20261025-205752",
+ "totals": {
+  "eaten": 0,
+  "best_life": 0,
+  "deaths": 0,
+  "episodes": 2
+ },
+ "episodes": [
+  {
+   "seed": 1,
+   "score": {
+    "eaten": 0,
+    "best_life": 0,
+    "deaths": 0,
+    "ticks": 120
+   },
+   "ended": "tick_cap",
+   "artifact": "probes/SNAKE_Ornith-1.5-9B-Q4_K_M_s1.json",
+   "chain_digest": "32d9bf1e3a4be462",
+   "not_an_action": 22
+  },
+  {
+   "seed": 7,
+   "score": {
+    "eaten": 0,
+    "best_life": 0,
+    "deaths": 0,
+    "ticks": 120
+   },
+   "ended": "tick_cap",
+   "artifact": "probes/SNAKE_Ornith-1.5-9B-Q4_K_M_s7.json",
+   "chain_digest": "32d9bf1e3a4be462",
+   "not_an_action": 22
+  }
+ ]
+}

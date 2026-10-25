@@ -1,0 +1,281 @@
+{
+ "finished": true,
+ "ending": "escaped",
+ "carried_required_item": true,
+ "required_item": "key",
+ "start_room": "hall",
+ "took_item_at_step": 1,
+ "commands": 5,
+ "commands_consumed": 5,
+ "counts": {
+  "parsed": 3,
+  "unparsed": 0,
+  "recognised-but-impossible": 2
+ },
+ "outcomes": {
+  "looked": 1,
+  "took": 1,
+  "already_carrying": 2,
+  "escaped": 1
+ },
+ "rooms_visited": [
+  "hall",
+  "vault"
+ ],
+ "rooms": 2,
+ "final_room": "vault",
+ "final_inventory": [
+  "key"
+ ],
+ "trace": [
+  {
+   "step": 0,
+   "command": "Look.",
+   "verb": "look",
+   "object": null,
+   "outcome": "looked",
+   "note": "A dust-choked hall. Something small glints on the floor by your foot.  Exits: north.  Here: key",
+   "room": "hall",
+   "inventory": []
+  },
+  {
+   "step": 1,
+   "command": "Take the key.",
+   "verb": "take",
+   "object": "key",
+   "outcome": "took",
+   "note": "took key",
+   "room": "hall",
+   "inventory": [
+    "key"
+   ]
+  },
+  {
+   "step": 2,
+   "command": "Take the key.",
+   "verb": "take",
+   "object": "key",
+   "outcome": "already_carrying",
+   "note": "key is already in hand",
+   "room": "hall",
+   "inventory": [
+    "key"
+   ]
+  },
+  {
+   "step": 3,
+   "command": "Take the key.",
+   "verb": "take",
+   "object": "key",
+   "outcome": "already_carrying",
+   "note": "key is already in hand",
+   "room": "hall",
+   "inventory": [
+    "key"
+   ]
+  },
+  {
+   "step": 4,
+   "command": "North.",
+   "verb": "go",
+   "object": "north",
+   "outcome": "escaped",
+   "note": "the gate opens: carrying key",
+   "room": "vault",
+   "inventory": [
+    "key"
+   ]
+  }
+ ],
+ "ended": "escaped",
+ "kind": "model",
+ "entrant": "Ministral-3-3B-Instruct-2512-UD-Q4_K_XL",
+ "entrant_digest": "6c2c59f20f5b2b68",
+ "entrant_digest_scope": "sha256 of the model FILE, first 16 hex. THE ENTRANT IS THE THING BEING MEASURED, so it is identified by a digest and not by a name; `entrant` beside it is a LABEL, for reading, not for checking.",
+ "level": "zork_01_the_floor",
+ "loaded": true,
+ "load_s": 6.0,
+ "level_text": "# THE FLOOR -- the smallest world the faculty fits in.\n#\n# The key is in the room you start in and the gate is ONE MOVE NORTH. If an entrant cannot\n# take an item it is standing on and then walk north, it cannot play this game at all, and\n# that is the floor of the scale rather than an insult.\n#\n# Verified solvable:  take key ; north      (2 commands, simulator-confirmed)\n\nstart hall\n\nroom hall Dusty Hall\ndesc hall A dust-choked hall. Something small glints on the floor by your foot.\nroom vault The Vault\ndesc vault A vault door with no handle, only a keyhole.\n\nexit hall north vault\nexit vault south hall\n\nitem key hall\nalias key brasskey\n\ngate vault key\n",
+ "level_digest": "699ef17bfe26521b",
+ "level_digest_scope": "sha256 of the LEVEL FILE, first 16 hex",
+ "simulator": "zork.py",
+ "simulator_digest": "ff35ec83b340fbf0",
+ "simulator_digest_scope": "sha256 of the SIMULATOR FILE, first 16 hex. THE SIMULATOR IS THE INSTRUMENT THIS EVENT IS MEASURED WITH, and it is pre-registered: a record that cannot say which simulator scored it cannot be placed against the frozen criteria.",
+ "turns": [
+  {
+   "ply": 0,
+   "raw": "Look.",
+   "command": "Look.",
+   "secs": 0.9,
+   "gen_tokens": 3,
+   "budget_hit": false,
+   "cap_cut": "nothing -- the model stopped on its own",
+   "answer_field": "content",
+   "missing_value": false,
+   "state": "A dust-choked hall. Something small glints on the floor by your foot.  Exits: north.  Here: key",
+   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA dust-choked hall. Something small glints on the floor by your foot.  Exits: north.  Here: key\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n(nothing yet -- this is your first command)\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
+  },
+  {
+   "ply": 1,
+   "raw": "Take the key.",
+   "command": "Take the key.",
+   "secs": 3.3,
+   "gen_tokens": 5,
+   "budget_hit": false,
+   "cap_cut": "nothing -- the model stopped on its own",
+   "answer_field": "content",
+   "missing_value": false,
+   "state": "A dust-choked hall. Something small glints on the floor by your foot.  Exits: north.  Here: key",
+   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA dust-choked hall. Something small glints on the floor by your foot.  Exits: north.  Here: key\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> Look.\n  A dust-choked hall. Something small glints on the floor by your foot.  Exits: north.  Here: key\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
+  },
+  {
+   "ply": 2,
+   "raw": "Take the key.",
+   "command": "Take the key.",
+   "secs": 2.2,
+   "gen_tokens": 5,
+   "budget_hit": false,
+   "cap_cut": "nothing -- the model stopped on its own",
+   "answer_field": "content",
+   "missing_value": false,
+   "state": "A dust-choked hall. Something small glints on the floor by your foot.  Exits: north.  Here: nothing",
+   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA dust-choked hall. Something small glints on the floor by your foot.  Exits: north.  Here: nothing\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> Look.\n  A dust-choked hall. Something small glints on the floor by your foot.  Exits: north.  Here: key\n> Take the key.\n  took key\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
+  },
+  {
+   "ply": 3,
+   "raw": "Take the key.",
+   "command": "Take the key.",
+   "secs": 1.5,
+   "gen_tokens": 5,
+   "budget_hit": false,
+   "cap_cut": "nothing -- the model stopped on its own",
+   "answer_field": "content",
+   "missing_value": false,
+   "state": "A dust-choked hall. Something small glints on the floor by your foot.  Exits: north.  Here: nothing",
+   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA dust-choked hall. Something small glints on the floor by your foot.  Exits: north.  Here: nothing\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> Look.\n  A dust-choked hall. Something small glints on the floor by your foot.  Exits: north.  Here: key\n> Take the key.\n  took key\n> Take the key.\n  key is already in hand\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
+  },
+  {
+   "ply": 4,
+   "raw": "North.",
+   "command": "North.",
+   "secs": 0.6,
+   "gen_tokens": 3,
+   "budget_hit": false,
+   "cap_cut": "nothing -- the model stopped on its own",
+   "answer_field": "content",
+   "missing_value": false,
+   "state": "A dust-choked hall. Something small glints on the floor by your foot.  Exits: north.  Here: nothing",
+   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA dust-choked hall. Something small glints on the floor by your foot.  Exits: north.  Here: nothing\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> Look.\n  A dust-choked hall. Something small glints on the floor by your foot.  Exits: north.  Here: key\n> Take the key.\n  took key\n> Take the key.\n  key is already in hand\n> Take the key.\n  key is already in hand\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
+  }
+ ],
+ "cap": 20,
+ "final_state": "A vault door with no handle, only a keyhole.  Exits: south.  Here: nothing",
+ "legend": "state-as-text",
+ "legend_digest": "a288ad6f5b387e3d",
+ "legend_digest_scope": "sha256, first 16 hex, of EVERYTHING THE ENTRANT SAW as a function of the state: the prompt template, the simulator's describe() source, and the transcript layout",
+ "transcript_lines": 12,
+ "config": {
+  "reasoning": "off",
+  "reasoning_source": "declared in PREREG_zork.md",
+  "reasoning_declared": "off",
+  "reasoning_declared_in": "PREREG_zork.md",
+  "reasoning_rationale": "Zork's answer is a COMMAND OF ONE TO FOUR WORDS -- `take key`, `north`, `north; look`. PREREG_zork.md states it as the reason the counters are kept apart, and the sibling cabinet measured what a thinking model does with a short-answer slot: 2314 tokens of deliberation and no commitment, because the deliberation is spent where the answer belongs. This is the short-answer case, so the setting is off. A LONG-ANSWER format would be the opposite case and would take this as a parameter rather than a constant -- this cabinet has no long-answer format in it.",
+  "reasoning_changed_from_declaration": false,
+  "reasoning_argv": [
+   "--reasoning",
+   "off"
+  ],
+  "reasoning_supported_by_build": true,
+  "max_tokens_ceiling": 64,
+  "command_cap": 20,
+  "ctx": 4096,
+  "n_gpu_layers": 0,
+  "temperature": 0.0,
+  "transcript_lines": 12,
+  "legend": "state-as-text",
+  "legend_digest": "a288ad6f5b387e3d",
+  "server_argv": [
+   "/home/chilly1/llama.cpp/build/bin/llama-server",
+   "-m",
+   "/home/chilly1/moltbook_pipeline/models/Ministral-3-3B-Instruct-2512-UD-Q4_K_XL.gguf",
+   "-c",
+   "4096",
+   "-ngl",
+   "0",
+   "--port",
+   "8752",
+   "--no-webui",
+   "--reasoning",
+   "off"
+  ],
+  "server_binary_digest": "0d5393431782ddf8",
+  "server_binary_digest_scope": "sha256 of the BINARY FILE, first 16 hex. THE BINARY IS PART OF THE INSTRUMENT, so it is identified by a digest and not by a path alone: a path can name one build and hold another.",
+  "server_binary_source": "no selector given: the module constant LLAMA"
+ },
+ "reasoning_probe": {
+  "question": "What is 2 + 2? Reply with just the number and nothing else.",
+  "answer": "4",
+  "answer_from_reasoning_field": false,
+  "completion_tokens": 2,
+  "finish_reason": "stop",
+  "observed_answer_shape": "short",
+  "shape_threshold_tokens": 8,
+  "observed": "off",
+  "observed_is_an_inference": true,
+  "inference_caveat": "a LONG answer is not necessarily deliberation -- a model that echoes the question in a schema produces a long answer too, and this probe cannot tell them apart",
+  "requested": "off",
+  "disagrees_with_config": false
+ },
+ "host": {
+  "platform": "Linux",
+  "release": "7.0.0-38-generic",
+  "machine": "x86_64",
+  "cpus": 12,
+  "python": "3.14.4"
+ },
+ "reading_note": {
+  "driver_rule": "THE FIRST NON-EMPTY LINE, VERBATIM. Nothing is mined from prose; whether the line IS a command is the simulator's parser's decision.",
+  "measured_frozen_parser_1": "a first word of `i`/`I` is a DECLARED abbreviation for inventory, so a prose sentence opening with `I` is read as an inventory command and counted `parsed`, NOT `unparsed` -- the parser reads a command out of text that does not contain one, which is the filed RESIGN defect in the other direction",
+  "measured_frozen_parser_2": "a command with a trailing sentence is refused AS A WHOLE and counted `unparsed` (strict identity, per the prereg's boundary rule): `take the key and walk north` does not resolve",
+  "consequence_for_a_reader": "`parsed` is NOT a count of progress: it includes commands the world executed and did nothing with (inventory, look). The score is `finished`/`ending`, computed by the simulator; `carried_required_item` is the faculty flag."
+ },
+ "unreadable": 0,
+ "unreadable_is_the_aggregate_of": "unparsed (the simulator's own counter, per command)",
+ "missing_values": 0,
+ "missing_values_are_a_subset_of": "a missing value is NOT inside `unreadable` here: `unreadable` counts COMMANDS the parser could not read, and a missing value is not a command at all -- the harness produced it. Both are non-answers and both are reported; they are SEPARATE because one is about the model's phrasing and the other about the ceiling.",
+ "never_started": 0,
+ "never_started_scope": "OUTSIDE the denominator (A7): a cell whose every answer was empty never started, and a rate taken over `attempted` can be improved by quitting early, so it is counted separately.",
+ "budget_signature": {
+  "turns": 5,
+  "turns_that_hit_the_ceiling": 0,
+  "ceiling": 64,
+  "fraction_capped": 0.0,
+  "all_turns_capped": false,
+  "reading": "no turn hit the ceiling -- the answers are the model's own endings"
+ },
+ "criteria_read_by": "NOT THIS DRIVER -- C1-C4 and the verdict belong to Ocho and the Chair (CABINET_STRUCTURE.md rule 4). The counters above are the cell's; the criterion is not evaluated here, and no field in this record says pass or fail.",
+ "sufficiency": {
+  "checked": true,
+  "reproduces": true,
+  "replayed_from": "the record alone: trace[].command, verbatim, plus the level text it carries",
+  "fields_compared": [
+   "finished",
+   "ending",
+   "carried_required_item",
+   "required_item",
+   "start_room",
+   "took_item_at_step",
+   "commands_consumed",
+   "counts",
+   "outcomes",
+   "rooms_visited",
+   "final_room",
+   "final_inventory"
+  ],
+  "fields_mismatched": [],
+  "trace_rows_mismatched": [],
+  "simulator_replay_mismatched": [],
+  "reading": "THE RECORD REPRODUCES ITS OWN SCORE -- the simulator, given nothing but this record, returns the same score, the same counters and the same rows."
+ },
+ "sufficiency_ok": true
+}

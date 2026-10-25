@@ -9,6 +9,8 @@
  "not_an_action": 0,
  "give_up": 0,
  "gave_up_at": null,
+ "loose_match_diagnostic_only_never_scored": 0,
+ "loose_match_diagnostic_note": "DIAGNOSTIC ONLY, NEVER SCORED: the tokens an ABSTENTION-SHAPED reading would have taken and the strict whitelist did not. In no rate, gate or denominator.",
  "ended": "solved",
  "final_board": "#####\n# @*#\n#####",
  "trace": [
@@ -31,7 +33,7 @@
    "ply": 0,
    "raw": "R",
    "token": "R",
-   "secs": 0.3,
+   "secs": 0.1,
    "gen_tokens": 2,
    "budget_hit": false,
    "cap_cut": "nothing -- the model stopped on its own",
@@ -40,7 +42,7 @@
    "board": "#####\n#@$.#\n#####"
   }
  ],
- "cap": 12,
+ "cap": 40,
  "final_screen": "#####\n# @*#\n#####",
  "legend": "new",
  "legend_digest": "0d86057c46d4c83b",
@@ -57,7 +59,7 @@
   ],
   "reasoning_supported_by_build": true,
   "max_tokens_ceiling": 64,
-  "command_cap": 12,
+  "command_cap": 40,
   "ctx": 4096,
   "n_gpu_layers": 0,
   "temperature": 0.0,
@@ -70,13 +72,18 @@
    "-c",
    "4096",
    "-ngl",
-   "0",
+   "99",
    "--port",
-   "8094",
+   "58701",
    "--no-webui",
+   "--parallel",
+   "1",
    "--reasoning",
    "off"
-  ]
+  ],
+  "server_binary_digest": "0d5393431782ddf8",
+  "server_binary_digest_scope": "sha256 of the BINARY FILE, first 16 hex. THE BINARY IS PART OF THE INSTRUMENT, so it is identified by a digest and not by a path alone: a path can name one build and hold another.",
+  "server_binary_source": "no selector given: the module constant LLAMA"
  },
  "reasoning_probe": {
   "question": "What is 2 + 2? Reply with just the number and nothing else.",
@@ -112,5 +119,18 @@
   "no_solution_from_here": false,
   "still_solvable_in": 0,
   "reading": "still winnable after the first action"
+ },
+ "artifact_replaced": {
+  "path": "probes/SOKOBAN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_01_one_push.json",
+  "sha256": "4d31d53a8ef7b1218cb735215523662586c60ce041eeeaad57f3e78a430d7aca",
+  "bytes": 5287,
+  "mtime": "2026-10-25T20:24:39Z",
+  "it_named": {
+   "server_binary_digest": "0d5393431782ddf8",
+   "legend_digest": "0d86057c46d4c83b",
+   "reasoning": "off"
+  },
+  "reason_given": "suite window t_234b2387, second pass at this cell: the first pass ran with the driver's own slot count (/props total_slots=4, i.e. 1024 tokens per slot at ctx 4096); this pass runs --parallel 1 so the row is on the card's declared envelope. The superseded row's bytes are sha256 4d31d53a8ef7b121... and its block metadata is kept under suite2/runs/.",
+  "reading": "THIS RUN REPLACED THE RECORD AT THIS PATH. The replaced record is NOT recoverable from this file: what survives is that it existed, the digest of the bytes it was, and what it said about its own instrument. The reason above is the operator's, verbatim, and is checked against nothing."
  }
 }

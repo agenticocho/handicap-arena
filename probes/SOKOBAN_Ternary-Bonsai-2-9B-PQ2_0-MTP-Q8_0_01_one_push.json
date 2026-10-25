@@ -33,7 +33,7 @@
    "ply": 0,
    "raw": "R",
    "token": "R",
-   "secs": 0.8,
+   "secs": 0.2,
    "gen_tokens": 2,
    "budget_hit": false,
    "cap_cut": "nothing -- the model stopped on its own",
@@ -72,10 +72,12 @@
    "-c",
    "4096",
    "-ngl",
-   "0",
+   "99",
    "--port",
-   "8751",
+   "58701",
    "--no-webui",
+   "--parallel",
+   "1",
    "--reasoning",
    "off"
   ],
@@ -117,5 +119,18 @@
   "no_solution_from_here": false,
   "still_solvable_in": 0,
   "reading": "still winnable after the first action"
+ },
+ "artifact_replaced": {
+  "path": "probes/SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_01_one_push.json",
+  "sha256": "61bee4d068c2f06e98eff96a26bbb34ef5422972a1c0f6cae96635a1e3fc1e29",
+  "bytes": 5273,
+  "mtime": "2026-10-25T20:29:11Z",
+  "it_named": {
+   "server_binary_digest": "3c7090fb24b84615",
+   "legend_digest": "0d86057c46d4c83b",
+   "reasoning": "off"
+  },
+  "reason_given": "suite window t_234b2387, second pass at this cell: the first pass ran with the driver's own slot count (/props total_slots=4, i.e. 1024 tokens per slot at ctx 4096); this pass runs --parallel 1 so the row is on the card's declared envelope. The superseded row's bytes are sha256 61bee4d068c2f06e... and its block metadata is kept under suite2/runs/.",
+  "reading": "THIS RUN REPLACED THE RECORD AT THIS PATH. The replaced record is NOT recoverable from this file: what survives is that it existed, the digest of the bytes it was, and what it said about its own instrument. The reason above is the operator's, verbatim, and is checked against nothing."
  }
 }

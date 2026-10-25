@@ -64,6 +64,10 @@ CTX = 65536                        # the card's floor, kept identical across arm
 CTX_DECLARED = CTX
 NGL_DECLARED = 0
 NGL = NGL_DECLARED
+# `--parallel` is the same class of field: the registered launch passes no such flag and lets
+# llama-server pick its slot count; the suite's card fixes slots at 1. None = pass nothing.
+PARALLEL_DECLARED = None
+PARALLEL = PARALLEL_DECLARED
 TEMPERATURE = 0.0
 SERVER_SEED = 42
 
@@ -254,6 +258,8 @@ def server_argv(entrant, mmproj, port, alias):
         argv += ["--mmproj", mmproj]
     argv += ["--alias", alias, "-c", str(CTX), "-ngl", str(NGL), "--port", str(port), "--no-webui",
              "--jinja", "-s", str(SERVER_SEED)]
+    if PARALLEL is not None:
+        argv += ["--parallel", str(PARALLEL)]
     return argv + reasoning_argv()
 
 
@@ -744,6 +750,9 @@ def main():
                     help="--ctx-size for the entrant's server (default: the registered %d). A "
                          "COMPUTE-PATH field only; it travels in the argv the server is started with."
                          % CTX_DECLARED)
+    ap.add_argument("--parallel", type=int, default=PARALLEL_DECLARED,
+                    help="--parallel for the entrant's server (default: the registered launch, which "
+                         "passes no such flag). A COMPUTE-PATH field; it travels in the argv.")
     ap.add_argument("--overwrite-artifact", dest="overwrite_artifact", default=None, metavar="REASON")
     ap.add_argument("--mmproj", default=None,
                     help="path to the multimodal projector (default: picked by longest common prefix with "
@@ -761,6 +770,8 @@ def main():
     a = ap.parse_args()
     NGL = a.ngl
     CTX = a.ctx
+    global PARALLEL
+    PARALLEL = a.parallel
     if a.legend:
         os.environ["SNAKE_LEGEND"] = a.legend
 

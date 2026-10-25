@@ -78,6 +78,11 @@ SNAKE_SEEDS = "1,7"
 SNAKE_TICKS = 120
 CHESS_CAP = 30
 LABYRINTH_CAP = 40
+LEVEL_FILTER = None       # --level basename (or comma list) to run a single refused/repaired cell
+# The window's own start (this card's claim time, 2026-10-25 13:17 -0700). A record older than this
+# predates the window and is preserved before anything is written at its cell; a record newer than it
+# was taken by this window and is superseded with its digest named.
+WINDOW_START = 1792959420
 
 
 def load(path, name):
@@ -184,15 +189,19 @@ def get_props(timeout=10):
 
 
 class Watcher(threading.Thread):
-    """Samples the card and, once the driver's server is up, the serving pid and its /props."""
+    """Samples the card and, once the driver's server is up, the serving pid, its /props and its
+    PROCESS IDENTITY — captured while the process is alive, because the driver kills it when it
+    returns and /proc/<pid> is gone by then (a start time read after exit is not a start time)."""
 
-    def __init__(self):
+    def __init__(self, weights=None):
         super().__init__(daemon=True)
         self.stop_flag = False
         self.samples = []
         self.pid = None
         self.props = None
         self.props_at = None
+        self.weights = weights
+        self.identity = None          # Thread.ident is taken by the threading module; this is ours
 
     def run(self):
         while not self.stop_flag:
@@ -206,6 +215,9 @@ class Watcher(threading.Thread):
                 if self.pid is not None:
                     s["server_pid"] = self.pid
             if self.pid is not None:
+                if self.identity is None:
+                    self.identity = proc_identity(self.pid, self.weights)
+                    s["identity_captured"] = bool(self.identity.get("start_time"))
                 try:
                     s["pid_mib"] = sd.gpu_pid_mib(self.pid)
                 except Exception:  # noqa: BLE001
@@ -228,6 +240,7 @@ class Watcher(threading.Thread):
                 "card_min_mib": min(cards) if cards else None,
                 "pid_max_mib": max(pids) if pids else None,
                 "server_pid": self.pid,
+                "identity": self.identity,
                 "props_at": self.props_at,
                 "props": self.props}
 
@@ -271,44 +284,56 @@ def preserve(path, reason_note):
 
 
 def artifact_candidates(cabinet, entrant):
-    """The coordinate the driver will write to, worked out from the driver's OWN naming helpers."""
-    label = entrant
+    """The coordinate the driver will write to, named exactly as the driver names it: the label is the
+    WEIGHTS BASENAME (`cell_labels()` in both drivers), not the suite's short entrant name."""
+    label = ENTRANTS[entrant]["file"].replace(".gguf", "")
     if cabinet == "sokoban":
-        out = []
-        for lv in SOKOBAN_LEVELS:
-            name = os.path.splitext(os.path.basename(lv))[0]
-            out.append(os.path.join(ROOT, "probes", f"SOKOBAN_{label}_{name}.json"))
-        return out
+        return [os.path.join(ROOT, "probes",
+                             f"SOKOBAN_{label}_{os.path.splitext(os.path.basename(lv))[0]}.json")
+                for lv in SOKOBAN_LEVELS]
     if cabinet == "zork":
-        return [os.path.join(ROOT, "probes", f"ZORK_{label}_{os.path.splitext(os.path.basename(lv))[0]}.json")
+        return [os.path.join(ROOT, "probes",
+                             f"ZORK_{label}_{os.path.splitext(os.path.basename(lv))[0]}.json")
                 for lv in ZORK_LEVELS]
     return []
 
 
-def driver_cmd(cabinet, entrant, level=None, extra=()):
+def cell_path(cabinet, entrant, level):
+    label = ENTRANTS[entrant]["file"].replace(".gguf", "")
+    lname = os.path.splitext(os.path.basename(level))[0]
+    return os.path.join(ROOT, "probes", f"{cabinet.upper()}_{label}_{lname}.json")
+
+
+def driver_cmd(cabinet, entrant, level=None, extra=(), overwrite=None):
     p = os.path.join(MODELS, ENTRANTS[entrant]["file"])
     py = sys.executable
     if cabinet == "sokoban":
         cmd = [py, DRIVER["sokoban"], "--entrant", p, "--level", level, "--cap", "40",
-               "--port", str(PORT), "--ngl", "99"]
+               "--port", str(PORT), "--ngl", "99", "--parallel", "1"]
         if entrant == "bonsai-9b":
             cmd += ["--llama-server", PRISMML]
+        if overwrite:
+            cmd += ["--overwrite-artifact", overwrite]
         return cmd
     if cabinet == "zork":
         cmd = [py, DRIVER["zork"], "--entrant", p, "--level", level, "--cap", "20",
-               "--port", str(PORT), "--ngl", "99"]
+               "--port", str(PORT), "--ngl", "99", "--parallel", "1"]
         if entrant == "bonsai-9b":
             cmd += ["--llama-server", PRISMML]
+        if overwrite:
+            cmd += ["--overwrite-artifact", overwrite]
         return cmd
     if cabinet == "snake":
         cmd = [py, DRIVER["snake"], "--entrant", p, "--seeds", SNAKE_SEEDS, "--ticks", str(SNAKE_TICKS),
-               "--port", str(PORT), "--ngl", "99", "--ctx", "8192"]
+               "--port", str(PORT), "--ngl", "99", "--ctx", "8192", "--parallel", "1"]
         if entrant != "bonsai-9b":       # the fork is this driver's registered default binary
             cmd += ["--llama-server", LLAMACPP]
+        if overwrite:
+            cmd += ["--overwrite-artifact", overwrite]
         return cmd
     if cabinet == "chess":
         cmd = [py, DRIVER["chess"], "--entrant", p, "--label", f"{entrant}-suite2",
-               "--cap", str(CHESS_CAP), "--port", str(PORT), "--ngl", "99"]
+               "--cap", str(CHESS_CAP), "--port", str(PORT), "--ngl", "99", "--parallel", "1"]
         if entrant == "bonsai-9b":
             cmd += ["--llama-server", PRISMML]
         return cmd
@@ -321,23 +346,22 @@ ART_RE = {"sokoban": re.compile(r"^\s*artifact\s+(\S+)", re.M),
           "chess": re.compile(r"^\s*artifact:\s*(\S+)", re.M)}
 
 
-def run_driver_block(entrant, cabinet, level, baseline, extra_note=None):
+def run_driver_block(entrant, cabinet, level, baseline, extra_note=None, overwrite=None):
     """One driver-owned block: baseline -> driver(with its own server) -> release verified."""
     os.makedirs(OUT, exist_ok=True)
     os.makedirs(LOGS, exist_ok=True)
     stamp = time.strftime("%Y%m%d-%H%M%S")
-    ensure = []
     rec = {"entrant": entrant, "cabinet": cabinet, "level": level, "block_started": now(),
            "baseline_mib_at_start": baseline, "resident_health_before": resident_health(),
            "shape": "driver-owned"}
     # PRESERVE ANY PUBLISHED CPU ARTIFACT AT THIS CELL, BEFORE THE RUN TOUCHES IT
     if extra_note:
         rec["preserved_published_rows"] = extra_note
-    cmd = driver_cmd(cabinet, entrant, level)
+    cmd = driver_cmd(cabinet, entrant, level, overwrite=overwrite)
     rec["driver_cmd"] = cmd
     logfile = os.path.join(LOGS, f"{cabinet}_{entrant}_{(level or 'cell').replace('/', '_')}_{stamp}.log")
     t0 = time.time()
-    watcher = Watcher()
+    watcher = Watcher(os.path.join(MODELS, ENTRANTS[entrant]["file"]))
     watcher.start()
     try:
         p = subprocess.run(cmd, capture_output=True, text=True, timeout=10800)
@@ -365,7 +389,9 @@ def run_driver_block(entrant, cabinet, level, baseline, extra_note=None):
             art = None
     rec["artifact"] = art
     rec["artifact_sha256"] = sha256_file(art) if art and os.path.exists(art) else None
-    if watch["server_pid"]:
+    if watch.get("identity"):
+        rec["serving_process"] = watch["identity"]
+    elif watch["server_pid"]:
         rec["serving_process"] = proc_identity(watch["server_pid"],
                                                os.path.join(MODELS, ENTRANTS[entrant]["file"]))
     rec["props"] = watch["props"]
@@ -413,11 +439,19 @@ def run_labyrinth_block(entrant, baseline):
         return rec
     rec["admission"] = "OK"
     rec["compute_path"] = sd.compute_path(lease, entrant, 99, 8192)
-    # the identity file the cell requires: its OWN fields, read from the live process
+    # THE SERVER'S OWN ARGV, read from /proc — the identity card requires it and a flag is not evidence
+    try:
+        with open(f"/proc/{lease['pid']}/cmdline", "rb") as f:
+            srv_argv = [x.decode() for x in f.read().split(b"\0") if x]
+    except OSError:
+        srv_argv = list(lease.get("cmd") or [])
+    rec["server_argv_from_proc"] = srv_argv
+    stem = ENTRANTS[entrant]["file"].replace(".gguf", "")
+    quant = next((p for p in stem.split("-") if re.match(r"^(UD-)?(PQ|IQ|Q)\d", p)), "undeclared")
     ident = {"api_model_id": entrant,
-             "quant": entrant,           # the filename's recipe; /props ftype is in compute_path
-             "server_argv": rec["compute_path"]["serving_process"].get("cmdline"),
-             "server_binary_digest": sha256_file(rec["compute_path"]["serving_process"]["binary_path"])}
+             "quant": quant,
+             "server_argv": srv_argv,
+             "server_binary_digest": sha256_file(srv_argv[0])}
     ident_path = os.path.join(OUT, f"labyrinth_identity_{entrant}_{stamp}.json")
     json.dump(ident, open(ident_path, "w"), indent=1)
     rec["model_identity_file"] = ident_path
@@ -462,33 +496,93 @@ def run_labyrinth_block(entrant, baseline):
 
 
 # ── cabinet drivers ──────────────────────────────────────────────────────────
+def want(level):
+    if not LEVEL_FILTER:
+        return True
+    return os.path.basename(level) in LEVEL_FILTER
+
+
+def prepare_cell(cabinet, entrant, level):
+    """Decide what to do about a record already at this cell, before the driver is handed it.
+
+    TWO DIFFERENT CASES, TWO DIFFERENT SENTENCES:
+      * a record from BEFORE this window -> its bytes go to suite/runs/published_cpu/ and the row is
+        a NEW row beside it;
+      * a record taken EARLIER IN THIS WINDOW (a first pass at the driver's default slot count,
+        superseded by the re-run at --parallel 1) -> nothing is copied aside; the reason names both
+        the digest of the superseded row and why it is being superseded, and the metadata keeps the
+        pass-1 meta files beside the pass-2 ones.
+    """
+    target = cell_path(cabinet, entrant, level)
+    if not os.path.exists(target):
+        return None, None
+    mtime = os.path.getmtime(target)
+    digest = sha256_file(target)
+    if mtime >= WINDOW_START:
+        return {"superseded_in_window": target, "sha256": digest, "mtime": mtime}, (
+            f"suite window t_234b2387, second pass at this cell: the first pass ran with the driver's "
+            f"own slot count (/props total_slots=4, i.e. 1024 tokens per slot at ctx 4096); this pass "
+            f"runs --parallel 1 so the row is on the card's declared envelope. The superseded row's "
+            f"bytes are sha256 {digest[:16]}... and its block metadata is kept under suite2/runs/.")
+    note = preserve(target, "published CPU artifact at this cell; the GPU row is a new row, this copy "
+                            "is the record of the row that was already there")
+    return note, (f"suite window t_234b2387: taking a GPU row at this cell. The pre-existing record "
+                  f"(sha256 {note['sha256'][:16]}..., {note['bytes']} B) is preserved at "
+                  f"suite/runs/published_cpu/{os.path.basename(target)} with its provenance, and is "
+                  f"reported beside this row, never merged into it.")
+
+
 def run_sokoban(entrant, baseline):
     recs = []
     for lv in SOKOBAN_LEVELS:
-        note = None
-        target = os.path.join(ROOT, "probes",
-                              f"SOKOBAN_{entrant}_{os.path.splitext(os.path.basename(lv))[0]}.json")
-        if os.path.exists(target):
-            note = preserve(target, "published CPU artifact at this cell; the GPU row is a new row, "
-                                    "this copy is the record of the row that was already there")
-            print(f"[preserve] {target} -> {note['preserved_at']} sha256 {note['sha256'][:16]}")
-        recs.append(run_driver_block(entrant, "sokoban", lv, gpu_used() if baseline is None else baseline,
-                                     extra_note=note))
+        if not want(lv):
+            continue
+        note, reason = prepare_cell("sokoban", entrant, lv)
+        if note and note.get("preserved_at"):
+            print(f"[preserve] {lv} sha256 {note['sha256'][:16]} -> {note['preserved_at']}")
+        recs.append(run_driver_block(entrant, "sokoban", lv, gpu_used(),
+                                     extra_note=note, overwrite=reason))
     return recs
 
 
 def run_zork(entrant, baseline):
     recs = []
     for lv in ZORK_LEVELS:
-        note = None
-        target = os.path.join(ROOT, "probes",
-                              f"ZORK_{entrant}_{os.path.splitext(os.path.basename(lv))[0]}.json")
-        if os.path.exists(target):
-            note = preserve(target, "published CPU artifact at this cell; the GPU row is a new row")
-            print(f"[preserve] {target} -> {note['preserved_at']} sha256 {note['sha256'][:16]}")
-        recs.append(run_driver_block(entrant, "zork", lv, gpu_used() if baseline is None else baseline,
-                                     extra_note=note))
+        if not want(lv):
+            continue
+        note, reason = prepare_cell("zork", entrant, lv)
+        if note and note.get("preserved_at"):
+            print(f"[preserve] {lv} sha256 {note['sha256'][:16]} -> {note['preserved_at']}")
+        recs.append(run_driver_block(entrant, "zork", lv, gpu_used(),
+                                     extra_note=note, overwrite=reason))
     return recs
+
+
+def run_snake(entrant, baseline):
+    """Snake writes ONE artifact per (entrant, seed) and gates each of them the same way, so the
+    overwrite decision is made for the seed list as a whole, before the driver starts."""
+    label = ENTRANTS[entrant]["file"].replace(".gguf", "")
+    targets = [os.path.join(ROOT, "probes", f"SNAKE_{label}_s{s}.json") for s in SNAKE_SEEDS.split(",")]
+    note, reason = None, None
+    existing = [t for t in targets if os.path.exists(t)]
+    if existing:
+        pres = []
+        for t in existing:
+            if os.path.getmtime(t) >= WINDOW_START:
+                pres.append({"superseded_in_window": t, "sha256": sha256_file(t)})
+            else:
+                pres.append(preserve(t, "published snake episode at this entrant/seed; the suite row is a "
+                                        "new row at the same coordinate"))
+        note = pres
+        reason = ("suite window t_234b2387: taking a GPU row for this entrant on the frozen seed list. "
+                  "The pre-existing episode record(s) " +
+                  ", ".join(f"sha256 {p['sha256'][:16]}..." for p in pres) +
+                  " are preserved at suite/runs/published_cpu/ with provenance and are reported beside "
+                  "this row, never merged into it.")
+        print(f"[preserve] snake {entrant}: {len(pres)} pre-existing episode artifact(s) recorded")
+    else:
+        print(f"[snake] {entrant}: no pre-existing episode artifacts at this coordinate")
+    return [run_driver_block(entrant, "snake", None, gpu_used(), extra_note=note, overwrite=reason)]
 
 
 def main():
@@ -496,7 +590,11 @@ def main():
     ap.add_argument("--entrant", default=None)
     ap.add_argument("--cabinet", default="sokoban",
                     help="sokoban|zork|snake|labyrinth|chess|all")
+    ap.add_argument("--level", default=None,
+                    help="run only this level basename (comma-separated list allowed)")
     a = ap.parse_args()
+    global LEVEL_FILTER
+    LEVEL_FILTER = [x for x in a.level.split(",") if x] if a.level else None
     baseline = gpu_used()
     print(f"[suite2] baseline VRAM at block start: {baseline} MiB   resident health {resident_health()}")
     cabinets = CABINETS if a.cabinet == "all" else [a.cabinet]
@@ -510,7 +608,7 @@ def main():
             elif cab == "zork":
                 all_recs += run_zork(e, None)
             elif cab == "snake":
-                all_recs.append(run_driver_block(e, "snake", None, gpu_used()))
+                all_recs += run_snake(e, None)
             elif cab == "chess":
                 all_recs.append(run_driver_block(e, "chess", None, gpu_used()))
             elif cab == "labyrinth":

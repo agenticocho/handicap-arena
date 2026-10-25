@@ -44,6 +44,7 @@ LLAMA = "/home/chilly1/llama.cpp/build/bin/llama-server"
 # into the artifact, so a row states the path it ran on.
 NGL_DECLARED = 0
 CTX_DECLARED = 4096
+PARALLEL_DECLARED = None
 
 # ---- FROZEN -------------------------------------------------------------------------------------
 THREADS, HASH_MB, MULTIPV, DEPTH = 1, 64, 1, 18
@@ -587,6 +588,9 @@ def main():
                     help="path to the llama-server BINARY to run (default: the declared default). A "
                          "Bonsai ternary gguf needs the PrismML fork; the path is written into the "
                          "artifact.")
+    ap.add_argument("--parallel", type=int, default=PARALLEL_DECLARED,
+                    help="--parallel for the entrant's server (default: the registered launch, which "
+                         "passes no such flag). A COMPUTE-PATH field; it travels in the argv.")
     a = ap.parse_args()
     if a.llama_server:
         sel = os.path.expanduser(a.llama_server)
@@ -626,6 +630,8 @@ def main():
     os.makedirs(RES, exist_ok=True)
     srv_argv = [LLAMA, "-m", a.entrant, "-c", str(a.ctx), "-ngl", str(a.ngl),
                 "--port", str(a.port), "--no-webui"]
+    if a.parallel is not None:
+        srv_argv += ["--parallel", str(a.parallel)]
     srv = subprocess.Popen(
         srv_argv,
         stdout=open(log, "w"), stderr=subprocess.STDOUT)
@@ -662,7 +668,7 @@ def main():
                    # it passed. `server_argv` is the list handed to exec, `ngl`/`ctx` are read back out of
                    # it, and the server pid is the process that answered /health.
                    compute=dict(server_argv=srv_argv, server_binary=LLAMA, ngl=a.ngl, ctx=a.ctx,
-                                server_pid=srv.pid),
+                                parallel=a.parallel, server_pid=srv.pid),
                    termination=term, why=why, measures=m, wall_s=round(time.time()-t1, 1),
                    rows=rows)
         p = os.path.join(RES, f"CHESS_GAME_{label}.json")

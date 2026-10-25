@@ -1,0 +1,2301 @@
+{
+ "sokoban": {
+  "blocks": 12,
+  "superseded": 13,
+  "entrants": {
+   "bonsai-9b": {
+    "levels": {
+     "01_one_push.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `PQ2_0 - 2.13 bpw (group 128)` \u00b7 slots 1 \u00b7 build `b10777-e3de71522` \u00b7 pid 2373068 started 2026-10-25T13:41:08-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_01_one_push.json",
+      "art_sha": "d3c1bebf33e9276ac8e8f34d2d50f0c02ab94bb4b153cae0c68368738d0f0899",
+      "wall_s": 4.9,
+      "exit": 0,
+      "pid_max_mib": 2560,
+      "card_max_mib": 4340,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1775,
+       "vram_baseline_mib": 1775,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "solved": true,
+       "ended": "solved",
+       "moves": 1,
+       "blocked": 0,
+       "not_an_action": 0,
+       "give_up": 0,
+       "gave_up_at": null,
+       "tokens": 2,
+       "turns": 1,
+       "secs": 0.2,
+       "legend_digest": "0d86057c46d4c83b",
+       "cap": 40,
+       "dead_end": "still winnable after the first action"
+      }
+     },
+     "02_two_boxes.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `PQ2_0 - 2.13 bpw (group 128)` \u00b7 slots 1 \u00b7 build `b10777-e3de71522` \u00b7 pid 2373156 started 2026-10-25T13:41:14-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_02_two_boxes.json",
+      "art_sha": "4642f29e98d70e64187b1d0a7e9b8edc7705548f21e892fa0f1c1abe2787bf19",
+      "wall_s": 14.0,
+      "exit": 0,
+      "pid_max_mib": 2560,
+      "card_max_mib": 4340,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1775,
+       "vram_baseline_mib": 1775,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "solved": false,
+       "ended": "gave_up",
+       "moves": 4,
+       "blocked": 6,
+       "not_an_action": 0,
+       "give_up": 1,
+       "gave_up_at": 10,
+       "tokens": 536,
+       "turns": 40,
+       "secs": 8.0,
+       "legend_digest": "0d86057c46d4c83b",
+       "cap": 40,
+       "dead_end": "still winnable after the first action"
+      }
+     },
+     "03_the_corner_waiting.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `PQ2_0 - 2.13 bpw (group 128)` \u00b7 slots 1 \u00b7 build `b10777-e3de71522` \u00b7 pid 2373441 started 2026-10-25T13:41:29-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_03_the_corner_waiting.json",
+      "art_sha": "29ed2ba77d8d8f145ad7b31f4dc718b6f6d47cbcca9ec542e7e63d9a92ec6ff6",
+      "wall_s": 9.1,
+      "exit": 0,
+      "pid_max_mib": 2560,
+      "card_max_mib": 4340,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1775,
+       "vram_baseline_mib": 1775,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "solved": false,
+       "ended": "gave_up",
+       "moves": 3,
+       "blocked": 5,
+       "not_an_action": 0,
+       "give_up": 1,
+       "gave_up_at": 8,
+       "tokens": 173,
+       "turns": 40,
+       "secs": 2.9,
+       "legend_digest": "0d86057c46d4c83b",
+       "cap": 40,
+       "dead_end": "still winnable after the first action"
+      }
+     }
+    },
+    "release_failures": []
+   },
+   "mimo-9b": {
+    "levels": {
+     "01_one_push.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2371030 started 2026-10-25T13:38:40-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/SOKOBAN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_01_one_push.json",
+      "art_sha": "e7980ededf506099228fdb4a8b448379d5e7bdca2feeae1134f2705a20128382",
+      "wall_s": 50.2,
+      "exit": 0,
+      "pid_max_mib": 5466,
+      "card_max_mib": 7246,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1775,
+       "vram_baseline_mib": 1775,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "solved": false,
+       "ended": "commands_exhausted",
+       "moves": 0,
+       "blocked": 0,
+       "not_an_action": 40,
+       "give_up": 0,
+       "gave_up_at": null,
+       "tokens": 2560,
+       "turns": 40,
+       "secs": 41.5,
+       "legend_digest": "0d86057c46d4c83b",
+       "cap": 40,
+       "dead_end": null
+      }
+     },
+     "02_two_boxes.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2371695 started 2026-10-25T13:39:31-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/SOKOBAN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_02_two_boxes.json",
+      "art_sha": "18a9a920f599dfa893fa09b5998636d6fc485455a2c93bd22e489083bf953c2d",
+      "wall_s": 44.9,
+      "exit": 0,
+      "pid_max_mib": 5466,
+      "card_max_mib": 7246,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1775,
+       "vram_baseline_mib": 1775,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "solved": false,
+       "ended": "commands_exhausted",
+       "moves": 2,
+       "blocked": 0,
+       "not_an_action": 38,
+       "give_up": 0,
+       "gave_up_at": null,
+       "tokens": 2312,
+       "turns": 40,
+       "secs": 38.3,
+       "legend_digest": "0d86057c46d4c83b",
+       "cap": 40,
+       "dead_end": "still winnable after the first action"
+      }
+     },
+     "03_the_corner_waiting.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2372253 started 2026-10-25T13:40:16-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/SOKOBAN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_03_the_corner_waiting.json",
+      "art_sha": "8e094f7f5f886a60204d35c888d890f5ce4010ad44a7ba8faeba0ca4b046180d",
+      "wall_s": 50.7,
+      "exit": 0,
+      "pid_max_mib": 5466,
+      "card_max_mib": 7246,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1775,
+       "vram_baseline_mib": 1775,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "solved": false,
+       "ended": "commands_exhausted",
+       "moves": 3,
+       "blocked": 0,
+       "not_an_action": 37,
+       "give_up": 0,
+       "gave_up_at": null,
+       "tokens": 2374,
+       "turns": 40,
+       "secs": 44.6,
+       "legend_digest": "0d86057c46d4c83b",
+       "cap": 40,
+       "dead_end": "still winnable after the first action"
+      }
+     }
+    },
+    "release_failures": []
+   },
+   "ministral-3b": {
+    "levels": {
+     "01_one_push.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2368481 started 2026-10-25T13:35:55-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/SOKOBAN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_01_one_push.json",
+      "art_sha": "c0bf05f7d64cc5d00148097839b12734974cf81273a8d319bc0982595be8cd98",
+      "wall_s": 4.5,
+      "exit": 0,
+      "pid_max_mib": 2744,
+      "card_max_mib": 4524,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1775,
+       "vram_baseline_mib": 1775,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "solved": true,
+       "ended": "solved",
+       "moves": 1,
+       "blocked": 0,
+       "not_an_action": 0,
+       "give_up": 0,
+       "gave_up_at": null,
+       "tokens": 2,
+       "turns": 1,
+       "secs": 0.1,
+       "legend_digest": "0d86057c46d4c83b",
+       "cap": 40,
+       "dead_end": "still winnable after the first action"
+      }
+     },
+     "02_two_boxes.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2368574 started 2026-10-25T13:36:01-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/SOKOBAN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_02_two_boxes.json",
+      "art_sha": "e2445ede9e9105740270ed0c97abd70356c8f3100843aedff3fc2816585373cb",
+      "wall_s": 22.9,
+      "exit": 0,
+      "pid_max_mib": 2744,
+      "card_max_mib": 4524,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1775,
+       "vram_baseline_mib": 1775,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "solved": false,
+       "ended": "commands_exhausted",
+       "moves": 1,
+       "blocked": 0,
+       "not_an_action": 39,
+       "give_up": 0,
+       "gave_up_at": null,
+       "tokens": 2523,
+       "turns": 40,
+       "secs": 19.7,
+       "legend_digest": "0d86057c46d4c83b",
+       "cap": 40,
+       "dead_end": "still winnable after the first action"
+      }
+     },
+     "03_the_corner_waiting.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2368987 started 2026-10-25T13:36:26-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/SOKOBAN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_03_the_corner_waiting.json",
+      "art_sha": "e994d8136c356c70830eb79f53f0c00163ba00bd02aba809a6144f1326388340",
+      "wall_s": 22.9,
+      "exit": 0,
+      "pid_max_mib": 2744,
+      "card_max_mib": 4524,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1775,
+       "vram_baseline_mib": 1775,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "solved": false,
+       "ended": "commands_exhausted",
+       "moves": 1,
+       "blocked": 0,
+       "not_an_action": 39,
+       "give_up": 0,
+       "gave_up_at": null,
+       "tokens": 2512,
+       "turns": 40,
+       "secs": 19.7,
+       "legend_digest": "0d86057c46d4c83b",
+       "cap": 40,
+       "dead_end": "still winnable after the first action"
+      }
+     }
+    },
+    "release_failures": []
+   },
+   "ornith-9b": {
+    "levels": {
+     "01_one_push.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2369407 started 2026-10-25T13:36:51-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/SOKOBAN_Ornith-1.5-9B-Q4_K_M_01_one_push.json",
+      "art_sha": "5f809df9e389a9737a81dd19b9416f2fe72c3aaa17e4734814c550d132cbbfc8",
+      "wall_s": 15.5,
+      "exit": 0,
+      "pid_max_mib": 5250,
+      "card_max_mib": 7030,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1775,
+       "vram_baseline_mib": 1775,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "solved": true,
+       "ended": "solved",
+       "moves": 1,
+       "blocked": 1,
+       "not_an_action": 0,
+       "give_up": 0,
+       "gave_up_at": null,
+       "tokens": 4,
+       "turns": 2,
+       "secs": 0.4,
+       "legend_digest": "0d86057c46d4c83b",
+       "cap": 40,
+       "dead_end": null
+      }
+     },
+     "02_two_boxes.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2369712 started 2026-10-25T13:37:07-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/SOKOBAN_Ornith-1.5-9B-Q4_K_M_02_two_boxes.json",
+      "art_sha": "61c55eff09e5eba5a86c116d68546b1dd0d1ac370411c9e88608da435fbae042",
+      "wall_s": 58.7,
+      "exit": 0,
+      "pid_max_mib": 5250,
+      "card_max_mib": 7030,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1775,
+       "vram_baseline_mib": 1775,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "solved": false,
+       "ended": "commands_exhausted",
+       "moves": 0,
+       "blocked": 0,
+       "not_an_action": 40,
+       "give_up": 0,
+       "gave_up_at": null,
+       "tokens": 2560,
+       "turns": 40,
+       "secs": 41.8,
+       "legend_digest": "0d86057c46d4c83b",
+       "cap": 40,
+       "dead_end": null
+      }
+     },
+     "03_the_corner_waiting.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2370607 started 2026-10-25T13:38:07-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/SOKOBAN_Ornith-1.5-9B-Q4_K_M_03_the_corner_waiting.json",
+      "art_sha": "fb04d4598c527c0e0b328f01130c40808c83a29db0c658cad4e8a89e6f2c8ccc",
+      "wall_s": 32.2,
+      "exit": 0,
+      "pid_max_mib": 5250,
+      "card_max_mib": 7030,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1775,
+       "vram_baseline_mib": 1775,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "solved": false,
+       "ended": "gave_up",
+       "moves": 1,
+       "blocked": 0,
+       "not_an_action": 2,
+       "give_up": 1,
+       "gave_up_at": 3,
+       "tokens": 802,
+       "turns": 40,
+       "secs": 18.0,
+       "legend_digest": "0d86057c46d4c83b",
+       "cap": 40,
+       "dead_end": null
+      }
+     }
+    },
+    "release_failures": []
+   }
+  }
+ },
+ "zork": {
+  "blocks": 8,
+  "superseded": 0,
+  "entrants": {
+   "bonsai-9b": {
+    "levels": {
+     "zork_01_the_floor.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `PQ2_0 - 2.13 bpw (group 128)` \u00b7 slots 1 \u00b7 build `b10777-e3de71522` \u00b7 pid 2377692 started 2026-10-25T13:47:27-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_01_the_floor.json",
+      "art_sha": "7b5c27c5cd645746cfed8dacbaf04c8f275962a12847f4022d3dc1564d507e8f",
+      "wall_s": 5.4,
+      "exit": 0,
+      "pid_max_mib": 2560,
+      "card_max_mib": 4350,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "finished": true,
+       "ended": "escaped",
+       "carried_item": true,
+       "took_item_at_step": 1,
+       "counts": {
+        "parsed": 3,
+        "unparsed": 0,
+        "recognised-but-impossible": 0
+       },
+       "rooms": [
+        "hall",
+        "vault"
+       ],
+       "tokens": 7,
+       "turns": 3,
+       "sufficiency_ok": true,
+       "replay_mismatch": [],
+       "takes": 1,
+       "first_raw": "look"
+      }
+     },
+     "zork_02_long_crawl.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `PQ2_0 - 2.13 bpw (group 128)` \u00b7 slots 1 \u00b7 build `b10777-e3de71522` \u00b7 pid 2377781 started 2026-10-25T13:47:33-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_02_long_crawl.json",
+      "art_sha": "d466037a2b1a0093f0904c8021d8a9c7f61b30d73f9ae8811ba156a610da0607",
+      "wall_s": 11.8,
+      "exit": 0,
+      "pid_max_mib": 2562,
+      "card_max_mib": 4352,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "finished": false,
+       "ended": "gate_locked",
+       "carried_item": false,
+       "took_item_at_step": 5,
+       "counts": {
+        "parsed": 14,
+        "unparsed": 1,
+        "recognised-but-impossible": 3
+       },
+       "rooms": [
+        "hall",
+        "corridor",
+        "cellar",
+        "study",
+        "vault"
+       ],
+       "tokens": 44,
+       "turns": 18,
+       "sufficiency_ok": true,
+       "replay_mismatch": [],
+       "takes": 5,
+       "first_raw": "e"
+      }
+     }
+    },
+    "release_failures": []
+   },
+   "mimo-9b": {
+    "levels": {
+     "zork_01_the_floor.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2377328 started 2026-10-25T13:46:56-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_01_the_floor.json",
+      "art_sha": "3f660454a52843aaf9979b9931c7c0f3bc3db14a61d19ce940e3e61ec0590bda",
+      "wall_s": 14.7,
+      "exit": 0,
+      "pid_max_mib": 5470,
+      "card_max_mib": 7260,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "finished": true,
+       "ended": "escaped",
+       "carried_item": true,
+       "took_item_at_step": 0,
+       "counts": {
+        "parsed": 6,
+        "unparsed": 0,
+        "recognised-but-impossible": 10
+       },
+       "rooms": [
+        "hall",
+        "vault"
+       ],
+       "tokens": 43,
+       "turns": 16,
+       "sufficiency_ok": true,
+       "replay_mismatch": [],
+       "takes": 11,
+       "first_raw": "take key"
+      }
+     },
+     "zork_02_long_crawl.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2377517 started 2026-10-25T13:47:12-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_02_long_crawl.json",
+      "art_sha": "4f26f6cf6c8f36bb9ddf235a50fefcc50cea9679efc9fcd356d02fff298a23f4",
+      "wall_s": 14.2,
+      "exit": 6,
+      "pid_max_mib": 5470,
+      "card_max_mib": 7260,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "finished": false,
+       "ended": "out_of_commands",
+       "carried_item": true,
+       "took_item_at_step": 17,
+       "counts": {
+        "parsed": 9,
+        "unparsed": 0,
+        "recognised-but-impossible": 11
+       },
+       "rooms": [
+        "hall",
+        "cellar"
+       ],
+       "tokens": 55,
+       "turns": 20,
+       "sufficiency_ok": false,
+       "replay_mismatch": [
+        "took_item_at_step"
+       ],
+       "takes": 12,
+       "first_raw": "take torch"
+      }
+     }
+    },
+    "release_failures": []
+   },
+   "ministral-3b": {
+    "levels": {
+     "zork_01_the_floor.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2376609 started 2026-10-25T13:46:04-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_01_the_floor.json",
+      "art_sha": "7e57408fe63fd5ad8a16cc9beae80c8b20bf8c712f30dcb89a547d52eaeccc48",
+      "wall_s": 5.3,
+      "exit": 0,
+      "pid_max_mib": 2744,
+      "card_max_mib": 4534,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "finished": true,
+       "ended": "escaped",
+       "carried_item": true,
+       "took_item_at_step": 1,
+       "counts": {
+        "parsed": 3,
+        "unparsed": 0,
+        "recognised-but-impossible": 2
+       },
+       "rooms": [
+        "hall",
+        "vault"
+       ],
+       "tokens": 21,
+       "turns": 5,
+       "sufficiency_ok": true,
+       "replay_mismatch": [],
+       "takes": 3,
+       "first_raw": "Look."
+      }
+     },
+     "zork_02_long_crawl.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2376713 started 2026-10-25T13:46:10-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_02_long_crawl.json",
+      "art_sha": "df3ef579919866203e0882a22e2b5052c9bd894b8a608fbc844fb29a5e5e645b",
+      "wall_s": 7.3,
+      "exit": 6,
+      "pid_max_mib": 2744,
+      "card_max_mib": 4534,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "finished": false,
+       "ended": "out_of_commands",
+       "carried_item": true,
+       "took_item_at_step": 10,
+       "counts": {
+        "parsed": 12,
+        "unparsed": 3,
+        "recognised-but-impossible": 5
+       },
+       "rooms": [
+        "hall",
+        "cellar",
+        "corridor"
+       ],
+       "tokens": 242,
+       "turns": 20,
+       "sufficiency_ok": false,
+       "replay_mismatch": [
+        "took_item_at_step"
+       ],
+       "takes": 5,
+       "first_raw": "Look."
+      }
+     }
+    },
+    "release_failures": []
+   },
+   "ornith-9b": {
+    "levels": {
+     "zork_01_the_floor.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2376845 started 2026-10-25T13:46:18-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/ZORK_Ornith-1.5-9B-Q4_K_M_zork_01_the_floor.json",
+      "art_sha": "24841df4d193ea58cd212240074ad56a5b063cc7937b490e7b5e5bbe5e4ecc10",
+      "wall_s": 17.5,
+      "exit": 0,
+      "pid_max_mib": 5250,
+      "card_max_mib": 7040,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "finished": true,
+       "ended": "escaped",
+       "carried_item": true,
+       "took_item_at_step": 0,
+       "counts": {
+        "parsed": 2,
+        "unparsed": 0,
+        "recognised-but-impossible": 2
+       },
+       "rooms": [
+        "hall",
+        "vault"
+       ],
+       "tokens": 11,
+       "turns": 4,
+       "sufficiency_ok": true,
+       "replay_mismatch": [],
+       "takes": 3,
+       "first_raw": "take key"
+      }
+     },
+     "zork_02_long_crawl.txt": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2377063 started 2026-10-25T13:46:37-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/ZORK_Ornith-1.5-9B-Q4_K_M_zork_02_long_crawl.json",
+      "art_sha": "60d06b325250d4c9f6fadb5d2a908d49b4427465213e80c802d176c4df412444",
+      "wall_s": 18.5,
+      "exit": 0,
+      "pid_max_mib": 5254,
+      "card_max_mib": 7044,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "finished": true,
+       "ended": "escaped",
+       "carried_item": true,
+       "took_item_at_step": 1,
+       "counts": {
+        "parsed": 7,
+        "unparsed": 0,
+        "recognised-but-impossible": 0
+       },
+       "rooms": [
+        "hall",
+        "cellar",
+        "corridor",
+        "study",
+        "vault"
+       ],
+       "tokens": 16,
+       "turns": 7,
+       "sufficiency_ok": true,
+       "replay_mismatch": [],
+       "takes": 1,
+       "first_raw": "north"
+      }
+     }
+    },
+    "release_failures": []
+   }
+  }
+ },
+ "snake": {
+  "blocks": 4,
+  "superseded": 1,
+  "entrants": {
+   "bonsai-9b": {
+    "levels": {
+     "cell": {
+      "path": "-ngl 99 \u00b7 ctx 8192 \u00b7 ftype `PQ2_0 - 2.13 bpw (group 128)` \u00b7 slots 1 \u00b7 build `b10777-e3de71522` \u00b7 pid 2391798 started 2026-10-25T14:05:02-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/SNAKE_RUN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_20261025-210551.json",
+      "art_sha": "cc6fb42106c45bca5386224e85641b69a261669dc7259d55e15f6e529edda520",
+      "wall_s": 49.0,
+      "exit": 0,
+      "pid_max_mib": 3540,
+      "card_max_mib": 5330,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "totals": {
+        "eaten": 0,
+        "best_life": 0,
+        "deaths": 0,
+        "episodes": 2
+       },
+       "seeds": [
+        1,
+        7
+       ],
+       "ticks": 120,
+       "per_seed": [
+        {
+         "seed": 1,
+         "eaten": 0,
+         "deaths": 0,
+         "ticks": 120,
+         "ended": "tick_cap",
+         "chain": "7f46665eb1a91edf",
+         "not_an_action": 0,
+         "missing_values": 0,
+         "no_answer": 0,
+         "distinct_moves": [
+          "R"
+         ],
+         "moves_share": [
+          "R",
+          120
+         ],
+         "config_ngl": 0,
+         "config_ctx": 8192,
+         "browser": {
+          "binary": "/home/chilly1/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+          "binary_digest": "0b20b130e7edd9dd",
+          "version": "Google Chrome for Testing 151.0.7922.34",
+          "headless": true,
+          "launch_flags": [
+           "--headless=new",
+           "--no-sandbox",
+           "--no-first-run",
+           "--no-default-browser-check",
+           "--disable-extensions",
+           "--disable-background-networking",
+           "--disable-sync",
+           "--disable-gpu",
+           "--allow-file-access-from-files",
+           "--mute-audio",
+           "--remote-debugging-port=0",
+           "about:blank"
+          ],
+          "digest_scope": "sha256 of the browser BINARY FILE, first 16 hex"
+         }
+        },
+        {
+         "seed": 7,
+         "eaten": 0,
+         "deaths": 0,
+         "ticks": 120,
+         "ended": "tick_cap",
+         "chain": "7f46665eb1a91edf",
+         "not_an_action": 0,
+         "missing_values": 0,
+         "no_answer": 0,
+         "distinct_moves": [
+          "R"
+         ],
+         "moves_share": [
+          "R",
+          120
+         ],
+         "config_ngl": 0,
+         "config_ctx": 8192,
+         "browser": {
+          "binary": "/home/chilly1/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+          "binary_digest": "0b20b130e7edd9dd",
+          "version": "Google Chrome for Testing 151.0.7922.34",
+          "headless": true,
+          "launch_flags": [
+           "--headless=new",
+           "--no-sandbox",
+           "--no-first-run",
+           "--no-default-browser-check",
+           "--disable-extensions",
+           "--disable-background-networking",
+           "--disable-sync",
+           "--disable-gpu",
+           "--allow-file-access-from-files",
+           "--mute-audio",
+           "--remote-debugging-port=0",
+           "about:blank"
+          ],
+          "digest_scope": "sha256 of the browser BINARY FILE, first 16 hex"
+         }
+        }
+       ]
+      }
+     }
+    },
+    "release_failures": []
+   },
+   "mimo-9b": {
+    "levels": {
+     "cell": {
+      "path": "-ngl 99 \u00b7 ctx 8192 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2385769 started 2026-10-25T13:57:52-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/SNAKE_RUN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_20261025-210006.json",
+      "art_sha": "54b1e9e3b55025ada242a37de6447bdf60981f97ac7d84d952d78d87e2e768cd",
+      "wall_s": 133.0,
+      "exit": 0,
+      "pid_max_mib": 5600,
+      "card_max_mib": 7390,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "totals": {
+        "eaten": 0,
+        "best_life": 0,
+        "deaths": 0,
+        "episodes": 2
+       },
+       "seeds": [
+        1,
+        7
+       ],
+       "ticks": 120,
+       "per_seed": [
+        {
+         "seed": 1,
+         "eaten": 0,
+         "deaths": 0,
+         "ticks": 120,
+         "ended": "tick_cap",
+         "chain": "235d7cddceebd6bc",
+         "not_an_action": 38,
+         "missing_values": 0,
+         "no_answer": 38,
+         "distinct_moves": [
+          "R",
+          "U"
+         ],
+         "moves_share": [
+          "R",
+          81
+         ],
+         "config_ngl": 0,
+         "config_ctx": 8192,
+         "browser": {
+          "binary": "/home/chilly1/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+          "binary_digest": "0b20b130e7edd9dd",
+          "version": "Google Chrome for Testing 151.0.7922.34",
+          "headless": true,
+          "launch_flags": [
+           "--headless=new",
+           "--no-sandbox",
+           "--no-first-run",
+           "--no-default-browser-check",
+           "--disable-extensions",
+           "--disable-background-networking",
+           "--disable-sync",
+           "--disable-gpu",
+           "--allow-file-access-from-files",
+           "--mute-audio",
+           "--remote-debugging-port=0",
+           "about:blank"
+          ],
+          "digest_scope": "sha256 of the browser BINARY FILE, first 16 hex"
+         }
+        },
+        {
+         "seed": 7,
+         "eaten": 0,
+         "deaths": 0,
+         "ticks": 120,
+         "ended": "tick_cap",
+         "chain": "235d7cddceebd6bc",
+         "not_an_action": 38,
+         "missing_values": 0,
+         "no_answer": 38,
+         "distinct_moves": [
+          "R",
+          "U"
+         ],
+         "moves_share": [
+          "R",
+          81
+         ],
+         "config_ngl": 0,
+         "config_ctx": 8192,
+         "browser": {
+          "binary": "/home/chilly1/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+          "binary_digest": "0b20b130e7edd9dd",
+          "version": "Google Chrome for Testing 151.0.7922.34",
+          "headless": true,
+          "launch_flags": [
+           "--headless=new",
+           "--no-sandbox",
+           "--no-first-run",
+           "--no-default-browser-check",
+           "--disable-extensions",
+           "--disable-background-networking",
+           "--disable-sync",
+           "--disable-gpu",
+           "--allow-file-access-from-files",
+           "--mute-audio",
+           "--remote-debugging-port=0",
+           "about:blank"
+          ],
+          "digest_scope": "sha256 of the browser BINARY FILE, first 16 hex"
+         }
+        }
+       ]
+      }
+     }
+    },
+    "release_failures": []
+   },
+   "ministral-3b": {
+    "levels": {
+     "cell": {
+      "path": "-ngl 99 \u00b7 ctx 8192 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2379866 started 2026-10-25T13:50:29-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/SNAKE_RUN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_20261025-205046.json",
+      "art_sha": "1d5e5b526d1c7987a7ab3c92b1e8d1bc7b7c14f4ea703951f4ae06a51f6d687c",
+      "wall_s": 16.3,
+      "exit": 0,
+      "pid_max_mib": 3164,
+      "card_max_mib": 4954,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "totals": {
+        "eaten": 0,
+        "best_life": 0,
+        "deaths": 0,
+        "episodes": 2
+       },
+       "seeds": [
+        1,
+        7
+       ],
+       "ticks": 120,
+       "per_seed": [
+        {
+         "seed": 1,
+         "eaten": 0,
+         "deaths": 0,
+         "ticks": 120,
+         "ended": "tick_cap",
+         "chain": "7f46665eb1a91edf",
+         "not_an_action": 0,
+         "missing_values": 0,
+         "no_answer": 0,
+         "distinct_moves": [
+          "R"
+         ],
+         "moves_share": [
+          "R",
+          120
+         ],
+         "config_ngl": 0,
+         "config_ctx": 8192,
+         "browser": {
+          "binary": "/home/chilly1/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+          "binary_digest": "0b20b130e7edd9dd",
+          "version": "Google Chrome for Testing 151.0.7922.34",
+          "headless": true,
+          "launch_flags": [
+           "--headless=new",
+           "--no-sandbox",
+           "--no-first-run",
+           "--no-default-browser-check",
+           "--disable-extensions",
+           "--disable-background-networking",
+           "--disable-sync",
+           "--disable-gpu",
+           "--allow-file-access-from-files",
+           "--mute-audio",
+           "--remote-debugging-port=0",
+           "about:blank"
+          ],
+          "digest_scope": "sha256 of the browser BINARY FILE, first 16 hex"
+         }
+        },
+        {
+         "seed": 7,
+         "eaten": 0,
+         "deaths": 0,
+         "ticks": 120,
+         "ended": "tick_cap",
+         "chain": "7f46665eb1a91edf",
+         "not_an_action": 0,
+         "missing_values": 0,
+         "no_answer": 0,
+         "distinct_moves": [
+          "R"
+         ],
+         "moves_share": [
+          "R",
+          120
+         ],
+         "config_ngl": 0,
+         "config_ctx": 8192,
+         "browser": {
+          "binary": "/home/chilly1/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+          "binary_digest": "0b20b130e7edd9dd",
+          "version": "Google Chrome for Testing 151.0.7922.34",
+          "headless": true,
+          "launch_flags": [
+           "--headless=new",
+           "--no-sandbox",
+           "--no-first-run",
+           "--no-default-browser-check",
+           "--disable-extensions",
+           "--disable-background-networking",
+           "--disable-sync",
+           "--disable-gpu",
+           "--allow-file-access-from-files",
+           "--mute-audio",
+           "--remote-debugging-port=0",
+           "about:blank"
+          ],
+          "digest_scope": "sha256 of the browser BINARY FILE, first 16 hex"
+         }
+        }
+       ]
+      }
+     }
+    },
+    "release_failures": []
+   },
+   "ornith-9b": {
+    "levels": {
+     "cell": {
+      "path": "-ngl 99 \u00b7 ctx 8192 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2384124 started 2026-10-25T13:55:57-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/probes/SNAKE_RUN_Ornith-1.5-9B-Q4_K_M_20261025-205752.json",
+      "art_sha": "3eae06a40f67a387bfde671b2f122540445b17720acd07a771e26873352ff74d",
+      "wall_s": 113.7,
+      "exit": 0,
+      "pid_max_mib": 5384,
+      "card_max_mib": 7174,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "totals": {
+        "eaten": 0,
+        "best_life": 0,
+        "deaths": 0,
+        "episodes": 2
+       },
+       "seeds": [
+        1,
+        7
+       ],
+       "ticks": 120,
+       "per_seed": [
+        {
+         "seed": 1,
+         "eaten": 0,
+         "deaths": 0,
+         "ticks": 120,
+         "ended": "tick_cap",
+         "chain": "32d9bf1e3a4be462",
+         "not_an_action": 22,
+         "missing_values": 0,
+         "no_answer": 22,
+         "distinct_moves": [
+          "D",
+          "R",
+          "U"
+         ],
+         "moves_share": [
+          "U",
+          94
+         ],
+         "config_ngl": 0,
+         "config_ctx": 8192,
+         "browser": {
+          "binary": "/home/chilly1/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+          "binary_digest": "0b20b130e7edd9dd",
+          "version": "Google Chrome for Testing 151.0.7922.34",
+          "headless": true,
+          "launch_flags": [
+           "--headless=new",
+           "--no-sandbox",
+           "--no-first-run",
+           "--no-default-browser-check",
+           "--disable-extensions",
+           "--disable-background-networking",
+           "--disable-sync",
+           "--disable-gpu",
+           "--allow-file-access-from-files",
+           "--mute-audio",
+           "--remote-debugging-port=0",
+           "about:blank"
+          ],
+          "digest_scope": "sha256 of the browser BINARY FILE, first 16 hex"
+         }
+        },
+        {
+         "seed": 7,
+         "eaten": 0,
+         "deaths": 0,
+         "ticks": 120,
+         "ended": "tick_cap",
+         "chain": "32d9bf1e3a4be462",
+         "not_an_action": 22,
+         "missing_values": 0,
+         "no_answer": 22,
+         "distinct_moves": [
+          "D",
+          "R",
+          "U"
+         ],
+         "moves_share": [
+          "U",
+          94
+         ],
+         "config_ngl": 0,
+         "config_ctx": 8192,
+         "browser": {
+          "binary": "/home/chilly1/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+          "binary_digest": "0b20b130e7edd9dd",
+          "version": "Google Chrome for Testing 151.0.7922.34",
+          "headless": true,
+          "launch_flags": [
+           "--headless=new",
+           "--no-sandbox",
+           "--no-first-run",
+           "--no-default-browser-check",
+           "--disable-extensions",
+           "--disable-background-networking",
+           "--disable-sync",
+           "--disable-gpu",
+           "--allow-file-access-from-files",
+           "--mute-audio",
+           "--remote-debugging-port=0",
+           "about:blank"
+          ],
+          "digest_scope": "sha256 of the browser BINARY FILE, first 16 hex"
+         }
+        }
+       ]
+      }
+     }
+    },
+    "release_failures": []
+   }
+  }
+ },
+ "labyrinth": {
+  "blocks": 4,
+  "superseded": 1,
+  "entrants": {
+   "bonsai-9b": {
+    "levels": {
+     "cell": {
+      "path": "-ngl 99 \u00b7 ctx 8192 \u00b7 ftype `PQ2_0 - 2.13 bpw (group 128)` \u00b7 slots 1 \u00b7 build `b10777-e3de71522` \u00b7 pid 2395883 started 2026-10-25T14:09:32-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/suite2/labyrinth/bonsai-9b-min-K12-Fehu-cap40-seed0-sm0-nothink-e8a7e2b7-cellspec6df7437a.json",
+      "art_sha": "fce6bde3760477911fe5f913af519c686b02b874442ddbc1654528bf51d16993",
+      "wall_s": 5.2,
+      "exit": 0,
+      "pid_max_mib": 2572,
+      "card_max_mib": 4362,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "pid_vram_after": 0,
+       "resident_health_after": 200,
+       "release_secs": 0.0,
+       "listener_after": null
+      },
+      "stat": {
+       "plies": 40,
+       "end_state": "cap",
+       "blocked": 0,
+       "not_an_action": 0,
+       "give_up": 0,
+       "visited_positions": 2,
+       "visited_names": 2,
+       "count_basis": "positions",
+       "graph_digest": "e8a7e2b7b59d9013",
+       "graph_file_sha256": "fe44d4cf7a2ccd87",
+       "cell_spec": "6df7437a",
+       "sym": "e8a7e2b7b59d90137f7b340815610938996f818b2b6e9639f79324caa225f3ce",
+       "K": null,
+       "cap": 40,
+       "tokens_total": 120,
+       "turn_cap": 32,
+       "budget_binding": false,
+       "prompt_digest": "3c8c4ce9618b4e2c",
+       "quant": "PQ2_0",
+       "moves": [
+        [
+         "Fehu",
+         "Uruz"
+        ],
+        [
+         "Uruz",
+         "Fehu"
+        ],
+        [
+         "Fehu",
+         "Uruz"
+        ],
+        [
+         "Uruz",
+         "Fehu"
+        ],
+        [
+         "Fehu",
+         "Uruz"
+        ],
+        [
+         "Uruz",
+         "Fehu"
+        ],
+        [
+         "Fehu",
+         "Uruz"
+        ],
+        [
+         "Uruz",
+         "Fehu"
+        ],
+        [
+         "Fehu",
+         "Uruz"
+        ],
+        [
+         "Uruz",
+         "Fehu"
+        ],
+        [
+         "Fehu",
+         "Uruz"
+        ],
+        [
+         "Uruz",
+         "Fehu"
+        ]
+       ]
+      }
+     }
+    },
+    "release_failures": []
+   },
+   "mimo-9b": {
+    "levels": {
+     "cell": {
+      "path": "-ngl 99 \u00b7 ctx 8192 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2395745 started 2026-10-25T14:09:21-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/suite2/labyrinth/mimo-9b-min-K12-Fehu-cap40-seed0-sm0-nothink-e8a7e2b7-cellspec6df7437a.json",
+      "art_sha": "b4abd2eba53cb1dfa219a3aa18dad17d9c9054eaf3b2ed16bde69c3def48e7c4",
+      "wall_s": 6.9,
+      "exit": 0,
+      "pid_max_mib": 5478,
+      "card_max_mib": 7268,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "pid_vram_after": 0,
+       "resident_health_after": 200,
+       "release_secs": 0.0,
+       "listener_after": null
+      },
+      "stat": {
+       "plies": 40,
+       "end_state": "cap",
+       "blocked": 0,
+       "not_an_action": 0,
+       "give_up": 0,
+       "visited_positions": 4,
+       "visited_names": 4,
+       "count_basis": "positions",
+       "graph_digest": "e8a7e2b7b59d9013",
+       "graph_file_sha256": "fe44d4cf7a2ccd87",
+       "cell_spec": "6df7437a",
+       "sym": "e8a7e2b7b59d90137f7b340815610938996f818b2b6e9639f79324caa225f3ce",
+       "K": null,
+       "cap": 40,
+       "tokens_total": 146,
+       "turn_cap": 32,
+       "budget_binding": false,
+       "prompt_digest": "3c8c4ce9618b4e2c",
+       "quant": "Q4_K_M",
+       "moves": [
+        [
+         "Fehu",
+         "Uruz"
+        ],
+        [
+         "Uruz",
+         "Thurisaz"
+        ],
+        [
+         "Thurisaz",
+         "Raidho"
+        ],
+        [
+         "Raidho",
+         "Uruz"
+        ],
+        [
+         "Uruz",
+         "Thurisaz"
+        ],
+        [
+         "Thurisaz",
+         "Raidho"
+        ],
+        [
+         "Raidho",
+         "Uruz"
+        ],
+        [
+         "Uruz",
+         "Thurisaz"
+        ],
+        [
+         "Thurisaz",
+         "Raidho"
+        ],
+        [
+         "Raidho",
+         "Uruz"
+        ],
+        [
+         "Uruz",
+         "Thurisaz"
+        ],
+        [
+         "Thurisaz",
+         "Raidho"
+        ]
+       ]
+      }
+     }
+    },
+    "release_failures": []
+   },
+   "ministral-3b": {
+    "levels": {
+     "cell": {
+      "path": "-ngl 99 \u00b7 ctx 8192 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2395485 started 2026-10-25T14:09:00-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/suite2/labyrinth/ministral-3b-min-K12-Fehu-cap40-seed0-sm0-nothink-e8a7e2b7-cellspec6df7437a.json",
+      "art_sha": "3ec7f93635ff7b7ff77a1e2cb46a0aa3f02de142add29cbedc2d1158a95b4403",
+      "wall_s": 1.5,
+      "exit": 0,
+      "pid_max_mib": 2766,
+      "card_max_mib": 4556,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "pid_vram_after": 0,
+       "resident_health_after": 200,
+       "release_secs": 0.0,
+       "listener_after": null
+      },
+      "stat": {
+       "plies": 40,
+       "end_state": "cap",
+       "blocked": 39,
+       "not_an_action": 0,
+       "give_up": 0,
+       "visited_positions": 2,
+       "visited_names": 2,
+       "count_basis": "positions",
+       "graph_digest": "e8a7e2b7b59d9013",
+       "graph_file_sha256": "fe44d4cf7a2ccd87",
+       "cell_spec": "6df7437a",
+       "sym": "e8a7e2b7b59d90137f7b340815610938996f818b2b6e9639f79324caa225f3ce",
+       "K": null,
+       "cap": 40,
+       "tokens_total": 160,
+       "turn_cap": 32,
+       "budget_binding": false,
+       "prompt_digest": "3c8c4ce9618b4e2c",
+       "quant": "Q4_K_XL",
+       "moves": [
+        [
+         "Fehu",
+         "Perthro"
+        ],
+        [
+         "Perthro",
+         null
+        ],
+        [
+         "Perthro",
+         null
+        ],
+        [
+         "Perthro",
+         null
+        ],
+        [
+         "Perthro",
+         null
+        ],
+        [
+         "Perthro",
+         null
+        ],
+        [
+         "Perthro",
+         null
+        ],
+        [
+         "Perthro",
+         null
+        ],
+        [
+         "Perthro",
+         null
+        ],
+        [
+         "Perthro",
+         null
+        ],
+        [
+         "Perthro",
+         null
+        ],
+        [
+         "Perthro",
+         null
+        ]
+       ]
+      }
+     }
+    },
+    "release_failures": []
+   },
+   "ornith-9b": {
+    "levels": {
+     "cell": {
+      "path": "-ngl 99 \u00b7 ctx 8192 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2395565 started 2026-10-25T14:09:04-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/suite2/labyrinth/ornith-9b-min-K12-Fehu-cap40-seed0-sm0-nothink-e8a7e2b7-cellspec6df7437a.json",
+      "art_sha": "1555704e18489bc246ff3bcf6d43a92e2efc530734e5889e5a99a0df068d1654",
+      "wall_s": 6.7,
+      "exit": 0,
+      "pid_max_mib": 5264,
+      "card_max_mib": 7054,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "pid_vram_after": 0,
+       "resident_health_after": 200,
+       "release_secs": 0.0,
+       "listener_after": null
+      },
+      "stat": {
+       "plies": 40,
+       "end_state": "cap",
+       "blocked": 0,
+       "not_an_action": 0,
+       "give_up": 0,
+       "visited_positions": 2,
+       "visited_names": 2,
+       "count_basis": "positions",
+       "graph_digest": "e8a7e2b7b59d9013",
+       "graph_file_sha256": "fe44d4cf7a2ccd87",
+       "cell_spec": "6df7437a",
+       "sym": "e8a7e2b7b59d90137f7b340815610938996f818b2b6e9639f79324caa225f3ce",
+       "K": null,
+       "cap": 40,
+       "tokens_total": 120,
+       "turn_cap": 32,
+       "budget_binding": false,
+       "prompt_digest": "3c8c4ce9618b4e2c",
+       "quant": "Q4_K_M",
+       "moves": [
+        [
+         "Fehu",
+         "Ansuz"
+        ],
+        [
+         "Ansuz",
+         "Fehu"
+        ],
+        [
+         "Fehu",
+         "Ansuz"
+        ],
+        [
+         "Ansuz",
+         "Fehu"
+        ],
+        [
+         "Fehu",
+         "Ansuz"
+        ],
+        [
+         "Ansuz",
+         "Fehu"
+        ],
+        [
+         "Fehu",
+         "Ansuz"
+        ],
+        [
+         "Ansuz",
+         "Fehu"
+        ],
+        [
+         "Fehu",
+         "Ansuz"
+        ],
+        [
+         "Ansuz",
+         "Fehu"
+        ],
+        [
+         "Fehu",
+         "Ansuz"
+        ],
+        [
+         "Ansuz",
+         "Fehu"
+        ]
+       ]
+      }
+     }
+    },
+    "release_failures": []
+   }
+  }
+ },
+ "chess": {
+  "blocks": 4,
+  "superseded": 0,
+  "entrants": {
+   "bonsai-9b": {
+    "levels": {
+     "cell": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `PQ2_0 - 2.13 bpw (group 128)` \u00b7 slots 1 \u00b7 build `b10777-e3de71522` \u00b7 pid 2400963 started 2026-10-25T14:13:31-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/../cabinet_results/main/CHESS_GAME_bonsai-9b-suite2.json",
+      "art_sha": "54587852b22e0e7d9bbeca4400e3e890b5c0f419fcbd85c7336fef097251a5f9",
+      "wall_s": 22.8,
+      "exit": 0,
+      "pid_max_mib": 2560,
+      "card_max_mib": 4350,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "termination": "illegal-move",
+       "why": "illegal: the model's first line is 'e2e4', which is well formed and IS NOT a legal move in this position (20 are legal). A FAILURE OF THE ENTRANT -- the move list is not supplied, so the candidates must be derived. [TAXONOMY NOTE: `illegal-move` is NOT one of CARD_chess.md's five frozen terminations. It becomes reachable only once the prompt stops supplying the move list, and it is an ENTRANT failure that the card has no value for. REQUIRES RATIFICATION before any of these numbers are scored.]",
+       "measures": {
+        "plies": 1,
+        "premature_collapse": 0,
+        "miscalibrated_persistence": 0,
+        "plies_in_lost_positions": 0,
+        "unreadable_evaluations": 0,
+        "calibrated": false
+       },
+       "plies": 1,
+       "prompt_digest": "76fa8848e9adf514",
+       "cap": 30,
+       "illegal": 0
+      }
+     }
+    },
+    "release_failures": []
+   },
+   "mimo-9b": {
+    "levels": {
+     "cell": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2400694 started 2026-10-25T14:13:18-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/../cabinet_results/main/CHESS_GAME_mimo-9b-suite2.json",
+      "art_sha": "3438933ee68dd390f3ec372e9a7e9c0bbebf009aa2d1680c8fc9880313a61bab",
+      "wall_s": 11.7,
+      "exit": 0,
+      "pid_max_mib": 5466,
+      "card_max_mib": 7256,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "termination": "illegal-move",
+       "why": "illegal: the model's first line is 'e4d5', which is well formed and IS NOT a legal move in this position (29 are legal). A FAILURE OF THE ENTRANT -- the move list is not supplied, so the candidates must be derived. [TAXONOMY NOTE: `illegal-move` is NOT one of CARD_chess.md's five frozen terminations. It becomes reachable only once the prompt stops supplying the move list, and it is an ENTRANT failure that the card has no value for. REQUIRES RATIFICATION before any of these numbers are scored.]",
+       "measures": {
+        "plies": 2,
+        "premature_collapse": 0,
+        "miscalibrated_persistence": 0,
+        "plies_in_lost_positions": 0,
+        "unreadable_evaluations": 0,
+        "calibrated": false
+       },
+       "plies": 2,
+       "prompt_digest": "76fa8848e9adf514",
+       "cap": 30,
+       "illegal": 0
+      }
+     }
+    },
+    "release_failures": []
+   },
+   "ministral-3b": {
+    "levels": {
+     "cell": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2398618 started 2026-10-25T14:11:40-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/../cabinet_results/main/CHESS_GAME_ministral-3b-suite2.json",
+      "art_sha": "2dff5edf2b512daba7f8be6eef3350cbce6fe3d34bf938a9b7c89ccfd4cf5d2b",
+      "wall_s": 4.6,
+      "exit": 0,
+      "pid_max_mib": 2744,
+      "card_max_mib": 4534,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "termination": "illegal-move",
+       "why": "illegal: the model's first line is 'e4', which is well formed and IS NOT a legal move in this position (20 are legal). A FAILURE OF THE ENTRANT -- the move list is not supplied, so the candidates must be derived. [TAXONOMY NOTE: `illegal-move` is NOT one of CARD_chess.md's five frozen terminations. It becomes reachable only once the prompt stops supplying the move list, and it is an ENTRANT failure that the card has no value for. REQUIRES RATIFICATION before any of these numbers are scored.]",
+       "measures": {
+        "plies": 1,
+        "premature_collapse": 0,
+        "miscalibrated_persistence": 0,
+        "plies_in_lost_positions": 0,
+        "unreadable_evaluations": 0,
+        "calibrated": false
+       },
+       "plies": 1,
+       "prompt_digest": "76fa8848e9adf514",
+       "cap": 30,
+       "illegal": 0
+      }
+     }
+    },
+    "release_failures": []
+   },
+   "ornith-9b": {
+    "levels": {
+     "cell": {
+      "path": "-ngl 99 \u00b7 ctx 4096 \u00b7 ftype `Q4_K - Medium` \u00b7 slots 1 \u00b7 build `b10931-3057bb66c` \u00b7 pid 2398800 started 2026-10-25T14:11:46-0700",
+      "art": "/home/chilly1/workspace/ocho_arena/../cabinet_results/main/CHESS_GAME_ornith-9b-suite2.json",
+      "art_sha": "ed7814ce804448dc410ed5578549b4c089f72942ca49fac75ad4ff059d5ca847",
+      "wall_s": 91.8,
+      "exit": 0,
+      "pid_max_mib": 5250,
+      "card_max_mib": 7040,
+      "release": {
+       "port_closed": true,
+       "vram_mib_after": 1785,
+       "vram_baseline_mib": 1785,
+       "vram_delta_mib": 0,
+       "tolerance_mib": 64,
+       "vram_back_to_baseline": true,
+       "listener_after": null,
+       "pid_vram_after": 0,
+       "resident_health_after": 200
+      },
+      "stat": {
+       "termination": "serving-failure",
+       "why": "the model was STILL DELIBERATING when the 2048-token cap hit (2048 tokens, 6060 characters of reasoning in `reasoning_content`, `content` empty). NO MOVE WAS COMMITTED, so there is no illegal move to report -- MISSING VALUE, not a verdict about the entrant. The deliberation is preserved at CHESS_REASONING_ornith-9b-suite2.txt",
+       "measures": {
+        "plies": 5,
+        "premature_collapse": 0,
+        "miscalibrated_persistence": 0,
+        "plies_in_lost_positions": 0,
+        "unreadable_evaluations": 0,
+        "calibrated": false
+       },
+       "plies": 5,
+       "prompt_digest": "76fa8848e9adf514",
+       "cap": 30,
+       "illegal": 0
+      }
+     }
+    },
+    "release_failures": []
+   }
+  }
+ },
+ "_published_cpu": {
+  "SNAKE_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_s1.json": {
+   "solved": null,
+   "ended": "tick_cap",
+   "moves": [
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R"
+   ],
+   "blocked": null,
+   "not_an_action": 0,
+   "give_up": null,
+   "finished": null,
+   "carried_required_item": null
+  },
+  "SNAKE_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_s1.json.provenance.json": {
+   "solved": null,
+   "ended": null,
+   "moves": null,
+   "blocked": null,
+   "not_an_action": null,
+   "give_up": null,
+   "finished": null,
+   "carried_required_item": null
+  },
+  "SNAKE_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_s7.json": {
+   "solved": null,
+   "ended": "tick_cap",
+   "moves": [
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R",
+    "R"
+   ],
+   "blocked": null,
+   "not_an_action": 0,
+   "give_up": null,
+   "finished": null,
+   "carried_required_item": null
+  },
+  "SNAKE_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_s7.json.provenance.json": {
+   "solved": null,
+   "ended": null,
+   "moves": null,
+   "blocked": null,
+   "not_an_action": null,
+   "give_up": null,
+   "finished": null,
+   "carried_required_item": null
+  },
+  "SOKOBAN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_02_two_boxes.json": {
+   "solved": false,
+   "ended": "commands_exhausted",
+   "moves": 1,
+   "blocked": 0,
+   "not_an_action": 39,
+   "give_up": 0,
+   "finished": null,
+   "carried_required_item": null
+  },
+  "SOKOBAN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_02_two_boxes.json.provenance.json": {
+   "solved": null,
+   "ended": null,
+   "moves": null,
+   "blocked": null,
+   "not_an_action": null,
+   "give_up": null,
+   "finished": null,
+   "carried_required_item": null
+  },
+  "SOKOBAN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_03_the_corner_waiting.json": {
+   "solved": false,
+   "ended": "commands_exhausted",
+   "moves": 3,
+   "blocked": 0,
+   "not_an_action": 37,
+   "give_up": 0,
+   "finished": null,
+   "carried_required_item": null
+  },
+  "SOKOBAN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_03_the_corner_waiting.json.provenance.json": {
+   "solved": null,
+   "ended": null,
+   "moves": null,
+   "blocked": null,
+   "not_an_action": null,
+   "give_up": null,
+   "finished": null,
+   "carried_required_item": null
+  },
+  "SOKOBAN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_01_one_push.json": {
+   "solved": true,
+   "ended": "solved",
+   "moves": 1,
+   "blocked": 0,
+   "not_an_action": 0,
+   "give_up": 0,
+   "finished": null,
+   "carried_required_item": null
+  },
+  "SOKOBAN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_01_one_push.json.provenance.json": {
+   "solved": null,
+   "ended": null,
+   "moves": null,
+   "blocked": null,
+   "not_an_action": null,
+   "give_up": null,
+   "finished": null,
+   "carried_required_item": null
+  },
+  "SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_01_one_push.json": {
+   "solved": true,
+   "ended": "solved",
+   "moves": 1,
+   "blocked": 0,
+   "not_an_action": 0,
+   "give_up": 0,
+   "finished": null,
+   "carried_required_item": null
+  },
+  "SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_01_one_push.json.provenance.json": {
+   "solved": null,
+   "ended": null,
+   "moves": null,
+   "blocked": null,
+   "not_an_action": null,
+   "give_up": null,
+   "finished": null,
+   "carried_required_item": null
+  },
+  "SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_02_two_boxes.json": {
+   "solved": false,
+   "ended": "gave_up",
+   "moves": 4,
+   "blocked": 6,
+   "not_an_action": 0,
+   "give_up": 1,
+   "finished": null,
+   "carried_required_item": null
+  },
+  "SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_02_two_boxes.json.provenance.json": {
+   "solved": null,
+   "ended": null,
+   "moves": null,
+   "blocked": null,
+   "not_an_action": null,
+   "give_up": null,
+   "finished": null,
+   "carried_required_item": null
+  },
+  "SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_03_the_corner_waiting.json": {
+   "solved": false,
+   "ended": "gave_up",
+   "moves": 3,
+   "blocked": 5,
+   "not_an_action": 0,
+   "give_up": 1,
+   "finished": null,
+   "carried_required_item": null
+  },
+  "SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_03_the_corner_waiting.json.provenance.json": {
+   "solved": null,
+   "ended": null,
+   "moves": null,
+   "blocked": null,
+   "not_an_action": null,
+   "give_up": null,
+   "finished": null,
+   "carried_required_item": null
+  },
+  "ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_01_the_floor.json": {
+   "solved": null,
+   "ended": "escaped",
+   "moves": null,
+   "blocked": null,
+   "not_an_action": null,
+   "give_up": null,
+   "finished": true,
+   "carried_required_item": true
+  },
+  "ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_01_the_floor.json.provenance.json": {
+   "solved": null,
+   "ended": null,
+   "moves": null,
+   "blocked": null,
+   "not_an_action": null,
+   "give_up": null,
+   "finished": null,
+   "carried_required_item": null
+  }
+ }
+}

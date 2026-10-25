@@ -1,0 +1,8 @@
+{
+ "original": "/home/chilly1/workspace/ocho_arena/probes/SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_01_one_push.json",
+ "preserved_at": "/home/chilly1/workspace/ocho_arena/suite2/runs/published_cpu/SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_01_one_push.json",
+ "sha256": "be2115fbff6999d084dc130fd14cafd83ae8fac33cab8301bf7dd5743134a2f4",
+ "bytes": 4286,
+ "preserved": "2026-10-25T13:29:06-0700",
+ "why": "published CPU artifact at this cell; the GPU row is a new row, this copy is the record of the row that was already there"
+}

@@ -1,0 +1,45 @@
+{
+ "kind": "snake-run",
+ "agent": "Ministral-3-3B-Instruct-2512-UD-Q4_K_XL",
+ "seeds": [
+  1,
+  7
+ ],
+ "ticks": 120,
+ "death_ends": true,
+ "at_utc": "20261025-205046",
+ "totals": {
+  "eaten": 0,
+  "best_life": 0,
+  "deaths": 0,
+  "episodes": 2
+ },
+ "episodes": [
+  {
+   "seed": 1,
+   "score": {
+    "eaten": 0,
+    "best_life": 0,
+    "deaths": 0,
+    "ticks": 120
+   },
+   "ended": "tick_cap",
+   "artifact": "probes/SNAKE_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_s1.json",
+   "chain_digest": "7f46665eb1a91edf",
+   "not_an_action": 0
+  },
+  {
+   "seed": 7,
+   "score": {
+    "eaten": 0,
+    "best_life": 0,
+    "deaths": 0,
+    "ticks": 120
+   },
+   "ended": "tick_cap",
+   "artifact": "probes/SNAKE_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_s7.json",
+   "chain_digest": "7f46665eb1a91edf",
+   "not_an_action": 0
+  }
+ ]
+}
