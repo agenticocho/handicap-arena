@@ -1,0 +1,77 @@
+{
+ "diagnostic": "mimo-9b mastermind no_answer replay",
+ "secret": [
+  2,
+  3,
+  0,
+  1
+ ],
+ "compute_path": {
+  "entrant": "mimo-9b",
+  "binary": "/home/chilly1/llama.cpp/build/bin/llama-server",
+  "ngl_flag": 99,
+  "ctx_flag": 8192,
+  "cache_k": "q8_0",
+  "cache_v": "q8_0",
+  "parallel_flag": 1,
+  "props_model_path": "/home/chilly1/moltbook_pipeline/models/MiMo-V2.6-Distill-Qwen-9B-Q4_K_M.gguf",
+  "props_model_ftype": "Q4_K - Medium",
+  "props_n_ctx": 8192,
+  "props_total_slots": 1,
+  "props_alias": "mimo-9b",
+  "build_line": "b10931-3057bb66c",
+  "serving_process": {
+   "pid": 2345079,
+   "start_epoch": 1792959224.52,
+   "start_time": "2026-10-25T13:13:44-0700",
+   "uptime_at_start_s": 272435.52,
+   "boot_id": "228f6d53-8c00-4ee8-b1fe-417203fa8ece",
+   "lstart_ps": "Sun Oct 25 13:13:44 2026",
+   "binary_path": "/home/chilly1/llama.cpp/build/bin/llama-server",
+   "binary_size": 17872,
+   "binary_mtime": "2026-09-12T12:25:58-0700",
+   "weights_path": "/home/chilly1/moltbook_pipeline/models/MiMo-V2.6-Distill-Qwen-9B-Q4_K_M.gguf",
+   "weights_size": 5841049120,
+   "weights_mtime": "2026-10-03T07:28:10-0700"
+  }
+ },
+ "turns": [
+  {
+   "turn": 1,
+   "content": "0 0 0 0",
+   "reasoning_chars": 0,
+   "finish": "stop",
+   "tokens": 8,
+   "secs": 0.45,
+   "parsed": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "raw_is_empty": false
+  },
+  {
+   "turn": 2,
+   "content": "The secret code contains exactly one 0, and it is in position 1. I need to determine the other three colours and their positions.\n\nLet me think about this systematically. I'll use a strategy that maximizes information gain.\n\nLet me guess a code that has 0 in position 1 and varied other colours.\n\nGuess: 0 1 2 3\n\nThis will tell me:\n- exact: how many of positions 2,3,4 match\n- partial: how many of colours 1,2,3 appear in the secret (but not in correct position)\n\nLet me think about what information I get.\n\nActually, let me be more strategic. I know position 1 is 0. Let me guess 0 1 2 3.\n\nIf I get exact=1, partial=0, then the other three colours are all wrong.\nIf I get exact=1, partial=1, then one of 1,2,3 is in the secret but in wrong position.\nIf I get exact=1, partial=2, then two of 1,2,3 are in the secret.\nIf I get exact=1, partial=3, then all three are in the secret.\n\nThis is a good first guess. Let me go with it.\n\n0 1 2 3</think>0 1 2 3",
+   "reasoning_chars": 0,
+   "finish": "stop",
+   "tokens": 292,
+   "secs": 4.59,
+   "parsed": null,
+   "raw_is_empty": false
+  }
+ ],
+ "stopped_at": 2,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1775,
+  "vram_baseline_mib": 1775,
+  "vram_delta_mib": 0,
+  "tolerance_mib": 64,
+  "vram_back_to_baseline": true,
+  "pid_vram_after": 0,
+  "resident_health_after": 200,
+  "release_secs": 0.0
+ }
+}

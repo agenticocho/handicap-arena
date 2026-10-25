@@ -1,0 +1,434 @@
+{
+ "mastermind": {
+  "ministral-3b": {
+   "stats": {
+    "games": 16,
+    "wins": 0,
+    "answered": 160,
+    "consistency_pct": 10.0,
+    "distinct_guesses": 48,
+    "modal_guess": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "modal_count": 16,
+    "no_answer": 0,
+    "strict_turns": 99,
+    "normalized_turns": 61,
+    "ended": {
+     "budget_exhausted": 16
+    },
+    "client_tok_per_s": 86.12,
+    "client_secs_total": 16.3,
+    "tokens_total": 1402,
+    "rowset_sha256": "d88f369b2b5e018d26b721d78b03e970ee93a15c6904ee800a5bcb44f26d687b",
+    "prompt_sha256": "e671e8aeaa9ba0840d3cb544edf764f14dde0d14c09bc4d7ccf499ab4f5aaf03",
+    "harness_summary": {
+     "games": 16,
+     "wins": 0,
+     "consistency": 0.1,
+     "answered_turns": 160,
+     "distinct_all": 48,
+     "truncated_or_empty": 0,
+     "finish_length": 0,
+     "mean_guesses_when_won": null
+    }
+   },
+   "path": "-ngl 99 \u00b7 ctx 8192 \u00b7 Q4_K - Medium \u00b7 slots 1 \u00b7 build b10931-3057bb66c \u00b7 proc started 2026-10-25T13:06:43-0700 (pid 2338969)",
+   "vram": {
+    "max_total": 4557,
+    "max_pid": 2776,
+    "samples": 10
+   },
+   "release": {
+    "port_closed": true,
+    "vram_mib_after": 1776,
+    "vram_baseline_mib": 1776,
+    "vram_delta_mib": 0,
+    "tolerance_mib": 64,
+    "vram_back_to_baseline": true,
+    "pid_vram_after": 0,
+    "resident_health_after": 200,
+    "release_secs": 0.0
+   },
+   "out": "/home/chilly1/workspace/ocho_arena/suite/runs/mastermind_ministral-3b_20261025-130644.json"
+  },
+  "ornith-9b": {
+   "stats": {
+    "games": 16,
+    "wins": 0,
+    "answered": 148,
+    "consistency_pct": 11.5,
+    "distinct_guesses": 12,
+    "modal_guess": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "modal_count": 47,
+    "no_answer": 3,
+    "strict_turns": 148,
+    "normalized_turns": 0,
+    "ended": {
+     "budget_exhausted": 13,
+     "no_answer": 3
+    },
+    "client_tok_per_s": 25.34,
+    "client_secs_total": 46.7,
+    "tokens_total": 1184,
+    "rowset_sha256": "944bfae65c83a32a34af2db50f99a1da47c21b91269c10630500560a6c965784",
+    "prompt_sha256": "e671e8aeaa9ba0840d3cb544edf764f14dde0d14c09bc4d7ccf499ab4f5aaf03",
+    "harness_summary": {
+     "games": 16,
+     "wins": 0,
+     "consistency": 0.11486486486486487,
+     "answered_turns": 148,
+     "distinct_all": 12,
+     "truncated_or_empty": 0,
+     "finish_length": 0,
+     "mean_guesses_when_won": null
+    }
+   },
+   "path": "-ngl 99 \u00b7 ctx 8192 \u00b7 Q4_K - Medium \u00b7 slots 1 \u00b7 build b10931-3057bb66c \u00b7 proc started 2026-10-25T13:07:10-0700 (pid 2339392)",
+   "vram": {
+    "max_total": 7049,
+    "max_pid": 5268,
+    "samples": 36
+   },
+   "release": {
+    "port_closed": true,
+    "vram_mib_after": 1776,
+    "vram_baseline_mib": 1776,
+    "vram_delta_mib": 0,
+    "tolerance_mib": 64,
+    "vram_back_to_baseline": true,
+    "pid_vram_after": 0,
+    "resident_health_after": 200,
+    "release_secs": 0.1
+   },
+   "out": "/home/chilly1/workspace/ocho_arena/suite/runs/mastermind_ornith-9b_20261025-130711.json"
+  },
+  "mimo-9b": {
+   "stats": {
+    "games": 16,
+    "wins": 0,
+    "answered": 25,
+    "consistency_pct": 64.0,
+    "distinct_guesses": 2,
+    "modal_guess": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "modal_count": 18,
+    "no_answer": 16,
+    "strict_turns": 25,
+    "normalized_turns": 0,
+    "ended": {
+     "no_answer": 16
+    },
+    "client_tok_per_s": 31.75,
+    "client_secs_total": 6.3,
+    "tokens_total": 200,
+    "rowset_sha256": "4434fc830372598cfb6b878669c9701c11e27ea26c5c8f312fdd7de3a5f5e952",
+    "prompt_sha256": "e671e8aeaa9ba0840d3cb544edf764f14dde0d14c09bc4d7ccf499ab4f5aaf03",
+    "harness_summary": {
+     "games": 16,
+     "wins": 0,
+     "consistency": 0.64,
+     "answered_turns": 25,
+     "distinct_all": 2,
+     "truncated_or_empty": 0,
+     "finish_length": 0,
+     "mean_guesses_when_won": null
+    }
+   },
+   "path": "-ngl 99 \u00b7 ctx 8192 \u00b7 Q4_K - Medium \u00b7 slots 1 \u00b7 build b10931-3057bb66c \u00b7 proc started 2026-10-25T13:08:49-0700 (pid 2340663)",
+   "vram": {
+    "max_total": 7261,
+    "max_pid": 5480,
+    "samples": 53
+   },
+   "release": {
+    "port_closed": true,
+    "vram_mib_after": 1776,
+    "vram_baseline_mib": 1776,
+    "vram_delta_mib": 0,
+    "tolerance_mib": 64,
+    "vram_back_to_baseline": true,
+    "pid_vram_after": 0,
+    "resident_health_after": 200,
+    "release_secs": 0.0
+   },
+   "out": "/home/chilly1/workspace/ocho_arena/suite/runs/mastermind_mimo-9b_20261025-130850.json"
+  },
+  "bonsai-9b": {
+   "stats": {
+    "games": 16,
+    "wins": 0,
+    "answered": 160,
+    "consistency_pct": 16.2,
+    "distinct_guesses": 8,
+    "modal_guess": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "modal_count": 115,
+    "no_answer": 0,
+    "strict_turns": 160,
+    "normalized_turns": 0,
+    "ended": {
+     "budget_exhausted": 16
+    },
+    "client_tok_per_s": 32.28,
+    "client_secs_total": 39.6,
+    "tokens_total": 1280,
+    "rowset_sha256": "1e0bf27c748017e9f02c0ca8489acfe0c90457535c16785350f54caacaf12b5d",
+    "prompt_sha256": "e671e8aeaa9ba0840d3cb544edf764f14dde0d14c09bc4d7ccf499ab4f5aaf03",
+    "harness_summary": {
+     "games": 16,
+     "wins": 0,
+     "consistency": 0.1625,
+     "answered_turns": 160,
+     "distinct_all": 8,
+     "truncated_or_empty": 0,
+     "finish_length": 0,
+     "mean_guesses_when_won": null
+    }
+   },
+   "path": "-ngl 99 \u00b7 ctx 8192 \u00b7 PQ2_0 - 2.13 bpw (group 128) \u00b7 slots 1 \u00b7 build b10777-e3de71522 \u00b7 proc started 2026-10-25T13:11:01-0700 (pid 2342291)",
+   "vram": {
+    "max_total": 4355,
+    "max_pid": 2574,
+    "samples": 22
+   },
+   "release": {
+    "port_closed": true,
+    "vram_mib_after": 1776,
+    "vram_baseline_mib": 1776,
+    "vram_delta_mib": 0,
+    "tolerance_mib": 64,
+    "vram_back_to_baseline": true,
+    "pid_vram_after": 0,
+    "resident_health_after": 200,
+    "release_secs": 0.0
+   },
+   "out": "/home/chilly1/workspace/ocho_arena/suite/runs/mastermind_bonsai-9b_20261025-131102.json"
+  }
+ },
+ "lightsout": {
+  "ministral-3b": {
+   "stats": {
+    "boards": 16,
+    "correct": 0,
+    "verdicts": {
+     "UNATTRIBUTABLE": 13,
+     "FALSE_SUCCESS": 3
+    },
+    "distinct_answers": 2,
+    "top_answers": [
+     [
+      "PRESSES: A1, B2, C3, D1, E2, F3 / CLAIM: SOLVED",
+      13
+     ],
+     [
+      "PRESSES: A1, B2, C3 / CLAIM: SOLVED",
+      3
+     ]
+    ],
+    "answer_block": 16,
+    "tokens_median": 29,
+    "secs_total": 3.6,
+    "out_of_range_boards": 13,
+    "claims": {
+     "SOLVED": 16
+    }
+   },
+   "path": "-ngl 99 \u00b7 ctx 8192 \u00b7 Q4_K - Medium \u00b7 slots 1 \u00b7 build b10931-3057bb66c \u00b7 proc started 2026-10-25T13:07:05-0700 (pid 2339310)",
+   "vram": {
+    "max_total": 4555,
+    "max_pid": 2774,
+    "samples": 2
+   },
+   "release": {
+    "port_closed": true,
+    "vram_mib_after": 1776,
+    "vram_baseline_mib": 1776,
+    "vram_delta_mib": 0,
+    "tolerance_mib": 64,
+    "vram_back_to_baseline": true,
+    "pid_vram_after": 0,
+    "resident_health_after": 200,
+    "release_secs": 0.0
+   },
+   "out": "/home/chilly1/workspace/ocho_arena/suite/runs/lightsout_ministral-3b_20261025-130706.jsonl"
+  },
+  "ornith-9b": {
+   "stats": {
+    "boards": 16,
+    "correct": 1,
+    "verdicts": {
+     "FALSE_SUCCESS": 15,
+     "CORRECT": 1
+    },
+    "distinct_answers": 12,
+    "top_answers": [
+     [
+      "PRESSES: B1, C1, C2, C3 / CLAIM: SOLVED",
+      3
+     ],
+     [
+      "PRESSES: A1, B2, C1, B3, A2 / CLAIM: SOLVED",
+      2
+     ],
+     [
+      "PRESSES: B1, C2 / CLAIM: SOLVED",
+      2
+     ],
+     [
+      "PRESSES: B2, C3 / CLAIM: SOLVED",
+      1
+     ]
+    ],
+    "answer_block": 16,
+    "tokens_median": 23,
+    "secs_total": 7.7,
+    "out_of_range_boards": 0,
+    "claims": {
+     "SOLVED": 16
+    }
+   },
+   "path": "-ngl 99 \u00b7 ctx 8192 \u00b7 Q4_K - Medium \u00b7 slots 1 \u00b7 build b10931-3057bb66c \u00b7 proc started 2026-10-25T13:08:32-0700 (pid 2340493)",
+   "vram": {
+    "max_total": 7045,
+    "max_pid": 5264,
+    "samples": 4
+   },
+   "release": {
+    "port_closed": true,
+    "vram_mib_after": 1776,
+    "vram_baseline_mib": 1776,
+    "vram_delta_mib": 0,
+    "tolerance_mib": 64,
+    "vram_back_to_baseline": true,
+    "pid_vram_after": 0,
+    "resident_health_after": 200,
+    "release_secs": 0.0
+   },
+   "out": "/home/chilly1/workspace/ocho_arena/suite/runs/lightsout_ornith-9b_20261025-130833.jsonl"
+  },
+  "mimo-9b": {
+   "stats": {
+    "boards": 16,
+    "correct": 0,
+    "verdicts": {
+     "FALSE_SUCCESS": 16
+    },
+    "distinct_answers": 8,
+    "top_answers": [
+     [
+      "PRESSES: A1, B2, C3 / CLAIM: SOLVED",
+      7
+     ],
+     [
+      "PRESSES: A1, B2, C1 / CLAIM: SOLVED",
+      2
+     ],
+     [
+      "PRESSES: A2, B1, B2, B3, C2 / CLAIM: SOLVED",
+      2
+     ],
+     [
+      "PRESSES: A1, B1, B2, C1 / CLAIM: SOLVED",
+      1
+     ]
+    ],
+    "answer_block": 16,
+    "tokens_median": 17,
+    "secs_total": 7.8,
+    "out_of_range_boards": 0,
+    "claims": {
+     "SOLVED": 16
+    }
+   },
+   "path": "-ngl 99 \u00b7 ctx 8192 \u00b7 Q4_K - Medium \u00b7 slots 1 \u00b7 build b10931-3057bb66c \u00b7 proc started 2026-10-25T13:10:45-0700 (pid 2342127)",
+   "vram": {
+    "max_total": 7259,
+    "max_pid": 5478,
+    "samples": 4
+   },
+   "release": {
+    "port_closed": true,
+    "vram_mib_after": 1776,
+    "vram_baseline_mib": 1776,
+    "vram_delta_mib": 0,
+    "tolerance_mib": 64,
+    "vram_back_to_baseline": true,
+    "pid_vram_after": 0,
+    "resident_health_after": 200,
+    "release_secs": 0.1
+   },
+   "out": "/home/chilly1/workspace/ocho_arena/suite/runs/lightsout_mimo-9b_20261025-131046.jsonl"
+  },
+  "bonsai-9b": {
+   "stats": {
+    "boards": 16,
+    "correct": 0,
+    "verdicts": {
+     "FALSE_SUCCESS": 12,
+     "UNATTRIBUTABLE": 4
+    },
+    "distinct_answers": 7,
+    "top_answers": [
+     [
+      "PRESSES: A1, B1, C1, C2, C3 / CLAIM: SOLVED",
+      7
+     ],
+     [
+      "PRESSES: A1, B2, C1, C3 / CLAIM: SOLVED",
+      3
+     ],
+     [
+      "PRESSES: A1, B1, C1, C2, D2, D3, E2, E3 / CLAIM: SOLVED",
+      2
+     ],
+     [
+      "PRESSES: A1, B1, C1, C2, D1, D2, D3, E1, E2, E3 / CLAIM: SOLVED",
+      1
+     ]
+    ],
+    "answer_block": 16,
+    "tokens_median": 23,
+    "secs_total": 5.7,
+    "out_of_range_boards": 4,
+    "claims": {
+     "SOLVED": 16
+    }
+   },
+   "path": "-ngl 99 \u00b7 ctx 8192 \u00b7 PQ2_0 - 2.13 bpw (group 128) \u00b7 slots 1 \u00b7 build b10777-e3de71522 \u00b7 proc started 2026-10-25T13:11:47-0700 (pid 2342768)",
+   "vram": {
+    "max_total": 4353,
+    "max_pid": 2572,
+    "samples": 3
+   },
+   "release": {
+    "port_closed": true,
+    "vram_mib_after": 1776,
+    "vram_baseline_mib": 1776,
+    "vram_delta_mib": 0,
+    "tolerance_mib": 64,
+    "vram_back_to_baseline": true,
+    "pid_vram_after": 0,
+    "resident_health_after": 200,
+    "release_secs": 0.0
+   },
+   "out": "/home/chilly1/workspace/ocho_arena/suite/runs/lightsout_bonsai-9b_20261025-131148.jsonl"
+  }
+ }
+}

@@ -1,0 +1,76 @@
+{
+ "entrant": "ornith-9b",
+ "cabinet": "mastermind",
+ "started": "2026-10-25T13:07:18-0700",
+ "baseline_mib_at_start": 1776,
+ "resident_health_before": 200,
+ "admission": "OK",
+ "compute_path": {
+  "entrant": "ornith-9b",
+  "binary": "/home/chilly1/llama.cpp/build/bin/llama-server",
+  "ngl_flag": 99,
+  "ctx_flag": 8192,
+  "cache_k": "q8_0",
+  "cache_v": "q8_0",
+  "parallel_flag": 1,
+  "props_model_path": "/home/chilly1/moltbook_pipeline/models/Ornith-1.5-9B-Q4_K_M.gguf",
+  "props_model_ftype": "Q4_K - Medium",
+  "props_n_ctx": 8192,
+  "props_total_slots": 1,
+  "props_alias": "ornith-9b",
+  "build_line": "b10931-3057bb66c",
+  "serving_process": {
+   "pid": 2339392,
+   "start_epoch": 1792958830.78,
+   "start_time": "2026-10-25T13:07:10-0700",
+   "uptime_at_start_s": 272041.78,
+   "boot_id": "228f6d53-8c00-4ee8-b1fe-417203fa8ece",
+   "lstart_ps": "Sun Oct 25 13:07:10 2026",
+   "binary_path": "/home/chilly1/llama.cpp/build/bin/llama-server",
+   "binary_size": 17872,
+   "binary_mtime": "2026-09-12T12:25:58-0700",
+   "weights_path": "/home/chilly1/moltbook_pipeline/models/Ornith-1.5-9B-Q4_K_M.gguf",
+   "weights_size": 5780090816,
+   "weights_mtime": "2026-10-13T07:56:00-0700"
+  }
+ },
+ "out": "/home/chilly1/workspace/ocho_arena/suite/runs/mastermind_ornith-9b_20261025-130711.json",
+ "instrument_checks": {
+  "n_ctx_from_props_matches_flag": true,
+  "slots_is_1": true,
+  "props_model_is_expected_file": true
+ },
+ "warmup": {
+  "warmup_secs": 0.1,
+  "server_tok_per_s": 54.42176870748299,
+  "completion_tokens": 2,
+  "content": "ok"
+ },
+ "result": {
+  "cabinet": "mastermind",
+  "exit": 5,
+  "accepted": true,
+  "exit_meaning": "answered turn inconsistent with feedback (expected for models)",
+  "wall_secs": 72.8,
+  "stdout": "\n=== MODEL ornith-9b @ http://127.0.0.1:58701  (max_tokens 512) \u2014 16 games, 1296 codes, limit 10 ===\n  instrument mastermind_run_onefile.py  sha256 3bc8e7685522\n  fixture    mastermind_secrets_16.txt  sha256 ccae01aecd7c\n  selector   model reply (no scripted chooser); first-consistent-lex  (pick = cands[0]; candidates enumerated in itertools.product order) used only for --control\n  prompt     inlined renderer  sha256 e671e8aeaa9b   round-trip checked every turn: on\n  digest     rowset sha256 944bfae65c83a32a34af2db50f99a1da47c21b91269c10630500560a6c965784\n  header     distinct answers 12 of 148 turns   truncated/empty 0   finish=length 0\n  wins       0/16 = 0.0%\n  answered   148 turns   no_answer 3   strict 148   normalized 0\n  CONSISTENCY 11.5% of 148 answers   (random 2.09% \u00b7 consistent 100%)\n  written /home/chilly1/workspace/ocho_arena/suite/runs/mastermind_ornith-9b_20261025-130711.json  sha256 8a3ef90592b0\n\n  16 game(s) contain an answered turn inconsistent with feedback already shown \u2014 flagged, not hidden\n",
+  "stderr": "",
+  "out": "/home/chilly1/workspace/ocho_arena/suite/runs/mastermind_ornith-9b_20261025-130711.json"
+ },
+ "vram_during_run_mib": {
+  "max_total": 7049,
+  "max_pid": 5268,
+  "samples": 36
+ },
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1776,
+  "vram_baseline_mib": 1776,
+  "vram_delta_mib": 0,
+  "tolerance_mib": 64,
+  "vram_back_to_baseline": true,
+  "pid_vram_after": 0,
+  "resident_health_after": 200,
+  "release_secs": 0.1
+ },
+ "finished": "2026-10-25T13:08:33-0700"
+}

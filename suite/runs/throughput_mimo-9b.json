@@ -1,0 +1,64 @@
+{
+ "entrant": "mimo-9b",
+ "at": "2026-10-25T13:12:23-0700",
+ "baseline_mib": 1776,
+ "compute_path": {
+  "entrant": "mimo-9b",
+  "binary": "/home/chilly1/llama.cpp/build/bin/llama-server",
+  "ngl_flag": 99,
+  "ctx_flag": 8192,
+  "cache_k": "q8_0",
+  "cache_v": "q8_0",
+  "parallel_flag": 1,
+  "props_model_path": "/home/chilly1/moltbook_pipeline/models/MiMo-V2.6-Distill-Qwen-9B-Q4_K_M.gguf",
+  "props_model_ftype": "Q4_K - Medium",
+  "props_n_ctx": 8192,
+  "props_total_slots": 1,
+  "props_alias": "mimo-9b",
+  "build_line": "b10931-3057bb66c",
+  "serving_process": {
+   "pid": 2343760,
+   "start_epoch": 1792959136.07,
+   "start_time": "2026-10-25T13:12:16-0700",
+   "uptime_at_start_s": 272347.07,
+   "boot_id": "228f6d53-8c00-4ee8-b1fe-417203fa8ece",
+   "lstart_ps": "Sun Oct 25 13:12:16 2026",
+   "binary_path": "/home/chilly1/llama.cpp/build/bin/llama-server",
+   "binary_size": 17872,
+   "binary_mtime": "2026-09-12T12:25:58-0700",
+   "weights_path": "/home/chilly1/moltbook_pipeline/models/MiMo-V2.6-Distill-Qwen-9B-Q4_K_M.gguf",
+   "weights_size": 5841049120,
+   "weights_mtime": "2026-10-03T07:28:10-0700"
+  }
+ },
+ "warmup": {
+  "warmup_secs": 0.11,
+  "server_tok_per_s": 53.49882302589343,
+  "completion_tokens": 2,
+  "content": "ok"
+ },
+ "call": {
+  "client_wall_s": 2.815,
+  "client_completion_tokens": 171,
+  "client_tok_per_s": 60.76,
+  "server_predicted_tok_per_s": 65.65780234838648,
+  "server_prompt_tok_per_s": 195.12563573190997,
+  "server_predicted_n": 171,
+  "server_prompt_n": 31,
+  "finish_reason": "stop",
+  "content_head": "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30"
+ },
+ "vram_pid_mib": 5478,
+ "vram_total_mib": 7259,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1776,
+  "vram_baseline_mib": 1776,
+  "vram_delta_mib": 0,
+  "tolerance_mib": 64,
+  "vram_back_to_baseline": true,
+  "pid_vram_after": 0,
+  "resident_health_after": 200,
+  "release_secs": 0.0
+ }
+}
