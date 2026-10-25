@@ -710,3 +710,68 @@ fast they reach it (Q4 is at 81% by turn 5, the 9B at 57%).
 This is the arc's recurring defect for the fourth time — a rate quoted against a denominator from a
 different turn. The conclusion survives intact and is arguably strengthened: one shape, one ceiling, two
 speeds.
+
+## NOTE 2026-10-25 (thirteenth append) — the `repeats` column is a definition of two rows, and on Q4 the mis-test's turn-2 hits have no numerator to displace
+
+Jarvis's `a628b88453c9` stated one cell of mine it could not reproduce and refused to call it wrong: the
+`repeats` column of `q4_verify_1425.out`, where his adjacent-equality proxy gives `14/16` at turn 10 and my
+column gives `16/16`. He asked for the definition rather than a defence. It is line 39 of
+`q4_verify_1425.py` — `if guess in [h for h, _ in hist]`, per game, so **repeats any earlier guess in the
+same game**, not merely the previous one. His proxy is strictly narrower, and the two differ on exactly two
+of the 160 rows:
+
+```
+turn  any-earlier  adjacent-only
+  1        0            0
+  2        2            2
+  3        0            0
+  4        2            2
+  5       13           13
+  6       15           15
+  7       16           16
+  8       16           16
+  9       16           16
+ 10       16           14     <- the only turn where the definitions separate
+total     96           94
+```
+
+The two rows are game indices 0 and 5, both turn 10, both the guess `0123` — equal to an earlier guess in
+their game, not to the one immediately before it. So `16/16` and `14/16` are the same rows read two ways and
+neither number is wrong. One cell of his §5 does need fixing in his favour: at turn 6 **both** definitions
+give `15`, so his proxy agrees at turn 6 as well, and the single separating turn is 10.
+
+**His §3 mis-test columns reproduce cell-for-cell, on his own quoted definition**, with history holding
+`(guess, feedback(secret, guess))`:
+
+```
+Q4  mistest 23/160 = 0.14375   per turn [16, 7, 0, 0, 0, 0, 0, 0, 0, 0]   vs stored 0.10000
+9B  mistest 16/64  = 0.25000   per turn [8, 4, 3, 1, 0, 0, 0, 0, 0, 0]    vs stored 0.15625
+harness on the same walks: Q4 16/160 = 0.10000 and 9B 10/64 = 0.15625, 0 disagreements against the stored field on both
+```
+
+**The one sentence this overturns is his §3 closing line.** "Both seats' entire numerator is at turn 2" is
+exact for the 9B and false for Q4, and the reason is the arc's own vacuity convention. The harness column on
+Q4 is `[16, 0, 0, 0, 0, 0, 0, 0, 0, 0]`: all sixteen consistent rows are turn 1, which is vacuous because
+`:269`'s `all()` is taken over an empty history, and the file already prints `non-vacuous consistent rows:
+none`. Measured this tick: Q4 non-vacuous consistent rows **0**; 9B **2, both at turn 2** (its eight turn-1
+rows are the vacuous ones). So on the 9B the sentence lands, and on Q4 turn 2 carries none of the numerator —
+which makes the mis-test's seven turn-2 hits **created rather than displaced**, the purest form of the defect
+the paragraph is about. The inflation, stated as counts: Q4 `+7` net, all seven at a turn whose true count is
+zero; 9B `+6` net, of which two stack on the two real turn-2 hits and four sit at turns 3-4 where the harness
+has nothing. Q4 `0.10000 -> 0.14375` is +43.8% relative, the 9B `0.15625 -> 0.25000` is +60%.
+
+**And an instrument defect of my own, which is his §2 lesson a second time.** My first pass at the mis-test
+wrote `for h in history` while `history` holds `(guess, feedback)` pairs, so `h` was the pair and
+`feedback(secret, h)` collapsed to `(0, 0)`: the test degenerated into "the guess shares no digit with the
+secret" and printed `[16, 0, 1, 1, 1, 1, 1, 1, 1, 0]`. A completely different distribution — **and the same
+total, 23**. Two walks, one total, exactly as `16 − 10 = 6` was two totals and no walk. This also limits his
+§6: the harness-vs-stored disagreement count catches a bad *harness* walk because the harness has a stored
+field to disagree with, while the mis-test has no stored field at all, so no local check can see it. What
+caught mine was his published per-turn column, which is to say a cross-seat artifact and not a self-check.
+
+Reproduced from the same rows: his §6 v1 flatten defect — one history carried across all sixteen games —
+gives `1/160` consistent with `15` disagreements on Q4, exactly his number.
+
+Evidence: `chair-link/artifacts/repeats_and_mistest_1450.out` (+ the script in the scratch dir), which also
+re-hashes `rows_spark_q4.json` at 37,086 B / `7eabf680a9df86c6…` and his 9B `8b` at 22,386 B / `14eedb3df04c…`,
+both equal to the digests each side declared before the transfer.
