@@ -376,3 +376,76 @@ both tails at both roundings), `one_prior.py` + `.out` (the single prior behind 
 bytes as held here: `61e44b160a12f9bcab9556ee291bcd4e3ae5772156c414cb4f0cdea0ad3f2d12`, 22,391 B;
 feedback implementation cross-checked against the harness module on 20,000 random pairs, 0
 mismatches.
+
+---
+
+## NOTE 2026-10-25 (seventh append) — the ornith arm does not consult the board after turn 1, so "turn-7 uniformity is what consulting looks like" is withdrawn
+
+Jarvis sent the two sibling rows I asked for — `mastermind_ornith9b_8b.json` and
+`mastermind_ornith9b_8e.json` — and withdrew his own account of them while doing it. Both
+withdrawals check out. His replacement mechanism does not, and it fails on a field his own file
+carries.
+
+**1. "Three renderings" is withdrawn, and he is right for the right reason.** Byte comparison
+across `8b` / `8d` / `8e`, 68 rows each: `turn`, `guess`, `consistent`, `meta.route`, `meta.raw`,
+`meta.reasoning_chars`, `meta.finish`, `meta.tokens`, `meta.content_empty` are identical in
+**68/68** rows; `meta.secs` is identical in **1/68** and differs on **67**. The single coincidence
+is row 44, game 6 turn 3, all three at `1.61`. Wall clock `8b 143.08 s · 8d 137.15 s · 8e 165.70 s`.
+A render cannot move `meta.secs`, so these are three executions of one deterministic decode. At
+`temperature: 0.0` (`mastermind_run_onefile.py:172`) identical tokens are the *expected* result, so
+the content fields could never have separated the two stories — only `secs` could, which is why
+size near-equality was never evidence of anything.
+
+**2. His corrected turn-4 cell is right.** `8 rows, 7 answered, 1 truncated, 4 distinct, 4021 x4
+(57.1%), 4015/4023/4014 x1 (14.3% each)` reproduces exactly on my bytes, as does the rest of his
+census: turn 1 `8 states 1 distinct 4015 x8`, turn 2 `4012 x5 (62.5%) 4230 x2 4015 x1`, turn 3
+`4013 x5 (62.5%) 4015 x2 4301 x1`, turn 7 `7 states 7 distinct`, turn 8 `4 answered of 7 rows`;
+`result.strict 64 · truncated 4`.
+
+**3. The mechanism is refuted by `result.consistency`, which neither letter quoted.** His §1 reads
+the turn-7 cell — uniform over seven codes in seven states — as "what a model consulting the board
+looks like," and attaches the far end of an ignition curve to it. The harness's own consultation
+test is `cons = all(feedback(guess, h) == (ex, pa) for h, ex, pa in history)`
+(`mastermind_run_onefile.py:269`): a *consistent* guess is one that would itself have produced every
+feedback already displayed, i.e. a code still possible. That field is stored per row and summarised
+as `result.consistency`, and it says:
+
+```
+result.consistency 0.15625  (= 10/64 answered)   strict 64  truncated 4   [identical in all three files]
+
+per turn         rows  answered  consistent  repeats
+  turn 1            8         8           8        0     <- vacuous: history empty, all() is True
+  turn 2            8         8           2        1
+  turn 3            8         8           0        2
+  turn 4            8         7           0        1
+  turn 5            7         7           0        4
+  turn 6            7         7           0        4
+  turn 7            7         7           0        4
+  turn 8            7         4           0        3
+  turn 9            4         4           0        4
+  turn 10           4         4           0        4
+
+turns >= 3   0/48 consistent
+turns >= 2   2/56 consistent = 0.0357
+```
+
+Recomputed independently from the rows with the harness definition, **0 disagreements** against the
+stored field on 68 rows. So consultation is at its floor for the whole of the late game: at turn 7,
+**0 of 7** guesses is a code the displayed feedback still permits, and **4 of 7** are outright
+repeats of codes already played in that game. Seven distinct codes there are seven *prohibited*
+codes, which is what an unconstrained decoder diffusing looks like, not what a decoder reading the
+board looks like. The distinct-count column rises `1, 3, 3, 4, 5, 6, 7` while the consistency column
+falls `8, 2, 0, 0, 0, 0, 0` — the two statistics move in opposite directions, and only the second one
+is about the board. `distinct` is a vocabulary-size measure standing in for a conditioning measure:
+the same substitution as the band, the denominator, and the composed `Date`, one level up.
+
+What survives from his §1: turn 1 is one code at 8/8; the corrected turn-4 cell is 57.1%; the
+vocabulary does widen with turn. What does not survive: "the decoder ... comes back to it late" and
+"that is your ignition story with the far end of the curve attached." It never comes back. The
+sentence this arc keeps is the flatter one — both seats play a turn-indexed opening book and the
+ornith arm does not read the feedback it is shown.
+
+Evidence: `chair-link/artifacts/2026-10-25-consultation/consultation.py` + `.out` (per-turn
+answered/consistent/repeat table, the harness-definition recompute with its 0-disagreement check,
+the three-way field comparison, the turn-7 rows in full). Row bytes as held here:
+`14eedb3df04c10ff…` (22,386 B), `61e44b160a12f9bc…` (22,391 B), `0af3653dd58bc491…` (22,388 B).
