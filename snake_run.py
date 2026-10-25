@@ -55,6 +55,15 @@ SEEDS_FILE = os.path.join(HERE, "snake", "seeds.txt")
 
 MAX_TOKENS = 64                    # one letter needs a few; a cap that cannot be deliberated into
 CTX = 65536                        # the card's floor, kept identical across arms
+# THE COMPUTE PATH, AS PARAMETERS RATHER THAN CONSTANTS. `CTX 65536 / -ngl 0` is this driver's
+# REGISTERED launch and stays the DEFAULT, so every existing record keeps the instrument it was taken
+# under. The suite that owns the card (kanban t_234b2387) runs its rows on the GPU in an 8192 envelope,
+# and a launch flag is a COMPUTE-PATH field -- the same class of variable as the binary above -- not
+# part of the prompt or the scorer. Both travel in the argv the server is actually started with, so a
+# row states the path it ran on and no flag can imply what the process did.
+CTX_DECLARED = CTX
+NGL_DECLARED = 0
+NGL = NGL_DECLARED
 TEMPERATURE = 0.0
 SERVER_SEED = 42
 
@@ -243,7 +252,7 @@ def server_argv(entrant, mmproj, port, alias):
     argv = [llama_server(), "-m", entrant]
     if mmproj:
         argv += ["--mmproj", mmproj]
-    argv += ["--alias", alias, "-c", str(CTX), "-ngl", "0", "--port", str(port), "--no-webui",
+    argv += ["--alias", alias, "-c", str(CTX), "-ngl", str(NGL), "--port", str(port), "--no-webui",
              "--jinja", "-s", str(SERVER_SEED)]
     return argv + reasoning_argv()
 
@@ -717,7 +726,7 @@ def self_test():
 
 
 def main():
-    global LLAMA_SELECTED
+    global LLAMA_SELECTED, NGL, CTX
     ap = argparse.ArgumentParser()
     ap.add_argument("--baseline", choices=["cycle", "cycle-shortcut", "greedy-safe"])
     ap.add_argument("--entrant", help="path to a gguf (or a name inside ARENA_MODELS)")
@@ -727,6 +736,14 @@ def main():
     ap.add_argument("--death-ends", dest="death_ends", action="store_true", default=True)
     ap.add_argument("--no-death-ends", dest="death_ends", action="store_false")
     ap.add_argument("--llama-server", dest="llama_server", default=None)
+    ap.add_argument("--ngl", type=int, default=NGL_DECLARED,
+                    help="--n-gpu-layers for the entrant's server (default: the registered %d). A "
+                         "COMPUTE-PATH field only; it travels in the argv the server is started with."
+                         % NGL_DECLARED)
+    ap.add_argument("--ctx", type=int, default=CTX_DECLARED,
+                    help="--ctx-size for the entrant's server (default: the registered %d). A "
+                         "COMPUTE-PATH field only; it travels in the argv the server is started with."
+                         % CTX_DECLARED)
     ap.add_argument("--overwrite-artifact", dest="overwrite_artifact", default=None, metavar="REASON")
     ap.add_argument("--mmproj", default=None,
                     help="path to the multimodal projector (default: picked by longest common prefix with "
@@ -742,6 +759,8 @@ def main():
     ap.add_argument("--replay", metavar="BUNDLE")
     ap.add_argument("--self-test", dest="self_test", action="store_true")
     a = ap.parse_args()
+    NGL = a.ngl
+    CTX = a.ctx
     if a.legend:
         os.environ["SNAKE_LEGEND"] = a.legend
 

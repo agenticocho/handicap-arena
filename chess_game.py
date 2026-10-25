@@ -36,6 +36,14 @@ from chess_derive import parse_fen                              # noqa: E402  (s
 import cabinet_root as _root                                          # noqa: E402
 SF = "/home/chilly1/chess_oracle/stockfish/stockfish-linux-x86-64-universal"
 LLAMA = "/home/chilly1/llama.cpp/build/bin/llama-server"
+# THE COMPUTE PATH, AS PARAMETERS RATHER THAN CONSTANTS. `ctx 4096 / -ngl 0` is this driver's REGISTERED
+# launch and stays the DEFAULT, so every existing record keeps the instrument it was taken under. The
+# suite that owns the card (kanban t_234b2387) runs its rows on the GPU, and a launch flag is a
+# COMPUTE-PATH field -- the same class of variable as the binary -- not part of the prompt, the reader or
+# the oracle. All three travel in the argv the server is actually started with, and the argv is written
+# into the artifact, so a row states the path it ran on.
+NGL_DECLARED = 0
+CTX_DECLARED = 4096
 
 # ---- FROZEN -------------------------------------------------------------------------------------
 THREADS, HASH_MB, MULTIPV, DEPTH = 1, 64, 1, 18
@@ -562,14 +570,29 @@ def measure(rows, termination):
 
 
 def main():
-    global REASONING_OUT
+    global REASONING_OUT, LLAMA
     ap = argparse.ArgumentParser()
     ap.add_argument("--entrant", required=True)
     ap.add_argument("--label", default=None)
     ap.add_argument("--cap", type=int, default=60)
     ap.add_argument("--port", type=int, default=8731)
     ap.add_argument("--probe", action="store_true")
+    ap.add_argument("--ngl", type=int, default=NGL_DECLARED,
+                    help="--n-gpu-layers for the entrant's server (default: the registered %d). A "
+                         "COMPUTE-PATH field only; the argv is written into the artifact." % NGL_DECLARED)
+    ap.add_argument("--ctx", type=int, default=CTX_DECLARED,
+                    help="--ctx-size for the entrant's server (default: the registered %d). A "
+                         "COMPUTE-PATH field only; the argv is written into the artifact." % CTX_DECLARED)
+    ap.add_argument("--llama-server", dest="llama_server", default=None,
+                    help="path to the llama-server BINARY to run (default: the declared default). A "
+                         "Bonsai ternary gguf needs the PrismML fork; the path is written into the "
+                         "artifact.")
     a = ap.parse_args()
+    if a.llama_server:
+        sel = os.path.expanduser(a.llama_server)
+        if not (os.path.exists(sel) and os.access(sel, os.X_OK)):
+            print(f"  BINARY ABSENT OR NOT EXECUTABLE: {a.llama_server}"); return 2
+        LLAMA = sel
     label = a.label or os.path.basename(a.entrant).replace(".gguf", "")
     # THE WRITE SCOPE, RESOLVED ONCE (AC5): one path, or a REFUSAL. results_dir() is a SystemExit
     # when there is no declaration, and it is NOT caught here -- a run that cannot declare where its
@@ -601,8 +624,10 @@ def main():
     os.makedirs(_root.log_dir(HERE), exist_ok=True)
     log = os.path.join(_root.log_dir(HERE), f"CHESS_GAME_{label}.log")
     os.makedirs(RES, exist_ok=True)
+    srv_argv = [LLAMA, "-m", a.entrant, "-c", str(a.ctx), "-ngl", str(a.ngl),
+                "--port", str(a.port), "--no-webui"]
     srv = subprocess.Popen(
-        [LLAMA, "-m", a.entrant, "-c", "4096", "-ngl", "0", "--port", str(a.port), "--no-webui"],
+        srv_argv,
         stdout=open(log, "w"), stderr=subprocess.STDOUT)
     try:
         import urllib.request
@@ -633,6 +658,11 @@ def main():
                                lost_cp=LOST_CP, hold_cp=HOLD_CP, cap=a.cap,
                                max_tokens=MAX_TOKENS,
                                prompt_digest=PROMPT_DIGEST, prompt_template=PROMPT_TEMPLATE),
+                   # THE COMPUTE PATH, READ FROM WHAT WAS LAUNCHED -- not from a flag the caller believes
+                   # it passed. `server_argv` is the list handed to exec, `ngl`/`ctx` are read back out of
+                   # it, and the server pid is the process that answered /health.
+                   compute=dict(server_argv=srv_argv, server_binary=LLAMA, ngl=a.ngl, ctx=a.ctx,
+                                server_pid=srv.pid),
                    termination=term, why=why, measures=m, wall_s=round(time.time()-t1, 1),
                    rows=rows)
         p = os.path.join(RES, f"CHESS_GAME_{label}.json")

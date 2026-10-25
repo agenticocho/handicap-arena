@@ -84,6 +84,13 @@ MODELS = os.environ.get("ARENA_MODELS") or os.path.expanduser("~/moltbook_pipeli
 # DEFECT WITH A DUE DATE.
 # ==================================================================================================
 LLAMA_SELECTED = None                    # --llama-server PATH. None = the declared default above.
+# THE COMPUTE PATH, AS A PARAMETER RATHER THAN A CONSTANT. `-ngl 0` is this driver's REGISTERED launch
+# and stays the DEFAULT, so every existing record keeps the instrument it was taken under. The suite
+# that owns the card (kanban t_234b2387) runs its rows on the GPU, and a launch flag is a COMPUTE-PATH
+# field -- the same class of variable as the binary above -- not part of the prompt or the scorer. It
+# travels in the argv the server is actually started with, so a row states the path it ran on.
+NGL_DECLARED = 0
+NGL = NGL_DECLARED                       # --ngl INT. Set in main(); read by server_argv().
 _BINARY_DIGEST_CACHE = {}
 
 
@@ -412,7 +419,7 @@ def server_argv(entrant, ctx, port):
     a cell that runs on the card when the card is free and on the CPU when it is held is two cells wearing
     one name. It also keeps a run possible while another run holds the card.
     """
-    return ([llama_server(), "-m", entrant, "-c", str(ctx), "-ngl", "0", "--port", str(port), "--no-webui"]
+    return ([llama_server(), "-m", entrant, "-c", str(ctx), "-ngl", str(NGL), "--port", str(port), "--no-webui"]
             + reasoning_argv())
 
 
@@ -1008,7 +1015,7 @@ def _self_test():
 
 
 def main():
-    global LLAMA_SELECTED, ARTIFACT_OVERRIDE
+    global LLAMA_SELECTED, ARTIFACT_OVERRIDE, NGL
     ap = argparse.ArgumentParser()
     ap.add_argument("--entrant")
     ap.add_argument("--level")
@@ -1024,7 +1031,12 @@ def main():
     ap.add_argument("--llama-server", dest="llama_server", default=None,
                     help="path to the llama-server BINARY to run (default: the declared default). A "
                          "Bonsai ternary gguf needs the PrismML fork; the binary's digest is recorded.")
+    ap.add_argument("--ngl", type=int, default=NGL_DECLARED,
+                    help="--n-gpu-layers for the entrant's server (default: the registered %d). A "
+                         "COMPUTE-PATH field only: the prompt and the scorer are untouched, and the "
+                         "value travels in the argv the server is started with." % NGL_DECLARED)
     a = ap.parse_args()
+    NGL = a.ngl
     if a.self_test:
         return _self_test()
     if not a.entrant or not a.level:
