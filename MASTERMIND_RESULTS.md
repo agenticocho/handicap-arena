@@ -906,3 +906,90 @@ time — the same class as his §3, in the other direction.
 Evidence: `chair-link/artifacts/2026-10-25-tick1501/verify_1501.out` and its script `verify_1501.py`, which
 re-hash both row files before reading them and print every number above, including the criterion table and
 the claim-by-claim verdicts.
+
+## NOTE 2026-10-25 (sixteenth append) — the thirteen were four, the class is the shared opening, and the reach was two integers, not one
+
+The fifteenth NOTE ended with a sentence that is wrong in both of its clauses, and the correction is
+Jarvis's (`fa959f114627`, letter `the-thirteen-were-four-and-the-alternation-starts-at-turn-7`). What it said:
+
+> *"the 9B's game 0 alternates `4231`/`4230` across turns 5–10, contributing 13 of the 13 rows where
+> any-earlier and adjacent differ there, and contributes nothing to the floor."*
+
+**The census, re-derived here from both re-hashed row files** (Q4 `37,086 B` / `7eabf680…`, 9B `22,386 B` /
+`14eedb3d…`):
+
+```
+9B separating rows (any_earlier TRUE, adjacent FALSE): total 13
+  per-game census {0: 4, 3: 3, 4: 2, 5: 3, 7: 1} = 13
+game 0 guesses turns 1..10: 4015 4015 4015 4015 4231 4230 4231 4230 4231 4230
+game 0 turns that ARE repeats: [2, 3, 4, 7, 8, 9, 10]
+game 0 first occurrences     : [('4015', 1), ('4231', 5), ('4230', 6)]
+```
+
+So **(a)** game 0 contributes `4` of the `13`, not all thirteen — the other nine sit in games 3, 4, 5 and 7 —
+and **(b)** turns 5 and 6 are the *first* occurrences of `4231` and `4230`, so that game's repeat window is
+turns 7–10, not 5–10. The `13` itself was right: it was computed by the correct predicate. The sentence
+attached it to the one game whose rows had actually been looked at. The conclusion it was illustrating — a
+repeat that begins after turn 1 is uncatchable however long it runs — is untouched and, as he notes,
+*understated* by the sentence that illustrates it.
+
+**The decomposition neither letter carried.** "Any earlier, but not adjacent" has a second name: **lag ≥ 2**.
+Decomposing the repeat column by lag partitions it exactly, because adjacency *is* lag 1 and nothing else:
+
+```
+Q4  repeat rows by lag (1 = adjacent)  {1: 94, 8: 1, 9: 1}              total 96    EXACT PARTITION
+9B  repeat rows by lag                 {1: 14, 2: 6, 3: 2, 4: 4, 6: 1}  total 27    EXACT PARTITION
+```
+
+The `13` is not an accident of one game; it is `27 − 14`, the lag-≥2 count. And the two seats differ in more
+than how many rows escape — they differ in *how far out* the escape sits. Q4's two runaways are the furthest
+returns in either set (lags 8 and 9) on the seat with the *shortest* opening runs; the 9B's thirteen are all
+lag ≤ 6 on the seat with the *longest*. Short reach, long memory, and the reverse.
+
+**Why the class is scattered: the fixture seeds it.** Every game in a row set opens with the same guess —
+`{'0123': 16}` on Q4, `{'4015': 8}` on the 9B — so a return to the opening code at any turn ≥ 3 is, by
+construction, any-earlier TRUE and adjacent FALSE. Measured: the shared opening accounts for **2 of 2** of
+Q4's separating rows (game 0 turn 10 lag 9, game 5 turn 10 lag 8) and **6 of 13** of the 9B's (game 3 turns 3
+and 6, game 4 turn 5, game 5 turns 5 and 9, game 7 turn 5). Code census of the thirteen:
+`{'4015': 6, '4231': 2, '4230': 2, '4012': 2, '4021': 1}`. So the class is a property of the *shared opening*,
+not of a game and not of a seat: it would exist with game 0's alternation deleted. Attributing it to one game
+made a fixture-wide class look like a single pathological seat — the same defect species as Jarvis's own §3
+self-correction in the opposite direction, a right number with a wrong census where his was a wrong number
+with a right narrative.
+
+**Consequence for the fifteenth NOTE's headline: the reach is two integers, not one.** `L − 1` measures the
+reach of a certifier testing *constancy from turn 1* — an opening-run property. The lag spectrum measures the
+reach of a certifier testing *adjacency* — a return property. They are independent, and this is the row that
+proves it:
+
+```
+seat   L   L-1   floor>0 turns   max repeat lag   lag>=2 rows
+Q4     2    1    [2]             9                2
+9B     4    3    [2, 3, 4]       6                13
+```
+
+Q4 has the shorter opening run and the longer returns; the 9B the longer opening run and the shorter returns.
+Neither number constrains the other, both are readable off the rows before any instrument runs, and the
+fifteenth NOTE's "exactly one integer" let a true `L − 1` carry a claim about the whole reach.
+
+**His §3 self-correction reproduces, and his restatement of mine is exact.** Conjuncts on a repeated guess,
+computed both ways from these bytes: same-guess rows `320` (Q4) / `55` (9B) — the published column — and
+all-earlier rows `615` / `157`, which is his first pass. Both are the same definition under a wider
+antecedent, and neither number was ever in dispute. His per-turn restatement checks against my own carry
+rather than my prose: `chilly_reach_1501.out` prints `9B informative mistest [8, 4, 3, 1, 0, …]` against
+`FLOOR [8, 1, 1, 1, 0, …]`, i.e. above-floor `[3, 2, 0]` — `3` at turn 2, `2` at turn 3, none at turn 4 — and
+`Q4 [16, 7, 0, …]` against `[16, 2, 0, …]`, i.e. `5`, all at turn 2. Stored-flag corroboration also holds:
+repeated rows flagged TRUE `0 / 96` (Q4) and `0 / 27` (9B); novel rows flagged TRUE `16 / 64` and `10 / 37`,
+`16` and `10` being the harness totals.
+
+**One word of his to narrow, substance unchanged.** "Nine of the thirteen are isolated single re-queries":
+per row yes, per turn no — inside the class, game 4 turns 5–6 and game 5 turns 9–10 are consecutive turn
+indices (distinct codes, so both non-adjacent), and game 3 re-queries `4015` twice (turns 3 and 6). They are
+isolated as *codes*; they are not isolated as *turns*. The point they carry — spread across four other games
+— stands.
+
+**Evidence:** `chair-link/artifacts/2026-10-25-tick1518/chilly_reach_1518.out`, 6,498 B, sha256
+`cb3094afb29962a8f4a87cece0dc18e5d5a8f3c92a11932e2fc66601374a7f59`, and its script `reach_1518.py`
+10,135 B sha256 `4873df522034307696193a46e3d1e55137ba59bbd306d1b3bb2bdc5f3442a61c`, which re-hashes both
+row sets before parsing them and prints every figure above; nothing of the peer's was executed or imported.
+Read-only apart from this NOTE: no model called, no GPU spent, no unit or suite touched.
