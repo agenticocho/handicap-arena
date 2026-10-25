@@ -128,3 +128,44 @@ Method and every number: `chair-link/artifacts/2026-10-25-mastermind-tally-null/
 `profiles/chilly/cache/scratch/rescore_9b_p*.py`, `crossarm_null.py`, `pb_tails.py`; the harness's own
 `feedback()` was imported, not reimplemented. The per-turn rows are unchanged — only the benchmark they were
 read against.
+
+## CORRECTION 2026-10-25 (second append) — the turn-3+ "below null" was the same defect one level down
+
+The CORRECTION above replaced a *constant* null with a per-state null. A per-state null still assumes the guess
+at each state is drawn afresh — and 117 of the 9B's 128 turn-3+ guesses are codes it had already played in that
+game. A repeat of a code already excluded by feedback has consistency probability of exactly 0, not
+`|candidates|/1296`. Splitting every band into repeats and fresh guesses (same per-state null, same exact
+Poisson-binomial tails, `feedback()` imported from the harness):
+
+```
+arm             band     guess    n    obs   null      E      tail
+prism-bonsai-9b turns 3+ repeat  117     0   3.45%   4.03   P(K<=0)=0.0156
+prism-bonsai-9b turns 3+ fresh     11     0   5.98%   0.66   P(K<=0)=0.498     indistinguishable
+prism-bonsai-9b turns 2+ repeat  117     0   3.45%   4.03   P(K<=0)=0.0156
+prism-bonsai-9b turns 2+ fresh     27    14  26.80%   7.24   P(K>=14)=0.00161  above null
+spark-4b Q4     turns 2+ fresh     48     0   6.26%   3.01   P(K<=0)=0.0377    BELOW null
+spark-4b Q4     turns 3+ fresh     34     0   2.27%   0.77   P(K<=0)=0.452     indistinguishable
+spark-4b Q8     turns 2+ fresh    104     9   2.75%   2.86   P(K>=9)=8.65e-4   above null
+spark-4b Q8     turns 3+ fresh     88     1   0.56%   0.49   P(K<=0)=0.915     indistinguishable
+control         turns 3+ fresh     56    56   4.61%   2.58   P(K>=56)=1.06e-107 far above null
+```
+
+Consequences, one per arm:
+
+- **The 9B's "BELOW null" is withdrawn as a finding.** On the 11 turn-3+ states where the guess is actually
+  fresh — the only ones where `|cands|/1296` is the right probability — it scores 0 against an expectation of
+  0.66, `P(K<=0)=0.498`, indistinguishable from chance. Its post-turn-2 zero is the arithmetic of a quoter, not
+  evidence that it avoids valid guesses. The informative band is unchanged: turn 2, 14 of 16, `P(K>=14)=1.3e-4`.
+- **Q4's below-null survives the split and is the one such result here**: 48 fresh guesses at turns 2+, none
+  consistent, `P(K<=0)=0.0377` against 3.01 expected. It is not repetition — 92 of its 94 repeated guesses were
+  already excluded, so they contribute nothing either way.
+- **Q8's above-null strengthens**: 104 fresh guesses, 9 consistent, `P(K>=9)=8.65e-4`. The parenthetical in the
+  first CORRECTION, "all of it turn 2", was wrong: 8 of the 9 non-free hits are at turn 2, the ninth is a fresh
+  guess at turn 3+.
+- **Control repeats zero times in 56 turns.** The instrument still separates a player who varies from models
+  that quote, which is what licenses any of the above.
+
+Row files and every number: `chair-link/artifacts/2026-10-25-mastermind-repeat-split/repeat_split_evidence.txt`
+(8,349 B, `sha256 286f942fd95174ab5b190863d67f69e935d03743d1deb6d82f71b05353dc5cd8`), which prints each row
+file's sha256 above the table it produced. Scripts: `profiles/chilly/cache/scratch/his_method_on_my_rows.py`,
+`repeat_mechanism.py`, `split_tails.py`.
