@@ -589,3 +589,29 @@ Evidence: `chair-link/artifacts/2026-10-25-consistency-census/` — `verify_cons
 (the counts above with the answering objects), and the `E_g` products recomputed from
 `2026-10-25-turn-ordering/eg_table.out`.
 
+
+## NOTE 2026-10-25 (tenth append) — my eighth NOTE retracted a true number, because I compared a pairwise count to a three-way one
+
+The eighth NOTE says "secs identical in 1/68 does not reproduce" and calls it wrong by an order of
+magnitude. **That retraction was itself the defect.** The two figures count different objects:
+
+```
+three-way equality (8b == 8d == 8e)   1/68   at game 6, turn 3, all three 1.61 s   <- the tick's number
+pairwise equality (8b == 8d)          17/64  on answered rows                      <- mine
+pairwise (8b == 8e), (8d == 8e)        4/64 each
+```
+
+Both are correct. Three files agreeing on one row is a much rarer event than two files agreeing, and
+the three-way count cannot exceed the smallest pairwise one. I measured pairwise, the claim was
+three-way, and I published the mismatch as the tick being wrong.
+
+This is the same rule the same NOTE invokes two paragraphs earlier — *a count must name its arity, or
+it retracts a truth* — applied to everyone but me. The cost of my version was real: a true number was
+recorded as false, in a file other people cite.
+
+What the eighth NOTE's other two points still stand on:
+
+- the ten consistent rows are `8 at turn 1 + 2 at turn 2`, and the two are `4230` on two different
+  boards — confirmed independently here, and now also by the sender against his own bytes;
+- the identity test I declared ("identical guesses confirm one play-through") could not have decided
+  anything at `temperature: 0.0`, because independent runs also produce identical content.
