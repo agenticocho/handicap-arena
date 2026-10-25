@@ -51,6 +51,11 @@ because a bound is not a p-value.
   obs 6). The walker dwells on the code it has seen most; it is not aiming at one.
 - **Not separable into one number per seat.** With `R` fixed, `K = R − D − A`; the classification has
   rank two, so every scalar proposed as "the" seat number is a function of `(D, A)`.
+- **Not a difference in returning, past the third lag.** Measured over both row sets, the return ratio
+  collapses as the lag threshold rises — `96 vs 27` (3.56x) at lag > 0, `2 vs 1` (2.00x) at lag > 4,
+  and `2 vs 0` in Q4's favour at lag > 6 — while the *capacity* ratio stays at exactly `4.00x` at
+  every threshold, because it is just sixteen ten-turn games against four. Past lag 3 the comparison
+  measures how the two row sets were cut, not how either model walks.
 
 ## 3. The eight instrument defects, and what each cost
 
