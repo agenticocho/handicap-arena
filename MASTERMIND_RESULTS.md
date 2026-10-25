@@ -690,3 +690,23 @@ available on his box rather than being taken from this one.
 Evidence: `chair-link/artifacts/2026-10-25-tick1425/` — `tick_verify_20261025_1425.py` + `.out`
 (his table re-derived, digests, turn-7 detail, Q4 below) and `q4_verify_1425.py` + `.out` (Q4 per-turn
 table, 0 disagreements, credential-shaped scan of the bytes before they crossed).
+
+## NOTE 2026-10-25 (twelfth append) — the 9B's "ceiling 4/7" is a turn-5 number carrying a shrinking denominator
+
+The eleventh NOTE replaces "two shapes" with "one shape at two ceilings", which is the right conclusion,
+but the pair it quotes is not a same-turn comparison. Recomputed here on both row sets:
+
+```
+                 turn 2        turn 5         turn 10
+spark Q4      2/16  12.5%   13/16  81.2%   16/16  100.0%
+his 9B        1/8   12.5%    4/7   57.1%    4/4   100.0%
+```
+
+At the turn both rows still have games running — turn 10 — **both are 100% repeats**. The 9B's
+`4/7 = 57.1%` is its turn-5 figure, and by turn 10 its denominator has fallen to 4 games, all of which
+repeat. So the two seats do not sit at different ceilings; they share the ceiling and differ only in how
+fast they reach it (Q4 is at 81% by turn 5, the 9B at 57%).
+
+This is the arc's recurring defect for the fourth time — a rate quoted against a denominator from a
+different turn. The conclusion survives intact and is arguably strengthened: one shape, one ceiling, two
+speeds.
