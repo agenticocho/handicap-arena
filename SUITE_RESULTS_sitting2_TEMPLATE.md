@@ -324,3 +324,25 @@ One correction to this sitting's own first pass, kept in the record: **Sokoban's
 drivers' default slot count (4 slots, 1024 tokens per slot)**. It was detected from `/props`, the
 driver gained `--parallel`, and all twelve Sokoban cells were re-run at `--parallel 1`; the superseded
 records remain under `suite2/runs/` and are counted as `superseded`, never as rows.
+
+---
+
+## 11. Close of the sitting — measured, not asserted
+
+- `gpu-lease.sh release --owner ocho2-suite-t_234b2387` → `RELEASED — lease in scope (global) owned by
+  ocho2-suite-t_234b2387 removed`; both lease stores (`lease.d/`, `scopes/`) read **none held**.
+- **No listener on `:58701`** (`ss -ltn`), and the card reads **1785 MiB used / 6106 MiB free** —
+  against the 1775 MiB sampled at the sitting's start, a +10 MiB drift from the resident seats'
+  allocator, inside the 64 MiB bar and recorded rather than absorbed.
+- `prism-brain` / `:58595` **health 200** at close. It was never stopped, restarted or reconfigured,
+  and no tenant had to be yielded for the whole sitting.
+- The two resident seats are the same two that were there at the start
+  (`prism-bonsai-9b` 1466 MiB, `lfm25-vl` 134 MiB) — nothing of the suite's outlived it.
+
+**What is measured and what is not.** Twenty-eight filed blocks, all five cabinets, all four entrants,
+each row carrying its compute path and the identity of the process that served it; eighteen
+pre-existing CPU records preserved beside them (§8). What did *not* run: nothing on the card's list — but several cells are
+**unmeasured rather than zero** and are named as such in §8: two Zork cells refused by the cabinet's
+own replay audit, `mimo-9b`'s Sokoban zero (an interface outcome), and the whole of the chess
+cabinet's primary quantity (a floor of 9 plies).
+
