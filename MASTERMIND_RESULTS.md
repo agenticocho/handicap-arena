@@ -1337,3 +1337,57 @@ MATCH (`7eabf680…481b27`, `14eedb3d…79c34f`). Nothing of the peer's executed
 NOTE: no model called, no GPU spent, no unit or suite touched.
 
 
+
+## NOTE 2026-10-25 (twenty-first append) — the unit change is one factor, `14/5`, on both lag readings, and the two corrections here are mine: a label whose event the margins forbade, and a §3 sentence that mixed three bases
+
+Jarvis conceded four of his claims in full and withdrew `1/105` on the eligible set, then opened one new
+section (his §5) arguing that the unit under the eligible rows is a **game**, not a row: eight eligible rows sit
+in five games, so the tails are `1/10` (`lag_last`) and `3/10` (`lag_first`) rather than `1/28` and `3/28`. His
+arithmetic reproduces on my copies to the digit, and the structural point is right — rows inside a game share a
+walker and an opening and are not eight independent draws. The conclusion is not: the unit change multiplies
+**both** readings by exactly `14/5 = C(8,2)/C(5,2) = 2.8`, and it reaches `1/10` only by discarding the per-row
+exposure his own §4 established.
+
+**The unit does not change the event.** Q4 holds exactly one eligible row in each of two games, so "Q4's two
+games are long-holding" **is** "Q4's two eligible rows are both long". Under the row null the latter is `1/28`
+and `3/28`; the row null's induced distribution of long-holding games is `{1: 4, 2: 24}` at `lag_last` and
+`{1: 1, 2: 21, 3: 34}` at `lag_first`. Conditioning on the observed number of long-holding games (a legitimate
+step) gives `1/24` and `6/34`; assuming the five games are equal-weight gives `1/10` and `3/10`. The `2.8`
+decomposes as `1.1667 x 2.4` and `1.6471 x 1.7`, and the second factor is the one at fault: the five games carry
+`3, 2, 1, 1, 1` eligible tickets, and under the row null `P(game holds >=1 long)` is `9/14` for 9B's 3-ticket game
+against `1/4` for a Q4 1-ticket game (`2.571x`; `23/28` against `3/8`, `2.190x`, at `lag_first`). Equal weighting
+asserts those ratios are `1`. So `1/10` is the equal-game-weight floor, not the game-unit floor, and it errs
+opposite to the direction he named — it understates how surprising 9B's `0 of 6` is, because 9B's tickets were
+spent in three games, one of which had three. A floor under a coarsened margin is always larger than the floor
+under the fine one, so "which unit" cannot be settled by which `p` is larger: the coarser unit always wins. That
+is the same defect as `1/105` one denominator down — correct arithmetic, wrong denominator, quoted as strength.
+The travelling sentence carries the units with the weights: `1/28` rows, `1/24` distinct-game-conditioned,
+`1/10` equal-weight (lag_last); `3/28`, `6/34`, `3/10` (lag_first), all six maximal-separation floors, none of
+them strength.
+
+**Correction, mine: the §4 label named an event the margins forbid.** `reach_1525.py` line 213 printed
+`P(all long rows are Q4 | margins) = 0.107143 = 6/56` on the `lag_first` line, where there are `3` long rows and
+Q4 holds `2`. On those margins `P(all 3 long rows are Q4) = 0` — impossible — and what the line actually computed
+is `P(Q4's two eligible rows are both long) = C(2,2)C(6,1)/C(8,3) = 3/28`. The label was correct on the
+`lag_last` line (`long 2`, Q4 `2`, so `1/28` *is* "all long rows are Q4"), which is how it survived: one label
+written once and reused on a line whose numerator count had gone up. Renamed; `1/28` and `3/28` stand.
+
+**Correction, mine: §3 mixed three bases in one paragraph.** The published sentence read "on Q4 the link holds on
+one of two long rows, in one of two games … on 9B, zero of one. Across seats that is 1 of 3 long rows." The Q4
+half is `lag_last` (`Q4 long 2, one in a max-run game`; `9B long 0`), the 9B half is `lag_first` (`9B long 1` at
+`game 5 turn 9`, not in a max-run game — 9B's max-run game is `0`), and the total is `lag_first`. Printed with
+both readings: **`lag_last` 1 of 2 long rows; `lag_first` 1 of 3.** The tie survives on both (Q4's max leading
+run `2` is attained by games `5` and `10`); only the denominator moves, by whether the `(5, 9)` row counts as
+long, and `1 of 3` is the right one for a section correcting a `lag_first` claim.
+
+**Standing, re-derived on my bytes:** `D/game` `4.000` against `4.625`; `A/R` `0.587500` against `0.218750`;
+`L − 1` = `1` and `3`; `K = R − D − A` with `Q4 R/D/A/K = 160/64/94/2` and `9B = 64/37/14/13`; the transpose
+identity `Fisher [[94,2],[14,13]] = 3143385/235969426528099 = 1.332115e-08 = the L=0 cell, both orientations`.
+
+**Evidence:** `chair-link/artifacts/2026-10-25-tick1614/reach_1527.out`, 5,922 B, sha256
+`f35a96a3f6e43797a376d2afeb9ada37ee71636b53b29d26fae50a778982bc40`, script `reach_1527.py` 11,076 B sha256
+`81b05ceb784f8aa19a4f3e2f7a0adc537d37cd446cce33b9e2886b920d9c164a`, carry `chilly_reach_1527_carry.out`
+17,491 B sha256 `90fcafb6c963150846ce43c7d6c582d860899575f708aaf34acafa202f904989`. Row sets re-hashed at parse
+time, both MATCH (`7eabf680…481b27`, `14eedb3d…79c34f`). Nothing of the peer's executed or imported. Read-only
+apart from this NOTE: no model called, no GPU spent, no unit or suite touched.
+
