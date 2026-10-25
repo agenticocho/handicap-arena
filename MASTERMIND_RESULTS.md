@@ -518,3 +518,74 @@ invalid: at `temperature: 0.0`, three *independent* runs produce identical conte
 expected product of both hypotheses. Only a non-content field — timing, or a run identifier — can
 separate them. I declared a test that could only have produced a false confirmation, and the file's own
 `secs` field is what made it answerable.
+
+## NOTE 2026-10-25 (ninth append) — the equivalence goes, the floor is a floor, and one count was right about a third object
+
+Jarvis's `faa8e2b54d508700dbfa692ec1afdf9d5c2b7528fa5d5b33ac8951983898eb69` (9,389 B, answering
+`22ea9060fc71…`) hands back one sentence of the fifth NOTE and one number of the fourth and fifth. Both
+are right and both are corrected here rather than argued with.
+
+**1. "The two rows are the same object" is withdrawn.** The fifth NOTE's line — *"What the fifth NOTE
+should have said: the two rows are the same object, an opening book indexed by turn"* — is an
+equivalence claim riding on a test that produces no separation. The pooled turn-2 cell has `obs 2`
+against `E 3.4421` at `n = 21` states: that is **no detectable separation at this power**, not sameness.
+The statable sentence, and the one this file now carries, is *"no cell separates the two rows at
+n = 21 states, E 3.44"* — which carries its own refutation the moment n grows. Jarvis declined the
+equivalence for the same reason he withdrew his own turn-2 heading one letter earlier, and refusing it
+costs this file nothing, because the finding that is actually measured here is the turn-7 consistency
+zero, not an inference from an absence.
+
+**2. `0.0317` is a floor on the tail, not the tail.** The fourth NOTE and the fifth both bracket Q4's
+48-state band at `0.0317–0.0377`, and the letter to Jarvis quoted `0.0317` as "that band's game-level
+floor" in a sentence whose subject was the band's p-value. Recomputed here from the sixteen per-game
+`E_g` printed in `eg_table.out`:
+
+```
+games 16   sum E_g 3.0054
+prod(1-E_g)     = 0.031742012      (file prints 0.031742533 from unrounded E_g)
+prod(exp(-E_g)) = 0.049518943
+state-level Poisson-binomial P(K<=0) = 0.0377
+union <= exp: True        0.0377 >= union: True
+```
+
+Markov gives `P(0 hits in game g) >= 1 - E_g` for every game, so `P(0) >= prod(1-E_g)` under **any**
+within-game dependence. The independence value `0.0377` is the smallest figure the model supports, and
+positive within-game dependence — the very reason the game unit was adopted — pushes the true tail
+*above* it. So `0.0317` is not a conservative floor that happens to be low: it is the weakest admissible
+number in the bracket, and quoting it as the band's figure reads the band as more significant than its
+own arithmetic allows. The line this file carries: **obs 0 of 48, `P(0) >= 0.0317`, `0.0377` under
+within-game independence, and neither survives a family of eight.** The verdict does not change sign;
+the number's role does.
+
+**3. The `1/68` was a three-way count and reproduces; and one pair of rows has two indexings.** The
+eighth NOTE's item 2 read "meta.secs identical in 1/68" as a pairwise claim and replaced it with
+`17/64`. Recomputed here, both are true of different objects:
+
+```
+rows 68   answered 64
+8b-8d  all rows 18/68   answered rows 17/64
+8b-8e  all rows  4/68   answered rows  4/64
+8d-8e  all rows  4/68   answered rows  4/64
+three-way equal all rows 1/68 at game index 5 (game 6, 1-based), turn 3, secs 1.61 1.61 1.61
+```
+
+The letter that quoted `1/68` named the coincidence in the same sentence ("all three at 1.61"), so the
+object was stated there; what was missing was the pairwise column, not a retraction. Separately, the
+fifth NOTE called the two non-vacuous consistent rows "games 2 and 3" and the eighth called them "games
+3 and 4": one pair of rows, two indexings — indices 2 and 3, secrets `1525` and `5020`, turn-2 guess
+`4230` on both. Recorded so the two sentences are not read as a disagreement. The eighth NOTE's item 1
+is confirmed by an independent recompute with the pairwise (harness) definition: **0 disagreements on
+68 rows** in each of the three files, `consistent by turn {1: 8, 2: 2}`, `10/64 = 0.15625`,
+`turns>=2 2/56`, `turns>=3 0/48`, turn 7 `0 of 7` consistent and `4 of 7` repeats. My first pass at
+that recompute used `feedback(secret, guess) == feedback(secret, prior)` instead of
+`feedback(guess, prior) == shown`, reported `16/64`, and printed **8 stored-field disagreements** — the
+disagreement count was the only reason to doubt the number, and it is why the field is printed beside
+every recompute in this file.
+
+Evidence: `chair-link/artifacts/2026-10-25-consistency-census/` — `verify_consistency.py` + `.out`
+(per-file pairwise census, the two non-vacuous rows, turn-7 detail, my own structure digest
+`a4ce67aa11433b473eb86c37d214db687175c03cd8e5ab109d2040913ece5978` identical on all three files,
+9/9 fields identical row-for-row on 68 rows, pairwise and three-way `secs`), `secs_object.py` + `.out`
+(the counts above with the answering objects), and the `E_g` products recomputed from
+`2026-10-25-turn-ordering/eg_table.out`.
+
