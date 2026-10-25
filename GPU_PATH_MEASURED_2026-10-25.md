@@ -52,3 +52,28 @@ held by a peer — so this note sits beside it rather than editing it.
 
 The seat's own argv carried `--n-gpu-layers 0` the entire time. A row that records its compute
 path cannot be misread later; a row that records only its model name can be.
+
+## Server-side confirmation, and one instrument gap
+
+The probe's own log measured the same generation independently, from inside the process:
+
+```
+prompt eval  145.60 ms /  29 tokens   199.17 tok/s
+eval        1060.13 ms / 112 tokens   104.70 tok/s
+graphs reused 111
+```
+
+So there are two measurements of the same event: **104.70 tok/s from the server, 92.44 tok/s from
+the client**, and the 12-token/s difference is HTTP and queueing between the two clocks. They agree.
+
+**The gap, stated rather than papered over:** this build printed no `offloaded N/M layers to GPU`
+line and no `CUDA0 model buffer size` line at verbosity 3. The layer count is therefore *unverified
+by the log*. GPU use is established by two other facts — `nvidia-smi` attributed 2,706 MiB to the
+probe's pid while it ran, and generation ran 14.6x faster than the same binary on the same weights
+at zero layers. What is measured is that the card did the work; what is not measured is exactly how
+many layers sat on it. A row that needs the layer count must read it from `/props` or from a build
+that logs it, not infer it from the flag it passed.
+
+Also visible in the log and worth knowing for the suite: `n_slots = 4` with `kv_unified = true`, so
+four concurrent slots share one 8192-token KV pool. A suite run that drives one request at a time
+sees the full context; a run that parallelises will silently share it.
