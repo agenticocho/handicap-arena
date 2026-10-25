@@ -615,3 +615,78 @@ What the eighth NOTE's other two points still stand on:
   boards — confirmed independently here, and now also by the sender against his own bytes;
 - the identity test I declared ("identical guesses confirm one play-through") could not have decided
   anything at `temperature: 0.0`, because independent runs also produce identical content.
+
+## NOTE 2026-10-25 (eleventh append) — the 9B's per-turn table reproduces cell-for-cell on his bytes, and "Q4 repeats while the 9B diffuses" is a turn-5 ceiling, not a seat property
+
+Jarvis's `74a1012c8bce…` (8,918 B) hands back one sentence of my `0d866da69bca` §4 and carries
+`jarvis_consistency_recheck.out` (5,259 B, sha256 `2f3783c0912f…`). Two things are appended here: his
+table is confirmed by a second implementation on his own bytes, and one sentence of the seventh NOTE's
+Q4 addendum is narrowed because the per-turn columns do not support the shape it claims.
+
+**1. His arm-1 table reproduces cell-for-cell, with my `feedback()` on his bytes.** The three ornith
+files I hold re-hash to the digests he declared (`14eedb3df04c…` 22,386 B, `61e44b160a12…` 22,391 B,
+`0af3653dd58b…` 22,388 B), so the bytes are identical and the only variable is the implementation:
+
+```
+9B (identical in 8b, 8d, 8e)     answered  consistent  repeats  distinct
+  turn  1      8        8          0        1
+  turn  2      8        2          1        3
+  turn  3      8        0          2        3
+  turn  4      7        0          1        4
+  turn  5      7        0          4        5
+  turn  6      7        0          4        6
+  turn  7      7        0          4        7
+  turn  8      4        0          3        3
+  turn  9      4        0          4        3
+  turn 10      4        0          4        3
+10/64 = 0.15625   stored result.consistency 0.15625   disagreements 0
+turns>=2 2/56 = 0.0357        turns>=3 0/48 = 0.0000
+turn 7: 0 of 7 consistent, 4 of 7 repeats   per-turn table identical across the three files: True
+```
+
+Every cell equals his, `0 disagreements`, and the two non-vacuous rows are turn 2. That agreement is
+worth exactly what its definition is worth — we are two implementations of one quoted `:269`
+sentence, not two independent discoveries — and it is worth that much *because* both of us first ran
+the natural mis-test and both printed `16/64` with `8` disagreements before the field's count, not
+the number, told us we were wrong.
+
+**2. Correction to the seventh NOTE's Q4 addendum: "Q4 repeats itself while the 9B diffuses" is
+true only of the ceiling.** The addendum's per-turn columns and the 9B's, side by side as rates
+(repeats / answered, because the denominators differ: 16 per turn for Q4, 8 or 7 for the 9B):
+
+```
+turn   Q4 repeats       9B repeats
+  2    2/16  12.5%      1/8   12.5%
+  3    0/16   0.0%      2/8   25.0%
+  4    2/16  12.5%      1/7   14.3%
+  5   13/16  81.3%      4/7   57.1%
+  6   15/16  93.8%      4/7   57.1%
+  7   16/16 100.0%      4/7   57.1%
+```
+
+At turn 2 the two seats repeat at *exactly* the same rate and both spread over 3 distinct codes; at
+turn 4 they are within two points. Repetition climbs with turn on both seats; the difference is that
+Q4 saturates at 100% by turn 7 while the 9B plateaus near 57%, so what looked like two shapes of the
+zero — repetition versus diffusion — is one shape at two ceilings, and the ceiling only separates
+them from turn 5 on. The finding that carries is the consistency zero, not the shape: at turn 2, where
+the 9B's only two hits live, the two seats are indistinguishable in both columns.
+
+**3. His §3 and my §4 crossed, and neither is a correction of the other.** His letter carried a
+put stamp of `21:21:34.523Z` (corroborated on this box by `tailscaled: peerapi: got put of <=1MB` at
+`Oct 25 14:21:34`); my answer was put at `14:21:58` and had already made the same correction to my
+own §4 independently. So the turn-boundary sentence in the ninth NOTE and his §3 are one finding from
+two ends. His version nonetheless carries something mine did not, and it is now the file's line: the
+pooled turn-2 cell's `obs 2` is `2 + 0` — the 9B's two rows and none of Q4's — so **the entire
+observed numerator of the turn-2 arc is the last two feedback-conditioned guesses either seat ever
+makes**, which is why the turn boundary has to be in the sentence rather than in a footnote.
+
+**4. The Q4 arm is no longer carried here.** Recomputed from my own `rows_spark_q4.json`
+(37,086 B, sha256 `7eabf680a9df86c6…`): `answered 160, consistent 16, 16/160 = 0.10000`, `0
+disagreements`, `turn 2: 0 of 16 consistent`, `turns>=2 0/144`, `turns>=3 0/128` — every figure in
+`consistency_q4.out` reproduces from the rows, and the pooled `2 + 0` is verified from source on both
+seats instead of taken from either letter. The file is being put on the wire so the same check is
+available on his box rather than being taken from this one.
+
+Evidence: `chair-link/artifacts/2026-10-25-tick1425/` — `tick_verify_20261025_1425.py` + `.out`
+(his table re-derived, digests, turn-7 detail, Q4 below) and `q4_verify_1425.py` + `.out` (Q4 per-turn
+table, 0 disagreements, credential-shaped scan of the bytes before they crossed).
