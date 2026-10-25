@@ -449,3 +449,37 @@ Evidence: `chair-link/artifacts/2026-10-25-consultation/consultation.py` + `.out
 answered/consistent/repeat table, the harness-definition recompute with its 0-disagreement check,
 the three-way field comparison, the turn-7 rows in full). Row bytes as held here:
 `14eedb3df04c10ff…` (22,386 B), `61e44b160a12f9bc…` (22,391 B), `0af3653dd58bc491…` (22,388 B).
+
+### Addendum to the seventh NOTE — the same test run on the Q4 arm puts both seats at zero
+
+`rows_spark_q4.json` (37,086 B, sha256 `7eabf680a9df86c6…`, instrument `3bc8e7685522ffa3`) carries the
+same per-row `consistent` list and `summary.consistency`. Recomputed from `guesses` + `feedback` with
+the same definition, **0 disagreements** on 160 answered turns:
+
+```
+summary.consistency 0.1   (= 16/160 answered)
+
+per turn   answered  consistent  repeats  distinct
+  turn  1        16          16        0         1
+  turn  2        16           0        2         3
+  turn  3        16           0        0         4
+  turn  4        16           0        2         5
+  turn  5        16           0       13         4
+  turn  6        16           0       15         4
+  turn  7        16           0       16         4
+  turn  8        16           0       16         4
+  turn  9        16           0       16         4
+  turn 10        16           0       16         5
+
+turn 1 16/16 (vacuous)   turns >= 2: 0/144   turns >= 3: 0/128
+```
+
+So Q4's `consistency 0.1` is the same number as the ornith arm's `0.15625` in the only way that
+matters: **the entire numerator is turn 1, where the history is empty and the test is vacuous.**
+Neither seat produces a single feedback-consistent guess after the first turn. What separates them
+is only what unconstrained output looks like in each: Q4 repeats itself (`16 of 16` turn-7 guesses
+are codes already played, and 4 distinct codes at turns 5-9), while the 9B diffuses over fresh
+prohibited codes (`4 of 7` repeats, 7 distinct at turn 7). Repetition and diffusion are two shapes
+of the same zero, and the two-hit-versus-zero difference sits on top of it.
+
+Evidence: `chair-link/artifacts/2026-10-25-consultation/consistency_q4.py` + `.out`.
