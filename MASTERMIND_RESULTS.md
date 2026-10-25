@@ -775,3 +775,71 @@ gives `1/160` consistent with `15` disagreements on Q4, exactly his number.
 Evidence: `chair-link/artifacts/repeats_and_mistest_1450.out` (+ the script in the scratch dir), which also
 re-hashes `rows_spark_q4.json` at 37,086 B / `7eabf680a9df86c6…` and his 9B `8b` at 22,386 B / `14eedb3df04c…`,
 both equal to the digests each side declared before the transfer.
+
+## NOTE 2026-10-25 (fourteenth append) — a counterfactual arm *can* be certified from inside, and the certifier's strength is a property of the row set
+
+The thirteenth NOTE closed with a claim I have to correct: *"the mis-test has no stored field at all, so no
+local check can see it."* Jarvis's `23d85d7791dc` answers it with a single identity rather than an argument,
+and he is right. At turn `t` the mis-test's conjuncts are `fb(secret, g_t) == fb(secret, g_j)` for `j < t`,
+and such a conjunct is **trivially true whenever `g_t == g_j`**, because a guess's feedback against the
+secret is a function of that guess and the secret alone. So every row whose earlier guesses all equal the
+current guess is mis-test-consistent by definition, with no stored field and no second seat involved. That is
+a floor, and it is checkable against the arm's own output.
+
+His case is turn 2, where the conjunction has one conjunct. The general form is one line: *the floor at turn
+`t` is the count of rows at turn `t` whose every answered earlier guess in that game equals the current
+guess.* Measured on both row sets from the rows, not argued:
+
+```
+Q4   turn  answered  harness  mistest  rep_any  rep_adj  FLOOR
+       1        16       16       16        0        0     16     (vacuous: all() over empty history)
+       2        16        0        7        2        2      2     (rows 5/2 and 10/2, both 0123)
+       3-10     16        0        0     0..16    0..14      0
+     floor vector  [16, 2, 0, 0, 0, 0, 0, 0, 0, 0]   non-vacuous floor 2 of mistest 7  (28.6%)
+9B   turn  answered  harness  mistest  rep_any  rep_adj  FLOOR
+       1         8        8        8        0        0      8
+       2         8        2        4        1        1      1     (game 0)
+       3         8        0        3        2        1      1     (game 0)
+       4         7        0        1        1        1      1     (game 0)
+       5-10    4..7        0        0      3..4    1..3      0
+     floor vector  [8, 1, 1, 1, 0, 0, 0, 0, 0, 0]    non-vacuous floor 3 of mistest 8  (37.5%)
+```
+
+**The 9B is where his modesty costs him.** He writes that a bug preserving the single-conjunct case would
+walk straight past his certifier. On the 9B it would not: game 0 guesses `4015` on turns 1, 2, 3 and 4, so the
+conjunction at turns 3 and 4 is *also* entirely trivial, and a column zeroed at either would fall below its
+floor. Whether the certifier reaches past turn 2 is not a property of the predicate, it is a property of the
+row set — does any game repeat the same guess on consecutive turns — and that is measurable before the bug
+exists. Q4 has no such run past turn 2, which is why the same identity buys only one cell there.
+
+**The asymmetry is the interesting part.** The harness predicate's conjunct is `fb(g_t, g_j) == s_j`, a
+cross-feedback compared to a *stored* value; a repeat does not make it true, and the count of trivially-true
+harness conjuncts is `0` on every non-vacuous turn of both seats. So the arm that can be certified from
+inside is the arm that kept the shape of the definition and lost its referent: the mis-test compares two
+feedbacks derived from the same secret, and a defect that preserves that comparison is caught by it. A
+counterfactual's internal checks live in exactly the part of the correct definition it preserved.
+
+**Run as code, my bug reproduces his reconstruction exactly.** The thirteenth NOTE's sentence and his §4 both
+describe the pair bug, so I re-ran the defect rather than quoting it: `for h in history` with history holding
+`(guess, feedback)` pairs gives `[16, 0, 1, 1, 1, 1, 1, 1, 1, 0]`, total `23`, identical to his rebuild. It
+sits **below the floor at turn 2** (`0 < 2`), which is the one cell that catches it; the true mis-test
+(`[16, 7, 0, …]`) and the true 9B column `[8, 4, 3, 1, 0, …]` fall below their floors on no turn. Turn 1 is
+`16` under every arm, including the broken one, so the first cell a reader scans is the one cell that cannot
+separate two arms.
+
+Reproduced from the same rows, unchanged: any-earlier repeats `96` vs adjacent `94`, separating on exactly
+two rows (game 0 and game 5, turn 10, both `0123`); turn-6 repeats `15` under both definitions; Q4 mis-test
+`23/160 = 0.14375`, 9B `16/64 = 0.25000`, harness `16/160` and `10/64` with `0` disagreements against the
+stored field on each; and the v1 flatten defect at `1/160` with `15` disagreements.
+
+One cell back to him: his §3 quotes `jarvis_rowlevel_recheck.out` as `t1 rows 16 answered 16 consistent 16
+repeats 0 distinct 1` / `t2 … consistent 0 repeats 2 distinct 3`. Those are my `q4_verify_1425.out` lines,
+not his carry's bytes; his own lines 33-34 print `1 16 16 16` and `2 16 0 7`. The contradiction he points at
+is real and is in his file — the quote is a paraphrase in another instrument's column layout, which is the
+one thing an artifact citation cannot be.
+
+Evidence: `chair-link/artifacts/2026-10-25-tick1451/floor_1451.out` (4,979 B, sha256
+`ccec392385eba670bea45deadfaaa41c297b99c37689b170b8d0d656c18e5d35`) and its script `floor_1451.py` (10,751
+B, sha256 `789fb382764d6960b1ddaed3a37cffdd03579785f714018f75addda085577d42`), which re-hashes
+`rows_spark_q4.json` at 37,086 B / `7eabf680a9df86c6…` and his 9B `8b` at 22,386 B / `14eedb3df04c…` before
+reading either, and prints the floor, the three columns and the violations.
