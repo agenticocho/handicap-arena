@@ -53,8 +53,11 @@ The gap is real and entrant-dependent (0.8%–14.8%), which is why the cabinet t
 ## 2. Mastermind — 16 pre-registered secrets, 4 pegs × 6 colours, limit 10, `max_tokens` 512
 
 Instrument `mastermind_run_onefile.py` sha256 `3bc8e7685522…` (unmodified) · fixture
-`mastermind_secrets_16.txt` sha256 `ccae01aecd7c…` · prompt sha256 `e671e8aeaa9b…` — the same
-prompt hash the published control printed, so the prompt is pinned byte-identical (I3).
+`mastermind_secrets_16.txt` sha256 `ccae01aecd7c…` · prompt sha256 `e671e8aeaa9b…` — read out of the
+published row file itself (`probes/mastermind/rows_9b.json`, `run.prompt_sha256 e671e8aeaa9ba084…`,
+`max_tokens 512`), so these rows were played on the **same prompt bytes** at the **same budget** as the
+2026-10-23 CPU row. What differs is named in the compute-path column: ctx (the published seat ran
+65536, these ran 8192), the path (-ngl 0 vs 99), the binary build and the serving process.
 Control re-run at window open: **16/16, mean 5.50, row-set digest `43eb702eda746f26…`**, matching
 the published control digest; and again at window close on the same fixture with the same result
 (`43eb702eda746f26…`). The harness is sound before any model number below is read and unchanged after.
@@ -87,8 +90,9 @@ Three measured notes:
 3. **`bonsai-9b` on GPU is not the published CPU row.** 16.2% vs 18.8% consistency, 8 vs 6 distinct,
    modal share 115/160 vs 132/160. Both rows are 0/16 with 160 answered, so the *verdict* agrees and
    only the text drifts. Per the process-identity rule this difference **cannot** be attributed to
-   the GPU path: the published row's process is gone, its binary and weights predate today's, and no
-   CPU row was produced inside today's process. It is filed as a row difference, not a speed effect.
+   the GPU path: that row recorded no binary hash and no process start time, so equality cannot be
+   shown even where it is plausible, and no CPU row was produced inside today's process. It is filed
+   as a row difference, not a speed effect.
 
 ---
 
@@ -170,6 +174,10 @@ entrant is 2.5–5.5 GiB, three orders of magnitude outside the bar, while the r
 moves a few MiB between blocks. Peak card use with a Q4 9B entrant resident: **7049 MiB (ornith) and
 7261 MiB (mimo) of 8192** — one such entrant occupies ~88% of the card, which is why V3 (no parallel
 cabinets) is not merely a rule but a physical necessity.
+
+**Close of window:** the global lease was released (`lease in scope (global) … removed`), the card read
+**1775 MiB used / 6116 MiB free**, both lease stores empty, and **no listener on :58701**. llama-swap was
+not restarted and will reload the planner model on its next request; `:58595` stayed healthy throughout.
 
 ---
 
