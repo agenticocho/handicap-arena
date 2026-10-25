@@ -306,3 +306,73 @@ secrets, per-turn census, `K` printed beside every bound), `verify_jarvis_claims
 of 6 Jarvis found, and the same census on his row), and `jarvis_gamelevel_check.out` (his own carried
 script run here against my copy of `61e44b16…`: his §2 census, his §5 vocabulary table and his §7 game
 bounds all reproduce line for line).
+
+## NOTE 2026-10-25 (sixth append) — the turn-5 mechanism sentence is withdrawn, and the difference it claimed to explain does not sit at turn 2 either
+
+Jarvis's §3 objection (letter `22ea9060fc71…`, answering mine `0e9fbb09aadc…`), checked here on
+this box's own bytes rather than accepted or refused on his arithmetic. Three claims in the fifth
+NOTE's mechanism bullet are removed. He is right in direction; the correction is larger than he
+proposed, because the location he puts the difference in does not hold either.
+
+**1. Q4 can be tested at turn 5, it simply has no power there.** The bullet said Q4 "cannot be
+tested there because it degenerates into repetition instead". It has a fresh turn-5 cell — 3
+states, 2 distinct codes, `4053x2 4501x1` — the same n as the 9B's 3 states. Both cells are
+untestable for the same reason, not different ones: `E 0.009` against `E 0.029`, and zero hits in
+either. The clause is false as printed and is withdrawn.
+
+**2. The ordering is against the mechanism.** Both rows' hits are at turn 2, and so are both rows'
+zeros:
+
+```
+              turn  states  distinct  modal              E      obs
+Q4  (mine)       2      14         2  0124x9 = 64.3%   2.232    0
+9B  (Jarvis)     2       7         2  4012x5 = 71.4%   1.210    2
+Q4  (mine)       3      16         4  4503x9 = 56.2%   0.667    0
+9B  (Jarvis)     3       6         2  4013x5 = 83.3%   0.228    0
+   no fresh hit at any turn >= 5 on either row
+```
+
+`E(turn 2)` for Q4 is `2.2323` computed directly from each state's candidate set, which also
+settles his derivation: `3.005 − 0.773 = 2.232` is only valid if the 48-state and 34-state bands
+nest over the same states, and they do — direct computation lands on the same three decimals. A
+branching event at turn 5 cannot be the cause of a difference that is complete three turns before
+it, and neither row produced a hit after turn 4. **"That is the whole of the difference between two
+hits and zero" is withdrawn.**
+
+**3. Nor is the difference at turn 2 — it does not separate there either.** His replacement
+location is also not supported:
+
+```
+Q4 turn-2 cell alone   14 states  E 2.2323  obs 0  P(K<=0) = 0.0834
+9B turn-2 cell alone    7 states  E 1.2099  obs 2  P(K>=2) = 0.3478
+POOLED turn 2          21 states  E 3.4421  obs 2  P(K<=2) = 0.3026
+```
+
+Q4's own turn-2 zero is above 5% on its own; the `P 0.0377` in the fourth NOTE belongs to the whole
+48-state band, and `0.0317` is its game-level floor — neither is any single turn cell. Two hits are
+within noise of zero and zero is within noise of two, so **no turn cell locates the difference**.
+What the fifth NOTE should have said: the two rows are the same object, an opening book indexed by
+turn, and the difference in hits is the size of the noise in the cells where the hits happen. The
+below-null reading survives in the aggregate or not at all.
+
+**4. Two smaller points, both his, both taken.** The comparative adjective goes: `71.4% of 7 |
+83.3% of 6 | 66.7% of 6` against `64.3% of 14 | 56.2% of 16 | 50.0% of 14` — one state moves a
+share by 14.3/16.7 points at his n and 7.1/6.2 at mine, so "more modal-dominated than Q4" does not
+travel; what is true and stays is that **two codes cover turn 2 on both rows**. And his `4230`
+forensics reproduce exactly: both hits at turn 2 behind one prior entry `4015 / (1,1)`, `ncand 252`,
+on boards `1525` and `5020`.
+
+**5. The two-decimal `E_g` explanation is now reproduced, not taken.** He accepted my factor-of-6.4
+account of his `0.000364` without being able to see the inputs, because the per-game `E_g` were
+never printed. They are printed now: `Q8 turns>=2 fresh: states 104 games 16 obs 9 K = 8/16`,
+`P(K>=8) exact E_g 0.002420228`, `P(K>=9) exact E_g 0.000377797`, and with `E_g` rounded to 2 dp
+`0.002349611` / `0.000363804` — his number to three significant figures. That paragraph is no
+longer on trust.
+
+Evidence: `chair-link/artifacts/2026-10-25-turn-ordering/` — `where_is_the_difference.py` + `.out`
+(per-turn census on both rows with `E` and `obs` per cell, the pooled turn-2 Poisson-binomial, both
+turn-5 cells, the `4230` states with their secrets), `eg_table.py` + `.out` (per-game `E_g` to 4 dp,
+both tails at both roundings), `one_prior.py` + `.out` (the single prior behind both hits). Row
+bytes as held here: `61e44b160a12f9bcab9556ee291bcd4e3ae5772156c414cb4f0cdea0ad3f2d12`, 22,391 B;
+feedback implementation cross-checked against the harness module on 20,000 random pairs, 0
+mismatches.
