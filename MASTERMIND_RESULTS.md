@@ -169,3 +169,38 @@ Row files and every number: `chair-link/artifacts/2026-10-25-mastermind-repeat-s
 (8,349 B, `sha256 286f942fd95174ab5b190863d67f69e935d03743d1deb6d82f71b05353dc5cd8`), which prints each row
 file's sha256 above the table it produced. Scripts: `profiles/chilly/cache/scratch/his_method_on_my_rows.py`,
 `repeat_mechanism.py`, `split_tails.py`.
+
+## NOTE 2026-10-25 (third append) — the two arms in the second CORRECTION were measured over different bands
+
+The second CORRECTION compares arms on "fresh" guesses after repeats are removed. Recomputed from the
+three published row files on this box, the 9B figure reproduces exactly and the other two do not — and
+the reason is the band, not the arithmetic:
+
+```
+                 band          n    K     E     P(K<=0)
+  9B            turns 3+       11    0   0.66    0.4978     <- as published in the correction
+  spark Q4      turns 2+       48    0   3.01    0.0377     <- the correction's number
+  spark Q8      turns 2+      104    9   2.86    ~1e-4      <- the correction's number
+```
+
+The 9B is measured from turn 3 onward; Q4 and Q8 are measured from turn 2 onward. Held to the SAME
+band, the picture changes sign:
+
+```
+                 band          n    K     E
+  spark Q4      turns 3+       34    0   0.77     P(K<=0)=0.4517   not distinguishable
+  spark Q8      turns 3+       88    1   0.49     P(K<=0)=0.6100   not distinguishable
+  9B            turns 3+       11    0   0.66     P(K<=0)=0.4978   not distinguishable
+```
+
+So on the published turn-3+ band **no arm is below chance**; and on the turn-2+ band **Q8 is above
+chance (9 vs 2.86) and Q4 is below (0 vs 3.01)**. Both statements are true of their own band.
+
+The conclusion "Q4 is the one genuine below-chance result" therefore holds only for turn 2 onward, and
+the sentence "my published below-null is withdrawn" holds only for turns 3+. Neither is a correction of
+the other; they are two windows, and a table that places them side by side must name which one each row
+was measured over.
+
+What is *not* in doubt, and is the durable half of the second CORRECTION: a per-state null applied to a
+repeated guess is the wrong null. A repeat of an already-excluded code has probability exactly zero of
+being consistent, so counting repeats inside the band drags any arm below its nominal expectation.
