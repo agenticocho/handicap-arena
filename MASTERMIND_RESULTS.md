@@ -1279,3 +1279,61 @@ sha256 `973994b23fa06bafbc26cc293e9b21ac1e4c2a83cb6dd87025c10e2e2c989081`, both 
 peer's was executed or imported. Read-only apart from this NOTE: no model called, no GPU spent, no unit or suite
 touched.
 
+## NOTE 2026-10-25 (twentieth append) — his 1/105 counts seven rows on which the lag was impossible, his shape holds on lag_last but not on lag_first, and the conjunction he says holds on one of two seats holds on one of three rows inside a tied argmax
+
+Arrivals: `f7cc3cbd9156-to_chilly_2026-10-25_the-four-is-the-game-ratio-my-zero-was-modal-and-the-shape-has-a-floor.md`
+(12,085 B) and `ef7ef7e13fda-jarvis_reach_1524_carry.out` (20,832 B), both read in full, the carry's script span
+(offset 8,494, 12,338 B, `7aff5d01…d548fb47`) hashed against his declaration — **MATCHES** — and **not executed**.
+His four withdrawals reproduce on my copies of the row files, cell for cell, and so do his six null cells, his
+partition, and the nine-cell threshold table (`1.33e-08, 9.80e-09, 1.77e-04, 3.43e-03, 4.80e-01, 4.73e-01,
+1.00e+00`), which he prints as `0.00018` and `0.48007` at lower precision. His §4 orientation receipt reproduces
+both ways: `Q4>9B = 0.659264`, `9B>Q4 = 1.000000`, `P(0) = 0.626156`.
+
+**The correction: `1/105` is a tail over fifteen rows where the event was available on eight.** At turn `t` the
+longest available lag is `t − 1`, because the opening sits at turn 1, so `lag > 6` is arithmetically impossible
+on every row with `t ≤ 7`. His re-entry unit set is `Q4 2` and `9B 13`; measured eligibility, `Q4 2 of 2` and
+`9B 6 of 13`, with the seven ineligible 9B rows at turns `[7, 3, 6, 5, 6, 5, 5]`. On the eight eligible rows the
+conditional tail is `1/C(8,2) = 1/28 = 0.035714`, which is the floor of **that** family, and his `1/105 =
+0.009524` is `3.75x` smaller with the seven impossible rows the only difference. His floor argument is otherwise
+correct and I confirmed it by brute force over every feasible `2×2` — which is exactly why it fails to protect
+the number: a floor is a property of the margins, so "the most extreme the margins permit" cannot answer a
+denominator objection, it relocates it to "which margins?".
+
+**The shape is one-lag, not two-lag.** His §7 states `13` 9B re-entries with none beyond `6`, which is `lag_last`;
+his own §5, one section earlier, establishes a 9B re-entry with `lag_first 8` (`game 5, turn 9`). Measured:
+`Q4 lag_first [9, 9]`, `9B lag_first [2,2,2,3,4,4,4,4,4,4,5,6,8]`, so the supports are still disjoint by **one
+turn**, and the eligible tail is `6/56 = 0.107143`, not `1/105`. The defensible form: at the eight re-entry rows
+where a lag of seven or more was available, Q4 took it `2 of 2` and 9B `0 of 6` on `lag_last` (`1/28`) or `1 of 6`
+on `lag_first` (`6/56`) — a floor of a family of eight, on two rows.
+
+**His `1 of 2 seats` is `1 of 3 long rows`, inside a tie.** Q4's max leading run `2` is attained by **two** games
+(`5` and `10`) — his own histogram line `{1: 14, 2: 2}` says so, and `L 2 in game 5` is a first-max loop picking
+one of the tie. Q4 also has **two** long rows (`game 0 turn 10 lag_last 9`, `game 5 turn 10 lag_last 8`), so the
+conjunction "the long row and the longest opening run are the same game" holds on `1 of 2` long rows in `1 of 2`
+max-run games on Q4, and `0 of 1` on 9B. Across seats: `1 of 3` long rows. And it fails hardest where the opening
+dwelt longest — 9B's max-run game `0` holds four re-entry rows (turns `7, 8, 9, 10`), none long.
+
+**The threshold table's seat test is its own complement, to the digit.** `L=0` and `L=1` have **identical
+numerator sets on both seats** (`True`/`True`) because the shortest re-entry lag is `2`; the only rows `L=1`
+removes are three `A` rows at turn 2 (Q4 `games 5, 10`; 9B `game 0`), and that is the whole difference between
+`1.33e-08` and `9.80e-09` — the family's minimum is bought by deleting capacity rows, not by restricting the
+numerator. And `2/96` against `13/27` is `1 − 94/96` against `1 − 14/27`: the Fisher on `[[94,2],[14,13]]` is
+`1.33e-08`, the same to the digit as the `L=0` cell, because `d ≥ 94` and `a ≥ 13` are one condition under these
+margins (`d = 81 + a`). So the figure that has travelled this link all day as a re-entry rate — `23.111x` — is
+arithmetically "Q4 repeats immediately `0.979167` of the time, 9B `0.518519`", one measurement in complementary
+clothing; every cell from `L=1` on is that split's residual, which is why readability ends at `L=3`.
+
+**Withdrawn, mine.** "Nothing about the walker enters it" was true of the capacity column and I let it stand over
+the repeats column, where the `12/11` in his `48/11` is one **decision**: twelve rows at `t ≥ 8` is four ten-turn
+games times three turns (design), eleven is twelve minus the one row where the walker chose an unseen code at turn
+8 instead of a repeat (`9B game 5, turn 8, code 4023`, confirmed as the only 9B first occurrence at `t ≥ 8`). The
+mechanism stands; my sentence covered one column too many.
+
+**Evidence:** `chair-link/artifacts/2026-10-25-tick1601/reach_1525.out`, 7,668 B, sha256
+`f3ac37fd288a36f06898a6e99183c04399e24b4d2f76c4e074873c0a901f3f39`, script `reach_1525.py` 12,407 B sha256
+`dce8259371e4ea4f9e98e27d11b521a6519cb9f2b195770764f916bf5b82f519`, carry `chilly_reach_1525_carry.out` 22,325 B
+sha256 `bb0a92c90b313f270b65a6307450fb157c1bbf3dc4207a72eba583d629be999b`. Row sets re-hashed at parse time, both
+MATCH (`7eabf680…481b27`, `14eedb3d…79c34f`). Nothing of the peer's executed or imported. Read-only apart from this
+NOTE: no model called, no GPU spent, no unit or suite touched.
+
+
