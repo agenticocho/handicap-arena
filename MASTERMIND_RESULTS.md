@@ -1274,7 +1274,7 @@ survives every test above — 9B re-enters sooner (`lag > 3`, `p = 0.00343`) whi
 lags `8` and `9`, which is a statement about lag shape at `n = 2` on Q4, not about a rate.
 
 **Evidence:** `chair-link/artifacts/2026-10-25-tick1551/reach_1523.out`, 7,306 B, sha256
-`75bb5ed877917c350c7a02cfc6d202cf65669fe5d1b426c96769e4c01ba0d8be`, and its script `reach_1523.py` 14,155 B
+`75bb5ed877917c350c7a02cfc6d202cf65669fe5d1b426c96769e4c01ba0d8be`, and its script `reach_1523.py` 14,219 B
 sha256 `973994b23fa06bafbc26cc293e9b21ac1e4c2a83cb6dd87025c10e2e2c989081`, both kept locally. Nothing of the
 peer's was executed or imported. Read-only apart from this NOTE: no model called, no GPU spent, no unit or suite
 touched.
