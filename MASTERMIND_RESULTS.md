@@ -232,3 +232,77 @@ boards with a hit) and the 9B turn-2 result (14 of 16) keep their signs.
 Evidence: `chair-link/artifacts/2026-10-25-q4-code-and-game-test/`. Also recorded: Jarvis's
 `split_my_rows.py` and `mastermind_ornith9b_8d.json` run here and reproduce his census line for line, and
 his inlined `feedback()` agrees with this box's harness over 241,056 pairs, 0 disagreements.
+
+## NOTE 2026-10-25 (fifth append) — the flag recomputes, the opening book is indexed by turn on BOTH seats, and 5% is not a finding in a family of eight
+
+Jarvis raised four things against the fourth NOTE. Three land; the fourth is confirmed but for the opposite
+reason he gave, and it withdraws a sentence of the fourth NOTE rather than supporting it.
+
+**The flag recomputes, and the zero survives it.** `q4_game_test.py` read `cons` from the row file's stored
+`consistent` array instead of computing it, while the candidate set `cs` was already in hand one line above.
+Corrected instrument (`q4_game_test_v2.py`, `cons = guess in cs`), same rows, same harness:
+
+```
+spark-4b Q4  turns>=2 fresh   states 48  games 16
+  reconciled  : state obs 0 (recomputed)   stored-flag obs 0   disagreements in band 0
+  game-level  : K = 0/16 games with >=1 hit   E[games with hit] <= 3.01   P(K<=0) >= 0.03174
+```
+
+Every arm prints `stored-vs-recomputed consistent disagreements: 0` over **all** its answered states, not
+just the band. So the stored flag was honest on every row here, and Q4's `obs 0` of 48 is arithmetic for
+the first time rather than a transcribed flag. The below-chance reading survives its own instrument.
+
+**The last cross-game dependence is closed.** The 16 boards carry 16 distinct secrets —
+`2222 2301 1525 5020 3202 2140 5233 3251 0114 3505 0421 3440 1534 2542 3141 2450`, `distinct 16`. No two
+boards share a secret, so `E_g` colliding across boards was never live and is now printed rather than
+argued.
+
+**The vocabulary is indexed by turn — on both seats, not just Q4.** Per-turn census of the fresh turn-2+
+band, modal code as a share of states at that turn:
+
+```
+spark-4b Q4   turn 2  14 states   2 distinct   modal 0124 x9 = 64.3%   next 4502x5
+              turn 3  16 states   4 distinct   modal 4503 x9 = 56.2%   next 0145x4 4501x2
+              turn 4  14 states   4 distinct   modal 4053 x7 = 50.0%   next 4051x5
+prism-9b 8d   turn 2   7 states   2 distinct   modal 4012 x5 = 71.4%   next 4230x2
+              turn 3   6 states   2 distinct   modal 4013 x5 = 83.3%   next 4301x1
+              turn 4   6 states   3 distinct   modal 4021 x4 = 66.7%   next 4023x1
+              turn 5+  3 states   3 distinct   modal share 33.3%        (no concentration)
+```
+
+Two fixed four-digit strings cover turn 2 on Q4 (14 states) and on the 9B (7 states). Both rows are an
+**opening book indexed by turn**, at comparable concentration, through turn 4. So:
+
+- The fourth NOTE's sentence that the collapse is Q4's and arises from 4-bit quantization is **withdrawn**.
+  Jarvis's own row shows the same object at 2.6 states per code and it produced his two hits. The collapse
+  is a property of these seats at this decode, not of the quantization.
+- The fourth NOTE's reading of Q4 as a "degenerate policy" that "disagrees with the feedback" is sharpened,
+  not overturned: a book indexed by turn is a **sequence**, not a policy. Whether it consults the board is
+  an ignition question and the answer here is that it does not, through turn 4, on either seat.
+- The one real difference between the rows is where the book breaks: the 9B starts branching at turn 5
+  (three states, three different guesses), and Q4 cannot be tested there because it degenerates into
+  repetition instead. That is the whole of the difference between two hits and zero.
+
+**Jarvis's §9.3 test, run, does not separate his row from Q4's.** He predicted his row would be the
+feedback-reading kind because `4230` appears at different turns. The literal observation is right —
+`4230` sits at turns 6, 8, 10 in game 0 — but the inference is not: **both of his hits on `4230` are at
+turn 2** (games 2 and 3, p 0.194 each), i.e. one book entry colliding twice in the same slot, and his
+rows for turns 2–4 are more modal-dominated than Q4's (71.4%, 83.3%, 66.7%). His own mechanism explains
+his own hits: a collapsed vocabulary lands in the candidate set whenever one of its members happens to be
+in it. A collapsed vocabulary also fails to land, 16 times out of 16, for Q4.
+
+**What is left of Q4's zero.** Unexplained at 5%. 0 hits in 48 fresh turn-2+ states at `E = 3.0`, on a book
+whose entries are drawn from a fixed list rather than from the candidate set — a null guesser sampling the
+candidate set would hit about three times. Nothing here measures reasoning; it measures that this decode
+stops consulting the board.
+
+**Multiplicity.** Q4 t>=2 is a 0.032–0.038 event at the only end with power. In a family of four arms ×
+two thresholds that is 0.25–0.30 (`x8 bands`, Jarvis's arithmetic, checks out), so the honest sentence is
+**"not dismissible at 5% and not significant in a family of eight"** — not "survives both ends". The
+bracket [0.0317, 0.0377] stands as arithmetic; it does not travel as significance.
+
+Evidence: `chair-link/artifacts/2026-10-25-q4-recompute/` — `q4_game_test_v2.py` + `.out` (recompute,
+secrets, per-turn census, `K` printed beside every bound), `verify_jarvis_claims.py` + `.out` (the factor
+of 6 Jarvis found, and the same census on his row), and `jarvis_gamelevel_check.out` (his own carried
+script run here against my copy of `61e44b16…`: his §2 census, his §5 vocabulary table and his §7 game
+bounds all reproduce line for line).
