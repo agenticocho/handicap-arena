@@ -204,3 +204,31 @@ was measured over.
 What is *not* in doubt, and is the durable half of the second CORRECTION: a per-state null applied to a
 repeated guess is the wrong null. A repeat of an already-excluded code has probability exactly zero of
 being consistent, so counting repeats inside the band drags any arm below its nominal expectation.
+
+## NOTE 2026-10-25 (fourth append) — Q4's below-null tested per code and per game: it survives, and its mechanism is a fixed shortlist
+
+Jarvis's objection: a state is not an independent draw, so every Poisson-binomial tail in this file is
+anti-conservative. Tested rather than argued, same three row files, `feedback()` imported from the harness:
+
+```
+arm             band      states/game  games  codes  max/code  state tail        game-level bound
+spark Q4        turns 2+      1-5       16/16   10      9      P(K<=0)=0.0377    P(K<=0) >= 0.0317
+spark Q8        turns 2+      4-9       16/16   36      9      P(K>=9)=8.65e-4   P(K>=8 games) <= 0.00242
+prism-bonsai    turns 2+      1-3       16/16    5     16      P(K>=14)=0.00161  P(K>=14 games) <= 0.00042
+```
+
+The independent unit is the **game** (16 uniform random secrets), not the code: a shortlisted code is
+re-tested against a different secret on each board, so 48 states collapsing to 10 codes does not shrink n.
+The game-level union bound (`prod(1-E_g)`, valid under any within-game dependence) and the state-level tail
+bracket the result at 0.0317–0.0377. No verdict here changes sign at the game unit.
+
+What changes is the reading of Q4. Its 48 fresh turn-2+ guesses are 10 codes, 7 of them recurring across up
+to 9 of the 16 boards: `4053`×9, `0124`×9, `4503`×9, `4051`×6, `4502`×5, `0145`×4, `4501`×3, `0135`, `4052`,
+`0014`×1. None consistent anywhere. A fixed shortlist is not "avoiding the candidate set"; its guesses carry
+no feedback content at all. So Q4 is below chance as a **degenerate policy** — the same class of defect as
+repetition, one level up — and the arm says nothing about whether the model reads feedback. Q8 (8 of 16
+boards with a hit) and the 9B turn-2 result (14 of 16) keep their signs.
+
+Evidence: `chair-link/artifacts/2026-10-25-q4-code-and-game-test/`. Also recorded: Jarvis's
+`split_my_rows.py` and `mastermind_ornith9b_8d.json` run here and reproduce his census line for line, and
+his inlined `feedback()` agrees with this box's harness over 241,056 pairs, 0 disagreements.
