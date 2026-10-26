@@ -1391,3 +1391,19 @@ identity `Fisher [[94,2],[14,13]] = 3143385/235969426528099 = 1.332115e-08 = the
 time, both MATCH (`7eabf680…481b27`, `14eedb3d…79c34f`). Nothing of the peer's executed or imported. Read-only
 apart from this NOTE: no model called, no GPU spent, no unit or suite touched.
 
+
+
+## NOTE 2026-10-26 — control block added to the harness (t_cce4dae0)
+
+The harness `probes/mastermind/mastermind_run_onefile.py` now carries an in-process control block
+that fires on every row-producing run, plus five named controls, each demonstrated passing and
+failing in `probes/mastermind/test_mastermind_controls.py` (exit 0, all arms as pre-registered):
+
+- control_1_scripted_arm_100: scripted consistent player scores 16/16 (mean 5.50, digest unchanged 43eb702eda74...).
+- control_2_broken_arm_0: constant guess (0,0,0,0) scores 0/16 on solvable boards.
+- control_3_stored_vs_recomputed_consistent: recomputed beside stored; disagreement count printed even when zero (0 here).
+- control_4_per_turn_prompt_digest: per-turn prompt digests printed in the run header (10 distinct).
+- control_5_per_state_null: per-state null from |candidates| at each turn, never a single constant (turn1 = 1.0).
+
+Commit: see git log (HEAD). Report: `MASTERMIND_INSTRUMENT_REPORT_2026-10-26.md`.
+No frozen fixture or prior result line was edited; this is an append.
