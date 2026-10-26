@@ -257,3 +257,16 @@ scripts/run_guarded.sh mc-claims <cab> /usr/bin/python3 scripts/check_mc_claims.
 The note is appended to that file rather than written here twice; it carries the same five lines as §0 and
 points at this document. Nothing above the note in `MC_FIELD_PLAIN.md` is edited — including the sentence at
 its line 11 that says the checker has "111 checks", which is that card's record of its own day.
+
+---
+
+## 9. THE COMMIT OF RECORD
+
+```
+commit   733eea3   (cabinet/missile-command, pushed to origin/handicap-arena)
+adds     scripts/check_mc_claims.py, this report, the dated NOTE in MC_FIELD_PLAIN.md
+leaves   scripts/check_mc_field_plain.py UNMODIFIED in the commit
+         (git diff --stat 733eea3^ 733eea3 -- scripts/check_mc_field_plain.py is empty)
+log      logs/mc-claims-20261026.out  (scratch, per DECISION_logs_are_scratch.md; re-runnable, §7)
+result   ALL CHECKS PASS -- 17/17, rc 0
+```
