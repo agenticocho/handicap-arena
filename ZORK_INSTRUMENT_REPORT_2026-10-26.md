@@ -285,7 +285,7 @@ claim the artifacts support, and it is checkable:
 
 | | sitting 1 | sitting 2 |
 |---|---|---|
-| record | `suite2/runs/published_cpu/ZORK_Ministral-…_zork_01_the_floor.json` | `probes/ZORK_Ministral-…_zork_01_the_floor.json` |
+| record | `suite2/runs/published_cpu/ZORK_Ministral-…_zork_01_the_floor.json` | `suite3/preserved/20261026-140512/ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_01_the_floor.json` |
 | mtime / preserved | `2026-10-17 10:55`, preserved `2026-10-25T13:46:04-0700` | `2026-10-25 13:46` |
 | `simulator_digest` | `ff35ec83b340fbf0` | `ff35ec83b340fbf0` |
 | launch in argv | `-c 4096 -ngl 0 --port 8752` | `-c 4096 -ngl 99 --port 58701 --parallel 1` |
@@ -295,6 +295,13 @@ Eight days apart, same simulator digest, same box, **and the two rows agree on e
 sitting-2 record carries the replacement note verbatim ("*the GPU row is a new row, this copy is the
 record of the row that was already there*"), so the preservation is on the record rather than asserted
 here.
+
+> **CITATION REPAIRED 2026-10-26 (card `t_a828c554`).** The sitting-2 cell named
+> `probes/ZORK_Ministral-…_zork_01_the_floor.json`, which now holds the `13b161a` re-measurement and not
+> the record this table describes. It is repointed to the preserved path above —
+> `suite3/preserved/20261026-140512/…`, 17,803 B, its own mtime `2026-10-25 13:46`, `simulator_digest`
+> `ff35ec83b340fbf0`, `-ngl 99` — which is the row every cell of this row is about. Nothing else in the
+> table moved, and the preserved rows are cited by their preserved paths, never as `probes/`.
 
 **NO — two boxes in one sitting.** I cannot show it, and I am not going to state it as though a matching
 digest implied it. What a matching digest would license is exactly one sentence: *the file was the same

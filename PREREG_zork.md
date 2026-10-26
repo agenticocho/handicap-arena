@@ -620,3 +620,205 @@ entrant's result. The 114 → 175 climb happened in `6c426e5` because the instru
 result was inconvenient — `[12]` asserts that the split leaves the frozen counters exactly where they
 were.
 
+
+---
+
+## AMENDMENT Z2 — 2026-10-26 · THE DRIVER'S ARCHIVE CONTROL IS RE-POINTED AT PRESERVED BYTES, AND THE TRIPLE IS RE-FROZEN AT 67
+
+**This is a dated amendment appended below Z1, and nothing above it is edited** — not Z1's text, not the
+frozen text above Z1. Z1 recorded `62/64` as measured on its own date and stands as that record, exactly as
+the frozen body above it stands as the record of `114/114`. Where they disagree with this section, this
+section is what a reader applies.
+
+**Authority:** Local Chair ruling of 2026-10-26, card `t_6b315921` →
+`governance/rulings/2026-10-26-a-control-that-asserts-a-defect-in-the-live-archive-vetoes-the-repair.md`
+(R1 a control may assert a property of committed bytes, never of what currently sits in a directory; R2 a
+control green only while a defect persists is a veto on the repair; R3 the contradiction is asserted against
+preserved bytes and the archive is asserted to AGREE, each arm able to fail alone; R4 an absent fixture or an
+absent archive FAILS, never skips, and the fixture is pinned by digest; R5 a control's name names its
+subject, and when the subject moves the name is retired and a new one added). Executed from card
+`t_a828c554`.
+
+**THE REASON, ON THE LINE:** `13b161a` re-measured the eight GPU cells under the simulator Z1 re-froze to,
+and a re-measurement AGREES with itself. The driver's two archive arms asserted that the eight rows in
+`probes/` CONTRADICTED themselves — true of the bytes they replaced, false of the bytes that replaced them —
+so the repair to the writer turned the driver red and the only way back to `64/64` was to put the older,
+mislabelled rows back on the canonical path. A control whose green state requires a defect to persist is not
+a measurement of the archive; it is a veto on repairing it. **The defect was in the control, not in the
+archive.**
+
+### Z2.1 — THE TRIPLE, RE-FROZEN
+
+```
+driver     9be11e482c9c8a5d8eb3650bf83a7b68a804a4931c5b239c27c2fb29e6f5474a   zork_run.py     86,531 B
+           (was b26b2cfc42a0a91520e9e3b9753ad3871b8d79657628e986186c5f3de9948d19              81,096 B
+            under Z1 — VOID as of this date)
+simulator  b9701007d6e186d5f27dc0e359a9c834b76a28ef8aedc362acf1c85bb6022d21   zork.py         75,338 B
+           (UNCHANGED by this amendment; `zork.py --self-test` still 175/175, exit 0)
+PREREG     03b96c98bd39733b8ef64ec22e701efa3a330ad068b49c3efa9a57333f35a710   the frozen body  13,623 B
+           (UNCHANGED — the criteria of record, as frozen before the first entrant moved)
+
+amendment  Z2 · 2026-10-26 · card t_a828c554
+```
+
+**WHICH PREREG DIGEST, AND WHY THERE ARE TWO NUMBERS.** The digest in the triple is `03b96c98…`: the file
+**as frozen**, which is what a run's criteria are fixed against, and it has not moved — `git show
+fa2011f:PREREG_zork.md | sha256sum` still returns it. The file **as amended** (Z1 appended, Z2 not yet) is
+`56dac6633f09e1a01151b254638d43be373e85ceb964ec1129734899b84d703a`, 36,691 B: that is what a reader hashing
+`PREREG_zork.md` in the tree would have got before this section landed, and it is printed here so the two
+numbers cannot be confused for a contradiction.
+
+**AND THE FILE CANNOT CARRY ITS OWN DIGEST (Z1's convention, applied unchanged).** Appending this section
+changes the file's `sha256`; a number recomputed until it is true is the defect R2 names, one layer up. Z2's
+own post-append digest is therefore recorded **outside** the text it identifies: in the message of the commit
+that lands this section, and in `ZORK_PREREG_AMENDMENT_2026-10-26.txt`, with the recipe
+`git show <landing-commit>:PREREG_zork.md | sha256sum`.
+
+### Z2.2 — THE TWO CONTROLS RETIRED, AND THE FIVE THAT REPLACE THEM
+
+The subject of the block moved from *the rows currently in `probes/`* to *eight committed, preserved,
+digest-pinned rows* (the contradiction) **and** *every row currently in `probes/`* (the agreement). R5 says
+the name moves with the subject, so both old names are retired and none is reworded in place. `removed: 2`
+is printed by the proof in Z2.4, with each reason, because a proof showing `removed: 0` over a renamed
+subject was obtained by not looking.
+
+```
+RETIRED  EVERY recorded GPU row contradicts itself: config.n_gpu_layers vs config.server_argv -ngl
+         why: its first word is now FALSE as a claim about this cabinet's rows — the live archive agrees
+         with itself on all eight. It also asserted the DEFECT over a working directory, so the fix to the
+         writer read as a regression (R2). Its subject — the historical contradiction — survives below,
+         named as preserved bytes, and its opposite is now an arm of its own.
+
+RETIRED  ...and the contradiction is 0 against 99, on all eight
+         why: retired although its sentence would still be true of the fixture, because it was the second
+         half of a two-arm block whose first arm was false and it named no subject of its own — the
+         "eight" it referred to meant "the rows in `probes/`". Keeping a name whose block was rewritten
+         underneath it is the silent subject swap R5 forbids. It is re-added with its subject in the
+         sentence, which is why the new name is longer than the old one.
+
+ADDED    the eight preserved fixture rows are present and unmodified: pinned sha256, eight literal paths
+         got 8  want 8      — PRESENT AND UNMODIFIED. Eight literal paths in `PRESERVED_FIXTURE`, each with
+         its `sha256` and byte count; a missing file or a moved byte is RED. NOT a glob over
+         `suite3/preserved/`: a later GPU window adds directories there, and a glob is a denominator that
+         can change without a line in the record (R4).
+
+ADDED    THE PRESERVED FIXTURE STILL CONTRADICTS ITSELF: all eight say n_gpu_layers 0 against -ngl 99
+         got 8  want 8      — the historical defect, checkable, over committed bytes: the writer defect was
+         real and this is what it looked like. `git checkout` of an unrelated commit cannot turn it red (R1).
+
+ADDED    ...and the contradiction is exactly (0, '99') on all eight preserved rows
+         got [(0, '99')]  want [(0, '99')]   — the shape of the contradiction, not merely its presence:
+         a row that said 0 against `-ngl 0` would be a CPU row and not this defect, and it would fail here.
+
+ADDED    the live archive at probes/ZORK_*.json has rows -- an absent archive is RED, not a skipped arm
+         got True  want True  — because the arm below counts DISAGREEMENTS, and zero disagreements over zero
+         rows is green: that is precisely how `62/62` was printable with no `probes/` beside it.
+
+ADDED    every LIVE row agrees with itself: config.n_gpu_layers == config.server_argv -ngl
+         got 0  want 0       — the invariant the archive is now supposed to satisfy, and the arm that goes
+         red the day a writer regresses. A row carrying no `-ngl` at all counts as a disagreement here,
+         which is stricter than the retired arm (it skipped `-ngl`-less rows).
+```
+
+**THE PAIR IS THE POINT (R3).** The first three arms document a defect that is fixed; the last two forbid
+its return. Either alone is half a control — one documents history and drifts from the present, the other
+asserts the present and forgets what was repaired.
+
+### Z2.3 — THE DENOMINATOR MOVES, PRINTED: 64 → 67, AND THE FOUR MUTATIONS
+
+A denominator that moves without a line in the record is the `62/62` defect at the level of the whole suite,
+so it is printed here rather than absorbed: **two arms became five.** Every run below is in a throwaway
+`git archive` tree of the commit that lands this amendment, and the repository's own `probes/` and
+`suite3/preserved/` are carried into it by git — no file under `probes/` was written, and none of the eight
+preserved rows was restored to the canonical path.
+
+```
+the archive as committed, unmodified        ALL CONTROLS PASS   --  67/67   exit 0
+  [5] the eight preserved fixture rows are present and unmodified: pinned sha256, eight literal paths PASS
+  [5] THE PRESERVED FIXTURE STILL CONTRADICTS ITSELF: all eight say n_gpu_layers 0 against -ngl 99     PASS
+  [5] ...and the contradiction is exactly (0, '99') on all eight preserved rows                          PASS
+  [5] the live archive at probes/ZORK_*.json has rows -- an absent archive is RED, not a skipped arm    PASS
+  [5] every LIVE row agrees with itself: config.n_gpu_layers == config.server_argv -ngl               PASS
+      8 preserved rows still carry the defect (0 against '99'); 8 live rows, 0 of them disagreeing.
+
+M1  a preserved fixture row's n_gpu_layers set 0 -> 99, in place, in a copy of the tree
+      3 FAILED   --  64/67   exit 1
+      the three fixture arms RED: present-and-unmodified got 7 want 8 · contradicts-itself got 7 want 8 ·
+      pairs got [(0, '99'), (99, '99')] want [(0, '99')]
+M2  a live row's n_gpu_layers set 99 -> 0, argv still -ngl 99, in a copy of the tree
+      1 FAILED   --  66/67   exit 1
+      the agreement arm RED: got 1 want 0, and the row it named is printed
+M3  one preserved fixture file removed, in a copy of the tree
+      2 FAILED   --  65/67   exit 1      DENOMINATOR UNCHANGED AT 67
+      the presence arm RED (7/8) and, with it, the contradiction-count arm (7/8); the pair arm stays green
+      because the seven that remain still agree on (0, '99'). NOTHING IS SKIPPED: the run that sees the
+      least evidence prints the least reassuring line.
+M4  the current, repaired archive, UNMODIFIED
+      ALL CONTROLS PASS   --  67/67   exit 0      NO ARM RED
+```
+
+**M4 IS THE WHOLE AMENDMENT.** It is the run that was impossible before the ruling existed: under the
+frozen driver the same repaired archive printed `62/64` and exit 1 (Z1's record), and the only way to make
+it green was to make the archive older. A change that cannot demonstrate M4 has not fixed the defect,
+whatever it does to the total; this one demonstrates it with every other arm green.
+
+**AND ONE CITATION REPAIRED IN THE SAME CHANGE.** `ZORK_INSTRUMENT_REPORT_2026-10-26.md` — sitting 2's
+record row — cited `probes/ZORK_Ministral-…_zork_01_the_floor.json`, a path that now holds the
+re-measurement. It is repointed to
+`suite3/preserved/20261026-140512/ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_01_the_floor.json`,
+the preserved 17,803-byte record whose own mtime is `2026-10-25 13:46` and whose `simulator_digest` is
+`ff35ec83b340fbf0` — the row that report describes. (The card cites `:290`; in the file as committed the
+`probes/` path was at `:288`, `:290` being the adjacent `simulator_digest` row of the same table. The row
+family is the same and the repair is stated here so the line number cannot be mistaken for a different fix.)
+The Chair's evidence-hold on `probes/` is lifted, and the preserved rows are cited by their preserved paths,
+never as `probes/`.
+
+### Z2.4 — THE SUPERSET PROOF · `frozen-driver-vs-new-driver`
+
+A count cannot tell *grew* from *grew and lost ten*, and for a DRIVER change the well-formed proof compares
+the frozen driver's printed control names with the new driver's, then goes one level deeper. Both revisions
+ran their own `--self-test` in `git archive` trees. Names are read from PASS **and** FAIL lines: the frozen
+driver's two archive arms are RED against the current archive by design, and a red arm still has a name.
+
+```
+frozen driver  6cb7f9b:zork_run.py   sha256 b26b2cfc42a0a915…   62 PASS,  2 FAIL, exit 1   2 FAILED -- 62/64
+new driver     this commit:zork_run.py sha256 9be11e482c9c8a5d…  67 PASS,  0 FAIL, exit 0   ALL CONTROLS PASS -- 67/67
+
+kept A ∩ B : 62
+added B \ A: 5
+removed A \ B: 2      (both with a reason, printed in Z2.2)
+
+ARITHMETIC   62 kept +  5 added   = 67  == 67?  True
+             62 kept +  2 removed = 64  == 64?  True
+
+call sites: 62 in the frozen driver, 65 in the new one
+call sites for KEPT names: 59
+KEPT NAMES WHOSE COMPARED EXPRESSIONS OR MULTIPLICITY CHANGED: 0
+expression-changes: 0
+```
+
+**WHAT THIS PROOF DOES NOT SAY.** It does not say the kept controls still measure the same objects — the
+driver's own `--self-test` is evidence that they still bite, not proof that they bite the same thing, and the
+same caveat Z1 printed applies here unchanged. It also does not license `zork.py`, `levels/`,
+`zork_controls.py` (93/93) or any other cabinet: none of them was touched.
+
+### Z2.5 — SUPERSESSION, AND WHAT THIS AMENDMENT DOES NOT CLAIM
+
+**SUPERSESSION:** `Z1's driver half b26b2cfc42a0a915… is superseded on 2026-10-26 by
+9be11e482c9c8a5d…; Z1 remains as the record of the state at its own date, including option C.`
+
+```
+VOID      the pairing driver b26b2cfc + simulator b9701007 + PREREG 03b96c98, as re-frozen by Z1
+          -> any row placed against b26b2cfc is placed against a driver whose archive arms are false
+RE-FROZEN driver 9be11e48 + simulator b9701007 + PREREG 03b96c98 (as frozen)
+UNMOVED   zork.py b9701007 (175/175) · zork_controls.py (93/93) · levels/ and both level digests ·
+          C1-C4 · the three frozen counters and the boundary rule · the six outcome rows · the gate
+NOT DONE  no file under probes/ written · no preserved row restored to the canonical path · no
+          simulator_digest field rewritten · no GPU lease, no model, no server (this change is CPU-only) ·
+          no entrant row, cross-box row or criterion certified by this amendment
+```
+
+**Z1's `62/64` IS NOT RETRACTED.** It was the measured state of the frozen driver on 2026-10-26, it was
+recorded rather than hidden, and the ruling treats that record as the interim it was. What changed is the
+control, not the history: the two numbers differ because the driver's denominator and subject changed, and
+both numbers are printed in this file so that no reader has to guess which driver a total belongs to.

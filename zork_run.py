@@ -98,6 +98,41 @@ PARALLEL_DECLARED = None
 PARALLEL = PARALLEL_DECLARED
 _BINARY_DIGEST_CACHE = {}
 
+# ==================================================================================================
+# THE PRESERVED FIXTURE — EIGHT PATHS NAMED LITERALLY, PINNED BY DIGEST, AND NOT GLOBBED.
+#
+# These are the eight sitting-2 rows of `13b161a`, the bytes the GPU window replaced, preserved under
+# `suite3/preserved/` and tracked in git. They are the HISTORICAL DEFECT: `config.n_gpu_layers` 0 beside
+# `config.server_argv` `-ngl 99`, the summary naming the constant while the argv named the launch. The
+# self-test asserts that contradiction against THESE BYTES, so the evidence for "the writer defect was
+# real, and this is what it looked like" is a digest rather than a claim.
+#
+# WHY LITERAL PATHS AND NOT `glob("suite3/preserved/*/ZORK_*.json")`: a later GPU window adds directories
+# there, and a glob is a denominator that can change without a line in the record. Eight names, eight
+# digests, eight byte counts, written down once. A missing file or a moved byte is a RED arm.
+#
+# Local Chair ruling 2026-10-26 (R3-R5), card `t_a828c554`:
+#   governance/rulings/2026-10-26-a-control-that-asserts-a-defect-in-the-live-archive-vetoes-the-repair.md
+# ==================================================================================================
+PRESERVED_FIXTURE = (
+    ("suite3/preserved/20261026-140512/ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_01_the_floor.json",
+     "7e57408fe63fd5ad8a16cc9beae80c8b20bf8c712f30dcb89a547d52eaeccc48", 17803),
+    ("suite3/preserved/20261026-140521/ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_02_long_crawl.json",
+     "df3ef579919866203e0882a22e2b5052c9bd894b8a608fbc844fb29a5e5e645b", 53987),
+    ("suite3/preserved/20261026-140527/ZORK_Ornith-1.5-9B-Q4_K_M_zork_01_the_floor.json",
+     "24841df4d193ea58cd212240074ad56a5b063cc7937b490e7b5e5bbe5e4ecc10", 14538),
+    ("suite3/preserved/20261026-140535/ZORK_Ornith-1.5-9B-Q4_K_M_zork_02_long_crawl.json",
+     "60d06b325250d4c9f6fadb5d2a908d49b4427465213e80c802d176c4df412444", 21527),
+    ("suite3/preserved/20261026-140549/ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_01_the_floor.json",
+     "3f660454a52843aaf9979b9931c7c0f3bc3db14a61d19ce940e3e61ec0590bda", 40346),
+    ("suite3/preserved/20261026-140602/ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_02_long_crawl.json",
+     "4f26f6cf6c8f36bb9ddf235a50fefcc50cea9679efc9fcd356d02fff298a23f4", 49733),
+    ("suite3/preserved/20261026-140614/ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_01_the_floor.json",
+     "7b5c27c5cd645746cfed8dacbaf04c8f275962a12847f4022d3dc1564d507e8f", 12960),
+    ("suite3/preserved/20261026-140620/ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_02_long_crawl.json",
+     "d466037a2b1a0093f0904c8021d8a9c7f61b30d73f9ae8811ba156a610da0607", 44669),
+)
+
 
 def llama_server():
     """THE BINARY THAT WILL ACTUALLY BE EXECUTED -- read at CALL TIME, so a selection made in main()
@@ -436,14 +471,15 @@ def argv_value(argv, flag):
     THIS EXISTS BECAUSE THE RECORD CONTRADICTED ITSELF, AND IT DID SO ON EVERY GPU ROW. `config` carried
     `"n_gpu_layers": 0` as a LITERAL while `config.server_argv` carried `-ngl 99` -- the summary field
     reporting the constant it was written against, the argv reporting the launch that happened. Eight
-    recorded rows say both:
+    recorded rows said both, and those eight are preserved under `suite3/preserved/` (pinned in
+    PRESERVED_FIXTURE below), not at `probes/`:
 
-        probes/ZORK_*.json   config.n_gpu_layers = 0      config.server_argv   -c 4096 -ngl 99 --parallel 1
+        suite3/preserved/…/ZORK_*.json   config.n_gpu_layers = 0   config.server_argv   -c 4096 -ngl 99 --parallel 1
 
-    A reader taking the summary would file eight CPU rows; a reader taking the argv would file eight GPU
-    rows, and NEITHER READER WOULD KNOW THE OTHER EXISTED. That is the same defect class as the counters
-    this cabinet's card is about -- one record, two claims, no way to tell which one is the measurement --
-    and it landed on the one field the suite card names as required: the compute path.
+    A reader taking the summary would have filed eight CPU rows; a reader taking the argv would have filed
+    eight GPU rows, and NEITHER READER WOULD HAVE KNOWN THE OTHER EXISTED. That is the same defect class
+    as the counters this cabinet's card is about -- one record, two claims, no way to tell which one is
+    the measurement -- and it landed on the one field the suite card names as required: the compute path.
 
     So the summary is now READ OUT OF THE ARGV rather than written beside it, and `--self-test` asserts the
     two agree instead of trusting that they do.
@@ -1149,23 +1185,59 @@ def _self_test():
        (compute_path(argv0)["n_gpu_layers"], compute_path(argv0)["parallel"]), (0, None))
     ck("a flag that is absent reads as None, not as a plausible zero",
        argv_value(argv0, "--parallel"), None)
-    # THE CONTROL FIRES ON THE EIGHT ROWS THIS CABINET ACTUALLY HAS.
+    # THE CONTROL IS A PAIR, AND EACH ARM NAMES ITS OWN SUBJECT (ruling 2026-10-26, R3-R5).
+    #
+    # ONE ARM OVER PRESERVED BYTES. The eight sitting-2 rows are the historical defect -- `n_gpu_layers 0`
+    # beside `-ngl 99` -- and they are checked HERE, as a fixture pinned by digest in PRESERVED_FIXTURE,
+    # never as "whatever is in probes/". The claim is about committed history, so `git checkout` of an
+    # unrelated commit cannot turn it red (R1).
+    #
+    # ONE ARM OVER THE LIVE ARCHIVE, ASSERTING AGREEMENT. `probes/` is a working directory by design: what
+    # sits in it changes when the instrument changes. The invariant that holds over it now -- every row
+    # agrees with itself, and nothing is said about the past -- is what goes red the day a writer
+    # regresses. That is the arm that would have caught the defect, and the arm the previous two
+    # replaced: they asserted the DEFECT was present in the live archive, so a repair to the writer read
+    # as a regression and fixing it was vetoed (R2).
+    #
+    # AND NEITHER SUBJECT MAY BE ABSENT. A missing fixture file or a missing `probes/` is a RED arm, never
+    # a skipped one: the old `if _rows:` guard is why the same bytes once printed `62/62` with no
+    # `probes/` beside them, the run that saw the least evidence printing the most reassuring line (R4).
     import glob as _glob
-    _rows = [_p for _p in sorted(_glob.glob(os.path.join(HERE, "probes", "ZORK_*.json")))]
-    if _rows:
-        disagree = []
-        for _p in _rows:
-            _d = json.load(open(_p))
-            _cfg = _d.get("config", {})
-            _said, _launched = _cfg.get("n_gpu_layers"), argv_value(_cfg.get("server_argv", []), "-ngl")
-            if _launched is not None and str(_said) != str(_launched):
-                disagree.append((os.path.basename(_p), _said, _launched))
-        ck("EVERY recorded GPU row contradicts itself: config.n_gpu_layers vs config.server_argv -ngl",
-           len(disagree), len(_rows))
-        ck("...and the contradiction is 0 against 99, on all eight",
-           sorted({(s, l) for _n, s, l in disagree}), [(0, "99")])
-        print(f"        {len(disagree)} rows: the summary said CPU, the argv said GPU. Neither reader "
-              f"would know the other existed.")
+    _pres = []
+    for _rel, _dig, _n in PRESERVED_FIXTURE:
+        try:
+            _pres.append((_rel, open(os.path.join(HERE, _rel), "rb").read(), _dig, _n))
+        except OSError:
+            continue                                  # a missing file is a short count, never a skip
+    ck("the eight preserved fixture rows are present and unmodified: pinned sha256, eight literal paths",
+       sum(1 for _rel, _raw, _dig, _n in _pres
+           if len(_raw) == _n and hashlib.sha256(_raw).hexdigest() == _dig),
+       len(PRESERVED_FIXTURE))
+    _pairs = []
+    for _rel, _raw, _dig, _n in _pres:
+        _cfg = json.loads(_raw).get("config", {})
+        _pairs.append((_cfg.get("n_gpu_layers"), argv_value(_cfg.get("server_argv", []), "-ngl")))
+    ck("THE PRESERVED FIXTURE STILL CONTRADICTS ITSELF: all eight say n_gpu_layers 0 against -ngl 99",
+       sum(1 for _s, _l in _pairs if str(_s) == "0" and str(_l) == "99"), len(PRESERVED_FIXTURE))
+    ck("...and the contradiction is exactly (0, '99') on all eight preserved rows",
+       sorted({(_s, _l) for _s, _l in _pairs}, key=lambda _t: (str(_t[0]), str(_t[1]))),
+       [(0, "99")])
+    _live = sorted(_glob.glob(os.path.join(HERE, "probes", "ZORK_*.json")))
+    ck("the live archive at probes/ZORK_*.json has rows -- an absent archive is RED, not a skipped arm",
+       len(_live) > 0, True)
+    _disagree = []
+    for _p in _live:
+        _cfg = json.load(open(_p)).get("config", {})
+        _said, _launched = _cfg.get("n_gpu_layers"), argv_value(_cfg.get("server_argv", []), "-ngl")
+        if str(_said) != str(_launched):              # a row with no -ngl at all disagrees too
+            _disagree.append((os.path.basename(_p), _said, _launched))
+    ck("every LIVE row agrees with itself: config.n_gpu_layers == config.server_argv -ngl",
+       len(_disagree), 0)
+    for _n, _s, _l in _disagree:
+        print(f"          disagrees: {_n}  said {_s!r}  launched {_l!r}")
+    print(f"        {sum(1 for _s, _l in _pairs if str(_s) == '0' and str(_l) == '99')} preserved rows "
+          f"still carry the defect (0 against '99'); {len(_live)} live rows, "
+          f"{len(_disagree)} of them disagreeing.")
     NGL, PARALLEL = _ngl_was, _par_was
 
     print("\n[6] THE AXIS AND THE PROGRESS BLOCK ARE CARRIED, AND SUFFICIENCY CHECKS THEM")
