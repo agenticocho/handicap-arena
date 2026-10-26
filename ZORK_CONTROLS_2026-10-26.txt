@@ -1,0 +1,152 @@
+====================================================================================================
+ZORK CONTROLS THAT CAN FIRE -- scripted walker, scripted non-parser, archived rows
+====================================================================================================
+  interpreter  python 3.14.9
+  compute path CPU ONLY -- no model, no server, no GPU, no network
+
+[A] THE SCRIPTED WALKER -- a route DERIVED FROM THE ROOM GRAPH, and it must finish
+  PASS  zork_01_the_floor: the walker derives a plan from the graph
+  PASS  zork_01_the_floor: it FINISHES
+  PASS  zork_01_the_floor: it carries the required item
+  PASS  zork_01_the_floor: zero commands were rejected
+  PASS  zork_01_the_floor: zero commands were unattributable
+  PASS  zork_01_the_floor: every command it typed was ACCEPTED
+  PASS  zork_01_the_floor: it ends on the gate, so the graph distance is zero
+  PASS  zork_01_the_floor: it moved exactly one object -- the required one
+  PASS  zork_01_the_floor: the derived route == the documented solution, up to the alias
+        plan: take key ; north
+        legs: [] -> take key -> ['north']
+  PASS  zork_01_the_floor: the counters agree with the attribution on this run too
+  PASS  zork_02_long_crawl: the walker derives a plan from the graph
+  PASS  zork_02_long_crawl: it FINISHES
+  PASS  zork_02_long_crawl: it carries the required item
+  PASS  zork_02_long_crawl: zero commands were rejected
+  PASS  zork_02_long_crawl: zero commands were unattributable
+  PASS  zork_02_long_crawl: every command it typed was ACCEPTED
+  PASS  zork_02_long_crawl: it ends on the gate, so the graph distance is zero
+  PASS  zork_02_long_crawl: it moved exactly one object -- the required one
+  PASS  zork_02_long_crawl: the derived route == the documented solution, up to the alias
+        plan: north ; take brasskey ; south ; east ; north ; east
+        legs: ['north'] -> take brasskey -> ['south', 'east', 'north', 'east']
+  PASS  zork_02_long_crawl: the counters agree with the attribution on this run too
+
+[B] THE SAME WALKER, THREE WAYS THAT MUST NOT FINISH -- the control is not a decoration
+  PASS  the walker WITHOUT the take reaches the gate and is LOCKED
+  PASS  ...and does not finish
+  PASS  ...and moved NO object
+  PASS  the walker with its LAST move cut off does not finish
+  PASS  ...and is one room short of the gate
+  PASS  the walker walking its route BACKWARDS does not finish
+  PASS  a world whose gate is unreachable is REFUSED, not silently played
+
+[C] THE SCRIPTED NON-PARSER -- gibberish, and it must produce ZERO accepted commands
+  PASS  the generator emitted 200 commands
+  PASS  EVERY one of them is outside this world's vocabulary -- the generator's own control
+  PASS  the excluded `I ...` sentence IS read as a command by this world, which is why it is excluded
+  PASS  ...so a non-parser built on it would be measuring the synonym list, not the language
+  PASS  zork_01_the_floor: ZERO accepted commands
+  PASS  zork_01_the_floor: every command is UNATTRIBUTABLE
+  PASS  zork_01_the_floor: the frozen counter says `unparsed == 200` too
+  PASS  zork_01_the_floor: it did not finish
+  PASS  zork_01_the_floor: THE WORLD DID NOT MOVE -- same room
+  PASS  zork_01_the_floor: ...same inventory
+  PASS  zork_01_the_floor: ...zero objects moved
+  PASS  zork_01_the_floor: ...and the distance to the gate never changed
+  PASS  zork_02_long_crawl: ZERO accepted commands
+  PASS  zork_02_long_crawl: every command is UNATTRIBUTABLE
+  PASS  zork_02_long_crawl: the frozen counter says `unparsed == 200` too
+  PASS  zork_02_long_crawl: it did not finish
+  PASS  zork_02_long_crawl: THE WORLD DID NOT MOVE -- same room
+  PASS  zork_02_long_crawl: ...same inventory
+  PASS  zork_02_long_crawl: ...zero objects moved
+  PASS  zork_02_long_crawl: ...and the distance to the gate never changed
+
+[D] ONE REAL COMMAND IN THE GIBBERISH STREAM -- the counter must move by exactly one
+  PASS  the stream is one command longer
+  PASS  EXACTLY ONE command is accepted
+  PASS  ...and it is the one that was injected
+  PASS  ...which is the only row whose attribution is not UNATTRIBUTABLE
+  PASS  ...and the world moved by that one command
+  PASS  ...so `accepted == 0` above was not a counter stuck at zero
+  PASS  five looks are five accepted commands that move nothing
+
+[E] THE SHAPES THE EIGHT RECORDED ROWS ACTUALLY CONTAIN -- attributed, one by one
+  PASS  'Look.'                                          -> accepted/acted
+        Ministral's shape: a capitalised word with a full stop. Punctuation is stripped, the verb is read.
+  PASS  'Take the key.'                                  -> accepted/acted
+        Ministral: `the` is noise, `key` is a declared alias.
+  PASS  'North.'                                         -> accepted/acted
+        Ministral: a direction with a full stop. Run on the CRAWL level, because on the FLOOR a bare `north` arrives at the gate and is REJECTED/gate_locked -- which [E] asserts as its own case.
+  PASS  'take metal'                                     -> rejected/unknown_object
+        Bonsai, zork_02 ply 4. The room's own prose says 'something metal on a shelf' and the noun list has no `metal`. THE COMMAND IS IN THE LANGUAGE; THE NOUN IS NOT.
+  PASS  'Try moving in a direction to explore further.'  -> UNATTRIBUTABLE/no_verb
+        Ministral, zork_02 plies 6-7. `try` is not a verb. NOT A COMMAND AT ALL.
+  PASS  'Inspect the torch.'                             -> accepted/acted
+        Ministral: `inspect` is a declared synonym for look, so this is read and does nothing.
+  PASS  'I will take the key'                            -> accepted/acted
+        THE MEASURED PARSER PROPERTY: `i` is a declared abbreviation for inventory, so a SENTENCE opening with `I` is read as a command. The parser finds a command in text that is not one -- and this is why the non-parser's word list cannot contain an `I` sentence (see GIBBERISH).
+  PASS  'I am not sure what to do next.'                 -> accepted/acted
+        the same property in a longer sentence: read as `inventory`. NOT unattributable, by the world's own declared vocabulary, which is why the generator excludes it rather than being scored against it.
+  PASS  'take the key and walk north'                    -> rejected/unknown_object
+        the other measured property: a command with a trailing sentence is refused AS A WHOLE.
+  PASS  '> Open brasskey.'                               -> rejected/nothing_to_open
+        Ministral: `>` is stripped, `open` is a verb, and there is no gate here. An entrant trying to use the key on a door gets `nothing_to_open` -- a rejection whose reason name reads like a world fact.
+  PASS  'take unicorn'                                   -> rejected/unknown_object
+        the prereg's own boundary case. REJECTED here, UNATTRIBUTABLE would be wrong: `take` is known.
+  PASS  'north pole'                                     -> accepted/acted
+        a direction read from the HEAD; the trailing word is not part of it.
+  PASS  'go sideways'                                    -> rejected/unknown_direction
+        a verb read, an argument this world has no word for.
+  PASS  'north'                                          -> rejected/gate_locked
+        Ministral's `North.` on the FLOOR level: `north` walks INTO the gate, and the gate is TERMINAL. A correct direction that does not finish is a REJECTION, not an acceptance, and this is the row where the word 'accepted' would otherwise overstate what happened.
+
+[F] THE EIGHT RECORDED ROWS, RE-ATTRIBUTED THROUGH THE FIXED PARSER (read-only)
+    The frozen counters must be reproduced EXACTLY. The additive axis must not move them.
+  PASS  eight recorded rows were found
+  PASS  MiMo-V2.6-Distill-Qwen-9B-Q4_K_M / zork_01_the_floor: the FROZEN counters are reproduced exactly
+  PASS  MiMo-V2.6-Distill-Qwen-9B-Q4_K_M / zork_01_the_floor: the per-row attribution sums back to them
+  PASS  MiMo-V2.6-Distill-Qwen-9B-Q4_K_M / zork_01_the_floor: the score is reproduced
+  PASS  MiMo-V2.6-Distill-Qwen-9B-Q4_K_M / zork_02_long_crawl: the FROZEN counters are reproduced exactly
+  PASS  MiMo-V2.6-Distill-Qwen-9B-Q4_K_M / zork_02_long_crawl: the per-row attribution sums back to them
+  PASS  MiMo-V2.6-Distill-Qwen-9B-Q4_K_M / zork_02_long_crawl: the score is reproduced
+  PASS  Ministral-3-3B-Instruct-2512-UD-Q4_K_XL / zork_01_the_floor: the FROZEN counters are reproduced exactly
+  PASS  Ministral-3-3B-Instruct-2512-UD-Q4_K_XL / zork_01_the_floor: the per-row attribution sums back to them
+  PASS  Ministral-3-3B-Instruct-2512-UD-Q4_K_XL / zork_01_the_floor: the score is reproduced
+  PASS  Ministral-3-3B-Instruct-2512-UD-Q4_K_XL / zork_02_long_crawl: the FROZEN counters are reproduced exactly
+  PASS  Ministral-3-3B-Instruct-2512-UD-Q4_K_XL / zork_02_long_crawl: the per-row attribution sums back to them
+  PASS  Ministral-3-3B-Instruct-2512-UD-Q4_K_XL / zork_02_long_crawl: the score is reproduced
+  PASS  Ornith-1.5-9B-Q4_K_M / zork_01_the_floor: the FROZEN counters are reproduced exactly
+  PASS  Ornith-1.5-9B-Q4_K_M / zork_01_the_floor: the per-row attribution sums back to them
+  PASS  Ornith-1.5-9B-Q4_K_M / zork_01_the_floor: the score is reproduced
+  PASS  Ornith-1.5-9B-Q4_K_M / zork_02_long_crawl: the FROZEN counters are reproduced exactly
+  PASS  Ornith-1.5-9B-Q4_K_M / zork_02_long_crawl: the per-row attribution sums back to them
+  PASS  Ornith-1.5-9B-Q4_K_M / zork_02_long_crawl: the score is reproduced
+  PASS  Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0 / zork_01_the_floor: the FROZEN counters are reproduced exactly
+  PASS  Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0 / zork_01_the_floor: the per-row attribution sums back to them
+  PASS  Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0 / zork_01_the_floor: the score is reproduced
+  PASS  Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0 / zork_02_long_crawl: the FROZEN counters are reproduced exactly
+  PASS  Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0 / zork_02_long_crawl: the per-row attribution sums back to them
+  PASS  Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0 / zork_02_long_crawl: the score is reproduced
+
+entrant                            level                  acc  rej UNATT old unparsed  rejected_by_reason
+---------------------------------------------------------------------------------------------------------
+MiMo-V2.6-Distill-Qwen-9B-Q4_K_M   zork_01_the_floor        6   10     0            0  already_carrying=10
+                                                           rejected:           'take key' (already_carrying) | 'take key' (already_carrying) | 'take key' (already_carrying) | 'take key' (already_carrying) | 'take key' (already_carrying) | 'take key' (already_carrying) | 'take key' (already_carrying) | 'take key' (already_carrying) | 'take key' (already_carrying) | 'take key' (already_carrying)
+MiMo-V2.6-Distill-Qwen-9B-Q4_K_M   zork_02_long_crawl       9   11     0            0  already_carrying=10, no_exit=1
+                                                           rejected:           'take torch' (already_carrying) | 'take torch' (already_carrying) | 'take torch' (already_carrying) | 'take torch' (already_carrying) | 'take torch' (already_carrying) | 'take torch' (already_carrying) | 'take torch' (already_carrying) | 'take torch' (already_carrying) | 'north' (no_exit) | 'take brasskey' (already_carrying) | 'take brasskey' (already_carrying)
+Ministral-3-3B-Instruct-2512-UD-Q4_K_XL zork_01_the_floor        3    2     0            0  already_carrying=2
+                                                           rejected:           'Take the key.' (already_carrying) | 'Take the key.' (already_carrying)
+Ministral-3-3B-Instruct-2512-UD-Q4_K_XL zork_02_long_crawl      12    5     3            3  already_carrying=3, nothing_to_open=2
+                                                           not in the language: 'Try moving in a direction to explore further.' | 'Try moving in a direction to explore further.' | 'Try moving in the east direction.'
+                                                           rejected:           'Take torch.' (already_carrying) | 'Take the torch.' (already_carrying) | 'Take the torch.' (already_carrying) | '> Open brasskey.' (nothing_to_open) | '> Use torch.' (nothing_to_open)
+Ornith-1.5-9B-Q4_K_M               zork_01_the_floor        2    2     0            0  already_carrying=2
+                                                           rejected:           'take key' (already_carrying) | 'take key' (already_carrying)
+Ornith-1.5-9B-Q4_K_M               zork_02_long_crawl       7    0     0            0  -
+Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0 zork_01_the_floor        3    0     0            0  -
+Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0 zork_02_long_crawl      14    4     0            1  already_carrying=2, gate_locked=1, unknown_object=1
+                                                           rejected:           'take metal' (unknown_object) | 'take torch' (already_carrying) | 'take torch' (already_carrying) | 'e' (gate_locked)
+
+====================================================================================================
+ALL CONTROLS PASS   --  93/93
+====================================================================================================
+  artifact  ZORK_CONTROLS_2026-10-26.json

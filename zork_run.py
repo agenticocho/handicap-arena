@@ -430,6 +430,43 @@ def server_argv(entrant, ctx, port):
     return argv + reasoning_argv()
 
 
+def argv_value(argv, flag):
+    """-> the value passed to `flag` in the argv that was ACTUALLY BUILT, or None if the flag is absent.
+
+    THIS EXISTS BECAUSE THE RECORD CONTRADICTED ITSELF, AND IT DID SO ON EVERY GPU ROW. `config` carried
+    `"n_gpu_layers": 0` as a LITERAL while `config.server_argv` carried `-ngl 99` -- the summary field
+    reporting the constant it was written against, the argv reporting the launch that happened. Eight
+    recorded rows say both:
+
+        probes/ZORK_*.json   config.n_gpu_layers = 0      config.server_argv   -c 4096 -ngl 99 --parallel 1
+
+    A reader taking the summary would file eight CPU rows; a reader taking the argv would file eight GPU
+    rows, and NEITHER READER WOULD KNOW THE OTHER EXISTED. That is the same defect class as the counters
+    this cabinet's card is about -- one record, two claims, no way to tell which one is the measurement --
+    and it landed on the one field the suite card names as required: the compute path.
+
+    So the summary is now READ OUT OF THE ARGV rather than written beside it, and `--self-test` asserts the
+    two agree instead of trusting that they do.
+    """
+    try:
+        return argv[argv.index(flag) + 1]
+    except (ValueError, IndexError):
+        return None
+
+
+def compute_path(argv):
+    """THE COMPUTE PATH AS THE LAUNCH STATED IT, read from the argv the server is started with."""
+    ngl = argv_value(argv, "-ngl")
+    ctx = argv_value(argv, "-c")
+    par = argv_value(argv, "--parallel")
+    return {"n_gpu_layers": None if ngl is None else int(ngl),
+            "ctx": None if ctx is None else int(ctx),
+            "parallel": None if par is None else int(par),
+            "computed_from": ("config.server_argv -- the summary fields above are READ OUT of the argv "
+                              "that was run, not written beside it, because this file once wrote them "
+                              "from the module constants and the two disagreed on every GPU row")}
+
+
 # ==================================================================================================
 # THE PROMPT -- THE STATE AND THE CONTROLS, AND NOTHING ELSE.
 #
@@ -616,6 +653,10 @@ def budget_signature(turns, cap):
 SCORED_FIELDS = ("finished", "ending", "carried_required_item", "required_item", "start_room",
                  "took_item_at_step", "commands_consumed", "counts", "outcomes", "rooms_visited",
                  "final_room", "final_inventory")
+# THE FIELDS THE ADDITIVE AXIS ADDS. Kept OUT of SCORED_FIELDS deliberately: that tuple is the frozen
+# claim about the SCORE, and a record written before this axis existed must not be failed for a field it
+# was never asked to carry. A record without them reports `axis_measured: false` -- absent, not wrong.
+AXIS_FIELDS = ("attribution", "attribution_reasons", "progress")
 
 
 def sufficiency_check(record):
@@ -636,6 +677,12 @@ def sufficiency_check(record):
         return False, {"checked": True, "reproduces": False,
                        "why": f"the replay refused the record: {type(e).__name__}: {e}"}
     mismatched = [k for k in SCORED_FIELDS if record.get(k) != again.get(k)]
+    # THE ADDITIVE AXIS, WHEN THE RECORD CARRIES ONE. It is NOT folded into SCORED_FIELDS, because that
+    # tuple is the frozen claim about the SCORE and a record written before this axis existed must not be
+    # failed for a field it was never asked to carry. Absent is reported as absent (`axis_measured: false`),
+    # which is a different statement from wrong.
+    axis_measured = all(k in record for k in AXIS_FIELDS)
+    axis_mismatched = [k for k in AXIS_FIELDS if record.get(k) != again.get(k)] if axis_measured else []
     # THE ROWS THEMSELVES, not only the totals: a trace whose per-step inventory drifted would still sum
     # to the same score, and a reader replaying the crawl needs the rows to be the same rows.
     row_mismatch = [i for i, (a, b) in enumerate(zip(record["trace"], again["trace"]))
@@ -645,9 +692,28 @@ def sufficiency_check(record):
                                               "inventory")}]
     if len(record["trace"]) != len(again["trace"]):
         row_mismatch.append(f"row count {len(record['trace'])} -> {len(again['trace'])}")
+    # AND THE ATTRIBUTION COLUMNS ON THE ROWS, when the record carries them. A total that agrees while
+    # the rows it was counted from have drifted is a total about a different run.
+    attr_row_mismatch = []
+    if axis_measured:
+        attr_row_mismatch = [i for i, (a, b) in enumerate(zip(record["trace"], again["trace"]))
+                             if (a.get("attribution"), a.get("reason"), a.get("counted_under"))
+                             != (b.get("attribution"), b.get("reason"), b.get("counted_under"))]
     # AND THE SIMULATOR'S OWN REPLAY OF THE TRACE -- the second, independent route to the same ending
     # (zork.replay()). If the two routes disagree, the record has two readings and that is a finding.
-    rec = Z.replay(record["trace"], record["start_room"])
+    #
+    # THE REQUIRED ITEM IS PASSED, AND THAT IS A FIX RATHER THAN A TIDY-UP. `replay()` without it recovers
+    # `took_item_at_step` as THE FIRST TAKE OF ANY ITEM, while `play()` sets that field to the first take
+    # OF THE REQUIRED ITEM. On `zork_02_long_crawl`, which ships a distractor (the torch), the two routes
+    # disagree for any entrant that takes the torch first -- and this check then filed
+    # `reproduces: false`, "THE RECORD DOES NOT REPRODUCE ITS OWN SCORE", against TWO ROWS THAT WERE FINE:
+    #
+    #     ZORK_MiMo-...-9B_Q4_K_M_zork_02_long_crawl.json        play said 17, replay said 0 (the torch)
+    #     ZORK_Ministral-3-...-_zork_02_long_crawl.json          play said 10, replay said the torch's step
+    #
+    # THOSE TWO RECORDS ARE NOT REWRITTEN. They are the record of what the instrument said at the time, and
+    # what it said was false; the correction belongs in the report, not in a patched file.
+    rec = Z.replay(record["trace"], record["start_room"], required_item=record.get("required_item"))
     replay_mismatch = []
     if rec["route"] != record["rooms_visited"]:
         replay_mismatch.append("route")
@@ -657,15 +723,22 @@ def sufficiency_check(record):
         replay_mismatch.append("took_item_at_step")
     if rec["ending"] != (record["ending"] if record["ending"] != "out_of_commands" else None):
         replay_mismatch.append("ending")
-    ok = not mismatched and not row_mismatch and not replay_mismatch
+    ok = (not mismatched and not row_mismatch and not replay_mismatch and not axis_mismatched
+          and not attr_row_mismatch)
     return ok, {"checked": True, "reproduces": bool(ok),
                 "replayed_from": "the record alone: trace[].command, verbatim, plus the level text it carries",
                 "fields_compared": list(SCORED_FIELDS),
                 "fields_mismatched": mismatched,
+                "axis_measured": axis_measured,
+                "axis_fields_compared": list(AXIS_FIELDS) if axis_measured else [],
+                "axis_fields_mismatched": axis_mismatched,
+                "attribution_rows_mismatched": attr_row_mismatch,
                 "trace_rows_mismatched": row_mismatch,
                 "simulator_replay_mismatched": replay_mismatch,
+                "replay_basis": rec["took_item_at_step_basis"],
                 "reading": ("THE RECORD REPRODUCES ITS OWN SCORE -- the simulator, given nothing but this "
-                            "record, returns the same score, the same counters and the same rows."
+                            "record, returns the same score, the same counters, the same attribution and "
+                            "the same rows."
                             if ok else
                             "THE RECORD DOES NOT REPRODUCE ITS OWN SCORE. THIS IS NOT A RESULT: it is an "
                             "instrument failure, and the number above it must not be filed.")}
@@ -796,7 +869,11 @@ def run(entrant, level_path, cap, port):
                        "reasoning_supported_by_build": True,
                        "max_tokens_ceiling": MAX_TOKENS,
                        "command_cap": cap,
-                       "ctx": 4096, "n_gpu_layers": 0, "temperature": 0.0,
+                       # THE COMPUTE PATH IS READ OUT OF THE ARGV, NOT WRITTEN BESIDE IT. These three
+                       # fields used to be the literals `4096` and `0`, and on every GPU row the argv
+                       # beside them said `-ngl 99` -- see `argv_value` for the full account.
+                       **compute_path(server_argv(entrant, 4096, port)),
+                       "temperature": 0.0,
                        "transcript_lines": TRANSCRIPT_LINES,
                        "legend": legend(), "legend_digest": legend_digest(),
                        "server_argv": server_argv(entrant, 4096, port),
@@ -838,8 +915,51 @@ def run(entrant, level_path, cap, port):
                                              "score is `finished`/`ending`, computed by the simulator; "
                                              "`carried_required_item` is the faculty flag."),
             },
+            # ── THE THREE-WAY SEPARATION, CARRIED ON THE RECORD ──────────────────────────────────────
+            # THE FROZEN COUNTERS STAY AND ARE NOT REWRITTEN. `unparsed` is pre-registered and this
+            # cabinet's card does not license moving it. What arrives beside it is the axis that says
+            # WHOSE VOCABULARY FAILED, counted per row:
+            #
+            #     accepted         the world ACTED on it
+            #     rejected         a verb this world knows was read, and the world refused it, with the reason
+            #     UNATTRIBUTABLE   not in the game's command language at all
+            #
+            # AND THE FROZEN COUNTER EACH ROW IS ALSO COUNTED IN TRAVELS WITH THE ROW, so the two axes can
+            # be checked against each other on the record itself rather than trusted.
+            "attribution": r["attribution"],
+            "attribution_reasons": r["attribution_reasons"],
+            "attribution_reasons_text": r["attribution_reasons_text"],
+            "attribution_scope": r["attribution_of"],
+            "attribution_checked_against_counts": r["attribution_checked_against_counts"],
+            "attribution_is_the_scoreable_form": True,
+            "scoreable": bool(r.get("attribution_checked_against_counts")),
+            "scoreable_scope": ("A ROW WITHOUT THE COUNTS IS NOT SCOREABLE. This flag is true only when "
+                                "every row was attributed exactly once AND the per-row attribution sums "
+                                "back to the frozen counters. Records written before this axis existed "
+                                "carry no `attribution` and no `scoreable`, and their absence is the "
+                                "statement that they are not scoreable on it -- they are not repaired, "
+                                "rewritten or re-scored."),
+            # ── PROGRESS AGAINST THE ROOM GRAPH, FROM WORLD STATE ────────────────────────────────────
+            "progress": r["progress"],
+            "progress_field_source": r["progress_field_source"],
+            "progress_prose_only": r["progress_prose_only"],
+            "progress_scope": ("EVERY field of `progress` is computed from the parsed world and the "
+                               "world's state -- room count, objects moved, score and the BFS distance "
+                               "to the gate. NOTHING in it is parsed from the entrant's prose. The one "
+                               "prose-derived field in a run is `turns[].command`, which is the INPUT to "
+                               "the parser; see `progress_prose_only` for the full list, and "
+                               "`progress_field_source` for the declared provenance of every leaf -- a "
+                               "control in zork.py fails if a leaf appears without a declared source."),
             "unreadable": r["counts"].get("unparsed", 0),
             "unreadable_is_the_aggregate_of": "unparsed (the simulator's own counter, per command)",
+            "unreadable_scope": ("THE FORMAT FIELD, AND IT IS THE FROZEN COUNTER `unparsed` UNDER ANOTHER "
+                                 "NAME. IT IS NOT A SINGLE CLAIM: it holds BOTH the commands that were "
+                                 "refused (a verb this world knows, an argument it does not) AND the "
+                                 "commands that were not in the language at all. A reader who wants to "
+                                 "know which should read `attribution.unattributable`; a reader who "
+                                 "needs the prereg's number reads this one. The two are reported and "
+                                 "both are true; they are not two readings of one thing, they are two "
+                                 "questions about one run."),
             "missing_values": missing_values,
             "missing_values_are_a_subset_of": ("a missing value is NOT inside `unreadable` here: `unreadable` "
                                                "counts COMMANDS the parser could not read, and a missing "
@@ -1013,6 +1133,76 @@ def _self_test():
        "the instrument changed and the cell was re-measured")
     ck("a free path needs no reason at all", artifact_gate(os.path.join(scratch, "nope.json"), None),
        (True, "", None))
+
+    print("\n[5] THE COMPUTE PATH: the summary is READ OUT OF THE ARGV, and the eight recorded rows show why")
+    global NGL, PARALLEL
+    _ngl_was, _par_was = NGL, PARALLEL
+    NGL, PARALLEL = 99, 1
+    argv99 = server_argv("M.gguf", 4096, 58701)
+    ck("with --ngl 99 the argv says -ngl 99", argv_value(argv99, "-ngl"), "99")
+    ck("...and the summary field agrees with it", compute_path(argv99)["n_gpu_layers"], 99)
+    ck("...and ctx agrees too", compute_path(argv99)["ctx"], 4096)
+    ck("...and --parallel is carried, not dropped", compute_path(argv99)["parallel"], 1)
+    NGL, PARALLEL = 0, None
+    argv0 = server_argv("M.gguf", 4096, 58701)
+    ck("the registered CPU launch reads back as 0 and no --parallel",
+       (compute_path(argv0)["n_gpu_layers"], compute_path(argv0)["parallel"]), (0, None))
+    ck("a flag that is absent reads as None, not as a plausible zero",
+       argv_value(argv0, "--parallel"), None)
+    # THE CONTROL FIRES ON THE EIGHT ROWS THIS CABINET ACTUALLY HAS.
+    import glob as _glob
+    _rows = [_p for _p in sorted(_glob.glob(os.path.join(HERE, "probes", "ZORK_*.json")))]
+    if _rows:
+        disagree = []
+        for _p in _rows:
+            _d = json.load(open(_p))
+            _cfg = _d.get("config", {})
+            _said, _launched = _cfg.get("n_gpu_layers"), argv_value(_cfg.get("server_argv", []), "-ngl")
+            if _launched is not None and str(_said) != str(_launched):
+                disagree.append((os.path.basename(_p), _said, _launched))
+        ck("EVERY recorded GPU row contradicts itself: config.n_gpu_layers vs config.server_argv -ngl",
+           len(disagree), len(_rows))
+        ck("...and the contradiction is 0 against 99, on all eight",
+           sorted({(s, l) for _n, s, l in disagree}), [(0, "99")])
+        print(f"        {len(disagree)} rows: the summary said CPU, the argv said GPU. Neither reader "
+              f"would know the other existed.")
+    NGL, PARALLEL = _ngl_was, _par_was
+
+    print("\n[6] THE AXIS AND THE PROGRESS BLOCK ARE CARRIED, AND SUFFICIENCY CHECKS THEM")
+    text = open(os.path.join(HERE, "levels", "zork_02_long_crawl.txt")).read()
+    run = Z.play(text, ["north", "take brasskey", "south", "east", "north", "east"])
+    rec = dict(run, level_text=text, level_digest=level_digest(
+        os.path.join(HERE, "levels", "zork_02_long_crawl.txt")))
+    ok, detail = sufficiency_check(rec)
+    ck("a record carrying the axis reproduces its own score", ok, True)
+    ck("...and the check says the axis was MEASURED, not skipped", detail["axis_measured"], True)
+    ck("...comparing all three axis fields", detail["axis_fields_compared"], list(AXIS_FIELDS))
+    ck("...and the replay route now names WHICH take it read", "REQUIRED ITEM" in detail["replay_basis"], True)
+    bad_axis = json.loads(json.dumps(rec))
+    bad_axis["attribution"]["accepted"] += 1
+    ck("A TAMPERED ATTRIBUTION TOTAL IS CAUGHT BY SUFFICIENCY", sufficiency_check(bad_axis)[0], False)
+    bad_row = json.loads(json.dumps(rec))
+    bad_row["trace"][1]["attribution"] = Z.ATTR_UNATTRIBUTABLE
+    ck("...and so is a tampered PER-ROW attribution", sufficiency_check(bad_row)[0], False)
+    old = {k: v for k, v in rec.items() if k not in AXIS_FIELDS}
+    ok_old, detail_old = sufficiency_check(old)
+    ck("a record with NO axis is reported as axis_measured: false", detail_old["axis_measured"], False)
+    ck("...and is not failed for a field it was never asked to carry", ok_old, True)
+
+    print("\n[7] THE REPLAY FALSE ALARM -- two records cried instrument-failure and the record was fine")
+    # THE DISTRACTOR CASE IS THE ONE THAT BROKE. An entrant that takes the torch before the key gets two
+    # different `took_item_at_step` readings, and the OLD call -- with no required item -- filed the
+    # record as unreproducible. The record is reproduced here in both directions.
+    torch_first = Z.play(text, ["take torch", "north", "take brasskey", "south", "east", "north", "east"])
+    rec_tf = dict(torch_first, level_text=text)
+    ck("the torch-first crawl takes the required item at step 2", rec_tf["took_item_at_step"], 2)
+    ok_tf, det_tf = sufficiency_check(rec_tf)
+    ck("...and its record REPRODUCES -- no false instrument failure", ok_tf, True)
+    ck("...with the replay reading the REQUIRED take", det_tf["simulator_replay_mismatched"], [])
+    ck("THE OLD CALL WOULD HAVE MISMATCHED, and this asserts it so the fix is not invisible",
+       Z.replay(rec_tf["trace"], rec_tf["start_room"])["took_item_at_step"], 0)
+    ck("...while the fixed call returns what the field claims",
+       Z.replay(rec_tf["trace"], rec_tf["start_room"], required_item="brasskey")["took_item_at_step"], 2)
 
     print("\n" + "=" * 100)
     print(f"{'ALL CONTROLS PASS' if not fails else str(len(fails)) + ' FAILED'}   --  "

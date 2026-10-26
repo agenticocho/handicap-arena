@@ -1,0 +1,1663 @@
+{
+ "A": [
+  {
+   "check": "zork_01_the_floor: the walker derives a plan from the graph",
+   "got": true,
+   "want": true,
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: it FINISHES",
+   "got": [
+    true,
+    "escaped"
+   ],
+   "want": [
+    true,
+    "escaped"
+   ],
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: it carries the required item",
+   "got": true,
+   "want": true,
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: zero commands were rejected",
+   "got": 0,
+   "want": 0,
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: zero commands were unattributable",
+   "got": 0,
+   "want": 0,
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: every command it typed was ACCEPTED",
+   "got": 2,
+   "want": 2,
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: it ends on the gate, so the graph distance is zero",
+   "got": 0,
+   "want": 0,
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: it moved exactly one object -- the required one",
+   "got": 1,
+   "want": 1,
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: the derived route == the documented solution, up to the alias",
+   "got": [
+    "take key",
+    "north"
+   ],
+   "want": [
+    "take key",
+    "north"
+   ],
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: the counters agree with the attribution on this run too",
+   "got": true,
+   "want": true,
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: the walker derives a plan from the graph",
+   "got": true,
+   "want": true,
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: it FINISHES",
+   "got": [
+    true,
+    "escaped"
+   ],
+   "want": [
+    true,
+    "escaped"
+   ],
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: it carries the required item",
+   "got": true,
+   "want": true,
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: zero commands were rejected",
+   "got": 0,
+   "want": 0,
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: zero commands were unattributable",
+   "got": 0,
+   "want": 0,
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: every command it typed was ACCEPTED",
+   "got": 6,
+   "want": 6,
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: it ends on the gate, so the graph distance is zero",
+   "got": 0,
+   "want": 0,
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: it moved exactly one object -- the required one",
+   "got": 1,
+   "want": 1,
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: the derived route == the documented solution, up to the alias",
+   "got": [
+    "north",
+    "take key",
+    "south",
+    "east",
+    "north",
+    "east"
+   ],
+   "want": [
+    "north",
+    "take key",
+    "south",
+    "east",
+    "north",
+    "east"
+   ],
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: the counters agree with the attribution on this run too",
+   "got": true,
+   "want": true,
+   "pass": true
+  }
+ ],
+ "B": [
+  {
+   "check": "the walker WITHOUT the take reaches the gate and is LOCKED",
+   "got": "gate_locked",
+   "want": "gate_locked",
+   "pass": true
+  },
+  {
+   "check": "...and does not finish",
+   "got": false,
+   "want": false,
+   "pass": true
+  },
+  {
+   "check": "...and moved NO object",
+   "got": 0,
+   "want": 0,
+   "pass": true
+  },
+  {
+   "check": "the walker with its LAST move cut off does not finish",
+   "got": [
+    false,
+    "out_of_commands"
+   ],
+   "want": [
+    false,
+    "out_of_commands"
+   ],
+   "pass": true
+  },
+  {
+   "check": "...and is one room short of the gate",
+   "got": 1,
+   "want": 1,
+   "pass": true
+  },
+  {
+   "check": "the walker walking its route BACKWARDS does not finish",
+   "got": false,
+   "want": false,
+   "pass": true
+  },
+  {
+   "check": "a world whose gate is unreachable is REFUSED, not silently played",
+   "got": "ValueError",
+   "want": "ValueError",
+   "pass": true
+  }
+ ],
+ "C": [
+  {
+   "check": "the generator emitted 200 commands",
+   "got": 200,
+   "want": 200,
+   "pass": true
+  },
+  {
+   "check": "EVERY one of them is outside this world's vocabulary -- the generator's own control",
+   "got": 200,
+   "want": 200,
+   "pass": true
+  },
+  {
+   "check": "the excluded `I ...` sentence IS read as a command by this world, which is why it is excluded",
+   "got": [
+    "accepted",
+    "inventory"
+   ],
+   "want": [
+    "accepted",
+    "inventory"
+   ],
+   "pass": true
+  },
+  {
+   "check": "...so a non-parser built on it would be measuring the synonym list, not the language",
+   "got": 0,
+   "want": 0,
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: ZERO accepted commands",
+   "got": 0,
+   "want": 0,
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: every command is UNATTRIBUTABLE",
+   "got": 200,
+   "want": 200,
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: the frozen counter says `unparsed == 200` too",
+   "got": 200,
+   "want": 200,
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: it did not finish",
+   "got": false,
+   "want": false,
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: THE WORLD DID NOT MOVE -- same room",
+   "got": "hall",
+   "want": "hall",
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: ...same inventory",
+   "got": [],
+   "want": [],
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: ...zero objects moved",
+   "got": 0,
+   "want": 0,
+   "pass": true
+  },
+  {
+   "check": "zork_01_the_floor: ...and the distance to the gate never changed",
+   "got": 0.0,
+   "want": 0.0,
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: ZERO accepted commands",
+   "got": 0,
+   "want": 0,
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: every command is UNATTRIBUTABLE",
+   "got": 200,
+   "want": 200,
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: the frozen counter says `unparsed == 200` too",
+   "got": 200,
+   "want": 200,
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: it did not finish",
+   "got": false,
+   "want": false,
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: THE WORLD DID NOT MOVE -- same room",
+   "got": "hall",
+   "want": "hall",
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: ...same inventory",
+   "got": [],
+   "want": [],
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: ...zero objects moved",
+   "got": 0,
+   "want": 0,
+   "pass": true
+  },
+  {
+   "check": "zork_02_long_crawl: ...and the distance to the gate never changed",
+   "got": 0.0,
+   "want": 0.0,
+   "pass": true
+  }
+ ],
+ "D": [
+  {
+   "check": "the stream is one command longer",
+   "got": 201,
+   "want": 201,
+   "pass": true
+  },
+  {
+   "check": "EXACTLY ONE command is accepted",
+   "got": 1,
+   "want": 1,
+   "pass": true
+  },
+  {
+   "check": "...and it is the one that was injected",
+   "got": "north",
+   "want": "north",
+   "pass": true
+  },
+  {
+   "check": "...which is the only row whose attribution is not UNATTRIBUTABLE",
+   "got": [
+    100
+   ],
+   "want": [
+    100
+   ],
+   "pass": true
+  },
+  {
+   "check": "...and the world moved by that one command",
+   "got": "cellar",
+   "want": "cellar",
+   "pass": true
+  },
+  {
+   "check": "...so `accepted == 0` above was not a counter stuck at zero",
+   "got": true,
+   "want": true,
+   "pass": true
+  },
+  {
+   "check": "five looks are five accepted commands that move nothing",
+   "got": [
+    5,
+    "hall"
+   ],
+   "want": [
+    5,
+    "hall"
+   ],
+   "pass": true
+  }
+ ],
+ "E": [
+  {
+   "check": "'Look.'                                          -> accepted/acted",
+   "got": [
+    "accepted",
+    "acted"
+   ],
+   "want": [
+    "accepted",
+    "acted"
+   ],
+   "pass": true
+  },
+  {
+   "check": "'Take the key.'                                  -> accepted/acted",
+   "got": [
+    "accepted",
+    "acted"
+   ],
+   "want": [
+    "accepted",
+    "acted"
+   ],
+   "pass": true
+  },
+  {
+   "check": "'North.'                                         -> accepted/acted",
+   "got": [
+    "accepted",
+    "acted"
+   ],
+   "want": [
+    "accepted",
+    "acted"
+   ],
+   "pass": true
+  },
+  {
+   "check": "'take metal'                                     -> rejected/unknown_object",
+   "got": [
+    "rejected",
+    "unknown_object"
+   ],
+   "want": [
+    "rejected",
+    "unknown_object"
+   ],
+   "pass": true
+  },
+  {
+   "check": "'Try moving in a direction to explore further.'  -> UNATTRIBUTABLE/no_verb",
+   "got": [
+    "UNATTRIBUTABLE",
+    "no_verb"
+   ],
+   "want": [
+    "UNATTRIBUTABLE",
+    "no_verb"
+   ],
+   "pass": true
+  },
+  {
+   "check": "'Inspect the torch.'                             -> accepted/acted",
+   "got": [
+    "accepted",
+    "acted"
+   ],
+   "want": [
+    "accepted",
+    "acted"
+   ],
+   "pass": true
+  },
+  {
+   "check": "'I will take the key'                            -> accepted/acted",
+   "got": [
+    "accepted",
+    "acted"
+   ],
+   "want": [
+    "accepted",
+    "acted"
+   ],
+   "pass": true
+  },
+  {
+   "check": "'I am not sure what to do next.'                 -> accepted/acted",
+   "got": [
+    "accepted",
+    "acted"
+   ],
+   "want": [
+    "accepted",
+    "acted"
+   ],
+   "pass": true
+  },
+  {
+   "check": "'take the key and walk north'                    -> rejected/unknown_object",
+   "got": [
+    "rejected",
+    "unknown_object"
+   ],
+   "want": [
+    "rejected",
+    "unknown_object"
+   ],
+   "pass": true
+  },
+  {
+   "check": "'> Open brasskey.'                               -> rejected/nothing_to_open",
+   "got": [
+    "rejected",
+    "nothing_to_open"
+   ],
+   "want": [
+    "rejected",
+    "nothing_to_open"
+   ],
+   "pass": true
+  },
+  {
+   "check": "'take unicorn'                                   -> rejected/unknown_object",
+   "got": [
+    "rejected",
+    "unknown_object"
+   ],
+   "want": [
+    "rejected",
+    "unknown_object"
+   ],
+   "pass": true
+  },
+  {
+   "check": "'north pole'                                     -> accepted/acted",
+   "got": [
+    "accepted",
+    "acted"
+   ],
+   "want": [
+    "accepted",
+    "acted"
+   ],
+   "pass": true
+  },
+  {
+   "check": "'go sideways'                                    -> rejected/unknown_direction",
+   "got": [
+    "rejected",
+    "unknown_direction"
+   ],
+   "want": [
+    "rejected",
+    "unknown_direction"
+   ],
+   "pass": true
+  },
+  {
+   "check": "'north'                                          -> rejected/gate_locked",
+   "got": [
+    "rejected",
+    "gate_locked"
+   ],
+   "want": [
+    "rejected",
+    "gate_locked"
+   ],
+   "pass": true
+  }
+ ],
+ "F": [
+  {
+   "check": "eight recorded rows were found",
+   "got": 8,
+   "want": 8,
+   "pass": true
+  },
+  {
+   "check": "MiMo-V2.6-Distill-Qwen-9B-Q4_K_M / zork_01_the_floor: the FROZEN counters are reproduced exactly",
+   "got": {
+    "parsed": 6,
+    "unparsed": 0,
+    "recognised-but-impossible": 10
+   },
+   "want": {
+    "parsed": 6,
+    "unparsed": 0,
+    "recognised-but-impossible": 10
+   },
+   "pass": true
+  },
+  {
+   "check": "MiMo-V2.6-Distill-Qwen-9B-Q4_K_M / zork_01_the_floor: the per-row attribution sums back to them",
+   "got": true,
+   "want": true,
+   "pass": true
+  },
+  {
+   "check": "MiMo-V2.6-Distill-Qwen-9B-Q4_K_M / zork_01_the_floor: the score is reproduced",
+   "got": [
+    true,
+    "escaped"
+   ],
+   "want": [
+    true,
+    "escaped"
+   ],
+   "pass": true
+  },
+  {
+   "check": "MiMo-V2.6-Distill-Qwen-9B-Q4_K_M / zork_02_long_crawl: the FROZEN counters are reproduced exactly",
+   "got": {
+    "parsed": 9,
+    "unparsed": 0,
+    "recognised-but-impossible": 11
+   },
+   "want": {
+    "parsed": 9,
+    "unparsed": 0,
+    "recognised-but-impossible": 11
+   },
+   "pass": true
+  },
+  {
+   "check": "MiMo-V2.6-Distill-Qwen-9B-Q4_K_M / zork_02_long_crawl: the per-row attribution sums back to them",
+   "got": true,
+   "want": true,
+   "pass": true
+  },
+  {
+   "check": "MiMo-V2.6-Distill-Qwen-9B-Q4_K_M / zork_02_long_crawl: the score is reproduced",
+   "got": [
+    false,
+    "out_of_commands"
+   ],
+   "want": [
+    false,
+    "out_of_commands"
+   ],
+   "pass": true
+  },
+  {
+   "check": "Ministral-3-3B-Instruct-2512-UD-Q4_K_XL / zork_01_the_floor: the FROZEN counters are reproduced exactly",
+   "got": {
+    "parsed": 3,
+    "unparsed": 0,
+    "recognised-but-impossible": 2
+   },
+   "want": {
+    "parsed": 3,
+    "unparsed": 0,
+    "recognised-but-impossible": 2
+   },
+   "pass": true
+  },
+  {
+   "check": "Ministral-3-3B-Instruct-2512-UD-Q4_K_XL / zork_01_the_floor: the per-row attribution sums back to them",
+   "got": true,
+   "want": true,
+   "pass": true
+  },
+  {
+   "check": "Ministral-3-3B-Instruct-2512-UD-Q4_K_XL / zork_01_the_floor: the score is reproduced",
+   "got": [
+    true,
+    "escaped"
+   ],
+   "want": [
+    true,
+    "escaped"
+   ],
+   "pass": true
+  },
+  {
+   "check": "Ministral-3-3B-Instruct-2512-UD-Q4_K_XL / zork_02_long_crawl: the FROZEN counters are reproduced exactly",
+   "got": {
+    "parsed": 12,
+    "unparsed": 3,
+    "recognised-but-impossible": 5
+   },
+   "want": {
+    "parsed": 12,
+    "unparsed": 3,
+    "recognised-but-impossible": 5
+   },
+   "pass": true
+  },
+  {
+   "check": "Ministral-3-3B-Instruct-2512-UD-Q4_K_XL / zork_02_long_crawl: the per-row attribution sums back to them",
+   "got": true,
+   "want": true,
+   "pass": true
+  },
+  {
+   "check": "Ministral-3-3B-Instruct-2512-UD-Q4_K_XL / zork_02_long_crawl: the score is reproduced",
+   "got": [
+    false,
+    "out_of_commands"
+   ],
+   "want": [
+    false,
+    "out_of_commands"
+   ],
+   "pass": true
+  },
+  {
+   "check": "Ornith-1.5-9B-Q4_K_M / zork_01_the_floor: the FROZEN counters are reproduced exactly",
+   "got": {
+    "parsed": 2,
+    "unparsed": 0,
+    "recognised-but-impossible": 2
+   },
+   "want": {
+    "parsed": 2,
+    "unparsed": 0,
+    "recognised-but-impossible": 2
+   },
+   "pass": true
+  },
+  {
+   "check": "Ornith-1.5-9B-Q4_K_M / zork_01_the_floor: the per-row attribution sums back to them",
+   "got": true,
+   "want": true,
+   "pass": true
+  },
+  {
+   "check": "Ornith-1.5-9B-Q4_K_M / zork_01_the_floor: the score is reproduced",
+   "got": [
+    true,
+    "escaped"
+   ],
+   "want": [
+    true,
+    "escaped"
+   ],
+   "pass": true
+  },
+  {
+   "check": "Ornith-1.5-9B-Q4_K_M / zork_02_long_crawl: the FROZEN counters are reproduced exactly",
+   "got": {
+    "parsed": 7,
+    "unparsed": 0,
+    "recognised-but-impossible": 0
+   },
+   "want": {
+    "parsed": 7,
+    "unparsed": 0,
+    "recognised-but-impossible": 0
+   },
+   "pass": true
+  },
+  {
+   "check": "Ornith-1.5-9B-Q4_K_M / zork_02_long_crawl: the per-row attribution sums back to them",
+   "got": true,
+   "want": true,
+   "pass": true
+  },
+  {
+   "check": "Ornith-1.5-9B-Q4_K_M / zork_02_long_crawl: the score is reproduced",
+   "got": [
+    true,
+    "escaped"
+   ],
+   "want": [
+    true,
+    "escaped"
+   ],
+   "pass": true
+  },
+  {
+   "check": "Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0 / zork_01_the_floor: the FROZEN counters are reproduced exactly",
+   "got": {
+    "parsed": 3,
+    "unparsed": 0,
+    "recognised-but-impossible": 0
+   },
+   "want": {
+    "parsed": 3,
+    "unparsed": 0,
+    "recognised-but-impossible": 0
+   },
+   "pass": true
+  },
+  {
+   "check": "Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0 / zork_01_the_floor: the per-row attribution sums back to them",
+   "got": true,
+   "want": true,
+   "pass": true
+  },
+  {
+   "check": "Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0 / zork_01_the_floor: the score is reproduced",
+   "got": [
+    true,
+    "escaped"
+   ],
+   "want": [
+    true,
+    "escaped"
+   ],
+   "pass": true
+  },
+  {
+   "check": "Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0 / zork_02_long_crawl: the FROZEN counters are reproduced exactly",
+   "got": {
+    "parsed": 14,
+    "unparsed": 1,
+    "recognised-but-impossible": 3
+   },
+   "want": {
+    "parsed": 14,
+    "unparsed": 1,
+    "recognised-but-impossible": 3
+   },
+   "pass": true
+  },
+  {
+   "check": "Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0 / zork_02_long_crawl: the per-row attribution sums back to them",
+   "got": true,
+   "want": true,
+   "pass": true
+  },
+  {
+   "check": "Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0 / zork_02_long_crawl: the score is reproduced",
+   "got": [
+    false,
+    "gate_locked"
+   ],
+   "want": [
+    false,
+    "gate_locked"
+   ],
+   "pass": true
+  }
+ ],
+ "archive": [
+  {
+   "record": "ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_01_the_floor.json",
+   "record_sha256": "3f660454a52843aa",
+   "entrant": "MiMo-V2.6-Distill-Qwen-9B-Q4_K_M",
+   "level": "zork_01_the_floor",
+   "recorded_counts": {
+    "parsed": 6,
+    "unparsed": 0,
+    "recognised-but-impossible": 10
+   },
+   "recomputed_counts": {
+    "parsed": 6,
+    "unparsed": 0,
+    "recognised-but-impossible": 10
+   },
+   "counts_reproduced": true,
+   "accepted": 6,
+   "rejected": 10,
+   "rejected_by_reason": {
+    "already_carrying": 10
+   },
+   "unattributable": 0,
+   "old_unreadable": 0,
+   "sufficiency_ok_as_recorded": true,
+   "sufficiency_mismatched": [],
+   "progress": {
+    "score": {
+     "finished": true,
+     "ending": "escaped",
+     "carried_required_item": true,
+     "took_item_at_step": 0
+    },
+    "rooms": {
+     "total_in_world": 2,
+     "reachable_from_start": 2,
+     "exits_in_world": 2,
+     "visited": 2,
+     "visited_fraction_of_reachable": 1.0,
+     "route": [
+      "hall",
+      "vault"
+     ],
+     "revisited": 15
+    },
+    "objects": {
+     "total_in_world": 1,
+     "moved_from_start_placement": 1,
+     "in_hand": [
+      "key"
+     ],
+     "placement": {
+      "key": null
+     },
+     "required_item_start_room": "hall",
+     "required_item_placement_now": null,
+     "required_item_moved": true
+    },
+    "bearing": {
+     "gate_room": "vault",
+     "distance_start_to_gate": 1,
+     "distance_final_room_to_gate": 0,
+     "closest_gate_distance_reached": 0,
+     "fraction_of_the_way_along_the_graph": 1.0,
+     "distance_trail": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0
+     ],
+     "monotone_toward_gate": true
+    }
+   },
+   "unattributable_commands": [],
+   "rejected_commands": [
+    {
+     "command": "take key",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take key",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take key",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take key",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take key",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take key",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take key",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take key",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take key",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take key",
+     "reason": "already_carrying"
+    }
+   ]
+  },
+  {
+   "record": "ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_02_long_crawl.json",
+   "record_sha256": "4f26f6cf6c8f36bb",
+   "entrant": "MiMo-V2.6-Distill-Qwen-9B-Q4_K_M",
+   "level": "zork_02_long_crawl",
+   "recorded_counts": {
+    "parsed": 9,
+    "unparsed": 0,
+    "recognised-but-impossible": 11
+   },
+   "recomputed_counts": {
+    "parsed": 9,
+    "unparsed": 0,
+    "recognised-but-impossible": 11
+   },
+   "counts_reproduced": true,
+   "accepted": 9,
+   "rejected": 11,
+   "rejected_by_reason": {
+    "already_carrying": 10,
+    "no_exit": 1
+   },
+   "unattributable": 0,
+   "old_unreadable": 0,
+   "sufficiency_ok_as_recorded": false,
+   "sufficiency_mismatched": [
+    "took_item_at_step"
+   ],
+   "progress": {
+    "score": {
+     "finished": false,
+     "ending": "out_of_commands",
+     "carried_required_item": true,
+     "took_item_at_step": 17
+    },
+    "rooms": {
+     "total_in_world": 5,
+     "reachable_from_start": 5,
+     "exits_in_world": 8,
+     "visited": 2,
+     "visited_fraction_of_reachable": 0.4,
+     "route": [
+      "hall",
+      "cellar"
+     ],
+     "revisited": 19
+    },
+    "objects": {
+     "total_in_world": 2,
+     "moved_from_start_placement": 2,
+     "in_hand": [
+      "torch",
+      "brasskey"
+     ],
+     "placement": {
+      "brasskey": null,
+      "torch": null
+     },
+     "required_item_start_room": "cellar",
+     "required_item_placement_now": null,
+     "required_item_moved": true
+    },
+    "bearing": {
+     "gate_room": "vault",
+     "distance_start_to_gate": 3,
+     "distance_final_room_to_gate": 4,
+     "closest_gate_distance_reached": 3,
+     "fraction_of_the_way_along_the_graph": 0.0,
+     "distance_trail": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+     ],
+     "monotone_toward_gate": false
+    }
+   },
+   "unattributable_commands": [],
+   "rejected_commands": [
+    {
+     "command": "take torch",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take torch",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take torch",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take torch",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take torch",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take torch",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take torch",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take torch",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "north",
+     "reason": "no_exit"
+    },
+    {
+     "command": "take brasskey",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take brasskey",
+     "reason": "already_carrying"
+    }
+   ]
+  },
+  {
+   "record": "ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_01_the_floor.json",
+   "record_sha256": "7e57408fe63fd5ad",
+   "entrant": "Ministral-3-3B-Instruct-2512-UD-Q4_K_XL",
+   "level": "zork_01_the_floor",
+   "recorded_counts": {
+    "parsed": 3,
+    "unparsed": 0,
+    "recognised-but-impossible": 2
+   },
+   "recomputed_counts": {
+    "parsed": 3,
+    "unparsed": 0,
+    "recognised-but-impossible": 2
+   },
+   "counts_reproduced": true,
+   "accepted": 3,
+   "rejected": 2,
+   "rejected_by_reason": {
+    "already_carrying": 2
+   },
+   "unattributable": 0,
+   "old_unreadable": 0,
+   "sufficiency_ok_as_recorded": true,
+   "sufficiency_mismatched": [],
+   "progress": {
+    "score": {
+     "finished": true,
+     "ending": "escaped",
+     "carried_required_item": true,
+     "took_item_at_step": 1
+    },
+    "rooms": {
+     "total_in_world": 2,
+     "reachable_from_start": 2,
+     "exits_in_world": 2,
+     "visited": 2,
+     "visited_fraction_of_reachable": 1.0,
+     "route": [
+      "hall",
+      "vault"
+     ],
+     "revisited": 4
+    },
+    "objects": {
+     "total_in_world": 1,
+     "moved_from_start_placement": 1,
+     "in_hand": [
+      "key"
+     ],
+     "placement": {
+      "key": null
+     },
+     "required_item_start_room": "hall",
+     "required_item_placement_now": null,
+     "required_item_moved": true
+    },
+    "bearing": {
+     "gate_room": "vault",
+     "distance_start_to_gate": 1,
+     "distance_final_room_to_gate": 0,
+     "closest_gate_distance_reached": 0,
+     "fraction_of_the_way_along_the_graph": 1.0,
+     "distance_trail": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      0
+     ],
+     "monotone_toward_gate": true
+    }
+   },
+   "unattributable_commands": [],
+   "rejected_commands": [
+    {
+     "command": "Take the key.",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "Take the key.",
+     "reason": "already_carrying"
+    }
+   ]
+  },
+  {
+   "record": "ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_02_long_crawl.json",
+   "record_sha256": "df3ef57991986620",
+   "entrant": "Ministral-3-3B-Instruct-2512-UD-Q4_K_XL",
+   "level": "zork_02_long_crawl",
+   "recorded_counts": {
+    "parsed": 12,
+    "unparsed": 3,
+    "recognised-but-impossible": 5
+   },
+   "recomputed_counts": {
+    "parsed": 12,
+    "unparsed": 3,
+    "recognised-but-impossible": 5
+   },
+   "counts_reproduced": true,
+   "accepted": 12,
+   "rejected": 5,
+   "rejected_by_reason": {
+    "already_carrying": 3,
+    "nothing_to_open": 2
+   },
+   "unattributable": 3,
+   "old_unreadable": 3,
+   "sufficiency_ok_as_recorded": false,
+   "sufficiency_mismatched": [
+    "took_item_at_step"
+   ],
+   "progress": {
+    "score": {
+     "finished": false,
+     "ending": "out_of_commands",
+     "carried_required_item": true,
+     "took_item_at_step": 10
+    },
+    "rooms": {
+     "total_in_world": 5,
+     "reachable_from_start": 5,
+     "exits_in_world": 8,
+     "visited": 3,
+     "visited_fraction_of_reachable": 0.6,
+     "route": [
+      "hall",
+      "cellar",
+      "corridor"
+     ],
+     "revisited": 18
+    },
+    "objects": {
+     "total_in_world": 2,
+     "moved_from_start_placement": 2,
+     "in_hand": [
+      "torch",
+      "brasskey"
+     ],
+     "placement": {
+      "brasskey": null,
+      "torch": null
+     },
+     "required_item_start_room": "cellar",
+     "required_item_placement_now": null,
+     "required_item_moved": true
+    },
+    "bearing": {
+     "gate_room": "vault",
+     "distance_start_to_gate": 3,
+     "distance_final_room_to_gate": 4,
+     "closest_gate_distance_reached": 2,
+     "fraction_of_the_way_along_the_graph": 0.3333,
+     "distance_trail": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      3,
+      2,
+      2,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4
+     ],
+     "monotone_toward_gate": false
+    }
+   },
+   "unattributable_commands": [
+    "Try moving in a direction to explore further.",
+    "Try moving in a direction to explore further.",
+    "Try moving in the east direction."
+   ],
+   "rejected_commands": [
+    {
+     "command": "Take torch.",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "Take the torch.",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "Take the torch.",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "> Open brasskey.",
+     "reason": "nothing_to_open"
+    },
+    {
+     "command": "> Use torch.",
+     "reason": "nothing_to_open"
+    }
+   ]
+  },
+  {
+   "record": "ZORK_Ornith-1.5-9B-Q4_K_M_zork_01_the_floor.json",
+   "record_sha256": "24841df4d193ea58",
+   "entrant": "Ornith-1.5-9B-Q4_K_M",
+   "level": "zork_01_the_floor",
+   "recorded_counts": {
+    "parsed": 2,
+    "unparsed": 0,
+    "recognised-but-impossible": 2
+   },
+   "recomputed_counts": {
+    "parsed": 2,
+    "unparsed": 0,
+    "recognised-but-impossible": 2
+   },
+   "counts_reproduced": true,
+   "accepted": 2,
+   "rejected": 2,
+   "rejected_by_reason": {
+    "already_carrying": 2
+   },
+   "unattributable": 0,
+   "old_unreadable": 0,
+   "sufficiency_ok_as_recorded": true,
+   "sufficiency_mismatched": [],
+   "progress": {
+    "score": {
+     "finished": true,
+     "ending": "escaped",
+     "carried_required_item": true,
+     "took_item_at_step": 0
+    },
+    "rooms": {
+     "total_in_world": 2,
+     "reachable_from_start": 2,
+     "exits_in_world": 2,
+     "visited": 2,
+     "visited_fraction_of_reachable": 1.0,
+     "route": [
+      "hall",
+      "vault"
+     ],
+     "revisited": 3
+    },
+    "objects": {
+     "total_in_world": 1,
+     "moved_from_start_placement": 1,
+     "in_hand": [
+      "key"
+     ],
+     "placement": {
+      "key": null
+     },
+     "required_item_start_room": "hall",
+     "required_item_placement_now": null,
+     "required_item_moved": true
+    },
+    "bearing": {
+     "gate_room": "vault",
+     "distance_start_to_gate": 1,
+     "distance_final_room_to_gate": 0,
+     "closest_gate_distance_reached": 0,
+     "fraction_of_the_way_along_the_graph": 1.0,
+     "distance_trail": [
+      1,
+      1,
+      1,
+      1,
+      0
+     ],
+     "monotone_toward_gate": true
+    }
+   },
+   "unattributable_commands": [],
+   "rejected_commands": [
+    {
+     "command": "take key",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take key",
+     "reason": "already_carrying"
+    }
+   ]
+  },
+  {
+   "record": "ZORK_Ornith-1.5-9B-Q4_K_M_zork_02_long_crawl.json",
+   "record_sha256": "60d06b325250d4c9",
+   "entrant": "Ornith-1.5-9B-Q4_K_M",
+   "level": "zork_02_long_crawl",
+   "recorded_counts": {
+    "parsed": 7,
+    "unparsed": 0,
+    "recognised-but-impossible": 0
+   },
+   "recomputed_counts": {
+    "parsed": 7,
+    "unparsed": 0,
+    "recognised-but-impossible": 0
+   },
+   "counts_reproduced": true,
+   "accepted": 7,
+   "rejected": 0,
+   "rejected_by_reason": {},
+   "unattributable": 0,
+   "old_unreadable": 0,
+   "sufficiency_ok_as_recorded": true,
+   "sufficiency_mismatched": [],
+   "progress": {
+    "score": {
+     "finished": true,
+     "ending": "escaped",
+     "carried_required_item": true,
+     "took_item_at_step": 1
+    },
+    "rooms": {
+     "total_in_world": 5,
+     "reachable_from_start": 5,
+     "exits_in_world": 8,
+     "visited": 5,
+     "visited_fraction_of_reachable": 1.0,
+     "route": [
+      "hall",
+      "cellar",
+      "corridor",
+      "study",
+      "vault"
+     ],
+     "revisited": 3
+    },
+    "objects": {
+     "total_in_world": 2,
+     "moved_from_start_placement": 1,
+     "in_hand": [
+      "brasskey"
+     ],
+     "placement": {
+      "brasskey": null,
+      "torch": "hall"
+     },
+     "required_item_start_room": "cellar",
+     "required_item_placement_now": null,
+     "required_item_moved": true
+    },
+    "bearing": {
+     "gate_room": "vault",
+     "distance_start_to_gate": 3,
+     "distance_final_room_to_gate": 0,
+     "closest_gate_distance_reached": 0,
+     "fraction_of_the_way_along_the_graph": 1.0,
+     "distance_trail": [
+      3,
+      4,
+      4,
+      4,
+      3,
+      2,
+      1,
+      0
+     ],
+     "monotone_toward_gate": false
+    }
+   },
+   "unattributable_commands": [],
+   "rejected_commands": []
+  },
+  {
+   "record": "ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_01_the_floor.json",
+   "record_sha256": "7b5c27c5cd645746",
+   "entrant": "Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0",
+   "level": "zork_01_the_floor",
+   "recorded_counts": {
+    "parsed": 3,
+    "unparsed": 0,
+    "recognised-but-impossible": 0
+   },
+   "recomputed_counts": {
+    "parsed": 3,
+    "unparsed": 0,
+    "recognised-but-impossible": 0
+   },
+   "counts_reproduced": true,
+   "accepted": 3,
+   "rejected": 0,
+   "rejected_by_reason": {},
+   "unattributable": 0,
+   "old_unreadable": 0,
+   "sufficiency_ok_as_recorded": true,
+   "sufficiency_mismatched": [],
+   "progress": {
+    "score": {
+     "finished": true,
+     "ending": "escaped",
+     "carried_required_item": true,
+     "took_item_at_step": 1
+    },
+    "rooms": {
+     "total_in_world": 2,
+     "reachable_from_start": 2,
+     "exits_in_world": 2,
+     "visited": 2,
+     "visited_fraction_of_reachable": 1.0,
+     "route": [
+      "hall",
+      "vault"
+     ],
+     "revisited": 2
+    },
+    "objects": {
+     "total_in_world": 1,
+     "moved_from_start_placement": 1,
+     "in_hand": [
+      "key"
+     ],
+     "placement": {
+      "key": null
+     },
+     "required_item_start_room": "hall",
+     "required_item_placement_now": null,
+     "required_item_moved": true
+    },
+    "bearing": {
+     "gate_room": "vault",
+     "distance_start_to_gate": 1,
+     "distance_final_room_to_gate": 0,
+     "closest_gate_distance_reached": 0,
+     "fraction_of_the_way_along_the_graph": 1.0,
+     "distance_trail": [
+      1,
+      1,
+      1,
+      0
+     ],
+     "monotone_toward_gate": true
+    }
+   },
+   "unattributable_commands": [],
+   "rejected_commands": []
+  },
+  {
+   "record": "ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_02_long_crawl.json",
+   "record_sha256": "d466037a2b1a0093",
+   "entrant": "Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0",
+   "level": "zork_02_long_crawl",
+   "recorded_counts": {
+    "parsed": 14,
+    "unparsed": 1,
+    "recognised-but-impossible": 3
+   },
+   "recomputed_counts": {
+    "parsed": 14,
+    "unparsed": 1,
+    "recognised-but-impossible": 3
+   },
+   "counts_reproduced": true,
+   "accepted": 14,
+   "rejected": 4,
+   "rejected_by_reason": {
+    "unknown_object": 1,
+    "already_carrying": 2,
+    "gate_locked": 1
+   },
+   "unattributable": 0,
+   "old_unreadable": 1,
+   "sufficiency_ok_as_recorded": true,
+   "sufficiency_mismatched": [],
+   "progress": {
+    "score": {
+     "finished": false,
+     "ending": "gate_locked",
+     "carried_required_item": false,
+     "took_item_at_step": 5
+    },
+    "rooms": {
+     "total_in_world": 5,
+     "reachable_from_start": 5,
+     "exits_in_world": 8,
+     "visited": 5,
+     "visited_fraction_of_reachable": 1.0,
+     "route": [
+      "hall",
+      "corridor",
+      "cellar",
+      "study",
+      "vault"
+     ],
+     "revisited": 14
+    },
+    "objects": {
+     "total_in_world": 2,
+     "moved_from_start_placement": 1,
+     "in_hand": [
+      "torch"
+     ],
+     "placement": {
+      "brasskey": "cellar",
+      "torch": null
+     },
+     "required_item_start_room": "cellar",
+     "required_item_placement_now": "cellar",
+     "required_item_moved": false
+    },
+    "bearing": {
+     "gate_room": "vault",
+     "distance_start_to_gate": 3,
+     "distance_final_room_to_gate": 0,
+     "closest_gate_distance_reached": 0,
+     "fraction_of_the_way_along_the_graph": 1.0,
+     "distance_trail": [
+      3,
+      2,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      3,
+      3,
+      3,
+      3,
+      3,
+      2,
+      2,
+      2,
+      1,
+      0
+     ],
+     "monotone_toward_gate": false
+    }
+   },
+   "unattributable_commands": [],
+   "rejected_commands": [
+    {
+     "command": "take metal",
+     "reason": "unknown_object"
+    },
+    {
+     "command": "take torch",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "take torch",
+     "reason": "already_carrying"
+    },
+    {
+     "command": "e",
+     "reason": "gate_locked"
+    }
+   ]
+  }
+ ],
+ "summary": {
+  "total": 93,
+  "failed": [],
+  "pass": true,
+  "cpu_only": true,
+  "model_runs": 0
+ }
+}
