@@ -223,12 +223,31 @@ replay_verifier_sha256     1dc7a6cc9ad8fac4…        <- the second opinion
 measured_at_unix / _local  per row
 ```
 
-**Why both a commit and a digest.** The card's own measurement is the reason: the live driver was 64 146 B
-`dd25eb53…` while the peer measured 35 909 B `2d3da54d…` at `2bb33058` — and the commits-behind count has already
-moved from 301 (card) to **302** (re-derived here) because other agents commit to this tree while a worker runs.
-A commit names a tree that moves; **a digest names the bytes that produced the score.** Both travel, and the
-dirty list is restricted to the three driver-relevant files so that an unrelated agent's edit does not appear as
-a defect in this cabinet's row.
+**Why both a commit and a digest.** The card's own measurement is the reason, and re-deriving it turned up more
+than the card claims. **There are five copies of `sokoban_run.py` on this box, at five revisions**, all of them
+called "the driver":
+
+```
+74075 B  54514db6…   main, after this card                          <- what wrote the rows below
+64146 B  dd25eb53…   main at the base; and chair-link/artifacts/20261026T1617-drivers-live/
+58642 B  e3f20b3b…   cabinet/sokoban branch (290 commits behind main) and cabinet/snake
+35909 B  2d3da54d…   the card's copy: git cat-file 2bb33058:sokoban_run.py -- byte-identical
+12789 B  312b5e06…   cabinet/zork and cabinet/missile-command
+```
+
+So the card's "the peer measured 35 909 B `2d3da54d…` at `2bb33058`, 301 commits behind" is exact, and the
+smaller fact behind it is that **two sibling cabinets run a 12 789 B driver** and a third runs one 290 commits
+old. And the commits-behind count has already moved: **301 (card) → 302 (when the pre-registration was written)
+→ 311 (at landing)**, because other agents commit to this tree while a worker runs. A commit names a tree that
+moves under the measurement; **a digest names the bytes that produced the score.** Both travel, and
+`driver_git_dirty` is restricted to the driver, the simulator and the verifier so that an unrelated agent's edit
+does not appear as a defect in this cabinet's row.
+
+**This card does not re-port the change onto the four stale copies, and says so rather than implying otherwise.**
+`cabinet/sokoban` is 290 commits behind and carries a 58 642 B driver; moving a 74 075 B rewrite onto it is a
+re-port, not a cherry-pick, and it is not in this card. **Flagged for the Chair:** until those copies are either
+updated or pinned as deliberately frozen, a reader who runs "the sokoban driver" from a sibling cabinet is
+running an instrument from before this certification, and nothing on their row will say so.
 
 ---
 
@@ -283,6 +302,10 @@ Stated because a certification that lists only what it proves is the defect this
 6. **One mutation cannot be made to fire** (level 01's box), declared in the harness with the geometric reason.
 7. **No model was run.** No new entrant rows, no GPU, no lease: the certification is CPU-only code work, as the
    card requires.
+8. **The other four copies of this driver are outside this card's reach.** A row written by `cabinet/snake`,
+   `cabinet/zork`, `cabinet/missile-command` or from `2bb33058` will carry **no** certificate, and its `solved`
+   is the old assertion. Their honest fix is either a re-port or a declared freeze; §5 flags it rather than
+   leaving a reader to assume "the driver" is one file.
 
 ---
 
