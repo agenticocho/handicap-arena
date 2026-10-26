@@ -168,3 +168,143 @@ how the README/FORMAT divergence started.
    front end)*
 4. **v2** — Tier-2 certification pipeline (re-run queue on reference hardware).
 5. **v3** — sponsored bounty cards. **This is where the money actually is.**
+
+---
+
+## 10. RECORD PROVENANCE — measured at the event, or current state
+
+Every field of every record this project writes is exactly one of **two classes**. A field that is
+neither, or that is both, is a defect in the format and not a matter of taste.
+
+### The two classes
+
+- **MEASURED AT THE EVENT (`M`)** — true of the moment the row records. **Once the row is committed
+  the value is immutable.** Recomputing it is allowed only as a *check* against the committed value;
+  it is never an overwrite. A field recomputed to stay true can never be evidence, because it will
+  agree with the world no matter what the world did.
+
+  Two kinds inside `M`, and the kind decides what a reader may do with the number:
+  - **`M1` measurement** — a value observed while the event ran, or computed from what was observed
+    then. `trace`, `counts`, `simulator_digest`, `host`.
+  - **`M2` scope** — committed text saying what an `M1` field *means*: what bytes a digest digests,
+    which side of a denominator a count sits on, which readings are prose. `M2` is what makes `M1`
+    checkable; it is not itself a measurement.
+
+- **CURRENT STATE (`C`)** — a value that depends on something **outside the row's own bytes**: a file
+  on disk now, the live archive now, the instrument in use now. It changes without the event
+  changing. A `C` field is recomputable *by definition*, which is exactly why it cannot be evidence.
+
+### The naming rule — how a reader tells them apart without reading the rest of this section
+
+1. An **`M`** field carries a **bare name** (`simulator_digest`, `counts`, `trace`). A field naming an
+   artifact by digest MUST have a sibling `<name>_scope` of class `M2` saying what it digests.
+2. A **`C`** field MUST be named **`current_<thing>`** (`current_simulator_digest`). **No bare name
+   may be defined as recomputable, and no name beginning `current_` may be a measurement.** The name
+   is the whole contract: a reader who sees `simulator_digest` may rely on it being the instrument at
+   measurement, and a reader who sees `current_simulator_digest` may rely on it being a statement
+   about now that is not evidence about then.
+3. **A `C` field MUST NOT be written into a committed row.** Writing it changes the row's bytes and
+   therefore the digest of the very record it annotates — the annotation destroys its subject.
+   Current state lives in a sidecar beside the row (`<row>.json.provenance.json`, the convention
+   already in use under `suite2/runs/published_cpu/`) or is computed at read time. A row carrying its
+   own "current" value is stale from the second it is written.
+
+### Why this is not pedantry — two measured cases
+
+**One: the field that was suspected of being recomputed.** `simulator_digest` carries the scope text
+*"THE SIMULATOR IS THE INSTRUMENT THIS EVENT IS MEASURED WITH"*. A bare field under that sentence
+that is recomputed at read time is a `C` wearing an `M`'s name, and every row automatically claims the
+instrument that happens to be on disk. The naming rule makes that impossible to do silently; if a row
+must also express today's instrument it is `current_simulator_digest` in the sidecar, never a rewrite
+of the measured field.
+
+**Two: a control that reads the archive and calls it an invariant.** `zork_run.py`'s block [5] asserts
+over the **live** `probes/ZORK_*.json` that every row contradicts itself —
+`config.n_gpu_layers` says `0` against `server_argv -ngl 99` — and expects all eight to disagree. That
+is a **`C` assertion in an `M` assertion's clothing**: it is a claim about which files are in a
+directory right now, not about the instrument. Measured at `13b161a`: `0` of `8` rows contradict, so
+both controls go red and `--self-test` reads **62/64** — the control fails *because the writer was
+fixed*. A control of this shape must read a **fixture** whose bytes are committed (the sitting-2 rows
+under `suite3/preserved/` carry exactly the eight `('0','99')` pairs this control wants — measured),
+never the mutable archive.
+
+### Classification of every field in a Zork cell record
+
+Measured from the eight committed rows at `13b161a`: **65 top-level fields, 0 of them `C`.** The
+format has no current-state field today, so this rule is prospective — its job is to forbid the
+transformation and to fix the name for anything added later. Nested blocks are classified with the
+fields inside them.
+
+| field | class | why |
+|---|---|---|
+| `artifact_replaced` | `M1` | digest, byte count and mtime of the record that was at this path before — facts about bytes that existed at the event; `reason_given` inside it is operator prose and the block says so |
+| `attribution` | `M1` | per-command attribution totals counted at the event; re-derivable from `trace` as a check only |
+| `attribution_checked_against_counts` | `M1` | result of a check the driver ran at the event |
+| `attribution_is_the_scoreable_form` | `M2` | declaration about the format, not a measurement |
+| `attribution_of` | `M2` | scope text defining what `attribution` counts |
+| `attribution_reasons` | `M1` | reason-code counts counted at the event |
+| `attribution_reasons_text` | `M2` | the human strings for those codes |
+| `attribution_scope` | `M2` | scope text |
+| `budget_signature` | `M1` | derived from `turns[].gen_tokens` against the ceiling at the event |
+| `cap` | `M1` | the command cap the run was launched under — a parameter fixed at the event |
+| `carried_required_item` | `M1` | observed faculty flag |
+| `commands` | `M1` | counted at the event |
+| `commands_consumed` | `M1` | counted at the event |
+| `config` | `M1` | the config **as launched** (`server_argv`, `ctx`, `n_gpu_layers`, `parallel`, …) — read out of the argv at launch, immutable after |
+| `counts` | `M1` | the frozen counters; re-derivable from `trace` as a check only |
+| `criteria_read_by` | `M2` | states that the C1–C4 verdict is not the driver's to make |
+| `ended` | `M1` | observed |
+| `ending` | `M1` | observed |
+| `entrant` | `M2` | a LABEL for reading, not for checking — the row says so itself |
+| `entrant_digest` | `M1` | sha256 of the model file measured at the event |
+| `entrant_digest_scope` | `M2` | says what the digest digests |
+| `final_inventory` | `M1` | world state read at the end of the event |
+| `final_room` | `M1` | world state read at the end of the event |
+| `final_state` | `M1` | the text the entrant last saw at the end of the event |
+| `finished` | `M1` | observed |
+| `host` | `M1` | **the box at the event** (`platform`, `release`, `machine`, `cpus`, `python`) — not "what box is this now"; if it were recomputed at read time it would be `host` the `C` field and its name would be a lie |
+| `kind` | `M2` | declares `model` \| `code` — a parameter of the event |
+| `legend` | `M1` | which legend variant the run used |
+| `legend_digest` | `M1` | sha256 of the rendering function measured at the event |
+| `legend_digest_scope` | `M2` | says what the digest digests |
+| `level` | `M2` | level name label |
+| `level_digest` | `M1` | sha256 of the level file measured at the event |
+| `level_digest_scope` | `M2` | says what the digest digests |
+| `level_text` | `M1` | the level **as it was**, so the score is recomputable from the record alone |
+| `load_s` | `M1` | measured |
+| `loaded` | `M1` | observed |
+| `missing_values` | `M1` | A7 counter, counted at the event |
+| `missing_values_are_a_subset_of` | `M2` | states the relation to `unreadable` |
+| `never_started` | `M1` | A7 counter, outside the denominator |
+| `never_started_scope` | `M2` | states which side of the denominator it sits on |
+| `outcomes` | `M1` | counted at the event |
+| `progress` | `M1` | computed from the parsed world and its state **at the event**; re-derivable from `trace` as a check only |
+| `progress_field_source` | `M2` | declares a source for each `progress` leaf |
+| `progress_prose_only` | `M2` | names the readings that are prose and must not be counted |
+| `progress_scope` | `M2` | scope text |
+| `reading_note` | `M2` | note on how to read the driver's rule |
+| `reasoning_probe` | `M1` | observed completion fields; `inference_caveat`/`observed_is_an_inference` inside it are `M2` |
+| `required_item` | `M2` | the level's required item — a parameter of the event |
+| `rooms` | `M1` | world state at the event |
+| `rooms_visited` | `M1` | world state at the event |
+| `scoreable` | `M1` | verdict computed at the event from the row's own contents |
+| `scoreable_scope` | `M2` | states the condition under which it is true |
+| `simulator` | `M2` | the instrument's FILE NAME — a label; the digest is the identity |
+| `simulator_digest` | `M1` | **the instrument this event was measured with.** Never recomputed, never rewritten |
+| `simulator_digest_scope` | `M2` | says what the digest digests and that the instrument is pre-registered |
+| `start_room` | `M2` | the level's start room — a parameter |
+| `sufficiency` | `M1` | thirteen checks run at the event |
+| `sufficiency_ok` | `M1` | their result at the event |
+| `took_item_at_step` | `M1` | observed (nullable, and null means null — never a substituted zero) |
+| `trace` | `M1` | the per-command record: the core measurement |
+| `transcript_lines` | `M1` | counted at the event |
+| `turns` | `M1` | the raw entrant turns (`prompt`, `raw`, `answer_field`, `gen_tokens`, `secs`, `budget_hit`, `cap_cut`, `missing_value`) |
+| `unreadable` | `M1` | A7 counter, inside the denominator as a non-pass |
+| `unreadable_is_the_aggregate_of` | `M2` | states what it aggregates |
+| `unreadable_scope` | `M2` | states which side of the denominator it sits on |
+
+**Enforced, not declared:** `python3 check_provenance_classes.py --self-test` parses this table and
+fails if a committed row carries a field this table does not classify, if a row carries any field
+named `current_*`, or if a field is declared `C` under a bare name. Both directions are controlled by
+mutation.
+
