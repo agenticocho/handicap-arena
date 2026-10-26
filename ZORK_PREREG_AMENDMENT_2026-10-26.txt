@@ -1,0 +1,727 @@
+====================================================================================================
+ZORK — PREREG AMENDMENT Z1 : THE EVIDENCE FILE
+2026-10-26 · card t_0c7829a8 · companion to PREREG_zork.md, § AMENDMENT Z1
+====================================================================================================
+
+WHY THIS FILE EXISTS. The amendment in PREREG_zork.md cannot carry the digest of itself (writing it
+would change the bytes it digests), so the amendment is identified here by date, section and card, and
+the digest of the AMENDED file is recorded in SECTION 8 -- outside the text it identifies. Every other
+number in the amendment has its full transcript below, produced by the command quoted above it. Nothing
+below is retyped from the amendment; it is the output of the run that produced it.
+
+RULING AUTHORISING IT
+  governance/rulings/2026-10-26-the-certified-pairing-is-a-triple-and-a-freeze-does-not-outrank-a-
+  working-instrument.md    (Local Chair, 2026-10-26; R1 re-freeze by dated amendment; R3 the triple)
+
+THE VANTAGE THESE NUMBERS WERE TAKEN FROM
+  host      Linux 7.0.0-38-generic x86_64
+  python    Python 3.14.9 (main, Oct 21 2026, 17:48:02) [Clang 23.1.3 ]
+  git HEAD  13b161a589b655c10633824721fc404af655f4a8
+  date      2026-10-26T22:37:22Z (UTC)
+  cwd       /home/chilly1/workspace/ocho_arena
+  NOTE: no GPU lease was taken, no model was run, no port was touched, and no file under probes/,
+        levels/, suite/ or suite3/ was written by this card. The only write is PREREG_zork.md (append)
+        and this file.
+
+====================================================================================================
+SECTION 1 — THE TRIPLE, MEASURED
+====================================================================================================
+
+$ sha256sum zork_run.py zork.py          # the two members that are files on disk
+
+b26b2cfc42a0a91520e9e3b9753ad3871b8d79657628e986186c5f3de9948d19  zork_run.py
+b9701007d6e186d5f27dc0e359a9c834b76a28ef8aedc362acf1c85bb6022d21  zork.py
+$ git show fa2011f:PREREG_zork.md | sha256sum    # THE PREREG AS FROZEN -- the third member
+
+03b96c98bd39733b8ef64ec22e701efa3a330ad068b49c3efa9a57333f35a710  -
+  03b96c98… is the file BEFORE this amendment was appended; the amended file's own digest is in
+  SECTION 8. They are two different objects, and the triple names the first.
+
+$ wc -c zork_run.py zork.py
+
+ 81096 zork_run.py
+ 75338 zork.py
+156434 total
+
+WHICH COMMIT WROTE THE FROZEN BODY, so the digest above is anchored to a commit and not to a claim:
+
+$ git log --format='%h %ad %s' --date=short -- PREREG_zork.md
+fa2011f 2026-10-09 ZORK / THE LONG CRAWL -- Ocho2's build, VERIFIED here rather than relayed
+
+  fa2011f is the commit that wrote the prereg and the only commit that ever touched it before this
+  amendment. 03b96c98… is therefore the digest of the plan as frozen and of nothing else.
+
+COMMIT SHAS NAMED IN THE AMENDMENT
+
+$ git rev-parse 4e0eb43 6c426e5 13b161a
+4e0eb4372bdc84ce97595495f7827da8708a48c2
+6c426e5844ac281c5c382db55b48724fdd8d6172
+13b161a589b655c10633824721fc404af655f4a8
+$ git merge-base --is-ancestor 6c426e5 HEAD && echo '6c426e5 is an ancestor of HEAD'
+6c426e5 is an ancestor of HEAD (exit 0)
+
+====================================================================================================
+SECTION 2 — THE SUPERSET PROOF (the condition on the amendment), FULL TRANSCRIPT
+====================================================================================================
+
+$ git show 4e0eb43:zork.py > F/zork.py && cd F && ln -s /home/chilly1/workspace/ocho_arena/levels .
+$ python3 zork.py --self-test          # the frozen simulator, run against the SAME levels/ tree
+
+ALL CONTROLS PASS   --  114/114
+
+  full transcript: 114 PASS lines, 0 FAIL lines, exit 0
+
+$ python3 zork.py --self-test          # the current simulator, same tree
+
+ALL CONTROLS PASS   --  175/175
+
+  full transcript: 175 PASS lines, 0 FAIL lines, exit 0
+
+$ git diff --stat 4e0eb43 HEAD -- levels/
+  (empty -- the world files did not change, so the two runs differ only in the simulator)
+
+$ python3 superset_proof.py            # extracts the 114 and the 175 names and differences them
+
+====================================================================================================
+NAME-LEVEL SUPERSET PROOF -- zork.py --self-test, 4e0eb43 (frozen) vs HEAD/b9701007
+====================================================================================================
+frozen  transcript: /tmp/frozen_selftest.txt   lines: 114  PASS: 114  FAIL: 0
+current transcript: /tmp/cur_selftest.txt   lines: 175  PASS: 175  FAIL: 0
+
+duplicate names, frozen:  0 []
+duplicate names, current: 0 []
+
+----------------------------------------------------------------------------------------------------
+THE FROZEN SET  (n=114 unique names)
+----------------------------------------------------------------------------------------------------
+   1  ...a different impossibility from `no_exit`
+   2  ...and by an abbreviation and an alias alone
+   3  ...and is unparsed, with a reason
+   4  ...and it is counted impossible, not unread
+   5  ...and it never took the item
+   6  ...and none of them is `recognised-but-impossible`
+   7  ...and not as progress
+   8  ...and only the readable one is `parsed`
+   9  ...and the ending does not change
+  10  ...and the entrant is still at the start with nothing
+  11  ...and the faculty flag is clear
+  12  ...and the faculty flag is set
+  13  ...and the hall, re-entered on the way back, is recorded once
+  14  ...and the item was taken at step 1
+  15  ...and the last row's inventory is the final inventory
+  16  ...and the log shows the empty inventory it arrived with
+  17  ...and the route begins where the entrant began
+  18  ...and the world did not move
+  19  ...counted as impossible, not as unread
+  20  ...ending is `escaped`
+  21  ...ending is `gate_locked`
+  22  ...in particular it does not become `r`
+  23  ...including the ones that were read
+  24  ...it is counted as unread
+  25  ...so it is a field of the record, not an inference
+  26  ...while the successful crawl's last row shows it carrying
+  27  ...while the trace, being one row per command, shows the hall only on re-entry
+  28  THE FAILURE IS VISIBLE IN THE LOG, not in a score
+  29  THE RAW TEXT OF EVERY COMMAND IS KEPT
+  30  THE TWO COUNTERS DO NOT MERGE: one unread, one impossible
+  31  `GO   NORTH` (padding) parses the same
+  32  `RESIGN` is not a verb and is NOT truncated to a direction
+  33  `collect brasskey` is a take
+  34  `e2e4` is not a verb
+  35  `examine` is a look
+  36  `get brasskey` is a take
+  37  `get the key` resolves by alias
+  38  `go north` parses to go north
+  39  `go sideways` is unparsed, not a moved-nowhere
+  40  `grab brasskey` is a take
+  41  `grab key` resolves by alias
+  42  `i` is an inventory
+  43  `inv` is an inventory
+  44  `inventory` is an inventory
+  45  `items` is an inventory
+  46  `l` is a look
+  47  `look` is a look
+  48  `n` parses to go north
+  49  `north` parses to go north
+  50  `pick brasskey` is a take
+  51  `pick up brasskey` is a take
+  52  `pick up the key` resolves by alias
+  53  `take br` does NOT resolve to brasskey
+  54  `take brass key` (spaced) resolves
+  55  `take brasskey` from the WRONG ROOM is `not_here` -- impossible, not unread
+  56  `take brasskey` is a take
+  57  `take key` resolves by alias
+  58  `take the brasskey` is a take
+  59  `take unicorn` does NOT resolve
+  60  `take` with no object is unparsed
+  61  `walk N` (other case) parses the same
+  62  `west` from a room with no west exit is recognised-but-impossible
+  63  a STRING commands argument is refused, not read as characters
+  64  a crawl that ends without reaching the gate has no ending row
+  65  a locked gate ends the run
+  66  an empty command is unparsed
+  67  an unreadable command BEFORE the gate is still consumed
+  68  carrying the item out finishes
+  69  commands after the gate are not consumed
+  70  every row carries an inventory snapshot
+  71  every row carries the object
+  72  every row carries the parsed verb
+  73  every row carries the raw command
+  74  every row carries the room
+  75  gate room
+  76  never taking the item locks the floor world too
+  77  north is a direction, `back` is not
+  78  one row per command consumed
+  79  rejects a world with duplicate item id
+  80  rejects a world with duplicate room id
+  81  rejects a world with exit to undefined room
+  82  rejects a world with gate item missing
+  83  rejects a world with gate room undefined
+  84  rejects a world with item in undefined room
+  85  rejects a world with no gate
+  86  rejects a world with no items
+  87  rejects a world with no rooms
+  88  rejects a world with no start
+  89  rejects a world with start undefined
+  90  rejects a world with unknown direction
+  91  rejects a world with unknown directive
+  92  rejects an UNREACHABLE gate
+  93  rooms
+  94  start
+  95  taking it twice is `already_carrying`
+  96  the floor world is finishable in two commands
+  97  the forgetful crawl: the ending is recoverable
+  98  the forgetful crawl: the final inventory is recoverable
+  99  the forgetful crawl: the route is recoverable from the record
+ 100  the forgetful crawl: the take step is recoverable
+ 101  the four unreadable commands are `unparsed`
+ 102  the required item
+ 103  the route is recorded in first-visit order, starting where the crawl started
+ 104  the starting room is NOT in the trace and has to be carried beside it
+ 105  the successful crawl: the ending is recoverable
+ 106  the successful crawl: the final inventory is recoverable
+ 107  the successful crawl: the route is recoverable from the record
+ 108  the successful crawl: the take step is recoverable
+ 109  the two runs typed the SAME route apart from the take
+ 110  walking the SAME route without taking it does NOT finish
+ 111  zork_01_the_floor ...and is NOT solvable without the item
+ 112  zork_01_the_floor is solvable by its solution
+ 113  zork_02_long_crawl ...and is NOT solvable without the item
+ 114  zork_02_long_crawl is solvable by its solution
+
+----------------------------------------------------------------------------------------------------
+THE CURRENT SET (n=175 unique names)
+----------------------------------------------------------------------------------------------------
+   1  ''               -> UNATTRIBUTABLE/empty
+   2  'RESIGN'         -> UNATTRIBUTABLE/no_verb
+   3  'e2e4'           -> UNATTRIBUTABLE/no_verb
+   4  'go sideways'    -> rejected/unknown_direction
+   5  'go'             -> rejected/missing_direction
+   6  'look'           -> accepted/acted
+   7  'north'          -> accepted/acted
+   8  'take br'        -> rejected/unknown_object
+   9  'take brasskey'  -> rejected/not_here
+  10  'take unicorn'   -> rejected/unknown_object
+  11  'take'           -> rejected/missing_object
+  12  'west'           -> rejected/no_exit
+  13  ...a different impossibility from `no_exit`
+  14  ...and `Try moving in a direction ...` is counted `unparsed` too
+  15  ...and a declaration for a field that is not emitted is caught too
+  16  ...and by an abbreviation and an alias alone
+  17  ...and every declared field is actually emitted
+  18  ...and is unparsed, with a reason
+  19  ...and it does not move the entrant toward the gate
+  20  ...and it is counted impossible, not unread
+  21  ...and it is the whole reachable graph
+  22  ...and it never took the item
+  23  ...and it says so on the record instead of leaving a plausible number bare
+  24  ...and its basis is stated
+  25  ...and moves NO object
+  26  ...and none of them is `recognised-but-impossible`
+  27  ...and not as progress
+  28  ...and only the readable one is `parsed`
+  29  ...and prose with no verb in it is UNATTRIBUTABLE
+  30  ...and that is a check that can fail: a mutated `counted_under` breaks it
+  31  ...and the closest it got is the gate itself
+  32  ...and the ending does not change
+  33  ...and the entrant is still at the start with nothing
+  34  ...and the faculty flag is clear
+  35  ...and the faculty flag is set
+  36  ...and the hall, re-entered on the way back, is recorded once
+  37  ...and the item was taken at step 1
+  38  ...and the last row's inventory is the final inventory
+  39  ...and the log shows the empty inventory it arrived with
+  40  ...and the object's placement says where it is, not where it started
+  41  ...and the prose-only fields are named, with what they are
+  42  ...and the repeat is NOT counted as unread
+  43  ...and the required item is the one that moved
+  44  ...and the route begins where the entrant began
+  45  ...and the score says so independently of the route
+  46  ...and the takes by object show BOTH items, which is why the two readings differed
+  47  ...and the world did not move
+  48  ...but `take metal` is REJECTED: the verb is one this world knows
+  49  ...but it does not move the required item
+  50  ...counted as impossible, not as unread
+  51  ...ending is `escaped`
+  52  ...ending is `gate_locked`
+  53  ...having started three moves away
+  54  ...in particular it does not become `r`
+  55  ...including the ones that were read
+  56  ...it is counted as unread
+  57  ...so 'objects moved' and 'progress' are two different numbers, both from world state
+  58  ...so it covered the whole graph way
+  59  ...so it is a field of the record, not an inference
+  60  ...so progress toward the gate is NOT monotone on the level that measures retention
+  61  ...so the split separates them
+  62  ...so the table is complete
+  63  ...while the successful crawl's last row shows it carrying
+  64  ...while the trace, being one row per command, shows the hall only on re-entry
+  65  A FIELD WITH NO STATED SOURCE IS CAUGHT: an invented leaf is undeclared
+  66  NO progress field is prose-derived
+  67  THE FAILURE IS VISIBLE IN THE LOG, not in a score
+  68  THE RAW TEXT OF EVERY COMMAND IS KEPT
+  69  THE TWO ARE INDISTINGUISHABLE IN THE FROZEN COUNTERS -- that is the defect, asserted
+  70  THE TWO COUNTERS DO NOT MERGE: one unread, one impossible
+  71  `GO   NORTH` (padding) parses the same
+  72  `RESIGN` is not a verb and is NOT truncated to a direction
+  73  `collect brasskey` is a take
+  74  `e2e4` is not a verb
+  75  `examine` is a look
+  76  `get brasskey` is a take
+  77  `get the key` resolves by alias
+  78  `go north` parses to go north
+  79  `go sideways` is unparsed, not a moved-nowhere
+  80  `grab brasskey` is a take
+  81  `grab key` resolves by alias
+  82  `i` is an inventory
+  83  `inv` is an inventory
+  84  `inventory` is an inventory
+  85  `items` is an inventory
+  86  `l` is a look
+  87  `look` is a look
+  88  `n` parses to go north
+  89  `north` parses to go north
+  90  `pick brasskey` is a take
+  91  `pick up brasskey` is a take
+  92  `pick up the key` resolves by alias
+  93  `take br` does NOT resolve to brasskey
+  94  `take brass key` (spaced) resolves
+  95  `take brasskey` from the WRONG ROOM is `not_here` -- impossible, not unread
+  96  `take brasskey` is a take
+  97  `take key` resolves by alias
+  98  `take metal` is STILL counted under `unparsed`, per the prereg -- the axis is additive, not a rewrite
+  99  `take metal` is counted `unparsed` by the FROZEN counters
+ 100  `take the brasskey` is a take
+ 101  `take unicorn` does NOT resolve
+ 102  `take` with no object is unparsed
+ 103  `walk N` (other case) parses the same
+ 104  `west` from a room with no west exit is recognised-but-impossible
+ 105  a STRING commands argument is refused, not read as characters
+ 106  a crawl that ends without reaching the gate has no ending row
+ 107  a crawl that takes the DISTRACTOR first, then the required item, escapes
+ 108  a locked gate ends the run
+ 109  a take that works is ACCEPTED, the repeat is REJECTED/already_carrying
+ 110  an empty command is unparsed
+ 111  an unreadable command BEFORE the gate is still consumed
+ 112  carrying the item out finishes
+ 113  commands after the gate are not consumed
+ 114  every leaf of the progress block has a declared source
+ 115  every reason carries its own text, so a row is readable without the source
+ 116  every row carries an inventory snapshot
+ 117  every row carries the object
+ 118  every row carries the parsed verb
+ 119  every row carries the raw command
+ 120  every row carries the room
+ 121  every row is attributed exactly once
+ 122  gate room
+ 123  never taking the item locks the floor world too
+ 124  north is a direction, `back` is not
+ 125  objects moved is read off `_placed`, not off the commands
+ 126  on the FLOOR world, one item, the two readings agree -- which is why this was invisible
+ 127  one row per command consumed
+ 128  rejects a world with duplicate item id
+ 129  rejects a world with duplicate room id
+ 130  rejects a world with exit to undefined room
+ 131  rejects a world with gate item missing
+ 132  rejects a world with gate room undefined
+ 133  rejects a world with item in undefined room
+ 134  rejects a world with no gate
+ 135  rejects a world with no items
+ 136  rejects a world with no rooms
+ 137  rejects a world with no start
+ 138  rejects a world with start undefined
+ 139  rejects a world with unknown direction
+ 140  rejects a world with unknown directive
+ 141  rejects an UNREACHABLE gate
+ 142  replay() WITH the required item returns the required take
+ 143  replay() WITHOUT the required item reads the TORCH and returns 0 -- THE DEFECT, asserted
+ 144  rooms
+ 145  rooms visited is the route's own length
+ 146  start
+ 147  taking it twice is `already_carrying`
+ 148  taking the DISTRACTOR moves an object
+ 149  the attribution is recoverable from the rows alone, or it is not part of the record
+ 150  the crawl ends ON the gate, so the graph distance is zero
+ 151  the distance trail records the step taken AWAY from the gate to fetch the key
+ 152  the floor world is finishable in two commands
+ 153  the forgetful crawl reaches the same room
+ 154  the forgetful crawl: the ending is recoverable
+ 155  the forgetful crawl: the final inventory is recoverable
+ 156  the forgetful crawl: the route is recoverable from the record
+ 157  the forgetful crawl: the take step is recoverable
+ 158  the four unreadable commands are `unparsed`
+ 159  the per-row attribution reproduces the frozen counters EXACTLY
+ 160  the required item
+ 161  the room graph: five rooms, five reachable, eight exits
+ 162  the route is recorded in first-visit order, starting where the crawl started
+ 163  the shortest route from hall to the gate is THREE moves (east, north, east)
+ 164  the starting room is NOT in the trace and has to be carried beside it
+ 165  the successful crawl: the ending is recoverable
+ 166  the successful crawl: the final inventory is recoverable
+ 167  the successful crawl: the route is recoverable from the record
+ 168  the successful crawl: the take step is recoverable
+ 169  the three categories sum to the rows
+ 170  the two runs typed the SAME route apart from the take
+ 171  walking the SAME route without taking it does NOT finish
+ 172  zork_01_the_floor ...and is NOT solvable without the item
+ 173  zork_01_the_floor is solvable by its solution
+ 174  zork_02_long_crawl ...and is NOT solvable without the item
+ 175  zork_02_long_crawl is solvable by its solution
+
+====================================================================================================
+SET DIFFERENCE
+====================================================================================================
+kept in both      : 114
+added  (B \ A)    : 61
+removed (A \ B)   : 0
+
+removed: none
+
+ADDED (each name, one per line):
+  + ''               -> UNATTRIBUTABLE/empty
+  + 'RESIGN'         -> UNATTRIBUTABLE/no_verb
+  + 'e2e4'           -> UNATTRIBUTABLE/no_verb
+  + 'go sideways'    -> rejected/unknown_direction
+  + 'go'             -> rejected/missing_direction
+  + 'look'           -> accepted/acted
+  + 'north'          -> accepted/acted
+  + 'take br'        -> rejected/unknown_object
+  + 'take brasskey'  -> rejected/not_here
+  + 'take unicorn'   -> rejected/unknown_object
+  + 'take'           -> rejected/missing_object
+  + 'west'           -> rejected/no_exit
+  + ...and `Try moving in a direction ...` is counted `unparsed` too
+  + ...and a declaration for a field that is not emitted is caught too
+  + ...and every declared field is actually emitted
+  + ...and it does not move the entrant toward the gate
+  + ...and it is the whole reachable graph
+  + ...and it says so on the record instead of leaving a plausible number bare
+  + ...and its basis is stated
+  + ...and moves NO object
+  + ...and prose with no verb in it is UNATTRIBUTABLE
+  + ...and that is a check that can fail: a mutated `counted_under` breaks it
+  + ...and the closest it got is the gate itself
+  + ...and the object's placement says where it is, not where it started
+  + ...and the prose-only fields are named, with what they are
+  + ...and the repeat is NOT counted as unread
+  + ...and the required item is the one that moved
+  + ...and the score says so independently of the route
+  + ...and the takes by object show BOTH items, which is why the two readings differed
+  + ...but `take metal` is REJECTED: the verb is one this world knows
+  + ...but it does not move the required item
+  + ...having started three moves away
+  + ...so 'objects moved' and 'progress' are two different numbers, both from world state
+  + ...so it covered the whole graph way
+  + ...so progress toward the gate is NOT monotone on the level that measures retention
+  + ...so the split separates them
+  + ...so the table is complete
+  + A FIELD WITH NO STATED SOURCE IS CAUGHT: an invented leaf is undeclared
+  + NO progress field is prose-derived
+  + THE TWO ARE INDISTINGUISHABLE IN THE FROZEN COUNTERS -- that is the defect, asserted
+  + `take metal` is STILL counted under `unparsed`, per the prereg -- the axis is additive, not a rewrite
+  + `take metal` is counted `unparsed` by the FROZEN counters
+  + a crawl that takes the DISTRACTOR first, then the required item, escapes
+  + a take that works is ACCEPTED, the repeat is REJECTED/already_carrying
+  + every leaf of the progress block has a declared source
+  + every reason carries its own text, so a row is readable without the source
+  + every row is attributed exactly once
+  + objects moved is read off `_placed`, not off the commands
+  + on the FLOOR world, one item, the two readings agree -- which is why this was invisible
+  + replay() WITH the required item returns the required take
+  + replay() WITHOUT the required item reads the TORCH and returns 0 -- THE DEFECT, asserted
+  + rooms visited is the route's own length
+  + taking the DISTRACTOR moves an object
+  + the attribution is recoverable from the rows alone, or it is not part of the record
+  + the crawl ends ON the gate, so the graph distance is zero
+  + the distance trail records the step taken AWAY from the gate to fetch the key
+  + the forgetful crawl reaches the same room
+  + the per-row attribution reproduces the frozen counters EXACTLY
+  + the room graph: five rooms, five reachable, eight exits
+  + the shortest route from hall to the gate is THREE moves (east, north, east)
+  + the three categories sum to the rows
+
+ARITHMETIC  114 kept + 61 added = 175  == current set size 175? True
+            114 kept + 0 removed = 114  == frozen set size 114? True
+
+THE SAME PROOF, AS LANDED AND RE-RUNNABLE FROM THE REPOSITORY (scripts/zork_superset_proof.py, which
+refuses to print anything if either revision has a failing control or a duplicate name):
+
+$ python3 scripts/zork_superset_proof.py     # 4e0eb43 -> HEAD
+
+====================================================================================================
+NAME-LEVEL SUPERSET PROOF -- zork.py --self-test, 4e0eb43 vs HEAD
+====================================================================================================
+4e0eb43      sha256 ff35ec83b340fbf0…  114 PASS, 0 FAIL, exit 0   ALL CONTROLS PASS   --  114/114
+HEAD         sha256 b9701007d6e186d5…  175 PASS, 0 FAIL, exit 0   ALL CONTROLS PASS   --  175/175
+duplicate names: 0 in 4e0eb43, 0 in HEAD
+
+[SET A -- the 114 names, and SET B \ A -- the 61 names, printed in full by the script; identical to the
+ lists in PREREG_zork.md Z1.2, which were produced by the same extraction]
+
+THE DIFFERENCE
+====================================================================================================
+kept A ∩ B : 114
+added B \ A: 61
+removed A \ B: 0
+
+removed: none
+
+ARITHMETIC  114 kept + 61 added = 175  == 175? True
+            114 kept + 0 removed = 114  == 114? True
+
+====================================================================================================
+ONE LEVEL DEEPER -- THE CALL SITES, BECAUSE A NAME IS NOT AN ASSERTION
+====================================================================================================
+call sites: 87 in 4e0eb43, 137 in HEAD
+frozen sites absent from HEAD (name template + compared expressions as a unit): 0
+sites whose multiplicity changed: 0
+
+removed: none -- at name level and at call-site level.
+
+WHAT THIS DOES NOT PROVE: that the thing a kept control measures did not change underneath it.
+The 175/175 run is evidence the kept controls still bite; it is not
+proof they bite the same object.
+
+====================================================================================================
+SECTION 3 — ONE LEVEL DEEPER: THE CALL SITES, NOT THE NAMES
+====================================================================================================
+
+A name is not an assertion. This compares every `ck(name, got, want)` call site between the revisions as
+source text (ast), matching looped and f-string names as templates, so a control that kept its name and
+changed what it compares would be caught.
+
+$ python3 callsite_proof.py
+
+====================================================================================================
+CALL-SITE SUPERSET PROOF -- every `ck(name, got, want)` site in the frozen file, verbatim, in HEAD
+====================================================================================================
+frozen 4e0eb43  ck() call sites: 87   distinct (name,got,want): 87
+HEAD  b9701007  ck() call sites: 137   distinct (name,got,want): 137
+
+frozen call sites ABSENT from HEAD (name+assertion as a unit) : 0
+HEAD call sites not in the frozen file                        : 50
+
+----------------------------------------------------------------------------------------------------
+removed: none -- every ck() call site in the frozen file is present in HEAD
+        with the same name template and the same compared expressions.
+----------------------------------------------------------------------------------------------------
+
+PER-SITE MULTIPLICITY (frozen count -> HEAD count), showing only sites that moved:
+  (0 frozen sites changed multiplicity; 0 is the clean answer)
+
+$ python3 assertion_proof.py           # the literal-name subset of the same question, printed per name
+
+====================================================================================================
+ASSERTION-LEVEL SUPERSET PROOF -- per control name, the (got, want) pair
+====================================================================================================
+frozen 4e0eb43   ck() calls with a literal name: 73   unique names: 71
+HEAD  b9701007   ck() calls with a literal name: 122   unique names: 120
+
+kept names compared        : 114
+  assertion IDENTICAL      : 71
+  assertion CHANGED        : 0
+  name not found in source : 43
+
+----------------------------------------------------------------------------------------------------
+  ... (full per-name output and the list of the 43 dynamically-registered names in the transcript)
+
+WHAT THIS SECTION DOES NOT ESTABLISH, said in the amendment too: a control can keep its name AND its
+expression and still be measuring changed code. `parse_command`'s contract did change in 6c426e5. The
+175/175 run is evidence that the kept controls still bite; it is not a proof that they bite the same thing.
+
+====================================================================================================
+SECTION 4 — THE FROZEN PAIRING DIES AT ITS OWN CONTROL [3] (why the driver cannot be pinned back)
+====================================================================================================
+
+Isolated tree, no repo file touched: zork.py = ff35ec83 (the frozen simulator), zork_run.py = b26b2cfc
+(this driver), PREREG_zork.md at its frozen digest, levels/ symlinked read-only.
+
+$ cd pairing_frozen_sim && sha256sum zork.py zork_run.py PREREG_zork.md
+ff35ec83b340fbf0bac5f4ee29dfe7a6eec80c87a766ddaf33b8ad4773bcc07f  zork.py
+b26b2cfc42a0a91520e9e3b9753ad3871b8d79657628e986186c5f3de9948d19  zork_run.py
+03b96c98bd39733b8ef64ec22e701efa3a330ad068b49c3efa9a57333f35a710  PREREG_zork.md
+$ python3 zork_run.py --self-test
+
+====================================================================================================
+THE ZORK ENTRANT DRIVER CONTROLS
+====================================================================================================
+
+[1] AN UNDECLARED RUN IS REFUSED -- and the three legal arms are not
+  PASS  the arm 'on' is accepted with its declaration
+  PASS  the arm 'off' is accepted with its declaration
+  PASS  the arm 'auto' is accepted with its declaration
+  PASS  an EMPTY arm is refused
+  PASS  a junk arm is refused
+  PASS  None is refused
+  PASS  an arm with NO declaration document is refused
+  PASS  an arm declared in a document that does not exist is refused
+  PASS  ...and the refusal SAYS the file is missing
+  PASS  the DECLARED arm is off, for the reason the prereg gives
+  PASS  this run's arm is the declared one
+  PASS  ...and the change flag is clear because nothing was overridden
+  PASS  ...and the record carries the argv, not a summary of it
+
+[2] THE READING RULE: the first non-empty line, verbatim -- and NOTHING mined from prose
+  PASS  the first line is the command
+  PASS  padding is stripped, the words are not cut
+  PASS  an answer that opens with a blank line is still read
+  PASS  AN EMPTY ANSWER IS NOT A COMMAND
+  PASS  ...and neither are blank lines
+  PASS  ...and neither is None
+  PASS  a command is NOT truncated to one token -- `take key` stays two words
+  PASS  `I will take the key` is HANDED OVER AS TYPED
+  PASS  ...and a sentence opening with `I` IS READ as the declared abbreviation for inventory
+  PASS  ...so it lands in `parsed`, NOT in `unparsed`
+  PASS  ...and `take the key and walk north` is REFUSED as a whole, not mined
+  PASS  ...and the refusal quotes the phrase it could not read
+  PASS  ...while a direction with prose after it resolves from the head
+  PASS  ...and a readable command parses
+  PASS  ...and a direction parses
+
+[3] SUFFICIENCY, IN BOTH DIRECTIONS -- the record must reproduce its own score, and the
+    check must FIRE when it does not
+Traceback (most recent call last):
+  File "/home/chilly1/.hermes/profiles/zork/cache/scratch/pairing_frozen_sim/zork_run.py", line 1303, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/home/chilly1/.hermes/profiles/zork/cache/scratch/pairing_frozen_sim/zork_run.py", line 1243, in main
+    return _self_test()
+  File "/home/chilly1/.hermes/profiles/zork/cache/scratch/pairing_frozen_sim/zork_run.py", line 1101, in _self_test
+    ok, detail = sufficiency_check(rec)
+                 ~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/chilly1/.hermes/profiles/zork/cache/scratch/pairing_frozen_sim/zork_run.py", line 716, in sufficiency_check
+    rec = Z.replay(record["trace"], record["start_room"], required_item=record.get("required_item"))
+TypeError: replay() got an unexpected keyword argument 'required_item'
+
+  exit status 1. The driver's own control [3] cannot run against the simulator the prereg froze, which
+  is the documented defect the amendment re-freezes away from -- not a defect in the driver's logic.
+
+  ALSO MEASURED, and worth having on the record: before PREREG_zork.md was present in that isolated
+  tree, the driver refused to start at all --
+
+    REFUSED: the reasoning arm is declared in 'PREREG_zork.md', WHICH DOES NOT EXIST in this tree.
+
+  i.e. the driver GATES ON THE PREREG'S PRESENCE. A driver alone is not a pairing; the third digest is
+  load-bearing at run time and not just in the writeup.
+
+====================================================================================================
+SECTION 5 — THE PAIRING'S DRIVER SELF-TEST AT HEAD: 62/64, TWO CONTROLS RED
+====================================================================================================
+
+$ python3 zork_run.py --self-test      # in the repo, HEAD 13b161a, probes/ as it stands
+
+  [5] THE COMPUTE PATH: the summary is READ OUT OF THE ARGV, and the eight recorded rows show why
+    FAIL  EVERY recorded GPU row contradicts itself: config.n_gpu_layers vs config.server_argv -ngl
+            got  0
+            want 8
+    FAIL  ...and the contradiction is 0 against 99, on all eight
+            got  []
+            want [(0, '99')]
+  2 FAILED   --  62/64
+
+  exit status 1. The two red lines are zork_run.py:1163 and :1165 (section [5]), and what they mean is
+  in the amendment: they assert that EVERY row in probes/ contradicts itself between
+  config.n_gpu_layers and the argv's -ngl. That was true of the eight rows as recorded on 2026-10-25.
+  It is false of the eight rows at HEAD.
+
+====================================================================================================
+SECTION 6 — THE SAME DRIVER, 64/64, AGAINST THE ARCHIVE AS IT STOOD AT 6c426e5 (the cause, isolated)
+====================================================================================================
+
+$ cd pairing_pre13b161a && sha256sum zork.py zork_run.py    # identical bytes to the repo
+b9701007d6e186d5f27dc0e359a9c834b76a28ef8aedc362acf1c85bb6022d21  zork.py
+b26b2cfc42a0a91520e9e3b9753ad3871b8d79657628e986186c5f3de9948d19  zork_run.py
+$ ls probes/            # the eight rows as committed at 6c426e5, taken from suite3/preserved/
+ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_01_the_floor.json
+ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_02_long_crawl.json
+ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_01_the_floor.json
+ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_02_long_crawl.json
+ZORK_Ornith-1.5-9B-Q4_K_M_zork_01_the_floor.json
+ZORK_Ornith-1.5-9B-Q4_K_M_zork_02_long_crawl.json
+ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_01_the_floor.json
+ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_02_long_crawl.json
+
+$ python3 zork_run.py --self-test
+
+    PASS  EVERY recorded GPU row contradicts itself: config.n_gpu_layers vs config.server_argv -ngl
+    PASS  ...and the contradiction is 0 against 99, on all eight
+          8 rows: the summary said CPU, the argv said GPU. Neither reader would know the other existed.
+  ALL CONTROLS PASS   --  64/64
+
+  exit status 0 -- 64 PASS, 0 FAIL. SAME driver digest, SAME simulator digest, SAME prereg; the only
+  difference is which eight files are in probes/. The two red controls in SECTION 5 measure the ARCHIVE,
+  not the pairing.
+
+$ for each row: sha256 of suite3/preserved/20261026-14*/<row>  ==  git show 13b161a^:probes/<row>
+
+SAME  ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_01_the_floor.json
+SAME  ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_02_long_crawl.json
+SAME  ZORK_Ornith-1.5-9B-Q4_K_M_zork_01_the_floor.json
+SAME  ZORK_Ornith-1.5-9B-Q4_K_M_zork_02_long_crawl.json
+SAME  ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_01_the_floor.json
+SAME  ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_02_long_crawl.json
+SAME  ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_01_the_floor.json
+SAME  ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_02_long_crawl.json
+
+  i.e. 13b161a did not merely rewrite a digest field: it REPLACED all eight records with a
+  re-measurement under this simulator, and preserved the replaced bytes exactly. That is a fact about
+  another card's commit, reported to that card (t_3829fc77) and to the Chair; it is not repaired here.
+
+====================================================================================================
+SECTION 7 — THE OTHER TWO SELF-TESTS ON THE SAME COMMIT
+====================================================================================================
+
+$ python3 zork.py --self-test && python3 zork_controls.py
+  zork.py           ALL CONTROLS PASS   --  175/175   exit 0
+  zork_controls.py  ALL CONTROLS PASS   --  93/93   exit 0
+
+====================================================================================================
+SECTION 8 — THE AMENDED FILE'S OWN DIGEST (this cannot live inside the amendment)
+====================================================================================================
+
+$ sha256sum PREREG_zork.md             # AFTER AMENDMENT Z1 was appended
+56dac6633f09e1a01151b254638d43be373e85ceb964ec1129734899b84d703a  PREREG_zork.md
+$ wc -l -c PREREG_zork.md
+  622 36691 PREREG_zork.md
+
+  READ IT AS: 03b96c98… is the prereg the run's criteria were frozen against (and the digest the triple
+  names). The digest above is the same document WITH this amendment appended, and is the digest of
+  record for the amended text. They are two different objects and neither substitutes for the other.
+
+$ git diff --numstat -- PREREG_zork.md    # the amendment is an append and nothing else
+
+416	0	PREREG_zork.md
+
+====================================================================================================
+SECTION 9 — WHAT THIS FILE DOES NOT DO
+====================================================================================================
+
+  * It does not certify any entrant row. No row is scored or re-scored here; no model was run.
+  * It does not certify a cross-box row. That needs Mike's own words; and host_block() carries no
+    hostname, so two boxes configured alike are byte-identical in the records -- a claim this file
+    deliberately does not make.
+  * It does not cite probes/ZORK_*.json as pairing evidence. Their status is another card's (t_3829fc77).
+  * It does not repair the driver's two archive controls. Changing zork_run.py would change the driver
+    digest and void the triple this file exists to record; the fork is stated in the amendment for the
+    Chair to choose, not resolved here.
+
