@@ -1,7 +1,6 @@
 # Lights Out instrument report — 2026-10-26
 
-Commit: (to be filled after commit).
-
+Commit: e1040a2
 Controls (all run in the same process that loads the fixture; output below):
 
 - control_1_clean_fixture_loads: PASS (16 boards load, truth present on every board).

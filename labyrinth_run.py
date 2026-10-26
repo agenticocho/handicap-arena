@@ -1096,7 +1096,7 @@ def model_walk(nodes, F, sym, K, rune, cap, ident, base_url, no_think, seed_mode
     cur = rune
     visited = [cur]
     moves, tokens = [], []
-    blocked = not_an_action = give_up = 0
+    legal = blocked = not_an_action = give_up = 0
     end_state, plies = "cap", 0
     while plies < cap:
         nb = neighbours(nodes, F, sym, K, cur)
@@ -1121,6 +1121,7 @@ def model_walk(nodes, F, sym, K, rune, cap, ident, base_url, no_think, seed_mode
             entry["to"] = name
             cur = name
             visited.append(name)
+            legal += 1
         elif kind == "blocked":
             entry["proposed"] = name
             blocked += 1
@@ -1135,7 +1136,7 @@ def model_walk(nodes, F, sym, K, rune, cap, ident, base_url, no_think, seed_mode
         if kind == "give_up":
             break
     return {"cur": cur, "visited": visited, "moves": moves, "tokens": tokens,
-            "blocked": blocked, "not_an_action": not_an_action, "give_up": give_up,
+            "legal": legal, "blocked": blocked, "not_an_action": not_an_action, "give_up": give_up,
             "end_state": end_state, "plies": plies}
 
 
@@ -2128,6 +2129,75 @@ def compare_test():
     return ok, rows
 
 
+def control_test():
+    """CONTROLS THAT MUST FIRE: a scripted walker on a corridor, and a wall-pusher.
+
+    CPU only, no model. The corridor control must report 40 distinct positions over 40 plies;
+    the wall-pusher must report blocked moves. Each has a passing assertion.
+    """
+    cnodes = [f"c{i}" for i in range(40)]
+    cF = {}
+    for a in cnodes:
+        row = {}
+        for b in cnodes:
+            if a == b:
+                row[b] = 0
+            elif (int(a[1:]) + 1) % 40 == int(b[1:]):
+                row[b] = 1
+            else:
+                row[b] = 99
+        cF[a] = row
+    cK = 1
+    csym = "min"
+    cpos_of, cgroups = position_index(cnodes, cF)
+    cur = cnodes[0]
+    visited = [cur]
+    legal = blocked = unattr = 0
+    for step in range(40):
+        nb = neighbours(cnodes, cF, csym, cK, cur)
+        # scripted walker: advance along the corridor (next node), which is a legal move
+        target = cnodes[(cnodes.index(cur) + 1) % 40]
+        if target in nb:
+            legal += 1
+            cur = target
+            visited.append(cur)
+        else:
+            blocked += 1
+            break
+    distinct = len({cpos_of[a] for a in visited})
+    revisits = len(visited) - distinct
+    corridor_ok = (legal == 40 and distinct == 40 and revisits == 1 and blocked == 0)
+
+    wcur = cnodes[0]
+    wvisited = [wcur]
+    wlegal = wblocked = wunattr = 0
+    for _ in range(40):
+        nb = neighbours(cnodes, cF, csym, cK, wcur)
+        proposal = cnodes[5]
+        if proposal not in cnodes:
+            wunattr += 1
+        elif proposal in nb:
+            wlegal += 1
+            wcur = proposal
+            wvisited.append(wcur)
+        else:
+            wblocked += 1
+    wall_ok = (wblocked == 40 and wlegal == 0 and wunattr == 0)
+
+    kind, name, _ = read_proposal("Zorgblat", cnodes, [])
+    unattr_ok = (kind == "not_an_action")
+
+    ok = corridor_ok and wall_ok and unattr_ok
+    return ok, {
+        "corridor": {"plies": 40, "legal": legal, "distinct_positions": distinct,
+                     "revisit_count": revisits, "blocked": blocked, "pass": corridor_ok},
+        "wall_pusher": {"plies": 40, "blocked": wblocked, "legal": wlegal,
+                        "UNATTRIBUTABLE": wunattr, "pass": wall_ok},
+        "unattributable_token": {"input": "Zorgblat", "kind": kind, "pass": unattr_ok},
+        "pass": ok,
+    }
+
+
 def self_test():
     """Reproduce the 2-node test vector from the definition alone. Exit 0 iff both match."""
     fx = SELF_TEST_GRAPH
@@ -2159,8 +2229,9 @@ def self_test():
     bbok, bb_rows = budget_binding_test()
     ptok, pt_row = prompt_template_test()
     cmok, cm_rows = compare_test()
+    ctok, ct_row = control_test()
     ok = (fsha == SELF_TEST_FILE_SHA and gdig == SELF_TEST_GRAPH_DIGEST and eok and aok and pok
-          and bok and qok and iok and nok and gok and wsok and rok and bbok and ptok and cmok)
+          and bok and qok and iok and nok and gok and wsok and rok and bbok and ptok and cmok and ctok)
     print(json.dumps({"self_test": "ged-v2",
                       "fixture_bytes": SELF_TEST_BYTES.decode(),
                       "preimage": (b"ged-v2\n" + b"".join(
@@ -2183,6 +2254,7 @@ def self_test():
                       "budget_binding": bb_rows, "budget_binding_pass": bbok,
                       "prompt_template": pt_row, "prompt_template_pass": ptok,
                       "compare": cm_rows, "compare_pass": cmok,
+                      "control": ct_row, "control_pass": ctok,
                       "pass": ok}, indent=1))
     return 0 if ok else EXIT_SELF_TEST_FAIL
 
@@ -2581,6 +2653,7 @@ def main():
         cur = a.rune
         visited = [cur]
         moves = []
+        legal = 0
         blocked = not_an_action = give_up = 0
         tokens = []
         end_state = "cap"
@@ -2596,6 +2669,7 @@ def main():
             tokens.append(None)
             cur = nxt
             visited.append(cur)
+            legal += 1
             plies += 1
     else:
         # THE MODEL WALK: proposal -> parse -> legal-move check, one turn per ply. No randomness and
@@ -2604,13 +2678,14 @@ def main():
         w = model_walk(nodes, F, a.symmetrisation, K, a.rune, a.cap, ident, a.base_url,
                        a.no_think, seed_model)
         cur, visited, moves, tokens = w["cur"], w["visited"], w["moves"], w["tokens"]
-        blocked, not_an_action, give_up = w["blocked"], w["not_an_action"], w["give_up"]
+        legal, blocked, not_an_action, give_up = w["legal"], w["blocked"], w["not_an_action"], w["give_up"]
         end_state, plies = w["end_state"], w["plies"]
 
     pos_of, alias_all = position_index(nodes, F)
     alias_multi = [grp for grp in alias_all if len(grp) > 1]
     visited_names = len(set(visited))
     visited_positions = len({pos_of[a] for a in visited})
+    revisit_count = len(visited) - visited_positions
 
     # DERIVED FROM THE RECORD, BEFORE THE RECORD IS WRITTEN: tokens_total, the mean and its basis,
     # the number of turns that reached the cap, and budget_binding. On a dry run every one is null
@@ -2706,7 +2781,9 @@ def main():
         "end_rune": cur,
         "moves": moves,
         "plies": plies,
+        "legal": legal,
         "blocked": blocked,
+        "UNATTRIBUTABLE": not_an_action,
         "not_an_action": not_an_action,
         "give_up": give_up,
         "counts_basis": (None if a.dry_run else
@@ -2723,6 +2800,8 @@ def main():
                          "marked *_basis carries how its number was derived, and budget_binding is "
                          "derived from the two numbers above it, not asserted"),
         "visited_unique": visited_positions,
+        "distinct_positions": visited_positions,
+        "revisit_count": revisit_count,
         "visited_names": visited_names,
         "visited_count_basis": "positions",
     }
@@ -2746,6 +2825,7 @@ def main():
     print(json.dumps({"record": out_path, "publish": publish,
                       "end_state": end_state, "plies": plies,
                       "end_rune": cur, "unique_positions": visited_positions,
+                      "distinct_positions": visited_positions, "revisit_count": revisit_count,
                       "unique_names": visited_names,
                       "model": rec["model"], "decoder_mode": rec["decoder_mode"],
                       "seed_model": seed_model, "tokens_total": rec["tokens_total"],
@@ -2758,7 +2838,9 @@ def main():
                       "budget_binding": rec["budget_binding"],
                       "budget_binding_basis": rec["budget_binding_basis"],
                       "prompt_digest": rec["prompt_digest"],
-                      "blocked": blocked, "not_an_action": not_an_action, "give_up": give_up,
+                      "legal": legal, "blocked": blocked, "UNATTRIBUTABLE": not_an_action,
+                      "not_an_action": not_an_action, "give_up": give_up,
+                      "distinct_positions": visited_positions, "revisit_count": revisit_count,
                       "graph_digest": gdig, "pinned_identity": rec["pinned_identity"],
                       "file_sha256": fsha, "file_sha256_role": rec["graph"]["file_sha256_role"],
                       "symmetrisation": a.symmetrisation, "K": K,
