@@ -1,0 +1,28 @@
+{
+ "api_model_id": "ministral-3b",
+ "server_argv": [
+  "/home/chilly1/llama.cpp/build/bin/llama-server",
+  "-m",
+  "/home/chilly1/moltbook_pipeline/models/Ministral-3-3B-Instruct-2512-UD-Q4_K_XL.gguf",
+  "--host",
+  "127.0.0.1",
+  "--port",
+  "58701",
+  "--n-gpu-layers",
+  "99",
+  "--ctx-size",
+  "8192",
+  "--cache-type-k",
+  "q8_0",
+  "--cache-type-v",
+  "q8_0",
+  "--parallel",
+  "1",
+  "--alias",
+  "ministral-3b",
+  "--log-verbosity",
+  "3"
+ ],
+ "server_binary_digest": "0d5393431782ddf8c8e1d14a68c1b37deb1c52459c4cd3dd696a457dd78c77a2",
+ "quant": "Q4_K_XL"
+}

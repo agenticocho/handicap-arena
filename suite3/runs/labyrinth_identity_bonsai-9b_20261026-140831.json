@@ -1,0 +1,28 @@
+{
+ "api_model_id": "bonsai-9b",
+ "server_argv": [
+  "/home/chilly1/src/PrismML-Bonsai-demo-20261016/bin/cuda/llama-server",
+  "-m",
+  "/home/chilly1/moltbook_pipeline/models/Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0.gguf",
+  "--host",
+  "127.0.0.1",
+  "--port",
+  "58701",
+  "--n-gpu-layers",
+  "99",
+  "--ctx-size",
+  "8192",
+  "--cache-type-k",
+  "q8_0",
+  "--cache-type-v",
+  "q8_0",
+  "--parallel",
+  "1",
+  "--alias",
+  "bonsai-9b",
+  "--log-verbosity",
+  "3"
+ ],
+ "server_binary_digest": "3c7090fb24b8461565e7c93b2e9731b09b876ded1003555bdc6467366c3d3f42",
+ "quant": "PQ2_0"
+}

@@ -1,0 +1,65 @@
+{
+ "window": "t_925f606f",
+ "cabinet": "snake",
+ "entrant": "ministral-3b",
+ "level": null,
+ "block_started": "2026-10-26T14:16:10-0700",
+ "shape": "cpu-only (certified driver: -c 65536 -ngl 0)",
+ "lease_held": false,
+ "gpu_baseline_mib": 1795,
+ "resident_health_before": 200,
+ "driver_path": "/home/chilly1/workspace/ocho_arena_cabinets/snake/snake_run.py",
+ "driver_sha256": "c2aabbafbc9b8e6beb28792425f34a5fdd77d624c1ee252ce2d4eb478e0e7320",
+ "preserved_preexisting": [],
+ "driver_cmd": [
+  "/home/chilly1/.hermes/installs/6aee69e0a7d8dfbd/environments/252d1a4dfac54fbfa586ceb8459575fe/venv/bin/python3",
+  "/home/chilly1/workspace/ocho_arena_cabinets/snake/snake_run.py",
+  "--entrant",
+  "/home/chilly1/moltbook_pipeline/models/Ministral-3-3B-Instruct-2512-UD-Q4_K_XL.gguf",
+  "--seeds",
+  "1,7",
+  "--ticks",
+  "120",
+  "--port",
+  "58714"
+ ],
+ "driver": {
+  "exit": 0,
+  "wall_secs": 75.0,
+  "log": "/home/chilly1/workspace/ocho_arena/suite3/logs/snake_certified_ministral-3b_20261026-141455.log",
+  "stdout_tail": "  subject   snake/snake.html  (sha256 808a2772e668cd9f)\n  seeds     [1, 7]   ticks 120   death_ends True\n  launching /home/chilly1/src/PrismML-Bonsai-demo-20261016/bin/cuda/llama-server -m /home/chilly1/moltbook_pipeline/models/Ministral-3-3B-Instruct-2512-UD-Q4_K_XL.gguf --alias snake-ministral-3-3b-instruct-2512-ud-q4-k-xl -c 65536 -ngl 0 --port 58714 --no-webui --jinja -s 42 --reasoning off\n  loaded in 6.0s   reasoning probe: thinking OFF -- a one-token question answered in a few tokens\n  seed 1      eaten 0    best_life 0    deaths 0   ticks 120  tick_cap         probes/SNAKE_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_s1.json\n  seed 7      eaten 0    best_life 0    deaths 0   ticks 120  tick_cap         probes/SNAKE_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_s7.json\n  TOTAL     {\"eaten\": 0, \"best_life\": 0, \"deaths\": 0, \"episodes\": 2}\n  run       probes/SNAKE_RUN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_20261026-211610.json\n",
+  "stderr_tail": ""
+ },
+ "artifacts": [
+  {
+   "path": "/home/chilly1/workspace/ocho_arena_cabinets/snake/probes/SNAKE_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_s1.json",
+   "exists": true,
+   "sha256": "d33f8cc12348febedfea20904aa8e316e46d3a4a2f3765a406ddbbc2dc4aadba",
+   "mtime_epoch": 1793049337.3647206,
+   "written_in_block": true
+  },
+  {
+   "path": "/home/chilly1/workspace/ocho_arena_cabinets/snake/probes/SNAKE_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_s7.json",
+   "exists": true,
+   "sha256": "d01e181c0bb946b4c1ad5e23efad6c416dc585e2c275bb3b47b6e3f7417941de",
+   "mtime_epoch": 1793049370.238424,
+   "written_in_block": true
+  }
+ ],
+ "artifact": null,
+ "artifact_exists": true,
+ "artifact_set": [
+  "/home/chilly1/workspace/ocho_arena_cabinets/snake/probes/SNAKE_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_s1.json",
+  "/home/chilly1/workspace/ocho_arena_cabinets/snake/probes/SNAKE_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_s7.json"
+ ],
+ "gpu_after_mib": 1780,
+ "resident_health_after": 200,
+ "block_finished": "2026-10-26T14:16:10-0700",
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1780,
+  "vram_baseline_mib": 1795,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}

@@ -1,0 +1,441 @@
+{
+ "cities_surviving": 0,
+ "cities_alive": [],
+ "score": 0,
+ "cities_total": 4,
+ "actions": 5,
+ "counts": {
+  "fired": 3,
+  "passed": 0,
+  "no_ammo": 0,
+  "out_of_range": 1,
+  "unknown": 0,
+  "malformed": 0,
+  "late": 1,
+  "hit": 4,
+  "spared": 1
+ },
+ "trace": [
+  {
+   "tick": 0,
+   "token": "2X",
+   "outcome": "fired",
+   "note": "X destroyed",
+   "cities_alive": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "ammo": {
+    "1": 2,
+    "2": 1
+   },
+   "threats_remaining": [
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "Y",
+    "Z"
+   ]
+  },
+  {
+   "tick": 1,
+   "token": "2Y",
+   "outcome": "fired",
+   "note": "Y destroyed",
+   "cities_alive": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "ammo": {
+    "1": 2,
+    "2": 0
+   },
+   "threats_remaining": [
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "Z"
+   ]
+  },
+  {
+   "tick": 2,
+   "token": "1R",
+   "outcome": "out_of_range",
+   "note": "silo 1 at 0 cannot reach impact 5 (range 4); Z hit empty ground",
+   "cities_alive": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "ammo": {
+    "1": 2,
+    "2": 0
+   },
+   "threats_remaining": [
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T"
+   ]
+  },
+  {
+   "tick": 3,
+   "token": "1R",
+   "outcome": "late",
+   "note": "threat R impacted at tick 3; Q hit B; R hit C",
+   "cities_alive": [
+    "A",
+    "D"
+   ],
+   "ammo": {
+    "1": 2,
+    "2": 0
+   },
+   "threats_remaining": [
+    "P",
+    "S",
+    "T"
+   ]
+  },
+  {
+   "tick": 4,
+   "token": "1T",
+   "outcome": "fired",
+   "note": "T destroyed; P hit A; S hit D",
+   "cities_alive": [],
+   "ammo": {
+    "1": 1,
+    "2": 0
+   },
+   "threats_remaining": []
+  }
+ ],
+ "entrant": "Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0",
+ "entrant_digest": "c79fcdfaf6b7bf47",
+ "entrant_digest_scope": "sha256 of the model FILE, first 16 hex. THE ENTRANT IS THE SUBJECT OF THE MEASUREMENT, so it is identified by a digest; `entrant` beside it is a LABEL, for reading, not for checking.",
+ "level": "mc_02_scarcity",
+ "state_path": "levels/mc_02_scarcity.txt",
+ "state_text": "# STATE 02 -- ALLOCATION UNDER SCARCITY. THE FACULTY, AND THE REASON THE SCORE IS A NUMBER.\n#\n# SEVEN THREATS, FOUR ROUNDS. It is IMPOSSIBLE to stop everything, and that is deliberate: the event\n# measures the CHOICE, not the reflexes. Four cities and seven incoming means the entrant must decide\n# which ground to lose.\n#\n# AND THE DECOYS ARE THE INSTRUMENT. Three threats (X, Y, Z) impact EMPTY GROUND at 7, 8 and 9. Nine is\n# outside every silo's reach, so Z cannot be engaged by anyone even if the entrant wants to. A model that\n# fires at everything runs out of ammo and loses cities it could have saved; a model that reads the impact\n# coordinates spends only on what matters and finishes with more cities alive.\n#\n# The ground line is 0..9. Cities sit at 2, 3, 5 and 6.\n#   P -> 2  city      Q -> 3  city      R -> 5  city      S -> 6  city      T -> 4  city\n#   X -> 7  EMPTY     Y -> 8  EMPTY     Z -> 9  EMPTY and OUT OF RANGE\n#\n# Silo 1 reaches 0..4, silo 2 reaches 5..9. So there is no silo that can cover the whole board, which is\n# what forces the routing decision on top of the ammo decision.\ntick 0\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5\nthreat X impact 7 tick 2\nthreat Y impact 8 tick 2\nthreat Z impact 9 tick 2\n",
+ "state_digest": "327d2157bd0b8a83",
+ "simulator_digest": "eb5ed36591b300e6",
+ "simulator_digest_scope": "sha256 of missile_command.py, first 16 hex -- THE SIMULATOR IS PART OF THE INSTRUMENT",
+ "driver_digest": "4018f0262498eb3e",
+ "driver_digest_scope": "sha256 of missile_command_run.py, first 16 hex -- THE DRIVER IS PART OF THE INSTRUMENT: it renders the screen, derives the cap and reads the answer. Added 2026-10-17, when it was measured to be the one input whose digest did not travel in the records it produced (card t_ec0b0420).",
+ "legend": "plain",
+ "legend_digest": "d8ee3da099c1a0c2",
+ "legend_arms": {
+  "example": "ec59f2dc5fd35518",
+  "plain": "d8ee3da099c1a0c2"
+ },
+ "legend_source": "the recorded default (plain)",
+ "legend_scope": "sha256 of the PROMPT TEMPLATE, first 16 hex; the state is filled in per turn. BOTH arms are digested, because a comparison between two records whose difference is invisible is a comparison between two files taken on trust.",
+ "prompt_turn0": "You are playing Missile Command. Enemy missiles are falling towards a line of positions numbered 0 to 9. Your cities sit at fixed positions on that line and each threat line tells you the position where that missile will land and the tick it lands on. A missile that lands on a city destroys it. A missile that lands on empty ground does nothing at all, so a threat you leave alone may cost you nothing.\n\nYou have silos on their own fixed positions, each holding a limited number of interceptors, and a silo can only reach a landing position within four of its own position. Each turn you may fire one interceptor from one silo at one threat, or you may fire nothing. Interceptors are scarce: spending one on a threat that could not have hurt you means it is not there when a city needs it. Every turn the tick advances by one, and any missile whose landing tick has arrived lands.\n\ntick 0\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5\nthreat X impact 7 tick 2\nthreat Y impact 8 tick 2\nthreat Z impact 9 tick 2\n\nThe actions you have already taken are: none yet\n\nAnswer with exactly two characters: the number of the silo you are firing from first, then the letter of the threat you are firing at. Those two values are in the state above -- use the silo numbers and the threat letters exactly as they are written there. If you want to fire nothing this turn, answer with the single word PASS. You may add an explanation after your answer, and it will be ignored.",
+ "loaded": true,
+ "load_s": 3.0,
+ "tokens": [
+  "2X",
+  "2Y",
+  "1R",
+  "1R",
+  "1T"
+ ],
+ "turns": [
+  {
+   "ply": 0,
+   "raw": "2X",
+   "token": "2X",
+   "secs": 1.5,
+   "gen_tokens": 3,
+   "budget_hit": false,
+   "cap_cut": "nothing -- the model stopped on its own",
+   "answer_field": "content",
+   "missing_value": false,
+   "screen_before": "tick 0\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5\nthreat X impact 7 tick 2\nthreat Y impact 8 tick 2\nthreat Z impact 9 tick 2",
+   "tick": 0,
+   "outcome": "fired",
+   "outcome_note": "X destroyed",
+   "cities_alive": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "ammo": {
+    "1": 2,
+    "2": 1
+   },
+   "threats_remaining": [
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "Y",
+    "Z"
+   ]
+  },
+  {
+   "ply": 1,
+   "raw": "2Y\n\n**Reasoning:**\n1.  **Analyze the current state:**\n    *   **Cities:** A(2), B(3), C(5), D(6).\n    *   **Silo 1:** Position 0, Ammo 2. Range: 0 to",
+   "token": "2Y",
+   "secs": 12.0,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "screen_before": "tick 0\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 1\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5\nthreat Y impact 8 tick 2\nthreat Z impact 9 tick 2",
+   "tick": 1,
+   "outcome": "fired",
+   "outcome_note": "Y destroyed",
+   "cities_alive": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "ammo": {
+    "1": 2,
+    "2": 0
+   },
+   "threats_remaining": [
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "Z"
+   ]
+  },
+  {
+   "ply": 2,
+   "raw": "1R\n\n**Reasoning:**\n1.  **Analyze the current state:**\n    *   **Cities:** A(2), B(3), C(5), D(6).\n    *   **Silo 1:** Position 0, Ammo 2.\n    *   **",
+   "token": "1R",
+   "secs": 12.1,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "screen_before": "tick 1\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 0\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5\nthreat Z impact 9 tick 2",
+   "tick": 2,
+   "outcome": "out_of_range",
+   "outcome_note": "silo 1 at 0 cannot reach impact 5 (range 4); Z hit empty ground",
+   "cities_alive": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "ammo": {
+    "1": 2,
+    "2": 0
+   },
+   "threats_remaining": [
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T"
+   ]
+  },
+  {
+   "ply": 3,
+   "raw": "1R",
+   "token": "1R",
+   "secs": 1.4,
+   "gen_tokens": 3,
+   "budget_hit": false,
+   "cap_cut": "nothing -- the model stopped on its own",
+   "answer_field": "content",
+   "missing_value": false,
+   "screen_before": "tick 2\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 0\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5",
+   "tick": 3,
+   "outcome": "late",
+   "outcome_note": "threat R impacted at tick 3; Q hit B; R hit C",
+   "cities_alive": [
+    "A",
+    "D"
+   ],
+   "ammo": {
+    "1": 2,
+    "2": 0
+   },
+   "threats_remaining": [
+    "P",
+    "S",
+    "T"
+   ]
+  },
+  {
+   "ply": 4,
+   "raw": "1T\n\n**Reasoning:**\n1.  **Analyze the current state:**\n    *   **Tick:** 3 (next tick will be 4).\n    *   **Missiles:**\n        *   Threat P: Lands at 2, Tick 4.\n        *   Threat",
+   "token": "1T",
+   "secs": 13.0,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "screen_before": "tick 3\ncity A at 2\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 0\nthreat P impact 2 tick 4\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5",
+   "tick": 4,
+   "outcome": "fired",
+   "outcome_note": "T destroyed; P hit A; S hit D",
+   "cities_alive": [],
+   "ammo": {
+    "1": 1,
+    "2": 0
+   },
+   "threats_remaining": []
+  }
+ ],
+ "screens": [
+  "tick 0\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 2\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5\nthreat X impact 7 tick 2\nthreat Y impact 8 tick 2\nthreat Z impact 9 tick 2",
+  "tick 0\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 1\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5\nthreat Y impact 8 tick 2\nthreat Z impact 9 tick 2",
+  "tick 1\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 0\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5\nthreat Z impact 9 tick 2",
+  "tick 2\ncity A at 2\ncity B at 3\ncity C at 5\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 0\nthreat P impact 2 tick 4\nthreat Q impact 3 tick 3\nthreat R impact 5 tick 3\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5",
+  "tick 3\ncity A at 2\ncity D at 6\nsilo 1 at 0 ammo 2\nsilo 2 at 9 ammo 0\nthreat P impact 2 tick 4\nthreat S impact 6 tick 4\nthreat T impact 4 tick 5"
+ ],
+ "final_screen": "tick 4\nsilo 1 at 0 ammo 1\nsilo 2 at 9 ammo 0",
+ "command_cap": 7,
+ "command_cap_source": "max impact tick in the state + 2",
+ "ended": "threats_resolved",
+ "ended_why": "every threat has been resolved by tick 4",
+ "missing_values": 0,
+ "missing_values_are_not_tokens": "a missing value is never passed to the simulator, so it can never be scored as a wrong move -- the empty-list rule",
+ "unreadable": 0,
+ "unreadable_is_a_simulator_outcome": "`malformed` is the simulator's own outcome for a token that is not an action: COUNTED, NEVER SCORED AS A WRONG MOVE -- the board is unchanged and the tick advances. `unknown`, `late`, `out_of_range` and `no_ammo` are four DIFFERENT claims and are never merged into it.",
+ "never_started": 0,
+ "budget_signature": {
+  "turns": 5,
+  "turns_that_hit_the_ceiling": 3,
+  "ceiling": 64,
+  "fraction_capped": 0.6,
+  "all_turns_capped": false,
+  "reading": "some turns hit the ceiling -- see the per-turn rows"
+ },
+ "protocol": {
+  "play_mode": "step_locked",
+  "action_format": "<silo><threat> or PASS",
+  "clock": "the state's own `tick` integer, advanced one per action",
+  "interface_decision": "turn-based BY CONSTRUCTION -- missile_command.py carries no wall-clock term, so no frozen criterion was changed to make it turn-based (see clock_audit)",
+  "clock_audit": {
+   "simulator": "missile_command.py",
+   "simulator_digest": "eb5ed36591b300e6",
+   "wall_clock_terms_found": [],
+   "reading": "NO WALL-CLOCK TERM EXISTS IN THE FROZEN SIMULATOR -- the play mode is turn-based by construction, so step-locking the clock is not a change this cabinet could make: there is nothing to lock. The only clock is the state's own `tick` integer, advanced one per action."
+  },
+  "declaration_file": "MC_DECLARATION.md",
+  "declaration_digest": "2ada03ee2ad1f60b",
+  "declaration": {
+   "cabinet": "missile-command",
+   "reasoning_arm": "off",
+   "reasoning_declared_in": "PREREG_sokoban.md (the cabinet-wide rule, which names MISSILE COMMAND explicitly) + CABINET_STRUCTURE.md (the standing rule for every cabinet)",
+   "reasoning_rationale": "This cabinet's answer is TWO CHARACTERS -- a silo number and a threat letter -- which is the short-answer class the setting was decided for: a thinking model puts its deliberation where the answer belongs, the ceiling eats it, and the measured result is a turn with no answer at all (2314 tokens, no commitment, on the same weights where thinking OFF held the format). The setting is off; the override is an experiment arm and the record says which one it is.",
+   "protocol": "step_locked",
+   "clock": "none -- the state's own `tick` integer, advanced by exactly one per action",
+   "artifact": "probes/MC_<entrant>_<level>.json",
+   "legend_arm": "plain"
+  }
+ },
+ "sufficiency": {
+  "score_recomputed_from_state_and_actions": 0,
+  "score_matches_the_record": true,
+  "screens_rebuilt": "6/6",
+  "screens_reproduce": true,
+  "reading": "THE RECORD IS SUFFICIENT: the score and every screen the entrant saw recompute from (state_text, tokens) under the frozen simulator."
+ },
+ "config": {
+  "reasoning": "off",
+  "reasoning_source": "declared in MC_DECLARATION.md",
+  "reasoning_declared": "off",
+  "reasoning_declared_in": "PREREG_sokoban.md (the cabinet-wide rule, which names MISSILE COMMAND explicitly) + CABINET_STRUCTURE.md (the standing rule for every cabinet)",
+  "reasoning_rationale": "This cabinet's answer is TWO CHARACTERS -- a silo number and a threat letter -- which is the short-answer class the setting was decided for: a thinking model puts its deliberation where the answer belongs, the ceiling eats it, and the measured result is a turn with no answer at all (2314 tokens, no commitment, on the same weights where thinking OFF held the format). The setting is off; the override is an experiment arm and the record says which one it is.",
+  "reasoning_changed_from_declaration": false,
+  "reasoning_argv": [
+   "--reasoning",
+   "off"
+  ],
+  "reasoning_argv_scope": "the build carries --reasoning, so the declared arm is passed",
+  "reasoning_supported_by_build": true,
+  "fit_argv": [
+   "--fit",
+   "off"
+  ],
+  "fit_scope": "--fit off IS passed: the cabinet is CPU-ONLY (-ngl 0), so the fit probe can only ask the DEVICE a question whose answer the run does not depend on -- and on a card held by other tenants it aborts the process (measured: three files, `CUDA error: out of memory` inside common_params_fit_impl, before any weight was read).",
+  "fit_supported_by_build": true,
+  "max_tokens_ceiling": 64,
+  "command_cap": 7,
+  "ctx": 4096,
+  "n_gpu_layers": 0,
+  "temperature": 0.0,
+  "legend": "plain",
+  "legend_digest": "d8ee3da099c1a0c2",
+  "legend_arms": {
+   "example": "ec59f2dc5fd35518",
+   "plain": "d8ee3da099c1a0c2"
+  },
+  "legend_source": "the recorded default (plain)",
+  "server_argv": [
+   "/home/chilly1/src/PrismML-Bonsai-demo-20261016/bin/cuda/llama-server",
+   "-m",
+   "/home/chilly1/moltbook_pipeline/models/Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0.gguf",
+   "-c",
+   "4096",
+   "-ngl",
+   "0",
+   "--port",
+   "8761",
+   "--no-webui",
+   "--reasoning",
+   "off",
+   "--fit",
+   "off"
+  ],
+  "server_binary_digest": "3c7090fb24b84615",
+  "server_binary_digest_scope": "sha256 of the BINARY FILE, first 16 hex. THE BINARY IS PART OF THE INSTRUMENT: a path can name one build and hold another.",
+  "server_binary_source": "--llama-server",
+  "server_binary_path": "/home/chilly1/src/PrismML-Bonsai-demo-20261016/bin/cuda/llama-server",
+  "reader_of_record_path": "/home/chilly1/workspace/ocho_arena/answer_reader.py",
+  "reader_of_record_digest": "450050761099e93c",
+  "reader_of_record_scope": "sha256 of the READER FILE, first 16 hex. RULING 79: the reader of record is imported, never reimplemented; this cabinet's tree does not carry it, so it is loaded from the shared tree and the file that answered is named here.",
+  "reader_of_record_in_this_tree": false
+ },
+ "reasoning_probe": {
+  "question": "What is 2 + 2? Reply with just the number and nothing else.",
+  "answer": "4",
+  "answer_from_reasoning_field": false,
+  "completion_tokens": 2,
+  "finish_reason": "stop",
+  "observed_answer_shape": "short",
+  "shape_threshold_tokens": 8,
+  "observed": "off",
+  "observed_is_an_inference": true,
+  "inference_caveat": "a LONG answer is not necessarily deliberation -- a model that echoes the question in a schema produces a long answer too, and this probe cannot tell them apart",
+  "requested": "off",
+  "disagrees_with_config": false
+ },
+ "artifact_replaced": {
+  "path": "probes/MC_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_mc_02_scarcity.json",
+  "sha256": "c492ba23ef192e3458e192bb8ba8011c282bbc044fa4e5f5228c616d3424b67e",
+  "bytes": 18768,
+  "mtime": "2026-10-17T18:49:35Z",
+  "it_named": {
+   "server_binary_digest": "3c7090fb24b84615",
+   "legend_digest": "ec59f2dc5fd35518",
+   "reasoning": "off"
+  },
+  "reason_given": "THE COORDINATE HELD AN example-ARM RECORD AND THE DECLARATION NOW NAMES plain (MC_DECLARATION.md 2ada03ee2ad1f60b, DECISION_mc_legend_arm.md, card t_ec0b0420): the cabinet's field is re-taken under the arm it declares. The replaced record's exact bytes are archived in probes/MC_FIELD_EXAMPLE_ARM_ARCHIVE_20261017.json with their sha256, so the replacement is recorded rather than silent.",
+  "reading": "THIS RUN REPLACED THE RECORD AT THIS PATH. The replaced record is NOT recoverable from this file: what survives is that it existed, the digest of the bytes it was, and what it said about its own instrument."
+ }
+}

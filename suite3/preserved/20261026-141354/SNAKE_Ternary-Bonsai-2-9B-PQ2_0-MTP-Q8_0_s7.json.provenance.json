@@ -1,0 +1,8 @@
+{
+ "original": "/home/chilly1/workspace/ocho_arena_cabinets/snake/probes/SNAKE_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_s7.json",
+ "preserved_at": "/home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-141354/SNAKE_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_s7.json",
+ "sha256": "0f04b18e0aa7cee81c12b09a96fe5c8e579d13c600a36e8591bd9a68097ce2be",
+ "bytes": 155933,
+ "why": "GPU window t_925f606f: pre-existing snake episodes at this coordinate",
+ "preserved": "2026-10-26T14:13:54-0700"
+}

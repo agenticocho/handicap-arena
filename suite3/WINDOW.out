@@ -1,0 +1,763 @@
+lease GRANTED (held) — owner=ocho-window-t_925f606f scope=(global) class=batch need=3600MiB ttl=21600s mode=run
+  record  : /home/chilly1/.local/state/gpu-lease/lease.d/record.json
+  card    : 1789 MiB used, 6102 MiB free (nvidia-smi --query-gpu memory.used,memory.free)
+  priced  : need 3600 MiB + 256 MiB headroom = 3856 MiB against LIVE free
+  tenants :
+      pid 976745     1466 MiB  llama-server owner=unowned   
+      pid 979586      134 MiB  llama-server owner=unowned   
+      pid 3025101       8 MiB  Hermes       owner=unowned   
+
+ADMITTED — 6102 MiB free >= 3856 MiB needed, measured on this card now; no drain was required. Lease is held.
+
+  attempt 1/3: executing (lease held by 'ocho-window-t_925f606f' scope 'global'): python3 -u suite/suite3.py --cabinet mastermind,lightsout,chess,labyrinth,snake,sokoban,zork --entrant all
+=== WINDOW t_925f606f start 2026-10-26T13:48:08-0700 cabinets=['mastermind', 'lightsout', 'chess', 'labyrinth', 'snake', 'sokoban', 'zork'] entrants=['ministral-3b', 'ornith-9b', 'mimo-9b', 'bonsai-9b'] ===
+--- mastermind / ministral-3b 2026-10-26T13:48:08-0700 ---
+{
+ "cabinet": "mastermind",
+ "entrant": "ministral-3b",
+ "exit": 5,
+ "wall_s": 30.0,
+ "artifact_exists": true,
+ "controls": true,
+ "card_max_mib": 4569,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- mastermind / ornith-9b 2026-10-26T13:48:39-0700 ---
+{
+ "cabinet": "mastermind",
+ "entrant": "ornith-9b",
+ "exit": 5,
+ "wall_s": 120.3,
+ "artifact_exists": true,
+ "controls": true,
+ "card_max_mib": 7063,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- mastermind / mimo-9b 2026-10-26T13:50:43-0700 ---
+{
+ "cabinet": "mastermind",
+ "entrant": "mimo-9b",
+ "exit": 5,
+ "wall_s": 109.7,
+ "artifact_exists": true,
+ "controls": true,
+ "card_max_mib": 7273,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- mastermind / bonsai-9b 2026-10-26T13:52:35-0700 ---
+{
+ "cabinet": "mastermind",
+ "entrant": "bonsai-9b",
+ "exit": 5,
+ "wall_s": 54.0,
+ "artifact_exists": true,
+ "controls": true,
+ "card_max_mib": 4369,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- lightsout / ministral-3b 2026-10-26T13:53:32-0700 ---
+{
+ "cabinet": "lightsout",
+ "entrant": "ministral-3b",
+ "exit": 0,
+ "wall_s": 3.6,
+ "artifact_exists": true,
+ "controls": null,
+ "card_max_mib": 4569,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- lightsout / ornith-9b 2026-10-26T13:53:38-0700 ---
+{
+ "cabinet": "lightsout",
+ "entrant": "ornith-9b",
+ "exit": 0,
+ "wall_s": 7.4,
+ "artifact_exists": true,
+ "controls": null,
+ "card_max_mib": 7059,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- lightsout / mimo-9b 2026-10-26T13:53:48-0700 ---
+{
+ "cabinet": "lightsout",
+ "entrant": "mimo-9b",
+ "exit": 0,
+ "wall_s": 7.3,
+ "artifact_exists": true,
+ "controls": null,
+ "card_max_mib": 7273,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- lightsout / bonsai-9b 2026-10-26T13:53:59-0700 ---
+{
+ "cabinet": "lightsout",
+ "entrant": "bonsai-9b",
+ "exit": 0,
+ "wall_s": 5.7,
+ "artifact_exists": true,
+ "controls": null,
+ "card_max_mib": 4367,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- chess / ministral-3b 2026-10-26T13:54:07-0700 ---
+[preserve] CHESS_GAME_ministral-3b-suite3.json sha256 aa93cf25b18479c0 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-135407/CHESS_GAME_ministral-3b-suite3.json
+{
+ "cabinet": "chess",
+ "entrant": "ministral-3b",
+ "level": null,
+ "exit": 0,
+ "wall_s": 6.0,
+ "artifact_exists": true,
+ "card_max_mib": 4569,
+ "pid_max_mib": 2774,
+ "controls": true,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- chess / ornith-9b 2026-10-26T13:54:13-0700 ---
+{
+ "cabinet": "chess",
+ "entrant": "ornith-9b",
+ "level": null,
+ "exit": 0,
+ "wall_s": 9.2,
+ "artifact_exists": true,
+ "card_max_mib": 7059,
+ "pid_max_mib": 5264,
+ "controls": true,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- chess / mimo-9b 2026-10-26T13:54:23-0700 ---
+{
+ "cabinet": "chess",
+ "entrant": "mimo-9b",
+ "level": null,
+ "exit": 0,
+ "wall_s": 37.4,
+ "artifact_exists": true,
+ "card_max_mib": 7273,
+ "pid_max_mib": 5478,
+ "controls": true,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- chess / bonsai-9b 2026-10-26T13:55:02-0700 ---
+{
+ "cabinet": "chess",
+ "entrant": "bonsai-9b",
+ "level": null,
+ "exit": 0,
+ "wall_s": 23.3,
+ "artifact_exists": true,
+ "card_max_mib": 4367,
+ "pid_max_mib": 2572,
+ "controls": true,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- labyrinth / ministral-3b 2026-10-26T13:55:27-0700 ---
+{
+ "cabinet": "labyrinth",
+ "entrant": "ministral-3b",
+ "exit": 11,
+ "wall_s": 0.1,
+ "artifact": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- labyrinth / ornith-9b 2026-10-26T13:55:30-0700 ---
+{
+ "cabinet": "labyrinth",
+ "entrant": "ornith-9b",
+ "exit": 11,
+ "wall_s": 0.1,
+ "artifact": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- labyrinth / mimo-9b 2026-10-26T13:55:34-0700 ---
+{
+ "cabinet": "labyrinth",
+ "entrant": "mimo-9b",
+ "exit": 11,
+ "wall_s": 0.1,
+ "artifact": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- labyrinth / bonsai-9b 2026-10-26T13:55:39-0700 ---
+{
+ "cabinet": "labyrinth",
+ "entrant": "bonsai-9b",
+ "exit": 11,
+ "wall_s": 0.1,
+ "artifact": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- snake / ministral-3b 2026-10-26T13:55:43-0700 ---
+[preserve] SNAKE_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_s1.json sha256 f54d59adce3eee4b -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-135543/SNAKE_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_s1.json
+[preserve] SNAKE_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_s7.json sha256 3f71e7fd8d0d3b9e -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-135543/SNAKE_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_s7.json
+{
+ "cabinet": "snake",
+ "entrant": "ministral-3b",
+ "level": null,
+ "exit": 0,
+ "wall_s": 16.3,
+ "artifact_exists": false,
+ "card_max_mib": 4959,
+ "pid_max_mib": 3164,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- snake / ornith-9b 2026-10-26T13:55:59-0700 ---
+[preserve] SNAKE_Ornith-1.5-9B-Q4_K_M_s1.json sha256 561e192787121712 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-135559/SNAKE_Ornith-1.5-9B-Q4_K_M_s1.json
+[preserve] SNAKE_Ornith-1.5-9B-Q4_K_M_s7.json sha256 49cb74cfd882daf5 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-135559/SNAKE_Ornith-1.5-9B-Q4_K_M_s7.json
+{
+ "cabinet": "snake",
+ "entrant": "ornith-9b",
+ "level": null,
+ "exit": 0,
+ "wall_s": 75.0,
+ "artifact_exists": false,
+ "card_max_mib": 7179,
+ "pid_max_mib": 5384,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- snake / mimo-9b 2026-10-26T13:57:15-0700 ---
+[preserve] SNAKE_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_s1.json sha256 cfdde0aaf878846b -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-135715/SNAKE_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_s1.json
+[preserve] SNAKE_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_s7.json sha256 02c1ea2ec22511f3 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-135715/SNAKE_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_s7.json
+{
+ "cabinet": "snake",
+ "entrant": "mimo-9b",
+ "level": null,
+ "exit": 0,
+ "wall_s": 114.3,
+ "artifact_exists": false,
+ "card_max_mib": 7395,
+ "pid_max_mib": 5600,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- snake / bonsai-9b 2026-10-26T13:59:09-0700 ---
+[preserve] SNAKE_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_s1.json sha256 5d5d2e3f94db8e5e -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-135909/SNAKE_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_s1.json
+[preserve] SNAKE_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_s7.json sha256 bd1872ba804b4b9a -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-135909/SNAKE_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_s7.json
+{
+ "cabinet": "snake",
+ "entrant": "bonsai-9b",
+ "level": null,
+ "exit": 0,
+ "wall_s": 49.5,
+ "artifact_exists": false,
+ "card_max_mib": 5335,
+ "pid_max_mib": 3540,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- sokoban / ministral-3b 2026-10-26T14:00:01-0700 ---
+[preserve] SOKOBAN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_01_one_push.json sha256 c0bf05f7d64cc5d0 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140001/SOKOBAN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_01_one_push.json
+{
+ "cabinet": "sokoban",
+ "entrant": "ministral-3b",
+ "level": "01_one_push.txt",
+ "exit": 0,
+ "wall_s": 4.6,
+ "artifact_exists": true,
+ "card_max_mib": 4539,
+ "pid_max_mib": 2744,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+[preserve] SOKOBAN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_02_two_boxes.json sha256 e2445ede9e910574 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140007/SOKOBAN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_02_two_boxes.json
+{
+ "cabinet": "sokoban",
+ "entrant": "ministral-3b",
+ "level": "02_two_boxes.txt",
+ "exit": 0,
+ "wall_s": 23.2,
+ "artifact_exists": true,
+ "card_max_mib": 4539,
+ "pid_max_mib": 2744,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1789,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+[preserve] SOKOBAN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_03_the_corner_waiting.json sha256 e994d8136c356c70 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140031/SOKOBAN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_03_the_corner_waiting.json
+{
+ "cabinet": "sokoban",
+ "entrant": "ministral-3b",
+ "level": "03_the_corner_waiting.txt",
+ "exit": 0,
+ "wall_s": 23.1,
+ "artifact_exists": true,
+ "card_max_mib": 4539,
+ "pid_max_mib": 2744,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": -10,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- sokoban / ornith-9b 2026-10-26T14:00:56-0700 ---
+[preserve] SOKOBAN_Ornith-1.5-9B-Q4_K_M_01_one_push.json sha256 5f809df9e389a973 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140056/SOKOBAN_Ornith-1.5-9B-Q4_K_M_01_one_push.json
+{
+ "cabinet": "sokoban",
+ "entrant": "ornith-9b",
+ "level": "01_one_push.txt",
+ "exit": 0,
+ "wall_s": 6.7,
+ "artifact_exists": true,
+ "card_max_mib": 7034,
+ "pid_max_mib": 5250,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+[preserve] SOKOBAN_Ornith-1.5-9B-Q4_K_M_02_two_boxes.json sha256 61c55eff09e5eba5 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140104/SOKOBAN_Ornith-1.5-9B-Q4_K_M_02_two_boxes.json
+{
+ "cabinet": "sokoban",
+ "entrant": "ornith-9b",
+ "level": "02_two_boxes.txt",
+ "exit": 0,
+ "wall_s": 32.3,
+ "artifact_exists": true,
+ "card_max_mib": 7034,
+ "pid_max_mib": 5250,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+[preserve] SOKOBAN_Ornith-1.5-9B-Q4_K_M_03_the_corner_waiting.json sha256 fb04d4598c527c0e -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140137/SOKOBAN_Ornith-1.5-9B-Q4_K_M_03_the_corner_waiting.json
+{
+ "cabinet": "sokoban",
+ "entrant": "ornith-9b",
+ "level": "03_the_corner_waiting.txt",
+ "exit": 0,
+ "wall_s": 34.0,
+ "artifact_exists": true,
+ "card_max_mib": 7034,
+ "pid_max_mib": 5250,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- sokoban / mimo-9b 2026-10-26T14:02:12-0700 ---
+[preserve] SOKOBAN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_01_one_push.json sha256 e7980ededf506099 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140212/SOKOBAN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_01_one_push.json
+{
+ "cabinet": "sokoban",
+ "entrant": "mimo-9b",
+ "level": "01_one_push.txt",
+ "exit": 0,
+ "wall_s": 48.7,
+ "artifact_exists": true,
+ "card_max_mib": 7250,
+ "pid_max_mib": 5466,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+[preserve] SOKOBAN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_02_two_boxes.json sha256 18a9a920f599dfa8 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140301/SOKOBAN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_02_two_boxes.json
+{
+ "cabinet": "sokoban",
+ "entrant": "mimo-9b",
+ "level": "02_two_boxes.txt",
+ "exit": 0,
+ "wall_s": 44.5,
+ "artifact_exists": true,
+ "card_max_mib": 7250,
+ "pid_max_mib": 5466,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+[preserve] SOKOBAN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_03_the_corner_waiting.json sha256 8e094f7f5f886a60 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140346/SOKOBAN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_03_the_corner_waiting.json
+{
+ "cabinet": "sokoban",
+ "entrant": "mimo-9b",
+ "level": "03_the_corner_waiting.txt",
+ "exit": 0,
+ "wall_s": 50.4,
+ "artifact_exists": true,
+ "card_max_mib": 7252,
+ "pid_max_mib": 5468,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- sokoban / bonsai-9b 2026-10-26T14:04:37-0700 ---
+[preserve] SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_01_one_push.json sha256 d3c1bebf33e9276a -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140437/SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_01_one_push.json
+{
+ "cabinet": "sokoban",
+ "entrant": "bonsai-9b",
+ "level": "01_one_push.txt",
+ "exit": 0,
+ "wall_s": 8.3,
+ "artifact_exists": true,
+ "card_max_mib": 4344,
+ "pid_max_mib": 2560,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+[preserve] SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_02_two_boxes.json sha256 4642f29e98d70e64 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140448/SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_02_two_boxes.json
+{
+ "cabinet": "sokoban",
+ "entrant": "bonsai-9b",
+ "level": "02_two_boxes.txt",
+ "exit": 0,
+ "wall_s": 13.7,
+ "artifact_exists": true,
+ "card_max_mib": 4344,
+ "pid_max_mib": 2560,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+[preserve] SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_03_the_corner_waiting.json sha256 29ed2ba77d8d8f14 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140502/SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_03_the_corner_waiting.json
+{
+ "cabinet": "sokoban",
+ "entrant": "bonsai-9b",
+ "level": "03_the_corner_waiting.txt",
+ "exit": 0,
+ "wall_s": 9.1,
+ "artifact_exists": true,
+ "card_max_mib": 4344,
+ "pid_max_mib": 2560,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- zork / ministral-3b 2026-10-26T14:05:12-0700 ---
+[preserve] ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_01_the_floor.json sha256 7e57408fe63fd5ad -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140512/ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_01_the_floor.json
+{
+ "cabinet": "zork",
+ "entrant": "ministral-3b",
+ "level": "zork_01_the_floor.txt",
+ "exit": 0,
+ "wall_s": 7.5,
+ "artifact_exists": true,
+ "card_max_mib": 4528,
+ "pid_max_mib": 2744,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+[preserve] ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_02_long_crawl.json sha256 df3ef57991986620 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140521/ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_02_long_crawl.json
+{
+ "cabinet": "zork",
+ "entrant": "ministral-3b",
+ "level": "zork_02_long_crawl.txt",
+ "exit": 0,
+ "wall_s": 5.8,
+ "artifact_exists": true,
+ "card_max_mib": 4528,
+ "pid_max_mib": 2744,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- zork / ornith-9b 2026-10-26T14:05:27-0700 ---
+[preserve] ZORK_Ornith-1.5-9B-Q4_K_M_zork_01_the_floor.json sha256 24841df4d193ea58 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140527/ZORK_Ornith-1.5-9B-Q4_K_M_zork_01_the_floor.json
+{
+ "cabinet": "zork",
+ "entrant": "ornith-9b",
+ "level": "zork_01_the_floor.txt",
+ "exit": 0,
+ "wall_s": 7.3,
+ "artifact_exists": true,
+ "card_max_mib": 7034,
+ "pid_max_mib": 5250,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+[preserve] ZORK_Ornith-1.5-9B-Q4_K_M_zork_02_long_crawl.json sha256 60d06b325250d4c9 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140535/ZORK_Ornith-1.5-9B-Q4_K_M_zork_02_long_crawl.json
+{
+ "cabinet": "zork",
+ "entrant": "ornith-9b",
+ "level": "zork_02_long_crawl.txt",
+ "exit": 0,
+ "wall_s": 12.7,
+ "artifact_exists": true,
+ "card_max_mib": 7038,
+ "pid_max_mib": 5254,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- zork / mimo-9b 2026-10-26T14:05:49-0700 ---
+[preserve] ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_01_the_floor.json sha256 3f660454a52843aa -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140549/ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_01_the_floor.json
+{
+ "cabinet": "zork",
+ "entrant": "mimo-9b",
+ "level": "zork_01_the_floor.txt",
+ "exit": 0,
+ "wall_s": 11.9,
+ "artifact_exists": true,
+ "card_max_mib": 7254,
+ "pid_max_mib": 5470,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+[preserve] ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_02_long_crawl.json sha256 4f26f6cf6c8f36bb -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140602/ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_02_long_crawl.json
+{
+ "cabinet": "zork",
+ "entrant": "mimo-9b",
+ "level": "zork_02_long_crawl.txt",
+ "exit": 0,
+ "wall_s": 12.0,
+ "artifact_exists": true,
+ "card_max_mib": 7256,
+ "pid_max_mib": 5472,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+--- zork / bonsai-9b 2026-10-26T14:06:14-0700 ---
+[preserve] ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_01_the_floor.json sha256 7b5c27c5cd645746 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140614/ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_01_the_floor.json
+{
+ "cabinet": "zork",
+ "entrant": "bonsai-9b",
+ "level": "zork_01_the_floor.txt",
+ "exit": 0,
+ "wall_s": 5.4,
+ "artifact_exists": true,
+ "card_max_mib": 4344,
+ "pid_max_mib": 2560,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+[preserve] ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_02_long_crawl.json sha256 d466037a2b1a0093 -> /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140620/ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_02_long_crawl.json
+{
+ "cabinet": "zork",
+ "entrant": "bonsai-9b",
+ "level": "zork_02_long_crawl.txt",
+ "exit": 0,
+ "wall_s": 9.2,
+ "artifact_exists": true,
+ "card_max_mib": 4346,
+ "pid_max_mib": 2562,
+ "controls": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_delta_mib": 0,
+  "vram_back_to_baseline": true,
+  "resident_health_after": 200
+ }
+}
+=== WINDOW t_925f606f end 2026-10-26T14:06:30-0700 ===
+
+run COMPLETE — 'python3' exited 0 after attempt 1 in 1103s; the lease held across every attempt and is now released.
+WINDOW_EXIT=0
+Mon Oct 26 02:06:30 PM PDT 2026

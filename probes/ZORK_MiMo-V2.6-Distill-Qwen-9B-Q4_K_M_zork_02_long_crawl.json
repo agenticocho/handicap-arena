@@ -1,34 +1,141 @@
 {
  "finished": false,
  "ending": "out_of_commands",
- "carried_required_item": true,
+ "carried_required_item": false,
  "required_item": "brasskey",
  "start_room": "hall",
- "took_item_at_step": 17,
+ "took_item_at_step": null,
  "commands": 20,
  "commands_consumed": 20,
  "counts": {
-  "parsed": 9,
+  "parsed": 8,
   "unparsed": 0,
-  "recognised-but-impossible": 11
+  "recognised-but-impossible": 12
  },
  "outcomes": {
-  "took": 2,
-  "already_carrying": 10,
-  "looked": 2,
-  "inventoried": 4,
-  "moved": 1,
-  "no_exit": 1
+  "took": 1,
+  "already_carrying": 12,
+  "looked": 7
  },
+ "attribution": {
+  "accepted": 8,
+  "rejected": 12,
+  "UNATTRIBUTABLE": 0
+ },
+ "attribution_reasons": {
+  "acted": 8,
+  "already_carrying": 12
+ },
+ "attribution_reasons_text": {
+  "acted": "a verb was read, its object resolved, and the world executed it",
+  "already_carrying": "the item resolved and it is already in hand"
+ },
+ "attribution_of": "counted per row on trace[].attribution. `accepted` is what the world ACTED on; `rejected` is a verb this world knows, refused, with its reason; UNATTRIBUTABLE is not in the game's command language at all. Every row is attributed exactly once and every category maps back to one of the three frozen counters -- see trace[].counted_under.",
+ "attribution_checked_against_counts": true,
  "rooms_visited": [
-  "hall",
-  "cellar"
+  "hall"
  ],
  "rooms": 5,
- "final_room": "cellar",
+ "progress": {
+  "score": {
+   "finished": false,
+   "ending": "out_of_commands",
+   "carried_required_item": false,
+   "took_item_at_step": null
+  },
+  "rooms": {
+   "total_in_world": 5,
+   "reachable_from_start": 5,
+   "exits_in_world": 8,
+   "visited": 1,
+   "visited_fraction_of_reachable": 0.2,
+   "route": [
+    "hall"
+   ],
+   "revisited": 20
+  },
+  "objects": {
+   "total_in_world": 2,
+   "moved_from_start_placement": 1,
+   "in_hand": [
+    "torch"
+   ],
+   "placement": {
+    "brasskey": "cellar",
+    "torch": null
+   },
+   "required_item_start_room": "cellar",
+   "required_item_placement_now": "cellar",
+   "required_item_moved": false
+  },
+  "bearing": {
+   "gate_room": "vault",
+   "distance_start_to_gate": 3,
+   "distance_final_room_to_gate": 3,
+   "closest_gate_distance_reached": 3,
+   "fraction_of_the_way_along_the_graph": 0.0,
+   "distance_trail": [
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3
+   ],
+   "monotone_toward_gate": true
+  }
+ },
+ "progress_field_source": {
+  "score.finished": "world",
+  "score.ending": "world",
+  "score.carried_required_item": "world",
+  "score.took_item_at_step": "world",
+  "rooms.total_in_world": "world",
+  "rooms.reachable_from_start": "world",
+  "rooms.exits_in_world": "world",
+  "rooms.visited": "world",
+  "rooms.visited_fraction_of_reachable": "world",
+  "rooms.route": "world",
+  "rooms.revisited": "world",
+  "objects.total_in_world": "world",
+  "objects.moved_from_start_placement": "world",
+  "objects.in_hand": "world",
+  "objects.placement": "world",
+  "objects.required_item_start_room": "world",
+  "objects.required_item_placement_now": "world",
+  "objects.required_item_moved": "world",
+  "bearing.gate_room": "world",
+  "bearing.distance_start_to_gate": "world",
+  "bearing.distance_final_room_to_gate": "world",
+  "bearing.closest_gate_distance_reached": "world",
+  "bearing.fraction_of_the_way_along_the_graph": "world",
+  "bearing.distance_trail": "world",
+  "bearing.monotone_toward_gate": "world"
+ },
+ "progress_prose_only": {
+  "turns[].raw": "the model's reply, truncated to 400 characters for size -- READ BY NO SCORER, and nothing is computed from it",
+  "turns[].command": "the first non-empty line of the reply, verbatim. PROSE-DERIVED: this is the one field in a run that comes out of the entrant's own words, and it is the INPUT to the parser, not a measurement of progress",
+  "turns[].answer_field": "which JSON field the answer was read from, off the wire -- not world state",
+  "progress.<none>": "NOTHING in the progress block is prose-derived; every leaf above is computed from the parsed world and the world's state"
+ },
+ "final_room": "hall",
  "final_inventory": [
-  "torch",
-  "brasskey"
+  "torch"
  ],
  "trace": [
   {
@@ -41,7 +148,11 @@
    "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "accepted",
+   "reason": "acted",
+   "reason_text": "a verb was read, its object resolved, and the world executed it",
+   "counted_under": "parsed"
   },
   {
    "step": 1,
@@ -53,7 +164,11 @@
    "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "rejected",
+   "reason": "already_carrying",
+   "reason_text": "the item resolved and it is already in hand",
+   "counted_under": "recognised-but-impossible"
   },
   {
    "step": 2,
@@ -65,7 +180,11 @@
    "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "accepted",
+   "reason": "acted",
+   "reason_text": "a verb was read, its object resolved, and the world executed it",
+   "counted_under": "parsed"
   },
   {
    "step": 3,
@@ -77,7 +196,11 @@
    "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "rejected",
+   "reason": "already_carrying",
+   "reason_text": "the item resolved and it is already in hand",
+   "counted_under": "recognised-but-impossible"
   },
   {
    "step": 4,
@@ -89,7 +212,11 @@
    "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "rejected",
+   "reason": "already_carrying",
+   "reason_text": "the item resolved and it is already in hand",
+   "counted_under": "recognised-but-impossible"
   },
   {
    "step": 5,
@@ -101,7 +228,11 @@
    "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "rejected",
+   "reason": "already_carrying",
+   "reason_text": "the item resolved and it is already in hand",
+   "counted_under": "recognised-but-impossible"
   },
   {
    "step": 6,
@@ -113,7 +244,11 @@
    "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "rejected",
+   "reason": "already_carrying",
+   "reason_text": "the item resolved and it is already in hand",
+   "counted_under": "recognised-but-impossible"
   },
   {
    "step": 7,
@@ -125,7 +260,11 @@
    "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "rejected",
+   "reason": "already_carrying",
+   "reason_text": "the item resolved and it is already in hand",
+   "counted_under": "recognised-but-impossible"
   },
   {
    "step": 8,
@@ -137,7 +276,11 @@
    "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "rejected",
+   "reason": "already_carrying",
+   "reason_text": "the item resolved and it is already in hand",
+   "counted_under": "recognised-but-impossible"
   },
   {
    "step": 9,
@@ -149,67 +292,91 @@
    "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "rejected",
+   "reason": "already_carrying",
+   "reason_text": "the item resolved and it is already in hand",
+   "counted_under": "recognised-but-impossible"
   },
   {
    "step": 10,
-   "command": "inventory",
-   "verb": "inventory",
-   "object": null,
-   "outcome": "inventoried",
-   "note": "carrying: torch",
+   "command": "take torch",
+   "verb": "take",
+   "object": "torch",
+   "outcome": "already_carrying",
+   "note": "torch is already in hand",
    "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "rejected",
+   "reason": "already_carrying",
+   "reason_text": "the item resolved and it is already in hand",
+   "counted_under": "recognised-but-impossible"
   },
   {
    "step": 11,
-   "command": "north",
-   "verb": "go",
-   "object": "north",
-   "outcome": "moved",
-   "note": "now in Root Cellar",
-   "room": "cellar",
+   "command": "take torch",
+   "verb": "take",
+   "object": "torch",
+   "outcome": "already_carrying",
+   "note": "torch is already in hand",
+   "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "rejected",
+   "reason": "already_carrying",
+   "reason_text": "the item resolved and it is already in hand",
+   "counted_under": "recognised-but-impossible"
   },
   {
    "step": 12,
-   "command": "north",
-   "verb": "go",
-   "object": "north",
-   "outcome": "no_exit",
-   "note": "no north exit from Root Cellar",
-   "room": "cellar",
+   "command": "take torch",
+   "verb": "take",
+   "object": "torch",
+   "outcome": "already_carrying",
+   "note": "torch is already in hand",
+   "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "rejected",
+   "reason": "already_carrying",
+   "reason_text": "the item resolved and it is already in hand",
+   "counted_under": "recognised-but-impossible"
   },
   {
    "step": 13,
-   "command": "inventory",
-   "verb": "inventory",
+   "command": "look",
+   "verb": "look",
    "object": null,
-   "outcome": "inventoried",
-   "note": "carrying: torch",
-   "room": "cellar",
+   "outcome": "looked",
+   "note": "A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing",
+   "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "accepted",
+   "reason": "acted",
+   "reason_text": "a verb was read, its object resolved, and the world executed it",
+   "counted_under": "parsed"
   },
   {
    "step": 14,
-   "command": "inventory",
-   "verb": "inventory",
-   "object": null,
-   "outcome": "inventoried",
-   "note": "carrying: torch",
-   "room": "cellar",
+   "command": "take torch",
+   "verb": "take",
+   "object": "torch",
+   "outcome": "already_carrying",
+   "note": "torch is already in hand",
+   "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "rejected",
+   "reason": "already_carrying",
+   "reason_text": "the item resolved and it is already in hand",
+   "counted_under": "recognised-but-impossible"
   },
   {
    "step": 15,
@@ -217,62 +384,79 @@
    "verb": "look",
    "object": null,
    "outcome": "looked",
-   "note": "A root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey",
-   "room": "cellar",
+   "note": "A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing",
+   "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "accepted",
+   "reason": "acted",
+   "reason_text": "a verb was read, its object resolved, and the world executed it",
+   "counted_under": "parsed"
   },
   {
    "step": 16,
-   "command": "inventory",
-   "verb": "inventory",
+   "command": "look",
+   "verb": "look",
    "object": null,
-   "outcome": "inventoried",
-   "note": "carrying: torch",
-   "room": "cellar",
+   "outcome": "looked",
+   "note": "A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing",
+   "room": "hall",
    "inventory": [
     "torch"
-   ]
+   ],
+   "attribution": "accepted",
+   "reason": "acted",
+   "reason_text": "a verb was read, its object resolved, and the world executed it",
+   "counted_under": "parsed"
   },
   {
    "step": 17,
-   "command": "take brasskey",
-   "verb": "take",
-   "object": "brasskey",
-   "outcome": "took",
-   "note": "took brasskey",
-   "room": "cellar",
+   "command": "look",
+   "verb": "look",
+   "object": null,
+   "outcome": "looked",
+   "note": "A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing",
+   "room": "hall",
    "inventory": [
-    "torch",
-    "brasskey"
-   ]
+    "torch"
+   ],
+   "attribution": "accepted",
+   "reason": "acted",
+   "reason_text": "a verb was read, its object resolved, and the world executed it",
+   "counted_under": "parsed"
   },
   {
    "step": 18,
-   "command": "take brasskey",
-   "verb": "take",
-   "object": "brasskey",
-   "outcome": "already_carrying",
-   "note": "brasskey is already in hand",
-   "room": "cellar",
+   "command": "look",
+   "verb": "look",
+   "object": null,
+   "outcome": "looked",
+   "note": "A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing",
+   "room": "hall",
    "inventory": [
-    "torch",
-    "brasskey"
-   ]
+    "torch"
+   ],
+   "attribution": "accepted",
+   "reason": "acted",
+   "reason_text": "a verb was read, its object resolved, and the world executed it",
+   "counted_under": "parsed"
   },
   {
    "step": 19,
-   "command": "take brasskey",
-   "verb": "take",
-   "object": "brasskey",
-   "outcome": "already_carrying",
-   "note": "brasskey is already in hand",
-   "room": "cellar",
+   "command": "look",
+   "verb": "look",
+   "object": null,
+   "outcome": "looked",
+   "note": "A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing",
+   "room": "hall",
    "inventory": [
-    "torch",
-    "brasskey"
-   ]
+    "torch"
+   ],
+   "attribution": "accepted",
+   "reason": "acted",
+   "reason_text": "a verb was read, its object resolved, and the world executed it",
+   "counted_under": "parsed"
   }
  ],
  "ended": "out_of_commands",
@@ -287,7 +471,7 @@
  "level_digest": "c1d33b940fd842ed",
  "level_digest_scope": "sha256 of the LEVEL FILE, first 16 hex",
  "simulator": "zork.py",
- "simulator_digest": "ff35ec83b340fbf0",
+ "simulator_digest": "b9701007d6e186d5",
  "simulator_digest_scope": "sha256 of the SIMULATOR FILE, first 16 hex. THE SIMULATOR IS THE INSTRUMENT THIS EVENT IS MEASURED WITH, and it is pre-registered: a record that cannot say which simulator scored it cannot be placed against the frozen criteria.",
  "turns": [
   {
@@ -333,7 +517,7 @@
    "ply": 3,
    "raw": "take torch",
    "command": "take torch",
-   "secs": 0.7,
+   "secs": 0.3,
    "gen_tokens": 3,
    "budget_hit": false,
    "cap_cut": "nothing -- the model stopped on its own",
@@ -346,7 +530,7 @@
    "ply": 4,
    "raw": "take torch",
    "command": "take torch",
-   "secs": 0.4,
+   "secs": 0.3,
    "gen_tokens": 3,
    "budget_hit": false,
    "cap_cut": "nothing -- the model stopped on its own",
@@ -422,10 +606,10 @@
   },
   {
    "ply": 10,
-   "raw": "inventory",
-   "command": "inventory",
+   "raw": "take torch",
+   "command": "take torch",
    "secs": 0.2,
-   "gen_tokens": 2,
+   "gen_tokens": 3,
    "budget_hit": false,
    "cap_cut": "nothing -- the model stopped on its own",
    "answer_field": "content",
@@ -435,8 +619,34 @@
   },
   {
    "ply": 11,
-   "raw": "north",
-   "command": "north",
+   "raw": "take torch",
+   "command": "take torch",
+   "secs": 0.3,
+   "gen_tokens": 3,
+   "budget_hit": false,
+   "cap_cut": "nothing -- the model stopped on its own",
+   "answer_field": "content",
+   "missing_value": false,
+   "state": "A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing",
+   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> take torch\n  took torch\n> take torch\n  torch is already in hand\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
+  },
+  {
+   "ply": 12,
+   "raw": "take torch",
+   "command": "take torch",
+   "secs": 0.3,
+   "gen_tokens": 3,
+   "budget_hit": false,
+   "cap_cut": "nothing -- the model stopped on its own",
+   "answer_field": "content",
+   "missing_value": false,
+   "state": "A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing",
+   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> take torch\n  took torch\n> take torch\n  torch is already in hand\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
+  },
+  {
+   "ply": 13,
+   "raw": "look",
+   "command": "look",
    "secs": 0.3,
    "gen_tokens": 2,
    "budget_hit": false,
@@ -444,115 +654,89 @@
    "answer_field": "content",
    "missing_value": false,
    "state": "A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing",
-   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> take torch\n  took torch\n> take torch\n  torch is already in hand\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> inventory\n  carrying: torch\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
-  },
-  {
-   "ply": 12,
-   "raw": "north",
-   "command": "north",
-   "secs": 0.4,
-   "gen_tokens": 2,
-   "budget_hit": false,
-   "cap_cut": "nothing -- the model stopped on its own",
-   "answer_field": "content",
-   "missing_value": false,
-   "state": "A root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey",
-   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> take torch\n  took torch\n> take torch\n  torch is already in hand\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> inventory\n  carrying: torch\n> north\n  now in Root Cellar\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
-  },
-  {
-   "ply": 13,
-   "raw": "inventory",
-   "command": "inventory",
-   "secs": 0.5,
-   "gen_tokens": 2,
-   "budget_hit": false,
-   "cap_cut": "nothing -- the model stopped on its own",
-   "answer_field": "content",
-   "missing_value": false,
-   "state": "A root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey",
-   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> take torch\n  torch is already in hand\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> inventory\n  carrying: torch\n> north\n  now in Root Cellar\n> north\n  no north exit from Root Cellar\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
+   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> take torch\n  torch is already in hand\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
   },
   {
    "ply": 14,
-   "raw": "inventory",
-   "command": "inventory",
-   "secs": 0.5,
-   "gen_tokens": 2,
+   "raw": "take torch",
+   "command": "take torch",
+   "secs": 0.3,
+   "gen_tokens": 3,
    "budget_hit": false,
    "cap_cut": "nothing -- the model stopped on its own",
    "answer_field": "content",
    "missing_value": false,
-   "state": "A root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey",
-   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> inventory\n  carrying: torch\n> north\n  now in Root Cellar\n> north\n  no north exit from Root Cellar\n> inventory\n  carrying: torch\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
+   "state": "A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing",
+   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
   },
   {
    "ply": 15,
    "raw": "look",
    "command": "look",
-   "secs": 0.4,
-   "gen_tokens": 2,
-   "budget_hit": false,
-   "cap_cut": "nothing -- the model stopped on its own",
-   "answer_field": "content",
-   "missing_value": false,
-   "state": "A root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey",
-   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> inventory\n  carrying: torch\n> north\n  now in Root Cellar\n> north\n  no north exit from Root Cellar\n> inventory\n  carrying: torch\n> inventory\n  carrying: torch\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
-  },
-  {
-   "ply": 16,
-   "raw": "inventory",
-   "command": "inventory",
    "secs": 0.3,
    "gen_tokens": 2,
    "budget_hit": false,
    "cap_cut": "nothing -- the model stopped on its own",
    "answer_field": "content",
    "missing_value": false,
-   "state": "A root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey",
-   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> inventory\n  carrying: torch\n> north\n  now in Root Cellar\n> north\n  no north exit from Root Cellar\n> inventory\n  carrying: torch\n> inventory\n  carrying: torch\n> look\n  A root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
+   "state": "A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing",
+   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> take torch\n  torch is already in hand\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
+  },
+  {
+   "ply": 16,
+   "raw": "look",
+   "command": "look",
+   "secs": 0.3,
+   "gen_tokens": 2,
+   "budget_hit": false,
+   "cap_cut": "nothing -- the model stopped on its own",
+   "answer_field": "content",
+   "missing_value": false,
+   "state": "A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing",
+   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> take torch\n  torch is already in hand\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
   },
   {
    "ply": 17,
-   "raw": "take brasskey",
-   "command": "take brasskey",
-   "secs": 0.8,
-   "gen_tokens": 4,
+   "raw": "look",
+   "command": "look",
+   "secs": 0.3,
+   "gen_tokens": 2,
    "budget_hit": false,
    "cap_cut": "nothing -- the model stopped on its own",
    "answer_field": "content",
    "missing_value": false,
-   "state": "A root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey",
-   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> inventory\n  carrying: torch\n> north\n  now in Root Cellar\n> north\n  no north exit from Root Cellar\n> inventory\n  carrying: torch\n> inventory\n  carrying: torch\n> look\n  A root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey\n> inventory\n  carrying: torch\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
+   "state": "A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing",
+   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> take torch\n  torch is already in hand\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
   },
   {
    "ply": 18,
-   "raw": "take brasskey",
-   "command": "take brasskey",
-   "secs": 0.4,
-   "gen_tokens": 4,
+   "raw": "look",
+   "command": "look",
+   "secs": 0.3,
+   "gen_tokens": 2,
    "budget_hit": false,
    "cap_cut": "nothing -- the model stopped on its own",
    "answer_field": "content",
    "missing_value": false,
-   "state": "A root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: nothing",
-   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: nothing\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> inventory\n  carrying: torch\n> north\n  now in Root Cellar\n> north\n  no north exit from Root Cellar\n> inventory\n  carrying: torch\n> inventory\n  carrying: torch\n> look\n  A root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey\n> inventory\n  carrying: torch\n> take brasskey\n  took brasskey\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
+   "state": "A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing",
+   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> take torch\n  torch is already in hand\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
   },
   {
    "ply": 19,
-   "raw": "take brasskey",
-   "command": "take brasskey",
-   "secs": 0.5,
-   "gen_tokens": 4,
+   "raw": "look",
+   "command": "look",
+   "secs": 0.3,
+   "gen_tokens": 2,
    "budget_hit": false,
    "cap_cut": "nothing -- the model stopped on its own",
    "answer_field": "content",
    "missing_value": false,
-   "state": "A root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: nothing",
-   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: nothing\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> inventory\n  carrying: torch\n> north\n  now in Root Cellar\n> north\n  no north exit from Root Cellar\n> inventory\n  carrying: torch\n> inventory\n  carrying: torch\n> look\n  A root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: brasskey\n> inventory\n  carrying: torch\n> take brasskey\n  took brasskey\n> take brasskey\n  brasskey is already in hand\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
+   "state": "A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing",
+   "prompt": "You are exploring a small world, one command at a time. You can only see the room you are standing in, and you are told what your last few commands did.\n\nHere is the room you are in now.\n\nA dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n\nHere is your session so far -- the lines you typed and what the world answered.\n\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> take torch\n  torch is already in hand\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> take torch\n  torch is already in hand\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n> look\n  A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing\n\nThe world understands five kinds of command. You walk by naming a direction: north, south, east or west, and the single letters n, s, e and w mean the same thing. You take something by naming it after the word take, and get, grab and pick up mean the same as take. You put something down with drop. You study the room with look, and you study yourself and what you are carrying with inventory, whose short form is the single letter i.\n\nReply with your next command on one line. Put nothing else on that line; if you want to explain yourself, the explanation goes on the lines after it. Name things exactly as they are written in the room, because the world does not guess what an invented word means."
   }
  ],
  "cap": 20,
- "final_state": "A root cellar. Damp brick, and something metal on a shelf.  Exits: south.  Here: nothing",
+ "final_state": "A dust-choked hall. A cold draught comes from the north.  Exits: east, north.  Here: nothing",
  "legend": "state-as-text",
  "legend_digest": "a288ad6f5b387e3d",
  "legend_digest_scope": "sha256, first 16 hex, of EVERYTHING THE ENTRANT SAW as a function of the state: the prompt template, the simulator's describe() source, and the transcript layout",
@@ -571,8 +755,10 @@
   "reasoning_supported_by_build": true,
   "max_tokens_ceiling": 64,
   "command_cap": 20,
+  "n_gpu_layers": 99,
   "ctx": 4096,
-  "n_gpu_layers": 0,
+  "parallel": 1,
+  "computed_from": "config.server_argv -- the summary fields above are READ OUT of the argv that was run, not written beside it, because this file once wrote them from the module constants and the two disagreed on every GPU row",
   "temperature": 0.0,
   "transcript_lines": 12,
   "legend": "state-as-text",
@@ -616,7 +802,7 @@
   "release": "7.0.0-38-generic",
   "machine": "x86_64",
   "cpus": 12,
-  "python": "3.14.4"
+  "python": "3.14.9"
  },
  "reading_note": {
   "driver_rule": "THE FIRST NON-EMPTY LINE, VERBATIM. Nothing is mined from prose; whether the line IS a command is the simulator's parser's decision.",
@@ -624,8 +810,14 @@
   "measured_frozen_parser_2": "a command with a trailing sentence is refused AS A WHOLE and counted `unparsed` (strict identity, per the prereg's boundary rule): `take the key and walk north` does not resolve",
   "consequence_for_a_reader": "`parsed` is NOT a count of progress: it includes commands the world executed and did nothing with (inventory, look). The score is `finished`/`ending`, computed by the simulator; `carried_required_item` is the faculty flag."
  },
+ "attribution_scope": "counted per row on trace[].attribution. `accepted` is what the world ACTED on; `rejected` is a verb this world knows, refused, with its reason; UNATTRIBUTABLE is not in the game's command language at all. Every row is attributed exactly once and every category maps back to one of the three frozen counters -- see trace[].counted_under.",
+ "attribution_is_the_scoreable_form": true,
+ "scoreable": true,
+ "scoreable_scope": "A ROW WITHOUT THE COUNTS IS NOT SCOREABLE. This flag is true only when every row was attributed exactly once AND the per-row attribution sums back to the frozen counters. Records written before this axis existed carry no `attribution` and no `scoreable`, and their absence is the statement that they are not scoreable on it -- they are not repaired, rewritten or re-scored.",
+ "progress_scope": "EVERY field of `progress` is computed from the parsed world and the world's state -- room count, objects moved, score and the BFS distance to the gate. NOTHING in it is parsed from the entrant's prose. The one prose-derived field in a run is `turns[].command`, which is the INPUT to the parser; see `progress_prose_only` for the full list, and `progress_field_source` for the declared provenance of every leaf -- a control in zork.py fails if a leaf appears without a declared source.",
  "unreadable": 0,
  "unreadable_is_the_aggregate_of": "unparsed (the simulator's own counter, per command)",
+ "unreadable_scope": "THE FORMAT FIELD, AND IT IS THE FROZEN COUNTER `unparsed` UNDER ANOTHER NAME. IT IS NOT A SINGLE CLAIM: it holds BOTH the commands that were refused (a verb this world knows, an argument it does not) AND the commands that were not in the language at all. A reader who wants to know which should read `attribution.unattributable`; a reader who needs the prereg's number reads this one. The two are reported and both are true; they are not two readings of one thing, they are two questions about one run.",
  "missing_values": 0,
  "missing_values_are_a_subset_of": "a missing value is NOT inside `unreadable` here: `unreadable` counts COMMANDS the parser could not read, and a missing value is not a command at all -- the harness produced it. Both are non-answers and both are reported; they are SEPARATE because one is about the model's phrasing and the other about the ceiling.",
  "never_started": 0,
@@ -641,7 +833,7 @@
  "criteria_read_by": "NOT THIS DRIVER -- C1-C4 and the verdict belong to Ocho and the Chair (CABINET_STRUCTURE.md rule 4). The counters above are the cell's; the criterion is not evaluated here, and no field in this record says pass or fail.",
  "sufficiency": {
   "checked": true,
-  "reproduces": false,
+  "reproduces": true,
   "replayed_from": "the record alone: trace[].command, verbatim, plus the level text it carries",
   "fields_compared": [
    "finished",
@@ -658,11 +850,31 @@
    "final_inventory"
   ],
   "fields_mismatched": [],
-  "trace_rows_mismatched": [],
-  "simulator_replay_mismatched": [
-   "took_item_at_step"
+  "axis_measured": true,
+  "axis_fields_compared": [
+   "attribution",
+   "attribution_reasons",
+   "progress"
   ],
-  "reading": "THE RECORD DOES NOT REPRODUCE ITS OWN SCORE. THIS IS NOT A RESULT: it is an instrument failure, and the number above it must not be filed."
+  "axis_fields_mismatched": [],
+  "attribution_rows_mismatched": [],
+  "trace_rows_mismatched": [],
+  "simulator_replay_mismatched": [],
+  "replay_basis": "the first take OF THE REQUIRED ITEM",
+  "reading": "THE RECORD REPRODUCES ITS OWN SCORE -- the simulator, given nothing but this record, returns the same score, the same counters, the same attribution and the same rows."
  },
- "sufficiency_ok": false
+ "sufficiency_ok": true,
+ "artifact_replaced": {
+  "path": "probes/ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_02_long_crawl.json",
+  "sha256": "4f26f6cf6c8f36bb9ddf235a50fefcc50cea9679efc9fcd356d02fff298a23f4",
+  "bytes": 49733,
+  "mtime": "2026-10-25T20:47:27Z",
+  "it_named": {
+   "server_binary_digest": "0d5393431782ddf8",
+   "legend_digest": "a288ad6f5b387e3d",
+   "reasoning": "off"
+  },
+  "reason_given": "GPU window t_925f606f: re-measuring this cell under the instrument certified on 2026-10-26. The pre-existing record(s) are preserved with their digests under suite3/preserved/ and are reported BESIDE this row, never merged into it.",
+  "reading": "THIS RUN REPLACED THE RECORD AT THIS PATH. The replaced record is NOT recoverable from this file: what survives is that it existed, the digest of the bytes it was, and what it said about its own instrument. The reason above is the operator's, verbatim, and is checked against nothing."
+ }
 }

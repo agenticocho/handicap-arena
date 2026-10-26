@@ -1,0 +1,8 @@
+{
+ "original": "/home/chilly1/workspace/cabinet_results/main/CHESS_GAME_ministral-3b-suite3.json",
+ "preserved_at": "/home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-135407/CHESS_GAME_ministral-3b-suite3.json",
+ "sha256": "aa93cf25b18479c0f1d8ff0e27acfc26b444324f53f10caae948b9cc038445c1",
+ "bytes": 6815,
+ "why": "GPU window t_925f606f: pre-existing chess row at this label",
+ "preserved": "2026-10-26T13:54:07-0700"
+}

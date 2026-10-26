@@ -1,0 +1,8 @@
+{
+ "original": "/home/chilly1/workspace/ocho_arena/probes/ZORK_Ornith-1.5-9B-Q4_K_M_zork_02_long_crawl.json",
+ "preserved_at": "/home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140535/ZORK_Ornith-1.5-9B-Q4_K_M_zork_02_long_crawl.json",
+ "sha256": "60d06b325250d4c9f6fadb5d2a908d49b4427465213e80c802d176c4df412444",
+ "bytes": 21527,
+ "why": "GPU window t_925f606f: pre-existing record at this cell",
+ "preserved": "2026-10-26T14:05:35-0700"
+}

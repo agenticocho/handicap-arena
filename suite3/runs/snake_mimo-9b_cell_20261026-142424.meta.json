@@ -1,0 +1,59 @@
+{
+ "window": "t_925f606f",
+ "cabinet": "snake",
+ "entrant": "mimo-9b",
+ "level": null,
+ "block_started": "2026-10-26T14:35:02-0700",
+ "shape": "cpu-only (certified driver: -c 65536 -ngl 0)",
+ "lease_held": false,
+ "gpu_baseline_mib": 1790,
+ "resident_health_before": 200,
+ "driver_path": "/home/chilly1/workspace/ocho_arena_cabinets/snake/snake_run.py",
+ "driver_sha256": "c2aabbafbc9b8e6beb28792425f34a5fdd77d624c1ee252ce2d4eb478e0e7320",
+ "preserved_preexisting": [],
+ "driver_cmd": [
+  "/home/chilly1/.hermes/installs/6aee69e0a7d8dfbd/environments/252d1a4dfac54fbfa586ceb8459575fe/venv/bin/python3",
+  "/home/chilly1/workspace/ocho_arena_cabinets/snake/snake_run.py",
+  "--entrant",
+  "/home/chilly1/moltbook_pipeline/models/MiMo-V2.6-Distill-Qwen-9B-Q4_K_M.gguf",
+  "--seeds",
+  "1,7",
+  "--ticks",
+  "120",
+  "--port",
+  "58714"
+ ],
+ "driver": {
+  "exit": -15,
+  "wall_secs": 638.3,
+  "log": "/home/chilly1/workspace/ocho_arena/suite3/logs/snake_certified_mimo-9b_20261026-142424.log",
+  "stdout_tail": "  subject   snake/snake.html  (sha256 808a2772e668cd9f)\n  seeds     [1, 7]   ticks 120   death_ends True\n  launching /home/chilly1/src/PrismML-Bonsai-demo-20261016/bin/cuda/llama-server -m /home/chilly1/moltbook_pipeline/models/MiMo-V2.6-Distill-Qwen-9B-Q4_K_M.gguf --alias snake-mimo-v2.6-distill-qwen-9b-q4-k-m -c 65536 -ngl 0 --port 58714 --no-webui --jinja -s 42 --reasoning off\n  loaded in 4.0s   reasoning probe: thinking OFF -- a one-token question answered in a few tokens\n",
+  "stderr_tail": ""
+ },
+ "artifacts": [
+  {
+   "path": "/home/chilly1/workspace/ocho_arena_cabinets/snake/probes/SNAKE_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_s1.json",
+   "exists": false
+  },
+  {
+   "path": "/home/chilly1/workspace/ocho_arena_cabinets/snake/probes/SNAKE_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_s7.json",
+   "exists": false
+  }
+ ],
+ "artifact": null,
+ "artifact_exists": false,
+ "artifact_set": [
+  "/home/chilly1/workspace/ocho_arena_cabinets/snake/probes/SNAKE_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_s1.json",
+  "/home/chilly1/workspace/ocho_arena_cabinets/snake/probes/SNAKE_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_s7.json"
+ ],
+ "gpu_after_mib": 5911,
+ "resident_health_after": 200,
+ "block_finished": "2026-10-26T14:35:02-0700",
+ "release": {
+  "port_closed": false,
+  "vram_mib_after": 5911,
+  "vram_baseline_mib": 1790,
+  "vram_back_to_baseline": false,
+  "resident_health_after": 200
+ }
+}

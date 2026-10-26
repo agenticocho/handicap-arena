@@ -1,0 +1,11801 @@
+{
+ "kind": "snake-episode",
+ "agent": "Ornith-1.5-9B-Q4_K_M",
+ "seed": 1,
+ "ended": "tick_cap",
+ "moves": [
+  null,
+  null,
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "R",
+  "R",
+  "U",
+  "U",
+  "D",
+  "U",
+  "U",
+  "U",
+  "R",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  null,
+  "U",
+  "U",
+  "U",
+  "U",
+  null,
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  null,
+  "U",
+  "U",
+  null,
+  "U",
+  null,
+  "U",
+  "U",
+  "U",
+  "U",
+  null,
+  "U",
+  "U",
+  "U",
+  "U",
+  null,
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  null,
+  "U",
+  "U",
+  null,
+  "U",
+  null,
+  "U",
+  "U",
+  "U",
+  "U",
+  null,
+  "U",
+  "U",
+  "U",
+  "U",
+  null,
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  null,
+  "U",
+  "U",
+  null,
+  "U",
+  null,
+  "U",
+  "U",
+  "U",
+  "U",
+  null,
+  "U",
+  "U",
+  "U",
+  "U",
+  null,
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  "U",
+  null,
+  "U",
+  "U",
+  null,
+  "U",
+  null,
+  "U",
+  "U"
+ ],
+ "score": {
+  "eaten": 0,
+  "best_life": 0,
+  "deaths": 0,
+  "ticks": 120
+ },
+ "score_readings": {
+  "ticks": 120,
+  "ticks_with_respawn": 0,
+  "maxCells_reading_used": 120,
+  "rng_reading_used": 0,
+  "both_readings_compared": 120
+ },
+ "score_disagreements": [],
+ "score_notes": [],
+ "score_problems": [],
+ "trace": [
+  {
+   "tick": 0,
+   "before": {
+    "tick": 0,
+    "head": [
+     160,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [],
+    "length": 0,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "2f242033978d54f4",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 1,
+    "head": [
+     176,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 1,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "d19ac0f8dcea67b5",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 0,
+    "raw": "**R**\n\nThe apple is directly to my right, at row 10, column 15. Since I'm currently moving right and there's a clear path of empty cells between my head (column 10) and the apple (column 15), I simply continue moving right. Each move",
+    "token": "**R**",
+    "secs": 1.3,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 1,
+   "before": {
+    "tick": 1,
+    "head": [
+     176,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 1,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "d19ac0f8dcea67b5",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 2,
+    "head": [
+     192,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 2,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "a93b55665df66fea",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 1,
+    "raw": "**R**\n\nThe apple is directly to my right, at row 11, column 14. Continuing right (my current direction) will let me reach and eat it.",
+    "token": "**R**",
+    "secs": 0.8,
+    "gen_tokens": 39,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 2,
+   "before": {
+    "tick": 2,
+    "head": [
+     192,
+     160
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 2,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "a93b55665df66fea",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 3,
+    "head": [
+     192,
+     144
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      192,
+      144
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 3,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "b03cab8ea7d7bb79",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 2,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 3,
+   "before": {
+    "tick": 3,
+    "head": [
+     192,
+     144
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      192,
+      144
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 3,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "b03cab8ea7d7bb79",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 4,
+    "head": [
+     192,
+     128
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      192,
+      128
+     ],
+     [
+      192,
+      144
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "3e5d5187a345f518",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 3,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 4,
+   "before": {
+    "tick": 4,
+    "head": [
+     192,
+     128
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      192,
+      128
+     ],
+     [
+      192,
+      144
+     ],
+     [
+      192,
+      160
+     ],
+     [
+      176,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "3e5d5187a345f518",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 5,
+    "head": [
+     192,
+     112
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      192,
+      112
+     ],
+     [
+      192,
+      128
+     ],
+     [
+      192,
+      144
+     ],
+     [
+      192,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "0c6e08881d9472d2",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 4,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 5,
+   "before": {
+    "tick": 5,
+    "head": [
+     192,
+     112
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      192,
+      112
+     ],
+     [
+      192,
+      128
+     ],
+     [
+      192,
+      144
+     ],
+     [
+      192,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "0c6e08881d9472d2",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 6,
+    "head": [
+     192,
+     96
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      192,
+      96
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      192,
+      128
+     ],
+     [
+      192,
+      144
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "cb1d8fe1230001d6",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 5,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 6,
+   "before": {
+    "tick": 6,
+    "head": [
+     192,
+     96
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      192,
+      96
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      192,
+      128
+     ],
+     [
+      192,
+      144
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "cb1d8fe1230001d6",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 7,
+    "head": [
+     192,
+     80
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      192,
+      80
+     ],
+     [
+      192,
+      96
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      192,
+      128
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "d0b9d9a6c5f58f65",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 6,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 7,
+   "before": {
+    "tick": 7,
+    "head": [
+     192,
+     80
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      192,
+      80
+     ],
+     [
+      192,
+      96
+     ],
+     [
+      192,
+      112
+     ],
+     [
+      192,
+      128
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "d0b9d9a6c5f58f65",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 8,
+    "head": [
+     208,
+     80
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      208,
+      80
+     ],
+     [
+      192,
+      80
+     ],
+     [
+      192,
+      96
+     ],
+     [
+      192,
+      112
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "a7583cfbec6f2090",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 7,
+    "raw": "R",
+    "token": "R",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 8,
+   "before": {
+    "tick": 8,
+    "head": [
+     208,
+     80
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      208,
+      80
+     ],
+     [
+      192,
+      80
+     ],
+     [
+      192,
+      96
+     ],
+     [
+      192,
+      112
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "a7583cfbec6f2090",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 9,
+    "head": [
+     224,
+     80
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      224,
+      80
+     ],
+     [
+      208,
+      80
+     ],
+     [
+      192,
+      80
+     ],
+     [
+      192,
+      96
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "07137a7af2c5a2bd",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 8,
+    "raw": "R",
+    "token": "R",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 9,
+   "before": {
+    "tick": 9,
+    "head": [
+     224,
+     80
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      224,
+      80
+     ],
+     [
+      208,
+      80
+     ],
+     [
+      192,
+      80
+     ],
+     [
+      192,
+      96
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "07137a7af2c5a2bd",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 10,
+    "head": [
+     224,
+     64
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      224,
+      64
+     ],
+     [
+      224,
+      80
+     ],
+     [
+      208,
+      80
+     ],
+     [
+      192,
+      80
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "5fdc78e582fda429",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 9,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1536
+   }
+  },
+  {
+   "tick": 10,
+   "before": {
+    "tick": 10,
+    "head": [
+     224,
+     64
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      224,
+      64
+     ],
+     [
+      224,
+      80
+     ],
+     [
+      208,
+      80
+     ],
+     [
+      192,
+      80
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "5fdc78e582fda429",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 11,
+    "head": [
+     224,
+     48
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      224,
+      48
+     ],
+     [
+      224,
+      64
+     ],
+     [
+      224,
+      80
+     ],
+     [
+      208,
+      80
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "9b4912ca9a9018a2",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 10,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 11,
+   "before": {
+    "tick": 11,
+    "head": [
+     224,
+     48
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      224,
+      48
+     ],
+     [
+      224,
+      64
+     ],
+     [
+      224,
+      80
+     ],
+     [
+      208,
+      80
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "9b4912ca9a9018a2",
+   "requested": "D",
+   "intended_dir": [
+    0,
+    16
+   ],
+   "after": {
+    "tick": 12,
+    "head": [
+     224,
+     32
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      224,
+      32
+     ],
+     [
+      224,
+      48
+     ],
+     [
+      224,
+      64
+     ],
+     [
+      224,
+      80
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "2f9d5a64806d6bba",
+   "tick_calls": 4,
+   "accepted": false,
+   "refused_because": "the game's own handler ignores a reversal along the axis the snake is already moving on (snake.dx === 0 / snake.dy === 0)",
+   "turn": {
+    "ply": 11,
+    "raw": "D",
+    "token": "D",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 12,
+   "before": {
+    "tick": 12,
+    "head": [
+     224,
+     32
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      224,
+      32
+     ],
+     [
+      224,
+      48
+     ],
+     [
+      224,
+      64
+     ],
+     [
+      224,
+      80
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "2f9d5a64806d6bba",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 13,
+    "head": [
+     224,
+     16
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      224,
+      16
+     ],
+     [
+      224,
+      32
+     ],
+     [
+      224,
+      48
+     ],
+     [
+      224,
+      64
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "ae6f0b8a5a26f501",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 12,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 13,
+   "before": {
+    "tick": 13,
+    "head": [
+     224,
+     16
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      224,
+      16
+     ],
+     [
+      224,
+      32
+     ],
+     [
+      224,
+      48
+     ],
+     [
+      224,
+      64
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "ae6f0b8a5a26f501",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 14,
+    "head": [
+     224,
+     0
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      224,
+      0
+     ],
+     [
+      224,
+      16
+     ],
+     [
+      224,
+      32
+     ],
+     [
+      224,
+      48
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "77ece10b06fae402",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 13,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 14,
+   "before": {
+    "tick": 14,
+    "head": [
+     224,
+     0
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      224,
+      0
+     ],
+     [
+      224,
+      16
+     ],
+     [
+      224,
+      32
+     ],
+     [
+      224,
+      48
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "77ece10b06fae402",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 15,
+    "head": [
+     224,
+     384
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      224,
+      384
+     ],
+     [
+      224,
+      0
+     ],
+     [
+      224,
+      16
+     ],
+     [
+      224,
+      32
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "54f31b64bec53ace",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 14,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 15,
+   "before": {
+    "tick": 15,
+    "head": [
+     224,
+     384
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      224,
+      384
+     ],
+     [
+      224,
+      0
+     ],
+     [
+      224,
+      16
+     ],
+     [
+      224,
+      32
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "54f31b64bec53ace",
+   "requested": "R",
+   "intended_dir": [
+    16,
+    0
+   ],
+   "after": {
+    "tick": 16,
+    "head": [
+     240,
+     384
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      384
+     ],
+     [
+      224,
+      384
+     ],
+     [
+      224,
+      0
+     ],
+     [
+      224,
+      16
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "ca0f4f3ba33e7a97",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 15,
+    "raw": "R",
+    "token": "R",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 16,
+   "before": {
+    "tick": 16,
+    "head": [
+     240,
+     384
+    ],
+    "dir": [
+     16,
+     0
+    ],
+    "cells": [
+     [
+      240,
+      384
+     ],
+     [
+      224,
+      384
+     ],
+     [
+      224,
+      0
+     ],
+     [
+      224,
+      16
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "ca0f4f3ba33e7a97",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 17,
+    "head": [
+     240,
+     368
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      224,
+      384
+     ],
+     [
+      224,
+      0
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "72eb7c77ad6ce4ab",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 16,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1537
+   }
+  },
+  {
+   "tick": 17,
+   "before": {
+    "tick": 17,
+    "head": [
+     240,
+     368
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      224,
+      384
+     ],
+     [
+      224,
+      0
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "72eb7c77ad6ce4ab",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 18,
+    "head": [
+     240,
+     352
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      224,
+      384
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "0310329e1d25f99f",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 17,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 18,
+   "before": {
+    "tick": 18,
+    "head": [
+     240,
+     352
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      224,
+      384
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "0310329e1d25f99f",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 19,
+    "head": [
+     240,
+     336
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "a489e45f01063c56",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 18,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 19,
+   "before": {
+    "tick": 19,
+    "head": [
+     240,
+     336
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "a489e45f01063c56",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 20,
+    "head": [
+     240,
+     320
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "977514a60493bad6",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 19,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 20,
+   "before": {
+    "tick": 20,
+    "head": [
+     240,
+     320
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "977514a60493bad6",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 21,
+    "head": [
+     240,
+     304
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "570dcedff4bd875f",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 20,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 21,
+   "before": {
+    "tick": 21,
+    "head": [
+     240,
+     304
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "570dcedff4bd875f",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 22,
+    "head": [
+     240,
+     288
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "2ffc83f3ce481496",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 21,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 22,
+   "before": {
+    "tick": 22,
+    "head": [
+     240,
+     288
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "2ffc83f3ce481496",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 23,
+    "head": [
+     240,
+     272
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "668493706d9b1e2d",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 22,
+    "raw": "**Analysis:**\n\nCurrent head position: row 18, column 15, moving up.\n\nBody segments (from head going back):\n- Head: (18,15)\n- (17,15)\n- (16,15)\n- (15",
+    "token": "**ANALYS",
+    "secs": 1.1,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 23,
+   "before": {
+    "tick": 23,
+    "head": [
+     240,
+     272
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "668493706d9b1e2d",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 24,
+    "head": [
+     240,
+     256
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "a256e600c235dca3",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 23,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 24,
+   "before": {
+    "tick": 24,
+    "head": [
+     240,
+     256
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "a256e600c235dca3",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 25,
+    "head": [
+     240,
+     240
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "8595214e73951164",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 24,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 25,
+   "before": {
+    "tick": 25,
+    "head": [
+     240,
+     240
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "8595214e73951164",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 26,
+    "head": [
+     240,
+     224
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "a8357b8857c7e0b4",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 25,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 26,
+   "before": {
+    "tick": 26,
+    "head": [
+     240,
+     224
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "a8357b8857c7e0b4",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 27,
+    "head": [
+     240,
+     208
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "0e4421219c5d9344",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 26,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 27,
+   "before": {
+    "tick": 27,
+    "head": [
+     240,
+     208
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "0e4421219c5d9344",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 28,
+    "head": [
+     240,
+     192
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "2930fc8207fc5c5a",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 27,
+    "raw": "**Answer: R**\n\n**Explanation:**\n- Head is at (13, 15), moving up. Body occupies (14,15), (15,15), (16,15).\n- Apple is at (18, 20).\n- Moving",
+    "token": "**ANSWER",
+    "secs": 1.1,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 28,
+   "before": {
+    "tick": 28,
+    "head": [
+     240,
+     192
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "2930fc8207fc5c5a",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 29,
+    "head": [
+     240,
+     176
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "89e41c5114766686",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 28,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 29,
+   "before": {
+    "tick": 29,
+    "head": [
+     240,
+     176
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "89e41c5114766686",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 30,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "1d56a1c6e880158e",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 29,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 30,
+   "before": {
+    "tick": 30,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "1d56a1c6e880158e",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 31,
+    "head": [
+     240,
+     144
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "44c1c0a8485a5813",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 30,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 31,
+   "before": {
+    "tick": 31,
+    "head": [
+     240,
+     144
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "44c1c0a8485a5813",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 32,
+    "head": [
+     240,
+     128
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "ed299996b7db3a18",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 31,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 32,
+   "before": {
+    "tick": 32,
+    "head": [
+     240,
+     128
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "ed299996b7db3a18",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 33,
+    "head": [
+     240,
+     112
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "b62fdc678eedd1a9",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 32,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 33,
+   "before": {
+    "tick": 33,
+    "head": [
+     240,
+     112
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "b62fdc678eedd1a9",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 34,
+    "head": [
+     240,
+     96
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "883e063e4a273588",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 33,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 34,
+   "before": {
+    "tick": 34,
+    "head": [
+     240,
+     96
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "883e063e4a273588",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 35,
+    "head": [
+     240,
+     80
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "ebf0e35c6afd93ef",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 34,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 35,
+   "before": {
+    "tick": 35,
+    "head": [
+     240,
+     80
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "ebf0e35c6afd93ef",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 36,
+    "head": [
+     240,
+     64
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "353ba497894a6437",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 35,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 36,
+   "before": {
+    "tick": 36,
+    "head": [
+     240,
+     64
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "353ba497894a6437",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 37,
+    "head": [
+     240,
+     48
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "3dc01695df8b61d7",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 36,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 37,
+   "before": {
+    "tick": 37,
+    "head": [
+     240,
+     48
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "3dc01695df8b61d7",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 38,
+    "head": [
+     240,
+     32
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "bec287fca9127eb7",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 37,
+    "raw": "**Answer: R**\n\n**Explanation:**\n\nLet me set up coordinates (row, col) with the head at (3, 15), moving up. The body segments are at (4,15), (5,15), (6,15). The apple is at (22",
+    "token": "**ANSWER",
+    "secs": 1.2,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 38,
+   "before": {
+    "tick": 38,
+    "head": [
+     240,
+     32
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "bec287fca9127eb7",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 39,
+    "head": [
+     240,
+     16
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "a880ac5ef0ff2707",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 38,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 39,
+   "before": {
+    "tick": 39,
+    "head": [
+     240,
+     16
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "a880ac5ef0ff2707",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 40,
+    "head": [
+     240,
+     0
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "bf4c6e642f5d0ad5",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 39,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 40,
+   "before": {
+    "tick": 40,
+    "head": [
+     240,
+     0
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "bf4c6e642f5d0ad5",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 41,
+    "head": [
+     240,
+     384
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "e5494bd63fa17b71",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 40,
+    "raw": "**Answer: U**\n\n**Explanation:**\n\nI'm currently moving up with my head at (0,15). Since the board wraps around, moving up will bring me back to row 0, column 15 \u2014 the same position. This is safe because no part of my body occupies that cell.",
+    "token": "**ANSWER",
+    "secs": 1.2,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 41,
+   "before": {
+    "tick": 41,
+    "head": [
+     240,
+     384
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "e5494bd63fa17b71",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 42,
+    "head": [
+     240,
+     368
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "eaa5bd94c3ae7d97",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 41,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 42,
+   "before": {
+    "tick": 42,
+    "head": [
+     240,
+     368
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "eaa5bd94c3ae7d97",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 43,
+    "head": [
+     240,
+     352
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "805b1db69ea4962e",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 42,
+    "raw": "**Answer: R**\n\n**Explanation:**\n\nCurrent state:\n- Head at (23, 15), moving up\n- Body segments at (23, 14), (23, 13), (23, 12)\n- Tail at (21,",
+    "token": "**ANSWER",
+    "secs": 1.2,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 43,
+   "before": {
+    "tick": 43,
+    "head": [
+     240,
+     352
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "805b1db69ea4962e",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 44,
+    "head": [
+     240,
+     336
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "ce37e9ae796e51dc",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 43,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 44,
+   "before": {
+    "tick": 44,
+    "head": [
+     240,
+     336
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "ce37e9ae796e51dc",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 45,
+    "head": [
+     240,
+     320
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "ca191cf8c7a8552f",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 44,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 45,
+   "before": {
+    "tick": 45,
+    "head": [
+     240,
+     320
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "ca191cf8c7a8552f",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 46,
+    "head": [
+     240,
+     304
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "1d483df6cc0a4688",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 45,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 46,
+   "before": {
+    "tick": 46,
+    "head": [
+     240,
+     304
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "1d483df6cc0a4688",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 47,
+    "head": [
+     240,
+     288
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "c862980656ce6f40",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 46,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 47,
+   "before": {
+    "tick": 47,
+    "head": [
+     240,
+     288
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "c862980656ce6f40",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 48,
+    "head": [
+     240,
+     272
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "0af74bbb646740d7",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 47,
+    "raw": "**Analysis:**\n\nCurrent head position: row 18, column 15, moving up.\n\nBody segments (from head going back):\n- Head: (18,15)\n- (17,15)\n- (16,15)\n- (15",
+    "token": "**ANALYS",
+    "secs": 1.1,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 48,
+   "before": {
+    "tick": 48,
+    "head": [
+     240,
+     272
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "0af74bbb646740d7",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 49,
+    "head": [
+     240,
+     256
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "b1f3dfc411026b00",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 48,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 49,
+   "before": {
+    "tick": 49,
+    "head": [
+     240,
+     256
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "b1f3dfc411026b00",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 50,
+    "head": [
+     240,
+     240
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "3aa85ac28215aa4d",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 49,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 50,
+   "before": {
+    "tick": 50,
+    "head": [
+     240,
+     240
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "3aa85ac28215aa4d",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 51,
+    "head": [
+     240,
+     224
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "9a830691cc1cbe99",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 50,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 51,
+   "before": {
+    "tick": 51,
+    "head": [
+     240,
+     224
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "9a830691cc1cbe99",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 52,
+    "head": [
+     240,
+     208
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "814f013f90244214",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 51,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 52,
+   "before": {
+    "tick": 52,
+    "head": [
+     240,
+     208
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "814f013f90244214",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 53,
+    "head": [
+     240,
+     192
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "5da6b34476bfcf37",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 52,
+    "raw": "**Answer: R**\n\n**Explanation:**\n- Head is at (13, 15), moving up. Body occupies (14,15), (15,15), (16,15).\n- Apple is at (18, 20).\n- Moving",
+    "token": "**ANSWER",
+    "secs": 1.1,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 53,
+   "before": {
+    "tick": 53,
+    "head": [
+     240,
+     192
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "5da6b34476bfcf37",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 54,
+    "head": [
+     240,
+     176
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "d60033f71dc1b7eb",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 53,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 54,
+   "before": {
+    "tick": 54,
+    "head": [
+     240,
+     176
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "d60033f71dc1b7eb",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 55,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "55b8433cf365c1ad",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 54,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 55,
+   "before": {
+    "tick": 55,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "55b8433cf365c1ad",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 56,
+    "head": [
+     240,
+     144
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "fc35e6631c179b0e",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 55,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 56,
+   "before": {
+    "tick": 56,
+    "head": [
+     240,
+     144
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "fc35e6631c179b0e",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 57,
+    "head": [
+     240,
+     128
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "d4a37460c69cc427",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 56,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 57,
+   "before": {
+    "tick": 57,
+    "head": [
+     240,
+     128
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "d4a37460c69cc427",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 58,
+    "head": [
+     240,
+     112
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "9a01047461f66c84",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 57,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 58,
+   "before": {
+    "tick": 58,
+    "head": [
+     240,
+     112
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "9a01047461f66c84",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 59,
+    "head": [
+     240,
+     96
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "abce4059aafb0dca",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 58,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 59,
+   "before": {
+    "tick": 59,
+    "head": [
+     240,
+     96
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "abce4059aafb0dca",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 60,
+    "head": [
+     240,
+     80
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "baf7bdfad150493b",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 59,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 60,
+   "before": {
+    "tick": 60,
+    "head": [
+     240,
+     80
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "baf7bdfad150493b",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 61,
+    "head": [
+     240,
+     64
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "70f8bb33dfe7780b",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 60,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 61,
+   "before": {
+    "tick": 61,
+    "head": [
+     240,
+     64
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "70f8bb33dfe7780b",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 62,
+    "head": [
+     240,
+     48
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "0271221d30b771b8",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 61,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 62,
+   "before": {
+    "tick": 62,
+    "head": [
+     240,
+     48
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "0271221d30b771b8",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 63,
+    "head": [
+     240,
+     32
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "7361cdb64c95aec8",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 62,
+    "raw": "**Answer: R**\n\n**Explanation:**\n\nLet me set up coordinates (row, col) with the head at (3, 15), moving up. The body segments are at (4,15), (5,15), (6,15). The apple is at (22",
+    "token": "**ANSWER",
+    "secs": 1.0,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 63,
+   "before": {
+    "tick": 63,
+    "head": [
+     240,
+     32
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "7361cdb64c95aec8",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 64,
+    "head": [
+     240,
+     16
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "9d8f3f24e4dd4a8a",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 63,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 64,
+   "before": {
+    "tick": 64,
+    "head": [
+     240,
+     16
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "9d8f3f24e4dd4a8a",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 65,
+    "head": [
+     240,
+     0
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "a77dea8bde9cab7b",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 64,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 65,
+   "before": {
+    "tick": 65,
+    "head": [
+     240,
+     0
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "a77dea8bde9cab7b",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 66,
+    "head": [
+     240,
+     384
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "cd9194bd40aeb954",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 65,
+    "raw": "**Answer: U**\n\n**Explanation:**\n\nI'm currently moving up with my head at (0,15). Since the board wraps around, moving up will bring me back to row 0, column 15 \u2014 the same position. This is safe because no part of my body occupies that cell.",
+    "token": "**ANSWER",
+    "secs": 1.0,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 66,
+   "before": {
+    "tick": 66,
+    "head": [
+     240,
+     384
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "cd9194bd40aeb954",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 67,
+    "head": [
+     240,
+     368
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "21b934fdc5c05537",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 66,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 67,
+   "before": {
+    "tick": 67,
+    "head": [
+     240,
+     368
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "21b934fdc5c05537",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 68,
+    "head": [
+     240,
+     352
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "1dfccbeb0f77018f",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 67,
+    "raw": "**Answer: R**\n\n**Explanation:**\n\nCurrent state:\n- Head at (23, 15), moving up\n- Body segments at (23, 14), (23, 13), (23, 12)\n- Tail at (21,",
+    "token": "**ANSWER",
+    "secs": 1.0,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 68,
+   "before": {
+    "tick": 68,
+    "head": [
+     240,
+     352
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "1dfccbeb0f77018f",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 69,
+    "head": [
+     240,
+     336
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "32b3486d4143912e",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 68,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 69,
+   "before": {
+    "tick": 69,
+    "head": [
+     240,
+     336
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "32b3486d4143912e",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 70,
+    "head": [
+     240,
+     320
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "4e1abb05d7d28c6d",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 69,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 70,
+   "before": {
+    "tick": 70,
+    "head": [
+     240,
+     320
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "4e1abb05d7d28c6d",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 71,
+    "head": [
+     240,
+     304
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "ebd2293e5ca25361",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 70,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 71,
+   "before": {
+    "tick": 71,
+    "head": [
+     240,
+     304
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "ebd2293e5ca25361",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 72,
+    "head": [
+     240,
+     288
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "0adf3b4f7cad9b46",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 71,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 72,
+   "before": {
+    "tick": 72,
+    "head": [
+     240,
+     288
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "0adf3b4f7cad9b46",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 73,
+    "head": [
+     240,
+     272
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "554ed1382b3e9fa1",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 72,
+    "raw": "**Analysis:**\n\nCurrent head position: row 18, column 15, moving up.\n\nBody segments (from head going back):\n- Head: (18,15)\n- (17,15)\n- (16,15)\n- (15",
+    "token": "**ANALYS",
+    "secs": 1.1,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 73,
+   "before": {
+    "tick": 73,
+    "head": [
+     240,
+     272
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "554ed1382b3e9fa1",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 74,
+    "head": [
+     240,
+     256
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "8f898f265eb4f0dc",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 73,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 74,
+   "before": {
+    "tick": 74,
+    "head": [
+     240,
+     256
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "8f898f265eb4f0dc",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 75,
+    "head": [
+     240,
+     240
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "4909e62784ef60c0",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 74,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 75,
+   "before": {
+    "tick": 75,
+    "head": [
+     240,
+     240
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "4909e62784ef60c0",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 76,
+    "head": [
+     240,
+     224
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "d1493051f7f3dc00",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 75,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 76,
+   "before": {
+    "tick": 76,
+    "head": [
+     240,
+     224
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "d1493051f7f3dc00",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 77,
+    "head": [
+     240,
+     208
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "af3bdee0d1b02543",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 76,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 77,
+   "before": {
+    "tick": 77,
+    "head": [
+     240,
+     208
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "af3bdee0d1b02543",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 78,
+    "head": [
+     240,
+     192
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "dbdea842d910e631",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 77,
+    "raw": "**Answer: R**\n\n**Explanation:**\n- Head is at (13, 15), moving up. Body occupies (14,15), (15,15), (16,15).\n- Apple is at (18, 20).\n- Moving",
+    "token": "**ANSWER",
+    "secs": 1.1,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 78,
+   "before": {
+    "tick": 78,
+    "head": [
+     240,
+     192
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "dbdea842d910e631",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 79,
+    "head": [
+     240,
+     176
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "43859b6b208ac625",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 78,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 79,
+   "before": {
+    "tick": 79,
+    "head": [
+     240,
+     176
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "43859b6b208ac625",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 80,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "e710550dd3505827",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 79,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 80,
+   "before": {
+    "tick": 80,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "e710550dd3505827",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 81,
+    "head": [
+     240,
+     144
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "37d35b63b5d55591",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 80,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 81,
+   "before": {
+    "tick": 81,
+    "head": [
+     240,
+     144
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "37d35b63b5d55591",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 82,
+    "head": [
+     240,
+     128
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "861540f610445369",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 81,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 82,
+   "before": {
+    "tick": 82,
+    "head": [
+     240,
+     128
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "861540f610445369",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 83,
+    "head": [
+     240,
+     112
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "76ff05df5d26e0d1",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 82,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 83,
+   "before": {
+    "tick": 83,
+    "head": [
+     240,
+     112
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "76ff05df5d26e0d1",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 84,
+    "head": [
+     240,
+     96
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "34a58ff574cc7df2",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 83,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 84,
+   "before": {
+    "tick": 84,
+    "head": [
+     240,
+     96
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "34a58ff574cc7df2",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 85,
+    "head": [
+     240,
+     80
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "e4de70258e6a568d",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 84,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 85,
+   "before": {
+    "tick": 85,
+    "head": [
+     240,
+     80
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "e4de70258e6a568d",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 86,
+    "head": [
+     240,
+     64
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "a8fe7cc2c24aa151",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 85,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 86,
+   "before": {
+    "tick": 86,
+    "head": [
+     240,
+     64
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "a8fe7cc2c24aa151",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 87,
+    "head": [
+     240,
+     48
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "d464e1428471c2f6",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 86,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 87,
+   "before": {
+    "tick": 87,
+    "head": [
+     240,
+     48
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "d464e1428471c2f6",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 88,
+    "head": [
+     240,
+     32
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "d7029397a3d115f3",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 87,
+    "raw": "**Answer: R**\n\n**Explanation:**\n\nLet me set up coordinates (row, col) with the head at (3, 15), moving up. The body segments are at (4,15), (5,15), (6,15). The apple is at (22",
+    "token": "**ANSWER",
+    "secs": 1.0,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 88,
+   "before": {
+    "tick": 88,
+    "head": [
+     240,
+     32
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "d7029397a3d115f3",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 89,
+    "head": [
+     240,
+     16
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "f78355a62e9c99d1",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 88,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 89,
+   "before": {
+    "tick": 89,
+    "head": [
+     240,
+     16
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "f78355a62e9c99d1",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 90,
+    "head": [
+     240,
+     0
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "068e86a69426263e",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 89,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 90,
+   "before": {
+    "tick": 90,
+    "head": [
+     240,
+     0
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "068e86a69426263e",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 91,
+    "head": [
+     240,
+     384
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "614c291f222672eb",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 90,
+    "raw": "**Answer: U**\n\n**Explanation:**\n\nI'm currently moving up with my head at (0,15). Since the board wraps around, moving up will bring me back to row 0, column 15 \u2014 the same position. This is safe because no part of my body occupies that cell.",
+    "token": "**ANSWER",
+    "secs": 1.0,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 91,
+   "before": {
+    "tick": 91,
+    "head": [
+     240,
+     384
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "614c291f222672eb",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 92,
+    "head": [
+     240,
+     368
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "6fe2f444aad9f744",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 91,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 92,
+   "before": {
+    "tick": 92,
+    "head": [
+     240,
+     368
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "6fe2f444aad9f744",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 93,
+    "head": [
+     240,
+     352
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "2b44bdf079f8c56c",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 92,
+    "raw": "**Answer: R**\n\n**Explanation:**\n\nCurrent state:\n- Head at (23, 15), moving up\n- Body segments at (23, 14), (23, 13), (23, 12)\n- Tail at (21,",
+    "token": "**ANSWER",
+    "secs": 1.0,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 93,
+   "before": {
+    "tick": 93,
+    "head": [
+     240,
+     352
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "2b44bdf079f8c56c",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 94,
+    "head": [
+     240,
+     336
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "f39c28457a3d2d97",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 93,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 94,
+   "before": {
+    "tick": 94,
+    "head": [
+     240,
+     336
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "f39c28457a3d2d97",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 95,
+    "head": [
+     240,
+     320
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "9214f8ab6ed448f8",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 94,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 95,
+   "before": {
+    "tick": 95,
+    "head": [
+     240,
+     320
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "9214f8ab6ed448f8",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 96,
+    "head": [
+     240,
+     304
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "b66a4a52c0387143",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 95,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 96,
+   "before": {
+    "tick": 96,
+    "head": [
+     240,
+     304
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "b66a4a52c0387143",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 97,
+    "head": [
+     240,
+     288
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "5785ceec9e8c56d5",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 96,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 97,
+   "before": {
+    "tick": 97,
+    "head": [
+     240,
+     288
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "5785ceec9e8c56d5",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 98,
+    "head": [
+     240,
+     272
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "9e14bc31410603b0",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 97,
+    "raw": "**Analysis:**\n\nCurrent head position: row 18, column 15, moving up.\n\nBody segments (from head going back):\n- Head: (18,15)\n- (17,15)\n- (16,15)\n- (15",
+    "token": "**ANALYS",
+    "secs": 1.1,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 98,
+   "before": {
+    "tick": 98,
+    "head": [
+     240,
+     272
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ],
+     [
+      240,
+      320
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "9e14bc31410603b0",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 99,
+    "head": [
+     240,
+     256
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "c18e1831eb70de6f",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 98,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 99,
+   "before": {
+    "tick": 99,
+    "head": [
+     240,
+     256
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ],
+     [
+      240,
+      304
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "c18e1831eb70de6f",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 100,
+    "head": [
+     240,
+     240
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "4496e7712084f812",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 99,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 100,
+   "before": {
+    "tick": 100,
+    "head": [
+     240,
+     240
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ],
+     [
+      240,
+      288
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "4496e7712084f812",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 101,
+    "head": [
+     240,
+     224
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "e13341658cefe3b4",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 100,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 101,
+   "before": {
+    "tick": 101,
+    "head": [
+     240,
+     224
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ],
+     [
+      240,
+      272
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "e13341658cefe3b4",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 102,
+    "head": [
+     240,
+     208
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "9fe7e6d9ee8ae567",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 101,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 102,
+   "before": {
+    "tick": 102,
+    "head": [
+     240,
+     208
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ],
+     [
+      240,
+      256
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "9fe7e6d9ee8ae567",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 103,
+    "head": [
+     240,
+     192
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "b60e732b11b468dd",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 102,
+    "raw": "**Answer: R**\n\n**Explanation:**\n- Head is at (13, 15), moving up. Body occupies (14,15), (15,15), (16,15).\n- Apple is at (18, 20).\n- Moving",
+    "token": "**ANSWER",
+    "secs": 1.1,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 103,
+   "before": {
+    "tick": 103,
+    "head": [
+     240,
+     192
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ],
+     [
+      240,
+      240
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "b60e732b11b468dd",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 104,
+    "head": [
+     240,
+     176
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "356bfa2ab342404f",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 103,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 104,
+   "before": {
+    "tick": 104,
+    "head": [
+     240,
+     176
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ],
+     [
+      240,
+      224
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "356bfa2ab342404f",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 105,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "38ed2616b20eaa9d",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 104,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 105,
+   "before": {
+    "tick": 105,
+    "head": [
+     240,
+     160
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ],
+     [
+      240,
+      208
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "38ed2616b20eaa9d",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 106,
+    "head": [
+     240,
+     144
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "32468224b8a2be65",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 105,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 106,
+   "before": {
+    "tick": 106,
+    "head": [
+     240,
+     144
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ],
+     [
+      240,
+      192
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "32468224b8a2be65",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 107,
+    "head": [
+     240,
+     128
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "74b450c82d9291f8",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 106,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 107,
+   "before": {
+    "tick": 107,
+    "head": [
+     240,
+     128
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ],
+     [
+      240,
+      176
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "74b450c82d9291f8",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 108,
+    "head": [
+     240,
+     112
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "33a3222891173467",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 107,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 108,
+   "before": {
+    "tick": 108,
+    "head": [
+     240,
+     112
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ],
+     [
+      240,
+      160
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "33a3222891173467",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 109,
+    "head": [
+     240,
+     96
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "522c4676d206b3a8",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 108,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 109,
+   "before": {
+    "tick": 109,
+    "head": [
+     240,
+     96
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ],
+     [
+      240,
+      144
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "522c4676d206b3a8",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 110,
+    "head": [
+     240,
+     80
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "3fb4f70613e082b6",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 109,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.2,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 110,
+   "before": {
+    "tick": 110,
+    "head": [
+     240,
+     80
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ],
+     [
+      240,
+      128
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "3fb4f70613e082b6",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 111,
+    "head": [
+     240,
+     64
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "e58907c1e66eed67",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 110,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 111,
+   "before": {
+    "tick": 111,
+    "head": [
+     240,
+     64
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ],
+     [
+      240,
+      112
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "e58907c1e66eed67",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 112,
+    "head": [
+     240,
+     48
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "6b0b29fa894cd479",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 111,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 112,
+   "before": {
+    "tick": 112,
+    "head": [
+     240,
+     48
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ],
+     [
+      240,
+      96
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "6b0b29fa894cd479",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 113,
+    "head": [
+     240,
+     32
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "29a73c8068565cc4",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 112,
+    "raw": "**Answer: R**\n\n**Explanation:**\n\nLet me set up coordinates (row, col) with the head at (3, 15), moving up. The body segments are at (4,15), (5,15), (6,15). The apple is at (22",
+    "token": "**ANSWER",
+    "secs": 1.0,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 113,
+   "before": {
+    "tick": 113,
+    "head": [
+     240,
+     32
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ],
+     [
+      240,
+      80
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "29a73c8068565cc4",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 114,
+    "head": [
+     240,
+     16
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "1a16f9b65b52756a",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 113,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 114,
+   "before": {
+    "tick": 114,
+    "head": [
+     240,
+     16
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ],
+     [
+      240,
+      64
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "1a16f9b65b52756a",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 115,
+    "head": [
+     240,
+     0
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "8b4a1afeb4ffb9a0",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 114,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 115,
+   "before": {
+    "tick": 115,
+    "head": [
+     240,
+     0
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ],
+     [
+      240,
+      48
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "8b4a1afeb4ffb9a0",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 116,
+    "head": [
+     240,
+     384
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "d82bd887b1b5c667",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 115,
+    "raw": "**Answer: U**\n\n**Explanation:**\n\nI'm currently moving up with my head at (0,15). Since the board wraps around, moving up will bring me back to row 0, column 15 \u2014 the same position. This is safe because no part of my body occupies that cell.",
+    "token": "**ANSWER",
+    "secs": 1.0,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1533
+   }
+  },
+  {
+   "tick": 116,
+   "before": {
+    "tick": 116,
+    "head": [
+     240,
+     384
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ],
+     [
+      240,
+      32
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "d82bd887b1b5c667",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 117,
+    "head": [
+     240,
+     368
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "ee285d613d9c9c11",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 116,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 117,
+   "before": {
+    "tick": 117,
+    "head": [
+     240,
+     368
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ],
+     [
+      240,
+      16
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "ee285d613d9c9c11",
+   "requested": null,
+   "intended_dir": null,
+   "after": {
+    "tick": 118,
+    "head": [
+     240,
+     352
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "cc8775e25effd4a3",
+   "tick_calls": 4,
+   "accepted": null,
+   "refused_because": "no move was given: the game was stepped on its own velocity",
+   "turn": {
+    "ply": 117,
+    "raw": "**Answer: R**\n\n**Explanation:**\n\nCurrent state:\n- Head at (23, 15), moving up\n- Body segments at (23, 14), (23, 13), (23, 12)\n- Tail at (21,",
+    "token": "**ANSWER",
+    "secs": 1.0,
+    "gen_tokens": 64,
+    "budget_hit": true,
+    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+    "answer_field": "content",
+    "not_an_action": true,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 118,
+   "before": {
+    "tick": 118,
+    "head": [
+     240,
+     352
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ],
+     [
+      240,
+      0
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "cc8775e25effd4a3",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 119,
+    "head": [
+     240,
+     336
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "1006d5cdfd489493",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 118,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.1,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  },
+  {
+   "tick": 119,
+   "before": {
+    "tick": 119,
+    "head": [
+     240,
+     336
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ],
+     [
+      240,
+      384
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "before_digest": "1006d5cdfd489493",
+   "requested": "U",
+   "intended_dir": [
+    0,
+    -16
+   ],
+   "after": {
+    "tick": 120,
+    "head": [
+     240,
+     320
+    ],
+    "dir": [
+     0,
+     -16
+    ],
+    "cells": [
+     [
+      240,
+      320
+     ],
+     [
+      240,
+      336
+     ],
+     [
+      240,
+      352
+     ],
+     [
+      240,
+      368
+     ]
+    ],
+    "length": 4,
+    "maxCells": 4,
+    "apple": [
+     320,
+     320
+    ],
+    "rng_calls": 0
+   },
+   "after_digest": "2b7a174b29c140a2",
+   "tick_calls": 4,
+   "accepted": true,
+   "turn": {
+    "ply": 119,
+    "raw": "U",
+    "token": "U",
+    "secs": 0.3,
+    "gen_tokens": 2,
+    "budget_hit": false,
+    "cap_cut": "nothing -- the model stopped on its own",
+    "answer_field": "content",
+    "not_an_action": false,
+    "missing_value": false,
+    "prompt_chars": 1534
+   }
+  }
+ ],
+ "chain_digest": "32d9bf1e3a4be462",
+ "instrument": {
+  "kind": "stepped-browser-wrapper",
+  "wrapper": {
+   "file": "snake_page.py",
+   "harness_source_digest": "381bb695953b3eab",
+   "harness_installs": [
+    "requestAnimationFrame -> recorder (THE TICK IS HELD)",
+    "Math.random -> mulberry32(seed) (THE RUN REPLAYS)",
+    "window.__SNAKE__ = {state, step, game_source}"
+   ],
+   "tick_definition": "step() calls the game's own loop() until the game's own throttle counter `window.count` returns to 0 -- the tick length is READ FROM THE GAME, not assumed",
+   "input_path": "a move is a dispatched `keydown` (keyCode/which 37..40), so it passes through the game's own handler and its no-backtrack rule",
+   "state_path": "read from the live page's top-level vars (snake, apple, grid, canvas, count); NOT scraped from pixels",
+   "rng": {
+    "algorithm": "mulberry32",
+    "period": 4294967296,
+    "seed": 1,
+    "call_site": "Math.random, whose only consumer in the page is getRandomInt"
+   }
+  },
+  "browser": {
+   "binary": "/home/chilly1/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+   "binary_digest": "0b20b130e7edd9dd",
+   "version": "Google Chrome for Testing 151.0.7922.34",
+   "headless": true,
+   "launch_flags": [
+    "--headless=new",
+    "--no-sandbox",
+    "--no-first-run",
+    "--no-default-browser-check",
+    "--disable-extensions",
+    "--disable-background-networking",
+    "--disable-sync",
+    "--disable-gpu",
+    "--allow-file-access-from-files",
+    "--mute-audio",
+    "--remote-debugging-port=0",
+    "about:blank"
+   ],
+   "digest_scope": "sha256 of the browser BINARY FILE, first 16 hex"
+  },
+  "subject": {
+   "path": "snake/snake.html",
+   "source_digest_on_disk": "a441de57c63a66c5",
+   "source_digest_from_live_dom": "a441de57c63a66c5",
+   "source_modified_by_harness": false,
+   "live_constants": {
+    "grid": 16,
+    "canvas": [
+     400,
+     400
+    ]
+   }
+  },
+  "episode_clock": "one step == one tick; no wall-clock time enters the game"
+ },
+ "entrant": "Ornith-1.5-9B-Q4_K_M",
+ "entrant_digest": "70c112196e0b7023",
+ "entrant_digest_scope": "sha256 of the model FILE, first 16 hex. THE ENTRANT IS THE THING BEING MEASURED, so it is identified by a digest; `entrant` is a label for reading, not for checking.",
+ "config": {
+  "server_argv": [
+   "/home/chilly1/llama.cpp/build/bin/llama-server",
+   "-m",
+   "/home/chilly1/moltbook_pipeline/models/Ornith-1.5-9B-Q4_K_M.gguf",
+   "--alias",
+   "snake-ornith-1.5-9b-q4-k-m",
+   "-c",
+   "8192",
+   "-ngl",
+   "99",
+   "--port",
+   "58701",
+   "--no-webui",
+   "--jinja",
+   "-s",
+   "42",
+   "--parallel",
+   "1",
+   "--reasoning",
+   "off"
+  ],
+  "server_binary": "/home/chilly1/llama.cpp/build/bin/llama-server",
+  "server_binary_digest": "0d5393431782ddf8",
+  "ctx": 8192,
+  "n_gpu_layers": 0,
+  "temperature": 0.0,
+  "max_tokens_ceiling": 64,
+  "server_seed": 42,
+  "alias": "snake-ornith-1.5-9b-q4-k-m",
+  "mmproj": null,
+  "mmproj_how": "no mmproj file shares an 8-character prefix with Ornith-1.5-9B-Q4_K_M.gguf",
+  "mmproj_mode": "auto",
+  "mmproj_digest": null,
+  "reasoning": "off",
+  "reasoning_argv": [
+   "--reasoning",
+   "off"
+  ],
+  "reasoning_declared": "off",
+  "reasoning_declared_in": "snake_run.py (declared here; the pattern and the measurement are PREREG_sokoban.md's)",
+  "reasoning_rationale": "Snake's answer is ONE LETTER, the same case as Sokoban and Missile Command: a thinking model puts its deliberation where the answer belongs and the token ceiling eats it -- measured on unchanged weights at 2,314 tokens with no move. DARTS is the opposite case (exact arithmetic) and is not this cabinet.",
+  "reasoning_changed_from_declaration": false,
+  "legend": "You are playing Snake on a board {w} cells wide and {h} cells tall. The board wraps around, so sliding off the right edge brings you back on the left and sliding off the bottom brings you back on the top. There are no walls, and the only way to lose is to run into your own body.\n\nOn the map below a dot is an empty cell, a small letter o is one segment of your body, a capital letter O is your head, and a capital letter A is the apple you are trying to eat. The first line of the map is the top row of the board and the first character of each line is its leftmost cell.\n\n{board}\n\nYour head is at row {row}, column {col}, counting from zero. You are currently moving {heading}. Your body is {length} cells long and you have eaten {eaten} apples so far.\n\nAnswer with a single letter: U to move up, D to move down, L to move left, or R to move right. You may add an explanation after your answer, and it will be ignored.",
+  "legend_arm": "prose",
+  "legend_digest": "226e585ad29a1725",
+  "legend_default_arm": "prose",
+  "legend_arms_available": [
+   "first",
+   "order",
+   "prose"
+  ]
+ },
+ "reasoning_probe": {
+  "question": "What is 2 + 2? Reply with just the number and nothing else.",
+  "text": "4",
+  "field": "content",
+  "completion_tokens": 2,
+  "finish_reason": "stop",
+  "observed": "thinking OFF -- a one-token question answered in a few tokens"
+ },
+ "not_an_action": 22,
+ "missing_values": 0
+}

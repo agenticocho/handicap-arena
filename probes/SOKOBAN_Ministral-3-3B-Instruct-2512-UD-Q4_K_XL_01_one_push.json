@@ -22,6 +22,57 @@
    "board": "#####\n# @*#\n#####"
   }
  ],
+ "plan": {
+  "tokens": [
+   "R"
+  ],
+  "actions": "R",
+  "derivation": "the emitted turn stream, in order, with every token kept: blocked attempts are part of the plan and noise tokens are replayed as not_an_action",
+  "sha256": "d7fa99dc6e1d0c9aa79f3cf45616d3c67ae7b80c3de957279858025604786af2"
+ },
+ "replay": {
+  "blocked": 0,
+  "boxes_on_targets": 1,
+  "claim_matches_verdict": true,
+  "cross_check": {
+   "agrees": true,
+   "by": "sokoban.play(..., stop_when_solved=False) -- the FROZEN simulator",
+   "first_divergent_ply": null,
+   "frozen_final_board": "#####\n# @*#\n#####",
+   "plies_compared": 1,
+   "ply_count_frozen": 1,
+   "ply_count_independent": 1,
+   "simulator_sha256": "00996929972b9483223bf54f4dcef007162134289c5cdb76a58533ac875e8a7c"
+  },
+  "ended": "pushed",
+  "exit_code": 0,
+  "fault_injected": null,
+  "final_board": "#####\n# @*#\n#####",
+  "level": "01_one_push",
+  "level_sha256": "db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313",
+  "moves": 1,
+  "not_an_action": 0,
+  "plan_actions": "R",
+  "plan_len": 1,
+  "plan_tokens": [
+   "R"
+  ],
+  "pushes": 1,
+  "refusal_detail": null,
+  "refusal_reason": null,
+  "row_claim_solved": true,
+  "solved_at_end": true,
+  "solves_at_ply": 0,
+  "targets": 1,
+  "verdict": "VERIFIED",
+  "verifier": {
+   "bytes": 24118,
+   "file": "sokoban_replay.py",
+   "sha256": "1dc7a6cc9ad8fac41d4456826783858e05574a10c16de8cb82bcef6883257e19"
+  }
+ },
+ "solved_simulator_claim": true,
+ "solved_downgraded_by_replay": null,
  "entrant": "Ministral-3-3B-Instruct-2512-UD-Q4_K_XL",
  "entrant_digest": "c11f7554656fe23d",
  "entrant_digest_scope": "sha256 of the model FILE, first 16 hex. THE ENTRANT IS THE THING BEING MEASURED, so it is identified by a digest and not by a name; `entrant` beside it is a LABEL, for reading, not for checking.",
@@ -120,17 +171,35 @@
   "still_solvable_in": 0,
   "reading": "still winnable after the first action"
  },
+ "provenance": {
+  "compute_path": "cpu",
+  "compute_path_note": "Sokoban's score is a SEARCH over a frozen simulator -- no model call computes it. The model emits one letter per turn; `sokoban.play()` scores the stream and `sokoban_replay.py` certifies it, both on CPU. The serving process's own compute path is recorded separately in `config.n_gpu_layers`.",
+  "driver_file": "sokoban_run.py",
+  "driver_bytes": 74075,
+  "driver_sha256": "54514db62d4c86b03bcadd7ecdc4da3d7534307d4dea3f0d7cd8b019527814bf",
+  "driver_git_commit": "40046393504479f5622d7b580e1f57ad2d3f5242",
+  "driver_git_commit_short": "4004639",
+  "driver_git_dirty": [],
+  "driver_git_source": "git rev-parse HEAD in the tree this file was imported from",
+  "simulator_file": "sokoban.py",
+  "simulator_sha256": "00996929972b9483223bf54f4dcef007162134289c5cdb76a58533ac875e8a7c",
+  "replay_verifier_file": "sokoban_replay.py",
+  "replay_verifier_sha256": "1dc7a6cc9ad8fac41d4456826783858e05574a10c16de8cb82bcef6883257e19",
+  "python": "3.14.9",
+  "measured_at_unix": 1793048405,
+  "measured_at_local": "2026-10-26T14:00:05-0700"
+ },
  "artifact_replaced": {
   "path": "probes/SOKOBAN_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_01_one_push.json",
-  "sha256": "4d31d53a8ef7b1218cb735215523662586c60ce041eeeaad57f3e78a430d7aca",
-  "bytes": 5287,
-  "mtime": "2026-10-25T20:24:39Z",
+  "sha256": "c0bf05f7d64cc5d00148097839b12734974cf81273a8d319bc0982595be8cd98",
+  "bytes": 5377,
+  "mtime": "2026-10-25T20:36:01Z",
   "it_named": {
    "server_binary_digest": "0d5393431782ddf8",
    "legend_digest": "0d86057c46d4c83b",
    "reasoning": "off"
   },
-  "reason_given": "suite window t_234b2387, second pass at this cell: the first pass ran with the driver's own slot count (/props total_slots=4, i.e. 1024 tokens per slot at ctx 4096); this pass runs --parallel 1 so the row is on the card's declared envelope. The superseded row's bytes are sha256 4d31d53a8ef7b121... and its block metadata is kept under suite2/runs/.",
+  "reason_given": "GPU window t_925f606f: re-measuring this cell under the instrument certified on 2026-10-26. The pre-existing record(s) are preserved with their digests under suite3/preserved/ and are reported BESIDE this row, never merged into it.",
   "reading": "THIS RUN REPLACED THE RECORD AT THIS PATH. The replaced record is NOT recoverable from this file: what survives is that it existed, the digest of the bytes it was, and what it said about its own instrument. The reason above is the operator's, verbatim, and is checked against nothing."
  }
 }

@@ -1,0 +1,8 @@
+{
+ "original": "/home/chilly1/workspace/ocho_arena/probes/SOKOBAN_Ornith-1.5-9B-Q4_K_M_03_the_corner_waiting.json",
+ "preserved_at": "/home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140137/SOKOBAN_Ornith-1.5-9B-Q4_K_M_03_the_corner_waiting.json",
+ "sha256": "fb04d4598c527c0e0b328f01130c40808c83a29db0c658cad4e8a89e6f2c8ccc",
+ "bytes": 21137,
+ "why": "GPU window t_925f606f: pre-existing record at this cell",
+ "preserved": "2026-10-26T14:01:37-0700"
+}

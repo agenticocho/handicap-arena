@@ -1,18 +1,18 @@
 {
  "solved": false,
- "moves": 2,
+ "moves": 1,
  "attempted_emitted": 40,
  "attempted_consumed": 40,
  "attempted": 40,
  "attempted_note": "DEPRECATED -- equals attempted_consumed; future runs use the named pair",
  "blocked": 0,
- "not_an_action": 38,
+ "not_an_action": 39,
  "give_up": 0,
  "gave_up_at": null,
  "loose_match_diagnostic_only_never_scored": 0,
  "loose_match_diagnostic_note": "DIAGNOSTIC ONLY, NEVER SCORED: the tokens an ABSTENTION-SHAPED reading would have taken and the strict whitelist did not. In no rate, gate or denominator.",
  "ended": "commands_exhausted",
- "final_board": "########\n#  @$ .#\n#      #\n#  $  .#\n########",
+ "final_board": "########\n# @ $ .#\n#      #\n#  $  .#\n########",
  "trace": [
   {
    "ply": 0,
@@ -30,271 +30,400 @@
   },
   {
    "ply": 2,
-   "token": "R",
-   "action": "R",
-   "outcome": "moved",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "token": "B",
+   "action": null,
+   "outcome": "not_an_action",
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 3,
    "token": "B",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 4,
-   "token": "Let",
+   "token": "B",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 5,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 6,
-   "token": "Let",
+   "token": "B",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 7,
-   "token": "Let",
+   "token": "B",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 8,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 9,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 10,
-   "token": "Let",
+   "token": "B",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 11,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 12,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 13,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 14,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 15,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 16,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 17,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 18,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 19,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 20,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 21,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 22,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 23,
-   "token": "Let",
+   "token": "The",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 24,
-   "token": "Let",
+   "token": "The",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 25,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 26,
-   "token": "Let",
+   "token": "The",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 27,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 28,
-   "token": "Let",
+   "token": "The",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 29,
-   "token": "Let",
+   "token": "The",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 30,
-   "token": "Let",
+   "token": "The",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 31,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 32,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 33,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 34,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 35,
-   "token": "Let",
+   "token": "The",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 36,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 37,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 38,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 39,
    "token": "Let",
    "action": null,
    "outcome": "not_an_action",
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   }
  ],
+ "plan": {
+  "tokens": [
+   "R",
+   "B",
+   "B",
+   "B",
+   "B",
+   "Let",
+   "B",
+   "B",
+   "Let",
+   "Let",
+   "B",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "The",
+   "The",
+   "Let",
+   "The",
+   "Let",
+   "The",
+   "The",
+   "The",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "The",
+   "Let",
+   "Let",
+   "Let",
+   "Let"
+  ],
+  "actions": "R",
+  "derivation": "the emitted turn stream, in order, with every token kept: blocked attempts are part of the plan and noise tokens are replayed as not_an_action",
+  "sha256": "b726caf1f25186904e030ca454df8617c761065bcc2787b2078c28622fcd33f4"
+ },
+ "replay": {
+  "blocked": 0,
+  "boxes_on_targets": 0,
+  "claim_matches_verdict": true,
+  "cross_check": {
+   "agrees": true,
+   "by": "sokoban.play(..., stop_when_solved=False) -- the FROZEN simulator",
+   "first_divergent_ply": null,
+   "frozen_final_board": "########\n# @ $ .#\n#      #\n#  $  .#\n########",
+   "plies_compared": 40,
+   "ply_count_frozen": 40,
+   "ply_count_independent": 40,
+   "simulator_sha256": "00996929972b9483223bf54f4dcef007162134289c5cdb76a58533ac875e8a7c"
+  },
+  "ended": "not_an_action",
+  "exit_code": 3,
+  "fault_injected": null,
+  "final_board": "########\n# @ $ .#\n#      #\n#  $  .#\n########",
+  "level": "02_two_boxes",
+  "level_sha256": "7549657f1768607cefab6d892b1756b1cabf23f51144a7679d76f331b38a57d7",
+  "moves": 1,
+  "not_an_action": 39,
+  "plan_actions": "R",
+  "plan_len": 40,
+  "plan_tokens": [
+   "R",
+   "B",
+   "B",
+   "B",
+   "B",
+   "Let",
+   "B",
+   "B",
+   "Let",
+   "Let",
+   "B",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "The",
+   "The",
+   "Let",
+   "The",
+   "Let",
+   "The",
+   "The",
+   "The",
+   "Let",
+   "Let",
+   "Let",
+   "Let",
+   "The",
+   "Let",
+   "Let",
+   "Let",
+   "Let"
+  ],
+  "pushes": 0,
+  "refusal_detail": "plan does not solve the level: 0 of 2 boxes on targets after 40 plies",
+  "refusal_reason": "not_solved",
+  "row_claim_solved": false,
+  "solved_at_end": false,
+  "solves_at_ply": null,
+  "targets": 2,
+  "verdict": "REFUSED",
+  "verifier": {
+   "bytes": 24118,
+   "file": "sokoban_replay.py",
+   "sha256": "1dc7a6cc9ad8fac41d4456826783858e05574a10c16de8cb82bcef6883257e19"
+  }
+ },
+ "solved_simulator_claim": false,
+ "solved_downgraded_by_replay": null,
  "entrant": "MiMo-V2.6-Distill-Qwen-9B-Q4_K_M",
  "entrant_digest": "4bca6f18c73f7227",
  "entrant_digest_scope": "sha256 of the model FILE, first 16 hex. THE ENTRANT IS THE THING BEING MEASURED, so it is identified by a digest and not by a name; `entrant` beside it is a LABEL, for reading, not for checking.",
@@ -328,8 +457,8 @@
   },
   {
    "ply": 2,
-   "raw": "R",
-   "token": "R",
+   "raw": "B",
+   "token": "B",
    "secs": 0.2,
    "gen_tokens": 2,
    "budget_hit": false,
@@ -348,23 +477,23 @@
    "cap_cut": "nothing -- the model stopped on its own",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 4,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nThe moves already made are: RBRB. Let me trace back to understand the initial state.\n\nStarting position:\n```",
-   "token": "Let",
-   "secs": 1.1,
-   "gen_tokens": 64,
-   "budget_hit": true,
-   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "raw": "B",
+   "token": "B",
+   "secs": 0.2,
+   "gen_tokens": 2,
+   "budget_hit": false,
+   "cap_cut": "nothing -- the model stopped on its own",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 5,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nLet me map out the coordinates. The board is 8 wide and 4 tall.\n\nRow 0: `########`",
+   "raw": "Let me work through this Sokoban puzzle carefully.\n\nThe board is:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nLet me map out the coordinates. The board is 8 wide and 5 tall.\n\nRow 0",
    "token": "Let",
    "secs": 1.1,
    "gen_tokens": 64,
@@ -372,35 +501,35 @@
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 6,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
-   "token": "Let",
-   "secs": 1.1,
-   "gen_tokens": 64,
-   "budget_hit": true,
-   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "raw": "B",
+   "token": "B",
+   "secs": 0.2,
+   "gen_tokens": 2,
+   "budget_hit": false,
+   "cap_cut": "nothing -- the model stopped on its own",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 7,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
-   "token": "Let",
-   "secs": 1.1,
-   "gen_tokens": 64,
-   "budget_hit": true,
-   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "raw": "B",
+   "token": "B",
+   "secs": 0.2,
+   "gen_tokens": 2,
+   "budget_hit": false,
+   "cap_cut": "nothing -- the model stopped on its own",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 8,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
+   "raw": "Let me analyze the current state.\n\nThe board is:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The moves already made are \"RBBBBLetBB\". Let me figure out the starting",
    "token": "Let",
    "secs": 1.1,
    "gen_tokens": 64,
@@ -408,35 +537,35 @@
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 9,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
+   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The board is:\n```\n########\n# @ $ .#\n#      #",
    "token": "Let",
-   "secs": 1.1,
+   "secs": 1.2,
    "gen_tokens": 64,
    "budget_hit": true,
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 10,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nThe moves already made: RBRBLetLetLetLetLetLet\n\nLet me trace through these moves from the initial position.",
-   "token": "Let",
-   "secs": 1.1,
-   "gen_tokens": 64,
-   "budget_hit": true,
-   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "raw": "B",
+   "token": "B",
+   "secs": 0.2,
+   "gen_tokens": 2,
+   "budget_hit": false,
+   "cap_cut": "nothing -- the model stopped on its own",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 11,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nThe moves already made: RBRBLetLetLetLetLetLetLet\n\nLet me trace through these moves from the initial position",
+   "raw": "Let me work through this Sokoban puzzle carefully.\n\nThe board is:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nLet me map out the coordinates. The board is 8 wide and 4 tall.\n\nRow 0",
    "token": "Let",
    "secs": 1.1,
    "gen_tokens": 64,
@@ -444,11 +573,11 @@
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 12,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nThe moves already made: RBRBLetLetLetLetLetLetLetLet\n\nLet me trace through these moves from the initial",
+   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The board is 8 wide and 4 tall.\n\n```\n########\n# @ $",
    "token": "Let",
    "secs": 1.1,
    "gen_tokens": 64,
@@ -456,23 +585,23 @@
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 13,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols are:\n- `#` = wall\n- `.` = target\n-",
+   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The moves already made are: BBBBLetBBLetLetBLetLet\n\nLet me",
    "token": "Let",
-   "secs": 1.1,
+   "secs": 1.2,
    "gen_tokens": 64,
    "budget_hit": true,
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 14,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
+   "raw": "Let me work through this Sokoban puzzle carefully.\n\nThe board is:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nLet me map out the coordinates. The board is 8 columns wide and 4 rows tall.\n\nRow",
    "token": "Let",
    "secs": 1.2,
    "gen_tokens": 64,
@@ -480,11 +609,11 @@
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 15,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nThe moves I've already made are: BLetLetLetLetLetLetLetLetLetLetLet\n\nLet me figure out the",
+   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The moves already made are: BBLetBBLetLetBLetLetLetLet",
    "token": "Let",
    "secs": 1.2,
    "gen_tokens": 64,
@@ -492,11 +621,119 @@
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 16,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
+   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols are:\n- `#` = wall\n- `@` = player",
+   "token": "Let",
+   "secs": 1.2,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+  },
+  {
+   "ply": 17,
+   "raw": "Let me trace the position.\n\nBoard:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nRow 0: `########`\nRow 1: `# @ $ .#`\nRow 2: `#      #`",
+   "token": "Let",
+   "secs": 1.2,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+  },
+  {
+   "ply": 18,
+   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The moves already made are: BBLetLetBLetLetLetLetLetLetLet",
+   "token": "Let",
+   "secs": 1.2,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+  },
+  {
+   "ply": 19,
+   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The board is 8 wide and 4 tall.\n\n```\n########\n# @ $",
+   "token": "Let",
+   "secs": 1.2,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+  },
+  {
+   "ply": 20,
+   "raw": "Let me trace the position.\n\nBoard:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nRow 0: `########`\nRow 1: `# @ $ .#`\nRow 2: `#      #`",
+   "token": "Let",
+   "secs": 1.2,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+  },
+  {
+   "ply": 21,
+   "raw": "Let me trace the position.\n\nBoard:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nCrate positions: (1,2) and (2,2). Targets: (1,3) and (2,3).",
+   "token": "Let",
+   "secs": 1.2,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+  },
+  {
+   "ply": 22,
+   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nThe moves I've already made are: BLetLetLetLetLetLetLetLetLetLetLet\n\nLet me trace back from",
+   "token": "Let",
+   "secs": 1.2,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+  },
+  {
+   "ply": 23,
+   "raw": "The board is 8 wide \u00d7 6 tall. Let me parse it:\n\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nRow 0: `########`\nRow 1: `# @ $ .#`\nRow",
+   "token": "The",
+   "secs": 1.2,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+  },
+  {
+   "ply": 24,
+   "raw": "The board is 8 wide \u00d7 6 tall.\n\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nLet me parse this carefully.\n\nRow 0: `########`\nRow 1: `# @ $ .#`",
+   "token": "The",
+   "secs": 1.1,
+   "gen_tokens": 64,
+   "budget_hit": true,
+   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
+   "answer_field": "content",
+   "missing_value": false,
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
+  },
+  {
+   "ply": 25,
+   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The moves already made are \"LetLetLetLetLetLetLetLetLetLetTheThe\"",
    "token": "Let",
    "secs": 1.1,
    "gen_tokens": 64,
@@ -504,287 +741,179 @@
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
-  },
-  {
-   "ply": 17,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
-   "token": "Let",
-   "secs": 1.0,
-   "gen_tokens": 64,
-   "budget_hit": true,
-   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
-   "answer_field": "content",
-   "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
-  },
-  {
-   "ply": 18,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
-   "token": "Let",
-   "secs": 1.0,
-   "gen_tokens": 64,
-   "budget_hit": true,
-   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
-   "answer_field": "content",
-   "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
-  },
-  {
-   "ply": 19,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
-   "token": "Let",
-   "secs": 1.0,
-   "gen_tokens": 64,
-   "budget_hit": true,
-   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
-   "answer_field": "content",
-   "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
-  },
-  {
-   "ply": 20,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
-   "token": "Let",
-   "secs": 1.0,
-   "gen_tokens": 64,
-   "budget_hit": true,
-   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
-   "answer_field": "content",
-   "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
-  },
-  {
-   "ply": 21,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
-   "token": "Let",
-   "secs": 1.0,
-   "gen_tokens": 64,
-   "budget_hit": true,
-   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
-   "answer_field": "content",
-   "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
-  },
-  {
-   "ply": 22,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
-   "token": "Let",
-   "secs": 1.0,
-   "gen_tokens": 64,
-   "budget_hit": true,
-   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
-   "answer_field": "content",
-   "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
-  },
-  {
-   "ply": 23,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
-   "token": "Let",
-   "secs": 1.0,
-   "gen_tokens": 64,
-   "budget_hit": true,
-   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
-   "answer_field": "content",
-   "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
-  },
-  {
-   "ply": 24,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
-   "token": "Let",
-   "secs": 1.0,
-   "gen_tokens": 64,
-   "budget_hit": true,
-   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
-   "answer_field": "content",
-   "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
-  },
-  {
-   "ply": 25,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
-   "token": "Let",
-   "secs": 1.0,
-   "gen_tokens": 64,
-   "budget_hit": true,
-   "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
-   "answer_field": "content",
-   "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 26,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
-   "token": "Let",
-   "secs": 1.0,
+   "raw": "The board is 8x6. Let me parse it:\n\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nRow 0: `########`\nRow 1: `# @ $ .#`\nRow 2: `",
+   "token": "The",
+   "secs": 1.1,
    "gen_tokens": 64,
    "budget_hit": true,
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 27,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
+   "raw": "Let me parse the board.\n\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The board is:\n\n```\n########\n# @ $ .#\n#      #\n#  $  .#",
    "token": "Let",
-   "secs": 1.0,
+   "secs": 1.2,
    "gen_tokens": 64,
    "budget_hit": true,
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 28,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
-   "token": "Let",
-   "secs": 1.0,
+   "raw": "The board is 6x6. Let me parse it:\n\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nWait, that's 8 columns. Let me count: `########` = 8 chars. `# @ $ .",
+   "token": "The",
+   "secs": 1.2,
    "gen_tokens": 64,
    "budget_hit": true,
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 29,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
-   "token": "Let",
-   "secs": 1.0,
+   "raw": "The board is 8 wide \u00d7 6 tall.\n\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nLet me parse this carefully.\n\nRow 0: `########`\nRow 1: `# @ $ .#`",
+   "token": "The",
+   "secs": 1.2,
    "gen_tokens": 64,
    "budget_hit": true,
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 30,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
-   "token": "Let",
-   "secs": 1.0,
+   "raw": "The board is 6x6. Let me parse it:\n\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nWait, that's only 4 rows but 8 columns. Let me re-read.\n\n```\n########\n# @",
+   "token": "The",
+   "secs": 1.2,
    "gen_tokens": 64,
    "budget_hit": true,
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 31,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
+   "raw": "Let me parse the board.\n\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nRow 1: `# @ $ .#` \u2014 wall, player at col 1, crate at col 3, target at col 5,",
    "token": "Let",
-   "secs": 1.0,
+   "secs": 1.2,
    "gen_tokens": 64,
    "budget_hit": true,
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 32,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
+   "raw": "Let me parse the board.\n\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nRow 1: `# @ $ .#` \u2014 wall, player at col 1, crate at col 3, target at col 5,",
    "token": "Let",
-   "secs": 1.0,
+   "secs": 1.2,
    "gen_tokens": 64,
    "budget_hit": true,
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 33,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
+   "raw": "Let me parse the board.\n\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nRow 1: `# @ $ .#` \u2014 wall, player at col 1, crate at col 3, target at col 5,",
    "token": "Let",
-   "secs": 1.0,
+   "secs": 1.2,
    "gen_tokens": 64,
    "budget_hit": true,
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 34,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
+   "raw": "Let me trace the state.\n\nBoard:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nRow 1: `# @ $ .#` \u2014 player at col 1, crate at col 3, target at col 5",
    "token": "Let",
-   "secs": 1.0,
+   "secs": 1.2,
    "gen_tokens": 64,
    "budget_hit": true,
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 35,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
-   "token": "Let",
-   "secs": 1.0,
+   "raw": "The board is 8 wide \u00d7 6 tall.\n\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nLet me parse this carefully.\n\nRow 0: `########`\nRow 1: `# @ $ .#`",
+   "token": "The",
+   "secs": 1.2,
    "gen_tokens": 64,
    "budget_hit": true,
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 36,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
+   "raw": "Let me parse the board.\n\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The board is:\n\n```\n########\n# @ $ .#\n#      #\n#  $  .#",
    "token": "Let",
-   "secs": 1.0,
+   "secs": 1.2,
    "gen_tokens": 64,
    "budget_hit": true,
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 37,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
+   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `@` = player\n-",
    "token": "Let",
-   "secs": 1.0,
+   "secs": 1.2,
    "gen_tokens": 64,
    "budget_hit": true,
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 38,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
+   "raw": "Let me trace the position.\n\nBoard:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nRow 1 (y=0): `########`\nRow 2 (y=1): `# @ $ .#`\nRow",
    "token": "Let",
-   "secs": 1.0,
+   "secs": 1.2,
    "gen_tokens": 64,
    "budget_hit": true,
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   },
   {
    "ply": 39,
-   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n#  @$ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The symbols:\n- `#` = wall\n- `.` = target\n- `$",
+   "raw": "Let me analyze the board state.\n\nThe board is:\n```\n########\n# @ $ .#\n#      #\n#  $  .#\n########\n```\n\nWait, let me re-read. The moves already made are \"LetTheTheTheLetLetLetLetTheLetLetLet\"",
    "token": "Let",
-   "secs": 1.0,
+   "secs": 1.2,
    "gen_tokens": 64,
    "budget_hit": true,
    "cap_cut": "SURPLUS AFTER AN ANSWER -- the answer is present and readable; the cap cut what followed it. NOT a failed turn.",
    "answer_field": "content",
    "missing_value": false,
-   "board": "########\n#  @$ .#\n#      #\n#  $  .#\n########"
+   "board": "########\n# @ $ .#\n#      #\n#  $  .#\n########"
   }
  ],
  "cap": 40,
- "final_screen": "########\n#  @$ .#\n#      #\n#  $  .#\n########",
+ "final_screen": "########\n# @ $ .#\n#      #\n#  $  .#\n########",
  "legend": "new",
  "legend_digest": "0d86057c46d4c83b",
  "config": {
@@ -841,16 +970,16 @@
   "disagrees_with_config": false
  },
  "kind": "model",
- "unreadable": 38,
+ "unreadable": 39,
  "unreadable_is_the_aggregate_of": "not_an_action (grammar \u00a72), per turn",
  "missing_values": 0,
  "missing_values_are_a_subset_of": "unreadable -- the harness produced these, the model produced the rest",
  "never_started": 0,
  "budget_signature": {
   "turns": 40,
-  "turns_that_hit_the_ceiling": 36,
+  "turns_that_hit_the_ceiling": 32,
   "ceiling": 64,
-  "fraction_capped": 0.9,
+  "fraction_capped": 0.8,
   "all_turns_capped": false,
   "reading": "some turns hit the ceiling -- see the per-turn rows"
  },
@@ -861,17 +990,35 @@
   "still_solvable_in": 11,
   "reading": "still winnable after the first action"
  },
+ "provenance": {
+  "compute_path": "cpu",
+  "compute_path_note": "Sokoban's score is a SEARCH over a frozen simulator -- no model call computes it. The model emits one letter per turn; `sokoban.play()` scores the stream and `sokoban_replay.py` certifies it, both on CPU. The serving process's own compute path is recorded separately in `config.n_gpu_layers`.",
+  "driver_file": "sokoban_run.py",
+  "driver_bytes": 74075,
+  "driver_sha256": "54514db62d4c86b03bcadd7ecdc4da3d7534307d4dea3f0d7cd8b019527814bf",
+  "driver_git_commit": "40046393504479f5622d7b580e1f57ad2d3f5242",
+  "driver_git_commit_short": "4004639",
+  "driver_git_dirty": [],
+  "driver_git_source": "git rev-parse HEAD in the tree this file was imported from",
+  "simulator_file": "sokoban.py",
+  "simulator_sha256": "00996929972b9483223bf54f4dcef007162134289c5cdb76a58533ac875e8a7c",
+  "replay_verifier_file": "sokoban_replay.py",
+  "replay_verifier_sha256": "1dc7a6cc9ad8fac41d4456826783858e05574a10c16de8cb82bcef6883257e19",
+  "python": "3.14.9",
+  "measured_at_unix": 1793048625,
+  "measured_at_local": "2026-10-26T14:03:45-0700"
+ },
  "artifact_replaced": {
   "path": "probes/SOKOBAN_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_02_two_boxes.json",
-  "sha256": "b5c836110e70fa0212aa53cbd5ca89f59cc9fe09c9459117d54237bfa24bd0b0",
-  "bytes": 32172,
-  "mtime": "2026-10-25T20:28:13Z",
+  "sha256": "18a9a920f599dfa893fa09b5998636d6fc485455a2c93bd22e489083bf953c2d",
+  "bytes": 32253,
+  "mtime": "2026-10-25T20:40:17Z",
   "it_named": {
    "server_binary_digest": "0d5393431782ddf8",
    "legend_digest": "0d86057c46d4c83b",
    "reasoning": "off"
   },
-  "reason_given": "suite window t_234b2387, second pass at this cell: the first pass ran with the driver's own slot count (/props total_slots=4, i.e. 1024 tokens per slot at ctx 4096); this pass runs --parallel 1 so the row is on the card's declared envelope. The superseded row's bytes are sha256 b5c836110e70fa02... and its block metadata is kept under suite2/runs/.",
+  "reason_given": "GPU window t_925f606f: re-measuring this cell under the instrument certified on 2026-10-26. The pre-existing record(s) are preserved with their digests under suite3/preserved/ and are reported BESIDE this row, never merged into it.",
   "reading": "THIS RUN REPLACED THE RECORD AT THIS PATH. The replaced record is NOT recoverable from this file: what survives is that it existed, the digest of the bytes it was, and what it said about its own instrument. The reason above is the operator's, verbatim, and is checked against nothing."
  }
 }

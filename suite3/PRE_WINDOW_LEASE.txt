@@ -1,0 +1,11 @@
+GPU lease status (read-only):
+  card    : 1789 MiB used, 6102 MiB free (nvidia-smi)
+  tenants :
+      pid 976745     1466 MiB  llama-server owner=unowned   
+      pid 979586      134 MiB  llama-server owner=unowned   
+      pid 3025101       8 MiB  Hermes       owner=unowned   
+  global lease (/home/chilly1/.local/state/gpu-lease/lease.d):
+    none held
+  scoped leases (/home/chilly1/.local/state/gpu-lease/scopes):
+    (none)
+  state   : /home/chilly1/.local/state/gpu-lease (mutex /home/chilly1/.local/state/gpu-lease/lease.mutex)

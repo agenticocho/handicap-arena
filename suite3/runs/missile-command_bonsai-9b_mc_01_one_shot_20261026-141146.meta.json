@@ -1,0 +1,67 @@
+{
+ "window": "t_925f606f",
+ "cabinet": "missile-command",
+ "entrant": "bonsai-9b",
+ "level": "levels/mc_01_one_shot.txt",
+ "block_started": "2026-10-26T14:11:53-0700",
+ "shape": "cpu-only (the cabinet's frozen compute path, -ngl 0)",
+ "lease_held": false,
+ "gpu_baseline_mib": 1779,
+ "resident_health_before": 200,
+ "preserved_preexisting": {
+  "original": "/home/chilly1/workspace/ocho_arena_cabinets/missile-command/probes/MC_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_mc_01_one_shot.json",
+  "preserved_at": "/home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-141146/MC_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_mc_01_one_shot.json",
+  "sha256": "d605b338e60f360fa42d2dcbafda60a2ae1ce3a75f64d3956434081ed4bd0a18",
+  "bytes": 11708,
+  "preserved": "2026-10-26T14:11:46-0700"
+ },
+ "driver_cmd": [
+  "/home/chilly1/.hermes/installs/6aee69e0a7d8dfbd/environments/252d1a4dfac54fbfa586ceb8459575fe/venv/bin/python3",
+  "/home/chilly1/workspace/ocho_arena_cabinets/missile-command/missile_command_run.py",
+  "--entrant",
+  "/home/chilly1/moltbook_pipeline/models/Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0.gguf",
+  "--state",
+  "levels/mc_01_one_shot.txt",
+  "--port",
+  "58712",
+  "--llama-server",
+  "/home/chilly1/src/PrismML-Bonsai-demo-20261016/bin/cuda/llama-server",
+  "--overwrite-artifact",
+  "GPU/CPU window t_925f606f: re-measuring this cell under the checker certified 2026-10-26. The pre-existing record (sha256 d605b338e60f360f...) is preserved at /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-141146/MC_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_mc_01_one_shot.json and is reported BESIDE this row."
+ ],
+ "driver": {
+  "exit": 0,
+  "wall_secs": 6.8,
+  "log": "/home/chilly1/workspace/ocho_arena/suite3/logs/mc_bonsai-9b_mc_01_one_shot_20261026-141146.log",
+  "stdout_tail": "  entrant   Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0   digest c79fcdfaf6b7bf47\n  state     mc_01_one_shot   digest ab101ca955c1c853   cap 4\n  binary    /home/chilly1/src/PrismML-Bonsai-demo-20261016/bin/cuda/llama-server  (server_binary_digest 3c7090fb24b84615)\n  ended     threats_resolved  (every threat has been resolved by tick 0)\n  score     1 / 1 cities surviving\n  counts    {'fired': 1, 'passed': 0, 'no_ammo': 0, 'out_of_range': 0, 'unknown': 0, 'malformed': 0, 'late': 0, 'hit': 0, 'spared': 0}\n  tokens    ['1P']\n  unreadable 0  missing_values 0  budget no turn hit the ceiling -- the answers are the model's own e\n  suffice   THE RECORD IS SUFFICIENT: the score and every screen the entrant saw recompute from (state\n  artifact  probes/MC_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_mc_01_one_shot.json\n  REPLACED  probes/MC_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_mc_01_one_shot.json (11708 B) -- reason: 'GPU/CPU window t_925f606f: re-measuring this cell under the checker certified 2026-10-26. The pre-existing record (sha256 d605b338e60f360f...) is preserved at /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-141146/MC_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_mc_01_one_shot.json and is reported BESIDE this row.'\n",
+  "stderr_tail": ""
+ },
+ "artifact": "/home/chilly1/workspace/ocho_arena_cabinets/missile-command/probes/MC_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_mc_01_one_shot.json",
+ "artifact_exists": true,
+ "artifact_sha256": "b24fd5ef1fd82364745a7ca55555d9e0872f102e76d1f14b7732c333537cece2",
+ "artifact_written_in_block": true,
+ "compute_path": {
+  "ngl": 0,
+  "server_argv": [
+   "/home/chilly1/src/PrismML-Bonsai-demo-20261016/bin/cuda/llama-server",
+   "-m",
+   "/home/chilly1/moltbook_pipeline/models/Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0.gguf",
+   "-c",
+   "4096",
+   "-ngl",
+   "0",
+   "--port",
+   "58712",
+   "--no-webui",
+   "--reasoning",
+   "off",
+   "--fit",
+   "off"
+  ],
+  "ctx": 4096,
+  "reading": "read from the artifact's own config block"
+ },
+ "gpu_after_mib": 1779,
+ "resident_health_after": 200,
+ "block_finished": "2026-10-26T14:11:53-0700"
+}

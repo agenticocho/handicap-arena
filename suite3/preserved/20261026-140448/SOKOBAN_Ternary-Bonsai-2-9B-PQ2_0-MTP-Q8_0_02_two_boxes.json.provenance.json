@@ -1,0 +1,8 @@
+{
+ "original": "/home/chilly1/workspace/ocho_arena/probes/SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_02_two_boxes.json",
+ "preserved_at": "/home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-140448/SOKOBAN_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_02_two_boxes.json",
+ "sha256": "4642f29e98d70e64187b1d0a7e9b8edc7705548f21e892fa0f1c1abe2787bf19",
+ "bytes": 20475,
+ "why": "GPU window t_925f606f: pre-existing record at this cell",
+ "preserved": "2026-10-26T14:04:48-0700"
+}

@@ -1,0 +1,65 @@
+{
+ "window": "t_925f606f",
+ "cabinet": "missile-command",
+ "entrant": "mimo-9b",
+ "level": "levels/mc_01_one_shot.txt",
+ "block_started": "2026-10-26T14:10:37-0700",
+ "shape": "cpu-only (the cabinet's frozen compute path, -ngl 0)",
+ "lease_held": false,
+ "gpu_baseline_mib": 1779,
+ "resident_health_before": 200,
+ "preserved_preexisting": {
+  "original": "/home/chilly1/workspace/ocho_arena_cabinets/missile-command/probes/MC_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_mc_01_one_shot.json",
+  "preserved_at": "/home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-141007/MC_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_mc_01_one_shot.json",
+  "sha256": "ca0db4a1a5550e0cfc0ebdebcc36ce4fa30f7dd4cb9ceb5ea672bc4e3b040eba",
+  "bytes": 14081,
+  "preserved": "2026-10-26T14:10:07-0700"
+ },
+ "driver_cmd": [
+  "/home/chilly1/.hermes/installs/6aee69e0a7d8dfbd/environments/252d1a4dfac54fbfa586ceb8459575fe/venv/bin/python3",
+  "/home/chilly1/workspace/ocho_arena_cabinets/missile-command/missile_command_run.py",
+  "--entrant",
+  "/home/chilly1/moltbook_pipeline/models/MiMo-V2.6-Distill-Qwen-9B-Q4_K_M.gguf",
+  "--state",
+  "levels/mc_01_one_shot.txt",
+  "--port",
+  "58712",
+  "--overwrite-artifact",
+  "GPU/CPU window t_925f606f: re-measuring this cell under the checker certified 2026-10-26. The pre-existing record (sha256 ca0db4a1a5550e0c...) is preserved at /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-141007/MC_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_mc_01_one_shot.json and is reported BESIDE this row."
+ ],
+ "driver": {
+  "exit": 0,
+  "wall_secs": 30.0,
+  "log": "/home/chilly1/workspace/ocho_arena/suite3/logs/mc_mimo-9b_mc_01_one_shot_20261026-141007.log",
+  "stdout_tail": "  entrant   MiMo-V2.6-Distill-Qwen-9B-Q4_K_M   digest 4bca6f18c73f7227\n  state     mc_01_one_shot   digest ab101ca955c1c853   cap 4\n  binary    /home/chilly1/llama.cpp/build/bin/llama-server  (server_binary_digest 0d5393431782ddf8)\n  ended     threats_resolved  (every threat has been resolved by tick 2)\n  score     0 / 1 cities surviving\n  counts    {'fired': 0, 'passed': 0, 'no_ammo': 0, 'out_of_range': 0, 'unknown': 0, 'malformed': 3, 'late': 0, 'hit': 1, 'spared': 0}\n  tokens    ['Silo', 'Silo', 'The']\n  unreadable 3  missing_values 0  budget no turn hit the ceiling -- the answers are the model's own e\n  suffice   THE RECORD IS SUFFICIENT: the score and every screen the entrant saw recompute from (state\n  artifact  probes/MC_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_mc_01_one_shot.json\n  REPLACED  probes/MC_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_mc_01_one_shot.json (14081 B) -- reason: 'GPU/CPU window t_925f606f: re-measuring this cell under the checker certified 2026-10-26. The pre-existing record (sha256 ca0db4a1a5550e0c...) is preserved at /home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-141007/MC_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_mc_01_one_shot.json and is reported BESIDE this row.'\n",
+  "stderr_tail": ""
+ },
+ "artifact": "/home/chilly1/workspace/ocho_arena_cabinets/missile-command/probes/MC_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_mc_01_one_shot.json",
+ "artifact_exists": true,
+ "artifact_sha256": "6a2129c083c6addef5a2514ff2aee48a2da67e2ef6f3d9ddb5edfe92e7c82817",
+ "artifact_written_in_block": true,
+ "compute_path": {
+  "ngl": 0,
+  "server_argv": [
+   "/home/chilly1/llama.cpp/build/bin/llama-server",
+   "-m",
+   "/home/chilly1/moltbook_pipeline/models/MiMo-V2.6-Distill-Qwen-9B-Q4_K_M.gguf",
+   "-c",
+   "4096",
+   "-ngl",
+   "0",
+   "--port",
+   "58712",
+   "--no-webui",
+   "--reasoning",
+   "off",
+   "--fit",
+   "off"
+  ],
+  "ctx": 4096,
+  "reading": "read from the artifact's own config block"
+ },
+ "gpu_after_mib": 1779,
+ "resident_health_after": 200,
+ "block_finished": "2026-10-26T14:10:37-0700"
+}

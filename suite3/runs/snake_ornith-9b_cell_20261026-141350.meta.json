@@ -1,0 +1,77 @@
+{
+ "window": "t_925f606f",
+ "cabinet": "snake",
+ "entrant": "ornith-9b",
+ "level": null,
+ "block_started": "2026-10-26T14:13:50-0700",
+ "baseline_mib_at_start": 1779,
+ "resident_health_before": 200,
+ "shape": "driver-owned",
+ "preserved_preexisting": [],
+ "driver_cmd": [
+  "/home/chilly1/.hermes/installs/6aee69e0a7d8dfbd/environments/252d1a4dfac54fbfa586ceb8459575fe/venv/bin/python3",
+  "/home/chilly1/workspace/ocho_arena_cabinets/snake/snake_run.py",
+  "--entrant",
+  "/home/chilly1/moltbook_pipeline/models/Ornith-1.5-9B-Q4_K_M.gguf",
+  "--seeds",
+  "1,7",
+  "--ticks",
+  "120",
+  "--port",
+  "58701",
+  "--ngl",
+  "99",
+  "--ctx",
+  "8192",
+  "--parallel",
+  "1",
+  "--llama-server",
+  "/home/chilly1/llama.cpp/build/bin/llama-server"
+ ],
+ "driver": {
+  "exit": 2,
+  "wall_secs": 0.1,
+  "log": "/home/chilly1/workspace/ocho_arena/suite3/logs/snake_ornith-9b_cell_20261026-141350.log",
+  "stdout_tail": "",
+  "stderr_tail": "usage: snake_run.py [-h] [--baseline {cycle,cycle-shortcut,greedy-safe}]\n                    [--entrant ENTRANT] [--seeds SEEDS] [--ticks TICKS]\n                    [--port PORT] [--death-ends] [--no-death-ends]\n                    [--llama-server LLAMA_SERVER]\n                    [--overwrite-artifact REASON] [--mmproj MMPROJ]\n                    [--no-mmproj] [--legend {first,order,prose}]\n                    [--verify BUNDLE] [--replay BUNDLE] [--self-test]\nsnake_run.py: error: unrecognized arguments: --ngl 99 --ctx 8192 --parallel 1\n"
+ },
+ "vram": {
+  "card_max_mib": 1779,
+  "pid_max_mib": null,
+  "samples": 1
+ },
+ "props": null,
+ "controls_in_producing_process": null,
+ "release": {
+  "port_closed": true,
+  "vram_mib_after": 1779,
+  "vram_baseline_mib": 1779,
+  "vram_delta_mib": 0,
+  "tolerance_mib": 64,
+  "vram_back_to_baseline": true,
+  "listener_after": null,
+  "pid_vram_after": 0,
+  "resident_health_after": 200
+ },
+ "block_finished": "2026-10-26T14:13:52-0700",
+ "artifacts": [
+  {
+   "path": "/home/chilly1/workspace/ocho_arena_cabinets/snake/probes/SNAKE_Ornith-1.5-9B-Q4_K_M_s1.json",
+   "exists": false,
+   "sha256": null,
+   "mtime_epoch": null
+  },
+  {
+   "path": "/home/chilly1/workspace/ocho_arena_cabinets/snake/probes/SNAKE_Ornith-1.5-9B-Q4_K_M_s7.json",
+   "exists": false,
+   "sha256": null,
+   "mtime_epoch": null
+  }
+ ],
+ "artifact_exists": false,
+ "artifact": null,
+ "artifact_set": [
+  "/home/chilly1/workspace/ocho_arena_cabinets/snake/probes/SNAKE_Ornith-1.5-9B-Q4_K_M_s1.json",
+  "/home/chilly1/workspace/ocho_arena_cabinets/snake/probes/SNAKE_Ornith-1.5-9B-Q4_K_M_s7.json"
+ ]
+}

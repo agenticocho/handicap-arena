@@ -1,0 +1,57 @@
+{
+ "window": "t_925f606f",
+ "cabinet": "missile-command",
+ "entrant": "ornith-9b",
+ "level": "levels/mc_01_one_shot.txt",
+ "block_started": "2026-10-26T14:09:54-0700",
+ "shape": "cpu-only (the cabinet's frozen compute path, -ngl 0)",
+ "lease_held": false,
+ "gpu_baseline_mib": 1779,
+ "resident_health_before": 200,
+ "preserved_preexisting": null,
+ "driver_cmd": [
+  "/home/chilly1/.hermes/installs/6aee69e0a7d8dfbd/environments/252d1a4dfac54fbfa586ceb8459575fe/venv/bin/python3",
+  "/home/chilly1/workspace/ocho_arena_cabinets/missile-command/missile_command_run.py",
+  "--entrant",
+  "/home/chilly1/moltbook_pipeline/models/Ornith-1.5-9B-Q4_K_M.gguf",
+  "--state",
+  "levels/mc_01_one_shot.txt",
+  "--port",
+  "58712"
+ ],
+ "driver": {
+  "exit": 0,
+  "wall_secs": 10.8,
+  "log": "/home/chilly1/workspace/ocho_arena/suite3/logs/mc_ornith-9b_mc_01_one_shot_20261026-140943.log",
+  "stdout_tail": "  entrant   Ornith-1.5-9B-Q4_K_M   digest 70c112196e0b7023\n  state     mc_01_one_shot   digest ab101ca955c1c853   cap 4\n  binary    /home/chilly1/llama.cpp/build/bin/llama-server  (server_binary_digest 0d5393431782ddf8)\n  ended     threats_resolved  (every threat has been resolved by tick 2)\n  score     0 / 1 cities surviving\n  counts    {'fired': 0, 'passed': 3, 'no_ammo': 0, 'out_of_range': 0, 'unknown': 0, 'malformed': 0, 'late': 0, 'hit': 1, 'spared': 0}\n  tokens    ['PASS', 'PASS', 'PASS']\n  unreadable 0  missing_values 0  budget no turn hit the ceiling -- the answers are the model's own e\n  suffice   THE RECORD IS SUFFICIENT: the score and every screen the entrant saw recompute from (state\n  artifact  probes/MC_Ornith-1.5-9B-Q4_K_M_mc_01_one_shot.json\n",
+  "stderr_tail": ""
+ },
+ "artifact": "/home/chilly1/workspace/ocho_arena_cabinets/missile-command/probes/MC_Ornith-1.5-9B-Q4_K_M_mc_01_one_shot.json",
+ "artifact_exists": true,
+ "artifact_sha256": "50eeb521057094aa9c71e2336ce152540a5d28b5dd56df73c99bd8823a1a09bb",
+ "artifact_written_in_block": true,
+ "compute_path": {
+  "ngl": 0,
+  "server_argv": [
+   "/home/chilly1/llama.cpp/build/bin/llama-server",
+   "-m",
+   "/home/chilly1/moltbook_pipeline/models/Ornith-1.5-9B-Q4_K_M.gguf",
+   "-c",
+   "4096",
+   "-ngl",
+   "0",
+   "--port",
+   "58712",
+   "--no-webui",
+   "--reasoning",
+   "off",
+   "--fit",
+   "off"
+  ],
+  "ctx": 4096,
+  "reading": "read from the artifact's own config block"
+ },
+ "gpu_after_mib": 1779,
+ "resident_health_after": 200,
+ "block_finished": "2026-10-26T14:09:54-0700"
+}

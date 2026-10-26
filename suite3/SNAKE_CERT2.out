@@ -1,0 +1,5 @@
+{"entrant": "ornith-9b", "exit": 0, "wall_s": 453.6, "artifacts": true, "gpu": [1780, 1790], "release": {"port_closed": true, "vram_mib_after": 1790, "vram_baseline_mib": 1780, "vram_back_to_baseline": true, "resident_health_after": 200}, "meta": "/home/chilly1/workspace/ocho_arena/suite3/runs/snake_ornith-9b_cell_20261026-141650.meta.json"}
+{"entrant": "mimo-9b", "exit": -15, "wall_s": 638.3, "artifacts": false, "gpu": [1790, 5911], "release": {"port_closed": false, "vram_mib_after": 5911, "vram_baseline_mib": 1790, "vram_back_to_baseline": false, "resident_health_after": 200}, "meta": "/home/chilly1/workspace/ocho_arena/suite3/runs/snake_mimo-9b_cell_20261026-142424.meta.json"}
+bash: [3215663: 1 (255)] tcsetattr: Inappropriate ioctl for device
+EXIT=143
+Mon Oct 26 02:35:36 PM PDT 2026

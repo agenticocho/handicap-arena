@@ -11840,5 +11840,22 @@
   "observed": "thinking OFF -- a one-token question answered in a few tokens"
  },
  "not_an_action": 0,
- "missing_values": 0
+ "missing_values": 0,
+ "artifact_replaced": {
+  "path": "probes/SNAKE_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_s7.json",
+  "bytes": 155944,
+  "sha256": "3f71e7fd8d0d3b9e",
+  "said_about_itself": {
+   "agent": "Ministral-3-3B-Instruct-2512-UD-Q4_K_XL",
+   "seed": 7,
+   "score": {
+    "eaten": 0,
+    "best_life": 0,
+    "deaths": 0,
+    "ticks": 120
+   },
+   "chain_digest": "7f46665eb1a91edf"
+  },
+  "reason_given": "GPU window t_925f606f: re-measuring this cell under the instrument certified on 2026-10-26. The pre-existing record(s) are preserved with their digests under suite3/preserved/ and are reported BESIDE this row, never merged into it."
+ }
 }

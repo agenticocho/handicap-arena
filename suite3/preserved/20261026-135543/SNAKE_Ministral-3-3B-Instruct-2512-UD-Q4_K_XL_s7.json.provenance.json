@@ -1,0 +1,8 @@
+{
+ "original": "/home/chilly1/workspace/ocho_arena/probes/SNAKE_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_s7.json",
+ "preserved_at": "/home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-135543/SNAKE_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_s7.json",
+ "sha256": "3f71e7fd8d0d3b9e359ad56b31b50f3b03e234e3787c41b364951304d6df077a",
+ "bytes": 155944,
+ "why": "GPU window t_925f606f: pre-existing snake episodes at this coordinate",
+ "preserved": "2026-10-26T13:55:43-0700"
+}

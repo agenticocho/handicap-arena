@@ -1,0 +1,9 @@
+{"entrant": "ministral-3b", "state": "mc_02_scarcity", "exit": 0, "wall_s": 16.0, "artifact": true, "gpu": [1779, 1779], "health": [200, 200]}
+{"entrant": "ornith-9b", "state": "mc_01_one_shot", "exit": 0, "wall_s": 10.8, "artifact": true, "gpu": [1779, 1779], "health": [200, 200]}
+{"entrant": "ornith-9b", "state": "mc_02_scarcity", "exit": 0, "wall_s": 13.2, "artifact": true, "gpu": [1779, 1779], "health": [200, 200]}
+{"entrant": "mimo-9b", "state": "mc_01_one_shot", "exit": 0, "wall_s": 30.0, "artifact": true, "gpu": [1779, 1779], "health": [200, 200]}
+{"entrant": "mimo-9b", "state": "mc_02_scarcity", "exit": 0, "wall_s": 68.7, "artifact": true, "gpu": [1779, 1779], "health": [200, 200]}
+{"entrant": "bonsai-9b", "state": "mc_01_one_shot", "exit": 0, "wall_s": 6.8, "artifact": true, "gpu": [1779, 1779], "health": [200, 200]}
+{"entrant": "bonsai-9b", "state": "mc_02_scarcity", "exit": 0, "wall_s": 25.0, "artifact": true, "gpu": [1779, 1779], "health": [200, 200]}
+MC_PASS_EXIT=0
+Mon Oct 26 02:12:18 PM PDT 2026

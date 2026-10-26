@@ -1,0 +1,8 @@
+{
+ "original": "/home/chilly1/workspace/ocho_arena/probes/SNAKE_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_s1.json",
+ "preserved_at": "/home/chilly1/workspace/ocho_arena/suite3/preserved/20261026-135715/SNAKE_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_s1.json",
+ "sha256": "cfdde0aaf878846b4cf28e2f913251b10d42a6898b246c80131e46d60dd22268",
+ "bytes": 167516,
+ "why": "GPU window t_925f606f: pre-existing snake episodes at this coordinate",
+ "preserved": "2026-10-26T13:57:15-0700"
+}
