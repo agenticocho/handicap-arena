@@ -46,6 +46,9 @@ WHAT IS MISSING                unreadable_is_the_aggregate_of  missing_values_ar
 FAILURE, WHICH CONDITION       load_failure_class  ended_why
 IT REPORTS
 
+SOLVE CERTIFICATE, THE PLAN,   plan  replay  provenance  solved_simulator_claim
+ITS REPLAY, AND THE DRIVER     solved_downgraded_by_replay
+
 INSTRUMENT READINGS            reasoning_probe  budget_signature  dead_end  turns
 ```
 

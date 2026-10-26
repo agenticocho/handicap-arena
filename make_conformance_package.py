@@ -89,6 +89,12 @@ FORMAT = [
     # WHICH CONDITION A FAILURE IS REPORTING, and the caveat on a cell the harness confounded. The PROSE that
     # quotes this box is LOCAL (`why`); the CLASS travels.
     ("FAILURE -- WHICH CONDITION IT REPORTS", ["load_failure_class", "ended_why"]),
+    # THE SOLVE CERTIFICATE. Three of these are BLOCKS whose keys travel with them (`plan.tokens`,
+    # `replay.verdict`, `provenance.driver_sha256`), and the split's grain here is the block -- the same grain the
+    # package already uses for `dead_end` and `turns`. The two scalar claims beside them are the half that makes
+    # the score auditable: WHAT THE SIMULATOR SAID, and WHY IT WAS OVERRULED IF IT WAS.
+    ("SOLVE CERTIFICATE -- THE PLAN, ITS REPLAY, AND THE DRIVER",
+     ["plan", "replay", "provenance", "solved_simulator_claim", "solved_downgraded_by_replay"]),
     ("INSTRUMENT READINGS", ["reasoning_probe", "budget_signature", "dead_end", "turns"]),
 ]
 

@@ -149,3 +149,35 @@ the run. The cell-4 retake therefore **truncated D1's log at the same path** at 
 `DISCARDED-MANIFEST` D1 (16 007 B, sha256 `910379dc…`) no longer exist on disk. The retake's own log is preserved
 under a run-specific name and hashed in that manifest (D1a). Nothing was deleted deliberately: the driver's
 naming is the cause, and any future retake of a cell will overwrite that cell's log again.
+
+---
+
+## NOTE (2026-10-26) — APPENDED, NOT EDITED: EVERY `SOLVED` NOW CARRIES A PLAN A SEPARATE PROCESS REPLAYS
+
+Card `t_5cd7649a`. **Nothing above this line was changed**, and **no frozen level was touched** (`01`/`02`/`03`
+are still `db6ca596…`/`7549657f…`/`77d18407…`). This note is appended because the table above is a record of what
+the instrument measured on the day it measured it, and an instrument change must not be read back into it.
+
+**What changed, in one sentence:** `sokoban_run.py` (64 146 B `dd25eb53…` → 74 075 B `54514db6…`) now puts the
+plan, the verdict of a **separate** replay process, and the **compute path + driver revision** on every row, and
+`solved` is the conjunction of the simulator's claim and that verdict. The new instrument is `sokoban_replay.py`
+(24 118 B `1dc7a6cc…`); its enforcer is `check_sokoban_replay.py` (24/24 controls, rc 0).
+
+**What it says about the eight cells in the table: nothing, and that is the point.** All eight rows claim
+`solved: false`, and re-executing each one against its level now yields `REFUSED` with rc 3 — every one of the
+eight claims is supported by its own plan. The frontier's 0 of 8 is unchanged and is now **replayable**: a reader
+can re-run any cell without asking this driver.
+
+**The five rows in the cabinet that DO claim a solve are all `01_one_push`, and all five verify** (rc 0),
+including two whose plans begin with blocked attempts — `['D','R']` and `['U','U','R']`. Those files were not
+rewritten; they are certified by re-execution.
+
+**One correction to a premise, measured in-cabinet:** `RULDLU` (period 6) does not clear "level 01 alone" — it
+clears **01 at ply 1 and 03 at ply 6**, i.e. two of three, and the level it cannot touch is **02**. The peer's
+`strict 1/3 · generous 2/3` is reproduced exactly (STRICT = solved on a period boundary, GENEROUS = solved at
+any ply), as are `87 380 / 77 540 / 198 / 76 / 0`; and the shortest period clearing two levels is **6, uniquely
+`RULDLU`**, so the period-6 result stands — while period **1** (`R`) clears level 01, so `RULDLU` is optimal by
+**coverage**, not by period. `198`/`76` are cap-invariant from cap 40 upward and move only below it.
+
+Full certification, the mutation results and the seven things this still cannot separate:
+`SOKOBAN_REPLAY_CERTIFICATION_2026-10-26.md`.

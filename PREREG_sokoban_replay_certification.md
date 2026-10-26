@@ -180,3 +180,54 @@ end of the card.
 A dated **NOTE is APPENDED** to `SOKOBAN_FRONTIER_RESULTS.md` (the results file for this cabinet). Nothing in
 that file is edited. The census package and the split gain the three names **only after the enforcer has been
 seen to fire on them** (P12), and the landing note records both the firing and the repair.
+
+---
+
+# LANDING NOTE — APPENDED AFTER THE MEASUREMENT
+
+**Landed:** `sokoban_replay.py` (the separate verifier), `check_sokoban_replay.py` (the enforcer and the mutation
+harness), `sokoban_base_rate.py` (the in-cabinet base rate), the three new blocks on every row of
+`sokoban_run.py` (64 146 B `dd25eb53…` → 74 075 B `54514db6…`), the five new names declared in
+`make_conformance_package.py` and `SOKOBAN_CONFORMANCE_PACKAGE.md`, the dated NOTE appended to
+`SOKOBAN_FRONTIER_RESULTS.md`, and the report `SOKOBAN_REPLAY_CERTIFICATION_2026-10-26.md`.
+
+**HEADLINE RESULTS.** All five historical `solved: true` rows replay to `VERIFIED` (rc 0) through a separate
+process, including the two whose plans open with blocked attempts. Nineteen rows claim no solve and all nineteen
+are refused; zero rows disagree with their own replay. The three named mutations all fire with a non-zero exit
+(plan step 3/3, box position 5 of 10 with 5 declared *survivors*, claimed solve in both directions including an
+enforcer rc 1 that returns to rc 0 with the claim restored), and the cross-check fires at rc 5 under a declared
+fault. The base rate reproduces the peer's five numbers exactly — `87 380 / 77 540 / 198 / 76 / 0`, best plan
+`RULDLU` period 6, `strict 1/3 · generous 2/3`.
+
+**THE CARD'S PREMISE IS WRONG ON ONE POINT (P8).** `RULDLU` clears level 01 **and** level 03 — two of three, not
+"level 01 alone"; the level it cannot touch is 02. `RULDLU` **is** optimal by coverage (period 6 is the shortest
+that clears two levels, and it is the only word at that period) and **is not** optimal by period (period 1, `R`,
+clears level 01).
+
+**THREE THINGS THIS MEASUREMENT GOT WRONG, NAMED RATHER THAN TIDIED.**
+
+1. The first M2 fixture (level 02's lower crate moved (3,3)→(3,4)) **did not fire**: the 12-move plan still
+   solved the mutated level, because the crate needed two pushes and the plan's third push was simply blocked and
+   landed it anyway. A mutation the plan survives is not a control, so the harness now classifies every mutation
+   and prints the survivors. Level 01 admits **no** firing one-cell box mutation at all — its crate's only free
+   neighbour is the target — and that impossibility is declared in `M2_EXPECT_REFUSAL` rather than papered over
+   with a mutation that happens to fire.
+2. The first level-01 mutation wrote `$` onto a `.` and produced a level with **no targets**, refused as
+   `NOT_A_LEVEL`: a control that would have fired for the wrong reason. The writer now keeps the target under the
+   crate (`*`).
+3. **P11 is simply false.** The peer's `198`/`76` are not cap-specific: they are identical at caps 40, 64 and 96,
+   and move only below 40 (cap 12: `02` = 0, `03` = 72; cap 24: `02` = 22, `03` = 76). The prediction failed in
+   the direction that makes the peer's numbers stronger, and the cap-sensitivity table is printed so a reader can
+   see where the plateau starts.
+
+**THE FIELD CENSUS FIRED BEFORE IT WENT GREEN (P12).** `check_conformance_census.py` returned rc 1 naming
+`plan`, `provenance`, `replay`, `solved_downgraded_by_replay`, `solved_simulator_claim` at `sokoban_run.py:989`;
+it returned rc 0 only after the five were declared in the split and in `LIST 1` (57 names in both carriers). Its
+own five-arm control passes. **One limitation is recorded rather than hidden:** the census's grain is the block,
+so the inner keys of `plan`/`replay`/`provenance` are not censused — a rename inside one of them would not be
+caught. That is the next enforcer, named in §7 of the report.
+
+**WHAT DID NOT CHANGE.** No frozen level (`db6ca596…`/`7549657f…`/`77d18407…`, re-hashed after every run); no
+historical row (all 24 byte-identical, certified by re-execution); no GPU, no lease, no model (`--ngl` still 0);
+`sokoban.py` untouched. `test_no_silent_zero.py` and `test_declared_root.py` were already rc 1 at the base and
+are still rc 1 — neither their failure nor a repair is spent as evidence here.

@@ -715,6 +715,166 @@ def dead_end_verdict(level_text, tokens, max_states=200000):
 
 ACTIONS_UDLR = ("U", "D", "L", "R")
 
+# ==================================================================================================
+# THE SOLVE CERTIFICATE -- A SEPARATE PROCESS REPLAYS THE PLAN, AND THE ROW CARRIES ITS VERDICT.
+#
+# THE DEFECT THIS CLOSES: `solved` was computed by `S.play()` in the same process that drove the model, and
+# nothing re-executed it. A row saying `solved: true` was therefore a claim about a computation nobody could
+# re-run without reconstructing the plan from the turn list by hand -- a rate built on rows like that measures
+# the driver's optimism.
+#
+# SO EVERY ROW NOW CARRIES THREE THINGS IT DID NOT CARRY BEFORE, AND THEY ARE PRODUCED BY DIFFERENT PROCESSES:
+#
+#   plan        the emitted TOKEN STREAM, lossless, blocked attempts kept -- because measured plans include them
+#               (['D','R'] and ['U','U','R'] both solved level 01)
+#   replay      the verdict of `sokoban_replay.py`, run as a SUBPROCESS, with its own parser, its own transition
+#               rule and a per-ply cross-check against the frozen simulator
+#   provenance  the COMPUTE PATH and the DRIVER REVISION that produced the row -- a digest, not "the engine"
+#
+# AND `solved` IS THE CONJUNCTION: `solved_simulator_claim AND replay.verdict == VERIFIED`. A row may not claim a
+# solve its own replay refuses. Both halves travel, so the downgrade is visible rather than silent and a reader
+# can always see what the simulator said and what the second opinion said.
+#
+# THE FAILURE PATHS CARRY THE BLOCKS TOO, WITH AN EXPLICIT "NOT ATTEMPTED". A field that is ABSENT on some rows
+# and present on others cannot be told apart from a field that was never computed -- the same class as a blank
+# class name -- so absence is not used to mean anything here.
+# ==================================================================================================
+REPLAY_VERIFIER = "sokoban_replay.py"
+_DRIVER_IDENTITY: dict = {}
+
+
+def _sha256_file(path):
+    try:
+        with open(path, "rb") as fh:
+            return hashlib.sha256(fh.read()).hexdigest()
+    except OSError:
+        return None
+
+
+def _git(args):
+    try:
+        p = subprocess.run(["git", "-C", HERE] + args, capture_output=True, text=True, timeout=30)
+        return p.stdout.strip() if p.returncode == 0 else None
+    except Exception:                                                    # noqa: BLE001
+        return None
+
+
+def driver_identity():
+    """COMPUTE PATH AND DRIVER REVISION, measured once per process from the files on disk.
+
+    WHY NOT "the engine": this tree is shared and moves under a running worker. The commit recorded here is the
+    commit the driver was read from, beside the driver's OWN digest -- which is what actually determines the
+    score, and which does not move when somebody else commits.
+    """
+    if _DRIVER_IDENTITY:
+        return dict(_DRIVER_IDENTITY)
+    commit = _git(["rev-parse", "HEAD"])
+    porcelain = _git(["status", "--porcelain", "--", "sokoban_run.py", "sokoban.py", REPLAY_VERIFIER])
+    _DRIVER_IDENTITY.update({
+        "compute_path": "cpu",
+        "compute_path_note": ("Sokoban's score is a SEARCH over a frozen simulator -- no model call computes it. "
+                              "The model emits one letter per turn; `sokoban.play()` scores the stream and "
+                              "`sokoban_replay.py` certifies it, both on CPU. The serving process's own compute "
+                              "path is recorded separately in `config.n_gpu_layers`."),
+        "driver_file": "sokoban_run.py",
+        "driver_bytes": os.path.getsize(os.path.join(HERE, "sokoban_run.py")),
+        "driver_sha256": _sha256_file(os.path.join(HERE, "sokoban_run.py")),
+        "driver_git_commit": commit,
+        "driver_git_commit_short": commit[:7] if commit else None,
+        "driver_git_dirty": sorted(ln for ln in (porcelain or "").splitlines() if ln.strip()),
+        "driver_git_source": ("git rev-parse HEAD in the tree this file was imported from" if commit
+                              else "git unavailable or this tree is not a repository"),
+        "simulator_file": "sokoban.py",
+        "simulator_sha256": _sha256_file(os.path.join(HERE, "sokoban.py")),
+        "replay_verifier_file": REPLAY_VERIFIER,
+        "replay_verifier_sha256": _sha256_file(os.path.join(HERE, REPLAY_VERIFIER)),
+        "python": sys.version.split()[0],
+    })
+    return dict(_DRIVER_IDENTITY)
+
+
+def provenance_block():
+    ident = driver_identity()
+    ident["measured_at_unix"] = int(time.time())
+    ident["measured_at_local"] = time.strftime("%Y-%m-%dT%H:%M:%S%z")
+    return ident
+
+
+def certify_plan(level_path, tokens, claim_solved):
+    """Run the SEPARATE verifier and return its verdict. FAIL-CLOSED: a verifier that cannot be run, or that
+    returns something that is not a verdict, yields a verdict the score cannot pass through."""
+    argv = [sys.executable, os.path.join(HERE, REPLAY_VERIFIER),
+            "--level", level_path, "--plan-tokens", json.dumps([str(t) for t in tokens]),
+            "--claim-solved", "true" if claim_solved else "false", "--json", "--root", HERE]
+    try:
+        p = subprocess.run(argv, capture_output=True, text=True, timeout=180)
+    except Exception as e:                                               # noqa: BLE001
+        return {"verdict": "VERIFIER_FAILED", "exit_code": None, "refusal_reason": "verifier_not_runnable",
+                "refusal_detail": f"could not run {REPLAY_VERIFIER}: {e}",
+                "verifier_sha256": _sha256_file(os.path.join(HERE, REPLAY_VERIFIER))}
+    try:
+        doc = json.loads(p.stdout)
+    except ValueError:
+        doc = None
+    if not isinstance(doc, dict) or "verdict" not in doc:
+        return {"verdict": "VERIFIER_FAILED", "exit_code": p.returncode,
+                "refusal_reason": "verifier_returned_no_verdict",
+                "refusal_detail": (p.stdout + p.stderr)[-600:],
+                "verifier_sha256": _sha256_file(os.path.join(HERE, REPLAY_VERIFIER))}
+    # THE VERDICT THAT COUNTS IS THE SUBPROCESS'S, AND SO IS ITS EXIT CODE. If they disagree the process is not
+    # behaving as a process, and that is reported as a failure rather than resolved in the caller's favour.
+    if (doc["verdict"] == "VERIFIED") != (p.returncode == 0):
+        doc["verdict"] = "VERIFIER_INCONSISTENT"
+        doc["refusal_reason"] = "verdict_and_exit_code_disagree"
+        doc["refusal_detail"] = f"{doc.get('verdict')} with rc {p.returncode}"
+    return doc
+
+
+def solve_certificate(r, level_path, tokens):
+    """-> the blocks the row carries, and the ONE score that is allowed out of this file.
+
+    Called by `run()` on every loaded cell, and by the control suite on a row it builds from a historical record
+    -- so the code the control exercises IS the code the driver runs, rather than a second copy of it.
+    """
+    tokens = list(tokens)
+    claim = bool(r.get("solved"))                       # what the frozen simulator said
+    replay = certify_plan(level_path, tokens, claim)
+    verified = replay.get("verdict") == "VERIFIED"
+    solved = bool(claim and verified)
+    downgraded = None if (claim == solved) else (replay.get("refusal_reason") or replay.get("verdict"))
+    if claim and not solved:
+        # THE ROW MAY NOT SAY `ended: solved` WHILE SAYING `solved: false`: one of the two would be a lie and the
+        # reader would have to guess which. The path that failed is named instead.
+        r["ended_why"] = (f"the frozen simulator scored this plan as solved and the separate replay refused it "
+                          f"({downgraded}): {replay.get('refusal_detail')}")
+    # THE RETURN IS A LITERAL, DELIBERATELY: the field-census enforcer resolves a `**` spread to the callee's
+    # RETURNED DICT LITERAL, and a function that returns a variable is a MISS rather than a pass (measured: it
+    # returned rc 2 with "could not be resolved to a returned dict literal" before this shape was used).
+    return {
+        "plan": {"tokens": [str(t) for t in tokens],
+                 "actions": "".join(str(t) for t in tokens if len(str(t).strip()) == 1
+                                    and str(t).strip().upper() in S.ACTIONS),
+                 "derivation": ("the emitted turn stream, in order, with every token kept: blocked attempts are "
+                                "part of the plan and noise tokens are replayed as not_an_action"),
+                 "sha256": hashlib.sha256(json.dumps([str(t) for t in tokens]).encode()).hexdigest()},
+        "replay": replay,
+        "solved": solved,
+        "solved_simulator_claim": claim,
+        "solved_downgraded_by_replay": downgraded,
+        "ended": ("solved_unverified" if (claim and not solved) else r.get("ended")),
+    }
+
+
+def not_attempted_certificate(why):
+    """The blocks on a row that never reached a plan. EXPLICIT, so absence never has to mean 'not computed'."""
+    return {
+        "plan": {"tokens": [], "actions": "", "derivation": f"NONE -- {why}", "sha256": None},
+        "replay": {"verdict": "NOT_ATTEMPTED", "exit_code": None, "refusal_reason": "no_plan",
+                   "refusal_detail": why,
+                   "verifier_sha256": _sha256_file(os.path.join(HERE, REPLAY_VERIFIER))},
+    }
+
+
 
 def run(entrant, level_path, cap, port):
     level = open(level_path).read()
@@ -751,7 +911,11 @@ def run(entrant, level_path, cap, port):
                         # WHICH BINARY REFUSED IT -- the failure path is where this matters most (the
                         # same file is REFUSED by the default and runs on the fork), so the failure record
                         # carries the binary's identity too, from the one definition.
-                        **binary_provenance()}
+                        **binary_provenance(),
+                        # AND THE CERTIFICATE BLOCKS, EXPLICITLY NOT ATTEMPTED: a row that never reached a turn
+                        # has no plan, and saying so is different from saying nothing.
+                        **not_attempted_certificate("the server exited before the first turn"),
+                        "provenance": provenance_block()}
             try:
                 urllib.request.urlopen(base + "/health", timeout=3).read()
                 up = True
@@ -765,7 +929,9 @@ def run(entrant, level_path, cap, port):
                     # are handed. A /health timeout is the case where the log usually names nothing, so
                     # this is where RULING 82's sentence normally appears.
                     **load_failure(log, "never answered /health in 600 s"),
-                    **binary_provenance()}
+                    **binary_provenance(),
+                    **not_attempted_certificate("the server never answered /health, so no turn was taken"),
+                    "provenance": provenance_block()}
         load_s = time.time() - t0
 
         # THE PROBE RUNS BEFORE A SINGLE GAME TURN. Ask once, briefly: what setting is this model ACTUALLY
@@ -820,7 +986,8 @@ def run(entrant, level_path, cap, port):
             r["ended_why"] = ("every command was an empty answer the HARNESS produced: the model "
                               "deliberated into the ceiling and never reached an answer. NOT a capability "
                               "result until it is re-run with room or at a setting that stops deliberating.")
-        r.update({"entrant": label, "entrant_digest": model_digest(entrant),
+        r.update({**solve_certificate(r, level_path, tokens),
+                  "entrant": label, "entrant_digest": model_digest(entrant),
                   "entrant_digest_scope": "sha256 of the model FILE, first 16 hex. THE ENTRANT IS THE THING "
                                           "BEING MEASURED, so it is identified by a digest and not by a name; "
                                           "`entrant` beside it is a LABEL, for reading, not for checking.",
@@ -872,7 +1039,9 @@ def run(entrant, level_path, cap, port):
                   "budget_signature": budget_signature(turns, MAX_TOKENS),
                   # THE COUNTERS CANNOT SAY WHETHER `moves 4` WAS PROGRESS. This can, and it travels on the
                   # same line as them because a reader who has only the counters cannot tell the difference.
-                  "dead_end": dead_end_verdict(level, tokens)})
+                  "dead_end": dead_end_verdict(level, tokens),
+                  # THE COMPUTE PATH AND THE DRIVER REVISION, per row -- a digest, not "the engine".
+                  "provenance": provenance_block()})
         return r
     finally:
         srv.terminate()
