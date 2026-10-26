@@ -1,0 +1,119 @@
+ZORK DRIVER -- NAME-LEVEL SUPERSET PROOF FOR THE BLOCK [5] REWRITE (AMENDMENT Z2)
+====================================================================================================
+Card t_a828c554. A DRIVER change, so the well-formed proof is frozen-driver-vs-new-driver: kept / added /
+removed-by-name-with-reason / expression-changes. Both revisions ran their OWN --self-test in throwaway
+git archive trees of this repository, so each was measured with its own probes/ and suite3/preserved/
+beside it. Names are read from PASS and FAIL lines both: the frozen driver's two archive arms are RED
+against the repaired archive by design, and a red arm still has a name. No file in the repository was
+written by this script.
+----------------------------------------------------------------------------------------------------
+
+====================================================================================================
+NAME-LEVEL SUPERSET PROOF -- zork_run.py --self-test -- 6cb7f9b vs b8a818a
+====================================================================================================
+6cb7f9b    sha256 b26b2cfc42a0a915…  62 PASS, 2 FAIL, exit 1   2 FAILED   --  62/64
+b8a818a    sha256 9be11e482c9c8a5d…  67 PASS, 0 FAIL, exit 0   ALL CONTROLS PASS   --  67/67
+
+duplicate names across the two sets: 0
+
+----------------------------------------------------------------------------------------------------
+SET A -- THE 64 NAMES THE FROZEN DRIVER (6cb7f9b) PRINTS
+----------------------------------------------------------------------------------------------------
+   1  ...and --parallel is carried, not dropped
+   2  ...and `take the key and walk north` is REFUSED as a whole, not mined
+   3  ...and a direction parses
+   4  ...and a readable command parses
+   5  ...and a record missing a SCORED field does not reproduce
+   6  ...and a record with no level text is reported as unreplayable, not skipped
+   7  ...and a replacement WITH A REASON is permitted
+   8  ...and a sentence opening with `I` IS READ as the declared abbreviation for inventory
+   9  ...and ctx agrees too
+  10  ...and is not failed for a field it was never asked to carry
+  11  ...and it carries what it destroyed, as a digest of the bytes
+  12  ...and it says WHICH field was missing
+  13  ...and its record REPRODUCES -- no false instrument failure
+  14  ...and neither are blank lines
+  15  ...and neither is None
+  16  ...and nothing was replaced
+  17  ...and so is a tampered PER-ROW attribution
+  18  ...and the change flag is clear because nothing was overridden
+  19  ...and the check says the axis was MEASURED, not skipped
+  20  ...and the check says which fields it compared
+  21  ...and the contradiction is 0 against 99, on all eight
+  22  ...and the message names the path and the remedy
+  23  ...and the operator's reason is verbatim in the record
+  24  ...and the record carries the argv, not a summary of it
+  25  ...and the refusal SAYS the file is missing
+  26  ...and the refusal quotes the phrase it could not read
+  27  ...and the replay route now names WHICH take it read
+  28  ...and the score it recomputes is the gate_locked ending, not the escape
+  29  ...and the summary field agrees with it
+  30  ...comparing all three axis fields
+  31  ...so it lands in `parsed`, NOT in `unparsed`
+  32  ...while a direction with prose after it resolves from the head
+  33  ...while the fixed call returns what the field claims
+  34  ...with the replay reading the REQUIRED take
+  35  A TAMPERED ATTRIBUTION TOTAL IS CAUGHT BY SUFFICIENCY
+  36  A TAMPERED RECORD IS CAUGHT -- the check is not a check that passes by construction
+  37  AN EMPTY ANSWER IS NOT A COMMAND
+  38  EVERY recorded GPU row contradicts itself: config.n_gpu_layers vs config.server_argv -ngl
+  39  None is refused
+  40  THE OLD CALL WOULD HAVE MISMATCHED, and this asserts it so the fix is not invisible
+  41  `I will take the key` is HANDED OVER AS TYPED
+  42  a command is NOT truncated to one token -- `take key` stays two words
+  43  a flag that is absent reads as None, not as a plausible zero
+  44  a free path needs no reason at all
+  45  a junk arm is refused
+  46  a path that EXISTS is REFUSED
+  47  a path that does not exist is written
+  48  a record carrying the axis reproduces its own score
+  49  a record of a real run reproduces its own score
+  50  a record with NO axis is reported as axis_measured: false
+  51  an EMPTY arm is refused
+  52  an answer that opens with a blank line is still read
+  53  an arm declared in a document that does not exist is refused
+  54  an arm with NO declaration document is refused
+  55  padding is stripped, the words are not cut
+  56  the DECLARED arm is off, for the reason the prereg gives
+  57  the arm 'auto' is accepted with its declaration
+  58  the arm 'off' is accepted with its declaration
+  59  the arm 'on' is accepted with its declaration
+  60  the first line is the command
+  61  the registered CPU launch reads back as 0 and no --parallel
+  62  the torch-first crawl takes the required item at step 2
+  63  this run's arm is the declared one
+  64  with --ngl 99 the argv says -ngl 99
+
+----------------------------------------------------------------------------------------------------
+SET B \ A -- THE 5 NAMES ADDED
+----------------------------------------------------------------------------------------------------
+   1  + ...and the contradiction is exactly (0, '99') on all eight preserved rows
+   2  + THE PRESERVED FIXTURE STILL CONTRADICTS ITSELF: all eight say n_gpu_layers 0 against -ngl 99
+   3  + every LIVE row agrees with itself: config.n_gpu_layers == config.server_argv -ngl
+   4  + the eight preserved fixture rows are present and unmodified: pinned sha256, eight literal paths
+   5  + the live archive at probes/ZORK_*.json has rows -- an absent archive is RED, not a skipped arm
+
+====================================================================================================
+THE DIFFERENCE
+====================================================================================================
+kept A n B : 62
+added B \ A: 5
+removed A \ B: 2
+
+removed: NOT NONE -- THE FOLLOWING NAMES WENT, EACH WITH ITS REASON:
+  - ...and the contradiction is 0 against 99, on all eight
+      RETIRED for R5, and it is retired although its sentence would still be true of the fixture: it was the second half of a two-arm block whose first arm was false, it named no subject of its own (the 'eight' it referred to was 'the rows in probes/'), and keeping a name whose block was rewritten underneath it is exactly the silent subject swap R5 forbids. Re-added with its subject in the sentence: '...and the contradiction is exactly (0, '99') on all eight preserved rows'.
+  - EVERY recorded GPU row contradicts itself: config.n_gpu_layers vs config.server_argv -ngl
+      RETIRED for R5. Its subject moved from 'every recorded row' to 'the eight preserved rows', and 'every recorded row' is now FALSE as a claim about this cabinet's rows: the live archive agrees with itself on all eight. The arm asserted the DEFECT in `probes/`, so repairing the writer turned it red -- a control that is green only while a defect persists is a veto on the repair (R2). Its subject is now named by the three preserved-fixture arms below.
+
+ARITHMETIC  62 kept + 5 added = 67  == 67? True
+            62 kept + 2 removed = 64  == 64? True
+
+====================================================================================================
+ONE LEVEL DEEPER -- THE CALL SITES, BECAUSE A NAME IS NOT AN ASSERTION
+====================================================================================================
+call sites: 62 in the frozen driver, 65 in the new one
+call sites for KEPT names: 59
+KEPT NAMES WHOSE COMPARED EXPRESSIONS OR MULTIPLICITY CHANGED: 0
+
+expression-changes: 0

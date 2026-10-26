@@ -725,3 +725,40 @@ SECTION 9 — WHAT THIS FILE DOES NOT DO
     digest and void the triple this file exists to record; the fork is stated in the amendment for the
     Chair to choose, not resolved here.
 
+
+====================================================================================================
+SECTION 10 — AMENDMENT Z2 (2026-10-26, card t_a828c554): THE AMENDMENT'S OWN DIGEST, RECORDED OUTSIDE IT
+====================================================================================================
+
+Z1's convention, applied unchanged to Z2: an amendment cannot carry its own digest -- appending the number
+would change the bytes it digests -- so the number is recorded HERE and in the message of the commit that
+lands the section.
+
+  commit that lands AMENDMENT Z2      b8a818a
+  PREREG_zork.md as amended by Z1     56dac6633f09e1a01151b254638d43be373e85ceb964ec1129734899b84d703a
+                                      36,691 B   (the state Z2 was appended to)
+  PREREG_zork.md as landed with Z2    945c3cb2a4250a9c1a868c5466e5108c57d7e7c961623b552edb2d58af1523b1
+                                      50,488 B   <- the digest of the amended text of record
+  recipe                              git show b8a818a:PREREG_zork.md | sha256sum
+  PREREG_zork.md as FROZEN            03b96c98bd39733b8ef64ec22e701efa3a330ad068b49c3efa9a57333f35a710
+                                      13,623 B   -- UNCHANGED, and still the digest in the triple, because
+                                      the criteria of record are the plan fixed before the first entrant
+  driver re-frozen by Z2              9be11e482c9c8a5d8eb3650bf83a7b68a804a4931c5b239c27c2fb29e6f5474a
+                                      86,531 B   -- supersedes b26b2cfc... 81,096 B (Z1's driver half)
+  simulator                           b9701007d6e186d5f27dc0e359a9c834b76a28ef8aedc362acf1c85bb6022d21
+                                      75,338 B   -- UNCHANGED; zork.py --self-test 175/175, exit 0
+
+  PREREG append, as landed            202 insertions, 0 deletions, one hunk at line 620 (below Z1)
+  the change itself                   zork_run.py block [5] only, plus the PRESERVED_FIXTURE table and one
+                                      docstring that cited the wrong path for the same eight rows
+  zork_run.py --self-test             67/67, exit 0        (was 62/64, exit 1, under the frozen driver)
+  driver superset proof               kept 62 / added 5 / removed 2 (with reasons) / expression-changes 0
+  M1-M4                               ZORK_DRIVER_M1-M4_2026-10-26.txt
+  the proof, in full                  ZORK_DRIVER_SUPERSET_PROOF_2026-10-26.txt
+  zork_controls.py                    93/93, exit 0 -- untouched by this change, read from probes/ as before
+
+SECTION 9 ABOVE STANDS AS THE RECORD OF Z1's OWN DATE, AND IS SUPERSEDED IN ONE RESPECT: Z1 did NOT repair
+the driver's two archive controls, because repairing them would have moved the driver's digest and voided
+the very triple Z1 existed to record. Z2 is the amendment that pays that price. The controls now assert the
+contradiction against the eight PRESERVED rows, pinned by digest, and AGREEMENT across the live archive;
+the driver's digest moved to 9be11e48...; the triple was re-frozen; and Z1's text was not edited.

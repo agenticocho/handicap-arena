@@ -1,0 +1,554 @@
+ZORK DRIVER -- THE FOUR MUTATION RUNS FOR THE BLOCK [5] REWRITE (AMENDMENT Z2)
+====================================================================================================
+Card t_a828c554. Local Chair ruling of 2026-10-26:
+governance/rulings/2026-10-26-a-control-that-asserts-a-defect-in-the-live-archive-vetoes-the-repair.md
+
+WHAT WAS RUN. Every run below is a throwaway tree built with
+
+    git -C /home/chilly1/workspace/ocho_arena archive b8a818a | tar -x
+
+i.e. it carries the repository's OWN probes/ (8 live rows), suite3/preserved/ (8 preserved rows) and
+levels/, straight out of b8a818a. Nothing was copied in, except in the "BEFORE" run below, whose whole
+point is that a different driver is used. The tree is deleted after each run. No file under the
+repository's probes/ was written; no preserved row was restored to the canonical path; no GPU lease, model
+or server was started. CPU only.
+
+    driver under test   zork_run.py  sha256 9be11e482c9c8a5d8eb3650bf83a7b68a804a4931c5b239c27c2fb29e6f5474a
+                                     86,531 B  (as committed in b8a818a)
+    simulator           zork.py      sha256 b9701007d6e186d5f27dc0e359a9c834b76a28ef8aedc362acf1c85bb6022d21
+    denominator         67 arms, up from 64 -- two arms became five, printed in Z2.3
+
+THE RESULT, IN ONE TABLE
+----------------------------------------------------------------------------------------------------
+BEFORE  the FROZEN driver b26b2cfc on this same, already-repaired archive
+                                             2 FAILED            --  62/64   exit 1   <- the defect
+M1      a preserved fixture row's n_gpu_layers set 0 -> 99
+                                             3 FAILED            --  64/67   exit 1   <- fixture arms RED
+M2      a live row's n_gpu_layers set 99 -> 0, argv still -ngl 99
+                                             1 FAILED            --  66/67   exit 1   <- agreement arm RED
+M3      one preserved fixture file removed
+                                             2 FAILED            --  65/67   exit 1   <- presence arm RED,
+                                                                                          denominator 67 UNCHANGED
+M4      the current, repaired archive, unmodified
+                                             ALL CONTROLS PASS   --  67/67   exit 0   <- NO ARM RED
+----------------------------------------------------------------------------------------------------
+M4 IS THE WHOLE POINT of the ruling: it is the run that was impossible before it. The BEFORE line is that
+impossibility reproduced -- the same archive, the same eight live rows, and the old control calling them a
+defect because they no longer are one.
+
+Each block below is the COMPLETE stdout of one --self-test run, verbatim, with its exit code.
+====================================================================================================
+
+==========================================================================================
+BEFORE  --  the FROZEN driver b26b2cfc, on the SAME repaired archive, unmodified
+tree: /home/chilly1/.hermes/profiles/zork/cache/scratch/ZORK_M4_y8wlse1_
+archive: git -C /home/chilly1/workspace/ocho_arena archive b8a818a
+mutation: none -- the archive as committed; ONLY the driver differs
+zork_run.py sha256: b26b2cfc42a0a91520e9e3b9753ad3871b8d79657628e986186c5f3de9948d19
+==========================================================================================
+====================================================================================================
+THE ZORK ENTRANT DRIVER CONTROLS
+====================================================================================================
+
+[1] AN UNDECLARED RUN IS REFUSED -- and the three legal arms are not
+  PASS  the arm 'on' is accepted with its declaration
+  PASS  the arm 'off' is accepted with its declaration
+  PASS  the arm 'auto' is accepted with its declaration
+  PASS  an EMPTY arm is refused
+  PASS  a junk arm is refused
+  PASS  None is refused
+  PASS  an arm with NO declaration document is refused
+  PASS  an arm declared in a document that does not exist is refused
+  PASS  ...and the refusal SAYS the file is missing
+  PASS  the DECLARED arm is off, for the reason the prereg gives
+  PASS  this run's arm is the declared one
+  PASS  ...and the change flag is clear because nothing was overridden
+  PASS  ...and the record carries the argv, not a summary of it
+
+[2] THE READING RULE: the first non-empty line, verbatim -- and NOTHING mined from prose
+  PASS  the first line is the command
+  PASS  padding is stripped, the words are not cut
+  PASS  an answer that opens with a blank line is still read
+  PASS  AN EMPTY ANSWER IS NOT A COMMAND
+  PASS  ...and neither are blank lines
+  PASS  ...and neither is None
+  PASS  a command is NOT truncated to one token -- `take key` stays two words
+  PASS  `I will take the key` is HANDED OVER AS TYPED
+  PASS  ...and a sentence opening with `I` IS READ as the declared abbreviation for inventory
+  PASS  ...so it lands in `parsed`, NOT in `unparsed`
+  PASS  ...and `take the key and walk north` is REFUSED as a whole, not mined
+  PASS  ...and the refusal quotes the phrase it could not read
+  PASS  ...while a direction with prose after it resolves from the head
+  PASS  ...and a readable command parses
+  PASS  ...and a direction parses
+
+[3] SUFFICIENCY, IN BOTH DIRECTIONS -- the record must reproduce its own score, and the
+    check must FIRE when it does not
+  PASS  a record of a real run reproduces its own score
+  PASS  ...and the check says which fields it compared
+  PASS  A TAMPERED RECORD IS CAUGHT -- the check is not a check that passes by construction
+  PASS  ...and the score it recomputes is the gate_locked ending, not the escape
+  PASS  ...and a record with no level text is reported as unreplayable, not skipped
+  PASS  ...and it says WHICH field was missing
+  PASS  ...and a record missing a SCORED field does not reproduce
+
+[4] THE ARTIFACT PATH IS OWNED BY ONE RUN -- refusal and permission, both
+  PASS  a path that does not exist is written
+  PASS  a path that EXISTS is REFUSED
+  PASS  ...and nothing was replaced
+  PASS  ...and the message names the path and the remedy
+  PASS  ...and a replacement WITH A REASON is permitted
+  PASS  ...and it carries what it destroyed, as a digest of the bytes
+  PASS  ...and the operator's reason is verbatim in the record
+  PASS  a free path needs no reason at all
+
+[5] THE COMPUTE PATH: the summary is READ OUT OF THE ARGV, and the eight recorded rows show why
+  PASS  with --ngl 99 the argv says -ngl 99
+  PASS  ...and the summary field agrees with it
+  PASS  ...and ctx agrees too
+  PASS  ...and --parallel is carried, not dropped
+  PASS  the registered CPU launch reads back as 0 and no --parallel
+  PASS  a flag that is absent reads as None, not as a plausible zero
+  FAIL  EVERY recorded GPU row contradicts itself: config.n_gpu_layers vs config.server_argv -ngl
+          got  0
+          want 8
+  FAIL  ...and the contradiction is 0 against 99, on all eight
+          got  []
+          want [(0, '99')]
+        0 rows: the summary said CPU, the argv said GPU. Neither reader would know the other existed.
+
+[6] THE AXIS AND THE PROGRESS BLOCK ARE CARRIED, AND SUFFICIENCY CHECKS THEM
+  PASS  a record carrying the axis reproduces its own score
+  PASS  ...and the check says the axis was MEASURED, not skipped
+  PASS  ...comparing all three axis fields
+  PASS  ...and the replay route now names WHICH take it read
+  PASS  A TAMPERED ATTRIBUTION TOTAL IS CAUGHT BY SUFFICIENCY
+  PASS  ...and so is a tampered PER-ROW attribution
+  PASS  a record with NO axis is reported as axis_measured: false
+  PASS  ...and is not failed for a field it was never asked to carry
+
+[7] THE REPLAY FALSE ALARM -- two records cried instrument-failure and the record was fine
+  PASS  the torch-first crawl takes the required item at step 2
+  PASS  ...and its record REPRODUCES -- no false instrument failure
+  PASS  ...with the replay reading the REQUIRED take
+  PASS  THE OLD CALL WOULD HAVE MISMATCHED, and this asserts it so the fix is not invisible
+  PASS  ...while the fixed call returns what the field claims
+
+====================================================================================================
+2 FAILED   --  62/64
+====================================================================================================
+
+EXIT CODE: 1
+
+==========================================================================================
+M1  --  copy a preserved fixture row, set n_gpu_layers to 99     -> fixture arms RED
+tree: /home/chilly1/.hermes/profiles/zork/cache/scratch/ZORK_M1_9giccobz
+archive: git -C /home/chilly1/workspace/ocho_arena archive b8a818a
+mutation: edited suite3/preserved/20261026-140512/ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_01_the_floor.json: config.n_gpu_layers 0 -> 99 (argv still -ngl 99)
+zork_run.py sha256: 9be11e482c9c8a5d8eb3650bf83a7b68a804a4931c5b239c27c2fb29e6f5474a
+==========================================================================================
+====================================================================================================
+THE ZORK ENTRANT DRIVER CONTROLS
+====================================================================================================
+
+[1] AN UNDECLARED RUN IS REFUSED -- and the three legal arms are not
+  PASS  the arm 'on' is accepted with its declaration
+  PASS  the arm 'off' is accepted with its declaration
+  PASS  the arm 'auto' is accepted with its declaration
+  PASS  an EMPTY arm is refused
+  PASS  a junk arm is refused
+  PASS  None is refused
+  PASS  an arm with NO declaration document is refused
+  PASS  an arm declared in a document that does not exist is refused
+  PASS  ...and the refusal SAYS the file is missing
+  PASS  the DECLARED arm is off, for the reason the prereg gives
+  PASS  this run's arm is the declared one
+  PASS  ...and the change flag is clear because nothing was overridden
+  PASS  ...and the record carries the argv, not a summary of it
+
+[2] THE READING RULE: the first non-empty line, verbatim -- and NOTHING mined from prose
+  PASS  the first line is the command
+  PASS  padding is stripped, the words are not cut
+  PASS  an answer that opens with a blank line is still read
+  PASS  AN EMPTY ANSWER IS NOT A COMMAND
+  PASS  ...and neither are blank lines
+  PASS  ...and neither is None
+  PASS  a command is NOT truncated to one token -- `take key` stays two words
+  PASS  `I will take the key` is HANDED OVER AS TYPED
+  PASS  ...and a sentence opening with `I` IS READ as the declared abbreviation for inventory
+  PASS  ...so it lands in `parsed`, NOT in `unparsed`
+  PASS  ...and `take the key and walk north` is REFUSED as a whole, not mined
+  PASS  ...and the refusal quotes the phrase it could not read
+  PASS  ...while a direction with prose after it resolves from the head
+  PASS  ...and a readable command parses
+  PASS  ...and a direction parses
+
+[3] SUFFICIENCY, IN BOTH DIRECTIONS -- the record must reproduce its own score, and the
+    check must FIRE when it does not
+  PASS  a record of a real run reproduces its own score
+  PASS  ...and the check says which fields it compared
+  PASS  A TAMPERED RECORD IS CAUGHT -- the check is not a check that passes by construction
+  PASS  ...and the score it recomputes is the gate_locked ending, not the escape
+  PASS  ...and a record with no level text is reported as unreplayable, not skipped
+  PASS  ...and it says WHICH field was missing
+  PASS  ...and a record missing a SCORED field does not reproduce
+
+[4] THE ARTIFACT PATH IS OWNED BY ONE RUN -- refusal and permission, both
+  PASS  a path that does not exist is written
+  PASS  a path that EXISTS is REFUSED
+  PASS  ...and nothing was replaced
+  PASS  ...and the message names the path and the remedy
+  PASS  ...and a replacement WITH A REASON is permitted
+  PASS  ...and it carries what it destroyed, as a digest of the bytes
+  PASS  ...and the operator's reason is verbatim in the record
+  PASS  a free path needs no reason at all
+
+[5] THE COMPUTE PATH: the summary is READ OUT OF THE ARGV, and the eight recorded rows show why
+  PASS  with --ngl 99 the argv says -ngl 99
+  PASS  ...and the summary field agrees with it
+  PASS  ...and ctx agrees too
+  PASS  ...and --parallel is carried, not dropped
+  PASS  the registered CPU launch reads back as 0 and no --parallel
+  PASS  a flag that is absent reads as None, not as a plausible zero
+  FAIL  the eight preserved fixture rows are present and unmodified: pinned sha256, eight literal paths
+          got  7
+          want 8
+  FAIL  THE PRESERVED FIXTURE STILL CONTRADICTS ITSELF: all eight say n_gpu_layers 0 against -ngl 99
+          got  7
+          want 8
+  FAIL  ...and the contradiction is exactly (0, '99') on all eight preserved rows
+          got  [(0, '99'), (99, '99')]
+          want [(0, '99')]
+  PASS  the live archive at probes/ZORK_*.json has rows -- an absent archive is RED, not a skipped arm
+  PASS  every LIVE row agrees with itself: config.n_gpu_layers == config.server_argv -ngl
+        7 preserved rows still carry the defect (0 against '99'); 8 live rows, 0 of them disagreeing.
+
+[6] THE AXIS AND THE PROGRESS BLOCK ARE CARRIED, AND SUFFICIENCY CHECKS THEM
+  PASS  a record carrying the axis reproduces its own score
+  PASS  ...and the check says the axis was MEASURED, not skipped
+  PASS  ...comparing all three axis fields
+  PASS  ...and the replay route now names WHICH take it read
+  PASS  A TAMPERED ATTRIBUTION TOTAL IS CAUGHT BY SUFFICIENCY
+  PASS  ...and so is a tampered PER-ROW attribution
+  PASS  a record with NO axis is reported as axis_measured: false
+  PASS  ...and is not failed for a field it was never asked to carry
+
+[7] THE REPLAY FALSE ALARM -- two records cried instrument-failure and the record was fine
+  PASS  the torch-first crawl takes the required item at step 2
+  PASS  ...and its record REPRODUCES -- no false instrument failure
+  PASS  ...with the replay reading the REQUIRED take
+  PASS  THE OLD CALL WOULD HAVE MISMATCHED, and this asserts it so the fix is not invisible
+  PASS  ...while the fixed call returns what the field claims
+
+====================================================================================================
+3 FAILED   --  64/67
+====================================================================================================
+
+EXIT CODE: 1
+
+==========================================================================================
+M2  --  copy a live row, set n_gpu_layers to 0 against -ngl 99     -> agreement arm RED
+tree: /home/chilly1/.hermes/profiles/zork/cache/scratch/ZORK_M2_trgpy9v2
+archive: git -C /home/chilly1/workspace/ocho_arena archive b8a818a
+mutation: edited probes/ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_01_the_floor.json: config.n_gpu_layers 99 -> 0 (argv still -ngl 99)
+zork_run.py sha256: 9be11e482c9c8a5d8eb3650bf83a7b68a804a4931c5b239c27c2fb29e6f5474a
+==========================================================================================
+====================================================================================================
+THE ZORK ENTRANT DRIVER CONTROLS
+====================================================================================================
+
+[1] AN UNDECLARED RUN IS REFUSED -- and the three legal arms are not
+  PASS  the arm 'on' is accepted with its declaration
+  PASS  the arm 'off' is accepted with its declaration
+  PASS  the arm 'auto' is accepted with its declaration
+  PASS  an EMPTY arm is refused
+  PASS  a junk arm is refused
+  PASS  None is refused
+  PASS  an arm with NO declaration document is refused
+  PASS  an arm declared in a document that does not exist is refused
+  PASS  ...and the refusal SAYS the file is missing
+  PASS  the DECLARED arm is off, for the reason the prereg gives
+  PASS  this run's arm is the declared one
+  PASS  ...and the change flag is clear because nothing was overridden
+  PASS  ...and the record carries the argv, not a summary of it
+
+[2] THE READING RULE: the first non-empty line, verbatim -- and NOTHING mined from prose
+  PASS  the first line is the command
+  PASS  padding is stripped, the words are not cut
+  PASS  an answer that opens with a blank line is still read
+  PASS  AN EMPTY ANSWER IS NOT A COMMAND
+  PASS  ...and neither are blank lines
+  PASS  ...and neither is None
+  PASS  a command is NOT truncated to one token -- `take key` stays two words
+  PASS  `I will take the key` is HANDED OVER AS TYPED
+  PASS  ...and a sentence opening with `I` IS READ as the declared abbreviation for inventory
+  PASS  ...so it lands in `parsed`, NOT in `unparsed`
+  PASS  ...and `take the key and walk north` is REFUSED as a whole, not mined
+  PASS  ...and the refusal quotes the phrase it could not read
+  PASS  ...while a direction with prose after it resolves from the head
+  PASS  ...and a readable command parses
+  PASS  ...and a direction parses
+
+[3] SUFFICIENCY, IN BOTH DIRECTIONS -- the record must reproduce its own score, and the
+    check must FIRE when it does not
+  PASS  a record of a real run reproduces its own score
+  PASS  ...and the check says which fields it compared
+  PASS  A TAMPERED RECORD IS CAUGHT -- the check is not a check that passes by construction
+  PASS  ...and the score it recomputes is the gate_locked ending, not the escape
+  PASS  ...and a record with no level text is reported as unreplayable, not skipped
+  PASS  ...and it says WHICH field was missing
+  PASS  ...and a record missing a SCORED field does not reproduce
+
+[4] THE ARTIFACT PATH IS OWNED BY ONE RUN -- refusal and permission, both
+  PASS  a path that does not exist is written
+  PASS  a path that EXISTS is REFUSED
+  PASS  ...and nothing was replaced
+  PASS  ...and the message names the path and the remedy
+  PASS  ...and a replacement WITH A REASON is permitted
+  PASS  ...and it carries what it destroyed, as a digest of the bytes
+  PASS  ...and the operator's reason is verbatim in the record
+  PASS  a free path needs no reason at all
+
+[5] THE COMPUTE PATH: the summary is READ OUT OF THE ARGV, and the eight recorded rows show why
+  PASS  with --ngl 99 the argv says -ngl 99
+  PASS  ...and the summary field agrees with it
+  PASS  ...and ctx agrees too
+  PASS  ...and --parallel is carried, not dropped
+  PASS  the registered CPU launch reads back as 0 and no --parallel
+  PASS  a flag that is absent reads as None, not as a plausible zero
+  PASS  the eight preserved fixture rows are present and unmodified: pinned sha256, eight literal paths
+  PASS  THE PRESERVED FIXTURE STILL CONTRADICTS ITSELF: all eight say n_gpu_layers 0 against -ngl 99
+  PASS  ...and the contradiction is exactly (0, '99') on all eight preserved rows
+  PASS  the live archive at probes/ZORK_*.json has rows -- an absent archive is RED, not a skipped arm
+  FAIL  every LIVE row agrees with itself: config.n_gpu_layers == config.server_argv -ngl
+          got  1
+          want 0
+          disagrees: ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_01_the_floor.json  said 0  launched '99'
+        8 preserved rows still carry the defect (0 against '99'); 8 live rows, 1 of them disagreeing.
+
+[6] THE AXIS AND THE PROGRESS BLOCK ARE CARRIED, AND SUFFICIENCY CHECKS THEM
+  PASS  a record carrying the axis reproduces its own score
+  PASS  ...and the check says the axis was MEASURED, not skipped
+  PASS  ...comparing all three axis fields
+  PASS  ...and the replay route now names WHICH take it read
+  PASS  A TAMPERED ATTRIBUTION TOTAL IS CAUGHT BY SUFFICIENCY
+  PASS  ...and so is a tampered PER-ROW attribution
+  PASS  a record with NO axis is reported as axis_measured: false
+  PASS  ...and is not failed for a field it was never asked to carry
+
+[7] THE REPLAY FALSE ALARM -- two records cried instrument-failure and the record was fine
+  PASS  the torch-first crawl takes the required item at step 2
+  PASS  ...and its record REPRODUCES -- no false instrument failure
+  PASS  ...with the replay reading the REQUIRED take
+  PASS  THE OLD CALL WOULD HAVE MISMATCHED, and this asserts it so the fix is not invisible
+  PASS  ...while the fixed call returns what the field claims
+
+====================================================================================================
+1 FAILED   --  66/67
+====================================================================================================
+
+EXIT CODE: 1
+
+==========================================================================================
+M3  --  remove a fixture file in a copy                          -> presence arm RED, denominator UNCHANGED
+tree: /home/chilly1/.hermes/profiles/zork/cache/scratch/ZORK_M3_c5psl0p8
+archive: git -C /home/chilly1/workspace/ocho_arena archive b8a818a
+mutation: removed suite3/preserved/20261026-140527/ZORK_Ornith-1.5-9B-Q4_K_M_zork_01_the_floor.json
+zork_run.py sha256: 9be11e482c9c8a5d8eb3650bf83a7b68a804a4931c5b239c27c2fb29e6f5474a
+==========================================================================================
+====================================================================================================
+THE ZORK ENTRANT DRIVER CONTROLS
+====================================================================================================
+
+[1] AN UNDECLARED RUN IS REFUSED -- and the three legal arms are not
+  PASS  the arm 'on' is accepted with its declaration
+  PASS  the arm 'off' is accepted with its declaration
+  PASS  the arm 'auto' is accepted with its declaration
+  PASS  an EMPTY arm is refused
+  PASS  a junk arm is refused
+  PASS  None is refused
+  PASS  an arm with NO declaration document is refused
+  PASS  an arm declared in a document that does not exist is refused
+  PASS  ...and the refusal SAYS the file is missing
+  PASS  the DECLARED arm is off, for the reason the prereg gives
+  PASS  this run's arm is the declared one
+  PASS  ...and the change flag is clear because nothing was overridden
+  PASS  ...and the record carries the argv, not a summary of it
+
+[2] THE READING RULE: the first non-empty line, verbatim -- and NOTHING mined from prose
+  PASS  the first line is the command
+  PASS  padding is stripped, the words are not cut
+  PASS  an answer that opens with a blank line is still read
+  PASS  AN EMPTY ANSWER IS NOT A COMMAND
+  PASS  ...and neither are blank lines
+  PASS  ...and neither is None
+  PASS  a command is NOT truncated to one token -- `take key` stays two words
+  PASS  `I will take the key` is HANDED OVER AS TYPED
+  PASS  ...and a sentence opening with `I` IS READ as the declared abbreviation for inventory
+  PASS  ...so it lands in `parsed`, NOT in `unparsed`
+  PASS  ...and `take the key and walk north` is REFUSED as a whole, not mined
+  PASS  ...and the refusal quotes the phrase it could not read
+  PASS  ...while a direction with prose after it resolves from the head
+  PASS  ...and a readable command parses
+  PASS  ...and a direction parses
+
+[3] SUFFICIENCY, IN BOTH DIRECTIONS -- the record must reproduce its own score, and the
+    check must FIRE when it does not
+  PASS  a record of a real run reproduces its own score
+  PASS  ...and the check says which fields it compared
+  PASS  A TAMPERED RECORD IS CAUGHT -- the check is not a check that passes by construction
+  PASS  ...and the score it recomputes is the gate_locked ending, not the escape
+  PASS  ...and a record with no level text is reported as unreplayable, not skipped
+  PASS  ...and it says WHICH field was missing
+  PASS  ...and a record missing a SCORED field does not reproduce
+
+[4] THE ARTIFACT PATH IS OWNED BY ONE RUN -- refusal and permission, both
+  PASS  a path that does not exist is written
+  PASS  a path that EXISTS is REFUSED
+  PASS  ...and nothing was replaced
+  PASS  ...and the message names the path and the remedy
+  PASS  ...and a replacement WITH A REASON is permitted
+  PASS  ...and it carries what it destroyed, as a digest of the bytes
+  PASS  ...and the operator's reason is verbatim in the record
+  PASS  a free path needs no reason at all
+
+[5] THE COMPUTE PATH: the summary is READ OUT OF THE ARGV, and the eight recorded rows show why
+  PASS  with --ngl 99 the argv says -ngl 99
+  PASS  ...and the summary field agrees with it
+  PASS  ...and ctx agrees too
+  PASS  ...and --parallel is carried, not dropped
+  PASS  the registered CPU launch reads back as 0 and no --parallel
+  PASS  a flag that is absent reads as None, not as a plausible zero
+  FAIL  the eight preserved fixture rows are present and unmodified: pinned sha256, eight literal paths
+          got  7
+          want 8
+  FAIL  THE PRESERVED FIXTURE STILL CONTRADICTS ITSELF: all eight say n_gpu_layers 0 against -ngl 99
+          got  7
+          want 8
+  PASS  ...and the contradiction is exactly (0, '99') on all eight preserved rows
+  PASS  the live archive at probes/ZORK_*.json has rows -- an absent archive is RED, not a skipped arm
+  PASS  every LIVE row agrees with itself: config.n_gpu_layers == config.server_argv -ngl
+        7 preserved rows still carry the defect (0 against '99'); 8 live rows, 0 of them disagreeing.
+
+[6] THE AXIS AND THE PROGRESS BLOCK ARE CARRIED, AND SUFFICIENCY CHECKS THEM
+  PASS  a record carrying the axis reproduces its own score
+  PASS  ...and the check says the axis was MEASURED, not skipped
+  PASS  ...comparing all three axis fields
+  PASS  ...and the replay route now names WHICH take it read
+  PASS  A TAMPERED ATTRIBUTION TOTAL IS CAUGHT BY SUFFICIENCY
+  PASS  ...and so is a tampered PER-ROW attribution
+  PASS  a record with NO axis is reported as axis_measured: false
+  PASS  ...and is not failed for a field it was never asked to carry
+
+[7] THE REPLAY FALSE ALARM -- two records cried instrument-failure and the record was fine
+  PASS  the torch-first crawl takes the required item at step 2
+  PASS  ...and its record REPRODUCES -- no false instrument failure
+  PASS  ...with the replay reading the REQUIRED take
+  PASS  THE OLD CALL WOULD HAVE MISMATCHED, and this asserts it so the fix is not invisible
+  PASS  ...while the fixed call returns what the field claims
+
+====================================================================================================
+2 FAILED   --  65/67
+====================================================================================================
+
+EXIT CODE: 1
+
+==========================================================================================
+M4  --  the CURRENT, REPAIRED archive, unmodified                -> NO ARM RED
+tree: /home/chilly1/.hermes/profiles/zork/cache/scratch/ZORK_M4_pl08vnr2
+archive: git -C /home/chilly1/workspace/ocho_arena archive b8a818a
+mutation: no mutation -- the archive as committed
+zork_run.py sha256: 9be11e482c9c8a5d8eb3650bf83a7b68a804a4931c5b239c27c2fb29e6f5474a
+==========================================================================================
+====================================================================================================
+THE ZORK ENTRANT DRIVER CONTROLS
+====================================================================================================
+
+[1] AN UNDECLARED RUN IS REFUSED -- and the three legal arms are not
+  PASS  the arm 'on' is accepted with its declaration
+  PASS  the arm 'off' is accepted with its declaration
+  PASS  the arm 'auto' is accepted with its declaration
+  PASS  an EMPTY arm is refused
+  PASS  a junk arm is refused
+  PASS  None is refused
+  PASS  an arm with NO declaration document is refused
+  PASS  an arm declared in a document that does not exist is refused
+  PASS  ...and the refusal SAYS the file is missing
+  PASS  the DECLARED arm is off, for the reason the prereg gives
+  PASS  this run's arm is the declared one
+  PASS  ...and the change flag is clear because nothing was overridden
+  PASS  ...and the record carries the argv, not a summary of it
+
+[2] THE READING RULE: the first non-empty line, verbatim -- and NOTHING mined from prose
+  PASS  the first line is the command
+  PASS  padding is stripped, the words are not cut
+  PASS  an answer that opens with a blank line is still read
+  PASS  AN EMPTY ANSWER IS NOT A COMMAND
+  PASS  ...and neither are blank lines
+  PASS  ...and neither is None
+  PASS  a command is NOT truncated to one token -- `take key` stays two words
+  PASS  `I will take the key` is HANDED OVER AS TYPED
+  PASS  ...and a sentence opening with `I` IS READ as the declared abbreviation for inventory
+  PASS  ...so it lands in `parsed`, NOT in `unparsed`
+  PASS  ...and `take the key and walk north` is REFUSED as a whole, not mined
+  PASS  ...and the refusal quotes the phrase it could not read
+  PASS  ...while a direction with prose after it resolves from the head
+  PASS  ...and a readable command parses
+  PASS  ...and a direction parses
+
+[3] SUFFICIENCY, IN BOTH DIRECTIONS -- the record must reproduce its own score, and the
+    check must FIRE when it does not
+  PASS  a record of a real run reproduces its own score
+  PASS  ...and the check says which fields it compared
+  PASS  A TAMPERED RECORD IS CAUGHT -- the check is not a check that passes by construction
+  PASS  ...and the score it recomputes is the gate_locked ending, not the escape
+  PASS  ...and a record with no level text is reported as unreplayable, not skipped
+  PASS  ...and it says WHICH field was missing
+  PASS  ...and a record missing a SCORED field does not reproduce
+
+[4] THE ARTIFACT PATH IS OWNED BY ONE RUN -- refusal and permission, both
+  PASS  a path that does not exist is written
+  PASS  a path that EXISTS is REFUSED
+  PASS  ...and nothing was replaced
+  PASS  ...and the message names the path and the remedy
+  PASS  ...and a replacement WITH A REASON is permitted
+  PASS  ...and it carries what it destroyed, as a digest of the bytes
+  PASS  ...and the operator's reason is verbatim in the record
+  PASS  a free path needs no reason at all
+
+[5] THE COMPUTE PATH: the summary is READ OUT OF THE ARGV, and the eight recorded rows show why
+  PASS  with --ngl 99 the argv says -ngl 99
+  PASS  ...and the summary field agrees with it
+  PASS  ...and ctx agrees too
+  PASS  ...and --parallel is carried, not dropped
+  PASS  the registered CPU launch reads back as 0 and no --parallel
+  PASS  a flag that is absent reads as None, not as a plausible zero
+  PASS  the eight preserved fixture rows are present and unmodified: pinned sha256, eight literal paths
+  PASS  THE PRESERVED FIXTURE STILL CONTRADICTS ITSELF: all eight say n_gpu_layers 0 against -ngl 99
+  PASS  ...and the contradiction is exactly (0, '99') on all eight preserved rows
+  PASS  the live archive at probes/ZORK_*.json has rows -- an absent archive is RED, not a skipped arm
+  PASS  every LIVE row agrees with itself: config.n_gpu_layers == config.server_argv -ngl
+        8 preserved rows still carry the defect (0 against '99'); 8 live rows, 0 of them disagreeing.
+
+[6] THE AXIS AND THE PROGRESS BLOCK ARE CARRIED, AND SUFFICIENCY CHECKS THEM
+  PASS  a record carrying the axis reproduces its own score
+  PASS  ...and the check says the axis was MEASURED, not skipped
+  PASS  ...comparing all three axis fields
+  PASS  ...and the replay route now names WHICH take it read
+  PASS  A TAMPERED ATTRIBUTION TOTAL IS CAUGHT BY SUFFICIENCY
+  PASS  ...and so is a tampered PER-ROW attribution
+  PASS  a record with NO axis is reported as axis_measured: false
+  PASS  ...and is not failed for a field it was never asked to carry
+
+[7] THE REPLAY FALSE ALARM -- two records cried instrument-failure and the record was fine
+  PASS  the torch-first crawl takes the required item at step 2
+  PASS  ...and its record REPRODUCES -- no false instrument failure
+  PASS  ...with the replay reading the REQUIRED take
+  PASS  THE OLD CALL WOULD HAVE MISMATCHED, and this asserts it so the fix is not invisible
+  PASS  ...while the fixed call returns what the field claims
+
+====================================================================================================
+ALL CONTROLS PASS   --  67/67
+====================================================================================================
+
+EXIT CODE: 0
