@@ -209,6 +209,37 @@ neither, or that is both, is a defect in the format and not a matter of taste.
    already in use under `suite2/runs/published_cpu/`) or is computed at read time. A row carrying its
    own "current" value is stale from the second it is written.
 
+### The measurement instant — the one field a row cannot be asked to carry
+
+**Measured case, 2026-10-26.** Eight committed rows carried no field saying *when* they were measured.
+Their reader took the date from `artifact_replaced.mtime` — 2026-10-25 — and concluded that a later
+commit (`13b161a`, 2026-10-26 14:36) had rewritten `simulator_digest` inside already-recorded rows. The
+rows were written **2026-10-26 14:05:20–14:06:29**; the 2026-10-25 stamp belonged to the records they
+*replaced*. The ordered repair was withdrawn because what was missing was a field, not a defect.
+**A missing instant is not a cosmetic gap: the nearest available timestamp gets read as the row's own.**
+
+`measured_at_utc` is therefore required for every row, and it is class **`M1`**: the instant the driver
+closed the row's file — the *end* of the event — read once from the filesystem and **frozen at
+observation**. It is not in git and cannot be recomputed; the ledger also records `observed_at_utc`,
+the instant the reading was taken, so the reading has a date of its own instead of looking live
+forever.
+
+**It lives beside the row, in `provenance/measurement_times.json`, and never inside it.** Writing a
+field into a committed row changes that row's `sha256` — the digest of the very record the field
+annotates, and the digest every check and every ruling cites. The ledger is instead **keyed by
+`row_sha256`**: if a row's bytes move, the entry stops matching and the check goes red. Drift is
+impossible to hide rather than merely forbidden, and the reading is never silently refreshed by a
+re-run.
+
+**A predecessor's time is never a bare `mtime`.** It is `predecessor_mtime_utc`, and it appears only
+beside `measured_at_utc` — the two instants are adjacent in every entry and a day apart, so the
+misreading that produced the withdrawn ruling reads as an obvious error.
+
+**Recoverability, measured rather than asserted:** each entry names the superseded artefact under
+`suite3/preserved/<ts>/` and the check hashes that file against the `predecessor_sha256` the row itself
+recorded. All **8 of 8** superseded rows are present on disk and hash to their recorded digests —
+"preserved" is a claim; a hash against the row's own record is a measurement.
+
 ### Why this is not pedantry — two measured cases
 
 **One: the field that was suspected of being recomputed.** `simulator_digest` carries the scope text
@@ -234,6 +265,10 @@ Measured from the eight committed rows at `13b161a`: **65 top-level fields, 0 of
 format has no current-state field today, so this rule is prospective — its job is to forbid the
 transformation and to fix the name for anything added later. Nested blocks are classified with the
 fields inside them.
+
+The same eight rows carry **no field naming when they were measured**, which is why the ledger beside
+them (`provenance/measurement_times.json`) exists; its **19 keys** are classified in the second table
+below and carried by no row, so the row count stays at 65.
 
 | field | class | why |
 |---|---|---|
@@ -303,8 +338,38 @@ fields inside them.
 | `unreadable_is_the_aggregate_of` | `M2` | states what it aggregates |
 | `unreadable_scope` | `M2` | states which side of the denominator it sits on |
 
+**The ledger beside the rows — every key classified.** These 19 names appear in
+`provenance/measurement_times.json` and in no row. `measured_at_*` and `predecessor_*` are deliberately
+adjacent: one is the row's own instant, the other is the instant of the record the row replaced.
+
+| field | class | why |
+|---|---|---|
+| `ledger_kind` | `M2` | says what the file is |
+| `measured_at_local` | `M1` | the same instant as `measured_at_utc` in the box's civil time — a rendering, not a second reading |
+| `measured_at_scope` | `M2` | says that `measured_at_utc` is the write instant (the END of the event), read from the filesystem once, corroborated by `preserved_at_utc` |
+| `measured_at_utc` | `M1` | **the instant this row was measured.** Frozen at observation; not in git, never recomputed, never refreshed |
+| `naming_rule` | `M2` | the naming rule for the ledger's own keys |
+| `observed_at_utc` | `M1` | when the filesystem reading was taken — a second instant, so the reading is dated rather than looking live |
+| `observed_from` | `M2` | what was read and from where |
+| `predecessor_mtime_scope` | `M2` | says that `predecessor_mtime_utc` is the REPLACED record's time and never this row's |
+| `predecessor_mtime_utc` | `M1` | the mtime of the record this row replaced, as the row itself records it in `artifact_replaced.mtime` |
+| `predecessor_sha256` | `M1` | digest of the superseded record |
+| `preserved_at_utc` | `M1` | when the superseded record was copied aside — must precede `measured_at_utc`, and does in 8 of 8 |
+| `preserved_copy` | `M2` | path of the superseded bytes — a label; `predecessor_sha256` is the identity |
+| `preserved_sidecar` | `M2` | path of the preservation record carrying those bytes' digest and size |
+| `row` | `M2` | the row's path — a label |
+| `row_bytes` | `M1` | size of the bytes annotated, as measured on disk at observation |
+| `row_sha256` | `M1` | **the digest of the bytes this entry annotates** — the key; drift means the annotation no longer describes its subject |
+| `rows` | `M1` | the entries, one per row in scope |
+| `scope` | `M2` | scope text for the file |
+| `why_not_in_the_row` | `M2` | states why the instant is beside the row instead of inside it |
+
 **Enforced, not declared:** `python3 check_provenance_classes.py --self-test` parses this table and
 fails if a committed row carries a field this table does not classify, if a row carries any field
 named `current_*`, or if a field is declared `C` under a bare name. Both directions are controlled by
-mutation.
+mutation. `python3 check_measurement_times.py --self-test` fails if a row in `probes/` has no ledger
+entry, if an entry's `row_sha256`/`row_bytes` do not match the file, if `measured_at_utc` is not
+strictly later than `predecessor_mtime_utc`, if the preserved copy is missing or hashes to anything
+other than the recorded predecessor, if a ledger key is unclassified, or if a `current_*` key appears
+in the ledger — six controls, five of them mutants.
 

@@ -38,6 +38,7 @@ import tempfile
 HERE = os.path.dirname(os.path.abspath(__file__))
 FORMAT = os.path.join(HERE, "FORMAT.md")
 ROW_GLOB = os.path.join(HERE, "probes", "ZORK_*.json")
+LEDGER = os.path.join(HERE, "provenance", "measurement_times.json")
 
 CLASSES = {"M1", "M2", "C"}
 ROW_RE = re.compile(r"^\|\s*`([A-Za-z0-9_]+)`\s*\|\s*`(M1|M2|C)`\s*\|")
@@ -113,6 +114,16 @@ def run(paths, declared, quiet=False):
             present.update(json.load(open(p, encoding="utf-8")).keys())
         except Exception:
             pass
+    # The ledger beside the rows carries classified keys of its own. Counting them here keeps the
+    # "declared but carried by nothing" note honest instead of turning 19 rows of the table into noise.
+    try:
+        led = json.load(open(LEDGER, encoding="utf-8"))
+        present.update(led.keys())
+        for entry in led.get("rows", []):
+            if isinstance(entry, dict):
+                present.update(entry.keys())
+    except Exception:
+        pass
     fails = [m for s, m in findings if s == "FAIL"]
     notes = ["declared in FORMAT.md 10 but carried by no row: `%s`" % n
              for n in sorted(set(declared) - present)]

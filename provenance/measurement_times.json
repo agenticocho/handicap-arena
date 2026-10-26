@@ -1,0 +1,108 @@
+{
+ "ledger_kind": "measurement-time ledger for the eight ZORK rows written in the t_925f606f window (card t_3829fc77)",
+ "scope": "The eight rows at probes/ZORK_*.json committed in 13b161a. Each entry states the instant the event was measured (the driver closing the row's file), recorded BESIDE the row because writing it into the row would change the digest of the record it annotates (FORMAT.md 10, naming rule 3).",
+ "naming_rule": "`measured_at_*` is class M1 -- a reading frozen at observation. A predecessor's timestamp is ONLY ever `predecessor_mtime_utc`, never a bare `mtime`, because artifact_replaced.mtime reads as the row's own time to anyone who misses the block it is nested in. That misreading is what the 2026-10-26 R2 ruling was built on.",
+ "why_not_in_the_row": "A row is committed record. Adding a field to it changes its sha256, and the digest is the subject of every check that cites it. The ledger is therefore keyed BY row_sha256: if a row's bytes move, the entry no longer matches and check_measurement_times.py fails.",
+ "observed_at_utc": "2026-10-26T22:47:04.280470Z",
+ "observed_from": "st_mtime of each live row, read once from the filesystem at observed_at_utc. probes/ was byte-identical to 13b161a at that instant (verified: 8/8 rows match git show 13b161a:probes/ZORK_*.json), so no write had touched these files since they were committed.",
+ "measured_at_scope": "M2 -- `measured_at_utc` is the instant the driver finished writing this row, i.e. the END of the measured event, not its start. It is a filesystem reading, not a value in git: it is frozen here once, and it is corroborated for every row by the preservation sidecar written to suite3/preserved/ a few seconds BEFORE this row replaced the record at that path (`preserved_at_utc`).",
+ "predecessor_mtime_scope": "M2 -- `predecessor_mtime_utc` is the mtime of the record this row REPLACED, carried in the row as artifact_replaced.mtime. It is not this row's measurement time and the two must never be read as one.",
+ "rows": [
+  {
+   "row": "probes/ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_01_the_floor.json",
+   "row_sha256": "1f5da60554725cc696fe54dabfb1df74dce02e1885b58fd0654388a56f1f15d0",
+   "row_bytes": 58494,
+   "measured_at_utc": "2026-10-26T21:06:01.771337Z",
+   "measured_at_local": "2026-10-26T14:06:01.771337-07:00",
+   "predecessor_sha256": "3f660454a52843aaf9979b9931c7c0f3bc3db14a61d19ce940e3e61ec0590bda",
+   "predecessor_mtime_utc": "2026-10-25T20:47:11Z",
+   "preserved_at_utc": "2026-10-26T21:05:49Z",
+   "preserved_copy": "suite3/preserved/20261026-140549/ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_01_the_floor.json",
+   "preserved_sidecar": "suite3/preserved/20261026-140549/ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_01_the_floor.json.provenance.json"
+  },
+  {
+   "row": "probes/ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_02_long_crawl.json",
+   "row_sha256": "897beeab372df396e4f5b97d12f69868510acc10891e2a368315547cfd70eb74",
+   "row_bytes": 61190,
+   "measured_at_utc": "2026-10-26T21:06:14.127196Z",
+   "measured_at_local": "2026-10-26T14:06:14.127196-07:00",
+   "predecessor_sha256": "4f26f6cf6c8f36bb9ddf235a50fefcc50cea9679efc9fcd356d02fff298a23f4",
+   "predecessor_mtime_utc": "2026-10-25T20:47:27Z",
+   "preserved_at_utc": "2026-10-26T21:06:02Z",
+   "preserved_copy": "suite3/preserved/20261026-140602/ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_02_long_crawl.json",
+   "preserved_sidecar": "suite3/preserved/20261026-140602/ZORK_MiMo-V2.6-Distill-Qwen-9B-Q4_K_M_zork_02_long_crawl.json.provenance.json"
+  },
+  {
+   "row": "probes/ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_01_the_floor.json",
+   "row_sha256": "2a439c43b55857c734454e603c7291a6cc65b2181812f88ae12b3b6216af80b3",
+   "row_bytes": 65001,
+   "measured_at_utc": "2026-10-26T21:05:20.290807Z",
+   "measured_at_local": "2026-10-26T14:05:20.290807-07:00",
+   "predecessor_sha256": "7e57408fe63fd5ad8a16cc9beae80c8b20bf8c712f30dcb89a547d52eaeccc48",
+   "predecessor_mtime_utc": "2026-10-25T20:46:10Z",
+   "preserved_at_utc": "2026-10-26T21:05:12Z",
+   "preserved_copy": "suite3/preserved/20261026-140512/ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_01_the_floor.json",
+   "preserved_sidecar": "suite3/preserved/20261026-140512/ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_01_the_floor.json.provenance.json"
+  },
+  {
+   "row": "probes/ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_02_long_crawl.json",
+   "row_sha256": "754ba9f0bc7ebe6724ec23d2cdfa926381e0f469ed731244c411db48107100e4",
+   "row_bytes": 43269,
+   "measured_at_utc": "2026-10-26T21:05:26.845733Z",
+   "measured_at_local": "2026-10-26T14:05:26.845733-07:00",
+   "predecessor_sha256": "df3ef579919866203e0882a22e2b5052c9bd894b8a608fbc844fb29a5e5e645b",
+   "predecessor_mtime_utc": "2026-10-25T20:46:18Z",
+   "preserved_at_utc": "2026-10-26T21:05:21Z",
+   "preserved_copy": "suite3/preserved/20261026-140521/ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_02_long_crawl.json",
+   "preserved_sidecar": "suite3/preserved/20261026-140521/ZORK_Ministral-3-3B-Instruct-2512-UD-Q4_K_XL_zork_02_long_crawl.json.provenance.json"
+  },
+  {
+   "row": "probes/ZORK_Ornith-1.5-9B-Q4_K_M_zork_01_the_floor.json",
+   "row_sha256": "2b1d7470f74dd1239ecfd0b9c7d807e14815d5ab32919c89cd21f34e22afc6fd",
+   "row_bytes": 21804,
+   "measured_at_utc": "2026-10-26T21:05:34.509646Z",
+   "measured_at_local": "2026-10-26T14:05:34.509646-07:00",
+   "predecessor_sha256": "24841df4d193ea58cd212240074ad56a5b063cc7937b490e7b5e5bbe5e4ecc10",
+   "predecessor_mtime_utc": "2026-10-25T20:46:37Z",
+   "preserved_at_utc": "2026-10-26T21:05:27Z",
+   "preserved_copy": "suite3/preserved/20261026-140527/ZORK_Ornith-1.5-9B-Q4_K_M_zork_01_the_floor.json",
+   "preserved_sidecar": "suite3/preserved/20261026-140527/ZORK_Ornith-1.5-9B-Q4_K_M_zork_01_the_floor.json.provenance.json"
+  },
+  {
+   "row": "probes/ZORK_Ornith-1.5-9B-Q4_K_M_zork_02_long_crawl.json",
+   "row_sha256": "bd4971a0487f26a3fb2a24d16e94adaf7a525ccdc4793d6633e51bc5c83099d4",
+   "row_bytes": 59486,
+   "measured_at_utc": "2026-10-26T21:05:48.134491Z",
+   "measured_at_local": "2026-10-26T14:05:48.134491-07:00",
+   "predecessor_sha256": "60d06b325250d4c9f6fadb5d2a908d49b4427465213e80c802d176c4df412444",
+   "predecessor_mtime_utc": "2026-10-25T20:46:56Z",
+   "preserved_at_utc": "2026-10-26T21:05:35Z",
+   "preserved_copy": "suite3/preserved/20261026-140535/ZORK_Ornith-1.5-9B-Q4_K_M_zork_02_long_crawl.json",
+   "preserved_sidecar": "suite3/preserved/20261026-140535/ZORK_Ornith-1.5-9B-Q4_K_M_zork_02_long_crawl.json.provenance.json"
+  },
+  {
+   "row": "probes/ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_01_the_floor.json",
+   "row_sha256": "6b46f04bfea387b3d2adc355e2a4fce645628b8461c7a541f0c539bf428108cd",
+   "row_bytes": 19952,
+   "measured_at_utc": "2026-10-26T21:06:19.835460Z",
+   "measured_at_local": "2026-10-26T14:06:19.835460-07:00",
+   "predecessor_sha256": "7b5c27c5cd645746cfed8dacbaf04c8f275962a12847f4022d3dc1564d507e8f",
+   "predecessor_mtime_utc": "2026-10-25T20:47:33Z",
+   "preserved_at_utc": "2026-10-26T21:06:14Z",
+   "preserved_copy": "suite3/preserved/20261026-140614/ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_01_the_floor.json",
+   "preserved_sidecar": "suite3/preserved/20261026-140614/ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_01_the_floor.json.provenance.json"
+  },
+  {
+   "row": "probes/ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_02_long_crawl.json",
+   "row_sha256": "2fe38cb1007b8297439857cd4b5fca1042d027f5273de8aeb27338a25fa0d602",
+   "row_bytes": 54860,
+   "measured_at_utc": "2026-10-26T21:06:29.836017Z",
+   "measured_at_local": "2026-10-26T14:06:29.836017-07:00",
+   "predecessor_sha256": "d466037a2b1a0093f0904c8021d8a9c7f61b30d73f9ae8811ba156a610da0607",
+   "predecessor_mtime_utc": "2026-10-25T20:47:46Z",
+   "preserved_at_utc": "2026-10-26T21:06:20Z",
+   "preserved_copy": "suite3/preserved/20261026-140620/ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_02_long_crawl.json",
+   "preserved_sidecar": "suite3/preserved/20261026-140620/ZORK_Ternary-Bonsai-2-9B-PQ2_0-MTP-Q8_0_zork_02_long_crawl.json.provenance.json"
+  }
+ ]
+}
