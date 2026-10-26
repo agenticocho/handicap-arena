@@ -413,6 +413,53 @@ def resolve(fen, token, legal):
     return None, None, "unreadable: no legal move named anywhere in the output"
 
 
+def _side_to_move_of_moves(fen, moves):
+    '''Return (ok, msg): do all moves belong to side to move in fen?'''
+    st = parse_fen(fen)
+    turn = st.get('turn')
+    if turn not in ('w', 'b'):
+        return False, 'bad turn field'
+    if not moves:
+        return False, 'empty move list'
+    for u in moves:
+        p = st['board'].get((u or '')[:2])
+        if p is None:
+            return False, 'no piece on source square of ' + str(u)
+        if (p.isupper()) != (turn == 'w'):
+            return False, str(u) + ' moves wrong colour for ' + turn + ' to move'
+    return True, 'all ' + str(len(moves)) + ' moves belong to ' + turn + ' to move'
+
+
+def control_3_check(row):
+    '''Control 3: row reported count/list vs engine list for same fen, plus side-to-move.'''
+    fen = (row or {}).get('fen')
+    reported_moves = (row or {}).get('legal_moves')
+    if reported_moves is None:
+        reported_moves = (row or {}).get('legal_list')
+    if reported_moves is None:
+        reported_moves = []
+    reported_count = (row or {}).get('legal_count', len(reported_moves))
+    try:
+        recomputed = legal_moves(fen)
+    except Exception as e:
+        return False, {'fen': fen, 'error': 'engine query failed: ' + repr(e)}
+    side_ok, side_msg = _side_to_move_of_moves(fen, recomputed)
+    count_ok = (reported_count == len(recomputed))
+    list_ok = (sorted(list(reported_moves)) == sorted(list(recomputed)))
+    ok = bool(side_ok and count_ok and list_ok and len(recomputed) > 0)
+    return ok, {
+        'fen': fen,
+        'reported_count': reported_count,
+        'reported_list': list(reported_moves),
+        'engine_count': len(recomputed),
+        'engine_list': list(recomputed),
+        'side_to_move_ok': bool(side_ok),
+        'side_to_move_detail': side_msg,
+        'count_ok': bool(count_ok),
+        'list_ok': bool(list_ok),
+    }
+
+
 def run_controls():
     global _CONTROLS_PASSED, _CONTROLS_RESULT
     res = {}
@@ -443,20 +490,21 @@ def run_controls():
     c3 = True
     c3_details = []
     for f in check_fens:
-        a = legal_moves(f)
-        b = legal_moves(f)
-        ok = (len(a) > 0 and a == b and len(a) == len(b))
+        row = {'fen': f, 'legal_count': len(legal_moves(f)), 'legal_moves': list(legal_moves(f))}
+        ok, detail = control_3_check(row)
         c3 = c3 and ok
-        c3_details.append({'fen': f, 'engine_legal_count': len(a), 'recomputed_equal': ok})
+        c3_details.append(detail)
     res['control_3_count_agrees_with_engine'] = {
         'pass': bool(c3),
         'fens': c3_details,
     }
+    ply2_moves = legal_moves(fen2)
+    c3m = (len(legal0) == 20 and len(ply2_moves) == 29 and 'e4d5' not in ply2_moves)
     res['control_3_measurement_29_vs_20'] = {
-        'pass': True,
+        'pass': bool(c3m),
         'ply0_initial_legal_count': len(legal0),
-        'ply2_after_e4_e5_legal_count': len(legal_moves(fen2)),
-        'e4d5_legal_at_ply2': 'e4d5' in legal_moves(fen2),
+        'ply2_after_e4_e5_legal_count': len(ply2_moves),
+        'e4d5_legal_at_ply2': 'e4d5' in ply2_moves,
     }
     passed = all(v.get('pass', False) for v in res.values())
     _CONTROLS_PASSED = passed
@@ -466,10 +514,18 @@ def run_controls():
     print('=' * 92)
     for k, v in res.items():
         print('  ' + ('PASS' if v.get('pass') else 'FAIL') + '  ' + k)
+        if k == 'control_3_count_agrees_with_engine':
+            for d in v.get('fens', []):
+                print('       fen=%s reported=%s engine=%s side_ok=%s count_ok=%s list_ok=%s' % (
+                    d.get('fen'), d.get('reported_count'), d.get('engine_count'),
+                    d.get('side_to_move_ok'), d.get('count_ok'), d.get('list_ok')))
+        if k == 'control_3_measurement_29_vs_20':
+            print('       ply0=%d ply2=%d e4d5@ply2=%s' % (
+                v.get('ply0_initial_legal_count'), v.get('ply2_after_e4_e5_legal_count'),
+                v.get('e4d5_legal_at_ply2')))
     print('  overall: ' + ('ALL CONTROLS PASS' if passed else 'CONTROL FAILURE'))
     print('=' * 92)
     return passed, res
-
 
 def play(base, cap, probe):
     """One game, both sides driven by the same model. Family 4 of Mike's sequencing: self-play first."""
@@ -479,10 +535,13 @@ def play(base, cap, probe):
         return [], 'serving-failure', 'instrument control FAILED: ' + repr(ctrl)
     # THE POSITIVE CONTROL, BEFORE ANY TERMINATION MAY BE TRUSTED.
     start_moves = legal_moves(STARTPOS)
-    if len(start_moves) != 20:
+    side_ok, side_msg = _side_to_move_of_moves(STARTPOS, start_moves)
+    if len(start_moves) != 20 or not side_ok:
         return [], 'serving-failure', (
-            'oracle control FAILED: legal_moves(startpos) returned %d, expected 20. ' % len(start_moves) +
+            'oracle control FAILED: legal_moves(startpos) returned %d moves (side_ok=%s: %s), expected 20 white moves. ' %
+            (len(start_moves), side_ok, side_msg) +
             'No termination this run produces may be read as a verdict about the entrant.')
+
 
     rows, engine_fail = [], []
     fen, ply = STARTPOS, 0
@@ -507,6 +566,7 @@ def play(base, cap, probe):
                 ev_b, _ = evaluate(fen)
                 rows.append(dict(ply=ply, fen=fen, raw=raw, move_uci=None, move_san=None,
                                  eval_before=ev_b, eval_after=ev_b,
+                                 legal_count=len(moves), legal_moves=list(moves),
                                  termination="resigned", result=side_of(ev_b),
                                  secs=secs, gen_tokens=nt, budget_hit=hit,
                                  verdict="ADMIT" if ev_b <= LOST_CP else
@@ -580,7 +640,8 @@ def play(base, cap, probe):
             pass
         rows.append(dict(ply=ply, fen=fen, raw=raw, move_uci=choice, move_san=san,
                          eval_before=prev_ev, eval_after=ev_a,
-                         # WHICH SUBJECT, AGAIN, AND THIS FIELD WAS LEFT INVERTED WHEN `measure()` WAS
+                         legal_count=len(moves), legal_moves=list(moves),
+                         # WHICH SUBJECT, AGAIN...
                          # FIXED. `ev_a` is the position AFTER the move, evaluated FROM THE OPPONENT'S
                          # side because Stockfish scores the side to move -- so labelling the row from
                          # `ev_a` reported the entrant's WINS as LOST (ply 12 at +547 was labelled LOST).
