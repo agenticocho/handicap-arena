@@ -60,6 +60,9 @@ MAX_GUESSES = 10
 # ── Frozen selector: the whole point of the second change ─────────────────────
 SELECTOR = "first-consistent-lex  (pick = cands[0]; candidates enumerated in itertools.product order)"
 
+# ── Broken arm: a deliberately constant guess. Must score 0 on solvable boards ──
+CONSTANT_GUESS = (0, 0, 0, 0)
+
 UNIVERSE = list(itertools.product(range(COLOURS), repeat=PEGS))
 GIVE_UP = ("resign", "give up", "giveup", "quit", "surrender", "abandon")
 
@@ -247,13 +250,96 @@ def consistent_choice(prompt):
     return cands[0], "", len(cands)
 
 
+def constant_guess_choice(prompt):
+    """Deliberately broken arm: ignores the prompt entirely."""
+    return CONSTANT_GUESS, "constant-guess", None
+
+
+def recompute_consistent_list(game):
+    """Recompute the per-turn consistent flags from guesses + feedback, never trusting stored."""
+    hist = []
+    out = []
+    guesses = [tuple(g) for g in game.get("guesses", [])]
+    feedbacks = game.get("feedback", [])
+    for guess, fb in zip(guesses, feedbacks):
+        ex, pa = int(fb[0]), int(fb[1])
+        cons = all(feedback(guess, hg) == (he, hp) for (hg, he, hp) in hist)
+        out.append(bool(cons))
+        hist.append((guess, ex, pa))
+    return out
+
+
+def stored_vs_recomputed_disagreements(rows):
+    n = 0
+    for r in rows:
+        stored = list(r.get("consistent", []))
+        recomputed = recompute_consistent_list(r)
+        for a, b in zip(stored, recomputed):
+            if bool(a) != bool(b):
+                n += 1
+    return n
+
+
+def per_turn_prompt_digests(limit=MAX_GUESSES):
+    return [sha256_text(build_prompt([], t, limit)) for t in range(1, limit + 1)]
+
+
+def per_state_nulls(game):
+    cands_before = game.get("state", {}).get("candidates_before_each_turn", [])
+    if not cands_before:
+        cands_before = game.get("candidates_before_each_turn", [])
+    return [cb / SPACE for cb in cands_before]
+
+
+def control_arm_rows(fixture, limit, reply_fn):
+    return [play_game(secret, reply_fn, limit, True) for _, secret in fixture]
+
+
+def run_control_block(fixture, limit, verbose=True):
+    def _control_reply(p):
+        g, note, _n = consistent_choice(p)
+        return g, {"route": "strict" if g else "none", "note": note, "raw": None}
+    def _broken_reply(p):
+        g, note, _n = constant_guess_choice(p)
+        return g, {"route": "constant-guess", "note": note, "raw": None}
+    control_rows = control_arm_rows(fixture, limit, _control_reply)
+    broken_rows = control_arm_rows(fixture, limit, _broken_reply)
+    control_wins = sum(1 for r in control_rows if r.get("solved"))
+    broken_wins = sum(1 for r in broken_rows if r.get("solved"))
+    disc = stored_vs_recomputed_disagreements(control_rows) + stored_vs_recomputed_disagreements(broken_rows)
+    digests = per_turn_prompt_digests(limit)
+    # per-state null sample from control arm
+    nulls = [per_state_nulls(r) for r in control_rows]
+    if verbose:
+        print("\n=== MASTERMIND CONTROL BLOCK (in-process) ===")
+        print(f"  scripted control arm: {control_wins}/{len(fixture)} wins (must be 100%)")
+        print(f"  broken (constant guess) arm: {broken_wins}/{len(fixture)} wins (must be 0)")
+        print(f"  stored-vs-recomputed consistent disagreements: {disc}")
+        print(f"  per-turn prompt digests: " + " ".join(d[:8] for d in digests))
+        print("  per-state nulls (control arm, game 0): " + ", ".join(f"{x:.4f}" for x in (nulls[0] if nulls else [])))
+        if control_wins != len(fixture):
+            print("  CONTROL FAILED — scripted arm did not score 100%")
+        if broken_wins != 0:
+            print("  CONTROL FAILED — broken arm did not score 0")
+        if disc != 0:
+            print("  NOTE: nonzero disagreements printed above (must be investigated)")
+        if control_wins == len(fixture) and broken_wins == 0:
+            print("  CONTROL BLOCK PASSED")
+    return {"control_wins": control_wins, "broken_wins": broken_wins,
+            "disagreements": disc, "digests": digests, "nulls": nulls,
+            "passed": control_wins == len(fixture) and broken_wins == 0}
+
+
 # ── Play one game ───────────────────────────────────────────────────────────
 def play_game(secret, reply_fn, limit, check_prompt_roundtrip=True):
     history, rows = [], []
     won_at = None
     ended = "budget_exhausted"
     cands_after = []
+    cands_before = list(UNIVERSE)
+    candidates_before_each_turn = []
     for turn in range(1, limit + 1):
+        candidates_before_each_turn.append(len(cands_before))
         prompt = build_prompt(history, turn, limit)
         if check_prompt_roundtrip and parse_history(prompt) != history:
             raise RuntimeError(f"prompt round-trip failed at turn {turn}: "
@@ -277,6 +363,7 @@ def play_game(secret, reply_fn, limit, check_prompt_roundtrip=True):
         history.append((guess, ex, pa))
         cands_after.append(len([c for c in UNIVERSE
                                 if all(feedback(c, g) == (e, p) for g, e, p in history)]))
+        cands_before = [c for c in cands_before if feedback(c, guess) == (ex, pa)]
         if guess == secret:
             won_at = turn
             ended = "solved"
@@ -312,6 +399,7 @@ def play_game(secret, reply_fn, limit, check_prompt_roundtrip=True):
             "ended": ended,
             "remaining_candidates": len(cands),
             "candidates_at_each_turn": cands_after,
+            "candidates_before_each_turn": candidates_before_each_turn,
             "consistent_at_each_turn": [r["consistent"] for r in answered],
         },
     }
@@ -339,6 +427,7 @@ def summarize(rows, label, meta):
     print(f"  selector   {meta['selector']}")
     print(f"  prompt     inlined renderer  sha256 {meta['prompt_sha256'][:12]}"
           f"   round-trip checked every turn: {meta['prompt_roundtrip']}")
+    print(f"  prompt     per-turn digests: " + " ".join(d[:8] for d in meta.get("prompt_digests_per_turn", [])))
     print(f"  digest     rowset sha256 {meta['rowset_sha256']}")
     print(f"  header     distinct answers {distinct_all} of {len(answered)} turns"
           f"   truncated/empty {trunc}   finish=length {finished}")
@@ -351,16 +440,30 @@ def summarize(rows, label, meta):
     if answered:
         print(f"  CONSISTENCY {100*cons/len(answered):.1f}% of {len(answered)} answers"
               f"   (random 2.09% · consistent 100%)")
+    print(f"  consistent stored-vs-recomputed disagreements: {stored_vs_recomputed_disagreements(rows)}")
+    turn_nulls = [[] for _ in range(meta["limit"])]
+    for r in rows:
+        ns = per_state_nulls(r)
+        for i, val in enumerate(ns):
+            if i < len(turn_nulls):
+                turn_nulls[i].append(val)
+    if any(any(v) for v in turn_nulls):
+        print("  null       per-state (mean over games, by turn): " +
+              ", ".join(f"t{i+1}={ (sum(v)/len(v)) if v else 0:.4f}" for i, v in enumerate(turn_nulls)))
     return {"games": n, "wins": len(wins), "consistency": (cons / len(answered) if answered else None),
             "answered_turns": len(answered), "distinct_all": distinct_all,
             "truncated_or_empty": trunc, "finish_length": finished,
-            "mean_guesses_when_won": (sum(wins) / len(wins) if wins else None)}
+            "mean_guesses_when_won": (sum(wins) / len(wins) if wins else None),
+            "stored_vs_recomputed_disagreements": stored_vs_recomputed_disagreements(rows)}
 
 
 def main():
     ap = argparse.ArgumentParser(description="Mastermind 4x6 runner, single file, frozen chooser")
     ap.add_argument("--fixture", required=True)
     ap.add_argument("--control", action="store_true")
+    ap.add_argument("--constant-guess", "--broken", action="store_true", dest="constant_guess")
+    ap.add_argument("--control-block", action="store_true", help="run the in-process control block and exit")
+    ap.add_argument("--no-control-block", action="store_true", help="skip the in-process control block")
     ap.add_argument("--base", default="http://127.0.0.1:8360")
     ap.add_argument("--model", default="ornith9b")
     ap.add_argument("--key", default=None)
@@ -380,6 +483,15 @@ def main():
     fsha = sha256_file(a.fixture)
     started = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
+    cb_result = None
+    if not a.no_control_block:
+        cb_result = run_control_block(fixture, a.limit, verbose=True)
+        if a.control_block:
+            return 0 if cb_result["passed"] else EXIT_CONTROL_FAILED
+        if not cb_result["passed"]:
+            print("\\n  CONTROL BLOCK FAILED — aborting row production")
+            return EXIT_CONTROL_FAILED
+
     if a.control:
         def reply_fn(prompt):
             g, note, _n = consistent_choice(prompt)
@@ -387,6 +499,13 @@ def main():
 
         label = "CONTROL — scripted consistent player, frozen chooser (must be 100%)"
         selector = SELECTOR
+    elif a.constant_guess:
+        def reply_fn(prompt):
+            g, note, _n = constant_guess_choice(prompt)
+            return g, {"route": "constant-guess", "note": note, "raw": None}
+
+        label = "BROKEN — constant guess (must score 0 on solvable boards)"
+        selector = "constant guess (0,0,0,0) regardless of prompt"
     else:
         call = http_model(a.base, a.model, a.key, a.max_tokens, not a.thinking_on)
 
@@ -429,6 +548,7 @@ def main():
             "limit": a.limit, "control": bool(a.control),
             "prompt": "inlined build_prompt (no import)",
             "prompt_sha256": sha256_text(build_prompt([], 1, a.limit)),
+            "prompt_digests_per_turn": per_turn_prompt_digests(a.limit),
             "prompt_roundtrip": "on" if not a.no_roundtrip_check else "off",
             "exit_status_policy": {"0": "self-checks passed", "2": "control < 100%",
                                    "3": "fixture refused", "4": "prompt round-trip failed",
@@ -446,6 +566,9 @@ def main():
     if a.control and summary["wins"] != len(fixture):
         print("\n  CONTROL FAILED — the harness is broken; no model number is valid")
         return EXIT_CONTROL_FAILED
+    if a.constant_guess and summary["wins"] != 0:
+        print("\n  BROKEN ARM FAILED — constant guess scored nonzero")
+        return EXIT_CONTROL_FAILED
     inconsistent = [r for r in rows if r["consistent_all"] is False]
     if inconsistent:
         print(f"\n  {len(inconsistent)} game(s) contain an answered turn inconsistent with "
@@ -453,6 +576,8 @@ def main():
         return EXIT_INCONSISTENT
     if a.control:
         print("\n  CONTROL PASSED — fixture path is sound; a model number is now meaningful")
+    if a.constant_guess:
+        print("\n  BROKEN ARM PASSED — constant guess scored 0 on solvable boards")
     return EXIT_OK
 
 
