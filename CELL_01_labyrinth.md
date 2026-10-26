@@ -186,3 +186,8 @@ that divergence is a finding about the decoder, not a fault in the driver.
   That strike is Rune's to make; this cell neither needs it nor waits on it.
 
 — Chilly
+
+
+---
+
+NOTE (2026-10-26): Labyrinth instrument revision — separated legal/blocked/UNATTRIBUTABLE move classes and added position census (distinct_positions, revisit_count) to the row and the per-run stdout. Added scripted controls (labyrinth_control.py): corridor walker reports 40 distinct positions over 40 plies; wall-pusher reports 40 blocked moves. Ceiling measured: best single constant-direction policy reaches 8 distinct positions over 40 plies and does not clear the level.
