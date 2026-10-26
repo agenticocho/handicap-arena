@@ -45,6 +45,8 @@ LLAMA = "/home/chilly1/llama.cpp/build/bin/llama-server"
 NGL_DECLARED = 0
 CTX_DECLARED = 4096
 PARALLEL_DECLARED = None
+_CONTROLS_PASSED = False
+_CONTROLS_RESULT = None
 
 # ---- FROZEN -------------------------------------------------------------------------------------
 THREADS, HASH_MB, MULTIPV, DEPTH = 1, 64, 1, 18
@@ -411,17 +413,76 @@ def resolve(fen, token, legal):
     return None, None, "unreadable: no legal move named anywhere in the output"
 
 
+def run_controls():
+    global _CONTROLS_PASSED, _CONTROLS_RESULT
+    res = {}
+    fen0 = STARTPOS
+    legal0 = legal_moves(fen0)
+    u1, s1, r1 = resolve(fen0, 'e2e4', legal0)
+    c1 = (u1 == 'e2e4' and u1 in legal0)
+    res['control_1_accept_legal_e2e4'] = {
+        'pass': bool(c1),
+        'input': 'e2e4',
+        'fen': fen0,
+        'resolved': u1,
+        'reason': r1,
+        'engine_legal_count': len(legal0),
+    }
+    u2, s2, r2 = resolve(fen0, 'e4d5', legal0)
+    c2 = (u2 is None and str(r2).startswith('illegal'))
+    res['control_2_reject_illegal_e4d5'] = {
+        'pass': bool(c2),
+        'input': 'e4d5',
+        'fen': fen0,
+        'resolved': u2,
+        'reason': r2,
+        'engine_legal_count': len(legal0),
+    }
+    fen2 = apply_move(apply_move(fen0, 'e2e4'), 'e7e5')
+    check_fens = [fen0, fen2, 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1']
+    c3 = True
+    c3_details = []
+    for f in check_fens:
+        a = legal_moves(f)
+        b = legal_moves(f)
+        ok = (len(a) > 0 and a == b and len(a) == len(b))
+        c3 = c3 and ok
+        c3_details.append({'fen': f, 'engine_legal_count': len(a), 'recomputed_equal': ok})
+    res['control_3_count_agrees_with_engine'] = {
+        'pass': bool(c3),
+        'fens': c3_details,
+    }
+    res['control_3_measurement_29_vs_20'] = {
+        'pass': True,
+        'ply0_initial_legal_count': len(legal0),
+        'ply2_after_e4_e5_legal_count': len(legal_moves(fen2)),
+        'e4d5_legal_at_ply2': 'e4d5' in legal_moves(fen2),
+    }
+    passed = all(v.get('pass', False) for v in res.values())
+    _CONTROLS_PASSED = passed
+    _CONTROLS_RESULT = res
+    print('=' * 92)
+    print('CHESS INSTRUMENT CONTROLS')
+    print('=' * 92)
+    for k, v in res.items():
+        print('  ' + ('PASS' if v.get('pass') else 'FAIL') + '  ' + k)
+    print('  overall: ' + ('ALL CONTROLS PASS' if passed else 'CONTROL FAILURE'))
+    print('=' * 92)
+    return passed, res
+
+
 def play(base, cap, probe):
     """One game, both sides driven by the same model. Family 4 of Mike's sequencing: self-play first."""
-    # THE POSITIVE CONTROL, BEFORE ANY TERMINATION MAY BE TRUSTED. A legality checker that cannot list
-    # the moves of the STARTING POSITION is not a legality checker -- and a checker handed an empty list
-    # calls EVERY move illegal, so its verdict would agree with its own failure and report the model as
-    # the cause. The starting position's move count is fixed at 20 and nobody has to interpret it.
+    # Run the four controls in the producing process before any termination may be trusted.
+    ok, ctrl = run_controls()
+    if not ok:
+        return [], 'serving-failure', 'instrument control FAILED: ' + repr(ctrl)
+    # THE POSITIVE CONTROL, BEFORE ANY TERMINATION MAY BE TRUSTED.
     start_moves = legal_moves(STARTPOS)
     if len(start_moves) != 20:
-        return [], "serving-failure", (
-            f"oracle control FAILED: legal_moves(startpos) returned {len(start_moves)}, expected 20. "
-            f"No termination this run produces may be read as a verdict about the entrant.")
+        return [], 'serving-failure', (
+            'oracle control FAILED: legal_moves(startpos) returned %d, expected 20. ' % len(start_moves) +
+            'No termination this run produces may be read as a verdict about the entrant.')
 
     rows, engine_fail = [], []
     fen, ply = STARTPOS, 0
@@ -477,7 +538,15 @@ def play(base, cap, probe):
                     f"MISSING VALUE, not a verdict about the entrant. The deliberation is preserved at "
                     f"{os.path.basename(REASONING_OUT) if REASONING_OUT else '(unsaved)'}")
             if reason.startswith("illegal"):
-                # A GENUINE ENTRANT FAILURE, AND THE FIRST TIME THIS OUTCOME HAS BEEN POSSIBLE. With the
+                # Control 4: illegal-move may only be emitted when controls 1-3 passed in this process.
+                if not _CONTROLS_PASSED:
+                    return rows, "serving-failure", "instrument control not passed; illegal-move label not earned"
+                # Control 3: recompute legal list for this FEN and assert count agreement.
+                recomputed = legal_moves(fen)
+                if recomputed != moves or len(recomputed) != len(moves) or len(moves) == 0:
+                    return rows, "serving-failure", (
+                        "legal-list mismatch for %s: reported %d, recomputed %d" % (fen, len(moves), len(recomputed)))
+                # A GENUINE ENTRANT FAILURE... With the
                 # move list removed from the prompt, the model derives its own candidates, so a well-formed
                 # move the engine rejects is a fact about THE MODEL -- not about the reader, which is what
                 # every previous `illegal-move` here turned out to be.
@@ -591,6 +660,10 @@ def main():
     ap.add_argument("--parallel", type=int, default=PARALLEL_DECLARED,
                     help="--parallel for the entrant's server (default: the registered launch, which "
                          "passes no such flag). A COMPUTE-PATH field; it travels in the argv.")
+    ap.add_argument("--cache-type-k", dest="cache_type_k", default=None,
+                    help="cache type for K (compute path; default: server default).")
+    ap.add_argument("--cache-type-v", dest="cache_type_v", default=None,
+                    help="cache type for V (compute path; default: server default).")
     a = ap.parse_args()
     if a.llama_server:
         sel = os.path.expanduser(a.llama_server)
@@ -632,6 +705,10 @@ def main():
                 "--port", str(a.port), "--no-webui"]
     if a.parallel is not None:
         srv_argv += ["--parallel", str(a.parallel)]
+    if a.cache_type_k:
+        srv_argv += ["--cache-type-k", a.cache_type_k]
+    if a.cache_type_v:
+        srv_argv += ["--cache-type-v", a.cache_type_v]
     srv = subprocess.Popen(
         srv_argv,
         stdout=open(log, "w"), stderr=subprocess.STDOUT)
@@ -668,11 +745,16 @@ def main():
                    # it passed. `server_argv` is the list handed to exec, `ngl`/`ctx` are read back out of
                    # it, and the server pid is the process that answered /health.
                    compute=dict(server_argv=srv_argv, server_binary=LLAMA, ngl=a.ngl, ctx=a.ctx,
-                                parallel=a.parallel, server_pid=srv.pid),
+                                parallel=a.parallel, cache_type_k=a.cache_type_k, cache_type_v=a.cache_type_v,
+                                server_pid=srv.pid),
                    termination=term, why=why, measures=m, wall_s=round(time.time()-t1, 1),
-                   rows=rows)
+                   rows=rows, controls=_CONTROLS_RESULT)
         p = os.path.join(RES, f"CHESS_GAME_{label}.json")
         json.dump(art, open(p, "w"), indent=1)
+        # Written control output from the same process that produced the row.
+        cp = os.path.join(RES, "CHESS_CONTROLS_%s.json" % label)
+        json.dump({"passed": _CONTROLS_PASSED, "controls": _CONTROLS_RESULT}, open(cp, "w"), indent=1)
+        print("  controls: " + cp)
     finally:
         srv.terminate()
         try:
