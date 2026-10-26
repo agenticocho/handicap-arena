@@ -370,3 +370,27 @@ trusting this file's prose.
 Every row carries `max_tokens`, `completion_tokens`, `finish_reason`, `answer_block`, `parse_path`,
 `out_of_range`, `raw` and the computed truth, so a row can be checked against the text that travels
 with it.
+
+---
+
+## NOTE 2026-10-26 — truth recomputed at load in the cabinet; mutation control landed
+
+The fix that lived in one probe script (`probes/lightsout/arm1_3x3.py`) now
+lives in the cabinet itself: `lightsout_cabinet.py` derives every board's
+unique clearing press set from the press matrix at load time and refuses the
+fixture's own `correct` label (and the prose answer cell) if either disagrees.
+`lightsout_cabinet_control.py` mutation-tests it on copies: board id, the
+`correct` field (`A1` -> `B2`), the prose answer cell (`A1` -> `C3`) and a
+whole-file substitution are all refused with non-zero exit; the unmutated
+copies pass.  The two mutations that historically survived (correct field and
+prose cell) are now caught.
+
+On 3x3 every one of the 16 answers in the arm-2 run claimed `SOLVED` and 0 of
+16 boards were actually cleared; the claim column and the state column are
+printed separately and a claim never awards a solve.  See
+`LIGHTSOUT_INSTRUMENT_REPORT_2026-10-26.md`.
+
+What the cabinet still cannot separate: a deliberating model from one that
+committed no move (both surface as no answer); and the 3x3 rung cannot
+exercise `CORRECT_UNSOLVABLE` / `FALSE_UNSOLVABLE` at all (every board is
+solvable), so unsolvability claims are only measurable on 4x4.
