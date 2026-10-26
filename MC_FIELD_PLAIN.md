@@ -248,3 +248,52 @@ logs/mc-field-plain-<entrant>.out (11)         the guarded units' own output, on
 logs/mc-selftest-fix2.out                      the controls after the fix: ALL CONTROLS PASS 53/53
 logs/mc-dryrun-fix.out                         the driver's own report of the arm it read
 ```
+
+---
+
+## NOTE APPENDED 2026-10-26 (card `t_3abd318f`) — THE CHECK THAT DOES NOT PASS, NAMED AND DECIDED
+
+**Nothing above this note is edited.** This file's line 11 says the checker has "111 checks"; that was true
+on 2026-10-17 and is that card's record of its own day. The checker has **115** now, and the sentence is left
+standing rather than rewritten, exactly as this project has done with every dated document.
+
+**The check that does not pass, measured by running the checker in-process and enumerating its checks in its
+own order** (`scripts/check_mc_claims.py --denominator`): **#114 of 115**, `over 12 cells the tokens
+reproduce TOKEN-FOR-TOKEN (P2)` — the replication control this document's Finding B already reports. Check
+#115, `...over exactly 12 cells`, is its non-vacuity guard: **it passes, and it fires alone when the shared
+set shrinks** (shown in the audit, mutation P6). So `114/115` names a missing pass, not the 115th line.
+
+**The decision: it is DEMOTED TO A READING, and the honest denominator is `114/114`.** The reasons are
+measured, not stylistic. The check is **falsifiable in both directions** — it fails on the field (rc 1) and
+it passes 115/115, rc 0, when the two differing token lists are made equal in a shadow copy (audit P5) — so
+it is neither dead code nor a control that cannot fire. But **its pass condition is an identity this cabinet
+measured not to exist**: it requires two runs to emit identical completions from model files whose bytes
+Finding A measured to be non-reproducible. 10 of 12 cells reproduce; the two that do not are **correct
+records** (their scores agree, their counters differ by one junk token). An expectation that fails on a
+correct record is a permanent red lamp, and it hides the next real regression inside a failure that is
+expected every run. This is the third instance of one class in this one checker, after `t_d68e29ba` (the
+driver digest) and `t_77f73033` (the entrant identity): **an identity asserted that was measured not to
+exist**.
+
+**What replaces it as a check, and what is lost.** Kept and promoted: the **SCORE reproduces on all 12 shared
+cells** (12 of 12, and it fails on a self-consistent substitution), the two runs are the **same instrument**
+(simulator, arm and state digest), and the two runs' **claimed scores agree**. Lost, named: **token-level
+provenance against an independent run, over the 12 shared cells** — the only thing that could notice a token
+stream substituted for another that scores the same. It is lost because it could not be relied on: on this
+box a genuine re-run trips it too, so it could not separate a substitution from a changed entrant file.
+
+**And one thing this document's checker never did, measured:** every record carries a `trace` — the recorded
+trajectory — and `scripts/check_mc_field_plain.py` **never reads it**. Falsifying one record's trace (a city
+marked dead that the simulator does not kill) leaves the checker at **the same 114/115, rc 1, the same single
+failure** as the unmutated field (audit P1). The trace is a claim that no check validated until now: all 22
+re-derive from `(state_text, tokens)` under the new instrument, and a mutation of one is caught there.
+
+**The ceiling, for the reader who wants the number this field is worth:** a constant policy that fires at
+every threat's impact coordinate, in impact order, scores **1/1 (100% of the exhaustive optimum) on
+`mc_01_one_shot` and 2/4 (50%) on `mc_02_scarcity`**; one that also reads which coordinates are cities scores
+**4/4 (100%)** on both. The entrants' mean is 63.6% of the optimum on mc_01 and 2.3% on mc_02. The score
+cannot separate a model that plays from a four-line program that reads.
+
+**Full report, with the mutation matrix and the residual:** `MC_CHECKER_AUDIT_2026-10-26.md`.
+**The instrument:** `scripts/check_mc_claims.py`; `scripts/check_mc_field_plain.py` is byte-identical
+(`575cd30462517038`) at the commit that adds it.
