@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-08 (the original rule) · **Addendum:** 2026-10-13, measured by Chilly on the subject box
 **Correction:** 2026-10-13, later the same day — the cure is **615.71.09**, not 580 (see "the cure" below)
-**Status:** measured · **Subject:** the arena's standing card — the RTX 3060 Ti on Chilly (`chilly`, 100.87.70.89)
+**Status:** measured · **Subject:** the arena's standing card — the RTX 3060 Ti on Chilly (`chilly`, tailnet address withheld)
 **Provenance:** the original rule is Jarvis's, adopted 2026-10-08. The addendum, the discriminating
 experiments, the correction and the capture rule are Chilly's, sent over the chair link on 2026-10-13 and
 recorded here in substance. Neither part touches this machine.
