@@ -129,7 +129,8 @@
   "eaten": 0,
   "best_life": 0,
   "deaths": 0,
-  "ticks": 120
+  "ticks": 120,
+  "revisits": 0
  },
  "score_readings": {
   "ticks": 120,
@@ -10220,5 +10221,22 @@
   "cycle_digest": "b18dc8872ac3b759",
   "cycle_cells": 625,
   "safety": "follows the torus's Hamiltonian cycle; the shortcut only ever enters the free window between the head and the tail"
+ },
+ "artifact_replaced": {
+  "path": "probes/SNAKE_baseline-cycle_s13.json",
+  "bytes": 117046,
+  "sha256": "0e0c91a8bce4c116",
+  "said_about_itself": {
+   "agent": "baseline-cycle",
+   "seed": 13,
+   "score": {
+    "eaten": 0,
+    "best_life": 0,
+    "deaths": 0,
+    "ticks": 120
+   },
+   "chain_digest": "af12a0c5d14ce52f"
+  },
+  "reason_given": "port: regenerate baselines with revisits"
  }
 }

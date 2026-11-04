@@ -129,7 +129,8 @@
   "eaten": 8,
   "best_life": 8,
   "deaths": 0,
-  "ticks": 120
+  "ticks": 120,
+  "revisits": 2
  },
  "score_readings": {
   "ticks": 120,
@@ -13772,5 +13773,23 @@
   "cycle_digest": "b18dc8872ac3b759",
   "cycle_cells": 625,
   "safety": "follows the torus's Hamiltonian cycle; the shortcut only ever enters the free window between the head and the tail"
+ },
+ "artifact_replaced": {
+  "path": "probes/SNAKE_baseline-greedy-safe_s7.json",
+  "bytes": 148813,
+  "sha256": "019d122d49895255",
+  "said_about_itself": {
+   "agent": "baseline-greedy-safe",
+   "seed": 7,
+   "score": {
+    "eaten": 8,
+    "best_life": 8,
+    "deaths": 0,
+    "ticks": 120,
+    "revisits": 2
+   },
+   "chain_digest": "20b384451cbb894a"
+  },
+  "reason_given": "port: regenerate baselines with revisits"
  }
 }

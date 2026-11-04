@@ -419,7 +419,7 @@ def episode_artifact(agent, seed, trace, ended, page, extra):
         "seed": seed,
         "ended": ended,
         "moves": [r["requested"] for r in trace],
-        "score": {k: live[k] for k in ("eaten", "best_life", "deaths", "ticks")},
+        "score": {k: live[k] for k in ("eaten", "best_life", "deaths", "ticks", "revisits")},
         "score_readings": live["checks"],
         "score_disagreements": live["disagreements"],
         "score_notes": live["notes"],

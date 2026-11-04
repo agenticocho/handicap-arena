@@ -129,7 +129,8 @@
   "eaten": 9,
   "best_life": 9,
   "deaths": 0,
-  "ticks": 120
+  "ticks": 120,
+  "revisits": 7
  },
  "score_readings": {
   "ticks": 120,
@@ -13963,19 +13964,19 @@
  },
  "artifact_replaced": {
   "path": "probes/SNAKE_baseline-greedy-safe_s1.json",
-  "bytes": 67190,
-  "sha256": "e4edd39673d556df",
+  "bytes": 150771,
+  "sha256": "2d342199aa4c6ae3",
   "said_about_itself": {
    "agent": "baseline-greedy-safe",
    "seed": 1,
    "score": {
-    "eaten": 4,
-    "best_life": 4,
+    "eaten": 9,
+    "best_life": 9,
     "deaths": 0,
-    "ticks": 60
+    "ticks": 120
    },
-   "chain_digest": "319f3acc0c511677"
+   "chain_digest": "05ec38c631bad848"
   },
-  "reason_given": "HORIZON ALIGNMENT on the same path: the cell held a 60-tick development run while the rest of the list is 120 ticks; the replacement puts this seed on the same horizon as its siblings"
+  "reason_given": "restore: re-ported driver"
  }
 }

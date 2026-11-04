@@ -51,6 +51,8 @@ def score_trace(trace):
     eaten = 0
     deaths = 0
     best_life = 0
+    revisits = 0
+    seen_heads = set()
     per_tick = []
     disagreements = []
     notes = []
@@ -99,10 +101,15 @@ def score_trace(trace):
         eaten += by_rng
         deaths += 1 if reset else 0
         best_life = max(best_life, after["maxCells"] - 4)
+        _head = tuple(after["head"])
+        if _head in seen_heads:
+            revisits += 1
+        seen_heads.add(_head)
         per_tick.append({"tick": row.get("tick"), "eaten": by_rng, "deaths": 1 if reset else 0,
-                         "length_after": after["length"], "maxCells_after": after["maxCells"],
+                          "length_after": after["length"], "maxCells_after": after["maxCells"],
                          "apple_after": after["apple"], "reset": reset})
     return {"eaten": eaten, "best_life": best_life, "deaths": deaths, "ticks": len(trace),
+            "revisits": revisits,
             "checks": checks, "disagreements": disagreements, "notes": notes, "problems": problems,
             "per_tick": per_tick}
 
@@ -117,6 +124,10 @@ def verify(bundle):
     for k in ("eaten", "best_life", "deaths", "ticks"):
         if rec.get(k) != live[k]:
             reasons.append("recorded score.%s = %r, but the trace alone gives %r" % (k, rec.get(k), live[k]))
+    if "revisits" in rec:
+        if rec.get("revisits") != live["revisits"]:
+            reasons.append("recorded score.revisits = %r, but the trace alone gives %r"
+                           % (rec.get("revisits"), live["revisits"]))
     if live["disagreements"]:
         reasons.append("%d tick(s) where two independent readings of the same event disagree: %s"
                        % (len(live["disagreements"]), live["disagreements"][:3]))
