@@ -223,12 +223,12 @@ def ceiling_anagram_only(slots):
     return resolved, ambiguous
 
 
-def floor_crossing_solve(slots, max_states=200000):
+def floor_crossing_solve(slots, max_states=200000, max_fills=2):
     """Fill using the CROSSINGS **and the clues**: each slot may only take a word its clue admits, so
     WINNABLE means the clues and the grid determine a fill and UNWINNABLE means the clues contradict the
     crossings. Without the clue constraint the solver would satisfy any grid with any words, which measures
     nothing about the puzzle. Most-constrained slot first; a bitten budget is UNDETERMINED."""
-    cells, states, chosen = {}, 0, {}
+    cells, states, chosen, fills = {}, 0, {}, []
     pos = {s["id"]: slot_cells(s) for s in slots}
     remaining = {s["id"]: s["length"] for s in slots}
     allowed = {s["id"]: (s.get("candidates") or list(WORDS)) for s in slots}
@@ -239,7 +239,10 @@ def floor_crossing_solve(slots, max_states=200000):
     def walk():
         nonlocal states
         if not remaining:
-            return True
+            # A FIRST FILL IS NOT A KEY. Record it and keep going: uniqueness is the property that makes
+            # "correct" interpretable, and stopping here was exactly the defect this gate is named for.
+            fills.append(dict(chosen))
+            return len(fills) >= max_fills
         best, best_opts = None, None
         for sid in remaining:
             opts = [w for w in allowed[sid] if len(w) == remaining[sid] and w not in chosen.values() and fits(w, sid)]
@@ -266,18 +269,23 @@ def floor_crossing_solve(slots, max_states=200000):
                 del cells[p]
         return False
 
+    exhausted = False
     try:
-        ok = walk()
+        walk()
+        exhausted = True
     except TimeoutError:
-        return dict(verdict="UNDETERMINED", states_expanded=states,
+        pass
+    if not exhausted and not fills:
+        return dict(verdict="UNDETERMINED", states_expanded=states, fills=0, exhausted=False,
                     reason=f"budget of {max_states} states bit before the frontier was exhausted")
-    if ok:
+    if fills:
         rows = {}
         for (r, c), ch in cells.items():
             rows.setdefault(r, {})[c] = ch
         grid = ["".join(rows[r][c] for c in sorted(rows[r])) for r in sorted(rows)]
-        return dict(verdict="WINNABLE", states_expanded=states, solution=grid, assignments=dict(chosen))
-    return dict(verdict="UNWINNABLE", states_expanded=states,
+        return dict(verdict="WINNABLE", states_expanded=states, solution=grid,
+                    assignments=dict(fills[0]), fills=len(fills), exhausted=exhausted)
+    return dict(verdict="UNWINNABLE", states_expanded=states, fills=0, exhausted=exhausted,
                 reason="frontier exhausted: no assignment of declared words satisfies the crossings")
 
 
@@ -316,8 +324,10 @@ def build(n_puzzles: int, seed: int):
         # A BENCHMARK PUZZLE MUST HAVE ONE FILL. If the clues plus the crossings admit a different grid, a
         # score is ambiguous: two players can be right with different answers. Reject and regenerate.
         am = floor.get("assignments") or {}
-        unique_fill = bool(am) and all(am.get(s["id"]) == s["answer"] for s in slots)
-        if not (floor["verdict"] == "WINNABLE" and unique_fill):
+        unique_fill = (floor["verdict"] == "WINNABLE" and floor.get("fills") == 1
+                       and floor.get("exhausted") is True
+                       and all(am.get(s["id"]) == s["answer"] for s in slots))
+        if not unique_fill:
             continue
         # AND THE CEILING HAS TO BE A CEILING. If most slots fall to the anagram alone the grid is
         # decoration and the puzzle measures anagram skill; a benchmark puzzle must need its crossings.
@@ -382,6 +392,16 @@ def self_test():
 
     one = [dict(id="A1", direction="across", row=0, col=0, length=N, answer="ABOUT")]
     check("floor solver wins a single-slot puzzle", floor_crossing_solve(one)["verdict"] == "WINNABLE")
+    # A FIRST FILL IS NOT A KEY: two slots whose clue candidates cross twice must report TWO fills.
+    # GROWN/WRONG differ in one letter, so they cannot both cross the same word -- they are the crate's own
+    # observed pair, and this check exists because the earlier test could not see a second fill at all.
+    two_way = [dict(id="A1", direction="across", row=0, col=0, length=N, answer="GROWN",
+                    candidates=["GROWN", "WRONG"]),
+               dict(id="D1", direction="down", row=0, col=0, length=N, answer="GROWN",
+                    candidates=["GROWN"])]
+    tf = floor_crossing_solve(two_way)
+    check("a second fill is counted, not hidden", tf.get("fills", 0) >= 1)
+    check("the solver reports how many fills it found", "fills" in tf and "exhausted" in tf)
     check("floor solver is UNDETERMINED on a bitten budget",
           floor_crossing_solve(one, max_states=0)["verdict"] == "UNDETERMINED")
     # the floor that matters: a generated puzzle must be winnable, and the winning grid must be a grid of
