@@ -893,5 +893,31 @@
    "unique_fill": true,
    "grid_sha256": "4081b6984648c43705dbb1246d353acd0605278426b83ef1aa873da7ef8c62a7"
   }
- ]
+ ],
+ "comparability": {
+  "rule": "a ceiling is a function of the CLUE RULE, so ceilings from different clue rules are not comparable and must never be placed in one column",
+  "history": [
+   {
+    "clue_rule": "anagram (letters printed)",
+    "ceiling": "19/20",
+    "status": "withdrawn -- the clues handed over the answers"
+   },
+   {
+    "clue_rule": "anagram/decoy, wrong candidate function",
+    "ceiling": "8/20",
+    "status": "withdrawn -- measured the wrong question"
+   },
+   {
+    "clue_rule": "decoy with the announced word subtracted",
+    "ceiling": "the 8/20 recomputation",
+    "status": "superseded"
+   },
+   {
+    "clue_rule": "terse WordNet definition, candidates share the terse phrase",
+    "ceiling": "0/10 per puzzle",
+    "status": "CURRENT"
+   }
+  ],
+  "why_0_is_not_worse_than_19": "19/20 meant the clues alone solved the puzzle; 0/10 means no slot is solvable without the grid. The first is a failure dressed as a high score, the second is the property a crossword needs."
+ }
 }
