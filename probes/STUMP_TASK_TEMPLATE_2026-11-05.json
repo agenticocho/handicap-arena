@@ -1,0 +1,251 @@
+{
+  "task": "STUMP-1",
+  "spec_version": "2026-11-05.1",
+  "note": "WORKED EXAMPLE, not a scheduled event: the grammar is a single-digit adder chosen because its answer space is computable and small. The SHAPE is the deliverable.",
+  "grammar": {
+    "id": "arith-singledigit-add-v1",
+    "rule": "Q(a, b) = a + b with a, b in 1..9; answer = the exact integer sum",
+    "answer_form": "^(?:[1-9][0-9]?)$",
+    "answer_form_note": "canonical: bare decimal digits, no sign, no spaces, no prose, no units",
+    "A_basis": "distinct canonical sums of two operands in 1..9 = {2..18}",
+    "computes_not_looks_up": true,
+    "identity": "1 + 2 = 3",
+    "identity_value": 3,
+    "identity_malformed": "three",
+    "digest": "457d8654cd52d5a8ec67a4b333c3a19ea0b814c097e603949f74ad1c6f58b82d"
+  },
+  "params": {
+    "n": 5,
+    "A": 17,
+    "tolerance": 0.01,
+    "p_ref": 0.9,
+    "ceiling": {
+      "P_coin_wins": 0.0002835119557814624,
+      "tie_at_zero_limit": 4.9999999999999945e-06,
+      "recomputed_from": {
+        "n": 5,
+        "A": 17,
+        "p": 0.9
+      },
+      "formula": "P(X>Y) + 0.5 P(X=Y), X~Bin(n,1/A), Y~Bin(n,p)"
+    },
+    "A_is_free_n_is_paid": "A is checked at admission, zero inference; n costs 2n answers per round"
+  },
+  "panel": [
+    {
+      "id": "panel-1",
+      "ref": "PLACEHOLDER",
+      "note": "digest-pinned before the run; never edited mid-run"
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "freeze": {
+        "grammar_digest": "457d8654cd52d5a8ec67a4b333c3a19ea0b814c097e603949f74ad1c6f58b82d",
+        "questions_committed_at": "2026-11-05T00:00:00Z",
+        "question_sets_digest": "PLACEHOLDER",
+        "answers_committed_at": null,
+        "answers_digest": null,
+        "rule": "both question sets are hashed and exchanged before either side's answers are revealed"
+      },
+      "questions": {
+        "A": [
+          {
+            "qid": "A-1",
+            "side": "A",
+            "text": "what is 3 + 4",
+            "template": "add(a,b): a,b in 1..9",
+            "A": 17,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "7",
+            "asker_answer_sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+            "admissible": true,
+            "inadmissible_reason": null
+          },
+          {
+            "qid": "A-2",
+            "side": "A",
+            "text": "what is 8 + 6",
+            "template": "add(a,b): a,b in 1..9",
+            "A": 17,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "14",
+            "asker_answer_sha256": "8527a891e224136950ff32ca212b45bc93f69fbb801c3b1ebedac52775f99e61",
+            "admissible": true,
+            "inadmissible_reason": null
+          },
+          {
+            "qid": "A-3",
+            "side": "A",
+            "text": "what is 2 + 9",
+            "template": "add(a,b): a,b in 1..9",
+            "A": 17,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "11",
+            "asker_answer_sha256": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8",
+            "admissible": true,
+            "inadmissible_reason": null
+          },
+          {
+            "qid": "A-4",
+            "side": "A",
+            "text": "what is 7 + 7",
+            "template": "add(a,b): a,b in 1..9",
+            "A": 17,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "14",
+            "asker_answer_sha256": "8527a891e224136950ff32ca212b45bc93f69fbb801c3b1ebedac52775f99e61",
+            "admissible": true,
+            "inadmissible_reason": null
+          },
+          {
+            "qid": "A-5",
+            "side": "A",
+            "text": "what is 5 + 1",
+            "template": "add(a,b): a,b in 1..9",
+            "A": 17,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "6",
+            "asker_answer_sha256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+            "admissible": true,
+            "inadmissible_reason": null
+          }
+        ],
+        "B": [
+          {
+            "qid": "B-1",
+            "side": "B",
+            "text": "what is 9 + 2",
+            "template": "add(a,b): a,b in 1..9",
+            "A": 17,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "11",
+            "asker_answer_sha256": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8",
+            "admissible": true,
+            "inadmissible_reason": null
+          },
+          {
+            "qid": "B-2",
+            "side": "B",
+            "text": "what is 4 + 4",
+            "template": "add(a,b): a,b in 1..9",
+            "A": 17,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "8",
+            "asker_answer_sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+            "admissible": true,
+            "inadmissible_reason": null
+          },
+          {
+            "qid": "B-3",
+            "side": "B",
+            "text": "what is 6 + 8",
+            "template": "add(a,b): a,b in 1..9",
+            "A": 17,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "14",
+            "asker_answer_sha256": "8527a891e224136950ff32ca212b45bc93f69fbb801c3b1ebedac52775f99e61",
+            "admissible": true,
+            "inadmissible_reason": null
+          },
+          {
+            "qid": "B-4",
+            "side": "B",
+            "text": "what is 1 + 1",
+            "template": "add(a,b): a,b in 1..9",
+            "A": 17,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "2",
+            "asker_answer_sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+            "admissible": true,
+            "inadmissible_reason": null
+          },
+          {
+            "qid": "B-5",
+            "side": "B",
+            "text": "what is 9 + 9",
+            "template": "add(a,b): a,b in 1..9",
+            "A": 17,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "18",
+            "asker_answer_sha256": "4ec9599fc203d176a301536c2e091a19bc852759b255bd6818810a42c5fed14a",
+            "admissible": true,
+            "inadmissible_reason": null
+          }
+        ]
+      },
+      "answers": {
+        "panel-1": {
+          "A-1": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0
+          },
+          "A-2": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0
+          },
+          "A-3": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0
+          },
+          "A-4": {
+            "attempts": 2,
+            "malformed": 1,
+            "wrong": 0
+          },
+          "A-5": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 1
+          },
+          "B-1": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0
+          },
+          "B-2": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0
+          },
+          "B-3": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0
+          },
+          "B-4": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0
+          },
+          "B-5": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0
+          }
+        }
+      },
+      "counters_rule": "malformed is over attempts; wrong is over well-formed attempts; the two never merge",
+      "result": {
+        "correct": {
+          "A": null,
+          "B": null
+        },
+        "winner": null,
+        "null": {
+          "P_coin_wins": 0.0002835119557814624,
+          "cell": {
+            "n": 5,
+            "A": 17,
+            "p": 0.9
+          }
+        },
+        "note": "a row with no null is not a result"
+      }
+    }
+  ]
+}
