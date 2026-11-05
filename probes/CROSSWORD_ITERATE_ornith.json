@@ -1,0 +1,198 @@
+{
+ "mode": "iterate",
+ "endpoint": "http://127.0.0.1:8360",
+ "crate": "/home/chilly1/workspace/ocho_arena/probes/CROSSWORD_CRATE_2026-11-05.json",
+ "n": 20,
+ "filled": 6,
+ "correct": 0,
+ "rounds": [
+  {
+   "round": 1,
+   "proposed": 2,
+   "changed": 2
+  },
+  {
+   "round": 2,
+   "proposed": 2,
+   "changed": 0
+  },
+  {
+   "round": 1,
+   "proposed": 6,
+   "changed": 6
+  },
+  {
+   "round": 2,
+   "proposed": 5,
+   "changed": 1
+  },
+  {
+   "round": 3,
+   "proposed": 4,
+   "changed": 0
+  }
+ ],
+ "conflicts": 0,
+ "rows": [
+  {
+   "puzzle": 0,
+   "id": "A1",
+   "clue": "tube",
+   "answer": "BARREL",
+   "placed": null,
+   "correct": false
+  },
+  {
+   "puzzle": 0,
+   "id": "D1",
+   "clue": "positive stimulus",
+   "answer": "BONUSES",
+   "placed": null,
+   "correct": false
+  },
+  {
+   "puzzle": 0,
+   "id": "A2",
+   "clue": "obstacle",
+   "answer": "RUBS",
+   "placed": null,
+   "correct": false
+  },
+  {
+   "puzzle": 0,
+   "id": "D2",
+   "clue": "robbery",
+   "answer": "STICKUP",
+   "placed": "BURGLAR",
+   "correct": false
+  },
+  {
+   "puzzle": 0,
+   "id": "D3",
+   "clue": "hollow",
+   "answer": "DELL",
+   "placed": null,
+   "correct": false
+  },
+  {
+   "puzzle": 0,
+   "id": "D4",
+   "clue": "adult",
+   "answer": "STOICS",
+   "placed": null,
+   "correct": false
+  },
+  {
+   "puzzle": 0,
+   "id": "A3",
+   "clue": "water",
+   "answer": "PUDDLES",
+   "placed": null,
+   "correct": false
+  },
+  {
+   "puzzle": 0,
+   "id": "D5",
+   "clue": "swine",
+   "answer": "SOWS",
+   "placed": "PORK",
+   "correct": false
+  },
+  {
+   "puzzle": 0,
+   "id": "A4",
+   "clue": "victim",
+   "answer": "WRETCH",
+   "placed": null,
+   "correct": false
+  },
+  {
+   "puzzle": 0,
+   "id": "A5",
+   "clue": "begin",
+   "answer": "ERUPTS",
+   "placed": null,
+   "correct": false
+  },
+  {
+   "puzzle": 1,
+   "id": "D1",
+   "clue": "greek deity",
+   "answer": "HYMENS",
+   "placed": null,
+   "correct": false
+  },
+  {
+   "puzzle": 1,
+   "id": "D2",
+   "clue": "motto",
+   "answer": "CRYINGS",
+   "placed": "MOTIVES",
+   "correct": false
+  },
+  {
+   "puzzle": 1,
+   "id": "D3",
+   "clue": "marking",
+   "answer": "FLECK",
+   "placed": null,
+   "correct": false
+  },
+  {
+   "puzzle": 1,
+   "id": "A1",
+   "clue": "commoner",
+   "answer": "LAYMEN",
+   "placed": null,
+   "correct": false
+  },
+  {
+   "puzzle": 1,
+   "id": "A2",
+   "clue": "tube",
+   "answer": "HOSE",
+   "placed": "TUBE",
+   "correct": false
+  },
+  {
+   "puzzle": 1,
+   "id": "A3",
+   "clue": "ballroom dance",
+   "answer": "SAMBA",
+   "placed": "TANGO",
+   "correct": false
+  },
+  {
+   "puzzle": 1,
+   "id": "A4",
+   "clue": "cipher",
+   "answer": "SQUIRTS",
+   "placed": null,
+   "correct": false
+  },
+  {
+   "puzzle": 1,
+   "id": "D4",
+   "clue": "slip",
+   "answer": "SKIDDED",
+   "placed": null,
+   "correct": false
+  },
+  {
+   "puzzle": 1,
+   "id": "A5",
+   "clue": "weave",
+   "answer": "NETTED",
+   "placed": null,
+   "correct": false
+  },
+  {
+   "puzzle": 1,
+   "id": "D5",
+   "clue": "wheeled vehicle",
+   "answer": "TRIKES",
+   "placed": "CARTON",
+   "correct": false
+  }
+ ]
+}

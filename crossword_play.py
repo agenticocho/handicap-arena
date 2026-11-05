@@ -97,6 +97,72 @@ def self_test():
     return fail == 0
 
 
+def play_iterate(endpoint, crate_path, rounds=4):
+    """THE ITERATIVE PLAYER. Nothing is locked: each round, every slot sees the letters that the OTHER slots
+    currently agree on at its cells, and may change its answer because of them. Only at the end are the
+    proposals scored. This is the protocol in which a model's second answer can differ from its first --
+    the greedy placer commits in one pass and therefore cannot recover a non-prototypical answer."""
+    import re
+    d = load(crate_path)
+    rows, history = [], []
+    for pi, p in enumerate(d["puzzles"]):
+        slots = p["slots"]
+        cells = {s["id"]: CG.slot_cells(s) for s in slots}
+        cover = {}
+        for s in slots:
+            for c in cells[s["id"]]:
+                cover.setdefault(c, []).append(s["id"])
+        prop = {}
+        for rd in range(1, rounds + 1):
+            new = {}
+            for s in slots:
+                # a cell is fixed only where every OTHER slot that covers it agrees on one letter
+                pat = []
+                for idx, c in enumerate(cells[s["id"]]):
+                    letters = set()
+                    for o in cover[c]:
+                        if o == s["id"]:
+                            continue
+                        w = prop.get(o)
+                        if not w:
+                            continue
+                        j = cells[o].index(c)
+                        letters.add(w[j])
+                    pat.append(letters.pop() if len(letters) == 1 else "_")
+                pattern = "".join(pat)
+                prompt = (f"Crossword clue: {s['clue']} ({s['length']} letters). "
+                          f"The crossing letters from the rest of the grid are {pattern} "
+                          f"(underscores are unknown). Answer with exactly one {s['length']}-letter "
+                          f"English word and nothing else.")
+                raw = ask(endpoint, prompt)
+                m = re.findall(rf"\b[A-Za-z]{{{s['length']}}}\b", (raw or "").upper())
+                cand = m[0] if len(set(m)) == 1 else None
+                if cand and cand in CG.WORDS:
+                    new[s["id"]] = cand
+            changed = sum(1 for k in new if new.get(k) != prop.get(k))
+            history.append(dict(round=rd, proposed=len(new), changed=changed))
+            prop = new
+            if changed == 0:
+                break
+        conflicts = 0
+        for c, ids in cover.items():
+            letters = {prop[i][cells[i].index(c)] for i in ids if prop.get(i)}
+            if len(letters) > 1:
+                conflicts += 1
+        for s in slots:
+            rows.append(dict(puzzle=pi, id=s["id"], clue=s["clue"], answer=s["answer"],
+                             placed=prop.get(s["id"]), correct=prop.get(s["id"]) == s["answer"]))
+    filled = sum(1 for r in rows if r["placed"])
+    right = sum(1 for r in rows if r["correct"])
+    rec = dict(mode="iterate", endpoint=endpoint, crate=crate_path, n=len(rows), filled=filled,
+               correct=right, rounds=history, conflicts=conflicts, rows=rows)
+    print(f"iterative: slots {len(rows)}  filled {filled}  correct {right}  crossing-conflicts {conflicts}")
+    print("  rounds:", history)
+    for r in rows[:10]:
+        print(f"   {r['id']:3s} {r['clue'][:18]:20s} key={r['answer']:9s} placed={str(r['placed']):10s} {'OK' if r['correct'] else ''}")
+    return rec
+
+
 def play_grid(endpoint, crate_path, passes=3):
     """THE ACTUAL GAME: answer slots against a live grid, using the crossing letters the grid already fixes.
     A slot is accepted only if it fits the pattern; passes repeat until nothing new lands. This is the
@@ -152,11 +218,19 @@ def main():
     ap.add_argument("--endpoint", default=None)
     ap.add_argument("--out", default=None)
     ap.add_argument("--self-test", action="store_true")
-    ap.add_argument("--protocol", default="clues", choices=("clues", "grid"))
+    ap.add_argument("--protocol", default="clues", choices=("clues", "grid", "iterate"))
+    ap.add_argument("--rounds", type=int, default=4)
     a = ap.parse_args()
 
     if a.self_test:
         return 0 if self_test() else 1
+    if a.protocol == "iterate":
+        rec = play_iterate(a.endpoint, a.crate, rounds=a.rounds)
+        if a.out:
+            Path(a.out).parent.mkdir(parents=True, exist_ok=True)
+            Path(a.out).write_text(json.dumps(rec, indent=1) + "\n")
+            print(f"wrote {a.out}")
+        return 0
     if a.protocol == "grid":
         rec = play_grid(a.endpoint, a.crate)
         if a.out:
