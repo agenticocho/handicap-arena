@@ -74,6 +74,8 @@ LEXICON_FILE = Path(__file__).with_name("wordlist_3_7.txt")
 DEFINITIONS_FILE = Path(__file__).with_name("definitions.json")
 DEFS, TERSE_INDEX = {}, {}
 LEXICON_SHA = None
+LEXICON_FILE_WORDS = None     # words in the file on disk
+LEXICON_BYTES = None          # bytes of the file that words_sha256 digests
 
 
 def set_definitions(path=None):
@@ -110,12 +112,14 @@ def set_lexicon(path=None):
     """Load the declared lexicon. One list, one digest, used by the generator AND both gates -- a clue is
     only ambiguous relative to the words a reader could think of, so the answers and the candidates must
     come from the same list."""
-    global WORDS, LEXICON_SHA
+    global WORDS, LEXICON_SHA, LEXICON_FILE_WORDS, LEXICON_BYTES
     p = Path(path) if path else LEXICON_FILE
     if not p.exists():
         return False
     ws = sorted({w.strip().upper() for w in p.read_text().split() if w.strip()})
     WORDS = tuple(ws)
+    LEXICON_FILE_WORDS = len(ws)          # the FILE's word count, before restrict_to_cluable
+    LEXICON_BYTES = len(p.read_bytes())
     LEXICON_SHA = hashlib.sha256(p.read_bytes()).hexdigest()
     return True
 
@@ -436,7 +440,11 @@ def build(n_puzzles: int, seed: int):
                         grid_sha256=hashlib.sha256(
                             json.dumps(sorted(placed, key=lambda q: (q["row"], q["col"], q["word"])), sort_keys=True).encode()).hexdigest()))
     return dict(seed=seed, word_list_size=len(WORDS),
+                word_list_size_rule="pool after restrict_to_cluable: the answers/candidates universe",
+                word_list_file_words=LEXICON_FILE_WORDS,
+                word_list_file_bytes=LEXICON_BYTES,
                 words_sha256=LEXICON_SHA or hashlib.sha256(" ".join(WORDS).encode()).hexdigest(),
+                words_sha256_rule="digest of the word-list FILE on disk, which is larger than the pool",
                 source="declared in crossword_gen.py -- no third-party content",
                 construction="criss-cross, no symmetry claim, every word crosses at least one other",
                 puzzles=out)

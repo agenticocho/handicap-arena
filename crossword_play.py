@@ -29,11 +29,23 @@ import crossword_gen as CG  # noqa: E402
 
 def load(crate_path):
     d = json.loads(Path(crate_path).read_text())
-    CG.set_lexicon()
+    if not CG.set_lexicon():
+        # the fallback is the 485-word hardcoded list, and nothing in the artifact records it -- so a
+        # missing wordlist would silently measure every candidate set, ceiling and score against a
+        # different universe and report it as this crate's numbers
+        sys.exit("wordlist_3_7.txt not found: refusing to score against the %d-word hardcoded fallback "
+                 "instead of the declared pool" % len(CG.WORDS))
     loaded = CG.set_definitions()
     if not loaded:
         sys.exit("definitions.json not found: the candidate index would be empty and every ceiling "
                  "measurement would read zero BY CONSTRUCTION rather than by measurement")
+    # the crate's pool is the RESTRICTED one: scoring against the full file answers a different question
+    # with identical field names, which is the defect class this tree keeps finding
+    CG.restrict_to_cluable()
+    declared = d.get("word_list_size")
+    if declared and len(CG.WORDS) != declared:
+        sys.exit("pool mismatch: crate declares %s words, this box's restricted pool is %d -- refusing to "
+                 "score two different universes" % (declared, len(CG.WORDS)))
     return d
 
 
