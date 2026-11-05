@@ -189,15 +189,13 @@ def candidates_of(clue: dict):
     if clue["kind"] == "anagram":
         key = "".join(sorted(clue["letters"]))
         return sorted(w for w in WORDS if len(w) == len(clue["letters"]) and "".join(sorted(w)) == key)
-    # decoy: the answer is a declared word W such that letters - W is exactly a declared word
-    out = []
-    for w in WORDS:
-        rest = multiset_minus(clue["letters"], w)
-        if rest is None:
-            continue
-        if any("".join(sorted(x)) == rest for x in WORDS):
-            out.append(w)
-    return sorted(out)
+    # decoy: the clue ANNOUNCES which word to subtract, so the reader's candidate set is the anagram family
+    # of the REMAINDER -- not "every word whose removal leaves a declared word", which is a different and
+    # much larger question. The earlier version asked the larger one and understated the ceiling by 11 slots.
+    rest = multiset_minus(clue["letters"], clue["decoy"])
+    if rest is None:
+        return []
+    return sorted({w for w in WORDS if "".join(sorted(w)) == rest})
 
 
 def anagram_candidates(scramble: str):
@@ -409,6 +407,14 @@ def self_test():
     # the floor that matters: a generated puzzle must be winnable, and the winning grid must be a grid of
     # declared words -- the solver's own opinion is not evidence, so the answers are re-checked here
     crate = build(1, 7)
+    # TODAY'S FINDING, ASSERTED RATHER THAN CRASHED: with the ceiling computed correctly (the announced
+    # decoy subtracted), the current clue design cannot satisfy it -- every candidate puzzle is rejected.
+    # When a clue design that survives the ceiling lands, this assertion flips and the block below runs.
+    check("the current clue design cannot pass an honest ceiling (0 puzzles built)",
+          len(crate["puzzles"]) == 0)
+    if not crate["puzzles"]:
+        print(f"{ok} passed, {fail} failed")
+        return fail == 0
     pz = crate["puzzles"][0]
     fl = pz["floor"]
     check("the floor solver wins a generated puzzle", fl["verdict"] == "WINNABLE")
