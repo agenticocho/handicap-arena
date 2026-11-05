@@ -6,14 +6,14 @@
  "construction": "criss-cross, no symmetry claim, every word crosses at least one other",
  "puzzles": [
   {
-   "rows": 9,
-   "cols": 7,
+   "rows": 13,
+   "cols": 11,
    "slots": [
     {
      "id": "D1",
      "direction": "down",
-     "row": -4,
-     "col": 0,
+     "row": 0,
+     "col": 4,
      "length": 5,
      "answer": "FORUM",
      "clue": "In a muddle OUMFR (5)",
@@ -21,8 +21,10 @@
       "kind": "anagram",
       "letters": "OUMFR"
      },
+     "scramble": "OUMFR",
+     "clue_kind": "anagram",
      "clue_to_slot_published": "D1",
-     "clue_to_slot_permuted": "D5",
+     "clue_to_slot_permuted": "D3",
      "clue_candidates": 1,
      "candidates": [
       "FORUM"
@@ -31,8 +33,8 @@
     {
      "id": "D2",
      "direction": "down",
-     "row": -3,
-     "col": 4,
+     "row": 1,
+     "col": 8,
      "length": 5,
      "answer": "BOARD",
      "clue": "Mixed up BROAD (5)",
@@ -40,8 +42,10 @@
       "kind": "anagram",
       "letters": "BROAD"
      },
+     "scramble": "BROAD",
+     "clue_kind": "anagram",
      "clue_to_slot_published": "D2",
-     "clue_to_slot_permuted": "A8",
+     "clue_to_slot_permuted": "A4",
      "clue_candidates": 2,
      "candidates": [
       "BOARD",
@@ -49,10 +53,10 @@
      ]
     },
     {
-     "id": "A3",
+     "id": "A1",
      "direction": "across",
-     "row": -2,
-     "col": 2,
+     "row": 2,
+     "col": 6,
      "length": 5,
      "answer": "GROWN",
      "clue": "In a muddle VIROOEGNWC less VOICE (5)",
@@ -61,8 +65,10 @@
       "letters": "VIROOEGNWC",
       "decoy": "VOICE"
      },
-     "clue_to_slot_published": "A3",
-     "clue_to_slot_permuted": "A3",
+     "scramble": "VIROOEGNWC",
+     "clue_kind": "decoy",
+     "clue_to_slot_published": "A1",
+     "clue_to_slot_permuted": "A1",
      "clue_candidates": 3,
      "candidates": [
       "GROWN",
@@ -71,10 +77,10 @@
      ]
     },
     {
-     "id": "A4",
+     "id": "A2",
      "direction": "across",
-     "row": 0,
-     "col": 0,
+     "row": 4,
+     "col": 4,
      "length": 5,
      "answer": "MOTOR",
      "clue": "Mixed up TKCLYMOOUR less LUCKY (5)",
@@ -83,7 +89,9 @@
       "letters": "TKCLYMOOUR",
       "decoy": "LUCKY"
      },
-     "clue_to_slot_published": "A4",
+     "scramble": "TKCLYMOOUR",
+     "clue_kind": "decoy",
+     "clue_to_slot_published": "A2",
      "clue_to_slot_permuted": "D2",
      "clue_candidates": 2,
      "candidates": [
@@ -92,10 +100,10 @@
      ]
     },
     {
-     "id": "D5",
+     "id": "D3",
      "direction": "down",
-     "row": 0,
-     "col": 2,
+     "row": 4,
+     "col": 6,
      "length": 5,
      "answer": "THERE",
      "clue": "Confused RHTEE (5)",
@@ -103,8 +111,10 @@
       "kind": "anagram",
       "letters": "RHTEE"
      },
-     "clue_to_slot_published": "D5",
-     "clue_to_slot_permuted": "A4",
+     "scramble": "RHTEE",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "D3",
+     "clue_to_slot_permuted": "A2",
      "clue_candidates": 2,
      "candidates": [
       "THERE",
@@ -112,10 +122,10 @@
      ]
     },
     {
-     "id": "A6",
+     "id": "A3",
      "direction": "across",
-     "row": 2,
-     "col": -2,
+     "row": 6,
+     "col": 2,
      "length": 5,
      "answer": "IMAGE",
      "clue": "Confused MAIEG (5)",
@@ -123,18 +133,20 @@
       "kind": "anagram",
       "letters": "MAIEG"
      },
-     "clue_to_slot_published": "A6",
-     "clue_to_slot_permuted": "A10",
+     "scramble": "MAIEG",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "A3",
+     "clue_to_slot_permuted": "A5",
      "clue_candidates": 1,
      "candidates": [
       "IMAGE"
      ]
     },
     {
-     "id": "D7",
+     "id": "D4",
      "direction": "down",
-     "row": 4,
-     "col": -4,
+     "row": 8,
+     "col": 0,
      "length": 5,
      "answer": "THESE",
      "clue": "Confused TYLESHSEIL less SILLY (5)",
@@ -143,8 +155,10 @@
       "letters": "TYLESHSEIL",
       "decoy": "SILLY"
      },
-     "clue_to_slot_published": "D7",
-     "clue_to_slot_permuted": "D9",
+     "scramble": "TYLESHSEIL",
+     "clue_kind": "decoy",
+     "clue_to_slot_published": "D4",
+     "clue_to_slot_permuted": "D5",
      "clue_candidates": 3,
      "candidates": [
       "SHEET",
@@ -153,10 +167,10 @@
      ]
     },
     {
-     "id": "A8",
+     "id": "A4",
      "direction": "across",
-     "row": 4,
-     "col": -2,
+     "row": 8,
+     "col": 2,
      "length": 5,
      "answer": "STONE",
      "clue": "Confused ENUOOTSBTA less ABOUT (5)",
@@ -165,7 +179,9 @@
       "letters": "ENUOOTSBTA",
       "decoy": "ABOUT"
      },
-     "clue_to_slot_published": "A8",
+     "scramble": "ENUOOTSBTA",
+     "clue_kind": "decoy",
+     "clue_to_slot_published": "A4",
      "clue_to_slot_permuted": "D1",
      "clue_candidates": 2,
      "candidates": [
@@ -174,10 +190,10 @@
      ]
     },
     {
-     "id": "D9",
+     "id": "D5",
      "direction": "down",
-     "row": 4,
-     "col": -2,
+     "row": 8,
+     "col": 2,
      "length": 5,
      "answer": "SUPER",
      "clue": "Mixed up EPUSR (5)",
@@ -185,18 +201,20 @@
       "kind": "anagram",
       "letters": "EPUSR"
      },
-     "clue_to_slot_published": "D9",
-     "clue_to_slot_permuted": "D7",
+     "scramble": "EPUSR",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "D5",
+     "clue_to_slot_permuted": "D4",
      "clue_candidates": 1,
      "candidates": [
       "SUPER"
      ]
     },
     {
-     "id": "A10",
+     "id": "A5",
      "direction": "across",
-     "row": 7,
-     "col": -4,
+     "row": 11,
+     "col": 0,
      "length": 5,
      "answer": "SCENE",
      "clue": "Confused SNIEXTEESC less EXIST (5)",
@@ -205,8 +223,10 @@
       "letters": "SNIEXTEESC",
       "decoy": "EXIST"
      },
-     "clue_to_slot_published": "A10",
-     "clue_to_slot_permuted": "A6",
+     "scramble": "SNIEXTEESC",
+     "clue_kind": "decoy",
+     "clue_to_slot_published": "A5",
+     "clue_to_slot_permuted": "A3",
      "clue_candidates": 2,
      "candidates": [
       "EXIST",
@@ -228,7 +248,7 @@
       ]
      },
      {
-      "id": "A3",
+      "id": "A1",
       "kind": "decoy",
       "n_candidates": 3,
       "candidates": [
@@ -238,7 +258,7 @@
       ]
      },
      {
-      "id": "A4",
+      "id": "A2",
       "kind": "decoy",
       "n_candidates": 2,
       "candidates": [
@@ -247,7 +267,7 @@
       ]
      },
      {
-      "id": "D5",
+      "id": "D3",
       "kind": "anagram",
       "n_candidates": 2,
       "candidates": [
@@ -256,7 +276,7 @@
       ]
      },
      {
-      "id": "D7",
+      "id": "D4",
       "kind": "decoy",
       "n_candidates": 3,
       "candidates": [
@@ -266,7 +286,7 @@
       ]
      },
      {
-      "id": "A8",
+      "id": "A4",
       "kind": "decoy",
       "n_candidates": 2,
       "candidates": [
@@ -275,7 +295,7 @@
       ]
      },
      {
-      "id": "A10",
+      "id": "A5",
       "kind": "decoy",
       "n_candidates": 2,
       "candidates": [
@@ -305,28 +325,28 @@
     ],
     "assignments": {
      "D1": "FORUM",
-     "A4": "MOTOR",
+     "A2": "MOTOR",
      "D2": "BOARD",
-     "A6": "IMAGE",
-     "D5": "THERE",
-     "A8": "STONE",
-     "D9": "SUPER",
-     "A10": "SCENE",
-     "D7": "THESE",
-     "A3": "GROWN"
+     "A3": "IMAGE",
+     "D3": "THERE",
+     "A4": "STONE",
+     "D5": "SUPER",
+     "A5": "SCENE",
+     "D4": "THESE",
+     "A1": "GROWN"
     }
    },
    "unique_fill": true,
    "grid_sha256": "142d7cee305fc6d5b575bad97ac49f1145b2748d3020836cff2b46f35f3f9554"
   },
   {
-   "rows": 9,
+   "rows": 11,
    "cols": 11,
    "slots": [
     {
      "id": "D1",
      "direction": "down",
-     "row": -2,
+     "row": 0,
      "col": 0,
      "length": 5,
      "answer": "MOTOR",
@@ -335,6 +355,8 @@
       "kind": "anagram",
       "letters": "OMTOR"
      },
+     "scramble": "OMTOR",
+     "clue_kind": "anagram",
      "clue_to_slot_published": "D1",
      "clue_to_slot_permuted": "D2",
      "clue_candidates": 1,
@@ -345,7 +367,7 @@
     {
      "id": "D2",
      "direction": "down",
-     "row": -2,
+     "row": 0,
      "col": 4,
      "length": 5,
      "answer": "WHERE",
@@ -355,8 +377,10 @@
       "letters": "CRWELKHCEO",
       "decoy": "CLOCK"
      },
+     "scramble": "CRWELKHCEO",
+     "clue_kind": "decoy",
      "clue_to_slot_published": "D2",
-     "clue_to_slot_permuted": "A6",
+     "clue_to_slot_permuted": "A3",
      "clue_candidates": 4,
      "candidates": [
       "CHECK",
@@ -366,9 +390,9 @@
      ]
     },
     {
-     "id": "A3",
+     "id": "A1",
      "direction": "across",
-     "row": -2,
+     "row": 0,
      "col": 6,
      "length": 5,
      "answer": "SUPER",
@@ -377,17 +401,19 @@
       "kind": "anagram",
       "letters": "PUESR"
      },
-     "clue_to_slot_published": "A3",
-     "clue_to_slot_permuted": "D7",
+     "scramble": "PUESR",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "A1",
+     "clue_to_slot_permuted": "D4",
      "clue_candidates": 1,
      "candidates": [
       "SUPER"
      ]
     },
     {
-     "id": "D4",
+     "id": "D3",
      "direction": "down",
-     "row": -2,
+     "row": 0,
      "col": 8,
      "length": 5,
      "answer": "PEACE",
@@ -397,8 +423,10 @@
       "letters": "ECSEVAEEPR",
       "decoy": "SERVE"
      },
-     "clue_to_slot_published": "D4",
-     "clue_to_slot_permuted": "D9",
+     "scramble": "ECSEVAEEPR",
+     "clue_kind": "decoy",
+     "clue_to_slot_published": "D3",
+     "clue_to_slot_permuted": "D5",
      "clue_candidates": 2,
      "candidates": [
       "PEACE",
@@ -406,9 +434,9 @@
      ]
     },
     {
-     "id": "A5",
+     "id": "A2",
      "direction": "across",
-     "row": 0,
+     "row": 2,
      "col": 0,
      "length": 5,
      "answer": "TITLE",
@@ -418,8 +446,10 @@
       "letters": "ERMTLTTSOI",
       "decoy": "STORM"
      },
-     "clue_to_slot_published": "A5",
-     "clue_to_slot_permuted": "D4",
+     "scramble": "ERMTLTTSOI",
+     "clue_kind": "decoy",
+     "clue_to_slot_published": "A2",
+     "clue_to_slot_permuted": "D3",
      "clue_candidates": 2,
      "candidates": [
       "STORM",
@@ -427,9 +457,9 @@
      ]
     },
     {
-     "id": "A6",
+     "id": "A3",
      "direction": "across",
-     "row": 2,
+     "row": 4,
      "col": 4,
      "length": 5,
      "answer": "ELITE",
@@ -438,17 +468,19 @@
       "kind": "anagram",
       "letters": "TEIEL"
      },
-     "clue_to_slot_published": "A6",
-     "clue_to_slot_permuted": "A10",
+     "scramble": "TEIEL",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "A3",
+     "clue_to_slot_permuted": "A5",
      "clue_candidates": 1,
      "candidates": [
       "ELITE"
      ]
     },
     {
-     "id": "D7",
+     "id": "D4",
      "direction": "down",
-     "row": 2,
+     "row": 4,
      "col": 7,
      "length": 5,
      "answer": "TREAT",
@@ -458,7 +490,9 @@
       "letters": "COURRTTAET",
       "decoy": "COURT"
      },
-     "clue_to_slot_published": "D7",
+     "scramble": "COURRTTAET",
+     "clue_kind": "decoy",
+     "clue_to_slot_published": "D4",
      "clue_to_slot_permuted": "D1",
      "clue_candidates": 2,
      "candidates": [
@@ -467,9 +501,9 @@
      ]
     },
     {
-     "id": "A8",
+     "id": "A4",
      "direction": "across",
-     "row": 4,
+     "row": 6,
      "col": 5,
      "length": 5,
      "answer": "FIELD",
@@ -479,8 +513,10 @@
       "letters": "DGOFLHERUI",
       "decoy": "ROUGH"
      },
-     "clue_to_slot_published": "A8",
-     "clue_to_slot_permuted": "A8",
+     "scramble": "DGOFLHERUI",
+     "clue_kind": "decoy",
+     "clue_to_slot_published": "A4",
+     "clue_to_slot_permuted": "A4",
      "clue_candidates": 2,
      "candidates": [
       "FIELD",
@@ -488,9 +524,9 @@
      ]
     },
     {
-     "id": "D9",
+     "id": "D5",
      "direction": "down",
-     "row": 4,
+     "row": 6,
      "col": 5,
      "length": 5,
      "answer": "FLUID",
@@ -499,17 +535,19 @@
       "kind": "anagram",
       "letters": "DIULF"
      },
-     "clue_to_slot_published": "D9",
-     "clue_to_slot_permuted": "A5",
+     "scramble": "DIULF",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "D5",
+     "clue_to_slot_permuted": "A2",
      "clue_candidates": 1,
      "candidates": [
       "FLUID"
      ]
     },
     {
-     "id": "A10",
+     "id": "A5",
      "direction": "across",
-     "row": 5,
+     "row": 7,
      "col": 1,
      "length": 5,
      "answer": "LABEL",
@@ -519,8 +557,10 @@
       "letters": "NSKLLAEILB",
       "decoy": "LINKS"
      },
-     "clue_to_slot_published": "A10",
-     "clue_to_slot_permuted": "A3",
+     "scramble": "NSKLLAEILB",
+     "clue_kind": "decoy",
+     "clue_to_slot_published": "A5",
+     "clue_to_slot_permuted": "A1",
      "clue_candidates": 2,
      "candidates": [
       "LABEL",
@@ -544,7 +584,7 @@
       ]
      },
      {
-      "id": "D4",
+      "id": "D3",
       "kind": "decoy",
       "n_candidates": 2,
       "candidates": [
@@ -553,7 +593,7 @@
       ]
      },
      {
-      "id": "A5",
+      "id": "A2",
       "kind": "decoy",
       "n_candidates": 2,
       "candidates": [
@@ -562,7 +602,7 @@
       ]
      },
      {
-      "id": "D7",
+      "id": "D4",
       "kind": "decoy",
       "n_candidates": 2,
       "candidates": [
@@ -571,7 +611,7 @@
       ]
      },
      {
-      "id": "A8",
+      "id": "A4",
       "kind": "decoy",
       "n_candidates": 2,
       "candidates": [
@@ -580,7 +620,7 @@
       ]
      },
      {
-      "id": "A10",
+      "id": "A5",
       "kind": "decoy",
       "n_candidates": 2,
       "candidates": [
@@ -608,15 +648,15 @@
     ],
     "assignments": {
      "D1": "MOTOR",
-     "A3": "SUPER",
-     "D4": "PEACE",
-     "A5": "TITLE",
-     "A6": "ELITE",
+     "A1": "SUPER",
+     "D3": "PEACE",
+     "A2": "TITLE",
+     "A3": "ELITE",
      "D2": "WHERE",
-     "D7": "TREAT",
-     "A8": "FIELD",
-     "D9": "FLUID",
-     "A10": "LABEL"
+     "D4": "TREAT",
+     "A4": "FIELD",
+     "D5": "FLUID",
+     "A5": "LABEL"
     }
    },
    "unique_fill": true,

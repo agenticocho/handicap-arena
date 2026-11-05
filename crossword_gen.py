@@ -145,9 +145,12 @@ def slot_cells(slot):
 
 
 def slots_of(placed):
-    out = []
+    """Ids are sequential WITHIN a direction (A1..An, D1..Dn): an id that runs 1,2,3,4,5,6,7,8,9,10 across
+    both directions is a trap for a player that renumbers by array position."""
+    out, n = [], {"across": 0, "down": 0}
     for p in sorted(placed, key=lambda p: (p["row"], p["col"], p["direction"])):
-        out.append(dict(id=f"{'A' if p['direction'] == 'across' else 'D'}{len(out) + 1}",
+        n[p["direction"]] += 1
+        out.append(dict(id=f"{'A' if p['direction'] == 'across' else 'D'}{n[p['direction']]}",
                         direction=p["direction"], row=p["row"], col=p["col"],
                         length=len(p["word"]), answer=p["word"]))
     return out
@@ -290,9 +293,19 @@ def build(n_puzzles: int, seed: int):
             continue
         seen.add(key)
         slots = slots_of(placed)
+        # a span, not a maximum: slot coordinates run negative and `max(r) + 1` silently understates the grid
+        minr = min(r for r, _ in grid)
+        minc = min(c for _, c in grid)
+        for sl in slots:
+            sl["row"] -= minr
+            sl["col"] -= minc
+        n_rows = max(r for r, _ in grid) - minr + 1
+        n_cols = max(c for _, c in grid) - minc + 1
         for s in slots:
             text, data = clue_for(s["answer"], rng)
             s["clue"], s["clue_data"] = text, data
+            s["scramble"] = data.get("letters", "")      # compatibility: the letters as the clue shows them
+            s["clue_kind"] = data["kind"]
         perm = list(range(len(slots)))
         rng.shuffle(perm)
         for i, s in enumerate(slots):
@@ -310,7 +323,7 @@ def build(n_puzzles: int, seed: int):
         # decoration and the puzzle measures anagram skill; a benchmark puzzle must need its crossings.
         if resolved > len(slots) // 2:
             continue
-        out.append(dict(rows=max(r for r, _ in grid) + 1, cols=max(c for _, c in grid) + 1,
+        out.append(dict(rows=n_rows, cols=n_cols,
                         slots=slots,
                         ceiling=dict(anagram_resolved=resolved, slots=len(slots), ambiguous=ambiguous),
                         floor=floor, unique_fill=True,
@@ -382,6 +395,20 @@ def self_test():
           all(w in WORDS for w in (fl.get("assignments") or {}).values()))
     check("the ceiling gate reports a count of slots, not a pass",
           pz["ceiling"]["slots"] == len(pz["slots"]) and 0 <= pz["ceiling"]["anagram_resolved"] <= len(pz["slots"]))
+    # the declarations a player reads must agree with the slots -- the fields that shipped unchecked
+    ext_r = max(sl["row"] + (sl["length"] - 1 if sl["direction"] == "down" else 0) for sl in pz["slots"])
+    ext_c = max(sl["col"] + (sl["length"] - 1 if sl["direction"] == "across" else 0) for sl in pz["slots"])
+    check("declared rows cover every slot", pz["rows"] == ext_r + 1)
+    check("declared cols cover every slot", pz["cols"] == ext_c + 1)
+    check("no slot starts outside the declared grid",
+          all(0 <= sl["row"] < pz["rows"] and 0 <= sl["col"] < pz["cols"] for sl in pz["slots"]))
+    check("ids are sequential within a direction",
+          [sl["id"] for sl in pz["slots"] if sl["direction"] == "across"] ==
+          [f"A{i + 1}" for i in range(sum(1 for sl in pz["slots"] if sl["direction"] == "across"))] and
+          [sl["id"] for sl in pz["slots"] if sl["direction"] == "down"] ==
+          [f"D{i + 1}" for i in range(sum(1 for sl in pz["slots"] if sl["direction"] == "down"))])
+    check("every slot carries a scramble and a clue kind",
+          all(sl.get("scramble") is not None and sl.get("clue_kind") in ("anagram", "decoy") for sl in pz["slots"]))
     check("both clue mappings cover every slot",
           sorted(s["clue_to_slot_published"] for s in pz["slots"]) == sorted(s["id"] for s in pz["slots"]) and
           sorted(set(s["clue_to_slot_permuted"] for s in pz["slots"])) == sorted(s["id"] for s in pz["slots"]))
