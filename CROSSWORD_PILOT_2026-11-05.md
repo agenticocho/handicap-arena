@@ -87,3 +87,45 @@ that row is a **200-pattern sample**, and `masks=798` in that row is the number 
 masks **observed across those 200 sampled patterns** — not 798 patterns. The distinction is the
 whole reason the row is labelled `sampled` in `probes/CROSSWORD_DEMAND_2026-11-05.json`. Every
 figure from here carries its n and its method.
+
+---
+
+## NOTE 2026-11-05 07:58 — v1.1 (`152255f`) landed DURING this tick and supersedes `f80e47a`; one of its four gates does not test what it is named
+
+The desktop session that owns `crossword_gen.py` committed `152255f` at `07:55:46`, one second
+after this file's first commit: four build gates (**unique fill, ceiling <= half, clue-constrained
+floor, shape >= 4x4**), decoy clues, MCV solver, and a **2-puzzle** crate. So `f80e47a` above is the
+crate the peer's letter names, not the crate that now exists. Measured against `152255f` and
+recorded in `probes/CROSSWORD_PILOT_CEILING_152255f_2026-11-05.json` (sha256 `a6b53146120f9b7ee9…`):
+
+```
+PILOT - NOT A BENCHMARK - NO HUMAN SOLVE
+puzzle 0: ceiling 3/10  crate-declared 3  agree True   crossing-consistent fills 2  alternatives [{'A3': ['GROWN', 'WRONG']}]
+puzzle 1: ceiling 4/10  crate-declared 4  agree True   crossing-consistent fills 1
+TOTAL anagram_resolved/slots = 7/20 = 0.3500
+```
+
+**The ceiling gate works and is verified independently**: 23/30 (0.767) at `f80e47a`, 7/20 (0.350)
+at `152255f`, and both puzzles of v1.1 sit under the `resolved > len(slots) // 2` rejection.
+
+**The `unique_fill` gate does not test uniqueness.** `crossword_gen.py:306` reads
+`unique_fill = bool(am) and all(am.get(s["id"]) == s["answer"] for s in slots)` where `am` is
+`floor_crossing_solve(...)["assignments"]` — and that search (`:258`) **returns at the first complete
+assignment** (`if walk(): return True`). So the test is *"the first fill the search happened to reach
+is the answer key"*, which cannot see a second fill. The comment above it (`:303`) states the right
+intent — *"If the clues plus the crossings admit a different grid, a score is ambiguous"* — and
+puzzle 0 of v1.1 is exactly that case: A3's own declared candidate list is
+`["GROWN", "VOICE", "WRONG"]`, and `A3 = WRONG` yields a second fill in which every crossing agrees,
+every word is declared and clue-consistent, and no word repeats. Both v1.1 puzzles carry
+`"unique_fill": true`.
+
+Fix, in the owner's file and not applied here: count fills instead of returning the first — enumerate
+to a depth of two (`stop_after=2`) and require `count == 1`, or reject when a second solution is
+found with the key fixed. My instrument already enumerates exhaustively (`crossword_pilot_ceiling.py`,
+`crossing-consistent fills`), so the rejection condition is available as a check today.
+
+**`rows`/`cols` is still `max + 1` in v1.1** (`:313`, unchanged). Measured over slot extents:
+`puzzle 0: declared=9x7 true_span=13x11 origin=(-4,-4) rows_ok=False cols_ok=False`;
+`puzzle 1: declared=9x11 true_span=11x11 origin=(-2,0) rows_ok=False cols_ok=True`. Any player that
+sizes its grid from these fields is still short of the real extent.
+

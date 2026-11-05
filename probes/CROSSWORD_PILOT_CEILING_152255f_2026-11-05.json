@@ -1,0 +1,161 @@
+{
+ "label": "PILOT - NOT A BENCHMARK - NO HUMAN SOLVE",
+ "method": "clue-only candidate enumeration over the declared word list, then crossing consistency by exhaustive enumeration of the unresolved combinations",
+ "puzzles": [
+  {
+   "agrees_with_crate": true,
+   "alternative_fills": [
+    {
+     "A3": [
+      "GROWN",
+      "WRONG"
+     ]
+    }
+   ],
+   "anagram_resolved": 3,
+   "answer_key_is_consistent": true,
+   "combinations_enumerated": 288,
+   "crossing_consistent_completions": 2,
+   "declared_by_crate": 3,
+   "puzzle": 0,
+   "slots": 10,
+   "unresolved": [
+    {
+     "answer": "BOARD",
+     "candidates": [
+      "BOARD",
+      "BROAD"
+     ],
+     "id": "D2"
+    },
+    {
+     "answer": "GROWN",
+     "candidates": [
+      "GROWN",
+      "VOICE",
+      "WRONG"
+     ],
+     "id": "A3"
+    },
+    {
+     "answer": "MOTOR",
+     "candidates": [
+      "LUCKY",
+      "MOTOR"
+     ],
+     "id": "A4"
+    },
+    {
+     "answer": "THERE",
+     "candidates": [
+      "THERE",
+      "THREE"
+     ],
+     "id": "D5"
+    },
+    {
+     "answer": "THESE",
+     "candidates": [
+      "SHEET",
+      "SILLY",
+      "THESE"
+     ],
+     "id": "D7"
+    },
+    {
+     "answer": "STONE",
+     "candidates": [
+      "ABOUT",
+      "STONE"
+     ],
+     "id": "A8"
+    },
+    {
+     "answer": "SCENE",
+     "candidates": [
+      "EXIST",
+      "SCENE"
+     ],
+     "id": "A10"
+    }
+   ]
+  },
+  {
+   "agrees_with_crate": true,
+   "alternative_fills": [],
+   "anagram_resolved": 4,
+   "answer_key_is_consistent": true,
+   "combinations_enumerated": 128,
+   "crossing_consistent_completions": 1,
+   "declared_by_crate": 4,
+   "puzzle": 1,
+   "slots": 10,
+   "unresolved": [
+    {
+     "answer": "WHERE",
+     "candidates": [
+      "CHECK",
+      "CLOCK",
+      "LOWER",
+      "WHERE"
+     ],
+     "id": "D2"
+    },
+    {
+     "answer": "PEACE",
+     "candidates": [
+      "PEACE",
+      "SERVE"
+     ],
+     "id": "D4"
+    },
+    {
+     "answer": "TITLE",
+     "candidates": [
+      "STORM",
+      "TITLE"
+     ],
+     "id": "A5"
+    },
+    {
+     "answer": "TREAT",
+     "candidates": [
+      "COURT",
+      "TREAT"
+     ],
+     "id": "D7"
+    },
+    {
+     "answer": "FIELD",
+     "candidates": [
+      "FIELD",
+      "ROUGH"
+     ],
+     "id": "A8"
+    },
+    {
+     "answer": "LABEL",
+     "candidates": [
+      "LABEL",
+      "LINKS"
+     ],
+     "id": "A10"
+    }
+   ]
+  }
+ ],
+ "source": {
+  "crate": "probes/CROSSWORD_CRATE_2026-11-05.json",
+  "generator": "crossword_gen.py",
+  "git_ref": "152255f"
+ },
+ "total": {
+  "anagram_resolved": 7,
+  "fraction": 0.35,
+  "slots": 20
+ },
+ "word_list": {
+  "sha256": "4a92a8a54377f42a653a50192a0d93a38b5d60d47140d0ce903b083de3b6aa8f",
+  "size": 483
+ }
+}
