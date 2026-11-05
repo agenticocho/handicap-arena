@@ -97,6 +97,54 @@ def self_test():
     return fail == 0
 
 
+def play_grid(endpoint, crate_path, passes=3):
+    """THE ACTUAL GAME: answer slots against a live grid, using the crossing letters the grid already fixes.
+    A slot is accepted only if it fits the pattern; passes repeat until nothing new lands. This is the
+    protocol that can turn a synonym into an answer, and the one that tests whether crossings do work."""
+    import re
+    d = load(crate_path)
+    rows, grid = [], {}
+    for pi, p in enumerate(d["puzzles"]):
+        placed = {}
+        for pno in range(passes):
+            before = len(placed)
+            for s in p["slots"]:
+                if s["id"] in placed:
+                    continue
+                cells = CG.slot_cells(s)
+                pattern = "".join(grid.get(c, "_") for c in cells)
+                prompt = (f"Crossword clue: {s['clue']} ({s['length']} letters). "
+                          f"The pattern so far is {pattern} (underscores are unknown). "
+                          f"Answer with exactly one {s['length']}-letter English word and nothing else.")
+                raw = ask(endpoint, prompt)
+                m = re.findall(rf"\b[A-Za-z]{{{s['length']}}}\b", (raw or "").upper())
+                cand = m[0] if len(set(m)) == 1 else None
+                # a word that is not in the declared lexicon never enters the grid: DARBOUR fit the pattern
+                # and is not a word, and accepting it would have been the instrument's hole, not the model's win
+                declared = bool(cand) and cand in CG.WORDS
+                fits = declared and all(grid.get(c, ch) == ch for c, ch in zip(cells, cand))
+                if fits:  # only declared words, only pattern-consistent placements
+                    for c, ch in zip(cells, cand):
+                        grid[c] = ch
+                    placed[s["id"]] = cand
+            if len(placed) == before:
+                break
+        for s in p["slots"]:
+            rows.append(dict(puzzle=pi, id=s["id"], clue=s["clue"], answer=s["answer"],
+                             placed=placed.get(s["id"]),
+                             declared=(placed.get(s["id"]) in CG.WORDS) if placed.get(s["id"]) else False,
+                             correct=placed.get(s["id"]) == s["answer"]))
+    filled = sum(1 for r in rows if r["placed"])
+    declared_n = sum(1 for r in rows if r["declared"])
+    right = sum(1 for r in rows if r["correct"])
+    rec = dict(mode="grid", endpoint=endpoint, crate=crate_path, n=len(rows), filled=filled,
+               declared=declared_n, correct=right, rows=rows)
+    print(f"grid protocol: slots {len(rows)}  filled {filled}  declared-word {declared_n}  correct {right}")
+    for r in rows[:10]:
+        print(f"   {r['id']:3s} {r['clue'][:20]:22s} key={r['answer']:9s} placed={str(r['placed']):10s} {'OK' if r['correct'] else ''}")
+    return rec
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--crate", default=str(HERE / "probes/CROSSWORD_CRATE_2026-11-05.json"))
@@ -104,10 +152,18 @@ def main():
     ap.add_argument("--endpoint", default=None)
     ap.add_argument("--out", default=None)
     ap.add_argument("--self-test", action="store_true")
+    ap.add_argument("--protocol", default="clues", choices=("clues", "grid"))
     a = ap.parse_args()
 
     if a.self_test:
         return 0 if self_test() else 1
+    if a.protocol == "grid":
+        rec = play_grid(a.endpoint, a.crate)
+        if a.out:
+            Path(a.out).parent.mkdir(parents=True, exist_ok=True)
+            Path(a.out).write_text(json.dumps(rec, indent=1) + "\n")
+            print(f"wrote {a.out}")
+        return 0
     d = load(a.crate)
     rows, t0 = [], time.time()
     for pi, p, s in slots(d):
