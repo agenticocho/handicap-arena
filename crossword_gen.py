@@ -13,9 +13,9 @@ symmetry claim; the crate declares its construction instead of implying a style 
 
 TWO GATES, in the arena's units:
 
-  CEILING  is it solvable WITHOUT the crossings? `ceiling_anagram_only` sees only the clue's scrambled
+  CEILING  is it solvable WITHOUT the crossings? `ceiling_clue_only` sees only the clue's scrambled
            letters and the enumeration. If every slot resolves uniquely that way, the puzzle offers no grid
-           work at all. Reported as a count, never as a pass: `anagram_resolved / slots`.
+           work at all. Reported as a count, never as a pass: `clue_resolved / slots`.
 
   FLOOR    can a real solver win it at all? `floor_crossing_solve` fills from the declared list using the
            crossings; its expanded-state count is the move count. `UNWINNABLE` is an exhausted frontier, and
@@ -276,7 +276,7 @@ def anagram_candidates(scramble: str):
 # ---------------------------------------------------------------------------------------------------
 # the two gates
 # ---------------------------------------------------------------------------------------------------
-def ceiling_anagram_only(slots):
+def ceiling_clue_only(slots):
     """Solvable WITHOUT the crossings. Reported as a count of slots, never as a pass."""
     resolved, ambiguous = 0, []
     for s in slots:
@@ -397,7 +397,7 @@ def build(n_puzzles: int, seed: int):
         for i, s in enumerate(slots):
             s["clue_to_slot_published"] = slots[i]["id"]
             s["clue_to_slot_permuted"] = slots[perm[i]]["id"]
-        resolved, ambiguous = ceiling_anagram_only(slots)
+        resolved, ambiguous = ceiling_clue_only(slots)
         floor = floor_crossing_solve(slots)
         # A BENCHMARK PUZZLE MUST HAVE ONE FILL. If the clues plus the crossings admit a different grid, a
         # score is ambiguous: two players can be right with different answers. Reject and regenerate.
@@ -413,7 +413,10 @@ def build(n_puzzles: int, seed: int):
             continue
         out.append(dict(rows=n_rows, cols=n_cols,
                         slots=slots,
-                        ceiling=dict(anagram_resolved=resolved, slots=len(slots), ambiguous=ambiguous),
+                        ceiling=dict(clue_resolved=resolved, slots=len(slots),
+                                     clue_rule=("definition: a slot counts as resolved when its terse "
+                                                "definition fits exactly one declared word"),
+                                     ambiguous=ambiguous),
                         floor=floor, unique_fill=True,
                         grid_sha256=hashlib.sha256(
                             json.dumps(sorted(placed, key=lambda q: (q["row"], q["col"], q["word"])), sort_keys=True).encode()).hexdigest()))
@@ -501,7 +504,7 @@ def self_test():
           len(fl.get("assignments") or {}) == len(pz["slots"]) and
           all(w in WORDS for w in (fl.get("assignments") or {}).values()))
     check("the ceiling gate reports a count of slots, not a pass",
-          pz["ceiling"]["slots"] == len(pz["slots"]) and 0 <= pz["ceiling"]["anagram_resolved"] <= len(pz["slots"]))
+          pz["ceiling"]["slots"] == len(pz["slots"]) and 0 <= pz["ceiling"]["clue_resolved"] <= len(pz["slots"]))
     # the declarations a player reads must agree with the slots -- the fields that shipped unchecked
     ext_r = max(sl["row"] + (sl["length"] - 1 if sl["direction"] == "down" else 0) for sl in pz["slots"])
     ext_c = max(sl["col"] + (sl["length"] - 1 if sl["direction"] == "across" else 0) for sl in pz["slots"])
@@ -520,7 +523,7 @@ def self_test():
         return sl["clue_kind"] in ("anagram", "decoy") and sl.get("scramble") is not None
     check("every slot carries the fields its clue kind needs", all(slot_ok(sl) for sl in pz["slots"]))
     check("the shipped puzzle has exactly one fill", pz["floor"].get("fills") == 1)
-    check("the shipped puzzle is under the ceiling", pz["ceiling"]["anagram_resolved"] <= len(pz["slots"]) // 2)
+    check("the shipped puzzle is under the ceiling", pz["ceiling"]["clue_resolved"] <= len(pz["slots"]) // 2)
     check("both clue mappings cover every slot",
           sorted(s["clue_to_slot_published"] for s in pz["slots"]) == sorted(s["id"] for s in pz["slots"]) and
           sorted(set(s["clue_to_slot_permuted"] for s in pz["slots"])) == sorted(s["id"] for s in pz["slots"]))
@@ -560,7 +563,7 @@ def main():
     for p in crate["puzzles"]:
         kinds = sorted({s["clue_kind"] for s in p["slots"]})
         print(f"  {p['rows']}x{p['cols']}  slots {len(p['slots'])}  kinds {kinds}  "
-              f"ceiling {p['ceiling']['anagram_resolved']}/{p['ceiling']['slots']}  "
+              f"ceiling {p['ceiling']['clue_resolved']}/{p['ceiling']['slots']}  "
               f"floor {p['floor']['verdict']} ({p['floor']['states_expanded']} states)  "
               f"fills {p['floor'].get('fills')}")
 

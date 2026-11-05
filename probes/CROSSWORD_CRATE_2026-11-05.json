@@ -289,8 +289,9 @@
     }
    ],
    "ceiling": {
-    "anagram_resolved": 0,
+    "clue_resolved": 0,
     "slots": 10,
+    "clue_rule": "definition: a slot counts as resolved when its terse definition fits exactly one declared word",
     "ambiguous": [
      {
       "id": "D1",
@@ -716,8 +717,9 @@
     }
    ],
    "ceiling": {
-    "anagram_resolved": 0,
+    "clue_resolved": 0,
     "slots": 10,
+    "clue_rule": "definition: a slot counts as resolved when its terse definition fits exactly one declared word",
     "ambiguous": [
      {
       "id": "D1",

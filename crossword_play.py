@@ -5,7 +5,7 @@ Two things must be true before a model is worth spending a token on:
 
   1. the SCORER is right -- `--stub answers` returns 20/20 on any crate, or the scorer is broken;
   2. the CEILING is achievable -- `--stub ceiling` answers only where the clue alone determines the word,
-     and must return exactly the crate's declared `anagram_resolved` total. If it does not, the crate's
+     and must return exactly the crate's declared `clue_resolved` total. If it does not, the crate's
      headline number and the scorer disagree about what a slot is.
 
 Only then `--endpoint`, which asks a model one slot at a time and scores what comes back.
@@ -30,6 +30,10 @@ import crossword_gen as CG  # noqa: E402
 def load(crate_path):
     d = json.loads(Path(crate_path).read_text())
     CG.set_lexicon()
+    loaded = CG.set_definitions()
+    if not loaded:
+        sys.exit("definitions.json not found: the candidate index would be empty and every ceiling "
+                 "measurement would read zero BY CONSTRUCTION rather than by measurement")
     return d
 
 
@@ -121,7 +125,7 @@ def main():
     n = len(rows)
     right = sum(r["correct"] for r in rows)
     ceil = sum(1 for r in rows if r["ceiling_reachable"])
-    declared_ceiling = sum(p["ceiling"]["anagram_resolved"] for p in d["puzzles"])
+    declared_ceiling = sum(p["ceiling"]["clue_resolved"] for p in d["puzzles"])
     total_slots = sum(len(p["slots"]) for p in d["puzzles"])
     by_kind = {}
     for r in rows:
