@@ -413,3 +413,16 @@ levels/01_one_push.txt` -> `"verdict": "DEGENERATE"`, `"n_hits": 45`). Any figur
 that board is an **upper bound and not evidence of planning**; a re-score drops those rows, it does not
 re-weight them. Rows are annotated, never deleted. Full record: `RETIRED_BOARDS.md`. Enforcement:
 `RETIRED_LEVELS` / `level_admission()` in `sokoban_run.py` (exit 5).
+
+## SUPERSEDES 2026-11-05 -- all three boards are dead, not one
+
+**p\* (smallest period whose repeated word clears the board) is 1 / 7 / 6 for `01_one_push`,
+`02_two_boxes`, `03_the_corner_waiting`.** The block above retired `01` and left `02` and `03` standing
+because both PASS the width-3 gate. That gate is a **choice of width**, and both boards clear above it:
+`02` in 28 of its 40 allowed moves on the 7-cycle `DDRLUUR`, `03` in 6 moves on `RULDLU` -- and `03`'s
+optimal solution IS that cycle (`sokoban_solver.solve_text`: `03 moves 6, solution RULDLU`). **No Sokoban
+board in this cabinet measures search.** Every figure in this file that rests on any Sokoban board is an
+upper bound, not evidence of planning; a re-score drops those rows rather than re-weighting them. The
+published rankings are **qualified, not withdrawn** -- withdrawal is Mike's call and is open. Measure,
+witnesses and reproduction: `PSTAR_2026-11-05.md`. Enforcement: `RETIRED_LEVELS` / `level_admission()`
+in `sokoban_run.py`.

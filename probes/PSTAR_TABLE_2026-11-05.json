@@ -1,0 +1,235 @@
+{
+ "measured_at": "2026-11-05T06:51:48.504051-08:00",
+ "bounds": {
+  "missile": 4,
+  "zork": 5,
+  "snake": 4,
+  "snake_ticks": 120
+ },
+ "gate_widths": {
+  "sokoban": 3,
+  "zork": 2,
+  "missile": 3,
+  "chess": null
+ },
+ "rows": [
+  {
+   "event": "missile",
+   "board": "levels/mc_01_one_shot.txt",
+   "sha256": "ab101ca955c1c8530304060ba03b80ed60534d5a0dff912d247ba2513acc1496",
+   "p_star": 1,
+   "witness": "1P",
+   "score": 1,
+   "ceiling": 1,
+   "cleared": true,
+   "gate_width": 3,
+   "search_bound": 4,
+   "streams": 30,
+   "budget": 2,
+   "best_by_period": {
+    "1": [
+     1,
+     "1P"
+    ]
+   },
+   "control": "n/a -- the score's ceiling is the control (a state that cannot be saved by any play is reported, not scored)"
+  },
+  {
+   "event": "missile",
+   "board": "levels/mc_02_scarcity.txt",
+   "sha256": "327d2157bd0b8a8388aa58af0f38a6aef456e8bf2bbd520ae67ffa430de77582",
+   "p_star": 4,
+   "witness": "1P 1Q 2R 2S",
+   "score": 4,
+   "ceiling": 4,
+   "cleared": true,
+   "gate_width": 3,
+   "search_bound": 4,
+   "streams": 88740,
+   "budget": 5,
+   "best_by_period": {
+    "1": [
+     1,
+     "1P"
+    ],
+    "2": [
+     2,
+     "1P 1Q"
+    ],
+    "3": [
+     3,
+     "1P 1Q 2R"
+    ],
+    "4": [
+     4,
+     "1P 1Q 2R 2S"
+    ]
+   },
+   "control": "n/a -- the score's ceiling is the control (a state that cannot be saved by any play is reported, not scored)"
+  },
+  {
+   "event": "zork",
+   "board": "levels/zork_01_the_floor.txt",
+   "sha256": "699ef17bfe26521bac34d11e341fd7c52f17d64708f9409a0c666950f75717d3",
+   "p_star": 2,
+   "witness": "take brasskey ; n",
+   "cleared": true,
+   "gate_width": 2,
+   "search_bound": 5,
+   "streams": 245,
+   "budget": 24,
+   "alphabet_size": 16,
+   "control": "synthetic control world: 2 of 240 streams finish it"
+  },
+  {
+   "event": "zork",
+   "board": "levels/zork_02_long_crawl.txt",
+   "sha256": "c1d33b940fd842ed88f0214a0be23885aa28191e2aa83055c24bbea4cff8ad45",
+   "p_star": 5,
+   "witness": "n ; e ; take brasskey ; s ; e",
+   "cleared": true,
+   "gate_width": 2,
+   "search_bound": 5,
+   "streams": 547365,
+   "budget": 24,
+   "alphabet_size": 18,
+   "control": "synthetic control world: 2 of 240 streams finish it"
+  },
+  {
+   "event": "snake",
+   "board": "seed 1",
+   "seed": "1",
+   "p_star": 2,
+   "witness": "UL",
+   "score": 1,
+   "cleared": true,
+   "streams": 340,
+   "gate_width": null,
+   "search_bound": 4,
+   "ticks": 120,
+   "ticks_cap": 120,
+   "best_by_period": {
+    "1": [
+     0,
+     "U"
+    ],
+    "2": [
+     1,
+     "UL"
+    ],
+    "3": [
+     0,
+     "UUU"
+    ],
+    "4": [
+     1,
+     "UULL"
+    ]
+   },
+   "adaptive_baseline_score": 9,
+   "control": "greedy-safe on the same seed, same cap, same page: 9 apple(s)"
+  },
+  {
+   "event": "snake",
+   "board": "seed 7",
+   "seed": "7",
+   "p_star": 2,
+   "witness": "DR",
+   "score": 2,
+   "cleared": true,
+   "streams": 340,
+   "gate_width": null,
+   "search_bound": 4,
+   "ticks": 120,
+   "ticks_cap": 120,
+   "best_by_period": {
+    "1": [
+     0,
+     "U"
+    ],
+    "2": [
+     2,
+     "DR"
+    ],
+    "3": [
+     0,
+     "UUU"
+    ],
+    "4": [
+     2,
+     "ULLU"
+    ]
+   },
+   "adaptive_baseline_score": 8,
+   "control": "greedy-safe on the same seed, same cap, same page: 8 apple(s)"
+  },
+  {
+   "event": "snake",
+   "board": "seed 13",
+   "seed": "13",
+   "p_star": 2,
+   "witness": "UL",
+   "score": 1,
+   "cleared": true,
+   "streams": 340,
+   "gate_width": null,
+   "search_bound": 4,
+   "ticks": 120,
+   "ticks_cap": 120,
+   "best_by_period": {
+    "1": [
+     0,
+     "U"
+    ],
+    "2": [
+     1,
+     "UL"
+    ],
+    "3": [
+     0,
+     "UUU"
+    ],
+    "4": [
+     1,
+     "UULL"
+    ]
+   },
+   "adaptive_baseline_score": 8,
+   "control": "greedy-safe on the same seed, same cap, same page: 8 apple(s)"
+  },
+  {
+   "event": "snake",
+   "board": "seed 42",
+   "seed": "42",
+   "p_star": 4,
+   "witness": "LLUL",
+   "score": 2,
+   "cleared": true,
+   "streams": 340,
+   "gate_width": null,
+   "search_bound": 4,
+   "ticks": 120,
+   "ticks_cap": 120,
+   "best_by_period": {
+    "1": [
+     0,
+     "U"
+    ],
+    "2": [
+     1,
+     "UL"
+    ],
+    "3": [
+     0,
+     "UUU"
+    ],
+    "4": [
+     2,
+     "LLUL"
+    ]
+   },
+   "adaptive_baseline_score": 8,
+   "control": "greedy-safe on the same seed, same cap, same page: 8 apple(s)"
+  }
+ ]
+}

@@ -183,6 +183,28 @@ def main():
     not_loaded = [r for r in rows if r.get("loaded") is not True]
     levels = sorted({r["level"] for r in rows})
 
+    # RETIRED BOARDS -- marked in the derived report, never deleted from the record.
+    # Source of truth is RETIRED_LEVELS in sokoban_run.py, keyed on the LEVEL TEXT's sha256 (not on a
+    # filename: a retired board copied to a new name is still retired). Rows carry a short label, so we
+    # map label -> levels/<label>.txt -> sha256 and ask the same registry.
+    retired_labels = {}
+    try:
+        import hashlib
+        from sokoban_run import RETIRED_LEVELS as _RL
+        _HERE = os.path.dirname(os.path.abspath(__file__))
+        for _lv in levels:
+            _p = os.path.join(_HERE, _lv if _lv.endswith(".txt") else f"levels/{_lv}.txt")
+            if os.path.exists(_p):
+                _h = hashlib.sha256(open(_p, "rb").read()).hexdigest()
+                if _h in _RL:
+                    retired_labels[_lv] = _RL[_h]
+    except Exception as _e:                       # the registry must never break a report
+        print(f"  NOTE retired-board registry not read: {type(_e).__name__}: {_e}")
+    if retired_labels:
+        for _lv, _r in retired_labels.items():
+            print(f"  NOTE retired board {_lv}: {_r.get('why', '')[:90]}")
+        print()
+
     print("=" * 92)
     print("SOKOBAN -- FROM THE RECORD, NOT FROM A SUMMARY")
     print("=" * 92)
@@ -197,7 +219,8 @@ def main():
             print(f"  {r['entrant'][:32]:32s} {r['level']:14s} DID NOT LOAD -- {r.get('why')}")
             continue
         vals = " ".join(f"{r.get(c, 0):9d}" for c in COUNTERS)
-        print(f"  {r['entrant'][:32]:32s} {r['level']:14s} {r.get('ended', '?'):19s} {vals}")
+        mark = "   [RETIRED BOARD -- not a score]" if r["level"] in retired_labels else ""
+        print(f"  {r['entrant'][:32]:32s} {r['level']:14s} {r.get('ended', '?'):19s} {vals}{mark}")
     print()
 
     print("  PER LEVEL -- sums over PLAYED cells only, so a non-loading model cannot vote")
@@ -206,8 +229,9 @@ def main():
     for lv in levels:
         sub = [r for r in loaded if r["level"] == lv]
         vals = " ".join(f"{sum(r.get(c, 0) for r in sub):9d}" for c in COUNTERS)
+        mark = "  [RETIRED BOARD -- not a rate]" if lv in retired_labels else ""
         print(f"  {lv:16s} {len(sub):6d} {sum(1 for r in sub if r.get('solved') is True):6d} "
-              f"{sum(1 for r in sub if r.get('give_up')):6d} {vals}")
+              f"{sum(1 for r in sub if r.get('give_up')):6d} {vals}{mark}")
     print()
 
     print("  REASON COUNTS, reported SEPARATELY FROM EVERY TOTAL ABOVE")
