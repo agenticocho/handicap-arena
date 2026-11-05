@@ -7,432 +7,6 @@
  "puzzles": [
   {
    "rows": 17,
-   "cols": 13,
-   "slots": [
-    {
-     "id": "D1",
-     "direction": "down",
-     "row": 0,
-     "col": 7,
-     "length": 7,
-     "answer": "DESIRED",
-     "clue": "wanted",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "wanted",
-      "pos": "a",
-      "gloss": "wanted intensely",
-      "synset": "craved.s.01"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "D1",
-     "clue_to_slot_permuted": "D6",
-     "clue_candidates": 5,
-     "candidates": [
-      "CRAVED",
-      "DESIRED",
-      "HOT",
-      "HOTTER",
-      "HOTTEST"
-     ]
-    },
-    {
-     "id": "D2",
-     "direction": "down",
-     "row": 3,
-     "col": 9,
-     "length": 7,
-     "answer": "BRIDALS",
-     "clue": "archaic",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "archaic",
-      "pos": "n",
-      "gloss": "archaic terms for a wedding or wedding feast",
-      "synset": "bridal.n.01"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "D2",
-     "clue_to_slot_permuted": "D3",
-     "clue_candidates": 6,
-     "candidates": [
-      "BRIDAL",
-      "BRIDALS",
-      "HOST",
-      "HOSTS",
-      "LEGION",
-      "LEGIONS"
-     ]
-    },
-    {
-     "id": "A1",
-     "direction": "across",
-     "row": 5,
-     "col": 5,
-     "length": 6,
-     "answer": "CREDIT",
-     "clue": "approval",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "approval",
-      "pos": "n",
-      "gloss": "approval",
-      "synset": "recognition.n.03"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "A1",
-     "clue_to_slot_permuted": "D5",
-     "clue_candidates": 2,
-     "candidates": [
-      "CREDIT",
-      "CREDITS"
-     ]
-    },
-    {
-     "id": "D3",
-     "direction": "down",
-     "row": 5,
-     "col": 11,
-     "length": 6,
-     "answer": "DIPPED",
-     "clue": "plunge",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "plunge",
-      "pos": "v",
-      "gloss": "plunge (one's hand or a receptacle) into a container",
-      "synset": "dip.v.13"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "D3",
-     "clue_to_slot_permuted": "A3",
-     "clue_candidates": 10,
-     "candidates": [
-      "DIP",
-      "DIPPED",
-      "DIPPING",
-      "DIPS",
-      "DIVE",
-      "DIVED",
-      "DIVES",
-      "DIVING",
-      "DOVE",
-      "SHEATHE"
-     ]
-    },
-    {
-     "id": "A2",
-     "direction": "across",
-     "row": 9,
-     "col": 6,
-     "length": 7,
-     "answer": "SLASHES",
-     "clue": "wound",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "wound",
-      "pos": "n",
-      "gloss": "a wound made by cutting",
-      "synset": "cut.n.05"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "A2",
-     "clue_to_slot_permuted": "A2",
-     "clue_candidates": 6,
-     "candidates": [
-      "GASH",
-      "GASHES",
-      "SLASH",
-      "SLASHES",
-      "SLICE",
-      "SLICES"
-     ]
-    },
-    {
-     "id": "D4",
-     "direction": "down",
-     "row": 9,
-     "col": 6,
-     "length": 7,
-     "answer": "SKILLET",
-     "clue": "pan",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "pan",
-      "pos": "n",
-      "gloss": "a pan used for frying foods",
-      "synset": "frying_pan.n.01"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "D4",
-     "clue_to_slot_permuted": "D1",
-     "clue_candidates": 3,
-     "candidates": [
-      "SKILLET",
-      "WOK",
-      "WOKS"
-     ]
-    },
-    {
-     "id": "A3",
-     "direction": "across",
-     "row": 11,
-     "col": 0,
-     "length": 5,
-     "answer": "MAJOR",
-     "clue": "greater",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "greater",
-      "pos": "a",
-      "gloss": "greater in number or size or amount",
-      "synset": "major.a.03"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "A3",
-     "clue_to_slot_permuted": "A4",
-     "clue_candidates": 4,
-     "candidates": [
-      "HIGH",
-      "HIGHER",
-      "HIGHEST",
-      "MAJOR"
-     ]
-    },
-    {
-     "id": "D5",
-     "direction": "down",
-     "row": 11,
-     "col": 4,
-     "length": 4,
-     "answer": "RACE",
-     "clue": "canal",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "canal",
-      "pos": "n",
-      "gloss": "a canal for a current of water",
-      "synset": "raceway.n.01"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "D5",
-     "clue_to_slot_permuted": "A1",
-     "clue_candidates": 5,
-     "candidates": [
-      "CUT",
-      "CUTS",
-      "RACE",
-      "RACES",
-      "RACEWAY"
-     ]
-    },
-    {
-     "id": "D6",
-     "direction": "down",
-     "row": 11,
-     "col": 8,
-     "length": 6,
-     "answer": "CENSUS",
-     "clue": "periodic",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "periodic",
-      "pos": "n",
-      "gloss": "a periodic count of the population",
-      "synset": "census.n.01"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "D6",
-     "clue_to_slot_permuted": "D4",
-     "clue_candidates": 2,
-     "candidates": [
-      "CENSUS",
-      "SERVICE"
-     ]
-    },
-    {
-     "id": "A4",
-     "direction": "across",
-     "row": 14,
-     "col": 3,
-     "length": 6,
-     "answer": "BESETS",
-     "clue": "assail",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "assail",
-      "pos": "v",
-      "gloss": "assail or attack on all sides:",
-      "synset": "beset.v.02"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "A4",
-     "clue_to_slot_permuted": "D2",
-     "clue_candidates": 5,
-     "candidates": [
-      "BESET",
-      "BESETS",
-      "VISIT",
-      "VISITED",
-      "VISITS"
-     ]
-    }
-   ],
-   "ceiling": {
-    "clue_resolved": 0,
-    "slots": 10,
-    "clue_rule": "definition: a slot counts as resolved when its terse definition fits exactly one declared word",
-    "ambiguous": [
-     {
-      "id": "D1",
-      "kind": "definition",
-      "n_candidates": 5,
-      "candidates": [
-       "CRAVED",
-       "DESIRED",
-       "HOT",
-       "HOTTER",
-       "HOTTEST"
-      ]
-     },
-     {
-      "id": "D2",
-      "kind": "definition",
-      "n_candidates": 6,
-      "candidates": [
-       "BRIDAL",
-       "BRIDALS",
-       "HOST",
-       "HOSTS",
-       "LEGION",
-       "LEGIONS"
-      ]
-     },
-     {
-      "id": "A1",
-      "kind": "definition",
-      "n_candidates": 2,
-      "candidates": [
-       "CREDIT",
-       "CREDITS"
-      ]
-     },
-     {
-      "id": "D3",
-      "kind": "definition",
-      "n_candidates": 10,
-      "candidates": [
-       "DIP",
-       "DIPPED",
-       "DIPPING",
-       "DIPS",
-       "DIVE",
-       "DIVED"
-      ]
-     },
-     {
-      "id": "A2",
-      "kind": "definition",
-      "n_candidates": 6,
-      "candidates": [
-       "GASH",
-       "GASHES",
-       "SLASH",
-       "SLASHES",
-       "SLICE",
-       "SLICES"
-      ]
-     },
-     {
-      "id": "D4",
-      "kind": "definition",
-      "n_candidates": 3,
-      "candidates": [
-       "SKILLET",
-       "WOK",
-       "WOKS"
-      ]
-     },
-     {
-      "id": "A3",
-      "kind": "definition",
-      "n_candidates": 4,
-      "candidates": [
-       "HIGH",
-       "HIGHER",
-       "HIGHEST",
-       "MAJOR"
-      ]
-     },
-     {
-      "id": "D5",
-      "kind": "definition",
-      "n_candidates": 5,
-      "candidates": [
-       "CUT",
-       "CUTS",
-       "RACE",
-       "RACES",
-       "RACEWAY"
-      ]
-     },
-     {
-      "id": "D6",
-      "kind": "definition",
-      "n_candidates": 2,
-      "candidates": [
-       "CENSUS",
-       "SERVICE"
-      ]
-     },
-     {
-      "id": "A4",
-      "kind": "definition",
-      "n_candidates": 5,
-      "candidates": [
-       "BESET",
-       "BESETS",
-       "VISIT",
-       "VISITED",
-       "VISITS"
-      ]
-     }
-    ]
-   },
-   "floor": {
-    "verdict": "WINNABLE",
-    "states_expanded": 10,
-    "solution": [],
-    "assignments": {
-     "A1": "CREDIT",
-     "D1": "DESIRED",
-     "D2": "BRIDALS",
-     "A2": "SLASHES",
-     "D3": "DIPPED",
-     "D4": "SKILLET",
-     "A3": "MAJOR",
-     "D5": "RACE",
-     "D6": "CENSUS",
-     "A4": "BESETS"
-    },
-    "fills": 1,
-    "exhausted": true
-   },
-   "unique_fill": true,
-   "grid_sha256": "5baf558618db4062c0e4a9eb1ebe3770eff242bd3418c838b7199b8a1c2ab80a"
-  },
-  {
-   "rows": 17,
    "cols": 15,
    "slots": [
     {
@@ -857,6 +431,467 @@
    },
    "unique_fill": true,
    "grid_sha256": "f579fd621c8641f28d511880f60693275ba8462fad6f0a64305f63312fa20414"
+  },
+  {
+   "rows": 17,
+   "cols": 17,
+   "slots": [
+    {
+     "id": "D1",
+     "direction": "down",
+     "row": 0,
+     "col": 14,
+     "length": 7,
+     "answer": "POPPING",
+     "clue": "fire",
+     "clue_data": {
+      "kind": "definition",
+      "terse": "fire",
+      "pos": "v",
+      "gloss": "fire a weapon with a loud explosive noise",
+      "synset": "pop.v.04"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D1",
+     "clue_to_slot_permuted": "A5",
+     "clue_candidates": 10,
+     "candidates": [
+      "BLAST",
+      "BLASTED",
+      "BLASTS",
+      "POP",
+      "POPPED",
+      "POPPING",
+      "POPS",
+      "SHOOT",
+      "SHOOTS",
+      "SMOLDER"
+     ]
+    },
+    {
+     "id": "A1",
+     "direction": "across",
+     "row": 1,
+     "col": 11,
+     "length": 5,
+     "answer": "BEBOP",
+     "clue": "early",
+     "clue_data": {
+      "kind": "definition",
+      "terse": "early",
+      "pos": "n",
+      "gloss": "an early form of modern jazz (originating around 1940)",
+      "synset": "bop.n.02"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A1",
+     "clue_to_slot_permuted": "A2",
+     "clue_candidates": 10,
+     "candidates": [
+      "ALPHA",
+      "BEBOP",
+      "BEBOPS",
+      "BOP",
+      "BOPS",
+      "INFANCY",
+      "SPINET",
+      "SPINETS",
+      "YOUTH",
+      "YOUTHS"
+     ]
+    },
+    {
+     "id": "D2",
+     "direction": "down",
+     "row": 3,
+     "col": 12,
+     "length": 7,
+     "answer": "INTENTS",
+     "clue": "intended",
+     "clue_data": {
+      "kind": "definition",
+      "terse": "intended",
+      "pos": "n",
+      "gloss": "the intended meaning of a communication",
+      "synset": "intent.n.02"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D2",
+     "clue_to_slot_permuted": "D1",
+     "clue_candidates": 10,
+     "candidates": [
+      "INTENT",
+      "INTENTS",
+      "LEFTER",
+      "LEFTEST",
+      "LIGHT",
+      "LIGHTER",
+      "PURPORT",
+      "RIGHTER",
+      "SPIRIT",
+      "SPIRITS"
+     ]
+    },
+    {
+     "id": "A2",
+     "direction": "across",
+     "row": 4,
+     "col": 10,
+     "length": 7,
+     "answer": "RANGIER",
+     "clue": "allowing",
+     "clue_data": {
+      "kind": "definition",
+      "terse": "allowing",
+      "pos": "a",
+      "gloss": "allowing ample room for ranging",
+      "synset": "rangy.s.03"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A2",
+     "clue_to_slot_permuted": "A4",
+     "clue_candidates": 6,
+     "candidates": [
+      "CLEAR",
+      "CLEARER",
+      "DUPLEX",
+      "POROUS",
+      "RANGIER",
+      "RANGY"
+     ]
+    },
+    {
+     "id": "A3",
+     "direction": "across",
+     "row": 9,
+     "col": 8,
+     "length": 5,
+     "answer": "PACKS",
+     "clue": "hike",
+     "clue_data": {
+      "kind": "definition",
+      "terse": "hike",
+      "pos": "v",
+      "gloss": "hike with a backpack",
+      "synset": "backpack.v.01"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A3",
+     "clue_to_slot_permuted": "D5",
+     "clue_candidates": 4,
+     "candidates": [
+      "PACK",
+      "PACKED",
+      "PACKING",
+      "PACKS"
+     ]
+    },
+    {
+     "id": "D3",
+     "direction": "down",
+     "row": 9,
+     "col": 8,
+     "length": 7,
+     "answer": "PARTING",
+     "clue": "discontinue",
+     "clue_data": {
+      "kind": "definition",
+      "terse": "discontinue",
+      "pos": "v",
+      "gloss": "discontinue an association or relation; go different ways",
+      "synset": "separate.v.08"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D3",
+     "clue_to_slot_permuted": "A3",
+     "clue_candidates": 10,
+     "candidates": [
+      "BREAK",
+      "BREAKS",
+      "BROKE",
+      "BROKEN",
+      "PART",
+      "PARTED",
+      "PARTING",
+      "PARTS",
+      "SPLIT",
+      "SPLITS"
+     ]
+    },
+    {
+     "id": "D4",
+     "direction": "down",
+     "row": 9,
+     "col": 10,
+     "length": 7,
+     "answer": "COMPOSE",
+     "clue": "calm",
+     "clue_data": {
+      "kind": "definition",
+      "terse": "calm",
+      "pos": "v",
+      "gloss": "calm (someone, especially oneself); make quiet",
+      "synset": "compose.v.05"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D4",
+     "clue_to_slot_permuted": "D4",
+     "clue_candidates": 7,
+     "candidates": [
+      "COMPOSE",
+      "LULL",
+      "LULLED",
+      "LULLING",
+      "LULLS",
+      "MUSING",
+      "MUSINGS"
+     ]
+    },
+    {
+     "id": "A4",
+     "direction": "across",
+     "row": 11,
+     "col": 3,
+     "length": 6,
+     "answer": "FALSER",
+     "clue": "inappropriate",
+     "clue_data": {
+      "kind": "definition",
+      "terse": "inappropriate",
+      "pos": "a",
+      "gloss": "inappropriate to reality or facts",
+      "synset": "delusive.s.01"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A4",
+     "clue_to_slot_permuted": "A1",
+     "clue_candidates": 3,
+     "candidates": [
+      "FALSE",
+      "FALSER",
+      "FALSEST"
+     ]
+    },
+    {
+     "id": "D5",
+     "direction": "down",
+     "row": 11,
+     "col": 5,
+     "length": 6,
+     "answer": "LUNACY",
+     "clue": "foolish",
+     "clue_data": {
+      "kind": "definition",
+      "terse": "foolish",
+      "pos": "n",
+      "gloss": "foolish or senseless behavior",
+      "synset": "folly.n.04"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D5",
+     "clue_to_slot_permuted": "D3",
+     "clue_candidates": 8,
+     "candidates": [
+      "CRAZIER",
+      "CRAZY",
+      "FOLLIES",
+      "FOLLY",
+      "FOOLERY",
+      "GIGGLE",
+      "GIGGLES",
+      "LUNACY"
+     ]
+    },
+    {
+     "id": "A5",
+     "direction": "across",
+     "row": 13,
+     "col": 0,
+     "length": 6,
+     "answer": "SLOGAN",
+     "clue": "favorite",
+     "clue_data": {
+      "kind": "definition",
+      "terse": "favorite",
+      "pos": "n",
+      "gloss": "a favorite saying of a sect or political group",
+      "synset": "motto.n.01"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A5",
+     "clue_to_slot_permuted": "D2",
+     "clue_candidates": 5,
+     "candidates": [
+      "MOTTO",
+      "MOTTOES",
+      "MOTTOS",
+      "SLOGAN",
+      "SLOGANS"
+     ]
+    }
+   ],
+   "ceiling": {
+    "clue_resolved": 0,
+    "slots": 10,
+    "clue_rule": "definition: a slot counts as resolved when its terse definition fits exactly one declared word",
+    "ambiguous": [
+     {
+      "id": "D1",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "BLAST",
+       "BLASTED",
+       "BLASTS",
+       "POP",
+       "POPPED",
+       "POPPING"
+      ]
+     },
+     {
+      "id": "A1",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "ALPHA",
+       "BEBOP",
+       "BEBOPS",
+       "BOP",
+       "BOPS",
+       "INFANCY"
+      ]
+     },
+     {
+      "id": "D2",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "INTENT",
+       "INTENTS",
+       "LEFTER",
+       "LEFTEST",
+       "LIGHT",
+       "LIGHTER"
+      ]
+     },
+     {
+      "id": "A2",
+      "kind": "definition",
+      "n_candidates": 6,
+      "candidates": [
+       "CLEAR",
+       "CLEARER",
+       "DUPLEX",
+       "POROUS",
+       "RANGIER",
+       "RANGY"
+      ]
+     },
+     {
+      "id": "A3",
+      "kind": "definition",
+      "n_candidates": 4,
+      "candidates": [
+       "PACK",
+       "PACKED",
+       "PACKING",
+       "PACKS"
+      ]
+     },
+     {
+      "id": "D3",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "BREAK",
+       "BREAKS",
+       "BROKE",
+       "BROKEN",
+       "PART",
+       "PARTED"
+      ]
+     },
+     {
+      "id": "D4",
+      "kind": "definition",
+      "n_candidates": 7,
+      "candidates": [
+       "COMPOSE",
+       "LULL",
+       "LULLED",
+       "LULLING",
+       "LULLS",
+       "MUSING"
+      ]
+     },
+     {
+      "id": "A4",
+      "kind": "definition",
+      "n_candidates": 3,
+      "candidates": [
+       "FALSE",
+       "FALSER",
+       "FALSEST"
+      ]
+     },
+     {
+      "id": "D5",
+      "kind": "definition",
+      "n_candidates": 8,
+      "candidates": [
+       "CRAZIER",
+       "CRAZY",
+       "FOLLIES",
+       "FOLLY",
+       "FOOLERY",
+       "GIGGLE"
+      ]
+     },
+     {
+      "id": "A5",
+      "kind": "definition",
+      "n_candidates": 5,
+      "candidates": [
+       "MOTTO",
+       "MOTTOES",
+       "MOTTOS",
+       "SLOGAN",
+       "SLOGANS"
+      ]
+     }
+    ]
+   },
+   "floor": {
+    "verdict": "WINNABLE",
+    "states_expanded": 11,
+    "solution": [],
+    "assignments": {
+     "A3": "PACKS",
+     "D3": "PARTING",
+     "D4": "COMPOSE",
+     "A4": "FALSER",
+     "D5": "LUNACY",
+     "A5": "SLOGAN",
+     "D2": "INTENTS",
+     "A2": "RANGIER",
+     "D1": "POPPING",
+     "A1": "BEBOP"
+    },
+    "fills": 1,
+    "exhausted": true
+   },
+   "unique_fill": true,
+   "grid_sha256": "4081b6984648c43705dbb1246d353acd0605278426b83ef1aa873da7ef8c62a7"
   }
  ]
 }

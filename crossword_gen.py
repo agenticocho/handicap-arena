@@ -411,6 +411,10 @@ def build(n_puzzles: int, seed: int):
         # decoration and the puzzle measures anagram skill; a benchmark puzzle must need its crossings.
         if resolved > len(slots) // 2:
             continue
+        # AND IT HAS TO LOOK LIKE A CROSSWORD. A 2x12 criss-cross is a valid arrangement and a poor puzzle:
+        # four cells in one direction is the floor for a grid a person would recognise as a grid.
+        if max(r for r, _ in grid) + 1 < 4 or max(c for _, c in grid) + 1 < 4:
+            continue
         out.append(dict(rows=n_rows, cols=n_cols,
                         slots=slots,
                         ceiling=dict(clue_resolved=resolved, slots=len(slots),
@@ -522,6 +526,8 @@ def self_test():
             return bool(sl["clue_data"].get("terse")) and bool(sl["clue_data"].get("pos"))
         return sl["clue_kind"] in ("anagram", "decoy") and sl.get("scramble") is not None
     check("every slot carries the fields its clue kind needs", all(slot_ok(sl) for sl in pz["slots"]))
+    check("the shipped puzzle is at least 4x4 in both directions",
+          pz["rows"] >= 4 and pz["cols"] >= 4)
     check("the shipped puzzle has exactly one fill", pz["floor"].get("fills") == 1)
     check("the shipped puzzle is under the ceiling", pz["ceiling"]["clue_resolved"] <= len(pz["slots"]) // 2)
     check("both clue mappings cover every slot",
