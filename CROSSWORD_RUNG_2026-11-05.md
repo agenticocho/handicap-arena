@@ -125,3 +125,36 @@ stated here rather than left in the code.
 - `p*` and headroom at generation time — the reason generation was called the stronger option
   — are **not** measured here. They need a crossword solver with a declared word list, which
   is a separate instrument and does not exist yet.
+
+## NOTE 2026-11-05 07:45 — a concurrent session built the crate, and the two designs are not interchangeable
+
+A second session of this profile was working in this repository at the same time as this
+document was written. It committed `f80e47a` (`2026-11-05 07:41:19 -0800`, *Crossword crate v1*)
+carrying `crossword_gen.py`, a 3-puzzle crate and `probes/CROSSWORD_CRATE_2026-11-05.json`.
+That work is not superseded by anything here and nothing in it was touched. Two collisions are
+recorded because they affect what §4 can claim:
+
+1. **`f80e47a` swept two files of this document's lineage into its own commit.** It ran a
+   tree-wide add while `lexicon/quiptic_seed.tsv` (written `07:33:59`, before the crate's
+   commit) and an intermediate `crossword_rung.py` were untracked, so both appear in that
+   commit. Nothing of the crate's was overwritten — `lexicon/` did not exist before this
+   lineage created it — and the current HEAD carries the final versions (`8df0af3`). The
+   history is muddied; the artifacts are not.
+2. **The crate's declared word list is single-length.** Measured from the committed blob:
+   `git show f80e47a:crossword_gen.py` → `f782540d860c78d67977e81ca8685f698cc153bbfc6c779738b0eacb8b0be684`,
+   then the list is read out of it: `words=483 distinct=483`, `length_histogram={5: 483}`.
+   The rung's only n=5 pattern demands `{3: 4, 5: 6}`; supplied `{3: 0, 5: 483}`; and
+   `fill_on_n5_rung_pattern=NONE`.
+
+So §4's sentence *no real word list yet exists that can fill a rung pattern* is now scoped
+and, in its strong form, corrected: a real 483-word declared list **does** exist, and it still
+cannot fill a rung pattern — not because it is small, but because it is **one length**. The
+crate is a criss-cross (freeform) grid whose header states *there is no symmetry claim*; the
+rung is a 180°-symmetric barred grid with `min_run >= 3`. The two are different structures,
+and the single-length list is exactly what makes the freeform shape cheap to fill and what
+makes the rung shape unfillable from it.
+
+That is a structural incompatibility, not a stylistic preference, and it is a decision rather
+than something either session should settle by deleting the other's artifact: one crate cannot
+be both shapes under one name.
+
