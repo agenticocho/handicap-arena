@@ -1,0 +1,366 @@
+{
+  "crate": "probes/CROSSWORD_CRATE_2026-11-05.json",
+  "crate_sha256": "da2cd56f3d1ec889bbc1a306ce2005c841b24cb737b5f60af1b5e5f48c0b19bd",
+  "commit": "4f564a5",
+  "label": "PILOT — NOT A BENCHMARK — NO HUMAN SOLVE",
+  "requested_pairs": 30,
+  "shipped_pairs": 20,
+  "why_not_30": "the counting gate (4f564a5) rejected both puzzles of the 3x10 crate that declared unique_fill on a two-fill puzzle; this crate is 2 puzzles x 10 slots",
+  "puzzles": [
+    {
+      "index": 0,
+      "rows": 11,
+      "cols": 11,
+      "ceiling": {
+        "anagram_resolved": 4,
+        "slots": 10,
+        "ambiguous": [
+          {
+            "id": "D2",
+            "kind": "decoy",
+            "n_candidates": 4,
+            "candidates": [
+              "CHECK",
+              "CLOCK",
+              "LOWER",
+              "WHERE"
+            ]
+          },
+          {
+            "id": "D3",
+            "kind": "decoy",
+            "n_candidates": 2,
+            "candidates": [
+              "PEACE",
+              "SERVE"
+            ]
+          },
+          {
+            "id": "A2",
+            "kind": "decoy",
+            "n_candidates": 2,
+            "candidates": [
+              "STORM",
+              "TITLE"
+            ]
+          },
+          {
+            "id": "D4",
+            "kind": "decoy",
+            "n_candidates": 2,
+            "candidates": [
+              "COURT",
+              "TREAT"
+            ]
+          },
+          {
+            "id": "A4",
+            "kind": "decoy",
+            "n_candidates": 2,
+            "candidates": [
+              "FIELD",
+              "ROUGH"
+            ]
+          },
+          {
+            "id": "A5",
+            "kind": "decoy",
+            "n_candidates": 2,
+            "candidates": [
+              "LABEL",
+              "LINKS"
+            ]
+          }
+        ]
+      },
+      "fills": null,
+      "slots": [
+        {
+          "id": "D1",
+          "length": 5,
+          "answer": "MOTOR",
+          "clue": "In a muddle OMTOR (5)",
+          "clue_data": {
+            "kind": "anagram",
+            "letters": "OMTOR"
+          }
+        },
+        {
+          "id": "D2",
+          "length": 5,
+          "answer": "WHERE",
+          "clue": "Mixed up CRWELKHCEO less CLOCK (5)",
+          "clue_data": {
+            "kind": "decoy",
+            "letters": "CRWELKHCEO",
+            "decoy": "CLOCK"
+          }
+        },
+        {
+          "id": "A1",
+          "length": 5,
+          "answer": "SUPER",
+          "clue": "In a muddle PUESR (5)",
+          "clue_data": {
+            "kind": "anagram",
+            "letters": "PUESR"
+          }
+        },
+        {
+          "id": "D3",
+          "length": 5,
+          "answer": "PEACE",
+          "clue": "In a muddle ECSEVAEEPR less SERVE (5)",
+          "clue_data": {
+            "kind": "decoy",
+            "letters": "ECSEVAEEPR",
+            "decoy": "SERVE"
+          }
+        },
+        {
+          "id": "A2",
+          "length": 5,
+          "answer": "TITLE",
+          "clue": "Mixed up ERMTLTTSOI less STORM (5)",
+          "clue_data": {
+            "kind": "decoy",
+            "letters": "ERMTLTTSOI",
+            "decoy": "STORM"
+          }
+        },
+        {
+          "id": "A3",
+          "length": 5,
+          "answer": "ELITE",
+          "clue": "Mixed up TEIEL (5)",
+          "clue_data": {
+            "kind": "anagram",
+            "letters": "TEIEL"
+          }
+        },
+        {
+          "id": "D4",
+          "length": 5,
+          "answer": "TREAT",
+          "clue": "Mixed up COURRTTAET less COURT (5)",
+          "clue_data": {
+            "kind": "decoy",
+            "letters": "COURRTTAET",
+            "decoy": "COURT"
+          }
+        },
+        {
+          "id": "A4",
+          "length": 5,
+          "answer": "FIELD",
+          "clue": "Confused DGOFLHERUI less ROUGH (5)",
+          "clue_data": {
+            "kind": "decoy",
+            "letters": "DGOFLHERUI",
+            "decoy": "ROUGH"
+          }
+        },
+        {
+          "id": "D5",
+          "length": 5,
+          "answer": "FLUID",
+          "clue": "In a muddle DIULF (5)",
+          "clue_data": {
+            "kind": "anagram",
+            "letters": "DIULF"
+          }
+        },
+        {
+          "id": "A5",
+          "length": 5,
+          "answer": "LABEL",
+          "clue": "Mixed up NSKLLAEILB less LINKS (5)",
+          "clue_data": {
+            "kind": "decoy",
+            "letters": "NSKLLAEILB",
+            "decoy": "LINKS"
+          }
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "rows": 11,
+      "cols": 12,
+      "ceiling": {
+        "anagram_resolved": 4,
+        "slots": 10,
+        "ambiguous": [
+          {
+            "id": "D1",
+            "kind": "decoy",
+            "n_candidates": 3,
+            "candidates": [
+              "LOGIC",
+              "QUIET",
+              "QUITE"
+            ]
+          },
+          {
+            "id": "A2",
+            "kind": "decoy",
+            "n_candidates": 2,
+            "candidates": [
+              "DOING",
+              "WATCH"
+            ]
+          },
+          {
+            "id": "D2",
+            "kind": "decoy",
+            "n_candidates": 2,
+            "candidates": [
+              "ENTRY",
+              "TOKEN"
+            ]
+          },
+          {
+            "id": "D3",
+            "kind": "decoy",
+            "n_candidates": 2,
+            "candidates": [
+              "KNOWN",
+              "SLIDE"
+            ]
+          },
+          {
+            "id": "A3",
+            "kind": "decoy",
+            "n_candidates": 5,
+            "candidates": [
+              "ALONG",
+              "ANGER",
+              "NEVER",
+              "NOVEL",
+              "RANGE"
+            ]
+          },
+          {
+            "id": "A4",
+            "kind": "decoy",
+            "n_candidates": 3,
+            "candidates": [
+              "AGREE",
+              "EAGER",
+              "NEEDS"
+            ]
+          }
+        ]
+      },
+      "fills": null,
+      "slots": [
+        {
+          "id": "A1",
+          "length": 5,
+          "answer": "ALLOW",
+          "clue": "Mixed up LAWOL (5)",
+          "clue_data": {
+            "kind": "anagram",
+            "letters": "LAWOL"
+          }
+        },
+        {
+          "id": "D1",
+          "length": 5,
+          "answer": "LOGIC",
+          "clue": "Mixed up UCQGOIEITL less QUIET (5)",
+          "clue_data": {
+            "kind": "decoy",
+            "letters": "UCQGOIEITL",
+            "decoy": "QUIET"
+          }
+        },
+        {
+          "id": "A2",
+          "length": 5,
+          "answer": "WATCH",
+          "clue": "Confused AOIWDHTGNC less DOING (5)",
+          "clue_data": {
+            "kind": "decoy",
+            "letters": "AOIWDHTGNC",
+            "decoy": "DOING"
+          }
+        },
+        {
+          "id": "D2",
+          "length": 5,
+          "answer": "TOKEN",
+          "clue": "In a muddle EYTNTKROEN less ENTRY (5)",
+          "clue_data": {
+            "kind": "decoy",
+            "letters": "EYTNTKROEN",
+            "decoy": "ENTRY"
+          }
+        },
+        {
+          "id": "D3",
+          "length": 5,
+          "answer": "SLIDE",
+          "clue": "In a muddle NLNWOIEKSD less KNOWN (5)",
+          "clue_data": {
+            "kind": "decoy",
+            "letters": "NLNWOIEKSD",
+            "decoy": "KNOWN"
+          }
+        },
+        {
+          "id": "D4",
+          "length": 5,
+          "answer": "PRIOR",
+          "clue": "In a muddle IRPRO (5)",
+          "clue_data": {
+            "kind": "anagram",
+            "letters": "IRPRO"
+          }
+        },
+        {
+          "id": "D5",
+          "length": 5,
+          "answer": "CROSS",
+          "clue": "Confused OCSRS (5)",
+          "clue_data": {
+            "kind": "anagram",
+            "letters": "OCSRS"
+          }
+        },
+        {
+          "id": "A3",
+          "length": 5,
+          "answer": "RANGE",
+          "clue": "In a muddle EELNANOGVR less NOVEL (5)",
+          "clue_data": {
+            "kind": "decoy",
+            "letters": "EELNANOGVR",
+            "decoy": "NOVEL"
+          }
+        },
+        {
+          "id": "A4",
+          "length": 5,
+          "answer": "NEEDS",
+          "clue": "In a muddle SAGEDREENE less AGREE (5)",
+          "clue_data": {
+            "kind": "decoy",
+            "letters": "SAGEDREENE",
+            "decoy": "AGREE"
+          }
+        },
+        {
+          "id": "A5",
+          "length": 5,
+          "answer": "MOUSE",
+          "clue": "Confused MSEUO (5)",
+          "clue_data": {
+            "kind": "anagram",
+            "letters": "MSEUO"
+          }
+        }
+      ]
+    }
+  ]
+}
