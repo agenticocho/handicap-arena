@@ -55,8 +55,38 @@ def ask(endpoint, prompt, timeout=90):
 
 
 def parse_answer(text, length):
-    m = re.findall(rf"\b[A-Za-z]{{{length}}}\b", text.upper())
-    return m[0] if m else None
+    """ONE word of the right length, or nothing. A model that offers two candidates has not committed to an
+    answer, and scoring the first one is a generosity applied after the fact -- so it scores as no answer."""
+    m = sorted(set(re.findall(rf"\b[A-Za-z]{{{length}}}\b", text.upper())))
+    return m[0] if len(m) == 1 else None
+
+
+def self_test():
+    """The PARSER is where a model run gets blamed for the harness. Check it against outputs a model
+    actually produces before spending a token on one."""
+    ok = fail = 0
+
+    def check(name, cond):
+        nonlocal ok, fail
+        if cond:
+            ok += 1
+        else:
+            fail += 1
+            print(f"  FAIL {name}")
+
+    check("bare word", parse_answer("TOUCHES", 7) == "TOUCHES")
+    check("sentence", parse_answer("The answer is TOUCHES.", 7) == "TOUCHES")
+    check("lower case", parse_answer("waltzes", 7) == "WALTZES")
+    check("punctuated", parse_answer("TOUCHES!", 7) == "TOUCHES")
+    check("leading newline", parse_answer("\nTOUCHES", 7) == "TOUCHES")
+    check("word of the wrong length is not accepted", parse_answer("TOUCH", 7) is None)
+    check("prose with no answer-length word is None", parse_answer("I am not sure", 7) is None)
+    check("two candidate words is not an answer", parse_answer("maybe TOUCHES or WALTZES", 7) is None)
+    check("the same word twice is still one answer", parse_answer("TOUCHES ... TOUCHES", 7) == "TOUCHES")
+    check("a 7-letter word inside a longer token is not matched", parse_answer("TOUCHESX", 7) is None)
+    check("an apostrophe word of the right length does not match", parse_answer("DON'T", 5) is None)
+    print(f"{ok} passed, {fail} failed")
+    return fail == 0
 
 
 def main():
@@ -65,8 +95,11 @@ def main():
     ap.add_argument("--stub", default=None, choices=("answers", "ceiling"))
     ap.add_argument("--endpoint", default=None)
     ap.add_argument("--out", default=None)
+    ap.add_argument("--self-test", action="store_true")
     a = ap.parse_args()
 
+    if a.self_test:
+        return 0 if self_test() else 1
     d = load(a.crate)
     rows, t0 = [], time.time()
     for pi, p, s in slots(d):
