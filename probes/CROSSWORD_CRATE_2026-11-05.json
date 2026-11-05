@@ -629,5 +629,11 @@
    "unique_fill": true,
    "grid_sha256": "3fe151ee8a07784ce620e0edfe37f8488a2b1d4bc4cc13f3e1fcd4f590060f05"
   }
- ]
+ ],
+ "pilot_character": {
+  "what_the_difficulty_is": "the clues print the answer's letters (anagram, and anagram-minus-announced-decoy), so a slot is ambiguous by LEXICON COMPETITION; the grid decides. The skill measured is search-plus-crossings, NOT cryptic parsing.",
+  "what_it_is_not": "not a cryptic crossword: no charade, hidden-word or container device, so no clue has to be parsed for its wordplay",
+  "lexicon_dependence": "both gates use the declared list; ceiling and floor move if the list moves, which is why word_list_size and words_sha256 are carried beside every number",
+  "ceiling_meaning": "anagram_resolved / slots = how many slots a reader could answer WITHOUT the grid"
+ }
 }
