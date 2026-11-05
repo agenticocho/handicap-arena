@@ -1,298 +1,409 @@
 {
- "seed": 11,
- "word_list_size": 25077,
+ "seed": 5,
+ "word_list_size": 9247,
  "words_sha256": "8e299e32d3b90006df8c75c0300faeee2970611b98b034ed973f014cd2043b23",
  "source": "declared in crossword_gen.py -- no third-party content",
  "construction": "criss-cross, no symmetry claim, every word crosses at least one other",
  "puzzles": [
   {
-   "rows": 15,
-   "cols": 11,
+   "rows": 17,
+   "cols": 13,
    "slots": [
     {
      "id": "D1",
      "direction": "down",
      "row": 0,
-     "col": 10,
+     "col": 7,
      "length": 7,
-     "answer": "TOUCHES",
-     "clue": "Confused COHUTSE (7)",
+     "answer": "DESIRED",
+     "clue": "wanted",
      "clue_data": {
-      "kind": "anagram",
-      "letters": "COHUTSE"
+      "kind": "definition",
+      "terse": "wanted",
+      "pos": "a",
+      "gloss": "wanted intensely",
+      "synset": "craved.s.01"
      },
-     "scramble": "COHUTSE",
-     "clue_kind": "anagram",
+     "scramble": "",
+     "clue_kind": "definition",
      "clue_to_slot_published": "D1",
-     "clue_to_slot_permuted": "D3",
-     "clue_candidates": 1,
+     "clue_to_slot_permuted": "D6",
+     "clue_candidates": 5,
      "candidates": [
-      "TOUCHES"
+      "CRAVED",
+      "DESIRED",
+      "HOT",
+      "HOTTER",
+      "HOTTEST"
      ]
     },
     {
      "id": "D2",
      "direction": "down",
      "row": 3,
-     "col": 8,
-     "length": 5,
-     "answer": "WRAPS",
-     "clue": "Mixed up ASWPR (5)",
+     "col": 9,
+     "length": 7,
+     "answer": "BRIDALS",
+     "clue": "archaic",
      "clue_data": {
-      "kind": "anagram",
-      "letters": "ASWPR"
+      "kind": "definition",
+      "terse": "archaic",
+      "pos": "n",
+      "gloss": "archaic terms for a wedding or wedding feast",
+      "synset": "bridal.n.01"
      },
-     "scramble": "ASWPR",
-     "clue_kind": "anagram",
+     "scramble": "",
+     "clue_kind": "definition",
      "clue_to_slot_published": "D2",
-     "clue_to_slot_permuted": "A3",
-     "clue_candidates": 2,
+     "clue_to_slot_permuted": "D3",
+     "clue_candidates": 6,
      "candidates": [
-      "WARPS",
-      "WRAPS"
+      "BRIDAL",
+      "BRIDALS",
+      "HOST",
+      "HOSTS",
+      "LEGION",
+      "LEGIONS"
      ]
     },
     {
      "id": "A1",
      "direction": "across",
      "row": 5,
-     "col": 6,
-     "length": 5,
-     "answer": "TRADE",
-     "clue": "Confused ADTER (5)",
+     "col": 5,
+     "length": 6,
+     "answer": "CREDIT",
+     "clue": "approval",
      "clue_data": {
-      "kind": "anagram",
-      "letters": "ADTER"
+      "kind": "definition",
+      "terse": "approval",
+      "pos": "n",
+      "gloss": "approval",
+      "synset": "recognition.n.03"
      },
-     "scramble": "ADTER",
-     "clue_kind": "anagram",
+     "scramble": "",
+     "clue_kind": "definition",
      "clue_to_slot_published": "A1",
      "clue_to_slot_permuted": "D5",
-     "clue_candidates": 4,
+     "clue_candidates": 2,
      "candidates": [
-      "RATED",
-      "TARED",
-      "TRADE",
-      "TREAD"
+      "CREDIT",
+      "CREDITS"
      ]
     },
     {
      "id": "D3",
      "direction": "down",
      "row": 5,
-     "col": 6,
-     "length": 5,
-     "answer": "TIDES",
-     "clue": "In a muddle TIDSE (5)",
-     "clue_data": {
-      "kind": "anagram",
-      "letters": "TIDSE"
-     },
-     "scramble": "TIDSE",
-     "clue_kind": "anagram",
-     "clue_to_slot_published": "D3",
-     "clue_to_slot_permuted": "A4",
-     "clue_candidates": 4,
-     "candidates": [
-      "DIETS",
-      "EDITS",
-      "SITED",
-      "TIDES"
-     ]
-    },
-    {
-     "id": "D4",
-     "direction": "down",
-     "row": 6,
-     "col": 1,
-     "length": 3,
-     "answer": "BYE",
-     "clue": "Mixed up BEY (3)",
-     "clue_data": {
-      "kind": "anagram",
-      "letters": "BEY"
-     },
-     "scramble": "BEY",
-     "clue_kind": "anagram",
-     "clue_to_slot_published": "D4",
-     "clue_to_slot_permuted": "D4",
-     "clue_candidates": 1,
-     "candidates": [
-      "BYE"
-     ]
-    },
-    {
-     "id": "D5",
-     "direction": "down",
-     "row": 7,
-     "col": 4,
+     "col": 11,
      "length": 6,
-     "answer": "MEANLY",
-     "clue": "In a muddle NAYLME (6)",
+     "answer": "DIPPED",
+     "clue": "plunge",
      "clue_data": {
-      "kind": "anagram",
-      "letters": "NAYLME"
+      "kind": "definition",
+      "terse": "plunge",
+      "pos": "v",
+      "gloss": "plunge (one's hand or a receptacle) into a container",
+      "synset": "dip.v.13"
      },
-     "scramble": "NAYLME",
-     "clue_kind": "anagram",
-     "clue_to_slot_published": "D5",
-     "clue_to_slot_permuted": "A1",
-     "clue_candidates": 3,
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D3",
+     "clue_to_slot_permuted": "A3",
+     "clue_candidates": 10,
      "candidates": [
-      "LAYMEN",
-      "MEANLY",
-      "NAMELY"
+      "DIP",
+      "DIPPED",
+      "DIPPING",
+      "DIPS",
+      "DIVE",
+      "DIVED",
+      "DIVES",
+      "DIVING",
+      "DOVE",
+      "SHEATHE"
      ]
     },
     {
      "id": "A2",
      "direction": "across",
-     "row": 8,
-     "col": 0,
+     "row": 9,
+     "col": 6,
      "length": 7,
-     "answer": "RELIEVE",
-     "clue": "Mixed up VILREEE (7)",
+     "answer": "SLASHES",
+     "clue": "wound",
      "clue_data": {
-      "kind": "anagram",
-      "letters": "VILREEE"
+      "kind": "definition",
+      "terse": "wound",
+      "pos": "n",
+      "gloss": "a wound made by cutting",
+      "synset": "cut.n.05"
      },
-     "scramble": "VILREEE",
-     "clue_kind": "anagram",
+     "scramble": "",
+     "clue_kind": "definition",
      "clue_to_slot_published": "A2",
-     "clue_to_slot_permuted": "D2",
-     "clue_candidates": 1,
+     "clue_to_slot_permuted": "A2",
+     "clue_candidates": 6,
      "candidates": [
-      "RELIEVE"
+      "GASH",
+      "GASHES",
+      "SLASH",
+      "SLASHES",
+      "SLICE",
+      "SLICES"
+     ]
+    },
+    {
+     "id": "D4",
+     "direction": "down",
+     "row": 9,
+     "col": 6,
+     "length": 7,
+     "answer": "SKILLET",
+     "clue": "pan",
+     "clue_data": {
+      "kind": "definition",
+      "terse": "pan",
+      "pos": "n",
+      "gloss": "a pan used for frying foods",
+      "synset": "frying_pan.n.01"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D4",
+     "clue_to_slot_permuted": "D1",
+     "clue_candidates": 3,
+     "candidates": [
+      "SKILLET",
+      "WOK",
+      "WOKS"
      ]
     },
     {
      "id": "A3",
      "direction": "across",
-     "row": 10,
-     "col": 1,
-     "length": 6,
-     "answer": "GRANDS",
-     "clue": "Confused GSNDAR (6)",
+     "row": 11,
+     "col": 0,
+     "length": 5,
+     "answer": "MAJOR",
+     "clue": "greater",
      "clue_data": {
-      "kind": "anagram",
-      "letters": "GSNDAR"
+      "kind": "definition",
+      "terse": "greater",
+      "pos": "a",
+      "gloss": "greater in number or size or amount",
+      "synset": "major.a.03"
      },
-     "scramble": "GSNDAR",
-     "clue_kind": "anagram",
+     "scramble": "",
+     "clue_kind": "definition",
      "clue_to_slot_published": "A3",
-     "clue_to_slot_permuted": "D6",
-     "clue_candidates": 1,
+     "clue_to_slot_permuted": "A4",
+     "clue_candidates": 4,
      "candidates": [
-      "GRANDS"
+      "HIGH",
+      "HIGHER",
+      "HIGHEST",
+      "MAJOR"
      ]
     },
     {
-     "id": "A4",
-     "direction": "across",
-     "row": 12,
-     "col": 2,
-     "length": 5,
-     "answer": "PAYER",
-     "clue": "In a muddle PYERA (5)",
+     "id": "D5",
+     "direction": "down",
+     "row": 11,
+     "col": 4,
+     "length": 4,
+     "answer": "RACE",
+     "clue": "canal",
      "clue_data": {
-      "kind": "anagram",
-      "letters": "PYERA"
+      "kind": "definition",
+      "terse": "canal",
+      "pos": "n",
+      "gloss": "a canal for a current of water",
+      "synset": "raceway.n.01"
      },
-     "scramble": "PYERA",
-     "clue_kind": "anagram",
-     "clue_to_slot_published": "A4",
-     "clue_to_slot_permuted": "A2",
-     "clue_candidates": 2,
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D5",
+     "clue_to_slot_permuted": "A1",
+     "clue_candidates": 5,
      "candidates": [
-      "PAYER",
-      "REPAY"
+      "CUT",
+      "CUTS",
+      "RACE",
+      "RACES",
+      "RACEWAY"
      ]
     },
     {
      "id": "D6",
      "direction": "down",
-     "row": 12,
-     "col": 3,
-     "length": 3,
-     "answer": "ASH",
-     "clue": "Confused CVESSEHLAA less CLEAVES (3)",
+     "row": 11,
+     "col": 8,
+     "length": 6,
+     "answer": "CENSUS",
+     "clue": "periodic",
      "clue_data": {
-      "kind": "decoy",
-      "letters": "CVESSEHLAA",
-      "decoy": "CLEAVES"
+      "kind": "definition",
+      "terse": "periodic",
+      "pos": "n",
+      "gloss": "a periodic count of the population",
+      "synset": "census.n.01"
      },
-     "scramble": "CVESSEHLAA",
-     "clue_kind": "decoy",
+     "scramble": "",
+     "clue_kind": "definition",
      "clue_to_slot_published": "D6",
-     "clue_to_slot_permuted": "D1",
+     "clue_to_slot_permuted": "D4",
      "clue_candidates": 2,
      "candidates": [
-      "ASH",
-      "HAS"
+      "CENSUS",
+      "SERVICE"
+     ]
+    },
+    {
+     "id": "A4",
+     "direction": "across",
+     "row": 14,
+     "col": 3,
+     "length": 6,
+     "answer": "BESETS",
+     "clue": "assail",
+     "clue_data": {
+      "kind": "definition",
+      "terse": "assail",
+      "pos": "v",
+      "gloss": "assail or attack on all sides:",
+      "synset": "beset.v.02"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A4",
+     "clue_to_slot_permuted": "D2",
+     "clue_candidates": 5,
+     "candidates": [
+      "BESET",
+      "BESETS",
+      "VISIT",
+      "VISITED",
+      "VISITS"
      ]
     }
    ],
    "ceiling": {
-    "anagram_resolved": 4,
+    "anagram_resolved": 0,
     "slots": 10,
     "ambiguous": [
      {
-      "id": "D2",
-      "kind": "anagram",
-      "n_candidates": 2,
+      "id": "D1",
+      "kind": "definition",
+      "n_candidates": 5,
       "candidates": [
-       "WARPS",
-       "WRAPS"
+       "CRAVED",
+       "DESIRED",
+       "HOT",
+       "HOTTER",
+       "HOTTEST"
+      ]
+     },
+     {
+      "id": "D2",
+      "kind": "definition",
+      "n_candidates": 6,
+      "candidates": [
+       "BRIDAL",
+       "BRIDALS",
+       "HOST",
+       "HOSTS",
+       "LEGION",
+       "LEGIONS"
       ]
      },
      {
       "id": "A1",
-      "kind": "anagram",
-      "n_candidates": 4,
+      "kind": "definition",
+      "n_candidates": 2,
       "candidates": [
-       "RATED",
-       "TARED",
-       "TRADE",
-       "TREAD"
+       "CREDIT",
+       "CREDITS"
       ]
      },
      {
       "id": "D3",
-      "kind": "anagram",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "DIP",
+       "DIPPED",
+       "DIPPING",
+       "DIPS",
+       "DIVE",
+       "DIVED"
+      ]
+     },
+     {
+      "id": "A2",
+      "kind": "definition",
+      "n_candidates": 6,
+      "candidates": [
+       "GASH",
+       "GASHES",
+       "SLASH",
+       "SLASHES",
+       "SLICE",
+       "SLICES"
+      ]
+     },
+     {
+      "id": "D4",
+      "kind": "definition",
+      "n_candidates": 3,
+      "candidates": [
+       "SKILLET",
+       "WOK",
+       "WOKS"
+      ]
+     },
+     {
+      "id": "A3",
+      "kind": "definition",
       "n_candidates": 4,
       "candidates": [
-       "DIETS",
-       "EDITS",
-       "SITED",
-       "TIDES"
+       "HIGH",
+       "HIGHER",
+       "HIGHEST",
+       "MAJOR"
       ]
      },
      {
       "id": "D5",
-      "kind": "anagram",
-      "n_candidates": 3,
+      "kind": "definition",
+      "n_candidates": 5,
       "candidates": [
-       "LAYMEN",
-       "MEANLY",
-       "NAMELY"
-      ]
-     },
-     {
-      "id": "A4",
-      "kind": "anagram",
-      "n_candidates": 2,
-      "candidates": [
-       "PAYER",
-       "REPAY"
+       "CUT",
+       "CUTS",
+       "RACE",
+       "RACES",
+       "RACEWAY"
       ]
      },
      {
       "id": "D6",
-      "kind": "decoy",
+      "kind": "definition",
       "n_candidates": 2,
       "candidates": [
-       "ASH",
-       "HAS"
+       "CENSUS",
+       "SERVICE"
+      ]
+     },
+     {
+      "id": "A4",
+      "kind": "definition",
+      "n_candidates": 5,
+      "candidates": [
+       "BESET",
+       "BESETS",
+       "VISIT",
+       "VISITED",
+       "VISITS"
       ]
      }
     ]
@@ -302,338 +413,448 @@
     "states_expanded": 10,
     "solution": [],
     "assignments": {
-     "D1": "TOUCHES",
-     "A1": "TRADE",
-     "D2": "WRAPS",
-     "D3": "TIDES",
-     "D4": "BYE",
-     "A2": "RELIEVE",
-     "D5": "MEANLY",
-     "A3": "GRANDS",
-     "A4": "PAYER",
-     "D6": "ASH"
+     "A1": "CREDIT",
+     "D1": "DESIRED",
+     "D2": "BRIDALS",
+     "A2": "SLASHES",
+     "D3": "DIPPED",
+     "D4": "SKILLET",
+     "A3": "MAJOR",
+     "D5": "RACE",
+     "D6": "CENSUS",
+     "A4": "BESETS"
     },
     "fills": 1,
     "exhausted": true
    },
    "unique_fill": true,
-   "grid_sha256": "2ef9a8bafd562dd288a97695946e33cd7ab201ca5308606b738af47e3de63c23"
+   "grid_sha256": "5baf558618db4062c0e4a9eb1ebe3770eff242bd3418c838b7199b8a1c2ab80a"
   },
   {
-   "rows": 19,
-   "cols": 14,
+   "rows": 17,
+   "cols": 15,
    "slots": [
     {
      "id": "D1",
      "direction": "down",
      "row": 0,
-     "col": 5,
-     "length": 7,
-     "answer": "WALTZES",
-     "clue": "In a muddle KLAWIMCSETMIGZ less GIMMICK (7)",
+     "col": 12,
+     "length": 6,
+     "answer": "TIPTOE",
+     "clue": "walking",
      "clue_data": {
-      "kind": "decoy",
-      "letters": "KLAWIMCSETMIGZ",
-      "decoy": "GIMMICK"
+      "kind": "definition",
+      "terse": "walking",
+      "pos": "a",
+      "gloss": "walking on the tips of ones's toes so as to make no noise",
+      "synset": "tiptoe.s.01"
      },
-     "scramble": "KLAWIMCSETMIGZ",
-     "clue_kind": "decoy",
+     "scramble": "",
+     "clue_kind": "definition",
      "clue_to_slot_published": "D1",
-     "clue_to_slot_permuted": "D1",
-     "clue_candidates": 1,
+     "clue_to_slot_permuted": "A1",
+     "clue_candidates": 5,
      "candidates": [
-      "WALTZES"
+      "PACING",
+      "ROLL",
+      "ROLLS",
+      "TIPTOE",
+      "WADING"
+     ]
+    },
+    {
+     "id": "A1",
+     "direction": "across",
+     "row": 5,
+     "col": 8,
+     "length": 7,
+     "answer": "PRUDENT",
+     "clue": "careful",
+     "clue_data": {
+      "kind": "definition",
+      "terse": "careful",
+      "pos": "a",
+      "gloss": "careful and sensible; marked by sound judgment",
+      "synset": "prudent.a.01"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A1",
+     "clue_to_slot_permuted": "D1",
+     "clue_candidates": 2,
+     "candidates": [
+      "PRUDENT",
+      "THRIFTY"
      ]
     },
     {
      "id": "D2",
      "direction": "down",
      "row": 5,
-     "col": 10,
-     "length": 7,
-     "answer": "JERSEYS",
-     "clue": "In a muddle REAESSLYJSEF less LEAFS (7)",
+     "col": 13,
+     "length": 6,
+     "answer": "NICKED",
+     "clue": "divide",
      "clue_data": {
-      "kind": "decoy",
-      "letters": "REAESSLYJSEF",
-      "decoy": "LEAFS"
+      "kind": "definition",
+      "terse": "divide",
+      "pos": "v",
+      "gloss": "divide or reset the tail muscles of",
+      "synset": "nick.v.03"
      },
-     "scramble": "REAESSLYJSEF",
-     "clue_kind": "decoy",
+     "scramble": "",
+     "clue_kind": "definition",
      "clue_to_slot_published": "D2",
-     "clue_to_slot_permuted": "D2",
-     "clue_candidates": 1,
-     "candidates": [
-      "JERSEYS"
-     ]
-    },
-    {
-     "id": "A1",
-     "direction": "across",
-     "row": 6,
-     "col": 5,
-     "length": 7,
-     "answer": "SCRAPER",
-     "clue": "Confused AERRSCP (7)",
-     "clue_data": {
-      "kind": "anagram",
-      "letters": "AERRSCP"
-     },
-     "scramble": "AERRSCP",
-     "clue_kind": "anagram",
-     "clue_to_slot_published": "A1",
      "clue_to_slot_permuted": "A4",
-     "clue_candidates": 1,
+     "clue_candidates": 10,
      "candidates": [
-      "SCRAPER"
+      "NICK",
+      "NICKED",
+      "NICKING",
+      "NICKS",
+      "PARCEL",
+      "PARCELS",
+      "PRORATE",
+      "RAMIFY",
+      "SECTION",
+      "SEGMENT"
      ]
     },
     {
      "id": "D3",
      "direction": "down",
-     "row": 8,
-     "col": 7,
-     "length": 5,
-     "answer": "UPSET",
-     "clue": "Confused EPSTU (5)",
+     "row": 7,
+     "col": 10,
+     "length": 6,
+     "answer": "THATCH",
+     "clue": "house",
      "clue_data": {
-      "kind": "anagram",
-      "letters": "EPSTU"
+      "kind": "definition",
+      "terse": "house",
+      "pos": "n",
+      "gloss": "a house roof made with a plant material (as straw)",
+      "synset": "thatch.n.04"
      },
-     "scramble": "EPSTU",
-     "clue_kind": "anagram",
+     "scramble": "",
+     "clue_kind": "definition",
      "clue_to_slot_published": "D3",
-     "clue_to_slot_permuted": "D5",
+     "clue_to_slot_permuted": "D4",
      "clue_candidates": 2,
      "candidates": [
-      "SETUP",
-      "UPSET"
+      "DUPLEX",
+      "THATCH"
      ]
     },
     {
      "id": "A2",
      "direction": "across",
      "row": 8,
-     "col": 10,
-     "length": 4,
-     "answer": "SLOP",
-     "clue": "Mixed up VOEDTPOLS less VOTED (4)",
-     "clue_data": {
-      "kind": "decoy",
-      "letters": "VOEDTPOLS",
-      "decoy": "VOTED"
-     },
-     "scramble": "VOEDTPOLS",
-     "clue_kind": "decoy",
-     "clue_to_slot_published": "A2",
-     "clue_to_slot_permuted": "D4",
-     "clue_candidates": 3,
-     "candidates": [
-      "LOPS",
-      "POLS",
-      "SLOP"
-     ]
-    },
-    {
-     "id": "A3",
-     "direction": "across",
-     "row": 10,
-     "col": 4,
+     "col": 0,
      "length": 7,
-     "answer": "GRISTLY",
-     "clue": "Confused LSYIRTG (7)",
+     "answer": "DIVINES",
+     "clue": "terms",
      "clue_data": {
-      "kind": "anagram",
-      "letters": "LSYIRTG"
+      "kind": "definition",
+      "terse": "terms",
+      "pos": "n",
+      "gloss": "terms referring to the Judeo-Christian God",
+      "synset": "godhead.n.01"
      },
-     "scramble": "LSYIRTG",
-     "clue_kind": "anagram",
-     "clue_to_slot_published": "A3",
-     "clue_to_slot_permuted": "A3",
-     "clue_candidates": 1,
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A2",
+     "clue_to_slot_permuted": "D2",
+     "clue_candidates": 7,
      "candidates": [
-      "GRISTLY"
+      "CREATOR",
+      "DIVINE",
+      "DIVINES",
+      "LORD",
+      "LORDS",
+      "MAKER",
+      "MAKERS"
      ]
     },
     {
      "id": "D4",
      "direction": "down",
-     "row": 10,
-     "col": 4,
+     "row": 8,
+     "col": 6,
      "length": 4,
-     "answer": "GABS",
-     "clue": "Mixed up GASIBNCAB less CABIN (4)",
+     "answer": "SPUR",
+     "clue": "verbalization",
      "clue_data": {
-      "kind": "decoy",
-      "letters": "GASIBNCAB",
-      "decoy": "CABIN"
+      "kind": "definition",
+      "terse": "verbalization",
+      "pos": "n",
+      "gloss": "a verbalization that encourages you to attempt something",
+      "synset": "goad.n.02"
      },
-     "scramble": "GASIBNCAB",
-     "clue_kind": "decoy",
+     "scramble": "",
+     "clue_kind": "definition",
      "clue_to_slot_published": "D4",
-     "clue_to_slot_permuted": "D3",
-     "clue_candidates": 2,
+     "clue_to_slot_permuted": "A3",
+     "clue_candidates": 8,
      "candidates": [
-      "BAGS",
-      "GABS"
+      "GOAD",
+      "GOADING",
+      "GOADS",
+      "PROD",
+      "PRODS",
+      "SPUR",
+      "SPURS",
+      "URGING"
      ]
     },
     {
-     "id": "A4",
+     "id": "A3",
      "direction": "across",
-     "row": 13,
-     "col": 0,
+     "row": 9,
+     "col": 8,
      "length": 7,
-     "answer": "TRUSSED",
-     "clue": "Mixed up USDTSRE (7)",
+     "answer": "REARMED",
+     "clue": "arm",
      "clue_data": {
-      "kind": "anagram",
-      "letters": "USDTSRE"
+      "kind": "definition",
+      "terse": "arm",
+      "pos": "v",
+      "gloss": "arm anew",
+      "synset": "rearm.v.02"
      },
-     "scramble": "USDTSRE",
-     "clue_kind": "anagram",
-     "clue_to_slot_published": "A4",
-     "clue_to_slot_permuted": "D6",
-     "clue_candidates": 2,
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A3",
+     "clue_to_slot_permuted": "D5",
+     "clue_candidates": 4,
      "candidates": [
-      "DUSTERS",
-      "TRUSSED"
+      "FOREARM",
+      "REARM",
+      "REARMED",
+      "REARMS"
      ]
     },
     {
      "id": "D5",
      "direction": "down",
-     "row": 13,
-     "col": 1,
-     "length": 6,
-     "answer": "RAGGED",
-     "clue": "In a muddle GRDAGE (6)",
+     "row": 9,
+     "col": 8,
+     "length": 4,
+     "answer": "RISE",
+     "clue": "theology",
      "clue_data": {
-      "kind": "anagram",
-      "letters": "GRDAGE"
+      "kind": "definition",
+      "terse": "theology",
+      "pos": "n",
+      "gloss": "(theology) the origination of the Holy Spirit at Pentecost",
+      "synset": "emanation.n.03"
      },
-     "scramble": "GRDAGE",
-     "clue_kind": "anagram",
+     "scramble": "",
+     "clue_kind": "definition",
      "clue_to_slot_published": "D5",
-     "clue_to_slot_permuted": "A1",
+     "clue_to_slot_permuted": "D3",
      "clue_candidates": 2,
      "candidates": [
-      "DAGGER",
-      "RAGGED"
+      "RISE",
+      "RISES"
+     ]
+    },
+    {
+     "id": "A4",
+     "direction": "across",
+     "row": 11,
+     "col": 4,
+     "length": 5,
+     "answer": "PYRES",
+     "clue": "wood",
+     "clue_data": {
+      "kind": "definition",
+      "terse": "wood",
+      "pos": "n",
+      "gloss": "wood heaped for burning a dead body as a funeral rite",
+      "synset": "pyre.n.01"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A4",
+     "clue_to_slot_permuted": "D6",
+     "clue_candidates": 4,
+     "candidates": [
+      "DEAL",
+      "DEALS",
+      "PYRE",
+      "PYRES"
      ]
     },
     {
      "id": "D6",
      "direction": "down",
-     "row": 13,
-     "col": 6,
+     "row": 11,
+     "col": 4,
      "length": 6,
-     "answer": "DAEMON",
-     "clue": "Mixed up NDTIMNTAGOEHE less TIGHTEN (6)",
+     "answer": "PARADE",
+     "clue": "march",
      "clue_data": {
-      "kind": "decoy",
-      "letters": "NDTIMNTAGOEHE",
-      "decoy": "TIGHTEN"
+      "kind": "definition",
+      "terse": "march",
+      "pos": "v",
+      "gloss": "march in a procession",
+      "synset": "parade.v.02"
      },
-     "scramble": "NDTIMNTAGOEHE",
-     "clue_kind": "decoy",
+     "scramble": "",
+     "clue_kind": "definition",
      "clue_to_slot_published": "D6",
      "clue_to_slot_permuted": "A2",
-     "clue_candidates": 2,
+     "clue_candidates": 6,
      "candidates": [
-      "DAEMON",
-      "MOANED"
+      "PARADE",
+      "PARADED",
+      "PARADES",
+      "TROOP",
+      "TROOPED",
+      "TROOPS"
      ]
     }
    ],
    "ceiling": {
-    "anagram_resolved": 4,
+    "anagram_resolved": 0,
     "slots": 10,
     "ambiguous": [
      {
-      "id": "D3",
-      "kind": "anagram",
+      "id": "D1",
+      "kind": "definition",
+      "n_candidates": 5,
+      "candidates": [
+       "PACING",
+       "ROLL",
+       "ROLLS",
+       "TIPTOE",
+       "WADING"
+      ]
+     },
+     {
+      "id": "A1",
+      "kind": "definition",
       "n_candidates": 2,
       "candidates": [
-       "SETUP",
-       "UPSET"
+       "PRUDENT",
+       "THRIFTY"
+      ]
+     },
+     {
+      "id": "D2",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "NICK",
+       "NICKED",
+       "NICKING",
+       "NICKS",
+       "PARCEL",
+       "PARCELS"
+      ]
+     },
+     {
+      "id": "D3",
+      "kind": "definition",
+      "n_candidates": 2,
+      "candidates": [
+       "DUPLEX",
+       "THATCH"
       ]
      },
      {
       "id": "A2",
-      "kind": "decoy",
-      "n_candidates": 3,
+      "kind": "definition",
+      "n_candidates": 7,
       "candidates": [
-       "LOPS",
-       "POLS",
-       "SLOP"
+       "CREATOR",
+       "DIVINE",
+       "DIVINES",
+       "LORD",
+       "LORDS",
+       "MAKER"
       ]
      },
      {
       "id": "D4",
-      "kind": "decoy",
-      "n_candidates": 2,
+      "kind": "definition",
+      "n_candidates": 8,
       "candidates": [
-       "BAGS",
-       "GABS"
+       "GOAD",
+       "GOADING",
+       "GOADS",
+       "PROD",
+       "PRODS",
+       "SPUR"
       ]
      },
      {
-      "id": "A4",
-      "kind": "anagram",
-      "n_candidates": 2,
+      "id": "A3",
+      "kind": "definition",
+      "n_candidates": 4,
       "candidates": [
-       "DUSTERS",
-       "TRUSSED"
+       "FOREARM",
+       "REARM",
+       "REARMED",
+       "REARMS"
       ]
      },
      {
       "id": "D5",
-      "kind": "anagram",
+      "kind": "definition",
       "n_candidates": 2,
       "candidates": [
-       "DAGGER",
-       "RAGGED"
+       "RISE",
+       "RISES"
+      ]
+     },
+     {
+      "id": "A4",
+      "kind": "definition",
+      "n_candidates": 4,
+      "candidates": [
+       "DEAL",
+       "DEALS",
+       "PYRE",
+       "PYRES"
       ]
      },
      {
       "id": "D6",
-      "kind": "decoy",
-      "n_candidates": 2,
+      "kind": "definition",
+      "n_candidates": 6,
       "candidates": [
-       "DAEMON",
-       "MOANED"
+       "PARADE",
+       "PARADED",
+       "PARADES",
+       "TROOP",
+       "TROOPED",
+       "TROOPS"
       ]
      }
     ]
    },
    "floor": {
     "verdict": "WINNABLE",
-    "states_expanded": 10,
+    "states_expanded": 12,
     "solution": [],
     "assignments": {
-     "D1": "WALTZES",
-     "D2": "JERSEYS",
-     "A1": "SCRAPER",
-     "A2": "SLOP",
-     "A3": "GRISTLY",
-     "D3": "UPSET",
-     "D4": "GABS",
-     "A4": "TRUSSED",
-     "D5": "RAGGED",
-     "D6": "DAEMON"
+     "D5": "RISE",
+     "A3": "REARMED",
+     "D3": "THATCH",
+     "A1": "PRUDENT",
+     "D1": "TIPTOE",
+     "D2": "NICKED",
+     "A2": "DIVINES",
+     "D4": "SPUR",
+     "A4": "PYRES",
+     "D6": "PARADE"
     },
     "fills": 1,
     "exhausted": true
    },
    "unique_fill": true,
-   "grid_sha256": "3fe151ee8a07784ce620e0edfe37f8488a2b1d4bc4cc13f3e1fcd4f590060f05"
+   "grid_sha256": "f579fd621c8641f28d511880f60693275ba8462fad6f0a64305f63312fa20414"
   }
- ],
- "pilot_character": {
-  "what_the_difficulty_is": "the clues print the answer's letters (anagram, and anagram-minus-announced-decoy), so a slot is ambiguous by LEXICON COMPETITION; the grid decides. The skill measured is search-plus-crossings, NOT cryptic parsing.",
-  "what_it_is_not": "not a cryptic crossword: no charade, hidden-word or container device, so no clue has to be parsed for its wordplay",
-  "lexicon_dependence": "both gates use the declared list; ceiling and floor move if the list moves, which is why word_list_size and words_sha256 are carried beside every number",
-  "ceiling_meaning": "anagram_resolved / slots = how many slots a reader could answer WITHOUT the grid"
- }
+ ]
 }

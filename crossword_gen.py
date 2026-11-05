@@ -71,7 +71,39 @@ N = 5
 ACROSS, DOWN = (0, 1), (1, 0)
 
 LEXICON_FILE = Path(__file__).with_name("wordlist_3_7.txt")
+DEFINITIONS_FILE = Path(__file__).with_name("definitions.json")
+DEFS, TERSE_INDEX = {}, {}
 LEXICON_SHA = None
+
+
+def set_definitions(path=None):
+    """Load the terse-definition index. A definition clue's candidate set is every declared word whose
+    TERSE definition is this same phrase -- that is what makes the grid load-bearing, and it is a different
+    question from the letter-based one it replaces."""
+    global DEFS, TERSE_INDEX
+    p = Path(path) if path else DEFINITIONS_FILE
+    if not p.exists():
+        return False
+    DEFS = json.loads(p.read_text())["words"]
+    idx = {}
+    for w, senses in DEFS.items():
+        for sn in senses:
+            idx.setdefault(sn["terse"], set()).add(w)
+    TERSE_INDEX = idx
+    return True
+
+
+def restrict_to_cluable(lo=2, hi=10):
+    """The answer pool is words we can CLUE. With a band of 2-10 candidates about 48% of the lexicon
+    qualifies, and requiring all ten answers of a grid to qualify is what made the first definition build
+    emit zero puzzles -- so the pool is filtered, not the gate relaxed."""
+    global WORDS
+    keep, probe = [], random.Random(0)
+    for w in WORDS:
+        if definition_clue(w, probe, lo, hi) is not None:
+            keep.append(w)
+    WORDS = tuple(keep)
+    return len(WORDS)
 
 
 def set_lexicon(path=None):
@@ -173,6 +205,25 @@ def slots_of(placed):
     return out
 
 
+FRAGMENT_STARTS = {"be", "have", "make", "cause", "give", "take", "do", "get", "put", "go", "come"}
+
+
+def definition_clue(answer: str, rng: random.Random, lo=2, hi=10):
+    """A terse definition whose candidate set is a FAIR BAND (lo..hi words): small enough that the clue
+    narrows, larger than one so the grid has to decide. Returns None if the word has no such sense."""
+    senses = DEFS.get(answer) or []
+    # a terse cut that begins on a light verb is a fragment ("be abundantly"), not a definition; and a clue
+    # must not be a bare copula-plus-adverb. Cheaper to reject at build time than to apologise for later.
+    band = [sn for sn in senses
+            if lo <= len(TERSE_INDEX.get(sn["terse"], ())) <= hi
+            and sn["terse"].split()[0] not in FRAGMENT_STARTS]
+    if not band:
+        return None
+    sn = band[rng.randrange(len(band))]
+    return sn["terse"], dict(kind="definition", terse=sn["terse"], pos=sn["pos"],
+                             gloss=sn["gloss"], synset=sn["synset"])
+
+
 def clue_for(answer: str, rng: random.Random):
     """Two machine-checkable cryptic devices. `anagram` hands over the answer's own letters; `decoy` hands
     over the letters of the answer PLUS a declared word that must be removed, so the solver has to choose
@@ -203,6 +254,8 @@ def multiset_minus(a: str, b: str):
 
 def candidates_of(clue: dict):
     """Every declared word consistent with the clue alone -- no crossings used."""
+    if clue["kind"] == "definition":
+        return sorted(TERSE_INDEX.get(clue["terse"], ()))
     if clue["kind"] == "anagram":
         key = "".join(sorted(clue["letters"]))
         return sorted(w for w in WORDS if len(w) == len(clue["letters"]) and "".join(sorted(w)) == key)
@@ -324,11 +377,21 @@ def build(n_puzzles: int, seed: int):
             sl["col"] -= minc
         n_rows = max(r for r, _ in grid) - minr + 1
         n_cols = max(c for _, c in grid) - minc + 1
+        all_clued = True
         for s in slots:
-            text, data = clue_for(s["answer"], rng)
+            # WHEN DEFINITIONS ARE LOADED THERE IS NO FALLBACK. A letter clue re-introduces the defect the
+            # whole change exists to remove -- it prints the answer -- so a slot without a fair-band sense
+            # rejects the grid instead of being filled with the old device.
+            made = definition_clue(s["answer"], rng) if DEFS else clue_for(s["answer"], rng)
+            if made is None:
+                all_clued = False
+                break
+            text, data = made
             s["clue"], s["clue_data"] = text, data
             s["scramble"] = data.get("letters", "")      # compatibility: the letters as the clue shows them
             s["clue_kind"] = data["kind"]
+        if not all_clued:
+            continue          # a puzzle is all-or-nothing: one uncluable slot rejects the grid
         perm = list(range(len(slots)))
         rng.shuffle(perm)
         for i, s in enumerate(slots):
@@ -451,8 +514,11 @@ def self_test():
           [f"A{i + 1}" for i in range(sum(1 for sl in pz["slots"] if sl["direction"] == "across"))] and
           [sl["id"] for sl in pz["slots"] if sl["direction"] == "down"] ==
           [f"D{i + 1}" for i in range(sum(1 for sl in pz["slots"] if sl["direction"] == "down"))])
-    check("every slot carries a scramble and a clue kind",
-          all(sl.get("scramble") is not None and sl.get("clue_kind") in ("anagram", "decoy") for sl in pz["slots"]))
+    def slot_ok(sl):
+        if sl["clue_kind"] == "definition":
+            return bool(sl["clue_data"].get("terse")) and bool(sl["clue_data"].get("pos"))
+        return sl["clue_kind"] in ("anagram", "decoy") and sl.get("scramble") is not None
+    check("every slot carries the fields its clue kind needs", all(slot_ok(sl) for sl in pz["slots"]))
     check("the shipped puzzle has exactly one fill", pz["floor"].get("fills") == 1)
     check("the shipped puzzle is under the ceiling", pz["ceiling"]["anagram_resolved"] <= len(pz["slots"]) // 2)
     check("both clue mappings cover every slot",
@@ -468,12 +534,21 @@ def main():
     ap.add_argument("--puzzles", type=int, default=3)
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--out", default="probes/CROSSWORD_CRATE_2026-11-05.json")
-    ap.add_argument("--lexicon", default=None, help="path to a word list; default wordlist_3_7.txt")
+    ap.add_argument("--lexicon", default=None, help="word list; default wordlist_3_7.txt")
+    ap.add_argument("--definitions", default=None, help="terse-definition index; default definitions.json")
     a = ap.parse_args()
-    if a.self_test:
-        set_lexicon(a.lexicon)
-        sys.exit(0 if self_test() else 1)
+
     set_lexicon(a.lexicon)
+    loaded_defs = set_definitions(a.definitions)
+
+    if a.self_test:
+        print(f"lexicon {len(WORDS)}  definitions {'loaded' if loaded_defs else 'absent'}")
+        sys.exit(0 if self_test() else 1)
+
+    if loaded_defs:
+        n = restrict_to_cluable()
+        print(f"answer pool restricted to cluable words: {n}")
+    print(f"lexicon {len(WORDS)}  definitions {'loaded' if loaded_defs else 'ABSENT -- letter clues only'}")
     crate = build(a.puzzles, a.seed)
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -481,9 +556,11 @@ def main():
     print(f"word list {crate['word_list_size']} words  sha256 {crate['words_sha256'][:16]}")
     print(f"puzzles {len(crate['puzzles'])}  wrote {out}")
     for p in crate["puzzles"]:
-        print(f"  {p['rows']}x{p['cols']}  slots {len(p['slots'])}  "
-              f"ceiling {p['ceiling']['anagram_resolved']}/{p['ceiling']['slots']} anagram-resolvable  "
-              f"floor {p['floor']['verdict']} ({p['floor']['states_expanded']} states)")
+        kinds = sorted({s["clue_kind"] for s in p["slots"]})
+        print(f"  {p['rows']}x{p['cols']}  slots {len(p['slots'])}  kinds {kinds}  "
+              f"ceiling {p['ceiling']['anagram_resolved']}/{p['ceiling']['slots']}  "
+              f"floor {p['floor']['verdict']} ({p['floor']['states_expanded']} states)  "
+              f"fills {p['floor'].get('fills')}")
 
 
 if __name__ == "__main__":
