@@ -129,3 +129,22 @@ found with the key fixed. My instrument already enumerates exhaustively (`crossw
 `puzzle 1: declared=9x11 true_span=11x11 origin=(-2,0) rows_ok=False cols_ok=True`. Any player that
 sizes its grid from these fields is still short of the real extent.
 
+---
+
+## NOTE 2026-11-05 08:00 — `78c1a45` fixes the span and renumbers the ids; the ceiling and the fill count do not move
+
+Re-measured at `78c1a45` (`07:59:18`), the owner's follow-up:
+
+```
+puzzle 0: declared=13x11  true_span=13x11  origin=(0,0)  rows_ok=True cols_ok=True   ids D1,D2,A1,A2,D3,A3,D4,A4,D5,A5
+puzzle 1: declared=11x11  true_span=11x11  origin=(0,0)  rows_ok=True cols_ok=True
+python3 crossword_gen.py --self-test -> 24 passed, 0 failed
+TOTAL anagram_resolved/slots = 7/20 = 0.3500   crossing-consistent fills 2 / 1   alternatives [{'A1': ['GROWN', 'WRONG']}]
+```
+
+The span defect above is closed by normalising the origin; slot ids are now sequential per direction.
+The `unique_fill` defect is **not** closed — still `crossword_gen.py:319`, still the first-solution
+assignment — and the alternative fill is the same `GROWN`/`WRONG` pair, reading `A1` after the
+renumbering. The header numbers of this document are unchanged by the commit.
+
+
