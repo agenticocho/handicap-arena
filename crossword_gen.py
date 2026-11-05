@@ -395,12 +395,14 @@ def self_test():
     # A FIRST FILL IS NOT A KEY: two slots whose clue candidates cross twice must report TWO fills.
     # GROWN/WRONG differ in one letter, so they cannot both cross the same word -- they are the crate's own
     # observed pair, and this check exists because the earlier test could not see a second fill at all.
-    two_way = [dict(id="A1", direction="across", row=0, col=0, length=N, answer="GROWN",
-                    candidates=["GROWN", "WRONG"]),
-               dict(id="D1", direction="down", row=0, col=0, length=N, answer="GROWN",
-                    candidates=["GROWN"])]
+    # two slots sharing one crossing, each admitting the same two words: both assignments are consistent,
+    # so a gate that stops at the first fill reports 1 and a gate that counts reports 2
+    two_way = [dict(id="A1", direction="across", row=0, col=0, length=N, answer="ABOUT",
+                    candidates=["ABOUT", "ABOVE"]),
+               dict(id="D1", direction="down", row=0, col=0, length=N, answer="ABOUT",
+                    candidates=["ABOUT", "ABOVE"])]
     tf = floor_crossing_solve(two_way)
-    check("a second fill is counted, not hidden", tf.get("fills", 0) >= 1)
+    check("a second fill is counted, not hidden", tf.get("fills") == 2)
     check("the solver reports how many fills it found", "fills" in tf and "exhausted" in tf)
     check("floor solver is UNDETERMINED on a bitten budget",
           floor_crossing_solve(one, max_states=0)["verdict"] == "UNDETERMINED")
