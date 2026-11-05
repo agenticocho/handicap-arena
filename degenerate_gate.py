@@ -239,6 +239,36 @@ def _file_digest(name):
 
 
 # ------------------------------------------------------------------------------------------------
+# THE MEASURE THAT DOES NOT DEPEND ON A CHOSEN WIDTH: the board's PERIODIC CLEARANCE INDEX p*.
+#
+# A boolean verdict at a declared width answers "is this board degenerate at width W", and W is a
+# choice -- so a board can pass because W was set below the period that clears it. p* removes the
+# choice from the answer: the smallest period p for which some word of length p, repeated to the
+# cap, clears the board. p* is then compared to the width the EVENT declares, and published beside
+# every board so a reader can see the distance between the two.
+#
+# THIS IS THE CATALOGUE QUESTION, NOT THE PER-RUN QUESTION. Cost is 4^p streams: p*<=3 is
+# milliseconds, p*<=8 is 87,380 streams and ~20 s on this box. So the admission gate stays at the
+# declared width, and this runs when a board is ADMITTED to a catalogue.
+# ------------------------------------------------------------------------------------------------
+def sokoban_min_period(board_path, upto=8):
+    import sokoban as S
+    text = open(board_path, encoding="utf-8").read()
+    alpha = sorted(S.ACTIONS)
+    for period in range(1, upto + 1):
+        n = 0
+        for word in itertools.product(alpha, repeat=period):
+            w = "".join(word)
+            n += 1
+            if S.play(text, list((w * (SOKOBAN_BUDGET // period + 1))[:SOKOBAN_BUDGET]),
+                      stop_when_solved=True)["solved"]:
+                return {"period": period, "word": w, "streams_scanned": n,
+                        "moves": S.play(text, list((w * (SOKOBAN_BUDGET // period + 1))[:SOKOBAN_BUDGET]))["moves"]}
+    return {"period": None, "word": None, "streams_scanned": sum(4 ** k for k in range(1, upto + 1)),
+            "note": f"no periodic word of period <= {upto} clears this board"}
+
+
+# ------------------------------------------------------------------------------------------------
 def _self_test():
     ok = [0, 0]
 
@@ -295,6 +325,13 @@ def _self_test():
     # 5. CHESS: named class, no probe -> UNDETERMINED, never PASS.
     ck("chess is UNDETERMINED", gate("chess", os.path.join(HERE, "CARD_chess.md"))["verdict"], UNDETERMINED)
 
+    # 6. p* IS A MEASUREMENT, NOT A HOPE: the width-free index on two boards, re-derived here.
+    p1 = sokoban_min_period(os.path.join(HERE, SOKOBAN_CONTROL), upto=8)
+    ck("p*(01_one_push) = 1 with word R", (p1["period"], p1["word"]), (1, "R"))
+    p3 = sokoban_min_period(os.path.join(HERE, "levels", "03_the_corner_waiting.txt"), upto=8)
+    ck("p*(03_the_corner_waiting) = 6 with word RULDLU", (p3["period"], p3["word"]), (6, "RULDLU"))
+    ck("03's p* is FAR wider than the declared width 3", p3["period"] > SOKOBAN_MAX_PERIOD, True)
+
     print(f"\n  {ok[0]} passed, {ok[1]} failed")
     return 0 if ok[1] == 0 else 1
 
@@ -305,9 +342,19 @@ def main():
     ap.add_argument("--event", choices=["sokoban", "zork", "chess"])
     ap.add_argument("--board")
     ap.add_argument("--json", action="store_true")
+    ap.add_argument("--max-period", type=int, default=None,
+                    help="sokoban only: report the board's periodic clearance index p* by searching "
+                         "periods 1..N (catalogue question, not the per-run gate)")
     a = ap.parse_args()
     if a.self_test:
         return _self_test()
+    if a.max_period is not None:
+        if a.event != "sokoban" or not a.board:
+            ap.error("--max-period needs --event sokoban --board <path>")
+        r = sokoban_min_period(a.board, upto=a.max_period)
+        r["board"] = os.path.relpath(a.board, HERE)
+        print(json.dumps(r, indent=1))
+        return 0
     if not a.event or not a.board:
         ap.error("--event and --board are required (or --self-test)")
     r = gate(a.event, a.board)

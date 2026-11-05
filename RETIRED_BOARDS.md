@@ -34,8 +34,9 @@ $ python3 degenerate_gate.py --json --event sokoban --board levels/01_one_push.t
   with short words played ONCE, 45 with each word repeated to the cap. **A gate must publish its class
   or its count means nothing**; this file's count is the repeated-to-cap one, and `degenerate_gate.py`
   prints the class beside every number.
-* The two surviving boards measure the opposite: `02_two_boxes` and `03_the_corner_waiting` return
-  **PASS** (control fired, 0 hits of 84). `--self-test` asserts both.
+* The two other boards pass **at the declared width 3** (`02_two_boxes` and `03_the_corner_waiting`:
+  **PASS**, control fired, 0 hits of 84). **They do not survive a wider class — §7, which is the
+  larger finding and the reason this file is not just about one board.**
 
 ## 3. What was NOT done, on purpose
 
@@ -88,7 +89,7 @@ search.**
 
 | Event | Class | Verdict on its boards |
 |---|---|---|
-| sokoban | periodic words, period ≤ 3, cap 40 | `01` DEGENERATE (control) · `02` PASS · `03` PASS |
+| sokoban | periodic words, period ≤ 3, cap 40 | `01` DEGENERATE (control, **p\*=1**) · `02` PASS at width 3, **p\*=7** · `03` PASS at width 3, **p\*=6** |
 | zork | periodic streams, period ≤ 2, over the world's own vocabulary, budget 24 | `zork_01` **DEGENERATE** at period 2 · `zork_02` **PASS** |
 | chess | **policy** class: always the first / always the last legal move | **UNDETERMINED** — class named, probe not built |
 
@@ -97,3 +98,49 @@ search.**
 alias form `take brasskey ; n` clears it in 2 commands too. So the degenerate class for a word-alphabet
 event is *periodic*, not *constant*: a gate that only tried constant commands would have passed the very
 board that fails.
+
+## 7. THE SET-WIDE FINDING — retiring board 01 is necessary and not sufficient
+
+A boolean verdict at a chosen width invites exactly the defect it is meant to catch: a board passes
+because the width was set below the period that clears it. So the gate also reports **p\*, the board's
+periodic clearance index** — the smallest period p for which SOME word of length p, repeated to the
+registered cap 40, clears the board. p\* does not depend on anyone's choice of width, and it is printed
+beside the board's own optimal solution length.
+
+```
+$ python3 degenerate_gate.py --event sokoban --board levels/<board>.txt --max-period 8
+```
+
+| Board | p\* | clearing word (fixed schedule) | moves it takes | optimal solution (solver) | optimal moves |
+|---|---|---|---|---|---|
+| `01_one_push` | **1** | `R` | 1 | `R` | 1 |
+| `03_the_corner_waiting` | **6** | `RULDLU` | 6 | `RULDLU` | 6 |
+| `02_two_boxes` | **7** | `DDRLUUR` | 28 | `DDRRRRULLURR` | 12 |
+
+Optimal lengths are `sokoban_solver.solve_text` on the same files (`01` → `moves 1, solution R`; `03` →
+`moves 6, solution RULDLU`; `02` → `moves 12, solution DDRRRRULLURR`).
+
+Three consequences, in order of how much they cost:
+
+1. **`03_the_corner_waiting` is degenerate in the STRONG form** — its optimal solution `RULDLU` IS the
+   period-6 cycle the gate finds. Like board 01, it was never a puzzle. It passed the cabinet's 84
+   streams only because the width (3) was set below its period (6).
+2. **`02_two_boxes` is degenerate in the operative sense** — a fixed 7-cycle clears it in 28 moves,
+   inside the 40-move cap, without ever reading the board. Its optimum (12) is not that cycle, so the
+   board is not *designed* degenerate; it is merely *clearable* by a schedule, which is the property the
+   score rewards.
+3. **Therefore all three boards are cleared by fixed schedules of period ≤ 7, and the cabinet's
+   rankings on this board set are void** — not just the board-01 rows. The qualifier in §5 is a floor,
+   not the whole exposure: a rate pooled over any of the three pools a board a schedule clears.
+
+**What this means for the replacement — and why no candidate is proposed here.** The third slot is not
+the problem; the whole set is. A replacement board must satisfy `p*` **greater than the width the event
+declares**, and that width must be justified by coverage and cost before any board is measured against
+it. One candidate was built and rejected on measurement rather than on taste: a single-box detour
+(`#  .  / # $   / #@    `) passes at width 3 (`0/84`) and falls at width 4 (`RULU`, 2 of 340). **A board
+that passes 84 streams has been shown almost nothing about its p\*,** which is the argument for making
+p\* the field that travels with a board instead of the verdict at a width someone picked.
+
+**Where this leaves the cabinet, stated plainly:** it currently has **no board that a fixed schedule
+cannot clear within the cap.** That is a set-level failure, it is measurable, and it is Jarvis's and
+Mike's to price — not something a replacement invented in a letter can fix.
