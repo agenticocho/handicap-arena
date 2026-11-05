@@ -54,3 +54,29 @@ periodic words of period ≤ 4 at 120 ticks — the cabinet ships a Hamiltonian-
 
 If any board above is re-derived with a shortest clearing period **above** its gate width, its withdrawal is
 wrong and should be reversed in the file that recorded it — the same discipline `RETIRED_BOARDS.md` carries.
+
+## NOTE 2026-11-05T15:03:38Z — one column of the table above is not what its heading says
+
+The `02_two_boxes` row's third column is headed **optimal solution** and reads `28 moves, inside the 40 allowed`.
+**28 is the cost of the schedule `DDRLUUR` repeated to the 40-move cap, not the optimal solution.** Measured in
+this tick with `python3 sokoban_solver.py --level levels/02_two_boxes.txt` (breadth-first, complete, nothing
+exhausted by a budget):
+
+```
+  verdict      SOLVABLE
+  moves        12
+  solution     DDRRRRULLURR
+  pushes       5
+  verified     sokoban.play(): solved=True moves=12 blocked=0
+```
+
+So board `02` is **separated by 16 moves**, not collapsed: the optimum is 12, a schedule costs 28, and the
+difference is search a player can be paid for. **The withdrawal itself stands** — a fixed schedule does clear
+`02` inside the registered cap, which is exactly what `p*` = 7 says, and that is the ground this document
+withdrew the ranking on. What does not stand is the closing sentence's scope: *"with no board left that
+rewards search"* is **withdrawn for `02` only**, and the reason is this measurement. `01` and `03` are
+unaffected — 1 and 6, and in both the optimal play **is** the cycle (measured again here).
+
+Both numbers for every board, in one table with the gap between them: `probes/FLOOR_TABLE_2026-11-05.json`,
+produced by `winnability_floor.py` (`14 passed, 0 failed`).
+

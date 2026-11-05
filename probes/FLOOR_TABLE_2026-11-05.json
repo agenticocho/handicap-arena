@@ -1,0 +1,446 @@
+{
+ "measured_at": "2026-11-05T07:03:03.180485-08:00",
+ "pstar_provenance": "missile/zork/snake p* from probes/PSTAR_TABLE_2026-11-05.json (measured_at 2026-11-05T06:51:48.504051-08:00); sokoban p* re-derived in this run",
+ "rows": [
+  {
+   "board": "levels/01_one_push.txt",
+   "event": "sokoban",
+   "floor": {
+    "board": "levels/01_one_push.txt",
+    "commands": 1,
+    "cost": {
+     "expanded_by_depth": {
+      "0": 1
+     },
+     "max_depth_reached": 0,
+     "seconds": 5.5639015045017004e-05,
+     "states_expanded": 1,
+     "states_pruned_by_corner_rule": 0,
+     "states_reachable_enumerated": 1
+    },
+    "event": "sokoban",
+    "kind": "win",
+    "optimal": true,
+    "pushes": 1,
+    "reference": "sokoban_solver.solve_text -- BFS over player moves (complete)",
+    "replay": {
+     "blocked": 0,
+     "by": "sokoban.play() -- the FROZEN simulator, the same counter the score uses",
+     "moves": 1,
+     "pushes": 1,
+     "simulator_sha256": "00996929972b9483223bf54f4dcef007162134289c5cdb76a58533ac875e8a7c",
+     "solved": true
+    },
+    "sha256": "db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313",
+    "solution": "R",
+    "solution_period": null,
+    "verdict": "WINNABLE"
+   },
+   "headroom": 0,
+   "p_star": 1,
+   "p_star_source": "re-derived in this run (degenerate_gate.sokoban_min_period)",
+   "schedule": {
+    "commands": 1,
+    "repetitions": 1
+   },
+   "sha256": "db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313",
+   "verdict_pair": "COLLAPSED",
+   "witness": "R"
+  },
+  {
+   "board": "levels/02_two_boxes.txt",
+   "event": "sokoban",
+   "floor": {
+    "board": "levels/02_two_boxes.txt",
+    "commands": 12,
+    "cost": {
+     "expanded_by_depth": {
+      "0": 1,
+      "1": 2,
+      "2": 3,
+      "3": 3,
+      "4": 5,
+      "5": 11,
+      "6": 20,
+      "7": 24,
+      "8": 32,
+      "9": 39,
+      "10": 48,
+      "11": 30
+     },
+     "max_depth_reached": 11,
+     "seconds": 0.0014427489950321615,
+     "states_expanded": 218,
+     "states_pruned_by_corner_rule": 8,
+     "states_reachable_enumerated": 226
+    },
+    "event": "sokoban",
+    "kind": "win",
+    "optimal": true,
+    "pushes": 5,
+    "reference": "sokoban_solver.solve_text -- BFS over player moves (complete)",
+    "replay": {
+     "blocked": 0,
+     "by": "sokoban.play() -- the FROZEN simulator, the same counter the score uses",
+     "moves": 12,
+     "pushes": 5,
+     "simulator_sha256": "00996929972b9483223bf54f4dcef007162134289c5cdb76a58533ac875e8a7c",
+     "solved": true
+    },
+    "sha256": "7549657f1768607cefab6d892b1756b1cabf23f51144a7679d76f331b38a57d7",
+    "solution": "DDRRRRULLURR",
+    "solution_period": null,
+    "verdict": "WINNABLE"
+   },
+   "headroom": 16,
+   "p_star": 7,
+   "p_star_source": "re-derived in this run (degenerate_gate.sokoban_min_period)",
+   "schedule": {
+    "commands": 28,
+    "repetitions": 4
+   },
+   "sha256": "7549657f1768607cefab6d892b1756b1cabf23f51144a7679d76f331b38a57d7",
+   "verdict_pair": "SEPARATED",
+   "witness": "DDRLUUR"
+  },
+  {
+   "board": "levels/03_the_corner_waiting.txt",
+   "event": "sokoban",
+   "floor": {
+    "board": "levels/03_the_corner_waiting.txt",
+    "commands": 6,
+    "cost": {
+     "expanded_by_depth": {
+      "0": 1,
+      "1": 3,
+      "2": 5,
+      "3": 6,
+      "4": 11,
+      "5": 11
+     },
+     "max_depth_reached": 5,
+     "seconds": 0.00038350396789610386,
+     "states_expanded": 37,
+     "states_pruned_by_corner_rule": 1,
+     "states_reachable_enumerated": 38
+    },
+    "event": "sokoban",
+    "kind": "win",
+    "optimal": true,
+    "pushes": 2,
+    "reference": "sokoban_solver.solve_text -- BFS over player moves (complete)",
+    "replay": {
+     "blocked": 0,
+     "by": "sokoban.play() -- the FROZEN simulator, the same counter the score uses",
+     "moves": 6,
+     "pushes": 2,
+     "simulator_sha256": "00996929972b9483223bf54f4dcef007162134289c5cdb76a58533ac875e8a7c",
+     "solved": true
+    },
+    "sha256": "77d18407a001da292b2f1dcf8054ed40ddc2038563f23b96861a362c78cf23d6",
+    "solution": "RULDLU",
+    "solution_period": null,
+    "verdict": "WINNABLE"
+   },
+   "headroom": 0,
+   "p_star": 6,
+   "p_star_source": "re-derived in this run (degenerate_gate.sokoban_min_period)",
+   "schedule": {
+    "commands": 6,
+    "repetitions": 1
+   },
+   "sha256": "77d18407a001da292b2f1dcf8054ed40ddc2038563f23b96861a362c78cf23d6",
+   "verdict_pair": "COLLAPSED",
+   "witness": "RULDLU"
+  },
+  {
+   "board": "levels/mc_01_one_shot.txt",
+   "event": "missile",
+   "floor": {
+    "board": "levels/mc_01_one_shot.txt",
+    "ceiling": 1,
+    "commands": 1,
+    "event": "missile",
+    "kind": "win",
+    "optimal": true,
+    "reference": "complete DP over (tick, alive, ammo, airborne) + replay in missile_command.play",
+    "replay": {
+     "actions": 1,
+     "by": "missile_command.play()",
+     "cities_surviving": 1,
+     "cities_total": 1,
+     "counts": {
+      "fired": 1,
+      "hit": 0,
+      "late": 0,
+      "malformed": 0,
+      "no_ammo": 0,
+      "out_of_range": 0,
+      "passed": 0,
+      "spared": 0,
+      "unknown": 0
+     }
+    },
+    "score": 1,
+    "sha256": "ab101ca955c1c8530304060ba03b80ed60534d5a0dff912d247ba2513acc1496",
+    "solution": "1P",
+    "verdict": "WINNABLE"
+   },
+   "headroom": 0,
+   "p_star": 1,
+   "p_star_source": "probes/PSTAR_TABLE_2026-11-05.json (measured_at 2026-11-05T06:51:48.504051-08:00)",
+   "schedule": {
+    "commands": 1,
+    "repetitions": 1,
+    "score": 1
+   },
+   "sha256": "ab101ca955c1c8530304060ba03b80ed60534d5a0dff912d247ba2513acc1496",
+   "verdict_pair": "COLLAPSED",
+   "witness": "1P"
+  },
+  {
+   "board": "levels/mc_02_scarcity.txt",
+   "event": "missile",
+   "floor": {
+    "board": "levels/mc_02_scarcity.txt",
+    "ceiling": 4,
+    "commands": 4,
+    "event": "missile",
+    "kind": "win",
+    "optimal": true,
+    "reference": "complete DP over (tick, alive, ammo, airborne) + replay in missile_command.play",
+    "replay": {
+     "actions": 4,
+     "by": "missile_command.play()",
+     "cities_surviving": 4,
+     "cities_total": 4,
+     "counts": {
+      "fired": 4,
+      "hit": 0,
+      "late": 0,
+      "malformed": 0,
+      "no_ammo": 0,
+      "out_of_range": 0,
+      "passed": 0,
+      "spared": 4,
+      "unknown": 0
+     }
+    },
+    "score": 4,
+    "sha256": "327d2157bd0b8a8388aa58af0f38a6aef456e8bf2bbd520ae67ffa430de77582",
+    "solution": "1P 1Q 2R 2S",
+    "verdict": "WINNABLE"
+   },
+   "headroom": 0,
+   "p_star": 4,
+   "p_star_source": "probes/PSTAR_TABLE_2026-11-05.json (measured_at 2026-11-05T06:51:48.504051-08:00)",
+   "schedule": {
+    "commands": 4,
+    "repetitions": 1,
+    "score": 4
+   },
+   "sha256": "327d2157bd0b8a8388aa58af0f38a6aef456e8bf2bbd520ae67ffa430de77582",
+   "verdict_pair": "COLLAPSED",
+   "witness": "1P 1Q 2R 2S"
+  },
+  {
+   "board": "levels/zork_01_the_floor.txt",
+   "event": "zork",
+   "floor": {
+    "board": "levels/zork_01_the_floor.txt",
+    "commands": 2,
+    "event": "zork",
+    "kind": "win",
+    "optimal": true,
+    "reference": "BFS over zork.step states + replay in zork.play (complete)",
+    "replay": {
+     "by": "zork.play()",
+     "carried_required_item": true,
+     "commands_consumed": 2,
+     "ending": "escaped",
+     "finished": true
+    },
+    "sha256": "699ef17bfe26521bac34d11e341fd7c52f17d64708f9409a0c666950f75717d3",
+    "solution": "take key ; north",
+    "states_expanded": 2,
+    "verdict": "WINNABLE"
+   },
+   "headroom": 0,
+   "p_star": 2,
+   "p_star_source": "probes/PSTAR_TABLE_2026-11-05.json (measured_at 2026-11-05T06:51:48.504051-08:00)",
+   "schedule": {
+    "commands": 2,
+    "repetitions": 1
+   },
+   "sha256": "699ef17bfe26521bac34d11e341fd7c52f17d64708f9409a0c666950f75717d3",
+   "verdict_pair": "COLLAPSED",
+   "witness": "take brasskey ; n"
+  },
+  {
+   "board": "levels/zork_02_long_crawl.txt",
+   "event": "zork",
+   "floor": {
+    "board": "levels/zork_02_long_crawl.txt",
+    "commands": 6,
+    "event": "zork",
+    "kind": "win",
+    "optimal": true,
+    "reference": "BFS over zork.step states + replay in zork.play (complete)",
+    "replay": {
+     "by": "zork.play()",
+     "carried_required_item": true,
+     "commands_consumed": 6,
+     "ending": "escaped",
+     "finished": true
+    },
+    "sha256": "c1d33b940fd842ed88f0214a0be23885aa28191e2aa83055c24bbea4cff8ad45",
+    "solution": "north ; take brasskey ; south ; east ; north ; east",
+    "states_expanded": 14,
+    "verdict": "WINNABLE"
+   },
+   "headroom": 1,
+   "p_star": 5,
+   "p_star_source": "probes/PSTAR_TABLE_2026-11-05.json (measured_at 2026-11-05T06:51:48.504051-08:00)",
+   "schedule": {
+    "commands": 7,
+    "repetitions": 2
+   },
+   "sha256": "c1d33b940fd842ed88f0214a0be23885aa28191e2aa83055c24bbea4cff8ad45",
+   "verdict_pair": "NARROW",
+   "witness": "n ; e ; take brasskey ; s ; e"
+  },
+  {
+   "board": "seed 1",
+   "event": "snake",
+   "floor": {
+    "best_policy": "greedy-safe",
+    "board": "seed 1",
+    "event": "snake",
+    "kind": "score",
+    "note": "score-typed: a count, not a terminal state. Never pool this with a win floor.",
+    "policy_scores": {
+     "greedy-safe": 9,
+     "hamiltonian-cycle": 0,
+     "hamiltonian-shortcut": 4
+    },
+    "reference": "reference policies through the real page (no cleared state exists)",
+    "score": 9,
+    "seed": "1",
+    "ticks": 120,
+    "verdict": "SCORES"
+   },
+   "headroom": null,
+   "p_star": 2,
+   "p_star_source": "probes/PSTAR_TABLE_2026-11-05.json (measured_at 2026-11-05T06:51:48.504051-08:00)",
+   "schedule": null,
+   "sha256": null,
+   "verdict_pair": "NO-SCHEDULE",
+   "witness": "UL"
+  },
+  {
+   "board": "seed 7",
+   "event": "snake",
+   "floor": {
+    "best_policy": "greedy-safe",
+    "board": "seed 7",
+    "event": "snake",
+    "kind": "score",
+    "note": "score-typed: a count, not a terminal state. Never pool this with a win floor.",
+    "policy_scores": {
+     "greedy-safe": 8,
+     "hamiltonian-cycle": 0,
+     "hamiltonian-shortcut": 5
+    },
+    "reference": "reference policies through the real page (no cleared state exists)",
+    "score": 8,
+    "seed": "7",
+    "ticks": 120,
+    "verdict": "SCORES"
+   },
+   "headroom": null,
+   "p_star": 2,
+   "p_star_source": "probes/PSTAR_TABLE_2026-11-05.json (measured_at 2026-11-05T06:51:48.504051-08:00)",
+   "schedule": null,
+   "sha256": null,
+   "verdict_pair": "NO-SCHEDULE",
+   "witness": "DR"
+  },
+  {
+   "board": "seed 13",
+   "event": "snake",
+   "floor": {
+    "best_policy": "greedy-safe",
+    "board": "seed 13",
+    "event": "snake",
+    "kind": "score",
+    "note": "score-typed: a count, not a terminal state. Never pool this with a win floor.",
+    "policy_scores": {
+     "greedy-safe": 8,
+     "hamiltonian-cycle": 0,
+     "hamiltonian-shortcut": 4
+    },
+    "reference": "reference policies through the real page (no cleared state exists)",
+    "score": 8,
+    "seed": "13",
+    "ticks": 120,
+    "verdict": "SCORES"
+   },
+   "headroom": null,
+   "p_star": 2,
+   "p_star_source": "probes/PSTAR_TABLE_2026-11-05.json (measured_at 2026-11-05T06:51:48.504051-08:00)",
+   "schedule": null,
+   "sha256": null,
+   "verdict_pair": "NO-SCHEDULE",
+   "witness": "UL"
+  },
+  {
+   "board": "seed 42",
+   "event": "snake",
+   "floor": {
+    "best_policy": "greedy-safe",
+    "board": "seed 42",
+    "event": "snake",
+    "kind": "score",
+    "note": "score-typed: a count, not a terminal state. Never pool this with a win floor.",
+    "policy_scores": {
+     "greedy-safe": 8,
+     "hamiltonian-cycle": 0,
+     "hamiltonian-shortcut": 5
+    },
+    "reference": "reference policies through the real page (no cleared state exists)",
+    "score": 8,
+    "seed": "42",
+    "ticks": 120,
+    "verdict": "SCORES"
+   },
+   "headroom": null,
+   "p_star": 4,
+   "p_star_source": "probes/PSTAR_TABLE_2026-11-05.json (measured_at 2026-11-05T06:51:48.504051-08:00)",
+   "schedule": null,
+   "sha256": null,
+   "verdict_pair": "NO-SCHEDULE",
+   "witness": "LLUL"
+  },
+  {
+   "board": "(no board file: probe unbuilt)",
+   "event": "chess",
+   "floor": {
+    "board": "<board>",
+    "commands": null,
+    "event": "chess",
+    "kind": "win",
+    "note": "no reference solver is declared or built for chess -- the floor is UNMEASURED, and an unmeasured floor must not read as 'no model can win it'",
+    "reference": null,
+    "verdict": "UNDETERMINED"
+   },
+   "headroom": null,
+   "p_star": null,
+   "p_star_source": "n/a",
+   "schedule": null,
+   "sha256": null,
+   "verdict_pair": "UNMEASURED",
+   "witness": null
+  }
+ ],
+ "units": "commands consumed to the event's terminal state; snake is a score and is labelled"
+}
