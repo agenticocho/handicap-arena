@@ -97,7 +97,7 @@ def self_test():
     return fail == 0
 
 
-def play_iterate(endpoint, crate_path, rounds=4):
+def play_iterate(endpoint, crate_path, rounds=4, stub=None):
     """THE ITERATIVE PLAYER. Nothing is locked: each round, every slot sees the letters that the OTHER slots
     currently agree on at its cells, and may change its answer because of them. Only at the end are the
     proposals scored. This is the protocol in which a model's second answer can differ from its first --
@@ -134,7 +134,7 @@ def play_iterate(endpoint, crate_path, rounds=4):
                           f"The crossing letters from the rest of the grid are {pattern} "
                           f"(underscores are unknown). Answer with exactly one {s['length']}-letter "
                           f"English word and nothing else.")
-                raw = ask(endpoint, prompt)
+                raw = s["answer"] if stub == "answers" else ask(endpoint, prompt)
                 m = re.findall(rf"\b[A-Za-z]{{{s['length']}}}\b", (raw or "").upper())
                 cand = m[0] if len(set(m)) == 1 else None
                 if cand and cand in CG.WORDS:
@@ -182,7 +182,7 @@ def play_grid(endpoint, crate_path, passes=3):
                 prompt = (f"Crossword clue: {s['clue']} ({s['length']} letters). "
                           f"The pattern so far is {pattern} (underscores are unknown). "
                           f"Answer with exactly one {s['length']}-letter English word and nothing else.")
-                raw = ask(endpoint, prompt)
+                raw = s["answer"] if stub == "answers" else ask(endpoint, prompt)
                 m = re.findall(rf"\b[A-Za-z]{{{s['length']}}}\b", (raw or "").upper())
                 cand = m[0] if len(set(m)) == 1 else None
                 # a word that is not in the declared lexicon never enters the grid: DARBOUR fit the pattern
@@ -225,7 +225,7 @@ def main():
     if a.self_test:
         return 0 if self_test() else 1
     if a.protocol == "iterate":
-        rec = play_iterate(a.endpoint, a.crate, rounds=a.rounds)
+        rec = play_iterate(a.endpoint, a.crate, rounds=a.rounds, stub=a.stub)
         if a.out:
             Path(a.out).parent.mkdir(parents=True, exist_ok=True)
             Path(a.out).write_text(json.dumps(rec, indent=1) + "\n")
