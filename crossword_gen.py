@@ -88,7 +88,7 @@ def set_definitions(path=None):
     idx = {}
     for w, senses in DEFS.items():
         for sn in senses:
-            idx.setdefault(sn["terse"], set()).add(w)
+            idx.setdefault(sn.get("clue") or sn["terse"], set()).add(w)
     TERSE_INDEX = idx
     return True
 
@@ -214,15 +214,15 @@ def definition_clue(answer: str, rng: random.Random, lo=2, hi=10):
     senses = DEFS.get(answer) or []
     # a terse cut that begins on a light verb is a fragment ("be abundantly"), not a definition; and a clue
     # must not be a bare copula-plus-adverb. Cheaper to reject at build time than to apologise for later.
+    key = lambda sn: sn.get("clue") or sn["terse"]
     band = [sn for sn in senses
-            if lo <= len(TERSE_INDEX.get(sn["terse"], ())) <= hi
-            and distinct_stems(TERSE_INDEX.get(sn["terse"], ())) >= 2   # a real choice, not one lemma's forms
-            and sn["terse"].split()[0] not in FRAGMENT_STARTS]
+            if lo <= len(TERSE_INDEX.get(key(sn), ())) <= hi
+            and distinct_stems(TERSE_INDEX.get(key(sn), ())) >= 2]  # a real choice, not one lemma's forms
     if not band:
         return None
     sn = band[rng.randrange(len(band))]
-    return sn["terse"], dict(kind="definition", terse=sn["terse"], pos=sn["pos"],
-                             gloss=sn["gloss"], synset=sn["synset"])
+    return key(sn), dict(kind="definition", clue=key(sn), terse=sn.get("terse"), pos=sn["pos"],
+                         gloss=sn["gloss"], synset=sn["synset"], clue_source="hypernym")
 
 
 def clue_for(answer: str, rng: random.Random):
@@ -266,7 +266,7 @@ def distinct_stems(words):
 def candidates_of(clue: dict):
     """Every declared word consistent with the clue alone -- no crossings used."""
     if clue["kind"] == "definition":
-        return sorted(TERSE_INDEX.get(clue["terse"], ()))
+        return sorted(TERSE_INDEX.get(clue.get("clue") or clue["terse"], ()))
     if clue["kind"] == "anagram":
         key = "".join(sorted(clue["letters"]))
         return sorted(w for w in WORDS if len(w) == len(clue["letters"]) and "".join(sorted(w)) == key)

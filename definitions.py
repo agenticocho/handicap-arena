@@ -35,6 +35,27 @@ def stemmer():
     return ps.stem
 
 
+def hypernym_clue(sense, stem, answer_stem, max_words=3):
+    """A DEFINITION THAT KEEPS THE SENSE. Truncating a gloss takes its modifier and discards its head --
+    "lightweight cord..." becomes the clue "lightweight", which reads as an adjective meaning tiny while the
+    answer STRINGS is the noun. A hypernym lemma is short by construction and names the sense: cord, war,
+    advantage. Instance hypernyms cover proper-noun senses."""
+    names = []
+    for h in list(sense.hypernyms()) + list(getattr(sense, "instance_hypernyms", lambda: [])()):
+        for l in h.lemmas():
+            nm = l.name().replace("_", " ").lower()
+            toks = nm.split()
+            if not toks or len(toks) > max_words:
+                continue
+            if any(stem(t) == answer_stem for t in toks):
+                continue
+            names.append(nm)
+    if not names:
+        return None
+    names.sort(key=lambda x: (len(x.split()), len(x)))
+    return names[0]
+
+
 def terse_of(gloss, stem, answer_stem, max_words=4):
     """The shortest leading phrase of the gloss that is a definition in its own right."""
     words = re.findall(r"[A-Za-z'-]+", gloss)
@@ -72,9 +93,10 @@ def build(lexicon):
             if any(stem(t) == ans_stem for t in toks):
                 continue
             terse = terse_of(gloss, stem, ans_stem)
-            if not terse:
+            clue = hypernym_clue(s, stem, ans_stem)
+            if not clue:
                 continue
-            senses.append(dict(gloss=gloss, terse=terse, pos=POS.get(s.pos(), s.pos()),
+            senses.append(dict(gloss=gloss, terse=terse, clue=clue, pos=POS.get(s.pos(), s.pos()),
                                synset=s.name(), sense_rank=rank))
         if senses:
             out[w] = senses

@@ -1,118 +1,165 @@
 {
  "seed": 5,
- "word_list_size": 7634,
+ "word_list_size": 7833,
  "words_sha256": "8e299e32d3b90006df8c75c0300faeee2970611b98b034ed973f014cd2043b23",
  "source": "declared in crossword_gen.py -- no third-party content",
  "construction": "criss-cross, no symmetry claim, every word crosses at least one other",
  "puzzles": [
   {
-   "rows": 16,
-   "cols": 13,
+   "rows": 12,
+   "cols": 14,
    "slots": [
     {
      "id": "A1",
      "direction": "across",
      "row": 0,
-     "col": 3,
-     "length": 7,
-     "answer": "WARPING",
-     "clue": "moral",
+     "col": 1,
+     "length": 6,
+     "answer": "BARREL",
+     "clue": "tube",
      "clue_data": {
       "kind": "definition",
-      "terse": "moral",
+      "clue": "tube",
+      "terse": "tube",
       "pos": "n",
-      "gloss": "a moral or mental distortion",
-      "synset": "warp.n.03"
+      "gloss": "a tube through which a bullet travels when a gun is fired",
+      "synset": "barrel.n.01",
+      "clue_source": "hypernym"
      },
      "scramble": "",
      "clue_kind": "definition",
      "clue_to_slot_published": "A1",
-     "clue_to_slot_permuted": "D2",
-     "clue_candidates": 8,
+     "clue_to_slot_permuted": "A1",
+     "clue_candidates": 10,
      "candidates": [
-      "FRAILTY",
-      "GOOD",
-      "GOODS",
-      "VICE",
-      "VICES",
-      "WARP",
-      "WARPING",
-      "WARPS"
+      "BARREL",
+      "BARRELS",
+      "BLOWGUN",
+      "DIODE",
+      "DIODES",
+      "HOSE",
+      "HOSES",
+      "VASES",
+      "VESSEL",
+      "VESSELS"
      ]
     },
     {
      "id": "D1",
      "direction": "down",
      "row": 0,
-     "col": 9,
+     "col": 1,
      "length": 7,
-     "answer": "GUFFAWS",
-     "clue": "burst",
+     "answer": "BONUSES",
+     "clue": "positive stimulus",
      "clue_data": {
       "kind": "definition",
-      "terse": "burst",
+      "clue": "positive stimulus",
+      "terse": "anything",
       "pos": "n",
-      "gloss": "a burst of deep loud hearty laughter",
-      "synset": "guffaw.n.01"
+      "gloss": "anything that tends to arouse",
+      "synset": "bonus.n.01",
+      "clue_source": "hypernym"
      },
      "scramble": "",
      "clue_kind": "definition",
      "clue_to_slot_published": "D1",
-     "clue_to_slot_permuted": "A5",
-     "clue_candidates": 8,
+     "clue_to_slot_permuted": "D2",
+     "clue_candidates": 7,
      "candidates": [
-      "EXPLODE",
-      "FLARE",
-      "FLARES",
-      "GUFFAW",
-      "GUFFAWS",
-      "IMPLODE",
-      "STAVED",
-      "STAVING"
+      "BONUS",
+      "BONUSES",
+      "DELIGHT",
+      "FILLIP",
+      "FILLIPS",
+      "JOY",
+      "JOYS"
+     ]
+    },
+    {
+     "id": "A2",
+     "direction": "across",
+     "row": 3,
+     "col": 0,
+     "length": 4,
+     "answer": "RUBS",
+     "clue": "obstacle",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "obstacle",
+      "terse": "unforeseen",
+      "pos": "n",
+      "gloss": "an unforeseen obstacle",
+      "synset": "hang-up.n.02",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A2",
+     "clue_to_slot_permuted": "D3",
+     "clue_candidates": 10,
+     "candidates": [
+      "HAZARD",
+      "HAZARDS",
+      "HITCH",
+      "HITCHES",
+      "HURDLE",
+      "HURDLES",
+      "RUB",
+      "RUBS",
+      "STYMIE",
+      "STYMIES"
      ]
     },
     {
      "id": "D2",
      "direction": "down",
-     "row": 4,
-     "col": 1,
+     "row": 3,
+     "col": 3,
      "length": 7,
-     "answer": "VICTUAL",
-     "clue": "lay",
+     "answer": "STICKUP",
+     "clue": "robbery",
      "clue_data": {
       "kind": "definition",
-      "terse": "lay",
-      "pos": "v",
-      "gloss": "lay in provisions",
-      "synset": "victual.v.02"
+      "clue": "robbery",
+      "terse": "robbery",
+      "pos": "n",
+      "gloss": "robbery at gunpoint",
+      "synset": "armed_robbery.n.01",
+      "clue_source": "hypernym"
      },
      "scramble": "",
      "clue_kind": "definition",
      "clue_to_slot_published": "D2",
-     "clue_to_slot_permuted": "D4",
-     "clue_candidates": 5,
+     "clue_to_slot_permuted": "D5",
+     "clue_candidates": 8,
      "candidates": [
-      "ARRAYED",
-      "DENUDE",
-      "DENUDED",
-      "DENUDES",
-      "VICTUAL"
+      "CAPER",
+      "CAPERS",
+      "HEIST",
+      "HEISTS",
+      "HOLDUP",
+      "HOLDUPS",
+      "ROLLING",
+      "STICKUP"
      ]
     },
     {
      "id": "D3",
      "direction": "down",
-     "row": 4,
-     "col": 3,
-     "length": 5,
-     "answer": "SHARE",
-     "clue": "allotment",
+     "row": 6,
+     "col": 6,
+     "length": 4,
+     "answer": "DELL",
+     "clue": "hollow",
      "clue_data": {
       "kind": "definition",
-      "terse": "allotment",
+      "clue": "hollow",
+      "terse": "small",
       "pos": "n",
-      "gloss": "the allotment of some amount by dividing something",
-      "synset": "parcel.n.02"
+      "gloss": "a small wooded hollow",
+      "synset": "dell.n.01",
+      "clue_source": "hypernym"
      },
      "scramble": "",
      "clue_kind": "definition",
@@ -120,157 +167,593 @@
      "clue_to_slot_permuted": "A2",
      "clue_candidates": 5,
      "candidates": [
-      "PARCEL",
-      "PARCELS",
-      "PORTION",
-      "SHARE",
-      "SHARES"
+      "DELL",
+      "DELLS",
+      "DUG",
+      "GOUGED",
+      "GOUGING"
      ]
     },
     {
      "id": "D4",
      "direction": "down",
-     "row": 4,
-     "col": 7,
-     "length": 7,
-     "answer": "UPSCALE",
-     "clue": "appropriate",
+     "row": 6,
+     "col": 12,
+     "length": 6,
+     "answer": "STOICS",
+     "clue": "adult",
      "clue_data": {
       "kind": "definition",
-      "terse": "appropriate",
-      "pos": "a",
-      "gloss": "appropriate for people with good incomes",
-      "synset": "upscale.s.01"
+      "clue": "adult",
+      "terse": "someone",
+      "pos": "n",
+      "gloss": "someone who is seemingly indifferent to emotions",
+      "synset": "stoic.n.02",
+      "clue_source": "hypernym"
      },
      "scramble": "",
      "clue_kind": "definition",
      "clue_to_slot_published": "D4",
-     "clue_to_slot_permuted": "D3",
-     "clue_candidates": 5,
+     "clue_to_slot_permuted": "A4",
+     "clue_candidates": 10,
      "candidates": [
-      "CASUAL",
-      "DAILY",
-      "GODLIKE",
-      "SPORTY",
-      "UPSCALE"
-     ]
-    },
-    {
-     "id": "A2",
-     "direction": "across",
-     "row": 6,
-     "col": 3,
-     "length": 7,
-     "answer": "ADJUSTS",
-     "clue": "adapt",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "adapt",
-      "pos": "v",
-      "gloss": "adapt or conform oneself to new or different conditions",
-      "synset": "adjust.v.03"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "A2",
-     "clue_to_slot_permuted": "A1",
-     "clue_candidates": 6,
-     "candidates": [
-      "ADJUST",
-      "ADJUSTS",
-      "TAME",
-      "TAMED",
-      "TAMES",
-      "TAMING"
+      "CATCH",
+      "CATCHES",
+      "ELDER",
+      "ELDERS",
+      "SENIOR",
+      "SENIORS",
+      "STOIC",
+      "STOICS",
+      "WOMAN",
+      "WOMEN"
      ]
     },
     {
      "id": "A3",
      "direction": "across",
      "row": 8,
-     "col": 0,
-     "length": 5,
-     "answer": "TUNED",
-     "clue": "adjust",
+     "col": 2,
+     "length": 7,
+     "answer": "PUDDLES",
+     "clue": "water",
      "clue_data": {
       "kind": "definition",
-      "terse": "adjust",
-      "pos": "v",
-      "gloss": "adjust the pitches of (musical instruments)",
-      "synset": "tune.v.02"
+      "clue": "water",
+      "terse": "small",
+      "pos": "n",
+      "gloss": "a small body of standing water (rainwater) or other liquid",
+      "synset": "pool.n.06",
+      "clue_source": "hypernym"
      },
      "scramble": "",
      "clue_kind": "definition",
      "clue_to_slot_published": "A3",
-     "clue_to_slot_permuted": "D1",
+     "clue_to_slot_permuted": "A3",
      "clue_candidates": 10,
      "candidates": [
-      "ATTUNE",
-      "ATTUNED",
-      "ATTUNES",
-      "PHASED",
-      "PHASING",
-      "TAILOR",
-      "TAILORS",
-      "TUNED",
-      "TUNING",
-      "TWEAKED"
+      "BRINY",
+      "FALLS",
+      "LAKE",
+      "LAKES",
+      "MAIN",
+      "MAINS",
+      "PUDDLE",
+      "PUDDLES",
+      "SHOAL",
+      "SHOALS"
+     ]
+    },
+    {
+     "id": "D5",
+     "direction": "down",
+     "row": 8,
+     "col": 8,
+     "length": 4,
+     "answer": "SOWS",
+     "clue": "swine",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "swine",
+      "terse": "adult",
+      "pos": "n",
+      "gloss": "an adult female hog",
+      "synset": "sow.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D5",
+     "clue_to_slot_permuted": "D4",
+     "clue_candidates": 8,
+     "candidates": [
+      "BOAR",
+      "BOARS",
+      "HOG",
+      "HOGS",
+      "PIG",
+      "PIGS",
+      "SOW",
+      "SOWS"
      ]
     },
     {
      "id": "A4",
      "direction": "across",
      "row": 10,
-     "col": 4,
+     "col": 8,
      "length": 6,
-     "answer": "REMEDY",
-     "clue": "medicine",
+     "answer": "WRETCH",
+     "clue": "victim",
      "clue_data": {
       "kind": "definition",
-      "terse": "medicine",
+      "clue": "victim",
+      "terse": "someone",
       "pos": "n",
-      "gloss": "a medicine or therapy that cures disease or relieve pain",
-      "synset": "remedy.n.02"
+      "gloss": "someone you feel sorry for",
+      "synset": "poor_devil.n.01",
+      "clue_source": "hypernym"
      },
      "scramble": "",
      "clue_kind": "definition",
      "clue_to_slot_published": "A4",
-     "clue_to_slot_permuted": "A3",
-     "clue_candidates": 5,
+     "clue_to_slot_permuted": "A5",
+     "clue_candidates": 3,
      "candidates": [
-      "ANODYNE",
-      "EMETIC",
-      "EMETICS",
-      "IMAGING",
-      "REMEDY"
+      "MARTYR",
+      "MARTYRS",
+      "WRETCH"
      ]
     },
     {
-     "id": "D5",
-     "direction": "down",
-     "row": 10,
-     "col": 8,
+     "id": "A5",
+     "direction": "across",
+     "row": 11,
+     "col": 3,
      "length": 6,
-     "answer": "DEDUCE",
-     "clue": "conclude",
+     "answer": "ERUPTS",
+     "clue": "begin",
      "clue_data": {
       "kind": "definition",
-      "terse": "conclude",
+      "clue": "begin",
+      "terse": "start",
       "pos": "v",
-      "gloss": "conclude by reasoning; in logic",
-      "synset": "deduce.v.02"
+      "gloss": "start abruptly",
+      "synset": "erupt.v.01",
+      "clue_source": "hypernym"
      },
      "scramble": "",
      "clue_kind": "definition",
-     "clue_to_slot_published": "D5",
-     "clue_to_slot_permuted": "A4",
+     "clue_to_slot_published": "A5",
+     "clue_to_slot_permuted": "D1",
+     "clue_candidates": 7,
+     "candidates": [
+      "BUDDED",
+      "BUDDING",
+      "DAWNED",
+      "DAWNING",
+      "ERUPT",
+      "ERUPTED",
+      "ERUPTS"
+     ]
+    }
+   ],
+   "ceiling": {
+    "clue_resolved": 0,
+    "slots": 10,
+    "clue_rule": "definition: a slot counts as resolved when its terse definition fits exactly one declared word",
+    "ambiguous": [
+     {
+      "id": "A1",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "BARREL",
+       "BARRELS",
+       "BLOWGUN",
+       "DIODE",
+       "DIODES",
+       "HOSE"
+      ]
+     },
+     {
+      "id": "D1",
+      "kind": "definition",
+      "n_candidates": 7,
+      "candidates": [
+       "BONUS",
+       "BONUSES",
+       "DELIGHT",
+       "FILLIP",
+       "FILLIPS",
+       "JOY"
+      ]
+     },
+     {
+      "id": "A2",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "HAZARD",
+       "HAZARDS",
+       "HITCH",
+       "HITCHES",
+       "HURDLE",
+       "HURDLES"
+      ]
+     },
+     {
+      "id": "D2",
+      "kind": "definition",
+      "n_candidates": 8,
+      "candidates": [
+       "CAPER",
+       "CAPERS",
+       "HEIST",
+       "HEISTS",
+       "HOLDUP",
+       "HOLDUPS"
+      ]
+     },
+     {
+      "id": "D3",
+      "kind": "definition",
+      "n_candidates": 5,
+      "candidates": [
+       "DELL",
+       "DELLS",
+       "DUG",
+       "GOUGED",
+       "GOUGING"
+      ]
+     },
+     {
+      "id": "D4",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "CATCH",
+       "CATCHES",
+       "ELDER",
+       "ELDERS",
+       "SENIOR",
+       "SENIORS"
+      ]
+     },
+     {
+      "id": "A3",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "BRINY",
+       "FALLS",
+       "LAKE",
+       "LAKES",
+       "MAIN",
+       "MAINS"
+      ]
+     },
+     {
+      "id": "D5",
+      "kind": "definition",
+      "n_candidates": 8,
+      "candidates": [
+       "BOAR",
+       "BOARS",
+       "HOG",
+       "HOGS",
+       "PIG",
+       "PIGS"
+      ]
+     },
+     {
+      "id": "A4",
+      "kind": "definition",
+      "n_candidates": 3,
+      "candidates": [
+       "MARTYR",
+       "MARTYRS",
+       "WRETCH"
+      ]
+     },
+     {
+      "id": "A5",
+      "kind": "definition",
+      "n_candidates": 7,
+      "candidates": [
+       "BUDDED",
+       "BUDDING",
+       "DAWNED",
+       "DAWNING",
+       "ERUPT",
+       "ERUPTED"
+      ]
+     }
+    ]
+   },
+   "floor": {
+    "verdict": "WINNABLE",
+    "states_expanded": 10,
+    "solution": [],
+    "assignments": {
+     "A2": "RUBS",
+     "D1": "BONUSES",
+     "A1": "BARREL",
+     "D2": "STICKUP",
+     "D3": "DELL",
+     "A3": "PUDDLES",
+     "D5": "SOWS",
+     "A4": "WRETCH",
+     "D4": "STOICS",
+     "A5": "ERUPTS"
+    },
+    "fills": 1,
+    "exhausted": true
+   },
+   "unique_fill": true,
+   "grid_sha256": "29ffb9d728fa0fbf94618050b0e96035f9790fb3cc92d7c3aca3b66de3592777"
+  },
+  {
+   "rows": 19,
+   "cols": 12,
+   "slots": [
+    {
+     "id": "D1",
+     "direction": "down",
+     "row": 0,
+     "col": 7,
+     "length": 6,
+     "answer": "HYMENS",
+     "clue": "greek deity",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "greek deity",
+      "terse": "greek",
+      "pos": "n",
+      "gloss": "(Greek mythology) the god of marriage",
+      "synset": "hymen.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D1",
+     "clue_to_slot_permuted": "D4",
      "clue_candidates": 5,
      "candidates": [
-      "DEDUCE",
-      "DEDUCED",
-      "DEDUCES",
-      "INFER",
-      "INFERS"
+      "ATE",
+      "HYMEN",
+      "HYMENS",
+      "ZEPHYR",
+      "ZEPHYRS"
+     ]
+    },
+    {
+     "id": "D2",
+     "direction": "down",
+     "row": 1,
+     "col": 5,
+     "length": 7,
+     "answer": "CRYINGS",
+     "clue": "motto",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "motto",
+      "terse": "slogan",
+      "pos": "n",
+      "gloss": "a slogan used to rally support for a cause",
+      "synset": "war_cry.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D2",
+     "clue_to_slot_permuted": "A3",
+     "clue_candidates": 5,
+     "candidates": [
+      "CRIES",
+      "CRY",
+      "CRYINGS",
+      "MANTRA",
+      "MANTRAS"
+     ]
+    },
+    {
+     "id": "D3",
+     "direction": "down",
+     "row": 2,
+     "col": 3,
+     "length": 5,
+     "answer": "FLECK",
+     "clue": "marking",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "marking",
+      "terse": "small",
+      "pos": "n",
+      "gloss": "a small contrasting part of something",
+      "synset": "spot.n.05",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D3",
+     "clue_to_slot_permuted": "A1",
+     "clue_candidates": 7,
+     "candidates": [
+      "DAPPLE",
+      "DAPPLES",
+      "FLECK",
+      "FLECKS",
+      "PATCH",
+      "PATCHES",
+      "SPECKLE"
+     ]
+    },
+    {
+     "id": "A1",
+     "direction": "across",
+     "row": 3,
+     "col": 3,
+     "length": 6,
+     "answer": "LAYMEN",
+     "clue": "commoner",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "commoner",
+      "terse": "someone",
+      "pos": "n",
+      "gloss": "someone who is not a clergyman or a professional person",
+      "synset": "layman.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A1",
+     "clue_to_slot_permuted": "D3",
+     "clue_candidates": 9,
+     "candidates": [
+      "BURGHER",
+      "LAYMAN",
+      "LAYMEN",
+      "NOBODY",
+      "RUSTIC",
+      "RUSTICS",
+      "SECULAR",
+      "WORKER",
+      "WORKERS"
+     ]
+    },
+    {
+     "id": "A2",
+     "direction": "across",
+     "row": 4,
+     "col": 0,
+     "length": 4,
+     "answer": "HOSE",
+     "clue": "tube",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "tube",
+      "terse": "flexible",
+      "pos": "n",
+      "gloss": "a flexible pipe for conveying a liquid or gas",
+      "synset": "hose.n.03",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A2",
+     "clue_to_slot_permuted": "A5",
+     "clue_candidates": 10,
+     "candidates": [
+      "BARREL",
+      "BARRELS",
+      "BLOWGUN",
+      "DIODE",
+      "DIODES",
+      "HOSE",
+      "HOSES",
+      "VASES",
+      "VESSEL",
+      "VESSELS"
+     ]
+    },
+    {
+     "id": "A3",
+     "direction": "across",
+     "row": 5,
+     "col": 7,
+     "length": 5,
+     "answer": "SAMBA",
+     "clue": "ballroom dance",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "ballroom dance",
+      "terse": "lively",
+      "pos": "n",
+      "gloss": "a lively ballroom dance from Brazil",
+      "synset": "samba.n.03",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A3",
+     "clue_to_slot_permuted": "A4",
+     "clue_candidates": 8,
+     "candidates": [
+      "MINUET",
+      "MINUETS",
+      "RUMBA",
+      "RUMBAS",
+      "SAMBA",
+      "SAMBAS",
+      "TANGO",
+      "TANGOS"
+     ]
+    },
+    {
+     "id": "A4",
+     "direction": "across",
+     "row": 7,
+     "col": 5,
+     "length": 7,
+     "answer": "SQUIRTS",
+     "clue": "cipher",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "cipher",
+      "terse": "someone",
+      "pos": "n",
+      "gloss": "someone who is small and insignificant",
+      "synset": "pip-squeak.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A4",
+     "clue_to_slot_permuted": "D5",
+     "clue_candidates": 10,
+     "candidates": [
+      "DEDUCT",
+      "DEDUCTS",
+      "DIVIDED",
+      "PRORATE",
+      "SOLVE",
+      "SOLVED",
+      "SOLVES",
+      "SOLVING",
+      "SQUIRT",
+      "SQUIRTS"
+     ]
+    },
+    {
+     "id": "D4",
+     "direction": "down",
+     "row": 7,
+     "col": 11,
+     "length": 7,
+     "answer": "SKIDDED",
+     "clue": "slip",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "slip",
+      "terse": "slide",
+      "pos": "v",
+      "gloss": "slide without control",
+      "synset": "skid.v.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D4",
+     "clue_to_slot_permuted": "D2",
+     "clue_candidates": 5,
+     "candidates": [
+      "FALL",
+      "LAPSED",
+      "SKIDDED",
+      "TUMBLE",
+      "TUMBLES"
      ]
     },
     {
@@ -278,472 +761,62 @@
      "direction": "across",
      "row": 13,
      "col": 6,
-     "length": 7,
-     "answer": "SQUARES",
-     "clue": "product",
+     "length": 6,
+     "answer": "NETTED",
+     "clue": "weave",
      "clue_data": {
       "kind": "definition",
-      "terse": "product",
-      "pos": "n",
-      "gloss": "the product of two equal terms",
-      "synset": "square.n.02"
+      "clue": "weave",
+      "terse": "construct",
+      "pos": "v",
+      "gloss": "construct or form a web, as if by weaving",
+      "synset": "web.v.01",
+      "clue_source": "hypernym"
      },
      "scramble": "",
      "clue_kind": "definition",
      "clue_to_slot_published": "A5",
-     "clue_to_slot_permuted": "D5",
-     "clue_candidates": 5,
-     "candidates": [
-      "CUBE",
-      "CUBES",
-      "SQUARE",
-      "SQUARES",
-      "WATTAGE"
-     ]
-    }
-   ],
-   "ceiling": {
-    "clue_resolved": 0,
-    "slots": 10,
-    "clue_rule": "definition: a slot counts as resolved when its terse definition fits exactly one declared word",
-    "ambiguous": [
-     {
-      "id": "A1",
-      "kind": "definition",
-      "n_candidates": 8,
-      "candidates": [
-       "FRAILTY",
-       "GOOD",
-       "GOODS",
-       "VICE",
-       "VICES",
-       "WARP"
-      ]
-     },
-     {
-      "id": "D1",
-      "kind": "definition",
-      "n_candidates": 8,
-      "candidates": [
-       "EXPLODE",
-       "FLARE",
-       "FLARES",
-       "GUFFAW",
-       "GUFFAWS",
-       "IMPLODE"
-      ]
-     },
-     {
-      "id": "D2",
-      "kind": "definition",
-      "n_candidates": 5,
-      "candidates": [
-       "ARRAYED",
-       "DENUDE",
-       "DENUDED",
-       "DENUDES",
-       "VICTUAL"
-      ]
-     },
-     {
-      "id": "D3",
-      "kind": "definition",
-      "n_candidates": 5,
-      "candidates": [
-       "PARCEL",
-       "PARCELS",
-       "PORTION",
-       "SHARE",
-       "SHARES"
-      ]
-     },
-     {
-      "id": "D4",
-      "kind": "definition",
-      "n_candidates": 5,
-      "candidates": [
-       "CASUAL",
-       "DAILY",
-       "GODLIKE",
-       "SPORTY",
-       "UPSCALE"
-      ]
-     },
-     {
-      "id": "A2",
-      "kind": "definition",
-      "n_candidates": 6,
-      "candidates": [
-       "ADJUST",
-       "ADJUSTS",
-       "TAME",
-       "TAMED",
-       "TAMES",
-       "TAMING"
-      ]
-     },
-     {
-      "id": "A3",
-      "kind": "definition",
-      "n_candidates": 10,
-      "candidates": [
-       "ATTUNE",
-       "ATTUNED",
-       "ATTUNES",
-       "PHASED",
-       "PHASING",
-       "TAILOR"
-      ]
-     },
-     {
-      "id": "A4",
-      "kind": "definition",
-      "n_candidates": 5,
-      "candidates": [
-       "ANODYNE",
-       "EMETIC",
-       "EMETICS",
-       "IMAGING",
-       "REMEDY"
-      ]
-     },
-     {
-      "id": "D5",
-      "kind": "definition",
-      "n_candidates": 5,
-      "candidates": [
-       "DEDUCE",
-       "DEDUCED",
-       "DEDUCES",
-       "INFER",
-       "INFERS"
-      ]
-     },
-     {
-      "id": "A5",
-      "kind": "definition",
-      "n_candidates": 5,
-      "candidates": [
-       "CUBE",
-       "CUBES",
-       "SQUARE",
-       "SQUARES",
-       "WATTAGE"
-      ]
-     }
-    ]
-   },
-   "floor": {
-    "verdict": "WINNABLE",
-    "states_expanded": 10,
-    "solution": [],
-    "assignments": {
-     "D3": "SHARE",
-     "A2": "ADJUSTS",
-     "D1": "GUFFAWS",
-     "A1": "WARPING",
-     "D4": "UPSCALE",
-     "A3": "TUNED",
-     "D2": "VICTUAL",
-     "A4": "REMEDY",
-     "D5": "DEDUCE",
-     "A5": "SQUARES"
-    },
-    "fills": 1,
-    "exhausted": true
-   },
-   "unique_fill": true,
-   "grid_sha256": "b76a24d6f2f858dbdcff9207bb93d3babf735921a12c98f04a018fb104fa615d"
-  },
-  {
-   "rows": 12,
-   "cols": 10,
-   "slots": [
-    {
-     "id": "D1",
-     "direction": "down",
-     "row": 0,
-     "col": 6,
-     "length": 5,
-     "answer": "HOBBY",
-     "clue": "auxiliary",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "auxiliary",
-      "pos": "n",
-      "gloss": "an auxiliary activity",
-      "synset": "avocation.n.01"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "D1",
      "clue_to_slot_permuted": "D1",
-     "clue_candidates": 3,
-     "candidates": [
-      "HOBBIES",
-      "HOBBY",
-      "PURSUIT"
-     ]
-    },
-    {
-     "id": "D2",
-     "direction": "down",
-     "row": 1,
-     "col": 4,
-     "length": 4,
-     "answer": "SECT",
-     "clue": "dissenting",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "dissenting",
-      "pos": "n",
-      "gloss": "a dissenting clique",
-      "synset": "faction.n.02"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "D2",
-     "clue_to_slot_permuted": "D2",
-     "clue_candidates": 3,
-     "candidates": [
-      "FACTION",
-      "SECT",
-      "SECTS"
-     ]
-    },
-    {
-     "id": "A1",
-     "direction": "across",
-     "row": 2,
-     "col": 0,
-     "length": 6,
-     "answer": "WARDEN",
-     "clue": "chief",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "chief",
-      "pos": "n",
-      "gloss": "the chief official in charge of a prison",
-      "synset": "warden.n.01"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "A1",
-     "clue_to_slot_permuted": "A4",
-     "clue_candidates": 3,
-     "candidates": [
-      "PREFECT",
-      "WARDEN",
-      "WARDENS"
-     ]
-    },
-    {
-     "id": "A2",
-     "direction": "across",
-     "row": 4,
-     "col": 1,
-     "length": 6,
-     "answer": "FILTHY",
-     "clue": "vile",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "vile",
-      "pos": "a",
-      "gloss": "vile; despicable",
-      "synset": "dirty.s.01"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "A2",
-     "clue_to_slot_permuted": "A2",
-     "clue_candidates": 4,
-     "candidates": [
-      "DIRTIER",
-      "FILTHY",
-      "LOUSIER",
-      "LOUSY"
-     ]
-    },
-    {
-     "id": "D3",
-     "direction": "down",
-     "row": 4,
-     "col": 3,
-     "length": 4,
-     "answer": "LOBE",
-     "clue": "botany",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "botany",
-      "pos": "n",
-      "gloss": "(botany) a part into which a leaf is divided",
-      "synset": "lobe.n.02"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "D3",
-     "clue_to_slot_permuted": "A5",
-     "clue_candidates": 10,
-     "candidates": [
-      "BLISTER",
-      "FLORA",
-      "FLORAE",
-      "FLORAS",
-      "LEAFING",
-      "LOBE",
-      "LOBES",
-      "PAPILLA",
-      "PLANT",
-      "PLANTS"
-     ]
-    },
-    {
-     "id": "D4",
-     "direction": "down",
-     "row": 4,
-     "col": 5,
-     "length": 5,
-     "answer": "HAUNT",
-     "clue": "frequently",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "frequently",
-      "pos": "n",
-      "gloss": "a frequently visited place",
-      "synset": "haunt.n.01"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "D4",
-     "clue_to_slot_permuted": "A1",
      "clue_candidates": 8,
      "candidates": [
-      "HANGOUT",
-      "HAUNT",
-      "HAUNTS",
-      "OFTEN",
-      "REPAIR",
-      "REPAIRS",
-      "RESORT",
-      "RESORTS"
-     ]
-    },
-    {
-     "id": "A3",
-     "direction": "across",
-     "row": 6,
-     "col": 3,
-     "length": 7,
-     "answer": "BOUNCED",
-     "clue": "spring",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "spring",
-      "pos": "v",
-      "gloss": "spring back; spring away from an impact",
-      "synset": "bounce.v.01"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "A3",
-     "clue_to_slot_permuted": "D3",
-     "clue_candidates": 8,
-     "candidates": [
-      "BOUNCED",
-      "GEYSER",
-      "GEYSERS",
-      "PRANCE",
-      "PRANCED",
-      "PRANCES",
-      "SPRANG",
-      "SPRUNG"
-     ]
-    },
-    {
-     "id": "A4",
-     "direction": "across",
-     "row": 8,
-     "col": 2,
-     "length": 5,
-     "answer": "PESTS",
-     "clue": "persistently",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "persistently",
-      "pos": "n",
-      "gloss": "a persistently annoying person",
-      "synset": "pest.n.03"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "A4",
-     "clue_to_slot_permuted": "D4",
-     "clue_candidates": 8,
-     "candidates": [
-      "CUSS",
-      "CUSSES",
-      "DUNES",
-      "DUNNED",
-      "DUNNING",
-      "GADFLY",
-      "PEST",
-      "PESTS"
+      "BROCADE",
+      "LACED",
+      "NETTED",
+      "PLAIT",
+      "PLAITED",
+      "PLAITS",
+      "TWILL",
+      "TWILLED"
      ]
     },
     {
      "id": "D5",
      "direction": "down",
-     "row": 8,
-     "col": 2,
-     "length": 4,
-     "answer": "PLUS",
-     "clue": "useful",
+     "row": 13,
+     "col": 8,
+     "length": 6,
+     "answer": "TRIKES",
+     "clue": "wheeled vehicle",
      "clue_data": {
       "kind": "definition",
-      "terse": "useful",
+      "clue": "wheeled vehicle",
+      "terse": "vehicle",
       "pos": "n",
-      "gloss": "a useful or valuable quality",
-      "synset": "asset.n.01"
+      "gloss": "a vehicle with three wheels that is moved by foot pedals",
+      "synset": "tricycle.n.01",
+      "clue_source": "hypernym"
      },
      "scramble": "",
      "clue_kind": "definition",
      "clue_to_slot_published": "D5",
-     "clue_to_slot_permuted": "D5",
-     "clue_candidates": 4,
+     "clue_to_slot_permuted": "A2",
+     "clue_candidates": 5,
      "candidates": [
-      "ASSET",
-      "ASSETS",
-      "PLUS",
-      "PLUSES"
-     ]
-    },
-    {
-     "id": "A5",
-     "direction": "across",
-     "row": 11,
-     "col": 2,
-     "length": 7,
-     "answer": "STRINGS",
-     "clue": "lightweight",
-     "clue_data": {
-      "kind": "definition",
-      "terse": "lightweight",
-      "pos": "n",
-      "gloss": "a lightweight cord",
-      "synset": "string.n.01"
-     },
-     "scramble": "",
-     "clue_kind": "definition",
-     "clue_to_slot_published": "A5",
-     "clue_to_slot_permuted": "A3",
-     "clue_candidates": 6,
-     "candidates": [
-      "MOUNT",
-      "MOUNTS",
-      "STRING",
-      "STRINGS",
-      "TWINE",
-      "TWINES"
+      "CAR",
+      "CARS",
+      "SCOOTER",
+      "TRIKE",
+      "TRIKES"
      ]
     }
    ],
@@ -755,68 +828,64 @@
      {
       "id": "D1",
       "kind": "definition",
-      "n_candidates": 3,
+      "n_candidates": 5,
       "candidates": [
-       "HOBBIES",
-       "HOBBY",
-       "PURSUIT"
+       "ATE",
+       "HYMEN",
+       "HYMENS",
+       "ZEPHYR",
+       "ZEPHYRS"
       ]
      },
      {
       "id": "D2",
       "kind": "definition",
-      "n_candidates": 3,
+      "n_candidates": 5,
       "candidates": [
-       "FACTION",
-       "SECT",
-       "SECTS"
-      ]
-     },
-     {
-      "id": "A1",
-      "kind": "definition",
-      "n_candidates": 3,
-      "candidates": [
-       "PREFECT",
-       "WARDEN",
-       "WARDENS"
-      ]
-     },
-     {
-      "id": "A2",
-      "kind": "definition",
-      "n_candidates": 4,
-      "candidates": [
-       "DIRTIER",
-       "FILTHY",
-       "LOUSIER",
-       "LOUSY"
+       "CRIES",
+       "CRY",
+       "CRYINGS",
+       "MANTRA",
+       "MANTRAS"
       ]
      },
      {
       "id": "D3",
       "kind": "definition",
-      "n_candidates": 10,
+      "n_candidates": 7,
       "candidates": [
-       "BLISTER",
-       "FLORA",
-       "FLORAE",
-       "FLORAS",
-       "LEAFING",
-       "LOBE"
+       "DAPPLE",
+       "DAPPLES",
+       "FLECK",
+       "FLECKS",
+       "PATCH",
+       "PATCHES"
       ]
      },
      {
-      "id": "D4",
+      "id": "A1",
       "kind": "definition",
-      "n_candidates": 8,
+      "n_candidates": 9,
       "candidates": [
-       "HANGOUT",
-       "HAUNT",
-       "HAUNTS",
-       "OFTEN",
-       "REPAIR",
-       "REPAIRS"
+       "BURGHER",
+       "LAYMAN",
+       "LAYMEN",
+       "NOBODY",
+       "RUSTIC",
+       "RUSTICS"
+      ]
+     },
+     {
+      "id": "A2",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "BARREL",
+       "BARRELS",
+       "BLOWGUN",
+       "DIODE",
+       "DIODES",
+       "HOSE"
       ]
      },
      {
@@ -824,74 +893,87 @@
       "kind": "definition",
       "n_candidates": 8,
       "candidates": [
-       "BOUNCED",
-       "GEYSER",
-       "GEYSERS",
-       "PRANCE",
-       "PRANCED",
-       "PRANCES"
+       "MINUET",
+       "MINUETS",
+       "RUMBA",
+       "RUMBAS",
+       "SAMBA",
+       "SAMBAS"
       ]
      },
      {
       "id": "A4",
       "kind": "definition",
-      "n_candidates": 8,
+      "n_candidates": 10,
       "candidates": [
-       "CUSS",
-       "CUSSES",
-       "DUNES",
-       "DUNNED",
-       "DUNNING",
-       "GADFLY"
+       "DEDUCT",
+       "DEDUCTS",
+       "DIVIDED",
+       "PRORATE",
+       "SOLVE",
+       "SOLVED"
       ]
      },
      {
-      "id": "D5",
+      "id": "D4",
       "kind": "definition",
-      "n_candidates": 4,
+      "n_candidates": 5,
       "candidates": [
-       "ASSET",
-       "ASSETS",
-       "PLUS",
-       "PLUSES"
+       "FALL",
+       "LAPSED",
+       "SKIDDED",
+       "TUMBLE",
+       "TUMBLES"
       ]
      },
      {
       "id": "A5",
       "kind": "definition",
-      "n_candidates": 6,
+      "n_candidates": 8,
       "candidates": [
-       "MOUNT",
-       "MOUNTS",
-       "STRING",
-       "STRINGS",
-       "TWINE",
-       "TWINES"
+       "BROCADE",
+       "LACED",
+       "NETTED",
+       "PLAIT",
+       "PLAITED",
+       "PLAITS"
+      ]
+     },
+     {
+      "id": "D5",
+      "kind": "definition",
+      "n_candidates": 5,
+      "candidates": [
+       "CAR",
+       "CARS",
+       "SCOOTER",
+       "TRIKE",
+       "TRIKES"
       ]
      }
     ]
    },
    "floor": {
     "verdict": "WINNABLE",
-    "states_expanded": 10,
+    "states_expanded": 11,
     "solution": [],
     "assignments": {
-     "D1": "HOBBY",
-     "D2": "SECT",
-     "A1": "WARDEN",
-     "A2": "FILTHY",
-     "D3": "LOBE",
-     "D4": "HAUNT",
-     "A3": "BOUNCED",
-     "A4": "PESTS",
-     "D5": "PLUS",
-     "A5": "STRINGS"
+     "A2": "HOSE",
+     "D3": "FLECK",
+     "D5": "TRIKES",
+     "A5": "NETTED",
+     "D4": "SKIDDED",
+     "D1": "HYMENS",
+     "A1": "LAYMEN",
+     "D2": "CRYINGS",
+     "A3": "SAMBA",
+     "A4": "SQUIRTS"
     },
     "fills": 1,
     "exhausted": true
    },
    "unique_fill": true,
-   "grid_sha256": "7227c08a1c135bef8093c9489a39d67f9bd8a105e208ac9780e2d1a5f85f9070"
+   "grid_sha256": "1d2fd42f13dd6cb2bb20623f5772e0de6bc002f82f83993662569d09b809ac7d"
   }
  ]
 }
