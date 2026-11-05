@@ -26,6 +26,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 LEXICON = HERE / "wordlist_3_7.txt"
 ARTICLES = {"a", "an", "the"}
+MAX_SENSE_RANK = 2      # the 3 most frequent senses of a word; beyond that a gloss describes a rare usage
 
 
 def stemmer():
@@ -61,7 +62,9 @@ def build(lexicon):
     for w in lexicon:
         ans_stem = stem(w.lower())
         senses = []
-        for s in wn.synsets(w.lower()):
+        for rank, s in enumerate(wn.synsets(w.lower())):
+            if rank > MAX_SENSE_RANK:      # WordNet orders synsets by frequency: rank 0 is the common sense
+                break
             gloss = s.definition()
             if not gloss or len(gloss) > 60:
                 continue
@@ -71,7 +74,8 @@ def build(lexicon):
             terse = terse_of(gloss, stem, ans_stem)
             if not terse:
                 continue
-            senses.append(dict(gloss=gloss, terse=terse, pos=POS.get(s.pos(), s.pos()), synset=s.name()))
+            senses.append(dict(gloss=gloss, terse=terse, pos=POS.get(s.pos(), s.pos()),
+                               synset=s.name(), sense_rank=rank))
         if senses:
             out[w] = senses
         else:

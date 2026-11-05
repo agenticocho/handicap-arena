@@ -48,14 +48,18 @@ def prompt_for(s):
             f"The answer is a single {s['length']}-letter English word. Reply with the word only.")
 
 
-def ask(endpoint, prompt, timeout=90):
-    body = json.dumps({"prompt": prompt, "n_predict": 24, "temperature": 0.0,
-                       "stop": ["\n", "."]}).encode()
-    req = urllib.request.Request(endpoint.rstrip("/") + "/completion", data=body,
+def ask(endpoint, prompt, timeout=180):
+    """CHAT completions, with thinking disabled. A raw /completion on a reasoning model returns
+    '<think>...' and any stop sequence on a newline truncates it to the empty string -- which is how the
+    first two rows recorded 0/20 while the model was in fact answering."""
+    body = json.dumps({"messages": [{"role": "user", "content": prompt}],
+                       "n_predict": 48, "temperature": 0.0,
+                       "chat_template_kwargs": {"enable_thinking": False}}).encode()
+    req = urllib.request.Request(endpoint.rstrip("/") + "/v1/chat/completions", data=body,
                                  headers={"Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         out = json.loads(r.read())
-    return (out.get("content") or "").strip()
+    return (out["choices"][0]["message"]["content"] or "").strip()
 
 
 def parse_answer(text, length):
@@ -113,10 +117,12 @@ def main():
         elif a.stub == "ceiling":
             got = cands[0] if cands == [s["answer"]] else None
         elif a.endpoint:
-            got = parse_answer(ask(a.endpoint, prompt_for(s)), s["length"])
+            raw = ask(a.endpoint, prompt_for(s))
+            got = parse_answer(raw, s["length"])
         else:
             sys.exit("need --stub or --endpoint")
         rows.append(dict(puzzle=pi, id=s["id"], kind=s["clue_kind"], length=s["length"],
+                         raw=locals().get("raw") if a.endpoint else None,
                          clue=s["clue"], answer=s["answer"], got=got,
                          correct=bool(got) and got == s["answer"],
                          candidates=len(cands),

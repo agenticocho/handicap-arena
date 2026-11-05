@@ -216,6 +216,7 @@ def definition_clue(answer: str, rng: random.Random, lo=2, hi=10):
     # must not be a bare copula-plus-adverb. Cheaper to reject at build time than to apologise for later.
     band = [sn for sn in senses
             if lo <= len(TERSE_INDEX.get(sn["terse"], ())) <= hi
+            and distinct_stems(TERSE_INDEX.get(sn["terse"], ())) >= 2   # a real choice, not one lemma's forms
             and sn["terse"].split()[0] not in FRAGMENT_STARTS]
     if not band:
         return None
@@ -250,6 +251,16 @@ def multiset_minus(a: str, b: str):
         return None
     rest = ca - cb
     return "".join(sorted(rest.elements()))
+
+
+def distinct_stems(words):
+    """How many distinct lemmas a candidate set really contains. GNAW/GNAWED/GNAWING/GNAWN/GNAWS is ONE word
+    in five forms, and counting it as five made the 'fair band' meaningless -- the grid was choosing an
+    inflection, not a word."""
+    out = set()
+    for w in words:
+        out.add(w.lower().rstrip("s").rstrip("ed").rstrip("ing") or w.lower())
+    return len(out)
 
 
 def candidates_of(clue: dict):
