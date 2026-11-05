@@ -542,6 +542,8 @@ def main():
     loaded_defs = set_definitions(a.definitions)
 
     if a.self_test:
+        if loaded_defs:
+            restrict_to_cluable()      # the test must see the same answer pool a build sees
         print(f"lexicon {len(WORDS)}  definitions {'loaded' if loaded_defs else 'absent'}")
         sys.exit(0 if self_test() else 1)
 
