@@ -56,19 +56,25 @@ different bounds and does not survive being checked row by row. What the floor a
 
 | verdict | boards | on what |
 |---|---|---|
-| **COLLAPSED** (schedule *is* the optimum) | sokoban `01` (1/1), `03` (6/6), zork `zork_01` (2/2), missile `mc_01` (1/1) | floor headroom **0**, replay-verified |
+| **COLLAPSED** (schedule *is* the optimum) | sokoban `01` (1/1), `03` (6/6), zork `zork_01` (2/2), missile `mc_01` (1/1), missile `mc_02` (4/4) | floor headroom **0**, replay-verified; `mc_02` also exact by exhaustion (cities saved 1/2/3/4 at periods 1/2/3/4) |
 | **SEPARATED** (real headroom) | sokoban `02` — schedule 28, optimum **12** | headroom **16** |
-| **AT ITS BOUND — unproven** | zork `zork_02` (p\*=5 at bound 5), missile `mc_02` (p\*=4 at bound 4) | a saturating search cannot exclude a longer period |
-| **NOT COMPARABLE** | zork `zork_02` again: `cleared: true` at `out_of_commands`, never `escaped` | p\*'s terminal condition is weaker than the floor's |
+| **DEGENERACY LIKELY, COMPARISON UNTRUSTWORTHY** | zork `zork_02` (p\*=5 at bound 5, headroom 1) | its `best_by_period` is `null`, so the exhaustion cannot be shown, **and** its `cleared: true` is reached at `out_of_commands` with the item carried — never `escaped`. The period is probably right; the "headroom 1" row compares two different terminal conditions. |
 | **SCORE-TYPED** | snake seeds 1/7/13/42 (8–9 apples; p\* 2/2/2/4 at bound 4) | a count, never pooled with a win floor |
 
 **Snake keeps its earlier caveat:** the cabinet ships a Hamiltonian-cycle baseline, a fixed *non-periodic*
 route that scores well, so "not degenerate" would have to mean "for periodic words of period ≤ 4 at 120
 ticks" and nothing wider.
 
-So: **four boards proven degenerate, one separated, three unproven or incomparable.** The Sokoban
-withdrawal does not depend on any of them — it rests on all three Sokoban boards having headroom 0/16/0
-against schedules of period 1/7/6 — but no reader should carry away "seven of eight".
+So: **five boards proven degenerate by measurement, one separated, one whose degeneracy is likely but whose
+headroom comparison is not trustworthy, four score-typed.** Your approval's scope withdrew **four** of them —
+`02_two_boxes` is kept — and the fifth (`mc_02`) enters no scored set in any case, because missile has no
+gate in `degenerate_gate.py` at all. The Sokoban withdrawal does not depend on the count: it rests on all
+three Sokoban boards having headroom 0/16/0 against schedules of period 1/7/6.
+
+**One correction the count earned, against the Chair.** An earlier draft called `mc_02` *"at its bound —
+unproven"* on the reasoning that a p\* measured at its search bound is only a lower bound. **That reasoning
+is backwards:** `p*` is a **minimum**, so a saturated bound risks *missing* a short period, never inventing
+one — and `best_by_period` shows periods 1/2/3 failing and 4 clearing, so `p* = 4` is exact.
 
 ## 5. Falsifier
 
