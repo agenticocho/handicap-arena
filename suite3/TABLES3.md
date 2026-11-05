@@ -103,3 +103,16 @@ _4 superseded or refused block(s) kept under `suite3/runs/`; not counted as rows
 | ministral-3b | mc_02_scarcity.txt | score=0 · ended=threats_resolved · counts={"fired": 0, "passed": 0, "malformed": 6, "unknown": 0, "out_of_range": 0, "late": 0, "hit": 4, "spared": 4} · unreadable=6 | — | CPU `-ngl 0` · ctx 4096 · no lease · server argv in the row | cpu-block (no lease) | `6f69907b04464b4c` | `missile-command_ministral-3b_mc_02_scarcity_20261026-140927.meta.json` |
 | ornith-9b | mc_01_one_shot.txt | score=0 · ended=threats_resolved · counts={"fired": 0, "passed": 3, "malformed": 0, "unknown": 0, "out_of_range": 0, "late": 0, "hit": 1, "spared": 0} · unreadable=0 | — | CPU `-ngl 0` · ctx 4096 · no lease · server argv in the row | cpu-block (no lease) | `50eeb521057094aa` | `missile-command_ornith-9b_mc_01_one_shot_20261026-140943.meta.json` |
 | ornith-9b | mc_02_scarcity.txt | score=0 · ended=threats_resolved · counts={"fired": 0, "passed": 6, "malformed": 0, "unknown": 0, "out_of_range": 0, "late": 0, "hit": 4, "spared": 4} · unreadable=0 | — | CPU `-ngl 0` · ctx 4096 · no lease · server argv in the row | cpu-block (no lease) | `e47b44df3a2bbbe3` | `missile-command_ornith-9b_mc_02_scarcity_20261026-140954.meta.json` |
+
+---
+
+## QUALIFIER 2026-11-05 -- board 01 is retired
+
+**`levels/01_one_push.txt` is RETIRED (level text sha256
+`db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313`).** It is cleared by the constant
+stream `R` in **one move**, and its optimal solution is that same single action: 45 of 84 periodic words
+of period <= 3 clear it (`python3 degenerate_gate.py --json --event sokoban --board
+levels/01_one_push.txt` -> `"verdict": "DEGENERATE"`, `"n_hits": 45`). Any figure in this file that pools
+that board is an **upper bound and not evidence of planning**; a re-score drops those rows, it does not
+re-weight them. Rows are annotated, never deleted. Full record: `RETIRED_BOARDS.md`. Enforcement:
+`RETIRED_LEVELS` / `level_admission()` in `sokoban_run.py` (exit 5).

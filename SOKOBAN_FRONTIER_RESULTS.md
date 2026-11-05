@@ -181,3 +181,16 @@ any ply), as are `87 380 / 77 540 / 198 / 76 / 0`; and the shortest period clear
 
 Full certification, the mutation results and the seven things this still cannot separate:
 `SOKOBAN_REPLAY_CERTIFICATION_2026-10-26.md`.
+
+---
+
+## QUALIFIER 2026-11-05 -- board 01 is retired
+
+**`levels/01_one_push.txt` is RETIRED (level text sha256
+`db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313`).** It is cleared by the constant
+stream `R` in **one move**, and its optimal solution is that same single action: 45 of 84 periodic words
+of period <= 3 clear it (`python3 degenerate_gate.py --json --event sokoban --board
+levels/01_one_push.txt` -> `"verdict": "DEGENERATE"`, `"n_hits": 45`). Any figure in this file that pools
+that board is an **upper bound and not evidence of planning**; a re-score drops those rows, it does not
+re-weight them. Rows are annotated, never deleted. Full record: `RETIRED_BOARDS.md`. Enforcement:
+`RETIRED_LEVELS` / `level_admission()` in `sokoban_run.py` (exit 5).

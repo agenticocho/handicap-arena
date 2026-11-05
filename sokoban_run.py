@@ -41,6 +41,66 @@ LLAMA = "/home/chilly1/llama.cpp/build/bin/llama-server"
 MODELS = os.environ.get("ARENA_MODELS") or os.path.expanduser("~/moltbook_pipeline/models")
 
 # ==================================================================================================
+# RETIRED BOARDS -- A LOADER STATE, NOT A COMMENT. A comment is not a retirement: the driver below
+# would still accept the board by name and file a passing score beside it.
+#
+# `01_one_push` IS CLEARED BY A STREAM THAT NEVER OBSERVED IT. Measured 2026-11-05 by
+# `degenerate_gate.py`, over the class its own docstring declares (periodic words of period <= 3 over
+# U D L R, played to the registered cap 40): 45 of 84 streams clear it, the shortest is the period-1
+# word `R`, in ONE move -- and the board's optimal solution IS that same single action. Any entrant
+# ranked on it was ranked on its willingness to emit `R`.
+#
+# THE KEY IS THE LEVEL'S TEXT DIGEST, NOT ITS NAME, because a copy under another name is the same
+# board. The name is carried in the record so the refusal can be read without a hash lookup.
+#
+# IT IS NOT DELETED. The file stays in the tree as `degenerate_gate.py`'s POSITIVE CONTROL -- the one
+# object that proves the detector still fires -- and it stays in the published tables with a qualifier
+# (RETIRED_BOARDS.md). Annotate, never delete: a deleted artifact cannot be re-read.
+# ==================================================================================================
+RETIRED_LEVELS = {
+    "db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313": {
+        "name": "levels/01_one_push.txt",
+        "retired": "2026-11-05",
+        "why": ("cleared by the constant stream 'R' in 1 move; the optimal solution IS a constant cycle "
+                "of length 1, so the board was never a puzzle"),
+        "evidence": ("python3 degenerate_gate.py --json --event sokoban --board levels/01_one_push.txt -> "
+                     "verdict DEGENERATE, witness 'R' (period 1), n_hits 45 of streams_evaluated 84"),
+        "role_now": ("positive control for degenerate_gate.py -- retained, never scored; not loadable here"),
+    }
+}
+
+
+def level_admission(level_path):
+    """-> (ok, message, record). A RETIRED board is refused BEFORE anything costs a model load.
+
+    The refusal is at ADMISSION for the reason the binary gate below is: a refusal that arrives after a
+    1.2 GB load is a report filed afterwards, not a refusal. Exit 5 is distinct from 2 (a bad argument),
+    3 (did not load), 4 (this pair must not run) so a caller can tell "this board must not be played" from
+    "this board did not play".
+    """
+    try:
+        text = open(level_path, encoding="utf-8").read()
+    except OSError as e:
+        return False, f"  LEVEL UNREADABLE: {level_path} ({e})", {"level_sha256": None, "retired": None}
+    digest = hashlib.sha256(text.encode()).hexdigest()
+    rec = {"level": os.path.basename(level_path), "level_sha256": digest,
+           "retired": digest in RETIRED_LEVELS}
+    ret = RETIRED_LEVELS.get(digest)
+    if ret is None:
+        return True, "", rec
+    msg = "\n".join([
+        f"  BOARD RETIRED: {level_path} is {ret['name']} (sha256 {digest[:16]}...) and cannot be played.",
+        f"    why        {ret['why']}",
+        f"    evidence   {ret['evidence']}",
+        f"    role now   {ret['role_now']}",
+        "    A board a fixed stream clears ranks nobody. Nothing was loaded; no artifact was written.",
+        "    Play a board that passed the gate: levels/02_two_boxes.txt, levels/03_the_corner_waiting.txt.",
+    ])
+    return False, msg, rec
+
+
+# ==================================================================================================
+# ==================================================================================================
 # THE BINARY IS PART OF THE INSTRUMENT, SO IT IS SELECTABLE -- AND IT TRAVELS WITH THE NUMBER.
 #
 # WHAT THIS FIXES, MEASURED RATHER THAN ARGUED (card t_33042da0, five arms, two files, one box):
@@ -1138,6 +1198,16 @@ def main():
     PARALLEL = a.parallel
     if not a.entrant or not a.level:
         ap.error("--entrant and --level are required")
+
+    # ---- THE BOARD GATE, AT ADMISSION -- BEFORE THE ENTRANT IS EVEN RESOLVED, BEFORE ANY SERVER ----
+    # The board is the more basic question than the entrant: a run refused here could not have been a
+    # measurement of any model on any file. Exit 5, distinct from 2 / 3 / 4 (see level_admission).
+    lvl_ok, lvl_msg, lvl_rec = level_admission(a.level)
+    if not lvl_ok:
+        for line in lvl_msg.splitlines():
+            print(line)
+        return 5 if lvl_rec.get("retired") else 2
+
     if a.llama_server:
         # A PATH THAT DOES NOT EXIST OR IS NOT EXECUTABLE IS REFUSED HERE RATHER THAN HANDED TO exec --
         # the guard `arena.py` already carries at :152, for the same reason: `--llama-server /typo` would
@@ -1177,6 +1247,10 @@ def main():
         return 4
 
     r = run(p, a.level, a.cap, a.port)
+    # THE BOARD'S OWN ADMISSION RECORD TRAVELS WITH THE MEASUREMENT: the level's text digest and the
+    # fact that it was checked against the retired registry. A reader can tell which board's bytes were
+    # played from the record alone, without resolving a path that may since have been edited.
+    r["level_admission"] = lvl_rec
     print(f"  entrant   {r['entrant']}")
     print(f"  level     {r['level']}")
     # ONLY ON THE SELECTED PATH, so a run on the declared default prints exactly what it printed before
