@@ -154,12 +154,47 @@ def slots_of(placed):
 
 
 def clue_for(answer: str, rng: random.Random):
-    """A cryptic-style clue that is machine-checkable: an anagram indicator, the scrambled letters and the
-    enumeration. How many declared words share those letters is the difficulty the ceiling gate counts."""
-    letters = list(answer)
+    """Two machine-checkable cryptic devices. `anagram` hands over the answer's own letters; `decoy` hands
+    over the letters of the answer PLUS a declared word that must be removed, so the solver has to choose
+    what to remove -- the ceiling gate counts exactly how much that choice costs."""
+    if rng.random() < 0.5:
+        letters = list(answer)
+        rng.shuffle(letters)
+        return (f"{rng.choice(['Confused', 'Mixed up', 'In a muddle'])} {''.join(letters)} ({len(answer)})",
+                dict(kind="anagram", letters="".join(letters)))
+    decoy = answer
+    while decoy == answer:
+        decoy = WORDS[rng.randrange(len(WORDS))]
+    letters = list(answer + decoy)
     rng.shuffle(letters)
-    scramble = "".join(letters)
-    return f"{rng.choice(['Confused', 'Mixed up', 'In a muddle'])} {scramble} ({len(answer)})", scramble
+    return (f"{rng.choice(['Confused', 'Mixed up', 'In a muddle'])} {''.join(letters)} less {decoy} ({len(answer)})",
+            dict(kind="decoy", letters="".join(letters), decoy=decoy))
+
+
+def multiset_minus(a: str, b: str):
+    """a's letters minus b's letters, or None if b is not a sub-multiset of a."""
+    from collections import Counter
+    ca, cb = Counter(a), Counter(b)
+    if any(cb[k] > ca[k] for k in cb):
+        return None
+    rest = ca - cb
+    return "".join(sorted(rest.elements()))
+
+
+def candidates_of(clue: dict):
+    """Every declared word consistent with the clue alone -- no crossings used."""
+    if clue["kind"] == "anagram":
+        key = "".join(sorted(clue["letters"]))
+        return sorted(w for w in WORDS if len(w) == len(clue["letters"]) and "".join(sorted(w)) == key)
+    # decoy: the answer is a declared word W such that letters - W is exactly a declared word
+    out = []
+    for w in WORDS:
+        rest = multiset_minus(clue["letters"], w)
+        if rest is None:
+            continue
+        if any("".join(sorted(x)) == rest for x in WORDS):
+            out.append(w)
+    return sorted(out)
 
 
 def anagram_candidates(scramble: str):
@@ -171,49 +206,65 @@ def anagram_candidates(scramble: str):
 # the two gates
 # ---------------------------------------------------------------------------------------------------
 def ceiling_anagram_only(slots):
+    """Solvable WITHOUT the crossings. Reported as a count of slots, never as a pass."""
     resolved, ambiguous = 0, []
     for s in slots:
-        cands = anagram_candidates(s["scramble"])
+        cands = candidates_of(s["clue_data"])
+        s["clue_candidates"] = len(cands)
+        s["candidates"] = cands
         if cands == [s["answer"]]:
             resolved += 1
         else:
-            ambiguous.append(dict(id=s["id"], n_candidates=len(cands), candidates=cands[:6]))
+            ambiguous.append(dict(id=s["id"], kind=s["clue_data"]["kind"],
+                                  n_candidates=len(cands), candidates=cands[:6]))
     return resolved, ambiguous
 
 
 def floor_crossing_solve(slots, max_states=200000):
-    """Fill from the declared list using the crossings. A bitten budget is UNDETERMINED, never UNWINNABLE."""
+    """Fill using the CROSSINGS **and the clues**: each slot may only take a word its clue admits, so
+    WINNABLE means the clues and the grid determine a fill and UNWINNABLE means the clues contradict the
+    crossings. Without the clue constraint the solver would satisfy any grid with any words, which measures
+    nothing about the puzzle. Most-constrained slot first; a bitten budget is UNDETERMINED."""
     cells, states, chosen = {}, 0, {}
     pos = {s["id"]: slot_cells(s) for s in slots}
-    order = sorted(slots, key=lambda s: s["id"])
+    remaining = {s["id"]: s["length"] for s in slots}
+    allowed = {s["id"]: (s.get("candidates") or list(WORDS)) for s in slots}
 
-    def consistent(word, sid):
+    def fits(word, sid):
         return all(cells.get(p) in (None, ch) for p, ch in zip(pos[sid], word))
 
-    def walk(i):
+    def walk():
         nonlocal states
-        if i == len(order):
+        if not remaining:
             return True
-        sid, length = order[i]["id"], order[i]["length"]
-        for w in WORDS:
-            if len(w) != length or not consistent(w, sid):
-                continue
+        best, best_opts = None, None
+        for sid in remaining:
+            opts = [w for w in allowed[sid] if len(w) == remaining[sid] and w not in chosen.values() and fits(w, sid)]
+            if best_opts is None or len(opts) < len(best_opts):
+                best, best_opts = sid, opts
+                if not opts:
+                    break
+        if not best_opts:
+            return False
+        for w in best_opts:
             states += 1
             if states > max_states:
                 raise TimeoutError
-            added = [p for p in pos[sid] if p not in cells]
-            for p, ch in zip(pos[sid], w):
+            added = [p for p in pos[best] if p not in cells]
+            for p, ch in zip(pos[best], w):
                 cells[p] = ch
-            chosen[sid] = w
-            if walk(i + 1):
+            chosen[best] = w
+            del remaining[best]
+            if walk():
                 return True
-            chosen.pop(sid, None)
+            remaining[best] = len(w)
+            chosen.pop(best, None)
             for p in added:
                 del cells[p]
         return False
 
     try:
-        ok = walk(0)
+        ok = walk()
     except TimeoutError:
         return dict(verdict="UNDETERMINED", states_expanded=states,
                     reason=f"budget of {max_states} states bit before the frontier was exhausted")
@@ -222,17 +273,16 @@ def floor_crossing_solve(slots, max_states=200000):
         for (r, c), ch in cells.items():
             rows.setdefault(r, {})[c] = ch
         grid = ["".join(rows[r][c] for c in sorted(rows[r])) for r in sorted(rows)]
-        return dict(verdict="WINNABLE", states_expanded=states, solution=grid, assignments=chosen)
+        return dict(verdict="WINNABLE", states_expanded=states, solution=grid, assignments=dict(chosen))
     return dict(verdict="UNWINNABLE", states_expanded=states,
                 reason="frontier exhausted: no assignment of declared words satisfies the crossings")
 
 
-# ---------------------------------------------------------------------------------------------------
 def build(n_puzzles: int, seed: int):
     rng = random.Random(seed)
     out, seen = [], set()
     guard = 0
-    while len(out) < n_puzzles and guard < 500:
+    while len(out) < n_puzzles and guard < 120:
         guard += 1
         grid, placed = crisscross(rng)
         key = "|".join(sorted(p["word"] for p in placed))
@@ -241,8 +291,8 @@ def build(n_puzzles: int, seed: int):
         seen.add(key)
         slots = slots_of(placed)
         for s in slots:
-            text, scramble = clue_for(s["answer"], rng)
-            s["clue"], s["scramble"] = text, scramble
+            text, data = clue_for(s["answer"], rng)
+            s["clue"], s["clue_data"] = text, data
         perm = list(range(len(slots)))
         rng.shuffle(perm)
         for i, s in enumerate(slots):
@@ -250,10 +300,20 @@ def build(n_puzzles: int, seed: int):
             s["clue_to_slot_permuted"] = slots[perm[i]]["id"]
         resolved, ambiguous = ceiling_anagram_only(slots)
         floor = floor_crossing_solve(slots)
+        # A BENCHMARK PUZZLE MUST HAVE ONE FILL. If the clues plus the crossings admit a different grid, a
+        # score is ambiguous: two players can be right with different answers. Reject and regenerate.
+        am = floor.get("assignments") or {}
+        unique_fill = bool(am) and all(am.get(s["id"]) == s["answer"] for s in slots)
+        if not (floor["verdict"] == "WINNABLE" and unique_fill):
+            continue
+        # AND THE CEILING HAS TO BE A CEILING. If most slots fall to the anagram alone the grid is
+        # decoration and the puzzle measures anagram skill; a benchmark puzzle must need its crossings.
+        if resolved > len(slots) // 2:
+            continue
         out.append(dict(rows=max(r for r, _ in grid) + 1, cols=max(c for _, c in grid) + 1,
                         slots=slots,
                         ceiling=dict(anagram_resolved=resolved, slots=len(slots), ambiguous=ambiguous),
-                        floor=floor,
+                        floor=floor, unique_fill=True,
                         grid_sha256=hashlib.sha256(
                             json.dumps(sorted(placed, key=lambda q: (q["row"], q["col"], q["word"])), sort_keys=True).encode()).hexdigest()))
     return dict(seed=seed, word_list_size=len(WORDS),
@@ -298,10 +358,14 @@ def self_test():
 
     slots = slots_of(placed)
     check("a slot per word", len(slots) == len(placed))
-    text, scramble = clue_for(slots[0]["answer"], random.Random(1))
-    check("scramble is a permutation of the answer", sorted(scramble) == sorted(slots[0]["answer"]))
+    text, data = clue_for(slots[0]["answer"], random.Random(1))
     check("enumeration is in the clue", f"({N})" in text)
-    check("the answer is among its own anagram candidates", slots[0]["answer"] in anagram_candidates(scramble))
+    check("an anagram clue carries exactly the answer's letters",
+          data["kind"] != "anagram" or sorted(data["letters"]) == sorted(slots[0]["answer"]))
+    check("a decoy clue carries the answer's letters plus a declared word",
+          data["kind"] != "decoy" or multiset_minus(data["letters"], slots[0]["answer"]) is not None)
+    # the clue must admit its own answer, whatever the device
+    check("the answer is among the clue's candidates", slots[0]["answer"] in candidates_of(data))
 
     one = [dict(id="A1", direction="across", row=0, col=0, length=N, answer="ABOUT")]
     check("floor solver wins a single-slot puzzle", floor_crossing_solve(one)["verdict"] == "WINNABLE")

@@ -1,0 +1,129 @@
+{
+ "label": "PILOT - NOT A BENCHMARK - NO HUMAN SOLVE",
+ "method": "clue-only candidate enumeration over the declared word list, then crossing consistency by exhaustive enumeration of the unresolved combinations",
+ "puzzles": [
+  {
+   "agrees_with_crate": true,
+   "alternative_fills": [
+    {
+     "A3": [
+      "GROWN",
+      "WRONG"
+     ]
+    }
+   ],
+   "anagram_resolved": 6,
+   "answer_key_is_consistent": true,
+   "combinations_enumerated": 16,
+   "crossing_consistent_completions": 2,
+   "declared_by_crate": 6,
+   "puzzle": 0,
+   "slots": 10,
+   "unresolved": [
+    {
+     "answer": "BOARD",
+     "candidates": [
+      "BOARD",
+      "BROAD"
+     ],
+     "id": "D2"
+    },
+    {
+     "answer": "GROWN",
+     "candidates": [
+      "GROWN",
+      "WRONG"
+     ],
+     "id": "A3"
+    },
+    {
+     "answer": "THERE",
+     "candidates": [
+      "THERE",
+      "THREE"
+     ],
+     "id": "D5"
+    },
+    {
+     "answer": "THESE",
+     "candidates": [
+      "SHEET",
+      "THESE"
+     ],
+     "id": "D7"
+    }
+   ]
+  },
+  {
+   "agrees_with_crate": true,
+   "alternative_fills": [
+    {
+     "A9": [
+      "PHASE",
+      "SHAPE"
+     ]
+    }
+   ],
+   "anagram_resolved": 8,
+   "answer_key_is_consistent": true,
+   "combinations_enumerated": 4,
+   "crossing_consistent_completions": 2,
+   "declared_by_crate": 8,
+   "puzzle": 1,
+   "slots": 10,
+   "unresolved": [
+    {
+     "answer": "PHASE",
+     "candidates": [
+      "PHASE",
+      "SHAPE"
+     ],
+     "id": "A9"
+    },
+    {
+     "answer": "QUIET",
+     "candidates": [
+      "QUIET",
+      "QUITE"
+     ],
+     "id": "A10"
+    }
+   ]
+  },
+  {
+   "agrees_with_crate": true,
+   "alternative_fills": [],
+   "anagram_resolved": 9,
+   "answer_key_is_consistent": true,
+   "combinations_enumerated": 2,
+   "crossing_consistent_completions": 1,
+   "declared_by_crate": 9,
+   "puzzle": 2,
+   "slots": 10,
+   "unresolved": [
+    {
+     "answer": "THESE",
+     "candidates": [
+      "SHEET",
+      "THESE"
+     ],
+     "id": "A5"
+    }
+   ]
+  }
+ ],
+ "source": {
+  "crate": "probes/CROSSWORD_CRATE_2026-11-05.json",
+  "generator": "crossword_gen.py",
+  "git_ref": "f80e47a"
+ },
+ "total": {
+  "anagram_resolved": 23,
+  "fraction": 0.7667,
+  "slots": 30
+ },
+ "word_list": {
+  "sha256": "4a92a8a54377f42a653a50192a0d93a38b5d60d47140d0ce903b083de3b6aa8f",
+  "size": 483
+ }
+}
