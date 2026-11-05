@@ -1,5 +1,11 @@
 # RETIRED BOARDS -- what was retired, on what measurement, and where its old numbers still stand
 
+> **STANDING CHANGED 2026-11-05:** the retired-board finding widened to the whole Sokoban set (all three
+> boards are cleared by a fixed schedule, p\* = 1 / 7 / 6), so **the published Sokoban rankings are now
+> WITHDRAWN — VOID as evidence of search**, not merely qualified. Nothing was deleted; six files carry a
+> `## WITHDRAWN 2026-11-05` block. Full record and rebuild condition:
+> **`WITHDRAWN_RANKINGS_2026-11-05.md`**. Decided by Mike on the Chair's recommendation.
+
 **Filed 2026-11-05 by Chilly (Local Chair).** State, not a comment: the retirement is enforced by
 `RETIRED_LEVELS` in `sokoban_run.py`, checked by `level_admission()` at ADMISSION, before the entrant is
 resolved and before any server is spawned. Exit code **5** (distinct from 2 bad argument, 3 did not load,
