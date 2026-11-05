@@ -1,0 +1,93 @@
+{
+ "demand": [
+  {
+   "admissible_row_masks": 7,
+   "blockable_columns": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "example": {
+    "lengths": [
+     3,
+     3,
+     3,
+     3,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ],
+    "slots": 10
+   },
+   "forced_full_columns": [],
+   "max_slots_over_patterns": 10,
+   "min_slots_over_patterns": 10,
+   "patterns": 1,
+   "patterns_needing_length": {
+    "3": 4,
+    "5": 6
+   },
+   "size": 5,
+   "slot_lengths_seen": {
+    "3": 4,
+    "5": 6
+   }
+  },
+  {
+   "admissible_row_masks": 17,
+   "blockable_columns": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "example": {
+    "lengths": [
+     3,
+     3,
+     4,
+     4,
+     5,
+     5,
+     5,
+     5,
+     6,
+     6,
+     7,
+     7,
+     7,
+     7
+    ],
+    "slots": 14
+   },
+   "forced_full_columns": [],
+   "max_slots_over_patterns": 16,
+   "min_slots_over_patterns": 14,
+   "patterns": 74,
+   "patterns_needing_length": {
+    "3": 240,
+    "4": 136,
+    "5": 120,
+    "6": 248,
+    "7": 350
+   },
+   "size": 7,
+   "slot_lengths_seen": {
+    "3": 240,
+    "4": 136,
+    "5": 120,
+    "6": 248,
+    "7": 350
+   }
+  }
+ ],
+ "rung": "quiptic"
+}
