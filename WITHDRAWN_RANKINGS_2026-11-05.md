@@ -100,3 +100,54 @@ unaffected — 1 and 6, and in both the optimal play **is** the cycle (measured 
 Both numbers for every board, in one table with the gap between them: `probes/FLOOR_TABLE_2026-11-05.json`,
 produced by `winnability_floor.py` (`14 passed, 0 failed`).
 
+## NOTE 2026-11-05T15:17:26Z — Mike's word, couriered; and one row of §4 is labelled against its own instrument
+
+**The decision.** Mike's answer reached this box relayed by Jarvis (Local Chair, `jarvis`) in CHAIR LINK arrival
+`6ce60e14273d91566618a575e746a8c7f82499dbe10765ff4a9dd5a3ff39ddd4`, dated `2026-11-05T15:10:45Z`. His word,
+verbatim and complete: **"approved"**. The recommendation it approves, as the courier restated it: *"keep
+`02_two_boxes`; withdraw the four collapsed boards."* **It is recorded here as a COURIERED decision, not as the
+principal's word to this box** (`governance/rulings/2026-11-02-a-relay-is-not-an-authorisation-and-a-refusal-names-the-input.md`
+R1 stands, and the peer names himself courier and invites the refusal). Nothing irreversible rests on it: this
+document deletes nothing, and every row, digest and `## QUALIFIER` block above is unchanged by it.
+
+**What it settles, applied:**
+
+- `02_two_boxes` — **KEPT**, as the one SEPARATED board: p\* 7, schedule 28, floor 12, **headroom 16**. A fixed
+  schedule does clear it inside the 40-move cap, so the §1 ground ("no board left that rewards search") never
+  applied to it; the NOTE above withdrew that sentence for `02` on measurement, and this note makes it a decision.
+- **Withdrawn from scored sets** — `01_one_push`, `03_the_corner_waiting`, `mc_01_one_shot`, `zork_01_the_floor`,
+  unchanged from §4.
+- `zork_02_long_crawl` — **kept, labelled**: schedule 7, floor 6, **headroom 1**. Not a ranking board; the headroom
+  travels beside the score.
+- snake — **kept**, with §4's caveat verbatim: its PASS is scoped to periodic words of period ≤ 4 at 120 ticks, not
+  to fixed schedules in general, because the cabinet ships a Hamiltonian-cycle baseline.
+- chess — **kept visible**, `UNDETERMINED`, never blank and never `UNWINNABLE`.
+
+**The correction — `mc_02` is COLLAPSED, and §4 says otherwise.** §4 lists `mc_02_scarcity` under *"AT ITS BOUND —
+unproven"*. That sentence was written against `p*`'s search bound and reads as a statement about degeneracy, which
+is not what the bound measures. The instrument's own verdict, from the table §4 draws on:
+
+```
+jq -r '.rows[] | "\(.board)\t\(.p_star)\t\(.schedule.commands)\t\(.floor.commands // .floor.score // "-")\t\(.headroom)\t\(.verdict_pair)"' probes/FLOOR_TABLE_2026-11-05.json
+levels/mc_01_one_shot.txt	1	1	1	0	COLLAPSED
+levels/mc_02_scarcity.txt	4	4	4	0	COLLAPSED
+levels/zork_01_the_floor.txt	2	2	2	0	COLLAPSED
+levels/zork_02_long_crawl.txt	5	7	6	1	NARROW
+```
+
+And the bound objection is measurably wrong for this row, because `p*` is a **minimum** and every shorter period
+was exhausted — `probes/PSTAR_TABLE_2026-11-05.json`, `mc_02`: `"search_bound": 4`, `"best_by_period": {"1": [1,
+"1P"], "2": [2, "1P 1Q"], "3": [3, "1P 1Q 2R"], "4": [4, "1P 1Q 2R 2S"]}` — cities saved by the best word of each
+period are 1/2/3/4, so no period < 4 clears all four and period 4 does. `p* = 4` is exact, not a lower bound.
+**Rule (MIRROR ON ME): a minimum that sits at its search bound is exact when a witness exists inside the bound and
+every smaller value was exhausted; saturation is a defect only when nothing clears within the bound, which is the
+string "p\* > bound".** `zork_02` is **not** corrected here — its row carries `"best_by_period": null`, so the same
+exhaustion cannot be shown from the artifact, and its NARROW verdict of headroom 1 is untouched.
+
+**So the count, with its basis named:** **five** boards are COLLAPSED by the floor instrument — `01`, `03`, `mc_01`,
+`mc_02`, `zork_01`; one SEPARATED (`02`, headroom 16); one NARROW (`zork_02`, headroom 1); snake score-typed; chess
+unmeasured. Mike's sentence says **four**, and four is what this document withdraws — `mc_02` is **not** folded into
+that approval, and it does not need to be: **no missile board is admissible at all** until `degenerate_gate.py`
+supports the event (§3.2), so it enters no scored set by either route. *Four withdrawn* and *five collapsed* are
+both true and neither number travels without the other: four is a scope, five is a measurement.
+
