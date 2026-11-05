@@ -1,0 +1,212 @@
+{
+ "demand": [
+  {
+   "admissible_row_masks": 7,
+   "block_fraction_max": 0.16,
+   "block_fraction_min": 0.16,
+   "blockable_columns": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "enumeration": "exhaustive",
+   "example": {
+    "lengths": [
+     3,
+     3,
+     3,
+     3,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ],
+    "slots": 10
+   },
+   "forced_full_columns": [],
+   "max_slots_over_patterns": 10,
+   "min_slots_over_patterns": 10,
+   "patterns": 1,
+   "patterns_containing_length": {
+    "3": 4,
+    "5": 6
+   },
+   "size": 5,
+   "slot_lengths_seen": {
+    "3": 4,
+    "5": 6
+   }
+  },
+  {
+   "admissible_row_masks": 17,
+   "block_fraction_max": 0.2449,
+   "block_fraction_min": 0.102,
+   "blockable_columns": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "enumeration": "exhaustive",
+   "example": {
+    "lengths": [
+     3,
+     3,
+     4,
+     4,
+     5,
+     5,
+     5,
+     5,
+     6,
+     6,
+     7,
+     7,
+     7,
+     7
+    ],
+    "slots": 14
+   },
+   "forced_full_columns": [],
+   "max_slots_over_patterns": 16,
+   "min_slots_over_patterns": 14,
+   "patterns": 74,
+   "patterns_containing_length": {
+    "3": 240,
+    "4": 136,
+    "5": 120,
+    "6": 248,
+    "7": 350
+   },
+   "size": 7,
+   "slot_lengths_seen": {
+    "3": 240,
+    "4": 136,
+    "5": 120,
+    "6": 248,
+    "7": 350
+   }
+  },
+  {
+   "admissible_row_masks": 798,
+   "block_fraction_max": 0.2489,
+   "block_fraction_min": 0.1022,
+   "blockable_columns": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ],
+   "enumeration": "sampled",
+   "example": {
+    "lengths": [
+     3,
+     3,
+     3,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     6,
+     6,
+     6,
+     6,
+     6,
+     6,
+     7,
+     7,
+     7,
+     7,
+     8,
+     8,
+     8,
+     8,
+     8,
+     8,
+     8,
+     8,
+     12,
+     12,
+     12,
+     12,
+     15,
+     15,
+     15,
+     15,
+     15
+    ],
+    "slots": 50
+   },
+   "forced_full_columns": [],
+   "max_slots_over_patterns": 74,
+   "min_slots_over_patterns": 28,
+   "patterns": 200,
+   "patterns_containing_length": {
+    "3": 1917,
+    "4": 1554,
+    "5": 876,
+    "6": 722,
+    "7": 1303,
+    "8": 632,
+    "9": 435,
+    "10": 232,
+    "11": 151,
+    "12": 394,
+    "13": 415,
+    "14": 354,
+    "15": 925
+   },
+   "size": 15,
+   "slot_lengths_seen": {
+    "10": 232,
+    "11": 151,
+    "12": 394,
+    "13": 415,
+    "14": 354,
+    "15": 925,
+    "3": 1917,
+    "4": 1554,
+    "5": 876,
+    "6": 722,
+    "7": 1303,
+    "8": 632,
+    "9": 435
+   }
+  }
+ ],
+ "rung": "quiptic"
+}

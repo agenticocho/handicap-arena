@@ -599,6 +599,10 @@ def length_demand(n, limit=20000):
     for row in per_pattern:
         for L in row["lengths"]:
             counts[L] = counts.get(L, 0) + 1
+    fracs = []
+    for p in pats:
+        n_ = len(p)
+        fracs.append(sum(r.count("#") for r in p) / (n_ * n_))
     return {
         "size": n,
         "enumeration": mode,
@@ -606,10 +610,12 @@ def length_demand(n, limit=20000):
         "blockable_columns": blockable_cols,
         "forced_full_columns": forced_full_cols,
         "patterns": len(pats),
+        "block_fraction_min": round(min(fracs), 4) if fracs else None,
+        "block_fraction_max": round(max(fracs), 4) if fracs else None,
         "slot_lengths_seen": {str(k): v for k, v in sorted(hist.items())},
         "max_slots_over_patterns": max((r["slots"] for r in per_pattern), default=0),
         "min_slots_over_patterns": min((r["slots"] for r in per_pattern), default=0),
-        "patterns_needing_length": counts,
+        "patterns_containing_length": counts,
         "example": per_pattern[0] if per_pattern else None,
     }
 
