@@ -1,0 +1,496 @@
+{
+ "task": "STUMP-1",
+ "grammar": "arith-singledigit-add-v1",
+ "A": 17,
+ "n": 5,
+ "p_ref": 0.9,
+ "tolerance": 0.01,
+ "ceiling_P_coin_wins": 0.0002835119557814624,
+ "panel": [
+  {
+   "id": "bonsai-9b-gpu",
+   "url": "http://127.0.0.1:58595/v1/chat/completions",
+   "model": "prism-bonsai-9b",
+   "device": "cuda"
+  },
+  {
+   "id": "ornith-9b-cpu",
+   "url": "http://127.0.0.1:8361/v1/chat/completions",
+   "model": "ornith",
+   "device": "cpu"
+  }
+ ],
+ "panel_digest": "daa6d976d13473af337d93ca57934c0a38ff2e27dba7f5bbf74425912d14a728",
+ "questions": 24,
+ "per_model_correct": {
+  "bonsai-9b-gpu": 24,
+  "ornith-9b-cpu": 24
+ },
+ "per_model_malformed": {
+  "bonsai-9b-gpu": 0,
+  "ornith-9b-cpu": 0
+ },
+ "floored_count": 24,
+ "floored": [
+  "1 + 1",
+  "1 + 2",
+  "2 + 3",
+  "1 + 9",
+  "9 + 1",
+  "4 + 4",
+  "5 + 5",
+  "9 + 9",
+  "3 + 7",
+  "7 + 3",
+  "6 + 8",
+  "8 + 6",
+  "2 + 9",
+  "9 + 2",
+  "5 + 9",
+  "9 + 5",
+  "4 + 7",
+  "7 + 4",
+  "3 + 3",
+  "6 + 6",
+  "2 + 5",
+  "5 + 2",
+  "8 + 9",
+  "9 + 8"
+ ],
+ "floor_verdict": "MEASURED",
+ "floor_rule": "a question every panel member answers correctly is floored: it discriminates nobody",
+ "rows": [
+  {
+   "q": "1 + 1",
+   "truth": 2,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "2",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "2",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "1 + 2",
+   "truth": 3,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "3",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "3",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "2 + 3",
+   "truth": 5,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "5",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "5",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "1 + 9",
+   "truth": 10,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "10",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "10",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "9 + 1",
+   "truth": 10,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "10",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "10",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "4 + 4",
+   "truth": 8,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "8",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "8",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "5 + 5",
+   "truth": 10,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "10",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "10",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "9 + 9",
+   "truth": 18,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "18",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "18",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "3 + 7",
+   "truth": 10,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "10",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "10",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "7 + 3",
+   "truth": 10,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "10",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "10",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "6 + 8",
+   "truth": 14,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "14",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "14",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "8 + 6",
+   "truth": 14,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "14",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "14",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "2 + 9",
+   "truth": 11,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "11",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "11",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "9 + 2",
+   "truth": 11,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "11",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "11",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "5 + 9",
+   "truth": 14,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "14",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "14",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "9 + 5",
+   "truth": 14,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "14",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "14",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "4 + 7",
+   "truth": 11,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "11",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "11",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "7 + 4",
+   "truth": 11,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "11",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "11",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "3 + 3",
+   "truth": 6,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "6",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "6",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "6 + 6",
+   "truth": 12,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "12",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "12",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "2 + 5",
+   "truth": 7,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "7",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "7",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "5 + 2",
+   "truth": 7,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "7",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "7",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "8 + 9",
+   "truth": 17,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "17",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "17",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  },
+  {
+   "q": "9 + 8",
+   "truth": 17,
+   "answers": {
+    "bonsai-9b-gpu": {
+     "raw": "17",
+     "well_formed": true,
+     "correct": true
+    },
+    "ornith-9b-cpu": {
+     "raw": "17",
+     "well_formed": true,
+     "correct": true
+    }
+   },
+   "floored": true,
+   "discriminating": false
+  }
+ ]
+}
