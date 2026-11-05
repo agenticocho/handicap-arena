@@ -1,15 +1,633 @@
 {
- "seed": 7,
- "word_list_size": 483,
- "words_sha256": "4a92a8a54377f42a653a50192a0d93a38b5d60d47140d0ce903b083de3b6aa8f",
+ "seed": 11,
+ "word_list_size": 25077,
+ "words_sha256": "8e299e32d3b90006df8c75c0300faeee2970611b98b034ed973f014cd2043b23",
  "source": "declared in crossword_gen.py -- no third-party content",
  "construction": "criss-cross, no symmetry claim, every word crosses at least one other",
- "puzzles": [],
- "withdrawn": {
-  "date": "2026-11-05",
-  "what": "the 2-puzzle crate previously in this file (sha256 da2cd56f3d1ec889bbc1a306ce2005c841b24cb737b5f60af1b5e5f48c0b19bd)",
-  "why": "its declared ceilings (4/10 per puzzle) were computed with candidates_of asking the wrong question: 'which word, if removed, leaves a declared word' instead of 'the anagram family of the remainder AFTER the announced decoy'. Recomputed correctly the crate is 19/20 clue-unique, not 8/20 -- the clues hand over the answers and the grid does almost no work.",
-  "kept_where": "probes/CROSSWORD_CRATE_2026-11-05.WITHDRAWN.json",
-  "consequence": "with an honest ceiling this clue design builds 0 puzzles; the next crate needs clue devices that do not print the answer's letters, and a multi-length word list"
- }
+ "puzzles": [
+  {
+   "rows": 15,
+   "cols": 11,
+   "slots": [
+    {
+     "id": "D1",
+     "direction": "down",
+     "row": 0,
+     "col": 10,
+     "length": 7,
+     "answer": "TOUCHES",
+     "clue": "Confused COHUTSE (7)",
+     "clue_data": {
+      "kind": "anagram",
+      "letters": "COHUTSE"
+     },
+     "scramble": "COHUTSE",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "D1",
+     "clue_to_slot_permuted": "D3",
+     "clue_candidates": 1,
+     "candidates": [
+      "TOUCHES"
+     ]
+    },
+    {
+     "id": "D2",
+     "direction": "down",
+     "row": 3,
+     "col": 8,
+     "length": 5,
+     "answer": "WRAPS",
+     "clue": "Mixed up ASWPR (5)",
+     "clue_data": {
+      "kind": "anagram",
+      "letters": "ASWPR"
+     },
+     "scramble": "ASWPR",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "D2",
+     "clue_to_slot_permuted": "A3",
+     "clue_candidates": 2,
+     "candidates": [
+      "WARPS",
+      "WRAPS"
+     ]
+    },
+    {
+     "id": "A1",
+     "direction": "across",
+     "row": 5,
+     "col": 6,
+     "length": 5,
+     "answer": "TRADE",
+     "clue": "Confused ADTER (5)",
+     "clue_data": {
+      "kind": "anagram",
+      "letters": "ADTER"
+     },
+     "scramble": "ADTER",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "A1",
+     "clue_to_slot_permuted": "D5",
+     "clue_candidates": 4,
+     "candidates": [
+      "RATED",
+      "TARED",
+      "TRADE",
+      "TREAD"
+     ]
+    },
+    {
+     "id": "D3",
+     "direction": "down",
+     "row": 5,
+     "col": 6,
+     "length": 5,
+     "answer": "TIDES",
+     "clue": "In a muddle TIDSE (5)",
+     "clue_data": {
+      "kind": "anagram",
+      "letters": "TIDSE"
+     },
+     "scramble": "TIDSE",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "D3",
+     "clue_to_slot_permuted": "A4",
+     "clue_candidates": 4,
+     "candidates": [
+      "DIETS",
+      "EDITS",
+      "SITED",
+      "TIDES"
+     ]
+    },
+    {
+     "id": "D4",
+     "direction": "down",
+     "row": 6,
+     "col": 1,
+     "length": 3,
+     "answer": "BYE",
+     "clue": "Mixed up BEY (3)",
+     "clue_data": {
+      "kind": "anagram",
+      "letters": "BEY"
+     },
+     "scramble": "BEY",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "D4",
+     "clue_to_slot_permuted": "D4",
+     "clue_candidates": 1,
+     "candidates": [
+      "BYE"
+     ]
+    },
+    {
+     "id": "D5",
+     "direction": "down",
+     "row": 7,
+     "col": 4,
+     "length": 6,
+     "answer": "MEANLY",
+     "clue": "In a muddle NAYLME (6)",
+     "clue_data": {
+      "kind": "anagram",
+      "letters": "NAYLME"
+     },
+     "scramble": "NAYLME",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "D5",
+     "clue_to_slot_permuted": "A1",
+     "clue_candidates": 3,
+     "candidates": [
+      "LAYMEN",
+      "MEANLY",
+      "NAMELY"
+     ]
+    },
+    {
+     "id": "A2",
+     "direction": "across",
+     "row": 8,
+     "col": 0,
+     "length": 7,
+     "answer": "RELIEVE",
+     "clue": "Mixed up VILREEE (7)",
+     "clue_data": {
+      "kind": "anagram",
+      "letters": "VILREEE"
+     },
+     "scramble": "VILREEE",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "A2",
+     "clue_to_slot_permuted": "D2",
+     "clue_candidates": 1,
+     "candidates": [
+      "RELIEVE"
+     ]
+    },
+    {
+     "id": "A3",
+     "direction": "across",
+     "row": 10,
+     "col": 1,
+     "length": 6,
+     "answer": "GRANDS",
+     "clue": "Confused GSNDAR (6)",
+     "clue_data": {
+      "kind": "anagram",
+      "letters": "GSNDAR"
+     },
+     "scramble": "GSNDAR",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "A3",
+     "clue_to_slot_permuted": "D6",
+     "clue_candidates": 1,
+     "candidates": [
+      "GRANDS"
+     ]
+    },
+    {
+     "id": "A4",
+     "direction": "across",
+     "row": 12,
+     "col": 2,
+     "length": 5,
+     "answer": "PAYER",
+     "clue": "In a muddle PYERA (5)",
+     "clue_data": {
+      "kind": "anagram",
+      "letters": "PYERA"
+     },
+     "scramble": "PYERA",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "A4",
+     "clue_to_slot_permuted": "A2",
+     "clue_candidates": 2,
+     "candidates": [
+      "PAYER",
+      "REPAY"
+     ]
+    },
+    {
+     "id": "D6",
+     "direction": "down",
+     "row": 12,
+     "col": 3,
+     "length": 3,
+     "answer": "ASH",
+     "clue": "Confused CVESSEHLAA less CLEAVES (3)",
+     "clue_data": {
+      "kind": "decoy",
+      "letters": "CVESSEHLAA",
+      "decoy": "CLEAVES"
+     },
+     "scramble": "CVESSEHLAA",
+     "clue_kind": "decoy",
+     "clue_to_slot_published": "D6",
+     "clue_to_slot_permuted": "D1",
+     "clue_candidates": 2,
+     "candidates": [
+      "ASH",
+      "HAS"
+     ]
+    }
+   ],
+   "ceiling": {
+    "anagram_resolved": 4,
+    "slots": 10,
+    "ambiguous": [
+     {
+      "id": "D2",
+      "kind": "anagram",
+      "n_candidates": 2,
+      "candidates": [
+       "WARPS",
+       "WRAPS"
+      ]
+     },
+     {
+      "id": "A1",
+      "kind": "anagram",
+      "n_candidates": 4,
+      "candidates": [
+       "RATED",
+       "TARED",
+       "TRADE",
+       "TREAD"
+      ]
+     },
+     {
+      "id": "D3",
+      "kind": "anagram",
+      "n_candidates": 4,
+      "candidates": [
+       "DIETS",
+       "EDITS",
+       "SITED",
+       "TIDES"
+      ]
+     },
+     {
+      "id": "D5",
+      "kind": "anagram",
+      "n_candidates": 3,
+      "candidates": [
+       "LAYMEN",
+       "MEANLY",
+       "NAMELY"
+      ]
+     },
+     {
+      "id": "A4",
+      "kind": "anagram",
+      "n_candidates": 2,
+      "candidates": [
+       "PAYER",
+       "REPAY"
+      ]
+     },
+     {
+      "id": "D6",
+      "kind": "decoy",
+      "n_candidates": 2,
+      "candidates": [
+       "ASH",
+       "HAS"
+      ]
+     }
+    ]
+   },
+   "floor": {
+    "verdict": "WINNABLE",
+    "states_expanded": 10,
+    "solution": [],
+    "assignments": {
+     "D1": "TOUCHES",
+     "A1": "TRADE",
+     "D2": "WRAPS",
+     "D3": "TIDES",
+     "D4": "BYE",
+     "A2": "RELIEVE",
+     "D5": "MEANLY",
+     "A3": "GRANDS",
+     "A4": "PAYER",
+     "D6": "ASH"
+    },
+    "fills": 1,
+    "exhausted": true
+   },
+   "unique_fill": true,
+   "grid_sha256": "2ef9a8bafd562dd288a97695946e33cd7ab201ca5308606b738af47e3de63c23"
+  },
+  {
+   "rows": 19,
+   "cols": 14,
+   "slots": [
+    {
+     "id": "D1",
+     "direction": "down",
+     "row": 0,
+     "col": 5,
+     "length": 7,
+     "answer": "WALTZES",
+     "clue": "In a muddle KLAWIMCSETMIGZ less GIMMICK (7)",
+     "clue_data": {
+      "kind": "decoy",
+      "letters": "KLAWIMCSETMIGZ",
+      "decoy": "GIMMICK"
+     },
+     "scramble": "KLAWIMCSETMIGZ",
+     "clue_kind": "decoy",
+     "clue_to_slot_published": "D1",
+     "clue_to_slot_permuted": "D1",
+     "clue_candidates": 1,
+     "candidates": [
+      "WALTZES"
+     ]
+    },
+    {
+     "id": "D2",
+     "direction": "down",
+     "row": 5,
+     "col": 10,
+     "length": 7,
+     "answer": "JERSEYS",
+     "clue": "In a muddle REAESSLYJSEF less LEAFS (7)",
+     "clue_data": {
+      "kind": "decoy",
+      "letters": "REAESSLYJSEF",
+      "decoy": "LEAFS"
+     },
+     "scramble": "REAESSLYJSEF",
+     "clue_kind": "decoy",
+     "clue_to_slot_published": "D2",
+     "clue_to_slot_permuted": "D2",
+     "clue_candidates": 1,
+     "candidates": [
+      "JERSEYS"
+     ]
+    },
+    {
+     "id": "A1",
+     "direction": "across",
+     "row": 6,
+     "col": 5,
+     "length": 7,
+     "answer": "SCRAPER",
+     "clue": "Confused AERRSCP (7)",
+     "clue_data": {
+      "kind": "anagram",
+      "letters": "AERRSCP"
+     },
+     "scramble": "AERRSCP",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "A1",
+     "clue_to_slot_permuted": "A4",
+     "clue_candidates": 1,
+     "candidates": [
+      "SCRAPER"
+     ]
+    },
+    {
+     "id": "D3",
+     "direction": "down",
+     "row": 8,
+     "col": 7,
+     "length": 5,
+     "answer": "UPSET",
+     "clue": "Confused EPSTU (5)",
+     "clue_data": {
+      "kind": "anagram",
+      "letters": "EPSTU"
+     },
+     "scramble": "EPSTU",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "D3",
+     "clue_to_slot_permuted": "D5",
+     "clue_candidates": 2,
+     "candidates": [
+      "SETUP",
+      "UPSET"
+     ]
+    },
+    {
+     "id": "A2",
+     "direction": "across",
+     "row": 8,
+     "col": 10,
+     "length": 4,
+     "answer": "SLOP",
+     "clue": "Mixed up VOEDTPOLS less VOTED (4)",
+     "clue_data": {
+      "kind": "decoy",
+      "letters": "VOEDTPOLS",
+      "decoy": "VOTED"
+     },
+     "scramble": "VOEDTPOLS",
+     "clue_kind": "decoy",
+     "clue_to_slot_published": "A2",
+     "clue_to_slot_permuted": "D4",
+     "clue_candidates": 3,
+     "candidates": [
+      "LOPS",
+      "POLS",
+      "SLOP"
+     ]
+    },
+    {
+     "id": "A3",
+     "direction": "across",
+     "row": 10,
+     "col": 4,
+     "length": 7,
+     "answer": "GRISTLY",
+     "clue": "Confused LSYIRTG (7)",
+     "clue_data": {
+      "kind": "anagram",
+      "letters": "LSYIRTG"
+     },
+     "scramble": "LSYIRTG",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "A3",
+     "clue_to_slot_permuted": "A3",
+     "clue_candidates": 1,
+     "candidates": [
+      "GRISTLY"
+     ]
+    },
+    {
+     "id": "D4",
+     "direction": "down",
+     "row": 10,
+     "col": 4,
+     "length": 4,
+     "answer": "GABS",
+     "clue": "Mixed up GASIBNCAB less CABIN (4)",
+     "clue_data": {
+      "kind": "decoy",
+      "letters": "GASIBNCAB",
+      "decoy": "CABIN"
+     },
+     "scramble": "GASIBNCAB",
+     "clue_kind": "decoy",
+     "clue_to_slot_published": "D4",
+     "clue_to_slot_permuted": "D3",
+     "clue_candidates": 2,
+     "candidates": [
+      "BAGS",
+      "GABS"
+     ]
+    },
+    {
+     "id": "A4",
+     "direction": "across",
+     "row": 13,
+     "col": 0,
+     "length": 7,
+     "answer": "TRUSSED",
+     "clue": "Mixed up USDTSRE (7)",
+     "clue_data": {
+      "kind": "anagram",
+      "letters": "USDTSRE"
+     },
+     "scramble": "USDTSRE",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "A4",
+     "clue_to_slot_permuted": "D6",
+     "clue_candidates": 2,
+     "candidates": [
+      "DUSTERS",
+      "TRUSSED"
+     ]
+    },
+    {
+     "id": "D5",
+     "direction": "down",
+     "row": 13,
+     "col": 1,
+     "length": 6,
+     "answer": "RAGGED",
+     "clue": "In a muddle GRDAGE (6)",
+     "clue_data": {
+      "kind": "anagram",
+      "letters": "GRDAGE"
+     },
+     "scramble": "GRDAGE",
+     "clue_kind": "anagram",
+     "clue_to_slot_published": "D5",
+     "clue_to_slot_permuted": "A1",
+     "clue_candidates": 2,
+     "candidates": [
+      "DAGGER",
+      "RAGGED"
+     ]
+    },
+    {
+     "id": "D6",
+     "direction": "down",
+     "row": 13,
+     "col": 6,
+     "length": 6,
+     "answer": "DAEMON",
+     "clue": "Mixed up NDTIMNTAGOEHE less TIGHTEN (6)",
+     "clue_data": {
+      "kind": "decoy",
+      "letters": "NDTIMNTAGOEHE",
+      "decoy": "TIGHTEN"
+     },
+     "scramble": "NDTIMNTAGOEHE",
+     "clue_kind": "decoy",
+     "clue_to_slot_published": "D6",
+     "clue_to_slot_permuted": "A2",
+     "clue_candidates": 2,
+     "candidates": [
+      "DAEMON",
+      "MOANED"
+     ]
+    }
+   ],
+   "ceiling": {
+    "anagram_resolved": 4,
+    "slots": 10,
+    "ambiguous": [
+     {
+      "id": "D3",
+      "kind": "anagram",
+      "n_candidates": 2,
+      "candidates": [
+       "SETUP",
+       "UPSET"
+      ]
+     },
+     {
+      "id": "A2",
+      "kind": "decoy",
+      "n_candidates": 3,
+      "candidates": [
+       "LOPS",
+       "POLS",
+       "SLOP"
+      ]
+     },
+     {
+      "id": "D4",
+      "kind": "decoy",
+      "n_candidates": 2,
+      "candidates": [
+       "BAGS",
+       "GABS"
+      ]
+     },
+     {
+      "id": "A4",
+      "kind": "anagram",
+      "n_candidates": 2,
+      "candidates": [
+       "DUSTERS",
+       "TRUSSED"
+      ]
+     },
+     {
+      "id": "D5",
+      "kind": "anagram",
+      "n_candidates": 2,
+      "candidates": [
+       "DAGGER",
+       "RAGGED"
+      ]
+     },
+     {
+      "id": "D6",
+      "kind": "decoy",
+      "n_candidates": 2,
+      "candidates": [
+       "DAEMON",
+       "MOANED"
+      ]
+     }
+    ]
+   },
+   "floor": {
+    "verdict": "WINNABLE",
+    "states_expanded": 10,
+    "solution": [],
+    "assignments": {
+     "D1": "WALTZES",
+     "D2": "JERSEYS",
+     "A1": "SCRAPER",
+     "A2": "SLOP",
+     "A3": "GRISTLY",
+     "D3": "UPSET",
+     "D4": "GABS",
+     "A4": "TRUSSED",
+     "D5": "RAGGED",
+     "D6": "DAEMON"
+    },
+    "fills": 1,
+    "exhausted": true
+   },
+   "unique_fill": true,
+   "grid_sha256": "3fe151ee8a07784ce620e0edfe37f8488a2b1d4bc4cc13f3e1fcd4f590060f05"
+  }
+ ]
 }

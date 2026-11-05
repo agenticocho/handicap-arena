@@ -70,6 +70,23 @@ WOUND WRITE WRONG WROTE YIELD YOUNG YOUTH
 N = 5
 ACROSS, DOWN = (0, 1), (1, 0)
 
+LEXICON_FILE = Path(__file__).with_name("wordlist_3_7.txt")
+LEXICON_SHA = None
+
+
+def set_lexicon(path=None):
+    """Load the declared lexicon. One list, one digest, used by the generator AND both gates -- a clue is
+    only ambiguous relative to the words a reader could think of, so the answers and the candidates must
+    come from the same list."""
+    global WORDS, LEXICON_SHA
+    p = Path(path) if path else LEXICON_FILE
+    if not p.exists():
+        return False
+    ws = sorted({w.strip().upper() for w in p.read_text().split() if w.strip()})
+    WORDS = tuple(ws)
+    LEXICON_SHA = hashlib.sha256(p.read_bytes()).hexdigest()
+    return True
+
 
 # ---------------------------------------------------------------------------------------------------
 # construction: criss-cross, every word crossing at least one other, no accidental runs
@@ -338,7 +355,7 @@ def build(n_puzzles: int, seed: int):
                         grid_sha256=hashlib.sha256(
                             json.dumps(sorted(placed, key=lambda q: (q["row"], q["col"], q["word"])), sort_keys=True).encode()).hexdigest()))
     return dict(seed=seed, word_list_size=len(WORDS),
-                words_sha256=hashlib.sha256(" ".join(WORDS).encode()).hexdigest(),
+                words_sha256=LEXICON_SHA or hashlib.sha256(" ".join(WORDS).encode()).hexdigest(),
                 source="declared in crossword_gen.py -- no third-party content",
                 construction="criss-cross, no symmetry claim, every word crosses at least one other",
                 puzzles=out)
@@ -355,7 +372,7 @@ def self_test():
             fail += 1
             print(f"  FAIL {name}")
 
-    check("word list loaded", len(WORDS) > 300 and all(len(w) == N for w in WORDS))
+    check("word list loaded", len(WORDS) > 300 and all(3 <= len(w) <= 7 for w in WORDS))
     check("word list has no duplicates", len(set(WORDS)) == len(WORDS))
 
     grid, placed = crisscross(random.Random(7))
@@ -380,7 +397,7 @@ def self_test():
     slots = slots_of(placed)
     check("a slot per word", len(slots) == len(placed))
     text, data = clue_for(slots[0]["answer"], random.Random(1))
-    check("enumeration is in the clue", f"({N})" in text)
+    check("enumeration is in the clue", f"({len(slots[0]['answer'])})" in text)
     check("an anagram clue carries exactly the answer's letters",
           data["kind"] != "anagram" or sorted(data["letters"]) == sorted(slots[0]["answer"]))
     check("a decoy clue carries the answer's letters plus a declared word",
@@ -407,11 +424,10 @@ def self_test():
     # the floor that matters: a generated puzzle must be winnable, and the winning grid must be a grid of
     # declared words -- the solver's own opinion is not evidence, so the answers are re-checked here
     crate = build(1, 7)
-    # TODAY'S FINDING, ASSERTED RATHER THAN CRASHED: with the ceiling computed correctly (the announced
-    # decoy subtracted), the current clue design cannot satisfy it -- every candidate puzzle is rejected.
-    # When a clue design that survives the ceiling lands, this assertion flips and the block below runs.
-    check("the current clue design cannot pass an honest ceiling (0 puzzles built)",
-          len(crate["puzzles"]) == 0)
+    # THE MULTI-LENGTH LEXICON FLIPS THIS. With 3-7 letter words the anagram families are large enough that
+    # the clues no longer publish their answers, so a puzzle CAN pass an honest ceiling. If this ever goes
+    # back to zero, the lexicon or the clue devices regressed -- not the gate.
+    check("an honest ceiling is satisfiable again (>=1 puzzle built)", len(crate["puzzles"]) >= 1)
     if not crate["puzzles"]:
         print(f"{ok} passed, {fail} failed")
         return fail == 0
@@ -437,6 +453,8 @@ def self_test():
           [f"D{i + 1}" for i in range(sum(1 for sl in pz["slots"] if sl["direction"] == "down"))])
     check("every slot carries a scramble and a clue kind",
           all(sl.get("scramble") is not None and sl.get("clue_kind") in ("anagram", "decoy") for sl in pz["slots"]))
+    check("the shipped puzzle has exactly one fill", pz["floor"].get("fills") == 1)
+    check("the shipped puzzle is under the ceiling", pz["ceiling"]["anagram_resolved"] <= len(pz["slots"]) // 2)
     check("both clue mappings cover every slot",
           sorted(s["clue_to_slot_published"] for s in pz["slots"]) == sorted(s["id"] for s in pz["slots"]) and
           sorted(set(s["clue_to_slot_permuted"] for s in pz["slots"])) == sorted(s["id"] for s in pz["slots"]))
@@ -450,9 +468,12 @@ def main():
     ap.add_argument("--puzzles", type=int, default=3)
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--out", default="probes/CROSSWORD_CRATE_2026-11-05.json")
+    ap.add_argument("--lexicon", default=None, help="path to a word list; default wordlist_3_7.txt")
     a = ap.parse_args()
     if a.self_test:
+        set_lexicon(a.lexicon)
         sys.exit(0 if self_test() else 1)
+    set_lexicon(a.lexicon)
     crate = build(a.puzzles, a.seed)
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
