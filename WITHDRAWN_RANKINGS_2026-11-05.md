@@ -32,23 +32,43 @@ a ranking. A qualified ranking is still a ranking; an unsupported one should be 
 
 ## 3. Rebuild condition — the gate for any future board
 
-No board enters a scored set until **all three** hold:
+No board enters a scored set until **all four** hold:
 
-1. `python3 degenerate_gate.py --json --event <event> --board <path>` returns a verdict that is not
-   `DEGENERATE`;
-2. the witness it reports is **replayed into that board's own simulator and reproduces**
-   (`verify_pstar.py`, `4 witnesses replayed, 0 did not reproduce`);
-3. **`p* > gate width`**, with both numbers written beside the row in
-   `probes/PSTAR_TABLE_2026-11-05.json`. *"p\* > bound" is not "not degenerate"* — the bound has to be
-   stated or the comparison is decoration.
+1. **`p*` is measured with a search bound strictly greater than the claimed `p*`.** A measure that
+   saturates its bound is a *lower bound* on p\*, not p\*. Two of the eight rows in
+   `probes/PSTAR_TABLE_2026-11-05.json` sit exactly at the edge — `zork_02` p\*=5 with bound 5, `mc_02`
+   p\*=4 with bound 4 — so as published they cannot exclude a period one longer.
+2. **`degenerate_gate.py` is run with `--max-period` at or above the claimed p\***. Its defaults are
+   `SOKOBAN_MAX_PERIOD = 3` and `ZORK_MAX_PERIOD = 2`, so at default settings it returns `PASS` for
+   `02_two_boxes` (p\*=7) and `03_the_corner_waiting` (p\*=6). *A verdict from a bounded instrument is a
+   statement about the bound.* **Missile is not a supported event in the gate at all**
+   (`--event {sokoban,zork,chess}`), so no missile board may be admitted until one exists.
+3. **The clearing condition is the floor's, verbatim:** `finished` / `escaped`. For `zork_02` the p\* table's
+   `cleared: true` is reached at `out_of_commands` with the item carried — the schedule never escapes. A
+   weaker terminal condition makes "p\* = 5" and "optimum = 6" incomparable, and the row that compares them
+   is arithmetic dressed as a finding.
+4. **`p* > gate width`**, with both numbers beside the row. *"p\* > bound" is not "not degenerate".*
 
-## 4. Scope — this is not a Sokoban defect
+## 4. Scope — this is not a Sokoban defect, and the count is smaller than the first claim
 
-Seven of the eight arena boards are cleared by a fixed schedule: missile `mc_01` **1**, `mc_02` **4** (one
-period above its width-3 gate, with the four tokens forced by four city-bound threats), zork `zork_01` **2**,
-`zork_02` **5** (which *passed* a width-2 gate two days ago). Snake is the only survivor, and only for
-periodic words of period ≤ 4 at 120 ticks — the cabinet ships a Hamiltonian-cycle baseline that is a fixed
-*non-periodic* route and scores well, so "snake is not degenerate" must never be quoted without that bound.
+The earlier "7 of 8 boards are cleared by a fixed schedule" was assembled from two artifacts with
+different bounds and does not survive being checked row by row. What the floor and the p\* table support:
+
+| verdict | boards | on what |
+|---|---|---|
+| **COLLAPSED** (schedule *is* the optimum) | sokoban `01` (1/1), `03` (6/6), zork `zork_01` (2/2), missile `mc_01` (1/1) | floor headroom **0**, replay-verified |
+| **SEPARATED** (real headroom) | sokoban `02` — schedule 28, optimum **12** | headroom **16** |
+| **AT ITS BOUND — unproven** | zork `zork_02` (p\*=5 at bound 5), missile `mc_02` (p\*=4 at bound 4) | a saturating search cannot exclude a longer period |
+| **NOT COMPARABLE** | zork `zork_02` again: `cleared: true` at `out_of_commands`, never `escaped` | p\*'s terminal condition is weaker than the floor's |
+| **SCORE-TYPED** | snake seeds 1/7/13/42 (8–9 apples; p\* 2/2/2/4 at bound 4) | a count, never pooled with a win floor |
+
+**Snake keeps its earlier caveat:** the cabinet ships a Hamiltonian-cycle baseline, a fixed *non-periodic*
+route that scores well, so "not degenerate" would have to mean "for periodic words of period ≤ 4 at 120
+ticks" and nothing wider.
+
+So: **four boards proven degenerate, one separated, three unproven or incomparable.** The Sokoban
+withdrawal does not depend on any of them — it rests on all three Sokoban boards having headroom 0/16/0
+against schedules of period 1/7/6 — but no reader should carry away "seven of eight".
 
 ## 5. Falsifier
 
