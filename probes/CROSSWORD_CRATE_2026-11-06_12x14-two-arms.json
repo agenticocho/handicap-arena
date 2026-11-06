@@ -1,0 +1,1734 @@
+{
+ "seed": 11,
+ "word_list_size": 7807,
+ "word_list_size_rule": "pool after restrict_to_cluable: the answers/candidates universe",
+ "word_list_file_words": 25077,
+ "word_list_file_bytes": 173944,
+ "words_sha256": "8e299e32d3b90006df8c75c0300faeee2970611b98b034ed973f014cd2043b23",
+ "words_sha256_rule": "digest of the word-list FILE on disk, which is larger than the pool",
+ "source": "declared in crossword_gen.py -- no third-party content",
+ "construction": "criss-cross, no symmetry claim, every word crosses at least one other",
+ "shape": {
+  "requested": [
+   12,
+   14
+  ],
+  "rule": "the arrangement fills the stated box exactly: every placement is bounded by it during construction and a grid that does not reach all four edges is rejected, so a stated 12x14 is a 12x14 and not a smaller grid in a larger margin"
+ },
+ "arms": {
+  "published": [
+   "published",
+   "permuted"
+  ],
+  "rule": "one puzzle entry per arm, all cut from one grid: same words, same clues, same shape, same ceiling; the only field that differs is the clue-to-slot mapping (`clue_to_slot`), so a score difference is a recall difference"
+ },
+ "ceiling_policy": {
+  "requested": [
+   3,
+   4
+  ],
+  "rule": "a resolving slot's terse definition fits exactly one declared word (the answer), so the slot is enterable from the clue alone; every other slot keeps the fair band (>=2 distinct stems) and needs its crossings",
+  "measured_per_grid": [
+   3,
+   4
+  ]
+ },
+ "puzzles": [
+  {
+   "rows": 12,
+   "cols": 14,
+   "slots": [
+    {
+     "id": "A1",
+     "direction": "across",
+     "row": 0,
+     "col": 0,
+     "length": 6,
+     "answer": "PUFFED",
+     "clue": "smoke",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "smoke",
+      "terse": "smoke",
+      "pos": "v",
+      "gloss": "smoke and exhale strongly",
+      "synset": "puff.v.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A1",
+     "clue_to_slot_permuted": "A3",
+     "clue_candidates": 10,
+     "candidates": [
+      "CIGAR",
+      "CIGARET",
+      "CIGARS",
+      "FAG",
+      "FAGS",
+      "INHALE",
+      "INHALED",
+      "INHALES",
+      "PUFFED",
+      "PUFFING"
+     ],
+     "clue_to_slot": "A1"
+    },
+    {
+     "id": "D1",
+     "direction": "down",
+     "row": 0,
+     "col": 5,
+     "length": 7,
+     "answer": "DROPOUT",
+     "clue": "quitter",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "quitter",
+      "terse": "someone",
+      "pos": "n",
+      "gloss": "someone who quits school before graduation",
+      "synset": "dropout.n.01",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D1",
+     "clue_to_slot_permuted": "D1",
+     "clue_candidates": 1,
+     "candidates": [
+      "DROPOUT"
+     ],
+     "clue_to_slot": "D1"
+    },
+    {
+     "id": "A2",
+     "direction": "across",
+     "row": 1,
+     "col": 5,
+     "length": 7,
+     "answer": "RAWNESS",
+     "clue": "unity",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "unity",
+      "terse": "state",
+      "pos": "n",
+      "gloss": "the state of being crude and incomplete and imperfect",
+      "synset": "incompleteness.n.01",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A2",
+     "clue_to_slot_permuted": "A2",
+     "clue_candidates": 1,
+     "candidates": [
+      "RAWNESS"
+     ],
+     "clue_to_slot": "A2"
+    },
+    {
+     "id": "D2",
+     "direction": "down",
+     "row": 1,
+     "col": 11,
+     "length": 6,
+     "answer": "STOLES",
+     "clue": "scarf",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "scarf",
+      "terse": "wide",
+      "pos": "n",
+      "gloss": "a wide scarf worn about their shoulders by women",
+      "synset": "stole.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D2",
+     "clue_to_slot_permuted": "A6",
+     "clue_candidates": 5,
+     "candidates": [
+      "BOA",
+      "BOAS",
+      "MUFFLER",
+      "STOLE",
+      "STOLES"
+     ],
+     "clue_to_slot": "D2"
+    },
+    {
+     "id": "A3",
+     "direction": "across",
+     "row": 4,
+     "col": 1,
+     "length": 5,
+     "answer": "BASSO",
+     "clue": "singing voice",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "singing voice",
+      "terse": "lowest",
+      "pos": "n",
+      "gloss": "the lowest adult male singing voice",
+      "synset": "bass.n.06",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A3",
+     "clue_to_slot_permuted": "A5",
+     "clue_candidates": 8,
+     "candidates": [
+      "ALTO",
+      "ALTOS",
+      "BASSI",
+      "BASSO",
+      "BASSOS",
+      "SOPRANO",
+      "TENOR",
+      "TENORS"
+     ],
+     "clue_to_slot": "A3"
+    },
+    {
+     "id": "A4",
+     "direction": "across",
+     "row": 5,
+     "col": 7,
+     "length": 7,
+     "answer": "POTTERY",
+     "clue": "trade",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "trade",
+      "terse": "craft",
+      "pos": "n",
+      "gloss": "the craft of making earthenware",
+      "synset": "pottery.n.02",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A4",
+     "clue_to_slot_permuted": "A1",
+     "clue_candidates": 6,
+     "candidates": [
+      "EXPORT",
+      "EXPORTS",
+      "MASONRY",
+      "POTTERY",
+      "ROOFING",
+      "TANNING"
+     ],
+     "clue_to_slot": "A4"
+    },
+    {
+     "id": "A5",
+     "direction": "across",
+     "row": 6,
+     "col": 3,
+     "length": 4,
+     "answer": "GATE",
+     "clue": "gross",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "gross",
+      "terse": "total",
+      "pos": "n",
+      "gloss": "total admission receipts at a sports event",
+      "synset": "gate.n.03",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A5",
+     "clue_to_slot_permuted": "D2",
+     "clue_candidates": 1,
+     "candidates": [
+      "GATE"
+     ],
+     "clue_to_slot": "A5"
+    },
+    {
+     "id": "D3",
+     "direction": "down",
+     "row": 6,
+     "col": 4,
+     "length": 6,
+     "answer": "AMAZES",
+     "clue": "surprise",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "surprise",
+      "terse": "affect",
+      "pos": "v",
+      "gloss": "affect with wonder",
+      "synset": "amaze.v.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D3",
+     "clue_to_slot_permuted": "A4",
+     "clue_candidates": 10,
+     "candidates": [
+      "AMAZE",
+      "AMAZED",
+      "AMAZES",
+      "AMAZING",
+      "ASTOUND",
+      "BOGGLE",
+      "BOGGLED",
+      "BOGGLES",
+      "FLOORED",
+      "SHOCKED"
+     ],
+     "clue_to_slot": "D3"
+    },
+    {
+     "id": "A6",
+     "direction": "across",
+     "row": 8,
+     "col": 2,
+     "length": 5,
+     "answer": "QUAYS",
+     "clue": "pier",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "pier",
+      "terse": "wharf",
+      "pos": "n",
+      "gloss": "wharf usually built parallel to the shoreline",
+      "synset": "quay.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A6",
+     "clue_to_slot_permuted": "D3",
+     "clue_candidates": 4,
+     "candidates": [
+      "LEVEE",
+      "LEVEES",
+      "QUAY",
+      "QUAYS"
+     ],
+     "clue_to_slot": "A6"
+    },
+    {
+     "id": "A7",
+     "direction": "across",
+     "row": 11,
+     "col": 2,
+     "length": 7,
+     "answer": "BOSSING",
+     "clue": "impress",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "impress",
+      "terse": "raise",
+      "pos": "v",
+      "gloss": "raise in a relief",
+      "synset": "emboss.v.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A7",
+     "clue_to_slot_permuted": "A7",
+     "clue_candidates": 8,
+     "candidates": [
+      "BOSSED",
+      "BOSSING",
+      "EMBOSS",
+      "STAMPED",
+      "WOW",
+      "WOWED",
+      "WOWING",
+      "WOWS"
+     ],
+     "clue_to_slot": "A7"
+    }
+   ],
+   "ceiling": {
+    "clue_resolved": 3,
+    "slots": 10,
+    "resolvable_target": 3,
+    "clue_rule": "definition: a slot counts as resolved when its terse definition fits exactly one declared word",
+    "ambiguous": [
+     {
+      "id": "A1",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "CIGAR",
+       "CIGARET",
+       "CIGARS",
+       "FAG",
+       "FAGS",
+       "INHALE"
+      ]
+     },
+     {
+      "id": "D2",
+      "kind": "definition",
+      "n_candidates": 5,
+      "candidates": [
+       "BOA",
+       "BOAS",
+       "MUFFLER",
+       "STOLE",
+       "STOLES"
+      ]
+     },
+     {
+      "id": "A3",
+      "kind": "definition",
+      "n_candidates": 8,
+      "candidates": [
+       "ALTO",
+       "ALTOS",
+       "BASSI",
+       "BASSO",
+       "BASSOS",
+       "SOPRANO"
+      ]
+     },
+     {
+      "id": "A4",
+      "kind": "definition",
+      "n_candidates": 6,
+      "candidates": [
+       "EXPORT",
+       "EXPORTS",
+       "MASONRY",
+       "POTTERY",
+       "ROOFING",
+       "TANNING"
+      ]
+     },
+     {
+      "id": "D3",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "AMAZE",
+       "AMAZED",
+       "AMAZES",
+       "AMAZING",
+       "ASTOUND",
+       "BOGGLE"
+      ]
+     },
+     {
+      "id": "A6",
+      "kind": "definition",
+      "n_candidates": 4,
+      "candidates": [
+       "LEVEE",
+       "LEVEES",
+       "QUAY",
+       "QUAYS"
+      ]
+     },
+     {
+      "id": "A7",
+      "kind": "definition",
+      "n_candidates": 8,
+      "candidates": [
+       "BOSSED",
+       "BOSSING",
+       "EMBOSS",
+       "STAMPED",
+       "WOW",
+       "WOWED"
+      ]
+     }
+    ]
+   },
+   "floor": {
+    "verdict": "WINNABLE",
+    "states_expanded": 11,
+    "solution": [],
+    "assignments": {
+     "D1": "DROPOUT",
+     "A1": "PUFFED",
+     "A2": "RAWNESS",
+     "D2": "STOLES",
+     "A3": "BASSO",
+     "A4": "POTTERY",
+     "A5": "GATE",
+     "D3": "AMAZES",
+     "A6": "QUAYS",
+     "A7": "BOSSING"
+    },
+    "fills": 1,
+    "exhausted": true
+   },
+   "unique_fill": true,
+   "grid_sha256": "393e01c45223d5c8fa5c66fb43ccb393a43a5e951f91889d0d6e8f02854f5e8c",
+   "arm": "published",
+   "grid_group": "g01"
+  },
+  {
+   "rows": 12,
+   "cols": 14,
+   "slots": [
+    {
+     "id": "A1",
+     "direction": "across",
+     "row": 0,
+     "col": 0,
+     "length": 6,
+     "answer": "PUFFED",
+     "clue": "smoke",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "smoke",
+      "terse": "smoke",
+      "pos": "v",
+      "gloss": "smoke and exhale strongly",
+      "synset": "puff.v.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A1",
+     "clue_to_slot_permuted": "A3",
+     "clue_candidates": 10,
+     "candidates": [
+      "CIGAR",
+      "CIGARET",
+      "CIGARS",
+      "FAG",
+      "FAGS",
+      "INHALE",
+      "INHALED",
+      "INHALES",
+      "PUFFED",
+      "PUFFING"
+     ],
+     "clue_to_slot": "A3"
+    },
+    {
+     "id": "D1",
+     "direction": "down",
+     "row": 0,
+     "col": 5,
+     "length": 7,
+     "answer": "DROPOUT",
+     "clue": "quitter",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "quitter",
+      "terse": "someone",
+      "pos": "n",
+      "gloss": "someone who quits school before graduation",
+      "synset": "dropout.n.01",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D1",
+     "clue_to_slot_permuted": "D1",
+     "clue_candidates": 1,
+     "candidates": [
+      "DROPOUT"
+     ],
+     "clue_to_slot": "D1"
+    },
+    {
+     "id": "A2",
+     "direction": "across",
+     "row": 1,
+     "col": 5,
+     "length": 7,
+     "answer": "RAWNESS",
+     "clue": "unity",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "unity",
+      "terse": "state",
+      "pos": "n",
+      "gloss": "the state of being crude and incomplete and imperfect",
+      "synset": "incompleteness.n.01",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A2",
+     "clue_to_slot_permuted": "A2",
+     "clue_candidates": 1,
+     "candidates": [
+      "RAWNESS"
+     ],
+     "clue_to_slot": "A2"
+    },
+    {
+     "id": "D2",
+     "direction": "down",
+     "row": 1,
+     "col": 11,
+     "length": 6,
+     "answer": "STOLES",
+     "clue": "scarf",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "scarf",
+      "terse": "wide",
+      "pos": "n",
+      "gloss": "a wide scarf worn about their shoulders by women",
+      "synset": "stole.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D2",
+     "clue_to_slot_permuted": "A6",
+     "clue_candidates": 5,
+     "candidates": [
+      "BOA",
+      "BOAS",
+      "MUFFLER",
+      "STOLE",
+      "STOLES"
+     ],
+     "clue_to_slot": "A6"
+    },
+    {
+     "id": "A3",
+     "direction": "across",
+     "row": 4,
+     "col": 1,
+     "length": 5,
+     "answer": "BASSO",
+     "clue": "singing voice",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "singing voice",
+      "terse": "lowest",
+      "pos": "n",
+      "gloss": "the lowest adult male singing voice",
+      "synset": "bass.n.06",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A3",
+     "clue_to_slot_permuted": "A5",
+     "clue_candidates": 8,
+     "candidates": [
+      "ALTO",
+      "ALTOS",
+      "BASSI",
+      "BASSO",
+      "BASSOS",
+      "SOPRANO",
+      "TENOR",
+      "TENORS"
+     ],
+     "clue_to_slot": "A5"
+    },
+    {
+     "id": "A4",
+     "direction": "across",
+     "row": 5,
+     "col": 7,
+     "length": 7,
+     "answer": "POTTERY",
+     "clue": "trade",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "trade",
+      "terse": "craft",
+      "pos": "n",
+      "gloss": "the craft of making earthenware",
+      "synset": "pottery.n.02",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A4",
+     "clue_to_slot_permuted": "A1",
+     "clue_candidates": 6,
+     "candidates": [
+      "EXPORT",
+      "EXPORTS",
+      "MASONRY",
+      "POTTERY",
+      "ROOFING",
+      "TANNING"
+     ],
+     "clue_to_slot": "A1"
+    },
+    {
+     "id": "A5",
+     "direction": "across",
+     "row": 6,
+     "col": 3,
+     "length": 4,
+     "answer": "GATE",
+     "clue": "gross",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "gross",
+      "terse": "total",
+      "pos": "n",
+      "gloss": "total admission receipts at a sports event",
+      "synset": "gate.n.03",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A5",
+     "clue_to_slot_permuted": "D2",
+     "clue_candidates": 1,
+     "candidates": [
+      "GATE"
+     ],
+     "clue_to_slot": "D2"
+    },
+    {
+     "id": "D3",
+     "direction": "down",
+     "row": 6,
+     "col": 4,
+     "length": 6,
+     "answer": "AMAZES",
+     "clue": "surprise",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "surprise",
+      "terse": "affect",
+      "pos": "v",
+      "gloss": "affect with wonder",
+      "synset": "amaze.v.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D3",
+     "clue_to_slot_permuted": "A4",
+     "clue_candidates": 10,
+     "candidates": [
+      "AMAZE",
+      "AMAZED",
+      "AMAZES",
+      "AMAZING",
+      "ASTOUND",
+      "BOGGLE",
+      "BOGGLED",
+      "BOGGLES",
+      "FLOORED",
+      "SHOCKED"
+     ],
+     "clue_to_slot": "A4"
+    },
+    {
+     "id": "A6",
+     "direction": "across",
+     "row": 8,
+     "col": 2,
+     "length": 5,
+     "answer": "QUAYS",
+     "clue": "pier",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "pier",
+      "terse": "wharf",
+      "pos": "n",
+      "gloss": "wharf usually built parallel to the shoreline",
+      "synset": "quay.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A6",
+     "clue_to_slot_permuted": "D3",
+     "clue_candidates": 4,
+     "candidates": [
+      "LEVEE",
+      "LEVEES",
+      "QUAY",
+      "QUAYS"
+     ],
+     "clue_to_slot": "D3"
+    },
+    {
+     "id": "A7",
+     "direction": "across",
+     "row": 11,
+     "col": 2,
+     "length": 7,
+     "answer": "BOSSING",
+     "clue": "impress",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "impress",
+      "terse": "raise",
+      "pos": "v",
+      "gloss": "raise in a relief",
+      "synset": "emboss.v.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A7",
+     "clue_to_slot_permuted": "A7",
+     "clue_candidates": 8,
+     "candidates": [
+      "BOSSED",
+      "BOSSING",
+      "EMBOSS",
+      "STAMPED",
+      "WOW",
+      "WOWED",
+      "WOWING",
+      "WOWS"
+     ],
+     "clue_to_slot": "A7"
+    }
+   ],
+   "ceiling": {
+    "clue_resolved": 3,
+    "slots": 10,
+    "resolvable_target": 3,
+    "clue_rule": "definition: a slot counts as resolved when its terse definition fits exactly one declared word",
+    "ambiguous": [
+     {
+      "id": "A1",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "CIGAR",
+       "CIGARET",
+       "CIGARS",
+       "FAG",
+       "FAGS",
+       "INHALE"
+      ]
+     },
+     {
+      "id": "D2",
+      "kind": "definition",
+      "n_candidates": 5,
+      "candidates": [
+       "BOA",
+       "BOAS",
+       "MUFFLER",
+       "STOLE",
+       "STOLES"
+      ]
+     },
+     {
+      "id": "A3",
+      "kind": "definition",
+      "n_candidates": 8,
+      "candidates": [
+       "ALTO",
+       "ALTOS",
+       "BASSI",
+       "BASSO",
+       "BASSOS",
+       "SOPRANO"
+      ]
+     },
+     {
+      "id": "A4",
+      "kind": "definition",
+      "n_candidates": 6,
+      "candidates": [
+       "EXPORT",
+       "EXPORTS",
+       "MASONRY",
+       "POTTERY",
+       "ROOFING",
+       "TANNING"
+      ]
+     },
+     {
+      "id": "D3",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "AMAZE",
+       "AMAZED",
+       "AMAZES",
+       "AMAZING",
+       "ASTOUND",
+       "BOGGLE"
+      ]
+     },
+     {
+      "id": "A6",
+      "kind": "definition",
+      "n_candidates": 4,
+      "candidates": [
+       "LEVEE",
+       "LEVEES",
+       "QUAY",
+       "QUAYS"
+      ]
+     },
+     {
+      "id": "A7",
+      "kind": "definition",
+      "n_candidates": 8,
+      "candidates": [
+       "BOSSED",
+       "BOSSING",
+       "EMBOSS",
+       "STAMPED",
+       "WOW",
+       "WOWED"
+      ]
+     }
+    ]
+   },
+   "floor": {
+    "verdict": "WINNABLE",
+    "states_expanded": 11,
+    "solution": [],
+    "assignments": {
+     "D1": "DROPOUT",
+     "A1": "PUFFED",
+     "A2": "RAWNESS",
+     "D2": "STOLES",
+     "A3": "BASSO",
+     "A4": "POTTERY",
+     "A5": "GATE",
+     "D3": "AMAZES",
+     "A6": "QUAYS",
+     "A7": "BOSSING"
+    },
+    "fills": 1,
+    "exhausted": true
+   },
+   "unique_fill": true,
+   "grid_sha256": "393e01c45223d5c8fa5c66fb43ccb393a43a5e951f91889d0d6e8f02854f5e8c",
+   "arm": "permuted",
+   "grid_group": "g01"
+  },
+  {
+   "rows": 12,
+   "cols": 14,
+   "slots": [
+    {
+     "id": "A1",
+     "direction": "across",
+     "row": 0,
+     "col": 0,
+     "length": 7,
+     "answer": "TRUANTS",
+     "clue": "absentee",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "absentee",
+      "terse": "one",
+      "pos": "n",
+      "gloss": "one who is absent from school without permission",
+      "synset": "truant.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A1",
+     "clue_to_slot_permuted": "A4",
+     "clue_candidates": 5,
+     "candidates": [
+      "AWOL",
+      "EXILE",
+      "EXILES",
+      "TRUANT",
+      "TRUANTS"
+     ],
+     "clue_to_slot": "A1"
+    },
+    {
+     "id": "D1",
+     "direction": "down",
+     "row": 0,
+     "col": 0,
+     "length": 6,
+     "answer": "TUNICS",
+     "clue": "membrane",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "membrane",
+      "terse": "enveloping",
+      "pos": "n",
+      "gloss": "an enveloping or covering membrane or layer of body tissue",
+      "synset": "tunic.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D1",
+     "clue_to_slot_permuted": "D2",
+     "clue_candidates": 4,
+     "candidates": [
+      "EARDRUM",
+      "TUNIC",
+      "TUNICS",
+      "TYMPANA"
+     ],
+     "clue_to_slot": "D1"
+    },
+    {
+     "id": "D2",
+     "direction": "down",
+     "row": 0,
+     "col": 6,
+     "length": 6,
+     "answer": "SLOUCH",
+     "clue": "bearing",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "bearing",
+      "terse": "stooping",
+      "pos": "n",
+      "gloss": "a stooping carriage in standing and walking",
+      "synset": "slouch.n.02",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D2",
+     "clue_to_slot_permuted": "A3",
+     "clue_candidates": 1,
+     "candidates": [
+      "SLOUCH"
+     ],
+     "clue_to_slot": "D2"
+    },
+    {
+     "id": "D3",
+     "direction": "down",
+     "row": 3,
+     "col": 2,
+     "length": 7,
+     "answer": "NUMBERS",
+     "clue": "lottery",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "lottery",
+      "terse": "illegal",
+      "pos": "n",
+      "gloss": "an illegal daily lottery",
+      "synset": "numbers_pool.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D3",
+     "clue_to_slot_permuted": "A1",
+     "clue_candidates": 3,
+     "candidates": [
+      "NUMBERS",
+      "RAFFLE",
+      "RAFFLES"
+     ],
+     "clue_to_slot": "D3"
+    },
+    {
+     "id": "D4",
+     "direction": "down",
+     "row": 3,
+     "col": 4,
+     "length": 3,
+     "answer": "WAR",
+     "clue": "battle",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "battle",
+      "terse": "active",
+      "pos": "n",
+      "gloss": "an active struggle between competing entities",
+      "synset": "war.n.03",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D4",
+     "clue_to_slot_permuted": "D5",
+     "clue_candidates": 10,
+     "candidates": [
+      "COMBAT",
+      "COMBATS",
+      "FEUD",
+      "FEUDS",
+      "SCUFFLE",
+      "STRIFE",
+      "WAR",
+      "WARFARE",
+      "WARS",
+      "WRESTLE"
+     ],
+     "clue_to_slot": "D4"
+    },
+    {
+     "id": "D5",
+     "direction": "down",
+     "row": 3,
+     "col": 8,
+     "length": 7,
+     "answer": "ABSOLVE",
+     "clue": "forgive",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "forgive",
+      "terse": "grant",
+      "pos": "v",
+      "gloss": "grant remission of a sin to",
+      "synset": "shrive.v.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D5",
+     "clue_to_slot_permuted": "D4",
+     "clue_candidates": 7,
+     "candidates": [
+      "ABSOLVE",
+      "CONDONE",
+      "SHRIVE",
+      "SHRIVED",
+      "SHRIVEN",
+      "SHRIVES",
+      "SHROVE"
+     ],
+     "clue_to_slot": "D5"
+    },
+    {
+     "id": "A2",
+     "direction": "across",
+     "row": 5,
+     "col": 2,
+     "length": 7,
+     "answer": "MARCHES",
+     "clue": "italian region",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "italian region",
+      "terse": "region",
+      "pos": "n",
+      "gloss": "a region in central Italy",
+      "synset": "marche.n.01",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A2",
+     "clue_to_slot_permuted": "A2",
+     "clue_candidates": 1,
+     "candidates": [
+      "MARCHES"
+     ],
+     "clue_to_slot": "A2"
+    },
+    {
+     "id": "D6",
+     "direction": "down",
+     "row": 5,
+     "col": 5,
+     "length": 7,
+     "answer": "CLOGGED",
+     "clue": "cumber",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "cumber",
+      "terse": "impede",
+      "pos": "v",
+      "gloss": "impede the motion of, as with a chain or a burden",
+      "synset": "clog.v.03",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D6",
+     "clue_to_slot_permuted": "D3",
+     "clue_candidates": 1,
+     "candidates": [
+      "CLOGGED"
+     ],
+     "clue_to_slot": "D6"
+    },
+    {
+     "id": "A3",
+     "direction": "across",
+     "row": 8,
+     "col": 8,
+     "length": 6,
+     "answer": "VESPER",
+     "clue": "service",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "service",
+      "terse": "late",
+      "pos": "n",
+      "gloss": "a late afternoon or evening worship service",
+      "synset": "vesper.n.02",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A3",
+     "clue_to_slot_permuted": "D6",
+     "clue_candidates": 3,
+     "candidates": [
+      "CHURCH",
+      "VESPER",
+      "VESPERS"
+     ],
+     "clue_to_slot": "A3"
+    },
+    {
+     "id": "A4",
+     "direction": "across",
+     "row": 10,
+     "col": 1,
+     "length": 7,
+     "answer": "CANTEEN",
+     "clue": "flask",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "flask",
+      "terse": "flask",
+      "pos": "n",
+      "gloss": "a flask for carrying water; used by soldiers or travelers",
+      "synset": "canteen.n.01",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A4",
+     "clue_to_slot_permuted": "D1",
+     "clue_candidates": 1,
+     "candidates": [
+      "CANTEEN"
+     ],
+     "clue_to_slot": "A4"
+    }
+   ],
+   "ceiling": {
+    "clue_resolved": 4,
+    "slots": 10,
+    "resolvable_target": 4,
+    "clue_rule": "definition: a slot counts as resolved when its terse definition fits exactly one declared word",
+    "ambiguous": [
+     {
+      "id": "A1",
+      "kind": "definition",
+      "n_candidates": 5,
+      "candidates": [
+       "AWOL",
+       "EXILE",
+       "EXILES",
+       "TRUANT",
+       "TRUANTS"
+      ]
+     },
+     {
+      "id": "D1",
+      "kind": "definition",
+      "n_candidates": 4,
+      "candidates": [
+       "EARDRUM",
+       "TUNIC",
+       "TUNICS",
+       "TYMPANA"
+      ]
+     },
+     {
+      "id": "D3",
+      "kind": "definition",
+      "n_candidates": 3,
+      "candidates": [
+       "NUMBERS",
+       "RAFFLE",
+       "RAFFLES"
+      ]
+     },
+     {
+      "id": "D4",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "COMBAT",
+       "COMBATS",
+       "FEUD",
+       "FEUDS",
+       "SCUFFLE",
+       "STRIFE"
+      ]
+     },
+     {
+      "id": "D5",
+      "kind": "definition",
+      "n_candidates": 7,
+      "candidates": [
+       "ABSOLVE",
+       "CONDONE",
+       "SHRIVE",
+       "SHRIVED",
+       "SHRIVEN",
+       "SHRIVES"
+      ]
+     },
+     {
+      "id": "A3",
+      "kind": "definition",
+      "n_candidates": 3,
+      "candidates": [
+       "CHURCH",
+       "VESPER",
+       "VESPERS"
+      ]
+     }
+    ]
+   },
+   "floor": {
+    "verdict": "WINNABLE",
+    "states_expanded": 10,
+    "solution": [],
+    "assignments": {
+     "A1": "TRUANTS",
+     "D1": "TUNICS",
+     "D2": "SLOUCH",
+     "D4": "WAR",
+     "A2": "MARCHES",
+     "D3": "NUMBERS",
+     "D5": "ABSOLVE",
+     "D6": "CLOGGED",
+     "A3": "VESPER",
+     "A4": "CANTEEN"
+    },
+    "fills": 1,
+    "exhausted": true
+   },
+   "unique_fill": true,
+   "grid_sha256": "466c58cca1cf1308f8bc0dfba70dc3751442d272acfbc5375be590d17871fe78",
+   "arm": "published",
+   "grid_group": "g02"
+  },
+  {
+   "rows": 12,
+   "cols": 14,
+   "slots": [
+    {
+     "id": "A1",
+     "direction": "across",
+     "row": 0,
+     "col": 0,
+     "length": 7,
+     "answer": "TRUANTS",
+     "clue": "absentee",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "absentee",
+      "terse": "one",
+      "pos": "n",
+      "gloss": "one who is absent from school without permission",
+      "synset": "truant.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A1",
+     "clue_to_slot_permuted": "A4",
+     "clue_candidates": 5,
+     "candidates": [
+      "AWOL",
+      "EXILE",
+      "EXILES",
+      "TRUANT",
+      "TRUANTS"
+     ],
+     "clue_to_slot": "A4"
+    },
+    {
+     "id": "D1",
+     "direction": "down",
+     "row": 0,
+     "col": 0,
+     "length": 6,
+     "answer": "TUNICS",
+     "clue": "membrane",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "membrane",
+      "terse": "enveloping",
+      "pos": "n",
+      "gloss": "an enveloping or covering membrane or layer of body tissue",
+      "synset": "tunic.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D1",
+     "clue_to_slot_permuted": "D2",
+     "clue_candidates": 4,
+     "candidates": [
+      "EARDRUM",
+      "TUNIC",
+      "TUNICS",
+      "TYMPANA"
+     ],
+     "clue_to_slot": "D2"
+    },
+    {
+     "id": "D2",
+     "direction": "down",
+     "row": 0,
+     "col": 6,
+     "length": 6,
+     "answer": "SLOUCH",
+     "clue": "bearing",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "bearing",
+      "terse": "stooping",
+      "pos": "n",
+      "gloss": "a stooping carriage in standing and walking",
+      "synset": "slouch.n.02",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D2",
+     "clue_to_slot_permuted": "A3",
+     "clue_candidates": 1,
+     "candidates": [
+      "SLOUCH"
+     ],
+     "clue_to_slot": "A3"
+    },
+    {
+     "id": "D3",
+     "direction": "down",
+     "row": 3,
+     "col": 2,
+     "length": 7,
+     "answer": "NUMBERS",
+     "clue": "lottery",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "lottery",
+      "terse": "illegal",
+      "pos": "n",
+      "gloss": "an illegal daily lottery",
+      "synset": "numbers_pool.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D3",
+     "clue_to_slot_permuted": "A1",
+     "clue_candidates": 3,
+     "candidates": [
+      "NUMBERS",
+      "RAFFLE",
+      "RAFFLES"
+     ],
+     "clue_to_slot": "A1"
+    },
+    {
+     "id": "D4",
+     "direction": "down",
+     "row": 3,
+     "col": 4,
+     "length": 3,
+     "answer": "WAR",
+     "clue": "battle",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "battle",
+      "terse": "active",
+      "pos": "n",
+      "gloss": "an active struggle between competing entities",
+      "synset": "war.n.03",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D4",
+     "clue_to_slot_permuted": "D5",
+     "clue_candidates": 10,
+     "candidates": [
+      "COMBAT",
+      "COMBATS",
+      "FEUD",
+      "FEUDS",
+      "SCUFFLE",
+      "STRIFE",
+      "WAR",
+      "WARFARE",
+      "WARS",
+      "WRESTLE"
+     ],
+     "clue_to_slot": "D5"
+    },
+    {
+     "id": "D5",
+     "direction": "down",
+     "row": 3,
+     "col": 8,
+     "length": 7,
+     "answer": "ABSOLVE",
+     "clue": "forgive",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "forgive",
+      "terse": "grant",
+      "pos": "v",
+      "gloss": "grant remission of a sin to",
+      "synset": "shrive.v.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D5",
+     "clue_to_slot_permuted": "D4",
+     "clue_candidates": 7,
+     "candidates": [
+      "ABSOLVE",
+      "CONDONE",
+      "SHRIVE",
+      "SHRIVED",
+      "SHRIVEN",
+      "SHRIVES",
+      "SHROVE"
+     ],
+     "clue_to_slot": "D4"
+    },
+    {
+     "id": "A2",
+     "direction": "across",
+     "row": 5,
+     "col": 2,
+     "length": 7,
+     "answer": "MARCHES",
+     "clue": "italian region",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "italian region",
+      "terse": "region",
+      "pos": "n",
+      "gloss": "a region in central Italy",
+      "synset": "marche.n.01",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A2",
+     "clue_to_slot_permuted": "A2",
+     "clue_candidates": 1,
+     "candidates": [
+      "MARCHES"
+     ],
+     "clue_to_slot": "A2"
+    },
+    {
+     "id": "D6",
+     "direction": "down",
+     "row": 5,
+     "col": 5,
+     "length": 7,
+     "answer": "CLOGGED",
+     "clue": "cumber",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "cumber",
+      "terse": "impede",
+      "pos": "v",
+      "gloss": "impede the motion of, as with a chain or a burden",
+      "synset": "clog.v.03",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D6",
+     "clue_to_slot_permuted": "D3",
+     "clue_candidates": 1,
+     "candidates": [
+      "CLOGGED"
+     ],
+     "clue_to_slot": "D3"
+    },
+    {
+     "id": "A3",
+     "direction": "across",
+     "row": 8,
+     "col": 8,
+     "length": 6,
+     "answer": "VESPER",
+     "clue": "service",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "service",
+      "terse": "late",
+      "pos": "n",
+      "gloss": "a late afternoon or evening worship service",
+      "synset": "vesper.n.02",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A3",
+     "clue_to_slot_permuted": "D6",
+     "clue_candidates": 3,
+     "candidates": [
+      "CHURCH",
+      "VESPER",
+      "VESPERS"
+     ],
+     "clue_to_slot": "D6"
+    },
+    {
+     "id": "A4",
+     "direction": "across",
+     "row": 10,
+     "col": 1,
+     "length": 7,
+     "answer": "CANTEEN",
+     "clue": "flask",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "flask",
+      "terse": "flask",
+      "pos": "n",
+      "gloss": "a flask for carrying water; used by soldiers or travelers",
+      "synset": "canteen.n.01",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A4",
+     "clue_to_slot_permuted": "D1",
+     "clue_candidates": 1,
+     "candidates": [
+      "CANTEEN"
+     ],
+     "clue_to_slot": "D1"
+    }
+   ],
+   "ceiling": {
+    "clue_resolved": 4,
+    "slots": 10,
+    "resolvable_target": 4,
+    "clue_rule": "definition: a slot counts as resolved when its terse definition fits exactly one declared word",
+    "ambiguous": [
+     {
+      "id": "A1",
+      "kind": "definition",
+      "n_candidates": 5,
+      "candidates": [
+       "AWOL",
+       "EXILE",
+       "EXILES",
+       "TRUANT",
+       "TRUANTS"
+      ]
+     },
+     {
+      "id": "D1",
+      "kind": "definition",
+      "n_candidates": 4,
+      "candidates": [
+       "EARDRUM",
+       "TUNIC",
+       "TUNICS",
+       "TYMPANA"
+      ]
+     },
+     {
+      "id": "D3",
+      "kind": "definition",
+      "n_candidates": 3,
+      "candidates": [
+       "NUMBERS",
+       "RAFFLE",
+       "RAFFLES"
+      ]
+     },
+     {
+      "id": "D4",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "COMBAT",
+       "COMBATS",
+       "FEUD",
+       "FEUDS",
+       "SCUFFLE",
+       "STRIFE"
+      ]
+     },
+     {
+      "id": "D5",
+      "kind": "definition",
+      "n_candidates": 7,
+      "candidates": [
+       "ABSOLVE",
+       "CONDONE",
+       "SHRIVE",
+       "SHRIVED",
+       "SHRIVEN",
+       "SHRIVES"
+      ]
+     },
+     {
+      "id": "A3",
+      "kind": "definition",
+      "n_candidates": 3,
+      "candidates": [
+       "CHURCH",
+       "VESPER",
+       "VESPERS"
+      ]
+     }
+    ]
+   },
+   "floor": {
+    "verdict": "WINNABLE",
+    "states_expanded": 10,
+    "solution": [],
+    "assignments": {
+     "A1": "TRUANTS",
+     "D1": "TUNICS",
+     "D2": "SLOUCH",
+     "D4": "WAR",
+     "A2": "MARCHES",
+     "D3": "NUMBERS",
+     "D5": "ABSOLVE",
+     "D6": "CLOGGED",
+     "A3": "VESPER",
+     "A4": "CANTEEN"
+    },
+    "fills": 1,
+    "exhausted": true
+   },
+   "unique_fill": true,
+   "grid_sha256": "466c58cca1cf1308f8bc0dfba70dc3751442d272acfbc5375be590d17871fe78",
+   "arm": "permuted",
+   "grid_group": "g02"
+  }
+ ]
+}
