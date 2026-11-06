@@ -153,7 +153,31 @@ def can_place(grid, word, r, c, d, must_cross=True):
     return cross
 
 
-def crisscross(rng: random.Random, target_words=10, attempts=6000):
+def _place_word(grid, placed, word, rng):
+    """Try to attach `word` at a crossing. Shared by the fill loop and by the guaranteed words a stated
+    ceiling needs -- the same placement rule, so a handhold cannot weaken the construction."""
+    cells = list(grid.items())
+    rng.shuffle(cells)
+    for (rr, cc), letter in cells:
+        for i in [i for i, ch in enumerate(word) if ch == letter]:
+            for d, name in ((DOWN, "down"), (ACROSS, "across")):
+                r0, c0 = rr - d[0] * i, cc - d[1] * i
+                if any(p["direction"] == name and
+                       ((name == "across" and p["row"] == r0) or (name == "down" and p["col"] == c0))
+                       for p in placed):
+                    continue                        # one word per line
+                if can_place(grid, word, r0, c0, d):
+                    for (qr, qc), ch in zip(_cells(word, r0, c0, d), word):
+                        grid[(qr, qc)] = ch
+                    placed.append(dict(word=word, row=r0, col=c0, direction=name))
+                    return True
+    return False
+
+
+def crisscross(rng: random.Random, target_words=10, attempts=6000, guarantee=(), guarantee_want=None):
+    """`guarantee` words are placed FIRST (each at a crossing), because a stated ceiling needs a known
+    number of resolving answers in the grid; a random ten-slot grid holds zero of them (measured). Placement
+    stops once `guarantee_want` have landed, so the count is the one that was asked for."""
     pool = list(WORDS)
     rng.shuffle(pool)
     grid, placed = {}, []
@@ -162,33 +186,22 @@ def crisscross(rng: random.Random, target_words=10, attempts=6000):
         grid[(rr, cc)] = ch
     placed.append(dict(word=w0, row=0, col=0, direction="across"))
 
+    landed = 0
+    for w in list(guarantee):
+        if guarantee_want is not None and landed >= guarantee_want:
+            break
+        if w in {p["word"] for p in placed}:
+            continue
+        if _place_word(grid, placed, w, rng):
+            landed += 1
+
     for _ in range(attempts):
         if len(placed) >= target_words:
             break
         word = pool[rng.randrange(len(pool))]
         if word in {p["word"] for p in placed}:
             continue
-        cells = list(grid.items())
-        rng.shuffle(cells)
-        done = False
-        for (rr, cc), letter in cells:
-            for i in [i for i, ch in enumerate(word) if ch == letter]:
-                for d, name in ((DOWN, "down"), (ACROSS, "across")):
-                    r0, c0 = rr - d[0] * i, cc - d[1] * i
-                    if any(p["direction"] == name and
-                           ((name == "across" and p["row"] == r0) or (name == "down" and p["col"] == c0))
-                           for p in placed):
-                        continue                        # one word per line
-                    if can_place(grid, word, r0, c0, d):
-                        for (qr, qc), ch in zip(_cells(word, r0, c0, d), word):
-                            grid[(qr, qc)] = ch
-                        placed.append(dict(word=word, row=r0, col=c0, direction=name))
-                        done = True
-                        break
-                if done:
-                    break
-            if done:
-                break
+        _place_word(grid, placed, word, rng)
     return grid, placed
 
 
@@ -212,21 +225,63 @@ def slots_of(placed):
 FRAGMENT_STARTS = {"be", "have", "make", "cause", "give", "take", "do", "get", "put", "go", "come"}
 
 
-def definition_clue(answer: str, rng: random.Random, lo=2, hi=10):
+def definition_clue(answer: str, rng: random.Random, lo=2, hi=10, min_stems=2):
     """A terse definition whose candidate set is a FAIR BAND (lo..hi words): small enough that the clue
-    narrows, larger than one so the grid has to decide. Returns None if the word has no such sense."""
+    narrows, larger than one so the grid has to decide. Returns None if the word has no such sense.
+
+    `min_stems` is the knob the ceiling turns on: at 2 (the default) no slot can ever be resolved from its
+    clue alone, which is why the 2026-11-05 crate declared 0/10 -- by construction, not by measurement.
+    `resolving_definition_clue` is the min_stems=1 case, kept separate because it is a DECLARED handhold
+    and its count is the crate's stated ceiling."""
     senses = DEFS.get(answer) or []
     # a terse cut that begins on a light verb is a fragment ("be abundantly"), not a definition; and a clue
     # must not be a bare copula-plus-adverb. Cheaper to reject at build time than to apologise for later.
+    # (This guard was a comment and a constant with no call site until 2026-11-06 -- measured, not assumed.)
     key = lambda sn: sn.get("clue") or sn["terse"]
     band = [sn for sn in senses
             if lo <= len(TERSE_INDEX.get(key(sn), ())) <= hi
-            and distinct_stems(TERSE_INDEX.get(key(sn), ())) >= 2]  # a real choice, not one lemma's forms
+            and key(sn).split()[0] not in FRAGMENT_STARTS
+            and distinct_stems(TERSE_INDEX.get(key(sn), ())) >= min_stems]  # a real choice, not one lemma's forms
     if not band:
         return None
     sn = band[rng.randrange(len(band))]
     return key(sn), dict(kind="definition", clue=key(sn), terse=sn.get("terse"), pos=sn["pos"],
                          gloss=sn["gloss"], synset=sn["synset"], clue_source="hypernym")
+
+
+def resolving_definition_clue(answer: str, rng: random.Random, lo=1, hi=10):
+    """A terse definition that fits EXACTLY ONE declared word, and that word is the answer.
+    This is the handhold a puzzle needs to have a point of entry; `ceiling_clue_only` counts these slots."""
+    senses = DEFS.get(answer) or []
+    key = lambda sn: sn.get("clue") or sn["terse"]
+    # lo=1 and the exact-one predicate are the point: the fair band's floor of 2 candidates is what made
+    # the 11-05 crate's 0/10 structural rather than a measurement.
+    band = [sn for sn in senses
+            if lo <= len(TERSE_INDEX.get(key(sn), ())) <= hi
+            and len(key(sn)) >= 2
+            and key(sn).split()[0] not in FRAGMENT_STARTS
+            and sorted(TERSE_INDEX.get(key(sn), ())) == [answer]]
+    if not band:
+        return None
+    sn = band[rng.randrange(len(band))]
+    return key(sn), dict(kind="definition", clue=key(sn), terse=sn.get("terse"), pos=sn["pos"],
+                         gloss=sn["gloss"], synset=sn["synset"], clue_source="hypernym",
+                         resolution="unique-in-pool")
+
+
+RESOLVABLE_ANSWERS = set()
+
+
+def index_resolvable():
+    """The raw material of a stated ceiling: pool words that `resolving_definition_clue` can actually clue,
+    checked by CALLING it rather than by a lookalike predicate. Measured 2026-11-06: 223 of 7807 cluable
+    words (2.86 %), and a random ten-slot grid holds ZERO of them -- which is why a stated ceiling has to
+    steer the grid instead of hoping one arrives."""
+    global RESOLVABLE_ANSWERS
+    probe = random.Random(0)
+    out = {w for w in WORDS if resolving_definition_clue(w, probe) is not None}
+    RESOLVABLE_ANSWERS = out
+    return len(out)
 
 
 def clue_for(answer: str, rng: random.Random):
@@ -372,18 +427,40 @@ def floor_crossing_solve(slots, max_states=200000, max_fills=2):
                 reason="frontier exhausted: no assignment of declared words satisfies the crossings")
 
 
-def build(n_puzzles: int, seed: int):
+def build(n_puzzles: int, seed: int, resolvable=None):
+    """`resolvable` asks for a STATED ceiling: an int, or a list of ints applied per puzzle in order, naming
+    how many of a puzzle's ten slots must be fillable from the clue alone."""
+    targets = list(resolvable) if isinstance(resolvable, (list, tuple)) else ([resolvable] if resolvable else [])
+    if targets and not RESOLVABLE_ANSWERS:
+        index_resolvable()
     rng = random.Random(seed)
     out, seen = [], set()
     guard = 0
     while len(out) < n_puzzles and guard < 120:
         guard += 1
-        grid, placed = crisscross(rng)
+        target = targets[len(out) % len(targets)] if targets else None
+        # STEER, DON'T HOPE: a random ten-slot grid holds zero resolving answers, so a stated ceiling asks
+        # for a surplus of them up front and reads back how many actually landed at a crossing.
+        guarantee = ()
+        if target is not None:
+            cands = sorted(RESOLVABLE_ANSWERS)
+            rng.shuffle(cands)
+            guarantee = tuple(cands[:target + 6])
+        grid, placed = crisscross(rng, guarantee=guarantee,
+                                  guarantee_want=target if target is not None else None)
         key = "|".join(sorted(p["word"] for p in placed))
         if len(placed) < 6 or key in seen:
             continue
         seen.add(key)
         slots = slots_of(placed)
+        resolved_words = set()
+        if target is not None:
+            if len(slots) != 10:
+                continue                          # "N of 10" has to mean ten
+            landed = sorted(w for w in guarantee if w in {p["word"] for p in placed})
+            if len(landed) < target:
+                continue                          # not enough handholds in THIS grid; reject it
+            resolved_words = set(landed[:target])
         # a span, not a maximum: slot coordinates run negative and `max(r) + 1` silently understates the grid
         minr = min(r for r, _ in grid)
         minc = min(c for _, c in grid)
@@ -397,7 +474,10 @@ def build(n_puzzles: int, seed: int):
             # WHEN DEFINITIONS ARE LOADED THERE IS NO FALLBACK. A letter clue re-introduces the defect the
             # whole change exists to remove -- it prints the answer -- so a slot without a fair-band sense
             # rejects the grid instead of being filled with the old device.
-            made = definition_clue(s["answer"], rng) if DEFS else clue_for(s["answer"], rng)
+            if s["answer"] in resolved_words:
+                made = resolving_definition_clue(s["answer"], rng)
+            else:
+                made = definition_clue(s["answer"], rng) if DEFS else clue_for(s["answer"], rng)
             if made is None:
                 all_clued = False
                 break
@@ -407,6 +487,8 @@ def build(n_puzzles: int, seed: int):
             s["clue_kind"] = data["kind"]
         if not all_clued:
             continue          # a puzzle is all-or-nothing: one uncluable slot rejects the grid
+        # THE STATED CEILING IS RE-MEASURED, NOT TRUSTED: `ceiling_clue_only` below counts the handholds the
+        # crate actually carries, and `resolved != target` rejects the grid (see the guard further down).
         perm = list(range(len(slots)))
         rng.shuffle(perm)
         for i, s in enumerate(slots):
@@ -424,7 +506,10 @@ def build(n_puzzles: int, seed: int):
             continue
         # AND THE CEILING HAS TO BE A CEILING. If most slots fall to the anagram alone the grid is
         # decoration and the puzzle measures anagram skill; a benchmark puzzle must need its crossings.
-        if resolved > len(slots) // 2:
+        # A STATED target is stricter than the half guard, not a waiver of it: it must be met exactly.
+        if target is None and resolved > len(slots) // 2:
+            continue
+        if target is not None and resolved != target:
             continue
         # AND IT HAS TO LOOK LIKE A CROSSWORD. A 2x12 criss-cross is a valid arrangement and a poor puzzle:
         # four cells in one direction is the floor for a grid a person would recognise as a grid.
@@ -433,6 +518,7 @@ def build(n_puzzles: int, seed: int):
         out.append(dict(rows=n_rows, cols=n_cols,
                         slots=slots,
                         ceiling=dict(clue_resolved=resolved, slots=len(slots),
+                                     resolvable_target=target,
                                      clue_rule=("definition: a slot counts as resolved when its terse "
                                                 "definition fits exactly one declared word"),
                                      ambiguous=ambiguous),
@@ -447,6 +533,12 @@ def build(n_puzzles: int, seed: int):
                 words_sha256_rule="digest of the word-list FILE on disk, which is larger than the pool",
                 source="declared in crossword_gen.py -- no third-party content",
                 construction="criss-cross, no symmetry claim, every word crosses at least one other",
+                ceiling_policy=dict(
+                    requested=targets,
+                    rule=("a resolving slot's terse definition fits exactly one declared word (the answer), "
+                          "so the slot is enterable from the clue alone; every other slot keeps the fair band "
+                          "(>=2 distinct stems) and needs its crossings"),
+                    measured_per_puzzle=[p["ceiling"]["clue_resolved"] for p in out]),
                 puzzles=out)
 
 
@@ -552,6 +644,26 @@ def self_test():
     check("both clue mappings cover every slot",
           sorted(s["clue_to_slot_published"] for s in pz["slots"]) == sorted(s["id"] for s in pz["slots"]) and
           sorted(set(s["clue_to_slot_permuted"] for s in pz["slots"])) == sorted(s["id"] for s in pz["slots"]))
+
+    # THE STATED CEILING IS A MEASUREMENT, NOT A REQUEST. Ask for 3 and 4 on two puzzles and read the crate
+    # back: if the generator cannot hit the number it must REJECT the grid, never ship the number it got.
+    stated = build(2, 11, resolvable=[3, 4])
+    check("a stated ceiling builds at all", len(stated["puzzles"]) == 2)
+    check("each puzzle declares the ceiling it was asked for",
+          [p["ceiling"].get("resolvable_target") for p in stated["puzzles"]] == [3, 4])
+    check("each puzzle MEETS its stated ceiling exactly",
+          [p["ceiling"]["clue_resolved"] for p in stated["puzzles"]] == [3, 4])
+    check("a resolving slot has exactly one candidate, and it is the answer",
+          all(s["clue_candidates"] == 1 and s["candidates"] == [s["answer"]]
+              for p in stated["puzzles"] for s in p["slots"]
+              if s["clue_data"].get("resolution") == "unique-in-pool"))
+    check("every non-resolving slot still needs the grid (>=2 candidates)",
+          all(s["clue_candidates"] >= 2 for p in stated["puzzles"] for s in p["slots"]
+              if s["clue_data"].get("resolution") != "unique-in-pool"))
+    check("the stated-ceiling puzzles are still uniquely fillable",
+          all(p["unique_fill"] and p["floor"].get("fills") == 1 for p in stated["puzzles"]))
+    check("each stated-ceiling puzzle is ten slots",
+          all(len(p["slots"]) == 10 for p in stated["puzzles"]))
     print(f"{ok} passed, {fail} failed")
     return fail == 0
 
@@ -562,9 +674,15 @@ def main():
     ap.add_argument("--puzzles", type=int, default=3)
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--out", default="probes/CROSSWORD_CRATE_2026-11-05.json")
+    ap.add_argument("--resolvable", default=None,
+                    help="stated ceiling: N (or a comma list, one per puzzle) of the 10 slots that must be "
+                         "fillable from the clue alone; measured, not assumed")
     ap.add_argument("--lexicon", default=None, help="word list; default wordlist_3_7.txt")
     ap.add_argument("--definitions", default=None, help="terse-definition index; default definitions.json")
     a = ap.parse_args()
+    resolvable = None
+    if a.resolvable:
+        resolvable = [int(x) for x in a.resolvable.split(",")]
 
     set_lexicon(a.lexicon)
     loaded_defs = set_definitions(a.definitions)
@@ -579,7 +697,7 @@ def main():
         n = restrict_to_cluable()
         print(f"answer pool restricted to cluable words: {n}")
     print(f"lexicon {len(WORDS)}  definitions {'loaded' if loaded_defs else 'ABSENT -- letter clues only'}")
-    crate = build(a.puzzles, a.seed)
+    crate = build(a.puzzles, a.seed, resolvable=resolvable)
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(crate, indent=1) + "\n")
@@ -588,7 +706,8 @@ def main():
     for p in crate["puzzles"]:
         kinds = sorted({s["clue_kind"] for s in p["slots"]})
         print(f"  {p['rows']}x{p['cols']}  slots {len(p['slots'])}  kinds {kinds}  "
-              f"ceiling {p['ceiling']['clue_resolved']}/{p['ceiling']['slots']}  "
+              f"ceiling {p['ceiling']['clue_resolved']}/{p['ceiling']['slots']}"
+              f" (stated {p['ceiling'].get('resolvable_target')})  "
               f"floor {p['floor']['verdict']} ({p['floor']['states_expanded']} states)  "
               f"fills {p['floor'].get('fills')}")
 

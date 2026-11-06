@@ -1,0 +1,814 @@
+{
+ "seed": 21,
+ "word_list_size": 7807,
+ "word_list_size_rule": "pool after restrict_to_cluable: the answers/candidates universe",
+ "word_list_file_words": 25077,
+ "word_list_file_bytes": 173944,
+ "words_sha256": "8e299e32d3b90006df8c75c0300faeee2970611b98b034ed973f014cd2043b23",
+ "words_sha256_rule": "digest of the word-list FILE on disk, which is larger than the pool",
+ "source": "declared in crossword_gen.py -- no third-party content",
+ "construction": "criss-cross, no symmetry claim, every word crosses at least one other",
+ "ceiling_policy": {
+  "requested": [
+   3,
+   4
+  ],
+  "rule": "a resolving slot's terse definition fits exactly one declared word (the answer), so the slot is enterable from the clue alone; every other slot keeps the fair band (>=2 distinct stems) and needs its crossings",
+  "measured_per_puzzle": [
+   3,
+   4
+  ]
+ },
+ "puzzles": [
+  {
+   "rows": 16,
+   "cols": 20,
+   "slots": [
+    {
+     "id": "D1",
+     "direction": "down",
+     "row": 0,
+     "col": 11,
+     "length": 7,
+     "answer": "CROWNED",
+     "clue": "climax",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "climax",
+      "terse": "be culminating",
+      "pos": "v",
+      "gloss": "be the culminating event",
+      "synset": "crown.v.02",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D1",
+     "clue_to_slot_permuted": "A2",
+     "clue_candidates": 1,
+     "candidates": [
+      "CROWNED"
+     ]
+    },
+    {
+     "id": "D2",
+     "direction": "down",
+     "row": 1,
+     "col": 14,
+     "length": 7,
+     "answer": "BETTING",
+     "clue": "gamble",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "gamble",
+      "terse": "stake",
+      "pos": "v",
+      "gloss": "stake on the outcome of an issue",
+      "synset": "bet.v.02",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D2",
+     "clue_to_slot_permuted": "A1",
+     "clue_candidates": 10,
+     "candidates": [
+      "BET",
+      "BETS",
+      "BETTED",
+      "BETTING",
+      "RAISE",
+      "RAISES",
+      "STAKES",
+      "WAGER",
+      "WAGERED",
+      "WAGERS"
+     ]
+    },
+    {
+     "id": "D3",
+     "direction": "down",
+     "row": 3,
+     "col": 9,
+     "length": 5,
+     "answer": "BUMPS",
+     "clue": "impact",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "impact",
+      "terse": "impact",
+      "pos": "n",
+      "gloss": "an impact (as from a collision)",
+      "synset": "blow.n.02",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D3",
+     "clue_to_slot_permuted": "D2",
+     "clue_candidates": 6,
+     "candidates": [
+      "BLOW",
+      "BLOWS",
+      "BUMP",
+      "BUMPS",
+      "SLAM",
+      "SLAMS"
+     ]
+    },
+    {
+     "id": "A1",
+     "direction": "across",
+     "row": 3,
+     "col": 11,
+     "length": 4,
+     "answer": "WHET",
+     "clue": "sharpen",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "sharpen",
+      "terse": "sharpen",
+      "pos": "v",
+      "gloss": "sharpen by rubbing, as on a whetstone",
+      "synset": "whet.v.02",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A1",
+     "clue_to_slot_permuted": "A5",
+     "clue_candidates": 4,
+     "candidates": [
+      "FOCUSED",
+      "WHET",
+      "WHETS",
+      "WHETTED"
+     ]
+    },
+    {
+     "id": "A2",
+     "direction": "across",
+     "row": 6,
+     "col": 5,
+     "length": 7,
+     "answer": "FLIPPED",
+     "clue": "mesh",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "mesh",
+      "terse": "cause",
+      "pos": "v",
+      "gloss": "cause to go on or to be engaged or set in operation",
+      "synset": "throw.v.06",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A2",
+     "clue_to_slot_permuted": "D3",
+     "clue_candidates": 1,
+     "candidates": [
+      "FLIPPED"
+     ]
+    },
+    {
+     "id": "D4",
+     "direction": "down",
+     "row": 6,
+     "col": 7,
+     "length": 7,
+     "answer": "IMPLANT",
+     "clue": "prosthesis",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "prosthesis",
+      "terse": "prosthesis",
+      "pos": "n",
+      "gloss": "a prosthesis placed permanently in tissue",
+      "synset": "implant.n.01",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D4",
+     "clue_to_slot_permuted": "D4",
+     "clue_candidates": 1,
+     "candidates": [
+      "IMPLANT"
+     ]
+    },
+    {
+     "id": "A3",
+     "direction": "across",
+     "row": 7,
+     "col": 14,
+     "length": 6,
+     "answer": "GROTTO",
+     "clue": "cave",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "cave",
+      "terse": "small",
+      "pos": "n",
+      "gloss": "a small cave (usually with attractive features)",
+      "synset": "grotto.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A3",
+     "clue_to_slot_permuted": "A3",
+     "clue_candidates": 8,
+     "candidates": [
+      "CAVERN",
+      "CAVERNS",
+      "COVE",
+      "COVES",
+      "GROTTO",
+      "GROTTOS",
+      "SAPPED",
+      "SAPPING"
+     ]
+    },
+    {
+     "id": "D5",
+     "direction": "down",
+     "row": 10,
+     "col": 5,
+     "length": 6,
+     "answer": "STATER",
+     "clue": "resident",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "resident",
+      "terse": "resident",
+      "pos": "n",
+      "gloss": "a resident of a particular state or group of states",
+      "synset": "stater.n.02",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D5",
+     "clue_to_slot_permuted": "D5",
+     "clue_candidates": 4,
+     "candidates": [
+      "COASTER",
+      "STATER",
+      "TENANT",
+      "TENANTS"
+     ]
+    },
+    {
+     "id": "A4",
+     "direction": "across",
+     "row": 12,
+     "col": 3,
+     "length": 6,
+     "answer": "BEAUTY",
+     "clue": "model",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "model",
+      "terse": "outstanding",
+      "pos": "n",
+      "gloss": "an outstanding example of its kind",
+      "synset": "beauty.n.03",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A4",
+     "clue_to_slot_permuted": "D1",
+     "clue_candidates": 3,
+     "candidates": [
+      "BEAUTY",
+      "EPITOME",
+      "PRODIGY"
+     ]
+    },
+    {
+     "id": "A5",
+     "direction": "across",
+     "row": 14,
+     "col": 0,
+     "length": 6,
+     "answer": "DOODLE",
+     "clue": "drawing",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "drawing",
+      "terse": "aimless",
+      "pos": "n",
+      "gloss": "an aimless drawing",
+      "synset": "scribble.n.02",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A5",
+     "clue_to_slot_permuted": "A4",
+     "clue_candidates": 7,
+     "candidates": [
+      "DOODLE",
+      "DOODLES",
+      "LIMNING",
+      "PLAN",
+      "PLANS",
+      "SKETCH",
+      "TRACING"
+     ]
+    }
+   ],
+   "ceiling": {
+    "clue_resolved": 3,
+    "slots": 10,
+    "resolvable_target": 3,
+    "clue_rule": "definition: a slot counts as resolved when its terse definition fits exactly one declared word",
+    "ambiguous": [
+     {
+      "id": "D2",
+      "kind": "definition",
+      "n_candidates": 10,
+      "candidates": [
+       "BET",
+       "BETS",
+       "BETTED",
+       "BETTING",
+       "RAISE",
+       "RAISES"
+      ]
+     },
+     {
+      "id": "D3",
+      "kind": "definition",
+      "n_candidates": 6,
+      "candidates": [
+       "BLOW",
+       "BLOWS",
+       "BUMP",
+       "BUMPS",
+       "SLAM",
+       "SLAMS"
+      ]
+     },
+     {
+      "id": "A1",
+      "kind": "definition",
+      "n_candidates": 4,
+      "candidates": [
+       "FOCUSED",
+       "WHET",
+       "WHETS",
+       "WHETTED"
+      ]
+     },
+     {
+      "id": "A3",
+      "kind": "definition",
+      "n_candidates": 8,
+      "candidates": [
+       "CAVERN",
+       "CAVERNS",
+       "COVE",
+       "COVES",
+       "GROTTO",
+       "GROTTOS"
+      ]
+     },
+     {
+      "id": "D5",
+      "kind": "definition",
+      "n_candidates": 4,
+      "candidates": [
+       "COASTER",
+       "STATER",
+       "TENANT",
+       "TENANTS"
+      ]
+     },
+     {
+      "id": "A4",
+      "kind": "definition",
+      "n_candidates": 3,
+      "candidates": [
+       "BEAUTY",
+       "EPITOME",
+       "PRODIGY"
+      ]
+     },
+     {
+      "id": "A5",
+      "kind": "definition",
+      "n_candidates": 7,
+      "candidates": [
+       "DOODLE",
+       "DOODLES",
+       "LIMNING",
+       "PLAN",
+       "PLANS",
+       "SKETCH"
+      ]
+     }
+    ]
+   },
+   "floor": {
+    "verdict": "WINNABLE",
+    "states_expanded": 10,
+    "solution": [],
+    "assignments": {
+     "D1": "CROWNED",
+     "A1": "WHET",
+     "D2": "BETTING",
+     "A2": "FLIPPED",
+     "D3": "BUMPS",
+     "D4": "IMPLANT",
+     "A3": "GROTTO",
+     "A4": "BEAUTY",
+     "D5": "STATER",
+     "A5": "DOODLE"
+    },
+    "fills": 1,
+    "exhausted": true
+   },
+   "unique_fill": true,
+   "grid_sha256": "1c45d9456581fb0989b70a408caca5204a6e437ac3d52d8a8b7c310b63badea9"
+  },
+  {
+   "rows": 16,
+   "cols": 13,
+   "slots": [
+    {
+     "id": "D1",
+     "direction": "down",
+     "row": 0,
+     "col": 5,
+     "length": 5,
+     "answer": "OCHRE",
+     "clue": "saffron",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "saffron",
+      "terse": "moderate",
+      "pos": "n",
+      "gloss": "a moderate yellow-orange to orange color",
+      "synset": "ocher.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D1",
+     "clue_to_slot_permuted": "D1",
+     "clue_candidates": 2,
+     "candidates": [
+      "OCHER",
+      "OCHRE"
+     ]
+    },
+    {
+     "id": "D2",
+     "direction": "down",
+     "row": 2,
+     "col": 9,
+     "length": 7,
+     "answer": "STORAGE",
+     "clue": "keeping",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "keeping",
+      "terse": "act",
+      "pos": "n",
+      "gloss": "the act of storing something",
+      "synset": "storage.n.01",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D2",
+     "clue_to_slot_permuted": "A2",
+     "clue_candidates": 1,
+     "candidates": [
+      "STORAGE"
+     ]
+    },
+    {
+     "id": "D3",
+     "direction": "down",
+     "row": 2,
+     "col": 12,
+     "length": 7,
+     "answer": "SICKENS",
+     "clue": "repel",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "repel",
+      "terse": "upset",
+      "pos": "v",
+      "gloss": "upset and make nauseated",
+      "synset": "sicken.v.03",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D3",
+     "clue_to_slot_permuted": "D2",
+     "clue_candidates": 3,
+     "candidates": [
+      "DISGUST",
+      "SICKEN",
+      "SICKENS"
+     ]
+    },
+    {
+     "id": "A1",
+     "direction": "across",
+     "row": 3,
+     "col": 5,
+     "length": 6,
+     "answer": "RARITY",
+     "clue": "density",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "density",
+      "terse": "rarified",
+      "pos": "n",
+      "gloss": "a rarified quality",
+      "synset": "rarity.n.02",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A1",
+     "clue_to_slot_permuted": "A5",
+     "clue_candidates": 1,
+     "candidates": [
+      "RARITY"
+     ]
+    },
+    {
+     "id": "A2",
+     "direction": "across",
+     "row": 6,
+     "col": 6,
+     "length": 7,
+     "answer": "TREACLE",
+     "clue": "syrup",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "syrup",
+      "terse": "pale",
+      "pos": "n",
+      "gloss": "a pale cane syrup",
+      "synset": "treacle.n.01",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A2",
+     "clue_to_slot_permuted": "D3",
+     "clue_candidates": 1,
+     "candidates": [
+      "TREACLE"
+     ]
+    },
+    {
+     "id": "A3",
+     "direction": "across",
+     "row": 8,
+     "col": 4,
+     "length": 7,
+     "answer": "UNRAVEL",
+     "clue": "disintegrate",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "disintegrate",
+      "terse": "become",
+      "pos": "v",
+      "gloss": "become undone",
+      "synset": "run.v.41",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A3",
+     "clue_to_slot_permuted": "A4",
+     "clue_candidates": 2,
+     "candidates": [
+      "CRUMBLE",
+      "UNRAVEL"
+     ]
+    },
+    {
+     "id": "D4",
+     "direction": "down",
+     "row": 8,
+     "col": 4,
+     "length": 6,
+     "answer": "UNISON",
+     "clue": "accord",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "accord",
+      "terse": "corresponding",
+      "pos": "n",
+      "gloss": "corresponding exactly",
+      "synset": "unison.n.01",
+      "clue_source": "hypernym",
+      "resolution": "unique-in-pool"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D4",
+     "clue_to_slot_permuted": "A1",
+     "clue_candidates": 1,
+     "candidates": [
+      "UNISON"
+     ]
+    },
+    {
+     "id": "D5",
+     "direction": "down",
+     "row": 10,
+     "col": 6,
+     "length": 6,
+     "answer": "TAUNTS",
+     "clue": "irritation",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "irritation",
+      "terse": "aggravation",
+      "pos": "n",
+      "gloss": "aggravation by deriding or mocking or criticizing",
+      "synset": "twit.n.02",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "D5",
+     "clue_to_slot_permuted": "A3",
+     "clue_candidates": 4,
+     "candidates": [
+      "TAUNT",
+      "TAUNTS",
+      "TWIT",
+      "TWITS"
+     ]
+    },
+    {
+     "id": "A4",
+     "direction": "across",
+     "row": 11,
+     "col": 0,
+     "length": 5,
+     "answer": "DRAWS",
+     "clue": "gully",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "gully",
+      "terse": "gully",
+      "pos": "n",
+      "gloss": "a gully that is shallower than a ravine",
+      "synset": "draw.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A4",
+     "clue_to_slot_permuted": "D4",
+     "clue_candidates": 4,
+     "candidates": [
+      "ARROYO",
+      "ARROYOS",
+      "DRAW",
+      "DRAWS"
+     ]
+    },
+    {
+     "id": "A5",
+     "direction": "across",
+     "row": 12,
+     "col": 4,
+     "length": 4,
+     "answer": "OVUM",
+     "clue": "gamete",
+     "clue_data": {
+      "kind": "definition",
+      "clue": "gamete",
+      "terse": "female",
+      "pos": "n",
+      "gloss": "the female reproductive cell; the female gamete",
+      "synset": "ovum.n.01",
+      "clue_source": "hypernym"
+     },
+     "scramble": "",
+     "clue_kind": "definition",
+     "clue_to_slot_published": "A5",
+     "clue_to_slot_permuted": "D5",
+     "clue_candidates": 4,
+     "candidates": [
+      "OVA",
+      "OVUM",
+      "SPERM",
+      "SPERMS"
+     ]
+    }
+   ],
+   "ceiling": {
+    "clue_resolved": 4,
+    "slots": 10,
+    "resolvable_target": 4,
+    "clue_rule": "definition: a slot counts as resolved when its terse definition fits exactly one declared word",
+    "ambiguous": [
+     {
+      "id": "D1",
+      "kind": "definition",
+      "n_candidates": 2,
+      "candidates": [
+       "OCHER",
+       "OCHRE"
+      ]
+     },
+     {
+      "id": "D3",
+      "kind": "definition",
+      "n_candidates": 3,
+      "candidates": [
+       "DISGUST",
+       "SICKEN",
+       "SICKENS"
+      ]
+     },
+     {
+      "id": "A3",
+      "kind": "definition",
+      "n_candidates": 2,
+      "candidates": [
+       "CRUMBLE",
+       "UNRAVEL"
+      ]
+     },
+     {
+      "id": "D5",
+      "kind": "definition",
+      "n_candidates": 4,
+      "candidates": [
+       "TAUNT",
+       "TAUNTS",
+       "TWIT",
+       "TWITS"
+      ]
+     },
+     {
+      "id": "A4",
+      "kind": "definition",
+      "n_candidates": 4,
+      "candidates": [
+       "ARROYO",
+       "ARROYOS",
+       "DRAW",
+       "DRAWS"
+      ]
+     },
+     {
+      "id": "A5",
+      "kind": "definition",
+      "n_candidates": 4,
+      "candidates": [
+       "OVA",
+       "OVUM",
+       "SPERM",
+       "SPERMS"
+      ]
+     }
+    ]
+   },
+   "floor": {
+    "verdict": "WINNABLE",
+    "states_expanded": 10,
+    "solution": [],
+    "assignments": {
+     "D2": "STORAGE",
+     "A1": "RARITY",
+     "D1": "OCHRE",
+     "A2": "TREACLE",
+     "D3": "SICKENS",
+     "A3": "UNRAVEL",
+     "D4": "UNISON",
+     "D5": "TAUNTS",
+     "A4": "DRAWS",
+     "A5": "OVUM"
+    },
+    "fills": 1,
+    "exhausted": true
+   },
+   "unique_fill": true,
+   "grid_sha256": "277190a5502c91b7611b03ec1361fd6361018f22542deadaf9ce26b675e6c31b"
+  }
+ ]
+}
