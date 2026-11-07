@@ -37,15 +37,15 @@ import sys
 
 TOLERANCE = 0.01
 GRAMMAR = {
-    "id": "arith-singledigit-add-v1",
-    "rule": "Q(a, b) = a + b with a, b in 1..9; answer = the exact integer sum",
-    "answer_form": r"^(?:[1-9][0-9]?)$",
-    "answer_form_note": "canonical: bare decimal digits, no sign, no spaces, no prose, no units",
-    "A_basis": "distinct canonical sums of two operands in 1..9 = {2..18}",
+    "id": "word_prob-v1",
+    "rule": "Q(a, b, c) = 'Alice has a apples. She buys b more, then gives away c. How many does she have?' with a, b in 1..20, c in 1..(a+b); answer = a + b - c (non-negative)",
+    "answer_form": r"^(?:0|[1-9]|[1-3][0-9])$",
+    "answer_form_note": "canonical: bare decimal digits, no sign, no spaces, no prose, no units; range 0..39",
+    "A_basis": "distinct values of a + b - c for a,b in 1..20, c in 1..(a+b) = 40 distinct answers (0..39)",
     "computes_not_looks_up": True,
-    "identity": "1 + 2 = 3",
-    "identity_value": 3,
-    "identity_malformed": "three",
+    "identity": "Alice has 2 apples. She buys 3 more, then gives away 1. How many does she have? = 4",
+    "identity_value": 4,
+    "identity_malformed": "four",
 }
 GRAMMAR_DIGEST = ""  # filled by --emit with sha256 of the canonical grammar block
 
@@ -57,11 +57,15 @@ def canonical_grammar_digest(g):
 
 
 def A_of(g):
-    """The answer space, computed from the grammar's declared operand ranges."""
-    lo, hi = 2, 18  # sums of 1..9 + 1..9
-    n = len(re.findall(g["answer_form"], "x"))  # only to prove the pattern compiles
-    del n
-    return hi - lo + 1
+    """The answer space, computed from the grammar's declared ranges."""
+    ans = set()
+    for a in range(1, 21):
+        for b in range(1, 21):
+            for c in range(1, a + b + 1):
+                v = a + b - c
+                if 0 <= v <= 99:
+                    ans.add(v)
+    return len(ans)
 
 
 def p_coin_wins(n, p, A):
@@ -90,18 +94,18 @@ def build():
     p_ref = 0.90
     a = A_of(GRAMMAR)
     questions_a = [
-        ("A-1", "what is 3 + 4", 7),
-        ("A-2", "what is 8 + 6", 14),
-        ("A-3", "what is 2 + 9", 11),
-        ("A-4", "what is 7 + 7", 14),
-        ("A-5", "what is 5 + 1", 6),
+        ("A-1", "Alice has 5 apples. She buys 19 more, then gives away 3. How many does she have?", 21),
+        ("A-2", "Alice has 9 apples. She buys 4 more, then gives away 8. How many does she have?", 5),
+        ("A-3", "Alice has 15 apples. She buys 16 more, then gives away 21. How many does she have?", 10),
+        ("A-4", "Alice has 13 apples. She buys 7 more, then gives away 4. How many does she have?", 16),
+        ("A-5", "Alice has 16 apples. She buys 1 more, then gives away 13. How many does she have?", 4),
     ]
     questions_b = [
-        ("B-1", "what is 9 + 2", 11),
-        ("B-2", "what is 4 + 4", 8),
-        ("B-3", "what is 6 + 8", 14),
-        ("B-4", "what is 1 + 1", 2),
-        ("B-5", "what is 9 + 9", 18),
+        ("B-1", "Alice has 14 apples. She buys 20 more, then gives away 1. How many does she have?", 33),
+        ("B-2", "Alice has 15 apples. She buys 9 more, then gives away 24. How many does she have?", 0),
+        ("B-3", "Alice has 8 apples. She buys 19 more, then gives away 4. How many does she have?", 23),
+        ("B-4", "Alice has 13 apples. She buys 7 more, then gives away 14. How many does she have?", 6),
+        ("B-5", "Alice has 1 apples. She buys 17 more, then gives away 8. How many does she have?", 10),
     ]
 
     def qset(prefix, rows):
@@ -123,7 +127,7 @@ def build():
 
     template = {
         "task": "STUMP-1",
-        "spec_version": "2026-11-05.1",
+        "spec_version": "2026-11-05.5",
         "note": "WORKED EXAMPLE, not a scheduled event: the grammar is a single-digit adder chosen because its answer space is computable and small. The SHAPE is the deliverable.",
         "grammar": dict(GRAMMAR, digest=canonical_grammar_digest(GRAMMAR)),
         "params": {
