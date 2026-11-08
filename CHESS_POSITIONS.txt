@@ -1,0 +1,39 @@
+# CHESS POSITION SET -- frozen
+# oracle: Stockfish 19 Threads=1 Hash=64 depth=18
+# harness commit: 9e6803794fec6a4399cd1b94ac6293b2b7780919
+rnbqkbnr/2ppppp1/1p5p/p7/1P5P/5P2/P1PPP1P1/RNBQKBNR w KQkq - 0 4  # HOLDABLE  eval=-47  best=b4b5
+rnbqkbnr/2ppppp1/1p5p/p7/1P5P/3P1P2/P1P1P1P1/RNBQKBNR b KQkq - 0 4  # HOLDABLE  eval=309  best=a5b4
+rnbqkbnr/2ppp1p1/1p3p1p/p7/1P5P/3P1P2/P1P1P1P1/RNBQKBNR w KQkq - 0 5  # HOLDABLE  eval=1  best=b4b5
+rnbqkbnr/2ppp1p1/1p3p1p/p7/1PP4P/3P1P2/P3P1P1/RNBQKBNR b KQkq - 0 5  # HOLDABLE  eval=215  best=a5b4
+rnbqkbnr/2pp2p1/1p2pp1p/p7/1PP4P/3P1P2/P3P1P1/RNBQKBNR w KQkq - 0 6  # HOLDABLE  eval=-8  best=b4b5
+rnbqkbnr/2pp2p1/1p2pp1p/p7/1PP4P/N2P1P2/P3P1P1/R1BQKBNR b KQkq - 1 6  # HOLDABLE  eval=250  best=a5b4
+rnbqkbnr/2pp2p1/1p2p2p/p4p2/1PP4P/N2P1P2/P3P1P1/R1BQKBNR w KQkq - 0 7  # HOLDABLE  eval=-60  best=b4b5
+rnbqkbnr/2pp2p1/1p2p2p/p4pB1/1PP4P/N2P1P2/P3P1P1/R2QKBNR b KQkq - 1 7  # HOLDABLE  eval=986  best=h6g5
+1nbqkbnr/r1pp2p1/1p2p2p/p4pB1/1PP4P/N2P1P2/P3P1P1/R2QKBNR w KQk - 2 8  # HOLDABLE  eval=414  best=g5d8
+1nbqkbnr/r1pp2p1/1p2p2p/p4pB1/1PP4P/N2P1P2/P2QP1P1/R3KBNR b KQk - 3 8  # HOLDABLE  eval=934  best=h6g5
+1nbqkbnr/r1pp2p1/1p2p2p/5pB1/pPP4P/N2P1P2/P2QP1P1/R3KBNR w KQk - 0 9  # HOLDABLE  eval=917  best=g5d8
+1nbqkbnr/r1pp2p1/1p2p2p/5pB1/pPP4P/N2P1P2/P3P1P1/R2QKBNR b KQk - 1 9  # HOLDABLE  eval=824  best=h6g5
+2bqkbnr/r1pp2p1/1pn1p2p/5pB1/pPP4P/N2P1P2/P3P1P1/R2QKBNR w KQk - 2 10  # HOLDABLE  eval=240  best=g5d8
+2bqkbnr/r1pp2p1/1pn1p2p/5p2/pPP4P/N2P1P2/P2BP1P1/R2QKBNR b KQk - 3 10  # HOLDABLE  eval=139  best=f8b4
+2bqkb1r/r1ppn1p1/1pn1p2p/5p2/pPP4P/N2P1P2/P2BP1P1/R2QKBNR w KQk - 4 11  # HOLDABLE  eval=62  best=e2e3
+2bqkb1r/r1ppn1p1/1pn1p2p/5p2/pPP4P/N2P1P1N/P2BP1P1/R2QKB1R b KQk - 5 11  # HOLDABLE  eval=-46  best=d7d5
+2bqkb1r/r1pp2p1/1pn1p1np/5p2/pPP4P/N2P1P1N/P2BP1P1/R2QKB1R w KQk - 6 12  # HOLDABLE  eval=87  best=h4h5
+2bqkb1r/r1pp2p1/1pn1p1np/5p2/pPP2P1P/N2P3N/P2BP1P1/R2QKB1R b KQk - 0 12  # HOLDABLE  eval=126  best=f8b4
+2bqkb1r/r1pp2p1/1pn1p2p/5p2/pPP2P1n/N2P3N/P2BP1P1/R2QKB1R w KQk - 0 13  # HOLDABLE  eval=79  best=a3b5
+2bqkb1r/r1pp2p1/1pn1p2p/5p2/pPPP1P1n/N6N/P2BP1P1/R2QKB1R b KQk - 0 13  # HOLDABLE  eval=107  best=f8b4
+2bqk2r/r1pp2p1/1pn1p2p/5p2/pbPP1P1n/N6N/P2BP1P1/R1Q1KB1R b KQk - 1 14  # HOLDABLE  eval=260  best=b4d2
+2bqk2r/2pp2p1/1pn1p2p/r4p2/pbPP1P1n/N6N/P2BP1P1/1RQ1KB1R b Kk - 3 15  # HOLDABLE  eval=251  best=b4d2
+2bqk2r/r1pp2p1/1pn1p2p/5p2/pbPP1P1n/N6N/P2BP1P1/1RQ1KB1R w Kk - 4 16  # HOLDABLE  eval=386  best=d2b4
+2bqk2r/r1pp2p1/1pn1p2p/5p2/pbPP1P1n/N6N/P2BP1P1/R1Q1KB1R b Kk - 5 16  # HOLDABLE  eval=255  best=e8g8
+2bqk2r/r1p3p1/1pnpp2p/5p2/pbPP1P1n/N3P2N/P2B2P1/R1Q1KB1R b Kk - 0 17  # HOLDABLE  eval=248  best=e8g8
+2bqk2r/2p3p1/1pnpp2p/r1P2p2/pb1P1P1n/N3P2N/P2B2P1/R1Q1KB1R b Kk - 0 18  # HOLDABLE  eval=461  best=b6c5
+2b1k2r/2p3p1/1pnpp2p/r1P2pq1/pb1P1P1n/N3P2N/P2B2P1/R1Q1KB1R w Kk - 1 19  # HOLDABLE  eval=894  best=f4g5
+2b1k2r/2p3p1/1pnpp2p/r1P2pP1/pb1P3n/N3P2N/P2B2P1/R1Q1KB1R b Kk - 0 19  # LOST  eval=-877  best=b4d2
+2b1k2r/2p3p1/1pnpp2p/r1b2pP1/p2P3n/N3P2N/P2B2P1/R1Q1KB1R w Kk - 0 20  # HOLDABLE  eval=1059  best=d2a5
+2b1k2r/2p3p1/1pnpp2p/r1b2pP1/p2P3n/N3P2N/P2BK1P1/R1Q2B1R b k - 1 20  # LOST  eval=-839  best=c5a3
+2b1k2r/2p3p1/1pnpp3/r1b2pPp/p2P3n/N3P2N/P2BK1P1/R1Q2B1R w k - 0 21  # HOLDABLE  eval=1014  best=d2a5
+2b1k2r/2p3p1/1pnpp3/r1b2pPp/p2P3n/N3P2N/P2BK1P1/RQ3B1R b k - 1 21  # LOST  eval=-816  best=c5a3
+2b1k2r/2p3p1/1p1pp3/r1b2pPp/pn1P3n/N3P2N/P2BK1P1/RQ3B1R w k - 2 22  # HOLDABLE  eval=1069  best=d4c5
+2b1k2r/2p3p1/1p1pp3/r1b2pPp/pn1P1N1n/N3P3/P2BK1P1/RQ3B1R b k - 3 22  # LOST  eval=-1046  best=c8a6
+2b1k2r/6p1/1pppp3/r1b2pPp/pn1P1N1n/N3P3/P2BK1P1/RQ3B1R w k - 0 23  # HOLDABLE  eval=1200  best=d4c5
+2b1k2r/6p1/1pppp3/r1P2pPp/pn3N1n/N3P3/P2BK1P1/RQ3B1R b k - 0 23  # LOST  eval=-1185  best=c8a6

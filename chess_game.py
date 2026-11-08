@@ -76,7 +76,7 @@ LOST_CP, HOLD_CP = -300, -100
 PROMPT_TEMPLATE = (
     "You are playing a game of chess. You control one side.\n"
     "Position (FEN): {fen}\n\n"
-    "FIRST LINE: your move alone, in coordinate notation such as e2e4, and nothing else.\n"
+    "FIRST LINE: your move alone, in coordinate notation (from-square to-square, e.g. a1 to b2), and nothing else.\n"
     "If you judge the position lost beyond recovery, the first line is exactly: RESIGN\n"
     "AFTER the first line you may explain your reasoning if you wish.\n\n"
     "The move goes on the first line. Reason after, not before."
@@ -402,6 +402,8 @@ def resolve(fen, token, legal):
     if len(head_found) > 1:
         return None, None, f"ambiguous: the first line names {len(head_found)} distinct legal moves"
 
+    if first:
+        return None, None, "unreadable: no legal move named on the first line"
     full = _extract(fen, raw, legal)
     if len(full) == 1:
         u = next(iter(full))
@@ -562,7 +564,8 @@ def play(base, cap, probe):
             print(f"    ply {ply:2d}  {len(moves):2d} legal  raw={raw[:40]!r}  -> {choice or 'UNRESOLVED'}"
                   f"  [{reason.split(':')[0]}]  reason_tok={len(reasoning)}")
         if choice is None:
-            if re.search(r"\bRESIGN", raw or "", re.I):
+            first_line = next((l.strip() for l in (raw or "").splitlines() if l.strip()), "")
+            if first_line.upper() == "RESIGN":
                 ev_b, _ = evaluate(fen)
                 rows.append(dict(ply=ply, fen=fen, raw=raw, move_uci=None, move_san=None,
                                  eval_before=ev_b, eval_after=ev_b,

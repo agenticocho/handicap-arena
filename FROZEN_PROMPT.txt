@@ -14,4 +14,4 @@
 # the candidates. That argument is about what the event measures and holds whether or not any particular
 # entrant exists; it was NOT made so that a failing entrant could answer.
 #
-prompt_digest 76fa8848e9adf514
+prompt_digest 2753858f493c4b18
