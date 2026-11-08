@@ -1,0 +1,113 @@
+{
+ "probe": "04_high_pstar",
+ "date": "2026-11-08",
+ "what": "A peer-supplied sokoban board, admitted on THIS box's instruments: the degenerate-class gate at its declared width, the clearance search p* to a stated bound, and an independent proof of solvability with its move count. CPU only; no model was run.",
+ "board": {
+  "path": "levels/04_high_pstar.txt",
+  "sha256": "9b4abc6ac3699e603ee40cbe49dec9e40ba15c2adabf6b7bb23d8ac02a75762a",
+  "bytes": 55,
+  "source": "arrival 9b4abc6ac369-04_high_pstar.txt (chair link, 2026-11-08 08:13)",
+  "source_sha256": "9b4abc6ac3699e603ee40cbe49dec9e40ba15c2adabf6b7bb23d8ac02a75762a",
+  "byte_identical_to_arrival": true
+ },
+ "gate": {
+  "gate": "degenerate-class",
+  "event": "sokoban",
+  "board": "levels/04_high_pstar.txt",
+  "board_sha256": "9b4abc6ac3699e603ee40cbe49dec9e40ba15c2adabf6b7bb23d8ac02a75762a",
+  "class": "periodic words of period <= 3 over sorted(sokoban.ACTIONS) = U D L R, repeated to the cap 40",
+  "verdict": "PASS",
+  "why": "the control fired and no stream in the class clears this board",
+  "streams_evaluated": 84,
+  "hits": [],
+  "n_hits": 0,
+  "control": {
+   "control": "levels/01_one_push.txt",
+   "sha256": "db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313"
+  },
+  "control_streams": 84,
+  "control_hits": [
+   "R",
+   "DR",
+   "LR",
+   "RD"
+  ],
+  "n_control_hits": 45,
+  "instrument": {
+   "simulator": "sokoban.py",
+   "sha256": "00996929972b9483223bf54f4dcef007162134289c5cdb76a58533ac875e8a7c",
+   "budget": 40
+  }
+ },
+ "solver": {
+  "budget": null,
+  "cost": {
+   "expanded_by_depth": {
+    "0": 1,
+    "1": 4,
+    "2": 12,
+    "3": 26,
+    "4": 43,
+    "5": 68,
+    "6": 114,
+    "7": 166,
+    "8": 252,
+    "9": 334,
+    "10": 486,
+    "11": 576,
+    "12": 710,
+    "13": 292
+   },
+   "max_depth_reached": 13,
+   "seconds": 0.01984795899988967,
+   "states_expanded": 3084,
+   "states_pruned_by_corner_rule": 120,
+   "states_reachable_enumerated": 3204
+  },
+  "level": "04_high_pstar.txt",
+  "moves": 14,
+  "proof": null,
+  "pushes": 4,
+  "solution": "LURURDRDDLLDLU",
+  "verdict": "SOLVABLE",
+  "verification": {
+   "blocked": 0,
+   "by": "sokoban.play() -- the FROZEN simulator, the same counter the score uses",
+   "moves": 14,
+   "pushes": 4,
+   "simulator_sha256": "00996929972b9483223bf54f4dcef007162134289c5cdb76a58533ac875e8a7c",
+   "solved": true
+  }
+ },
+ "p_star": {
+  "bound": 10,
+  "budget": 40,
+  "instrument_function": "degenerate_gate.sokoban_min_period(board, upto=10)",
+  "instrument_result": {
+   "period": null,
+   "word": null,
+   "streams_scanned": 1398100,
+   "note": "no periodic word of period <= 10 clears this board",
+   "elapsed_s": 365.32,
+   "instrument": "00996929972b9483223bf54f4dcef007162134289c5cdb76a58533ac875e8a7c",
+   "budget": 40
+  },
+  "independent_sweep": [
+   "period  1  streams         4  clearers   0      0.00s  first=-",
+   "period  2  streams        16  clearers   0      0.01s  first=-",
+   "period  3  streams        64  clearers   0      0.02s  first=-",
+   "period  4  streams       256  clearers   0      0.06s  first=-",
+   "period  5  streams      1024  clearers   0      0.26s  first=-",
+   "period  6  streams      4096  clearers   0      1.03s  first=-",
+   "period  7  streams     16384  clearers   0      4.22s  first=-",
+   "period  8  streams     65536  clearers   0     16.63s  first=-",
+   "period  9  streams    262144  clearers   0     66.21s  first=-",
+   "period 10  streams   1048576  clearers   0    265.96s  first=-",
+   "TOTAL streams scanned 1398100  elapsed 354.38s",
+   "P_STAR None -- no periodic word of period <= 10 clears this board to the cap 40"
+  ],
+  "conclusion": "no periodic word of period <= 10 over U D L R, repeated to the cap 40, clears this board; p* is therefore > 10 at this bound, not at width 3",
+  "cost": "two full 1,398,100-stream runs, 354 s and 365 s, on this box, CPU only"
+ },
+ "limits": "p* > 10 is a negative at a stated bound, not a claim that no period clears the board. The record's own null is reproduced, not extended: no run beyond period 10 is claimed here, and none is needed for admission at width 3."
+}
