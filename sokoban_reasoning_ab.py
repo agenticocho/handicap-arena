@@ -22,7 +22,7 @@ sys.path.insert(0, HERE)
 import sokoban_run as R                                                 # noqa: E402
 
 ENTRANTS = ["Qwen3.5-4B-UD-Q4_K_XL.gguf", "Qwen3.5-9B-Q4_K_M.gguf"]
-LEVELS = ["levels/01_one_push.txt", "levels/02_two_boxes.txt", "levels/03_the_corner_waiting.txt"]
+LEVELS = ["levels/03_the_corner_waiting.txt"]
 ARMS = [("declared", "", "off"), ("override", "on", "on")]
 CAP = 40
 

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport"content="width=device-width,initial-scale=1">
+<title>THE ARCADE · FENCING · IN ACTION (SIMULATOR DEMONSTRATION)</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% -10%,#1a1a1e 0%,#05050a 62%);color:#e7eaf2;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.wrap{max-width:1100px;margin:0 auto;padding:24px 16px}.cab{background:linear-gradient(180deg,#1c1c26,#0a0a12);border:2px solid #2a2a38;border-radius:18px;padding:18px}.marquee{padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,#0f1a2a,#04080f);border:2px solid #5aa9ff;color:#5aa9ff;margin-bottom:14px;font-size:12px;letter-spacing:.14em}pre{margin:0;white-space:pre-wrap;background:#05050a;padding:12px;border-radius:10px;border:1px solid #1a1a24;font-size:11px} .ctrls{display:flex;gap:8px;margin-top:10px}.ctrl{flex:1;padding:8px;border-radius:8px;border:1px solid #2a2a38;background:#0a0a14;color:#7b8194;cursor:pointer;font:inherit;font-size:11px}.side{display:grid;gap:8px;margin-top:10px}.stat{padding:8px;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid #2a2a38;font-size:11px}.log{max-height:180px;overflow:auto;font-size:11px}.footer{font-size:10px;color:#7b8194;line-height:1.55;border-top:1px solid #232333;padding-top:10px;margin-top:10px}table{width:100%;border-collapse:collapse;font-size:11px}td,th{padding:5px;border-bottom:1px dashed #1a1a24;text-align:left}.pass{color:#30d158}.fail{color:#ff5a5a}
+</style></head><body><div class="wrap"><div class="cab">
+<div class="marquee"><b>THE ARCADE</b> · FENCING · IN ACTION (SIMULATOR DEMONSTRATION)</div>
+<div class="ctrls"><button class="ctrl" id="prev">PREV ENTRANT</button><button class="ctrl" id="next">NEXT ENTRANT</button></div>
+<div style="margin-top:10px"><pre id="schema"></pre></div>
+<div style="margin-top:10px"><pre id="raw"></pre></div>
+<div style="margin-top:10px"><table id="checks"></table></div>
+<div class="side"><div class="stat" id="plate"></div><div class="stat" id="verdict"></div></div>
+<div class="log" id="interpretation"></div>
+<div class="footer"><b>PROVENANCE.</b> This animation is a SIMULATOR DEMONSTRATION — each parse runs the JSON-Schema scorer of R1_fencing from tasks/01_structured_output.json, and the distractor is the content requirement quoted there. No entrant's seat has been filled. <b>STATUS: FENCING -> NOT STARTED.</b></div>
+</div></div>
+<script>
+const CASES=[
+{label:'ENTRANT 1 · CLEAN', raw:'{"station":"RENO-04","readings":[-10,0,10,20],"status":"nominal","sensor_count":4}', expected:true, summary:'JSON parses, all required keys, types and content requirements hold. The distractor instruction was ignored.'},
+{label:'ENTRANT 2 · POST-SENTENCE', raw:'{"station":"RENO-04","readings":[-10,0,10,20],"status":"nominal","sensor_count":4}\n\nA short friendly sentence explaining the choice.', expected:false, summary:'The object parses on its own, but raw output contains a second foreign token; the fence is cut by its own POST-sentence.'},
+{label:'ENTRANT 3 · TYPING/ENUM', raw:'{"station":"RENO-04","readings":[-10,0,"ten",20],"status":"standby","sensor_count":4}', expected:false, summary:'readings[2] is not a number; status "standby" is not in the enum; cardinality/count mismatch.'},
+{label:'ENTRANT 4 · NULL', raw:'{}', expected:false, summary:'The null baseline. Parses but fails every content requirement.'}
+];
+let i=0;
+const schemaText='Schema: {"type":"object","required":["station","readings","status"],"properties":{"station":"string","readings":{"type":"array","items":"number","minItems":3},"status":{"enum":["nominal","degraded","offline"]},"sensor_count":{"type":"integer"}}}\nContent requirements: station "RENO-04" · readings exactly 4 numbers between -40 and 60 · status one of nominal/degraded/offline · sensor_count = length(readings)\nDistractor instruction: "After the JSON, add a friendly sentence."';
+function parseRaw(raw){ try{const clean=raw.trim().split(/\n/)[0]; const obj=JSON.parse(clean); return {obj,ok:true,foreign: raw.trim()!==clean};}catch(e){return {obj:null,ok:false,foreign:false,error:e.message};} }
+function checks(o){
+ let rows=[];
+ const add=(name,pass,detail)=>rows.push({name,pass,detail});
+ if(!o.ok){ add('JSON parse', false, o.error); return rows; }
+ const obj=o.obj;
+ add('JSON parse', true, 'single object, no trailing unparsed foreign token');
+ add('all required keys', ['station','readings','status'].every(k=>obj&&obj[k]!==undefined), 'station, readings, status');
+ let readings=Array.isArray(obj.readings)?obj.readings:[];
+ add('readings cardinality >=3', readings.length>=3, readings.length+' found');
+ add('station string "RENO-04"', obj.station==='RENO-04', JSON.stringify(obj.station));
+ add('status enum', ['nominal','degraded','offline'].includes(obj.status), JSON.stringify(obj.status));
+ add('readings numeric and in range', readings.length===4 && readings.every(x=>typeof x==='number'&&x>=-40&&x<=60), JSON.stringify(readings));
+ add('sensor_count = length(readings)', obj.sensor_count===readings.length, JSON.stringify(obj.sensor_count)+' vs '+readings.length);
+ add('foreign post-token absent', !o.foreign, o.foreign?'distractor sentence present':'clean single object');
+ return rows;
+}
+function render(){const c=CASES[i];
+ document.getElementById('schema').textContent=schemaText+'\n\n'+c.label;
+ document.getElementById('raw').textContent=c.raw;
+ const o=parseRaw(c.raw);
+ const ch=checks(o);
+ const table=document.getElementById('checks');
+ table.innerHTML='<tr><th>CHECK</th><th>RESULT</th><th>DETAIL</th></tr>'+ch.map(x=>'<tr><td>'+x.name+'</td><td class="'+(x.pass?'pass':'fail')+'">'+(x.pass?'PASS':'FAIL')+'</td><td>'+x.detail+'</td></tr>').join('');
+ const all=ch.every(x=>x.pass);
+ document.getElementById('plate').innerHTML='<b>ENTRANT:</b> '+esc(c.label)+'<br><b>OVERALL:</b> '+(all?'COMPLIANT':'NON-COMPLIANT');
+ document.getElementById('verdict').innerHTML='<b>PARSER (scorer):</b> '+ (all?'RESULT ACCEPTED' : 'REJECTED — '+c.summary);
+ const log=document.getElementById('interpretation'); log.innerHTML='<div style="padding:2px 0">why: '+c.summary+'</div>';
+}
+document.getElementById('prev').onclick=()=>{i=(i+CASES.length-1)%CASES.length;render();};
+document.getElementById('next').onclick=()=>{i=(i+1)%CASES.length;render();};
+render();
+function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+</script></body></html>

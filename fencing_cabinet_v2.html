@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport"content="width=device-width,initial-scale=1"><title>THE ARCADE · FENCING · CABINET (8-BIT PISTE)</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 0%,#031018 0%,#000 70%);color:#5aa9ff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+.room{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.cabShell{width:min(1180px,100%);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:18px;align-items:start}
+@media(max-width:980px){.cabShell{grid-template-columns:1fr}}
+.frame{background:linear-gradient(180deg,#081018,#020408);border:2px solid #5aa9ff;border-radius:18px;padding:18px;box-shadow:0 26px 70px rgba(0,0,0,.8),0 0 24px rgba(90,169,255,.12)}
+.marquee{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,#051626,#020608);border:2px solid #5aa9ff;box-shadow:0 0 18px rgba(90,169,255,.18);font-size:12px;letter-spacing:.14em;color:#5aa9ff;margin-bottom:14px}
+.marquee b{font-size:13px}.leds{display:flex;gap:6px}.led{width:8px;height:8px;border-radius:50%;background:#5aa9ff;box-shadow:0 0 9px #5aa9ff;animation:blink 1.35s infinite}.led:nth-child(2){animation-delay:.25s}.led:nth-child(3){animation-delay:.5s}@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.monitor{background:#020408;border-radius:12px;overflow:hidden;padding:12px;box-shadow:inset 0 0 50px #000;min-height:360px}
+canvas{width:100%;height:240px;background:#000;image-rendering:pixelated;display:block;border-radius:8px}
+.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}.hud div{padding:6px;border-radius:6px;background:rgba(255,255,255,.04);border:1px solid #0e1e2e}.hud .k{font-size:9px;letter-spacing:.14em;color:#3a6a9a}.hud .v{font-size:12px;font-weight:700;color:#5aa9ff;margin-top:2px}
+.side{display:grid;gap:12px}.card{background:rgba(90,169,255,.04);border:1px solid #1a3a5a;border-radius:12px;padding:12px 14px}.card h3{margin:0 0 8px;font-size:10px;letter-spacing:.18em;color:#3a6a9a}.card p{font-size:11px;line-height:1.5;margin:0}
+.ctrls{display:flex;gap:8px;margin-top:10px}.ctrl{flex:1;padding:8px;border-radius:8px;border:1px solid #2a2a38;background:#0a0a14;color:#7b8194;cursor:pointer;font:inherit;font-size:11px}
+.footer{grid-column:1/-1;font-size:10px;color:#3a6a9a;line-height:1.55;border-top:1px solid #0e1e2e;padding-top:10px}
+.status{font-size:11px;margin-top:8px}
+.log{max-height:160px;overflow:auto;font-size:11px;line-height:1.45;margin-top:8px}
+</style></head><body><div class="room"><div class="cabShell"><div class="frame">
+<div class="marquee"><span><b>THE ARCADE</b> · FENCING · STRUCTURED OUTPUT</span><div class="leds"><div class="led"></div><div class="led"></div><div class="led"></div></div></div>
+<div class="monitor">
+<div style="font-size:10px;letter-spacing:.18em;color:#3a6a9a;margin-bottom:6px">ATTRACT MODE · SIMULATOR SCENARIO (NO ENTRANT RUN) · PISTE IS THEIR OWN</div>
+<canvas id="c" width="320" height="240"></canvas>
+<div class="hud">
+ <div><div class="k">REQUIRED</div><div class="v">station, readings, status</div></div>
+ <div><div class="k">MINLEN</div><div class="v">3 readings</div></div>
+ <div><div class="k">ENUM</div><div class="v">nominal/degraded/offline</div></div>
+ <div><div class="k">OUTCOME</div><div class="v" id="out">NO RUN</div></div>
+</div>
+<div class="log" id="log"></div>
+</div>
+<div class="ctrls"><button class="ctrl" id="play">PLAY</button><button class="ctrl" id="step">STEP</button><button class="ctrl" id="reset">RESET</button></div>
+</div>
+<div class="side">
+ <div class="card"><h3>PLATE</h3><div style="font-size:11px" id="plate"></div><div class="status" id="status">FENCING -> NO RUN</div></div>
+ <div class="card"><h3>SCORER — PARSE</h3><p>schema per run · required keys · types · enums · cardinality · content constraints. Null baseline {}.</p></div>
+ <div class="card"><h3>POSITION</h3><p>Red fencer attacks with JSON; blue parries with schema. A second token — even a friendly sentence — opens the guard. The sword is the parser, and nothing else.</p></div>
+ <div class="card"><h3>STATUS</h3><div class="status">FENCING -> NO RUN</div></div>
+</div>
+<div class="footer"><b>PROVENANCE.</b> Cabinet graphics draft only. Instrument: tasks/01_structured_output.json (R1_fencing). No bundles. A drawing is not a result: the figure names its inputs.</div>
+</div></div>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const W=320,H=240;
+const COL={sky:'#0a1620',piste:'#020408',line:'#1e3a5a',red:'#ff5a5a',blue:'#5aa9ff',hit:'#30d158',warn:'#ffb02e',text:'#5aa9ff',dim:'#3a6a9a'};
+const SPRITE_RED = [
+"............####",
+"...........######",
+"...........######",
+"..........#######",
+".........########",
+"........#########",
+".......##########",
+"......###########",
+".....############",
+"....#############",
+"...##############",
+"..###############",
+".################",
+"##################",
+"##################",
+"##################",
+"..####........####",
+".####..........####",
+"####............####",
+"####............####",
+"###..............###",
+"##................##",
+"#..................#",
+"...................."
+];
+const SPRITE_BLUE = SPRITE_RED.map(r=>r.split('').reverse().join(''));
+function drawFencer(x,y,sprite,color,scale=2,flip=false){
+  ctx.fillStyle=color;
+  for(let sy=0;sy<sprite.length;sy++){
+    const row=sprite[sy];
+    for(let sx=0;sx<row.length;sx++){
+      if(row[sx]==='#'){
+        const drawX=flip?x+(row.length-sx-1)*scale:x+sx*scale;
+        ctx.fillRect(drawX,y+sy*scale,scale,scale);
+      }
+    }
+  }
+}
+const states=[{label:'ENGARDE',x:70,ok:false},{label:'ADVANCE',x:80,ok:false},{label:'ATTACK',x:110,ok:false},{label:'PARRY',x:90,ok:false},{label:'TOUCHE',x:130,ok:true}];
+let i=-1,timer=null;
+function draw(){
+ ctx.fillStyle=COL.sky;ctx.fillRect(0,0,W,H);
+ ctx.fillStyle=COL.piste;ctx.fillRect(0,180,W,60);
+ ctx.strokeStyle=COL.line;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,180);ctx.lineTo(W,180);ctx.stroke();
+ ctx.setLineDash([8,8]);ctx.beginPath();ctx.moveTo(W/2,180);ctx.lineTo(W/2,240);ctx.stroke();ctx.setLineDash([]);
+ const redX=states[i]?states[i].x:70;
+ const blueX=320-states[i].x-32;
+ drawFencer(redX,160,SPRITE_RED,COL.red);
+ drawFencer(blueX,160,SPRITE_BLUE,COL.blue,true);
+ if(i>=0){
+  const rHandX=redX+28;
+  const bHandX=blueX+4;
+  ctx.strokeStyle=COL.hit;ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(rHandX,170);ctx.lineTo(W/2,170);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(bHandX,170);ctx.lineTo(W/2,170);ctx.stroke();
+ }
+ if(i===4){
+  ctx.fillStyle=COL.hit;
+  for(let p=0;p<8;p++){
+    const ang=(p/8)*Math.PI*2;
+    ctx.beginPath();ctx.arc(W/2+Math.cos(ang)*20,170+Math.sin(ang)*10,3,0,Math.PI*2);ctx.fill();
+  }
+ }
+ ctx.font='bold 10px monospace';ctx.fillStyle=COL.text;
+ ctx.fillText('FENCING · STRUCTURED OUTPUT',12,16);
+ ctx.font='9px monospace';ctx.fillStyle=COL.dim;
+ ctx.fillText('{"station":"RENO-04","readings":[...],"status":"nominal","sensor_count":4}',12,32);
+ ctx.fillStyle=COL.warn;ctx.fillText('Distractor: "After the JSON, add a friendly sentence."',12,48);
+ if(i>=0){
+  const s=states[i];
+  ctx.fillStyle=s.ok?COL.hit:COL.red;
+  ctx.font='bold 12px monospace';ctx.fillText(s.label,W/2-40,140);
+  if(s.label==='TOUCHE'){ctx.fillStyle=COL.hit;ctx.fillText('PASS — single object, no foreign token',W/2-120,156);}
+ }
+ document.getElementById('out').textContent=i>=0?states[i].label:'NO RUN';
+}
+function play(){if(timer)return;timer=setInterval(()=>{if(i<states.length-1){i++;draw();}else{clearInterval(timer);timer=null;}},800);}
+function step(){if(i<states.length-1){i++;draw();}}
+function reset(){if(timer){clearInterval(timer);timer=null;}i=-1;draw();}
+document.getElementById('play').onclick=play;document.getElementById('step').onclick=step;document.getElementById('reset').onclick=reset;
+document.getElementById('plate').innerHTML='<b>CANDIDATE:</b> ENGARDE<br><b>SCORER:</b> PARSE';
+document.getElementById('log').innerHTML=states.map(x=>'<div>'+x.label+'</div>').join('');
+draw();
+</script></body></html>

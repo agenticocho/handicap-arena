@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport"content="width=device-width,initial-scale=1"><title>THE ARCADE · FENCING · CABINET (VECTOR 3)</title><style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 0%,#031018 0%,#000 70%);color:#5aa9ff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+.room{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.cabShell{width:min(1180px,100%);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:18px;align-items:start}
+@media(max-width:980px){.cabShell{grid-template-columns:1fr}}
+.frame{background:linear-gradient(180deg,#081018,#020408);border:2px solid #5aa9ff;border-radius:18px;padding:18px;box-shadow:0 26px 70px rgba(0,0,0,.8),0 0 24px rgba(90,169,255,.12)}
+.marquee{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,#051626,#020608);border:2px solid #5aa9ff;box-shadow:0 0 18px rgba(90,169,255,.18);font-size:12px;letter-spacing:.14em;color:#5aa9ff;margin-bottom:14px}
+.marquee b{font-size:13px}.leds{display:flex;gap:6px}.led{width:8px;height:8px;border-radius:50%;background:#5aa9ff;box-shadow:0 0 9px #5aa9ff;animation:blink 1.35s infinite}.led:nth-child(2){animation-delay:.25s}.led:nth-child(3){animation-delay:.5s}@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.monitor{background:#020408;border-radius:12px;overflow:hidden;padding:12px;box-shadow:inset 0 0 50px #000;min-height:360px}
+.piste{position:relative;height:240px;background:linear-gradient(180deg,#0a1620,#020408);border-radius:8px;overflow:hidden;border:1px solid #0e1a2e}
+.piste::before{content:'';position:absolute;left:20px;right:20px;top:205px;height:2px;background:#1e3a5a}
+.center{position:absolute;left:50%;top:24px;bottom:24px;border-left:1px dashed #1e3a5a}
+.fight{position:absolute;bottom:20px;width:64px;height:72px;transform:scaleX(1)}
+.fight.right{transform:scaleX(-1);left:auto;right:70px}
+.head{position:absolute;left:28px;top:0;width:16px;height:20px;background:#1f5f9f;border-radius:6px 6px 2px 2px}
+.head::before{content:'';position:absolute;left:0;top:4px;width:16px;height:2px;background:#0e1020}
+.mask{position:absolute;left:24px;top:-3px;width:24px;height:28px;border:2px solid #9ad;clip-path:polygon(12% 0,88% 0,100% 100%,0 100%);opacity:.7}
+.torso{position:absolute;left:20px;top:20px;width:24px;height:30px;background:#3a5f9a;border-radius:4px}
+.leg{position:absolute;top:50px;width:8px;height:22px;background:#3a5f9a;border-radius:3px}
+.foot{position:absolute;top:70px;width:12px;height:6px;background:#1e2f5a;border-radius:2px}
+.arm{position:absolute;top:24px;width:6px;height:24px;background:#1f5f9f;border-radius:3px;transform-origin:top center}
+.foil{position:absolute;top:24px;height:3px;width:46px;background:#fff;box-shadow:0 0 8px #9ad;border-radius:2px;transform-origin:left center}
+.red .head,.red .torso,.red .arm,.red .leg,.red .foot{background:#ff5a5a}
+.red .arm{background:#d93a3a}
+.blue .arm{background:#1f5f9f}
+.touch{position:absolute;width:14px;height:14px;border-radius:50%;background:#ffd166;box-shadow:0 0 18px #ffd166;opacity:0;transition:opacity .15s}
+.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}.hud div{padding:6px;border-radius:6px;background:rgba(255,255,255,.04);border:1px solid #0e1e2e}.hud .k{font-size:9px;letter-spacing:.14em;color:#3a6a9a}.hud .v{font-size:12px;font-weight:700;color:#5aa9ff;margin-top:2px}
+.side{display:grid;gap:12px}.card{background:rgba(90,169,255,.04);border:1px solid #1a3a5a;border-radius:12px;padding:12px 14px}.card h3{margin:0 0 8px;font-size:10px;letter-spacing:.18em;color:#3a6a9a}.card p{font-size:11px;line-height:1.5;margin:0}
+.ctrls{display:flex;gap:8px;margin-top:10px}.ctrl{flex:1;padding:8px;border-radius:8px;border:1px solid #2a2a38;background:#0a0a14;color:#7b8194;cursor:pointer;font:inherit;font-size:11px}
+.footer{grid-column:1/-1;font-size:10px;color:#3a6a9a;line-height:1.55;border-top:1px solid #0e1e2e;padding-top:10px}
+</style></head><body><div class="room"><div class="cabShell"><div class="frame">
+<div class="marquee"><span><b>THE ARCADE</b> · FENCING · STRUCTURED OUTPUT</span><div class="leds"><div class="led"></div><div class="led"></div><div class="led"></div></div></div>
+<div class="monitor">
+<div style="font-size:10px;letter-spacing:.18em;color:#3a6a9a;margin-bottom:6px">ATTRACT MODE · SIMULATOR SCENARIO (NO ENTRANT RUN) · FOIL AVAILABLE BEFORE PARSE</div>
+<div class="piste">
+  <div class="center"></div>
+  <div id="red" class="fight red" style="left:40px">
+    <div class="head"></div><div class="mask"></div><div class="torso"></div>
+    <div class="arm" style="left:28px;top:24px;transform:rotate(10deg)"></div>
+    <div class="leg" style="left:18px"></div><div class="leg" style="left:28px"></div>
+    <div class="foot" style="left:14px"></div><div class="foot" style="left:24px"></div>
+    <div class="foil" id="redFoil" style="left:16px;top:26px;transform:rotate(-8deg)"></div>
+  </div>
+  <div id="blue" class="fight right" style="right:40px">
+    <div class="head"></div><div class="mask"></div><div class="torso"></div>
+    <div class="arm" style="left:28px;top:24px;transform:rotate(-10deg)"></div>
+    <div class="leg" style="left:18px"></div><div class="leg" style="left:28px"></div>
+    <div class="foot" style="left:14px"></div><div class="foot" style="left:24px"></div>
+    <div class="foil" id="blueFoil" style="left:16px;top:26px;transform:rotate(188deg)"></div>
+  </div>
+  <div id="touch" class="touch" style="left:160px;top:164px"></div>
+</div>
+<div class="hud">
+ <div><div class="k">REQUIRED</div><div class="v">station, readings, status</div></div>
+ <div><div class="k">MINLEN</div><div class="v">3 readings</div></div>
+ <div><div class="k">ENUM</div><div class="v">nominal/degraded/offline</div></div>
+ <div><div class="k">OUTCOME</div><div class="v" id="out">NO RUN</div></div>
+</div>
+<div class="log" id="log"></div>
+</div>
+<div class="ctrls"><button class="ctrl" id="play">PLAY</button><button class="ctrl" id="step">STEP</button><button class="ctrl" id="reset">RESET</button></div>
+</div>
+<div class="side">
+ <div class="card"><h3>PLATE</h3><div style="font-size:11px" id="plate"></div><div class="status" id="status">FENCING -> NO RUN</div></div>
+ <div class="card"><h3>SCORER — PARSE</h3><p>schema per run · required keys · types · enums · cardinality · content constraints. Null baseline {}.</p></div>
+ <div class="card"><h3>POSITION</h3><p>The sword is the parser. A second token is an opening. Clean JSON keeps the mask in place; a friendly sentence breaks the guard and scores the touch for the wrong side.</p></div>
+ <div class="card"><h3>STATUS</h3><div class="status">FENCING -> NO RUN</div></div>
+</div>
+<div class="footer"><b>PROVENANCE.</b> Cabinet graphics draft only. Instrument: tasks/01_structured_output.json (R1_fencing). No bundles. A striking fencer is not a measurement.</div>
+</div></div>
+<script>
+const red=document.getElementById('red'), blue=document.getElementById('blue'), redFoil=document.getElementById('redFoil'), blueFoil=document.getElementById('blueFoil'), touch=document.getElementById('touch'), out=document.getElementById('out');
+const states=[
+ {label:'ENGARDE', redLeft:40, blueRight:40, redFoilRot:-8, blueFoilRot:188, touch:0, note:'both set; schema empty'},
+ {label:'ADVANCE', redLeft:48, blueRight:44, redFoilRot:-10, blueFoilRot:190, touch:0, note:'red steps on target'},
+ {label:'EXTEND', redLeft:64, blueRight:36, redFoilRot:-3, blueFoilRot:182, touch:0, note:'foil extends'},
+ {label:'PARRY', redLeft:74, blueRight:28, redFoilRot:-12, blueFoilRot:162, touch:0, note:'blue breaks the attack'},
+ {label:'TOUCHE', redLeft:86, blueRight:20, redFoilRot:-18, blueFoilRot:155, touch:1, note:'red scores (PASS) — single valid object'},
+ {label:'DEFENSE', redLeft:76, blueRight:30, redFoilRot:-5, blueFoilRot:176, touch:0, note:'reset for next entrant'}
+];
+let i=-1,timer=null;
+function applyState(s){
+ red.style.left=s.redLeft+'px';
+ blue.style.right=s.blueRight+'px';
+ redFoil.style.transform='rotate('+s.redFoilRot+'deg)';
+ blueFoil.style.transform='rotate('+s.blueFoilRot+'deg)';
+ touch.style.opacity=s.touch?1:0;
+ out.textContent = s.label+' · '+(s.label==='TOUCHE'?'PASS':'');
+ out.style.color = s.label==='TOUCHE'?'#30d158':'#5aa9ff';
+ document.getElementById('plate').innerHTML='<b>PHASE:</b> '+s.label+'<br><b>NOTE:</b> '+s.note;
+}
+function frame(){
+ if(i>=0) applyState(states[i]); else applyState(states[0]);
+ document.getElementById('log').innerHTML=states.map((x,j)=>'<div style="padding:2px 0'+(j===i?';background:#0a2016':'')+'">'+x.label+': '+x.note+'</div>').join('');
+}
+function play(){if(timer)return;timer=setInterval(()=>{if(i<states.length-1){i++;frame();}else{clearInterval(timer);timer=null;}},700);}
+function step(){if(i<states.length-1){i++;frame();}}
+function reset(){if(timer){clearInterval(timer);timer=null;}i=-1;frame();}
+document.getElementById('play').onclick=play;document.getElementById('step').onclick=step;document.getElementById('reset').onclick=reset;
+frame();
+</script></body></html>

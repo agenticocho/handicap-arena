@@ -704,6 +704,145 @@ Three further constraints, all from this project's own findings:
 
 ---
 
+# LEAGUE L — TOPOLOGICAL LABYRINTH (Ground-Truthed Null Baseline)
+
+*The null baseline. Every other event in this catalogue measures a model against a task;
+this event measures a model against a mathematical object it cannot memorise, cannot
+hallucinate past, and cannot game — because the oracle is a pinned graph, not a grader.*
+
+### L1 · Futhark Topological Labyrinth
+
+- **Measures** — structural reasoning under a hard mathematical admission gate. Can the model
+  navigate a 3D topological maze by proposing valid Graph Edit Distance (GED) frontier moves,
+  or does it hallucinate coordinates, make illegal jumps, and exhaust its reasoning budget?
+
+- **Format** — The model is dropped into a 3D topological maze (e.g., starting at `Nauthiz`,
+  targeting `Dagaz`). On each turn it must propose a valid structural frontier move: a rune
+  within the Graph Edit Distance escape threshold ($K = 12$) of the current position. The maze
+  has 24 distinct topological positions (one per rune name). The model receives the current
+  position, target, legal moves, and path history. It proposes a next rune. The harness
+  validates, advances, and repeats until the target is reached, the turn budget (default 40)
+  is exhausted, or the model resigns.
+
+- **Scorer** — GROUND TRUTH: the pinned directed GED matrix
+  (`futhark_ged_matrix_directed.json`, ged-v2 digest `596255d95da38565…`) is the absolute
+  oracle. Every legal move is derived from `distance(a, b) = min(ged(a,b), ged(b,a))` against
+  this matrix. The model's proposal is checked by exact string match against the legal-move
+  list. No LLM judge. No fuzzy matching. No partial credit.
+
+- **Null baseline** — **the random walk.** A model that proposes uniformly random legal moves
+  reaches the target with probability proportional to path length and maze branching factor.
+  Any model that cannot beat a random walk has demonstrated no structural reasoning. A second
+  null: **the greedy shortest-path** (always pick the move with lowest GED to target) — this
+  tests whether the model's path is better than pure distance minimisation.
+
+- **Admission gate (instant failure, exit 5)** — before any model call, the harness refuses:
+  - `start == target` (trivial)
+  - target unreachable from start
+  - one-hop escape (distance ≤ K, meaning the target is directly adjacent — no reasoning needed)
+  - missing graph digest (no pinned identity → no run)
+  - Hallucinated coordinates (proposed rune not in legal-move list) → illegal, rejected, counted
+  - Reasoning token exhaustion (empty or unparseable proposal) → illegal, counted
+
+- **Scoring metrics** (published per run, per model, per VRAM division):
+  - `reached`: boolean — did the model reach the target?
+  - `steps_taken`: integer — path length (fewer is better)
+  - `legal_rate`: float — fraction of proposals that were legal moves
+  - `proposals`: integer — total proposals made
+  - `legal_proposals`: integer — proposals that were legal
+  - `visited_unique`: integer — distinct topological positions visited (one per rune name, 24 total)
+  - `visited_names`: integer — distinct rune names visited
+  - `visited_count_basis`: `"positions"` (24 distinct positions, no aliases)
+  - `end_state`: `"reached"` | `"resigned"` | `"gave_up"` | `"all_illegal"` | `"max_steps"`
+  - `path`: list of rune names traversed
+  - `turns`: per-turn record (current, proposed, legal, latency, usage tokens, system fingerprint)
+
+- **Discriminates** — whether the model can read a topological structure and navigate it, or
+  whether it pattern-matches surface words ("move toward Dagaz") without understanding the
+  graph. The legal-move list is provided in the prompt, so the test is not memorisation of
+  the graph — it is the ability to select from a provided set under a structural constraint.
+  A model that proposes illegal moves is not reasoning; it is guessing.
+
+- **Anti-gaming** — the graph is pinned and immutable (ged-v2 digest `596255d9…`). The
+  matrix cannot be trained on because it is a mathematical object, not a text corpus. The
+  admission gate rejects hallucinated coordinates before they affect state. The null baseline
+  (random walk) makes the bar explicit: a model must beat random to claim structural reasoning.
+  All 24 runes have distinct stroke configurations — no alias groups, no duplicate labels.
+
+- **Legal-move predicate** — `0 < d <= K` (K = 12). The zero is load-bearing:
+  - `d = 0` → self/alias (excluded)
+  - `d = K` → exactly at escape threshold (included)
+  - `d <= K` (without zero) fails 5/24 rows
+  - `0 < d < K` (without equality) fails 17/24 rows
+  - `0 < d <= K` → 0/24 rows disagree
+
+- **Null baseline for belt grading** — a model's belt rank is determined by:
+  1. Whether it reaches the target (binary gate)
+  2. Steps taken (efficiency)
+  3. Legal rate (discipline)
+  4. Whether it beats the random-walk null (structural reasoning claim)
+  - A model that reaches the target in fewer steps with higher legal rate than the random walk
+    earns a higher belt. A model that cannot beat random is unranked regardless of VRAM tier.
+
+- **VRAM divisions** — the circuit runs across all weighted VRAM divisions (Featherweight
+  through Heavyweight). Cost is part of the score: tokens, latency, and VRAM are published
+  alongside the structural metrics. A 9B model that reaches the target in 8 steps beats a 35B
+  model that reaches it in 15 steps, if the 9B used fewer tokens and less VRAM. This is the
+  "martial arts belt" principle: rank is by capability-per-resource, not by size alone.
+
+- **Data contamination immunity** — the graph is a mathematical object (pinned GED matrix),
+  not a text corpus. No training data contains the specific GED values between 24 Elder Futhark
+  runes. The admission gate rejects hallucinated coordinates before they affect state. The
+  null baseline (random walk) is computable from the matrix alone. Data contamination from
+  static training sets is mathematically impossible.
+
+- **Samplers** — all runs use greedy decoding (temperature 0.0). Fixed seed alone is not a
+  reproducibility claim; greedy decoding is required. `top_p` and `top_k` are recorded and
+  transmitted. The record attests only parameters the request actually used.
+
+- **Reproducibility** — each run produces a machine-readable JSON record with: graph digest
+  (from manifest), symmetrisation ruling, K value, pair, seed, decoder, sampler params,
+  model ID, server binary digest, client argv, per-turn tokens and system fingerprint,
+  end state, visited counts, path, and full proposal history. A third party can re-derive
+  the score from the artifacts without trusting the harness.
+```
+### L1a · Shadow Permutation Analysis (3D → 2D Reality Check)
+
+- **Measures** — how many 3D wireframes in a $3 \times 3 \times 3$ grid cast each
+  rune as a 2D shadow under orthographic projection. This is a reality check on
+  the graph's dimensionality, not a benchmark event.
+
+- **Result** — of 24 runes, only **Dagaz** (3 permutations) has valid 3D wireframes
+  that project to its exact 2D shadow. All other 23 runes produce **zero** valid
+  shapes. The 2D rune strokes (distances 1-3) do not align with individual 3D
+  grid edges (distance 1). A 2D stroke of length 2 requires two collinear 3D
+  edges at the same z-level, which the strict single-edge matching does not compose.
+
+- **The true scale** — the $3 \times 3 \times 3$ grid has 27 nodes and 54 undirected
+  edges, yielding $2^{54} \approx 1.8 \times 10^{16}$ possible 3D wireframes. The 24
+  Elder Futhark runes are 24 equivalence classes in this space — a many-to-one hash
+  collision where all depth (z-coordinate) data is discarded by the projection.
+
+- **Why this matters for the Arena** — an LLM generating text operates in 2D
+  (token sequences). When it reasons about system architecture, it does what every
+  LLM does: it guesses based on 2D linguistic patterns, producing plausible-sounding
+  but ungrounded answers. The Labyrinth benchmark's admission gate rejects these
+  hallucinations instantly (exit 5 for illegal coordinates). The AI is forced to
+  either possess genuine spatial reasoning or fail immediately. The $2^{54}$ spatial
+  volume and the orthographic zero-counts formally prove why a topological Python
+  gate is mathematically superior to reading an LLM's reasoning tokens.
+
+- **Anti-fabrication** — the numbers in this section were computed by
+  `futhark_shadow_permutations.py`, not hallucinated. An LLM (Google Gemini)
+  previously produced a fabricated table (40,014 total, Hagalaz=12,384, etc.)
+  that followed a suspiciously clean progression. The honest computation produced
+  mostly zeros. The lesson: plausible-sounding numbers are not evidence.
+
+- **Script**: `~/HermesWorkspace/deep-futhark/futhark_shadow_permutations.py`
+- **Results**: `~/HermesWorkspace/deep-futhark/shadow_permutation_results.json`
+
+---
+
 # PART 3 — THE NULL-BASELINE CATALOGUE
 
 Reusable, and the reason most events are meaningful.

@@ -1,0 +1,28 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport"content="width=device-width,initial-scale=1"><title>THE ARCADE · PUNCH-OUT · PERSISTENCE (SIMULATOR DEMONSTRATION)</title><style>*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% -10%,#1a1a1e 0%,#05050a 62%);color:#e7eaf2;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.wrap{max-width:1100px;margin:0 auto;padding:24px 16px}.cab{background:linear-gradient(180deg,#1c1c26,#0a0a12);border:2px solid #2a2a38;border-radius:18px;padding:18px}.marquee{padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,#2a0a0a,#0a0202);border:2px solid #ff5a5a;color:#ff5a5a;margin-bottom:14px;font-size:12px;letter-spacing:.14em} .ctr{display:flex;gap:8px;margin-top:10px}.ctrl{flex:1;padding:8px;border-radius:8px;border:1px solid #2a2a38;background:#0a0a14;color:#7b8194;cursor:pointer;font:inherit;font-size:11px}.fighter{height:160px;background:#05050a;border:1px solid #1a1a24;border-radius:10px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden} .counter{font-size:64px;font-weight:700;color:#ff5a5a;transition:all .2s}.side{display:grid;gap:8px;margin-top:10px}.stat{padding:8px;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid #2a2a38;font-size:11px}.log{max-height:180px;overflow:auto;font-size:11px}.footer{font-size:10px;color:#7b8194;line-height:1.55;border-top:1px solid #232333;padding-top:10px;margin-top:10px}.pass{color:#30d158}.fail{color:#ff5a5a}</style></head><body><div class="wrap"><div class="cab">
+<div class="marquee"><b>THE ARCADE</b> · PUNCH-OUT · PERSISTENCE / RECOVERY (SIMULATOR DEMONSTRATION)</div>
+<div class="ctr"><button class="ctrl" id="play">PLAY</button><button class="ctrl" id="pause">PAUSE</button><button class="ctrl" id="step">STEP</button><button class="ctrl" id="reset">RESET</button></div>
+<div class="fighter"><div class="counter" id="count">0</div></div>
+<div class="side"><div class="stat" id="plate"></div><div class="stat" id="ledger"></div><div class="stat" id="verdict"></div></div>
+<div class="log" id="log"></div>
+<div class="footer"><b>PROVENANCE.</b> PUNCH-OUT is the persistence/recovery counter defined as the OR primary reserve after chess kept calibration. This board is a scenario, not a model entrant's run: there is no instrument to replay yet. <b>STATUS: PUNCH-OUT -> NOT STARTED (no instrument, no bundles).</b></div>
+</div></div>
+<script>
+const ENTRIES=[
+{label:'FIGHT A',falls:[-300,-250],gotup:[true,false],note:'mixed recovery — one get-up, one stay down'},
+{label:'FIGHT B',falls:[-400,-380,-350],gotup:[false,false,false],note:'zero recovery — the count stays zero'},
+{label:'FIGHT C',falls:[-120],gotup:[true],note:'single get-up — strong persistence'},
+{label:'FIGHT D',falls:[-300,-290,-280],gotup:[true,true,false],note:'two get-ups, one late collapse'}
+];
+let idx=-1,row=0,timer=null,current=0;
+function counts(){let total=0; ENTRIES.slice(0,current+1).forEach(e=>{total += e.gotup.filter(Boolean).length;}); return total;}
+function frame(){const e=ENTRIES[current]; const fell=row<e.falls.length?e.falls[row]:e.falls[e.falls.length-1]; const up=row<e.falls.length?e.gotup[row]:null; document.getElementById('count').textContent=counts()+(up===null?'':(up?'+1':'')); if(up){document.getElementById('count').style.color='#30d158';}else{document.getElementById('count').style.color='#ff5a5a';} if(up===null){document.getElementById('count').style.color='#ffcc33';}
+ document.getElementById('plate').innerHTML='<b>FIGHT:</b> '+e.label+' &nbsp; <b>CURRENT WEIGHT:</b> '+fell+'cp &nbsp; <b>GET-UP:</b> '+(up===null?'waiting':up?'yes':'no');
+ document.getElementById('ledger').innerHTML='<b>LEDGER:</b> '+ENTRIES.map((x,j)=>'<br>'+x.label+': '+x.gotup.map(v=>v?'↑':'×').join(' ')).join('');
+ document.getElementById('verdict').innerHTML='<b>PERSISTENCE COUNT (all completed):</b> '+counts()+'/'+ENTRIES.reduce((a,x)=>a+x.gotup.filter(Boolean).length,0)+' recovered within window';
+ const log=document.getElementById('log'); let h=''; for(let i=0;i<ENTRIES.length;i++){h+='<div style="padding:2px 0'+(i===current?';background:#0a2016':'')+'">'+ENTRIES[i].label+': weights '+ENTRIES[i].falls.join(', ')+' · get-ups '+ENTRIES[i].gotup.map(v=>v?'up':'down').join(', ')+'</div>';} log.innerHTML=h; }
+function play(){if(timer) return; timer=setInterval(()=>{advance();},700);}
+function advance(){const e=ENTRIES[current]; if(row<e.falls.length-1){row++; if(row===e.falls.length-1 && current<ENTRIES.length-1){current++;row=0;} frame();} else { if(current<ENTRIES.length-1){current++;row=0;} else {pause();} frame(); } }
+function pause(){if(timer){clearInterval(timer);timer=null;}}
+function step(){advance();} function reset(){pause(); current=0;row=0;frame();}
+document.getElementById('play').onclick=play; document.getElementById('pause').onclick=pause; document.getElementById('step').onclick=step; document.getElementById('reset').onclick=reset; frame();
+</script></body></html>

@@ -1,0 +1,85 @@
+{
+  "source": "synthetic",
+  "series": "test",
+  "number": 1,
+  "name": "Test 3x3",
+  "creator": "test",
+  "dimensions": {
+    "rows": 3,
+    "cols": 3
+  },
+  "crosswordType": "quiptic",
+  "grid": [
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      1,
+      1
+    ]
+  ],
+  "entries": [
+    {
+      "id": "1-across",
+      "number": 1,
+      "humanNumber": "1",
+      "clue": "Not empty (3)",
+      "direction": "across",
+      "length": 3,
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "solution": "CAT",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "1-down",
+      "number": 1,
+      "humanNumber": "1",
+      "clue": "Animal (3)",
+      "direction": "down",
+      "length": 3,
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "solution": "CAT",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    }
+  ]
+}

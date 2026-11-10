@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport"content="width=device-width,initial-scale=1"><title>THE ARCADE · FENCING · VECTOR CABINET (SIMULATOR DEMONSTRATION)</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 0%,#031018 0%,#000 70%);color:#5aa9ff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+.room{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.cabinet{width:min(1180px,100%);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:18px;align-items:start}
+@media(max-width:980px){.cabinet{grid-template-columns:1fr}}
+.frame{background:linear-gradient(180deg,#081018,#020408);border:2px solid #5aa9ff;border-radius:18px;padding:18px;box-shadow:0 26px 70px rgba(0,0,0,.8),0 0 24px rgba(90,169,255,.12)}
+.marquee{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,#051626,#020608);border:2px solid #5aa9ff;box-shadow:0 0 18px rgba(90,169,255,.18);font-size:12px;letter-spacing:.14em;color:#5aa9ff;margin-bottom:14px}
+.marquee b{font-size:13px}.leds{display:flex;gap:6px}.led{width:8px;height:8px;border-radius:50%;background:#5aa9ff;box-shadow:0 0 9px #5aa9ff;animation:blink 1.35s infinite}.led:nth-child(2){animation-delay:.25s}.led:nth-child(3){animation-delay:.5s}@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.monitor{background:#020408;border-radius:14px;overflow:hidden;padding:12px;box-shadow:inset 0 0 50px #000,0 0 0 2px #08141f;min-height:360px}
+canvas{width:100%;height:240px;background:#000;image-rendering:pixelated;display:block;border-radius:8px}
+hud{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}.hud div{padding:6px;border-radius:6px;background:rgba(255,255,255,.04);border:1px solid #0e1e2e}.hud .k{font-size:9px;letter-spacing:.14em;color:#3a6a9a}.hud .v{font-size:13px;font-weight:700;color:#5aa9ff;margin-top:2px}
+.side{display:grid;gap:12px}.card{background:rgba(90,169,255,.04);border:1px solid #1a3a5a;border-radius:12px;padding:12px 14px}.card h3{margin:0 0 8px;font-size:10px;letter-spacing:.18em;color:#3a6a9a}
+.ctrls{display:flex;gap:8px;margin-top:10px}.ctrl{flex:1;padding:8px;border-radius:8px;border:1px solid #2a2a38;background:#0a0a14;color:#7b8194;cursor:pointer;font:inherit;font-size:11px}
+.footer{grid-column:1/-1;font-size:10px;color:#3a6a9a;line-height:1.55;border-top:1px solid #0e1e2e;padding-top:10px}
+.status{font-size:11px;margin-top:8px}
+.log{font-size:11px;margin-top:8px;max-height:140px;overflow:auto}
+</style></head><body><div class="room"><div class="cabinet"><div class="frame">
+<div class="marquee"><span><b>THE ARCADE</b> · FENCING · STRUCTURED OUTPUT</span><div class="leds"><div class="led"></div><div class="led"></div><div class="led"></div></div></div>
+<div class="monitor">
+<div style="font-size:10px;letter-spacing:.18em;color:#3a6a9a;margin-bottom:6px">ATTRACT MODE · SIMULATOR SCENARIO (NO ENTRANT RUN)</div>
+<canvas id="c" width="320" height="240"></canvas>
+<div class="hud">
+<div><div class="k">FIELDS</div><div class="v">station, readings, status</div></div>
+<div><div class="k">MINLEN</div><div class="v">3 readings</div></div>
+<div><div class="k">ENUM</div><div class="v">nominal · degraded · offline</div></div>
+<div><div class="k">OUTCOME</div><div class="v" id="out">NO RUN</div></div>
+</div>
+<div class="log" id="log"></div>
+</div>
+<div class="ctrls"><button class="ctrl" id="play">PLAY</button><button class="ctrl" id="step">STEP</button><button class="ctrl" id="reset">RESET</button></div>
+</div>
+<div class="side">
+<div class="card"><h3>PLATE</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px" id="plate"></div><div class="status" id="status">FENCING -> NO RUN</div></div>
+<div class="card"><h3>SCORER — PARSE</h3><div style="font-size:11px;line-height:1.5">valid JSON · required keys · types · enums · cardinality · content constraints.<br>schema generated per run: cannot be memorised. distractor: "After the JSON, add a friendly sentence."</div></div>
+<div class="card"><h3>INTERPRETATION</h3><div style="font-size:11px;line-height:1.45;color:#3a6a9a" id="note">A single object survives the fence; a second token — even a friendly sentence — is its own failure. schema is the blade; discipline is the point.</div></div>
+<div class="card"><h3>STATUS</h3><div class="status">FENCING -> NO RUN</div></div>
+</div>
+<div class="footer"><b>PROVENANCE.</b> Cabinet graphics draft only; the instrument is R1_fencing in tasks/01_structured_output.json, parsed by arena.py --grade. No bundles, no entrants. A drawing is not a result: it carries the instrument, nothing more.</div>
+</div></div>
+<div id="pk" data-plate='[["station","RENO-04"],["readings","4 nums"],["status","enum"],["score (null baseline)","0.0"]]'></div>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const rounds=[{tag:'STRIKE',color:'#ff5a5a',x:40,y:180,rc:80},{tag:'PARRY',color:'#30d158',x:280,y:180,rc:80},{tag:'PRIME',color:'#5aa9ff',x:160,y:60,rc:70},{tag:'DISTR ACTOR',color:'#ffb02e',x:160,y:130,rc:100}];
+let i=-1,timer=null;
+function draw(){
+ const r=i>=0?rounds[i]:null;
+ ctx.fillStyle='#000';ctx.fillRect(0,0,320,240);
+ // piste
+ ctx.strokeStyle='#1e3a5a';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(20,210);ctx.lineTo(300,210);ctx.stroke();
+ ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(160,210);ctx.lineTo(160,40);ctx.stroke();ctx.setLineDash([]);
+ // fencers
+ ctx.fillStyle='#ff5a5a';ctx.beginPath();ctx.arc(60,180,8,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle='#5aa9ff';ctx.beginPath();ctx.arc(260,180,8,0,Math.PI*2);ctx.fill();
+ if(r){ctx.strokeStyle=r.color;ctx.lineWidth=2;ctx.beginPath();ctx.arc(r.x,r.y,r.rc,0,Math.PI*2);ctx.stroke();ctx.font='bold 10px monospace';ctx.fillStyle=r.color;ctx.fillText(r.tag, r.x-28, r.y-r.rc-6);}
+ ctx.font='10px monospace';ctx.fillStyle='#3a6a9a';ctx.fillText('JSON SCHEMA (forge per run)',12,20);
+ // schema readout
+ ctx.font='9px monospace';ctx.fillStyle='#7aaedf';ctx.fillText('{"station":"RENO-04","readings":[...4 nums...],"status":"nominal","sensor_count":4}',12,40);
+ ctx.fillStyle='#ffb02e';ctx.fillText('DISTR ACTOR: "After the JSON, add a friendly sentence." → parse stops at first foreign token.',12,56);
+ if(r&&r.tag==='PARRY'){ctx.fillStyle='#30d158';ctx.fillText('PASS — single object, all constraints hold.',12,72);}
+ if(r&&r.tag==='STRIKE'){ctx.fillStyle='#ff5a5a';ctx.fillText('FAIL — schema allows only one object; post-text is a foreign token.',12,72);}
+ if(r&&r.tag==='PRIME'){ctx.fillStyle='#5aa9ff';ctx.fillText('RANGE / ENUM — readings must be in [-40,60]; status must be enum.',12,72);}
+ if(r&&r.tag==='DISTR ACTOR'){ctx.fillStyle='#ffb02e';ctx.fillText('NULL BASELINE {} — parses, fails every content requirement.',12,72);}
+ document.getElementById('out').textContent=r?r.tag:'NO RUN';
+}
+function play(){if(timer) return;timer=setInterval(()=>{if(i<rounds.length-1){i++;draw();}else clearInterval(timer);},900);}
+function step(){if(i<rounds.length-1){i++;draw();}}
+function reset(){if(timer){clearInterval(timer);timer=null;}i=-1;draw();}
+document.getElementById('play').onclick=play;document.getElementById('step').onclick=step;document.getElementById('reset').onclick=reset;
+const pl=JSON.parse(document.getElementById('pk').dataset.plate);
+document.getElementById('plate').innerHTML=pl.map(p=>'<div class="stat"><div class="k">'+p[0].toUpperCase()+'</div><div class="v">'+p[1]+'</div></div>').join('');
+document.getElementById('log').innerHTML=['pass · single object, no foreign tokens','fail · distractor produces foreign token','fail · readings non-numeric / out of range','fail · null baseline {} fails content requirements'].map(x=>'<div>'+x+'</div>').join('');
+draw();
+</script></body></html>

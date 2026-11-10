@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport"content="width=device-width,initial-scale=1"><title>THE ARCADE · PIT STOP · CABINET (VECTOR PIT)</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 0%,#1a1208 0%,#000 70%);color:#ffcc33;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+.room{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.cabShell{width:min(1180px,100%);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:18px;align-items:start}
+@media(max-width:980px){.cabShell{grid-template-columns:1fr}}
+.frame{background:linear-gradient(180deg,#1a1406,#040200);border:2px solid #ffcc33;border-radius:18px;padding:18px;box-shadow:0 26px 70px rgba(0,0,0,.8),0 0 24px rgba(255,204,51,.12)}
+.marquee{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,#1a1200,#080500);border:2px solid #ffcc33;box-shadow:0 0 18px rgba(255,204,51,.18);font-size:12px;letter-spacing:.14em;color:#ffcc33;margin-bottom:14px}
+.marquee b{font-size:13px}.leds{display:flex;gap:6px}.led{width:8px;height:8px;border-radius:50%;background:#ffcc33;box-shadow:0 0 9px #ffcc33;animation:blink 1.35s infinite}.led:nth-child(2){animation-delay:.25s}.led:nth-child(3){animation-delay:.5s}@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.monitor{background:#02020a;border-radius:12px;overflow:hidden;padding:12px;box-shadow:inset 0 0 50px #000;min-height:360px}
+.track{position:relative;height:240px;background:#0a0803;border-radius:8px;overflow:hidden;border:1px solid #2a2410}
+.track::before{content:'';position:absolute;left:0;right:0;top:50%;height:2px;background:#aa8800;opacity:.4}
+.lane-lines{position:absolute;left:0;right:0;top:55%;height:2px;background:#aa8800;opacity:.4}
+.pit-box{position:absolute;bottom:18px;left:120px;right:120px;height:42px;border:1px solid #aa8800;background:#1a1406;border-radius:4px}
+.car{position:absolute;bottom:38px;width:78px;height:24px;background:#ffcc33;border-radius:6px;transition:left .35s;box-shadow:0 0 12px rgba(255,204,51,.5)} 
+.car::before,.car::after{content:'';position:absolute;top:8px;width:8px;height:8px;background:#111;border-radius:2px}
+.car::before{left:6px}.car::after{right:6px}
+.car .window{position:absolute;top:6px;left:32px;width:12px;height:12px;background:#2a3a1a;border:1px solid #666;border-radius:2px}
+.car .spoiler{position:absolute;top:-4px;left:70px;width:10px;height:4px;background:#999;border-radius:1px}
+.mech{position:absolute;bottom:38px;width:18px;height:28px;background:#ffcc33;border-radius:4px 4px 0 0;opacity:0;transition:opacity .2s}
+.mech::before{content:'';position:absolute;top:-10px;left:5px;width:8px;height:8px;background:#ffcc33;border-radius:50%}
+.mech span{position:absolute;bottom:-16px;left:12px;width:20px;height:3px;background:#999;transform:rotate(-30deg)}
+.wheel{position:absolute;bottom:6px;width:26px;height:26px;background:#222;border:2px solid #ffcc33;border-radius:50%;opacity:0;transition:opacity .2s}
+.wheel::after{content:'';position:absolute;inset:6px;border-radius:50%;background:#554}
+.touch-light{position:absolute;bottom:198px;width:6px;height:6px;border-radius:50%;background:#555;transition:background .2s}
+.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}.hud div{padding:6px;border-radius:6px;background:rgba(255,255,255,.04);border:1px solid #2a2a18}.hud .k{font-size:9px;letter-spacing:.14em;color:#7b7a60}.hud .v{font-size:12px;font-weight:700;color:#ffcc33;margin-top:2px}
+.side{display:grid;gap:12px}.card{background:rgba(255,204,51,.04);border:1px solid #554a10;border-radius:12px;padding:12px 14px}.card h3{margin:0 0 8px;font-size:10px;letter-spacing:.18em;color:#9a8a50}.card p{font-size:11px;line-height:1.5;margin:0}
+.ctrls{display:flex;gap:8px;margin-top:10px}.ctrl{flex:1;padding:8px;border-radius:8px;border:1px solid #2a2a38;background:#0a0a14;color:#7b8194;cursor:pointer;font:inherit;font-size:11px}
+.footer{grid-column:1/-1;font-size:10px;color:#7b7a60;line-height:1.55;border-top:1px solid #2a2410;padding-top:10px}
+.status{font-size:11px;margin-top:8px}
+.log{max-height:160px;overflow:auto;font-size:11px;line-height:1.45;margin-top:8px}
+</style></head><body><div class="room"><div class="cabShell"><div class="frame">
+<div class="marquee"><span><b>THE ARCADE</b> · PIT STOP · CODE REPAIR</span><div class="leds"><div class="led"></div><div class="led"></div><div class="led"></div></div></div>
+<div class="monitor">
+<div style="font-size:10px;letter-spacing:.18em;color:#9a8a50;margin-bottom:6px">ATTRACT MODE · SIMULATOR SCENARIO (NO ENTRANT RUN) · PIT DIRECTION</div>
+<div class="track">
+  <div id="car" class="car"><div class="spoiler"></div><div class="window"></div></div>
+  <div class="pit-box"></div>
+  <div id="mech" class="mech"></div>
+  <div id="wheel1" class="wheel" style="left:150px"></div>
+  <div id="wheel2" class="wheel" style="left:210px"></div>
+  <div id="light1" class="touch-light" style="left:120px"></div>
+  <div id="light2" class="touch-light" style="left:160px"></div>
+  <div id="light3" class="touch-light" style="left:200px"></div>
+  <div id="light4" class="touch-light" style="left:240px"></div>
+</div>
+<div class="hud">
+ <div><div class="k">ENTRY</div><div class="v">merge_intervals</div></div>
+ <div><div class="k">BUG</div><div class="v">s &lt; e[-1]</div></div>
+ <div><div class="k">FIX</div><div class="v">s &lt;= e[-1]</div></div>
+ <div><div class="k">OUTCOME</div><div class="v" id="out">NO RUN</div></div>
+</div>
+<div class="log" id="log"></div>
+</div>
+<div class="ctrls"><button class="ctrl" id="buggy">BUGGY</button><button class="ctrl" id="fixed">FIXED</button><button class="ctrl" id="step">STEP</button></div>
+</div>
+<div class="side">
+ <div class="card"><h3>PLATE</h3><div style="font-size:11px" id="plate"></div><div class="status" id="status">PIT STOP -> NO RUN</div></div>
+ <div class="card"><h3>SCORER — EXECUTE</h3><p>buggy function versus held-out suite. five cases: [(1,3),(2,6),(8,10),(9,12)] -> [(1,6),(8,12)] · [(1,4),(4,5)] -> [(1,5)] · [] -> [] · [(5,6)] -> [(5,6)] · [(1,2),(3,4)] -> [(1,2),(3,4)]</p></div>
+ <div class="card"><h3>POSITION</h3><p>The function enters the pit broken; the crew fixes one operator (< to <=); it exits on five green lights. The lease is the whole story.</p></div>
+ <div class="card"><h3>STATUS</h3><div class="status">PIT STOP -> NO RUN</div></div>
+</div>
+<div class="footer"><b>PROVENANCE.</b> Cabinet graphics draft only. Instrument: tasks/03_code_repair.json. No bundles. A fan is not a measurement. Photographs of cars do not prove a race.</div>
+</div></div>
+<script>
+const car=document.getElementById('car'),mech=document.getElementById('mech'),w1=document.getElementById('wheel1'),w2=document.getElementById('wheel2'),lights=document.querySelectorAll('.touch-light'), out=document.getElementById('out');
+const states=[
+  {label:'APPROACH', carLeft: -20, mech:0, wheels:0, lights:[0,0,0,0], note:'car barrels in, hood still on fire'},
+  {label:'BUGGY STOP', carLeft: 80, mech:0, wheels:0, lights:[1,0,1,1], note:'case 2 FAILS (touching intervals not merged)'},
+  {label:'TIRE OFF', carLeft: 110, mech:1, wheels:0, lights:[1,0,1,1], note:'crew lifts — tests darkened'},
+  {label:'CORRECTED', carLeft: 110, mech:1, wheels:1, lights:[1,1,1,1], note:'all five lights green (< to <=) '},
+  {label:'LOCKED', carLeft: 110, mech:0, wheels:0, lights:[1,1,1,1], note:'tires locked, score recorded'},
+  {label:'LEAVE', carLeft: 300, mech:0, wheels:0, lights:[0,0,0,0], note:'car sails out; next entrant'}
+];
+let i=-1,timer=null;
+function applyState(s){
+ car.style.left=s.carLeft+'px'; mech.style.opacity=s.mech?1:0; w1.style.opacity=s.wheels?1:0; w2.style.opacity=s.wheels?1:0;
+ lights.forEach((l,j)=>{l.style.background=s.lights[j]?'#30d158':'#ff5a5a';});
+ if(s.carLeft>200){mech.style.opacity=0;}
+ out.textContent=s.label+(s.lights.some(x=>!x)?' (4/5)':' (5/5)');
+ out.style.color=s.lights.every(x=>x)?'#30d158':'#ff5a5a';
+ document.getElementById('plate').innerHTML='<b>PHASE:</b> '+s.label+'<br><b>NOTE:</b> '+s.note;
+}
+function frame(){
+ if(i>=0) applyState(states[i]); else applyState(states[0]);
+ document.getElementById('log').innerHTML=states.map((x,j)=>'<div style="padding:2px 0'+(j===i?';background:#1a1406':'')+'">'+x.label+': '+x.note+'</div>').join('');
+}
+function play(){if(timer)return;timer=setInterval(()=>{if(i<states.length-1){i++;frame();}else{clearInterval(timer);timer=null;}},700);}
+function step(){if(i<states.length-1){i++;frame();}}
+function reset(){if(timer){clearInterval(timer);timer=null;}i=-1;frame();}
+document.getElementById('buggy').onclick=()=>{i=1;frame();};
+document.getElementById('fixed').onclick=()=>{i=3;frame();};
+document.getElementById('step').onclick=step;
+frame();
+</script></body></html>

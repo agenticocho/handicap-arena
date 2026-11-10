@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport"content="width=device-width,initial-scale=1"><title>THE ARCADE · PIT STOP · VECTOR CABINET (SIMULATOR DEMONSTRATION)</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 0%,#1a1208 0%,#000 70%);color:#ffcc33;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+.room{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.cabinet{width:min(1180px,100%);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:18px;align-items:start}
+@media(max-width:980px){.cabinet{grid-template-columns:1fr}}
+.frame{background:linear-gradient(180deg,#1a1406,#040200);border:2px solid #ffcc33;border-radius:18px;padding:18px;box-shadow:0 26px 70px rgba(0,0,0,.8),0 0 24px rgba(255,204,51,.12)}
+.marquee{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,#1a1200,#080500);border:2px solid #ffcc33;box-shadow:0 0 18px rgba(255,204,51,.18);font-size:12px;letter-spacing:.14em;color:#ffcc33;margin-bottom:14px}
+.marquee b{font-size:13px}.leds{display:flex;gap:6px}.led{width:8px;height:8px;border-radius:50%;background:#ffcc33;box-shadow:0 0 9px #ffcc33;animation:blink 1.35s infinite}.led:nth-child(2){animation-delay:.25s}.led:nth-child(3){animation-delay:.5s}@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.monitor{background:#02020a;border-radius:14px;overflow:hidden;padding:12px;box-shadow:inset 0 0 50px #000,0 0 0 2px #1a1a10;min-height:360px}
+canvas{width:100%;height:240px;background:#000;image-rendering:pixelated;display:block;border-radius:8px}
+.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}.hud div{padding:6px;border-radius:6px;background:rgba(255,255,255,.04);border:1px solid #2a2a18}.hud .k{font-size:9px;letter-spacing:.14em;color:#7b7a60}.hud .v{font-size:13px;font-weight:700;color:#ffcc33;margin-top:2px}
+.side{display:grid;gap:12px}.card{background:rgba(255,204,51,.04);border:1px solid #554a10;border-radius:12px;padding:12px 14px}.card h3{margin:0 0 8px;font-size:10px;letter-spacing:.18em;color:#9a8a50}
+.ctrls{display:flex;gap:8px;margin-top:10px}.ctrl{flex:1;padding:8px;border-radius:8px;border:1px solid #2a2a38;background:#0a0a14;color:#7b8194;cursor:pointer;font:inherit;font-size:11px}
+.footer{grid-column:1/-1;font-size:10px;color:#7b7a60;line-height:1.55;border-top:1px solid #2a2410;padding-top:10px}
+.status{font-size:11px;margin-top:8px}
+.log{font-size:11px;margin-top:8px;max-height:140px;overflow:auto}
+</style></head><body><div class="room"><div class="cabinet"><div class="frame">
+<div class="marquee"><span><b>THE ARCADE</b> · PIT STOP · CODE REPAIR</span><div class="leds"><div class="led"></div><div class="led"></div><div class="led"></div></div></div>
+<div class="monitor">
+<div style="font-size:10px;letter-spacing:.18em;color:#9a8a50;margin-bottom:6px">ATTRACT MODE · SIMULATOR SCENARIO (NO ENTRANT RUN)</div>
+<canvas id="c" width="320" height="240"></canvas>
+<div class="hud">
+<div><div class="k">ENTRY</div><div class="v">merge_intervals</div></div>
+<div><div class="k">BUG</div><div class="v">s < e[-1]</div></div>
+<div><div class="k">FIX</div><div class="v">s <= e[-1]</div></div>
+<div><div class="k">OUTCOME</div><div class="v" id="out">NO RUN</div></div>
+</div>
+<div class="log" id="log"></div>
+</div>
+<div class="ctrls"><button class="ctrl" id="buggy">BUGGY</button><button class="ctrl" id="fixed">FIXED</button><button class="ctrl" id="step">STEP</button></div>
+</div>
+<div class="side">
+<div class="card"><h3>PLATE</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px" id="plate"></div><div class="status" id="status">PIT STOP -> NO RUN</div></div>
+<div class="card"><h3>SCORER — EXECUTE</h3><div style="font-size:11px;line-height:1.5">buggy function versus held-out suite. five cases: [(1,3),(2,6),(8,10),(9,12)] -> [(1,6),(8,12)] · [(1,4),(4,5)] -> [(1,5)] · [] -> [] · [(5,6)] -> [(5,6)] · [(1,2),(3,4)] -> [(1,2),(3,4)]</div></div>
+<div class="card"><h3>INTERPRETATION</h3><div style="font-size:11px;line-height:1.45;color:#9aa">The null baseline returns input unchanged, and touches collapse two intervals into one. Fixing the operator is the whole fix; nothing else changes.</div></div>
+<div class="card"><h3>STATUS</h3><div class="status">PIT STOP -> NO RUN</div></div>
+</div>
+<div class="footer"><b>PROVENANCE.</b> Cabinet graphics draft only; the instrument is tasks/03_code_repair.json and arena.py --grade. No bundles, no entrants. A drawing is not a result.</div>
+</div></div>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const carY=190;
+const frames=[
+ {label:'BUGGY',code:'s < out[-1][1]',cases:[1,1,1,1,0]},
+ {label:'CASE 2 touching',code:'s < out[-1][1]  → FAIL',cases:[1,0,1,1,1]},
+ {label:'CORRECTED',code:'s <= out[-1][1]',cases:[1,1,1,1,1]},
+];
+let i=-1,timer=null;
+function draw(){
+ const f=i>=0?frames[i]:null;
+ ctx.fillStyle='#02020a';ctx.fillRect(0,0,320,240);
+ // track lanes
+ ctx.strokeStyle='#3a3a20';ctx.lineWidth=1;for(let y=60;y<220;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(320,y);ctx.stroke();}
+ ctx.fillStyle='#ffcc33';ctx.fillRect(10,carY,20,8);ctx.fillRect(40,carY-20,4,28);ctx.fillRect(80,carY-20,4,28);
+ // pit wall
+ ctx.fillStyle='#111';ctx.fillRect(140,130,160,100);
+ ctx.strokeStyle='#ffcc33';ctx.strokeRect(140,130,160,100);
+ ctx.font='10px monospace';ctx.fillStyle='#ffcc33';ctx.fillText('BUGGY ← pit lane → FIXED',148,124);
+ if(f){
+  ctx.font='bold 11px monospace';ctx.fillStyle=f.cases.every(x=>x)?'#30d158':'#ff5a5a';
+  ctx.fillText(f.label+'  ('+f.code+')',12,26);
+  ctx.font='10px monospace';ctx.fillStyle='#e7eaf2';
+  for(let j=0;j<f.cases.length;j++){
+    ctx.fillStyle=f.cases[j]?'#30d158':'#ff5a5a';
+    ctx.fillText('case '+(j+1)+' '+ (f.cases[j]?'PASS':'FAIL'),148,145+j*14);
+  }
+  // moving car position
+  const progress=f.cases.every(x=>x)?260:160;
+  ctx.fillStyle='#5aa9ff';ctx.fillRect(progress,carY,16,8);
+ }
+ document.getElementById('out').textContent=f?f.label:'NO RUN';
+}
+function step(){if(i<frames.length-1){i++;draw();} draw();}
+function play(){if(timer) return;timer=setInterval(()=>{if(i<frames.length-1){i++;draw();}else clearInterval(timer);},900);}
+function reset(){if(timer){clearInterval(timer);timer=null;}i=-1;draw();}
+document.getElementById('buggy').onclick=()=>{i=0;draw();};
+document.getElementById('fixed').onclick=()=>{i=2;draw();};
+document.getElementById('step').onclick=step;
+const pl=[['entry_point','merge_intervals'],['hard case','[(1,4),(4,5)]'],['outcome','b'<='c'],'bug'<'=>' in text];
+document.getElementById('plate').innerHTML=[['entry_point','merge_intervals'],['scorer','EXECUTE'],['trials','5'],['stat (null baseline)','0/5 if <= unchanged']].map(p=>'<div class="stat"><div class="k">'+p[0].toUpperCase()+'</div><div class="v">'+p[1]+'</div></div>').join('');
+document.getElementById('log').innerHTML=['BUGGY: case 2 fails (touching)','CORRECTED: all five pass','case 2 is the instrument','operator is the only change'].map(x=>'<div>'+x+'</div>').join('');
+draw();
+</script></body></html>

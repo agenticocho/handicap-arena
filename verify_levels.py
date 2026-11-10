@@ -40,6 +40,11 @@ LEVELS = [
      "it LEFT then UP wins. FATAL FRACTION 0.250: the first level in the set that can measure the faculty "
      "the event exists for.",
      ("U",)),
+    ("04_the_long_road", "DLLLULDURRRDRU",
+     "HIGH CLEARANCE INDEX. p* > 8: no periodic word of period <= 8 (over U D L R, repeated to the cap 40) "
+     "clears it, so a fixed-cycle emitter and a planner cannot score the same. Optimal solution is 14 moves. "
+     "Gated by the degenerate-class gate (PASS) before play.",
+     ()),
 ]
 
 # TWO DISTINCT MINIMAL SOLUTIONS FOR 02, both replaying to solved/12. The published one and the one the
@@ -47,6 +52,35 @@ LEVELS = [
 # published string, and this is the evidence that it did not.
 ALT_SOLUTIONS = {"02_two_boxes": "DDRRRRULLURR"}
 
+# RETIRED LEVELS -- a state the loader checks, not a comment.
+# 01_one_push was retired 2026-11-05 by the constant-reply ceiling gate:
+#   solved by R (len 1) in 1 move; 46 of 84 constant streams solve it (measured here: 45);
+#   optimal solution is itself a constant cycle of length 1.
+# A retired level is still VERIFIED (its solution still replays) but it is NOT selectable for a run.
+RETIRED_LEVELS = {
+    "01_one_push": ("retired 2026-11-05: constant-reply ceiling gate. "
+                    "Solved by R (len 1) in 1 move; 45 of 84 constant streams solve it; "
+                    "optimal solution is itself a constant cycle of length 1. "
+                    "See CONSTANT_REPLY_CANDIDATES.md and GATE_REPORT.md."),
+    "02_two_boxes": ("retired 2026-11-07: action-ablated null passes. "
+                     "Fixed cycle DDRLUUR (p* = 7) clears the board in 28 moves against a "
+                     "12-move optimum, so a cycler and a planner score identically. "
+                     "Constant-input ceiling = 0 of 84; ablated null = 28 moves; model score unpublished. "
+                     "See records/02_two_boxes.json. New boards require p* > 8."),
+}
+
+def active_levels():
+    """Levels available for a run. Excludes retired levels."""
+    return [lv for lv in LEVELS if lv[0] not in RETIRED_LEVELS]
+
+def load_level(name):
+    """Load a level by name. Raises if the level is retired or unknown."""
+    if name in RETIRED_LEVELS:
+        raise ValueError(f"level {name!r} is RETIRED: {RETIRED_LEVELS[name]}")
+    for lv in LEVELS:
+        if lv[0] == name:
+            return lv
+    raise KeyError(f"unknown level {name!r}")
 
 def main():
     fails = []

@@ -1,0 +1,1475 @@
+{
+  "source": "guardian",
+  "series": "quiptic",
+  "number": 1,
+  "name": "Quiptic crossword No 1",
+  "creator": "Don Putnam",
+  "dimensions": {
+    "rows": 15,
+    "cols": 15
+  },
+  "crosswordType": "quiptic",
+  "grid": [
+    [
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      0,
+      1,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0
+    ]
+  ],
+  "entries": [
+    {
+      "id": "8-across",
+      "number": 8,
+      "humanNumber": "8",
+      "clue": "This tree may still make you laugh (8)",
+      "direction": "across",
+      "length": 8,
+      "position": {
+        "x": 0,
+        "y": 1
+      },
+      "solution": "CHESTNUT",
+      "cells": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "9-across",
+      "number": 9,
+      "humanNumber": "9",
+      "clue": "Bandit not at home on principle (6)",
+      "direction": "across",
+      "length": 6,
+      "position": {
+        "x": 9,
+        "y": 1
+      },
+      "solution": "OUTLAW",
+      "cells": [
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          10
+        ],
+        [
+          1,
+          11
+        ],
+        [
+          1,
+          12
+        ],
+        [
+          1,
+          13
+        ],
+        [
+          1,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "10-across",
+      "number": 10,
+      "humanNumber": "10",
+      "clue": "Just like a blonde! (4)",
+      "direction": "across",
+      "length": 4,
+      "position": {
+        "x": 0,
+        "y": 3
+      },
+      "solution": "FAIR",
+      "cells": [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "11-across",
+      "number": 11,
+      "humanNumber": "11",
+      "clue": "Petition for plump bird (5,5)",
+      "direction": "across",
+      "length": 10,
+      "position": {
+        "x": 5,
+        "y": 3
+      },
+      "solution": "ROUNDROBIN",
+      "cells": [
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          3,
+          10
+        ],
+        [
+          3,
+          11
+        ],
+        [
+          3,
+          12
+        ],
+        [
+          3,
+          13
+        ],
+        [
+          3,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "12-across",
+      "number": 12,
+      "humanNumber": "12",
+      "clue": "Being heart-broken, died showing enmity (6)",
+      "direction": "across",
+      "length": 6,
+      "position": {
+        "x": 0,
+        "y": 5
+      },
+      "solution": "HATRED",
+      "cells": [
+        [
+          5,
+          0
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "14-across",
+      "number": 14,
+      "humanNumber": "14",
+      "clue": "Newspaper extract displaying activity of barber (8)",
+      "direction": "across",
+      "length": 8,
+      "position": {
+        "x": 7,
+        "y": 5
+      },
+      "solution": "CLIPPING",
+      "cells": [
+        [
+          5,
+          7
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          5,
+          10
+        ],
+        [
+          5,
+          11
+        ],
+        [
+          5,
+          12
+        ],
+        [
+          5,
+          13
+        ],
+        [
+          5,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "15-across",
+      "number": 15,
+      "humanNumber": "15",
+      "clue": "Undergraduate, half dead, taking part in exploit (7)",
+      "direction": "across",
+      "length": 7,
+      "position": {
+        "x": 0,
+        "y": 7
+      },
+      "solution": "STUDENT",
+      "cells": [
+        [
+          7,
+          0
+        ],
+        [
+          7,
+          1
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          7,
+          3
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          7,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "17-across",
+      "number": 17,
+      "humanNumber": "17",
+      "clue": "Railway coach with beds for fairy-tale beauty? (7)",
+      "direction": "across",
+      "length": 7,
+      "position": {
+        "x": 8,
+        "y": 7
+      },
+      "solution": "SLEEPER",
+      "cells": [
+        [
+          7,
+          8
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          7,
+          12
+        ],
+        [
+          7,
+          13
+        ],
+        [
+          7,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "20-across",
+      "number": 20,
+      "humanNumber": "20",
+      "clue": "Not worried about heartless referee (8)",
+      "direction": "across",
+      "length": 8,
+      "position": {
+        "x": 0,
+        "y": 9
+      },
+      "solution": "CAREFREE",
+      "cells": [
+        [
+          9,
+          0
+        ],
+        [
+          9,
+          1
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          9,
+          4
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          9,
+          6
+        ],
+        [
+          9,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "22-across",
+      "number": 22,
+      "humanNumber": "22",
+      "clue": "Old boy watched closely and complied (6)",
+      "direction": "across",
+      "length": 6,
+      "position": {
+        "x": 9,
+        "y": 9
+      },
+      "solution": "OBEYED",
+      "cells": [
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          9,
+          13
+        ],
+        [
+          9,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "23-across",
+      "number": 23,
+      "humanNumber": "23",
+      "clue": "Into battle in World War I, which is outrageous (4,3,3)",
+      "direction": "across",
+      "length": 10,
+      "position": {
+        "x": 0,
+        "y": 11
+      },
+      "solution": "OVERTHETOP",
+      "cells": [
+        [
+          11,
+          0
+        ],
+        [
+          11,
+          1
+        ],
+        [
+          11,
+          2
+        ],
+        [
+          11,
+          3
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          11,
+          5
+        ],
+        [
+          11,
+          6
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          11,
+          8
+        ],
+        [
+          11,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "24-across",
+      "number": 24,
+      "humanNumber": "24",
+      "clue": "Inflamed swelling detected in test yesterday (4)",
+      "direction": "across",
+      "length": 4,
+      "position": {
+        "x": 11,
+        "y": 11
+      },
+      "solution": "STYE",
+      "cells": [
+        [
+          11,
+          11
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          13
+        ],
+        [
+          11,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "25-across",
+      "number": 25,
+      "humanNumber": "25",
+      "clue": "Finger twisted hair on forehead (6)",
+      "direction": "across",
+      "length": 6,
+      "position": {
+        "x": 0,
+        "y": 13
+      },
+      "solution": "FRINGE",
+      "cells": [
+        [
+          13,
+          0
+        ],
+        [
+          13,
+          1
+        ],
+        [
+          13,
+          2
+        ],
+        [
+          13,
+          3
+        ],
+        [
+          13,
+          4
+        ],
+        [
+          13,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "26-across",
+      "number": 26,
+      "humanNumber": "26",
+      "clue": "Say \"Eat me\" like this and you should trounce him! (8)",
+      "direction": "across",
+      "length": 8,
+      "position": {
+        "x": 7,
+        "y": 13
+      },
+      "solution": "EASYMEAT",
+      "cells": [
+        [
+          13,
+          7
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          13,
+          13
+        ],
+        [
+          13,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "1-down",
+      "number": 1,
+      "humanNumber": "1",
+      "clue": "Bird for dinner? Make haste with pan! (8)",
+      "direction": "down",
+      "length": 8,
+      "position": {
+        "x": 1,
+        "y": 0
+      },
+      "solution": "PHEASANT",
+      "cells": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "2-down",
+      "number": 2,
+      "humanNumber": "2",
+      "clue": "Russian emperor lies in great sarcophagus (4)",
+      "direction": "down",
+      "length": 4,
+      "position": {
+        "x": 3,
+        "y": 0
+      },
+      "solution": "TSAR",
+      "cells": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "3-down",
+      "number": 3,
+      "humanNumber": "3",
+      "clue": "Write Bergman in diagram (6)",
+      "direction": "down",
+      "length": 6,
+      "position": {
+        "x": 5,
+        "y": 0
+      },
+      "solution": "INGRID",
+      "cells": [
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "4-down",
+      "number": 4,
+      "humanNumber": "4",
+      "clue": "Loyal, being nuts to get up while carrying a child (7)",
+      "direction": "down",
+      "length": 7,
+      "position": {
+        "x": 7,
+        "y": 0
+      },
+      "solution": "STAUNCH",
+      "cells": [
+        [
+          0,
+          7
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          6,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "5-down",
+      "number": 5,
+      "humanNumber": "5",
+      "clue": "Friendliness shown with right hand down (8)",
+      "direction": "down",
+      "length": 8,
+      "position": {
+        "x": 9,
+        "y": 0
+      },
+      "solution": "GOODWILL",
+      "cells": [
+        [
+          0,
+          9
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          6,
+          9
+        ],
+        [
+          7,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "6-down",
+      "number": 6,
+      "humanNumber": "6",
+      "clue": "Prevailing mood provides master with hope (10)",
+      "direction": "down",
+      "length": 10,
+      "position": {
+        "x": 11,
+        "y": 0
+      },
+      "solution": "ATMOSPHERE",
+      "cells": [
+        [
+          0,
+          11
+        ],
+        [
+          1,
+          11
+        ],
+        [
+          2,
+          11
+        ],
+        [
+          3,
+          11
+        ],
+        [
+          4,
+          11
+        ],
+        [
+          5,
+          11
+        ],
+        [
+          6,
+          11
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "7-down",
+      "number": 7,
+      "humanNumber": "7",
+      "clue": "No. 1 sailor turning up for allowance (6)",
+      "direction": "down",
+      "length": 6,
+      "position": {
+        "x": 13,
+        "y": 0
+      },
+      "solution": "RATION",
+      "cells": [
+        [
+          0,
+          13
+        ],
+        [
+          1,
+          13
+        ],
+        [
+          2,
+          13
+        ],
+        [
+          3,
+          13
+        ],
+        [
+          4,
+          13
+        ],
+        [
+          5,
+          13
+        ]
+      ]
+    },
+    {
+      "id": "13-down",
+      "number": 13,
+      "humanNumber": "13",
+      "clue": "Wine and fish make an irrelevant topic (3,7)",
+      "direction": "down",
+      "length": 10,
+      "position": {
+        "x": 3,
+        "y": 5
+      },
+      "solution": "REDHERRING",
+      "cells": [
+        [
+          5,
+          3
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          7,
+          3
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          11,
+          3
+        ],
+        [
+          12,
+          3
+        ],
+        [
+          13,
+          3
+        ],
+        [
+          14,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "16-down",
+      "number": 16,
+      "humanNumber": "16",
+      "clue": "Earth's no different from a lot of water (5,3)",
+      "direction": "down",
+      "length": 8,
+      "position": {
+        "x": 5,
+        "y": 7
+      },
+      "solution": "NORTHSEA",
+      "cells": [
+        [
+          7,
+          5
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          11,
+          5
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          13,
+          5
+        ],
+        [
+          14,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "18-down",
+      "number": 18,
+      "humanNumber": "18",
+      "clue": "Typical human being must be jolly in call up (8)",
+      "direction": "down",
+      "length": 8,
+      "position": {
+        "x": 13,
+        "y": 7
+      },
+      "solution": "EVERYMAN",
+      "cells": [
+        [
+          7,
+          13
+        ],
+        [
+          8,
+          13
+        ],
+        [
+          9,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          13
+        ],
+        [
+          12,
+          13
+        ],
+        [
+          13,
+          13
+        ],
+        [
+          14,
+          13
+        ]
+      ]
+    },
+    {
+      "id": "19-down",
+      "number": 19,
+      "humanNumber": "19",
+      "clue": "Show anxiety about the type of bed (7)",
+      "direction": "down",
+      "length": 7,
+      "position": {
+        "x": 7,
+        "y": 8
+      },
+      "solution": "FEATHER",
+      "cells": [
+        [
+          8,
+          7
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          12,
+          7
+        ],
+        [
+          13,
+          7
+        ],
+        [
+          14,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "21-down",
+      "number": 21,
+      "humanNumber": "21",
+      "clue": "Five cutting up fancy bread economically, for example (6)",
+      "direction": "down",
+      "length": 6,
+      "position": {
+        "x": 1,
+        "y": 9
+      },
+      "solution": "ADVERB",
+      "cells": [
+        [
+          9,
+          1
+        ],
+        [
+          10,
+          1
+        ],
+        [
+          11,
+          1
+        ],
+        [
+          12,
+          1
+        ],
+        [
+          13,
+          1
+        ],
+        [
+          14,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "22-down",
+      "number": 22,
+      "humanNumber": "22",
+      "clue": "Take issue with model after work (6)",
+      "direction": "down",
+      "length": 6,
+      "position": {
+        "x": 9,
+        "y": 9
+      },
+      "solution": "OPPOSE",
+      "cells": [
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          11,
+          9
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          14,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "24-down",
+      "number": 24,
+      "humanNumber": "24",
+      "clue": "See me join Salvation Army to get uniform! (4)",
+      "direction": "down",
+      "length": 4,
+      "position": {
+        "x": 11,
+        "y": 11
+      },
+      "solution": "SAME",
+      "cells": [
+        [
+          11,
+          11
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          14,
+          11
+        ]
+      ]
+    }
+  ]
+}

@@ -24,8 +24,8 @@ import local_task_compare as L                                          # noqa: 
 from answer_reader import read_answer                                   # noqa: E402
 
 ALIAS = sys.argv[1] if len(sys.argv) > 1 else "brain"
-LEVELS = ["levels/01_one_push.txt", "levels/02_two_boxes.txt", "levels/03_the_corner_waiting.txt"]
-PUBLISHED = {"01_one_push.txt": 1, "02_two_boxes.txt": 12, "03_the_corner_waiting.txt": 6}
+LEVELS = ["levels/03_the_corner_waiting.txt"]
+PUBLISHED = {"03_the_corner_waiting.txt": 6}
 
 
 def oracle(level_text, cap=400000):

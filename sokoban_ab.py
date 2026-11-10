@@ -24,7 +24,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import sokoban_run as R                                                 # noqa: E402
 
-LEVELS = ["levels/01_one_push.txt", "levels/02_two_boxes.txt"]
+LEVELS = []
 ARMS = ["old", "new"]
 
 

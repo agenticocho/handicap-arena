@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport"content="width=device-width,initial-scale=1"><title>THE ARCADE · CHESS · CALIBRATION · IN ACTION (SIMULATOR DEMONSTRATION)</title><style>*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% -10%,#1a1a1e 0%,#05050a 62%);color:#e7eaf2;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.wrap{max-width:1100px;margin:0 auto;padding:24px 16px}.cab{background:linear-gradient(180deg,#1c1c26,#0a0a12);border:2px solid #2a2a38;border-radius:18px;padding:18px}.marquee{padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,#0a1a1a,#020a0a);border:2px solid #4ee08a;color:#4ee08a;margin-bottom:14px;font-size:12px;letter-spacing:.14em} .ctr{display:flex;gap:8px;margin-top:10px}.ctrl{flex:1;padding:8px;border-radius:8px;border:1px solid #2a2a38;background:#0a0a14;color:#7b8194;cursor:pointer;font:inherit;font-size:11px}.board{display:grid;grid-template-columns:repeat(8,40px);grid-template-rows:repeat(8,40px);gap:0;background:#0e0e14;margin:10px auto;width:320px;border:2px solid #2a2a38} .sq{display:flex;align-items:center;justify-content:center;font-size:26px;position:relative}.light{background:#2a2a38}.dark{background:#15151f}.sq .coord{position:absolute;bottom:2px;right:3px;font-size:8px;color:#7b8194}.side{display:grid;gap:8px;margin-top:10px}.stat{padding:8px;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid #2a2a38;font-size:11px}.log{max-height:180px;overflow:auto;font-size:11px}.footer{font-size:10px;color:#7b8194;line-height:1.55;border-top:1px solid #232333;padding-top:10px;margin-top:10px}.pass{color:#30d158}.warn{color:#ffb02e}
+<div class="wrap"><div class="cab">
+<div class="marquee"><b>THE ARCADE</b> · CHESS · CALIBRATION · IN ACTION (SIMULATOR DEMONSTRATION)</div>
+<div class="ctr"><button class="ctrl" id="play">PLAY</button><button class="ctrl" id="pause">PAUSE</button><button class="ctrl" id="step">STEP</button><button class="ctrl" id="reset">RESET</button></div>
+<div id="board" class="board"></div>
+<div class="side"><div class="stat" id="plate"></div><div class="stat" id="evals"></div><div class="stat" id="verdict"></div></div>
+<div class="log" id="log"></div>
+<div class="footer"><b>PROVENANCE.</b> This animation is a SIMULATOR DEMONSTRATION — each frame is produced by Stockfish 19 at depth 10 (Threads=1, Hash=16) over both replies, so the engine is its own oracle. Frozen thresholds LOST_CP=-300 / HOLD_CP=-100 carried. <b>STATUS: CHESS -> NOT STARTED.</b></div>
+</div></div>
+<script>
+const FRAMES=[{"ply": 0, "move": "a2a3", "fen_before": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", "eval_before": 0, "turn": "w", "eval_after": 0}, {"ply": 1, "move": "a7a6", "fen_before": "rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1", "eval_before": 0, "turn": "b", "eval_after": 0}, {"ply": 2, "move": "b2b3", "fen_before": "rnbqkbnr/1ppppppp/p7/8/8/P7/1PPPPPPP/RNBQKBNR w KQkq - 0 2", "eval_before": 0, "turn": "w", "eval_after": 0}, {"ply": 3, "move": "a6a5", "fen_before": "rnbqkbnr/1ppppppp/p7/8/8/PP6/2PPPPPP/RNBQKBNR b KQkq - 0 2", "eval_before": 0, "turn": "b", "eval_after": 0}, {"ply": 4, "move": "c2c3", "fen_before": "rnbqkbnr/1ppppppp/8/p7/8/PP6/2PPPPPP/RNBQKBNR w KQkq - 0 3", "eval_before": 0, "turn": "w", "eval_after": 0}, {"ply": 5, "move": "a5a4", "fen_before": "rnbqkbnr/1ppppppp/8/p7/8/PPP5/3PPPPP/RNBQKBNR b KQkq - 0 3", "eval_before": 0, "turn": "b", "eval_after": 0}, {"ply": 6, "move": "d2d3", "fen_before": "rnbqkbnr/1ppppppp/8/8/p7/PPP5/3PPPPP/RNBQKBNR w KQkq - 0 4", "eval_before": 0, "turn": "w", "eval_after": 0}, {"ply": 7, "move": "b7b6", "fen_before": "rnbqkbnr/1ppppppp/8/8/p7/PPPP4/4PPPP/RNBQKBNR b KQkq - 0 4", "eval_before": 0, "turn": "b", "eval_after": 0}, {"ply": 8, "move": "e2e3", "fen_before": "rnbqkbnr/2pppppp/1p6/8/p7/PPPP4/4PPPP/RNBQKBNR w KQkq - 0 5", "eval_before": 0, "turn": "w", "eval_after": 0}, {"ply": 9, "move": "b6b5", "fen_before": "rnbqkbnr/2pppppp/1p6/8/p7/PPPPP3/5PPP/RNBQKBNR b KQkq - 0 5", "eval_before": 0, "turn": "b", "eval_after": 0}, {"ply": 10, "move": "f2f3", "fen_before": "rnbqkbnr/2pppppp/8/1p6/p7/PPPPP3/5PPP/RNBQKBNR w KQkq - 0 6", "eval_before": 0, "turn": "w", "eval_after": 0}, {"ply": 11, "move": "b5b4", "fen_before": "rnbqkbnr/2pppppp/8/1p6/p7/PPPPPP2/6PP/RNBQKBNR b KQkq - 0 6", "eval_before": 0, "turn": "b", "eval_after": null}];
+const PIECE={'K':'♔','Q':'♕','R':'♖','B':'♗','N':'♘','P':'♙','k':'♚','q':'♛','r':'♜','b':'♝','n':'♞','p':'♟'};
+let idx=-1,timer=null;
+function fenPieces(f){return f.split(' ')[0];}
+function renderBoard(fen,move){
+ const board=document.getElementById('board'); board.innerHTML='';
+ const placement=fenPieces(fen).split('/');
+ let from=null,to=null;
+ if(move){from=move.slice(0,2);to=move.slice(2,4);}
+ for(let r=0;r<8;r++){for(let c=0;c<8;c++){
+   const ch=placement[r][c];
+   const sq=document.createElement('div'); sq.className='sq '+((r+c)%2===0?'light':'dark');
+   if(ch){sq.textContent=PIECE[ch]||'';}
+   if(from && square(r,c)===from){sq.style.boxShadow='inset 0 0 0 2px #ffb02e';}
+   if(to && square(r,c)===to){sq.style.boxShadow='inset 0 0 0 2px #30d158';}
+   board.appendChild(sq);
+ }}
+}
+function square(r,c){return 'abcdefgh'[c]+(8-r);}
+function sideEval(f){return f.turn==='w'? f.eval_after : (f.eval_after===null?null:-f.eval_after);}
+function verdict(f){
+ const e=sideEval(f);
+ if(e===null) return 'ENGINE TREND UNREADABLE';
+ if(e<=-300) return 'RESIGN (lost beyond threshold)';
+ if(e>=-100) return 'PLAY ON (holdable)';
+ return 'JUDGEMENT ZONE';
+}
+function frame(){
+ let f=idx>=0?FRAMES[idx]:null;
+ const fen=f?f.fen_before:FRAMES[0].fen_before;
+ renderBoard(fen,f?f.move:null);
+ document.getElementById('plate').innerHTML='<b>PLY:</b> '+(idx<0?0:idx+1)+'/'+FRAMES.length+' &nbsp; <b>MOVE:</b> '+(f?f.move:'(start)')+' &nbsp; <b>TURN:</b> '+(f?f.turn:'w')+' &nbsp; <b>EVAL BEFORE:</b> '+(f?f.eval_before:'—')+' &nbsp; <b>AFTER:</b> '+(f&&f.eval_after!==null?f.eval_after:'—');
+ document.getElementById('evals').innerHTML='<b>THRESHOLDS:</b> LOST_CP=-300 · HOLD_CP=-100. Player-side eval after: '+(f&&f.eval_after!==null?(f.turn==='w'?f.eval_after:-f.eval_after):'—');
+ document.getElementById('verdict').innerHTML='<b>GATE DECISION:</b> '+(f?verdict(f):'READY');
+ const log=document.getElementById('log'); log.innerHTML=FRAMES.map((x,j)=>'<div style="padding:2px 0'+(j===idx?';background:#0a2016':'')+'">'+String(j).padStart(2,'0')+'  '+x.move+'  eval-before '+x.eval_before+(x.eval_after!==null?' -> after '+x.eval_after:'')+'</div>').join('');
+}
+function play(){if(timer) return; timer=setInterval(()=>{if(idx<FRAMES.length-1){idx++;frame();}else pause();},700);}
+function pause(){if(timer){clearInterval(timer);timer=null;}}
+function step(){pause();if(idx<FRAMES.length-1){idx++;frame();}}
+function reset(){pause();idx=-1;frame();}
+document.getElementById('play').onclick=play;
+document.getElementById('pause').onclick=pause;
+document.getElementById('step').onclick=step;
+document.getElementById('reset').onclick=reset;
+frame();
+</script>

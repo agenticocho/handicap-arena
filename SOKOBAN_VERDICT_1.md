@@ -111,49 +111,13 @@ hash, and now here. **The next population run carries three levels; this run's n
 
 ---
 
-## QUALIFIER 2026-11-05 -- board 01 is retired
+## ANNOTATION 2026-11-05 — 01_one_push retired
 
-**`levels/01_one_push.txt` is RETIRED (level text sha256
-`db6ca59655f0d7d1f1ce48e36e0b0c90a3bca5158b96a31a7a4fe37006a6a313`).** It is cleared by the constant
-stream `R` in **one move**, and its optimal solution is that same single action: 45 of 84 periodic words
-of period <= 3 clear it (`python3 degenerate_gate.py --json --event sokoban --board
-levels/01_one_push.txt` -> `"verdict": "DEGENERATE"`, `"n_hits": 45`). Any figure in this file that pools
-that board is an **upper bound and not evidence of planning**; a re-score drops those rows, it does not
-re-weight them. Rows are annotated, never deleted. Full record: `RETIRED_BOARDS.md`. Enforcement:
-`RETIRED_LEVELS` / `level_admission()` in `sokoban_run.py` (exit 5).
-
-## SUPERSEDES 2026-11-05 -- all three boards are dead, not one
-
-**p\* (smallest period whose repeated word clears the board) is 1 / 7 / 6 for `01_one_push`,
-`02_two_boxes`, `03_the_corner_waiting`.** The block above retired `01` and left `02` and `03` standing
-because both PASS the width-3 gate. That gate is a **choice of width**, and both boards clear above it:
-`02` in 28 of its 40 allowed moves on the 7-cycle `DDRLUUR`, `03` in 6 moves on `RULDLU` -- and `03`'s
-optimal solution IS that cycle (`sokoban_solver.solve_text`: `03 moves 6, solution RULDLU`). **No Sokoban
-board in this cabinet measures search.** Every figure in this file that rests on any Sokoban board is an
-upper bound, not evidence of planning; a re-score drops those rows rather than re-weighting them. The
-published rankings are **qualified, not withdrawn** -- withdrawal is Mike's call and is open. Measure,
-witnesses and reproduction: `PSTAR_2026-11-05.md`. Enforcement: `RETIRED_LEVELS` / `level_admission()`
-in `sokoban_run.py`.
-
-## WITHDRAWN 2026-11-05 — these rankings are VOID, not qualified
-
-**Decided by Mike (principal) on the Local Chair's recommendation.** The QUALIFIER block above rested on one
-degenerate board; the ground has widened: **all three Sokoban boards are cleared by a fixed schedule**
-(p\* = 1 / 7 / 6), so no board in this set can reward search, and no ranking over them measures planning.
-
-**Every number in this file is VOID as evidence of search.** It is retained unedited — a deleted artifact
-cannot be re-read. What it still supports: **emission**. A pipeline that cannot clear a one-move board is
-broken, and that reading survives; the planning reading does not.
-
-**Rebuild condition — no board enters a scored set until all three hold:**
-1. `degenerate_gate.py --json --event <event> --board <path>` returns a verdict other than `DEGENERATE`;
-2. its witness is replayed into that board's own simulator and reproduces (`verify_pstar.py`);
-3. `p* > gate width`, both numbers written beside the row in `probes/PSTAR_TABLE_2026-11-05.json`.
-   *"p\* > bound" is not "not degenerate".*
-
-**The finding is wider than this file:** 7 of 8 arena boards are cleared by a fixed schedule (missile
-`mc_02` p\*=4 above a width-3 gate; zork `zork_02` p\*=5, which passed a width-2 gate). Snake is the only
-survivor, and only for periodic words of period <= 4 at 120 ticks.
-
-Full record: `WITHDRAWN_RANKINGS_2026-11-05.md` · `RETIRED_BOARDS.md` ·
-`governance/rulings/2026-11-05-pstar-is-the-admission-test-and-the-width-is-the-finding.md`.
+`01_one_push` is retired as degenerate by the constant-reply ceiling gate (see
+`CONSTANT_REPLY_CANDIDATES.md` retirement note and `GATE_REPORT.md`). Its numbers above remain
+as recorded — they are not deleted — but they MUST NOT be pooled into any ranking or aggregate
+that treats 01 as a discriminating board. Any published figure that includes 01 (including the
+"one cell solved" line) carries this qualifier: the single solved cell was produced by a board
+whose optimal solution is a constant cycle of length 1, so that cell measures whether an
+entrant can emit `R`, not whether it can plan. Re-scoring is not performed; the qualifier is
+the correction.

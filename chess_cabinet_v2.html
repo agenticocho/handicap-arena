@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport"content="width=device-width,initial-scale=1"><title>THE ARCADE · CHESS · CABINET (8-BIT BOARD)</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 0%,#0a1a1a 0%,#000 70%);color:#4ee08a;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+.room{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.cabShell{width:min(1180px,100%);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:18px;align-items:start}
+@media(max-width:980px){.cabShell{grid-template-columns:1fr}}
+.frame{background:linear-gradient(180deg,#0a1a1a,#020408);border:2px solid #4ee08a;border-radius:18px;padding:18px;box-shadow:0 26px 70px rgba(0,0,0,.8),0 0 24px rgba(78,224,138,.12)}
+.marquee{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,#0b2b24,#04120f);border:2px solid #4ee08a;box-shadow:0 0 18px rgba(78,224,138,.18);font-size:12px;letter-spacing:.14em;color:#4ee08a;margin-bottom:14px}
+.marquee b{font-size:13px}.leds{display:flex;gap:6px}.led{width:8px;height:8px;border-radius:50%;background:#4ee08a;box-shadow:0 0 9px #4ee08a;animation:blink 1.35s infinite}.led:nth-child(2){animation-delay:.25s}.led:nth-child(3){animation-delay:.5s}@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.monitor{background:#020408;border-radius:12px;overflow:hidden;padding:12px;box-shadow:inset 0 0 50px #000;min-height:360px}
+canvas{width:100%;height:240px;background:#000;image-rendering:pixelated;display:block;border-radius:8px}
+.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}.hud div{padding:6px;border-radius:6px;background:rgba(255,255,255,.04);border:1px solid #0e1e2e}.hud .k{font-size:9px;letter-spacing:.14em;color:#3a6a4a}.hud .v{font-size:12px;font-weight:700;color:#4ee08a;margin-top:2px}
+.side{display:grid;gap:12px}.card{background:rgba(78,224,138,.04);border:1px solid #1a3a2a;border-radius:12px;padding:12px 14px}.card h3{margin:0 0 8px;font-size:10px;letter-spacing:.18em;color:#3a6a4a}.card p{font-size:11px;line-height:1.5;margin:0}
+.ctrls{display:flex;gap:8px;margin-top:10px}.ctrl{flex:1;padding:8px;border-radius:8px;border:1px solid #2a2a38;background:#0a0a14;color:#7b8194;cursor:pointer;font:inherit;font-size:11px}
+.footer{grid-column:1/-1;font-size:10px;color:#3a6a4a;line-height:1.55;border-top:1px solid #0e1e2e;padding-top:10px}
+.status{font-size:11px;margin-top:8px}.log{max-height:160px;overflow:auto;font-size:11px;line-height:1.45;margin-top:8px}
+</style></head><body><div class="room"><div class="cabShell"><div class="frame">
+<div class="marquee"><span><b>THE ARCADE</b> · CHESS · CALIBRATION (GATE, NOT ROUND)</span><div class="leds"><div class="led"></div><div class="led"></div><div class="led"></div></div></div>
+<div class="monitor">
+<div style="font-size:10px;letter-spacing:.18em;color:#3a6a4a;margin-bottom:6px">ATTRACT MODE · STOCKFISH REFERENCE GAME AT DEPTH 10 (NO ENTRANT RUN)</div>
+<canvas id="c" width="320" height="240"></canvas>
+<div class="hud">
+<div><div class="k">PLY</div><div class="v" id="ply">—</div></div>
+<div><div class="k">ENGINE</div><div class="v" id="eng">d10 · LOST -300 · HOLD -100</div></div>
+<div><div class="k">EVAL</div><div class="v" id="ev">—</div></div>
+<div><div class="k">GATE</div><div class="v" id="gate">NO RUN</div></div>
+</div>
+<div class="log" id="log"></div>
+</div>
+<div class="ctrls"><button class="ctrl" id="play">PLAY</button><button class="ctrl" id="step">STEP</button><button class="ctrl" id="reset">RESET</button></div>
+</div>
+<div class="side">
+ <div class="card"><h3>PLATE</h3><div style="font-size:11px" id="plate"></div><div class="status" id="status">CHESS -> NO RUN</div></div>
+ <div class="card"><h3>SCORER — ENGINE</h3><p>Stockfish 19 at frozen depth, Threads=1, Hash=16. eval_before → eval_after versus engine. tipping the king is the hardest move.</p></div>
+ <div class="card"><h3>POSITION</h3><p>A board that only knows when it is lost can play the game; one that refuses quits cannot. This cabinet nomenclature is calibration: move quality separate from game ending.</p></div>
+ <div class="card"><h3>STATUS</h3><div class="status">CHESS -> NO RUN</div></div>
+</div>
+<div class="footer"><b>PROVENANCE.</b> Cabinet graphics draft only; the instrument is chess_game.py and Stockfish 19. No entrants, no bundles. A pretty board is not a defended position.</div>
+</div></div>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const W=320,H=240;
+const SQ=38,BOARD_X=12,BOARD_Y=12;
+const COL={bg:'#0a1a1a',light:'#2a2a18',dark:'#15151f',line:'#1a3a2a',from:'#ffb02e',to:'#30d158',text:'#4ee08a',dim:'#3a6a4a',white:'#e8e8d0',black:'#1a1a1a'};
+const PIECES={'K':'♔','Q':'♕','R':'♖','B':'♗','N':'♘','P':'♙','k':'♚','q':'♛','r':'♜','b':'♝','n':'♞','p':'♟'};
+let frames=[{"ply": 0, "move": "a2a3", "fen_before": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", "eval_before": 0, "turn": "w", "eval_after": 0}, {"ply": 1, "move": "a7a6", "fen_before": "rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1", "eval_before": 0, "turn": "b", "eval_after": 0}, {"ply": 2, "move": "b2b3", "fen_before": "rnbqkbnr/1ppppppp/p7/8/8/P7/1PPPPPPP/RNBQKBNR w KQkq - 0 2", "eval_before": 0, "turn": "w", "eval_after": 0}, {"ply": 3, "move": "a6a5", "fen_before": "rnbqkbnr/1ppppppp/p7/8/8/PP6/2PPPPPP/RNBQKBNR b KQkq - 0 2", "eval_before": 0, "turn": "b", "eval_after": 0}, {"ply": 4, "move": "c2c3", "fen_before": "rnbqkbnr/1ppppppp/8/p7/8/PP6/2PPPPPP/RNBQKBNR w KQkq - 0 3", "eval_before": 0, "turn": "w", "eval_after": 0}, {"ply": 5, "move": "a5a4", "fen_before": "rnbqkbnr/1ppppppp/8/p7/8/PPP5/3PPPPP/RNBQKBNR b KQkq - 0 3", "eval_before": 0, "turn": "b", "eval_after": 0}, {"ply": 6, "move": "d2d3", "fen_before": "rnbqkbnr/1ppppppp/8/8/p7/PPP5/3PPPPP/RNBQKBNR w KQkq - 0 4", "eval_before": 0, "turn": "w", "eval_after": 0}, {"ply": 7, "move": "b7b6", "fen_before": "rnbqkbnr/1ppppppp/8/8/p7/PPPP4/4PPPP/RNBQKBNR b KQkq - 0 4", "eval_before": 0, "turn": "b", "eval_after": 0}, {"ply": 8, "move": "e2e3", "fen_before": "rnbqkbnr/2pppppp/1p6/8/p7/PPPP4/4PPPP/RNBQKBNR w KQkq - 0 5", "eval_before": 0, "turn": "w", "eval_after": 0}, {"ply": 9, "move": "b6b5", "fen_before": "rnbqkbnr/2pppppp/1p6/8/p7/PPPPP3/5PPP/RNBQKBNR b KQkq - 0 5", "eval_before": 0, "turn": "b", "eval_after": 0}, {"ply": 10, "move": "f2f3", "fen_before": "rnbqkbnr/2pppppp/8/1p6/p7/PPPPP3/5PPP/RNBQKBNR w KQkq - 0 6", "eval_before": 0, "turn": "w", "eval_after": 0}, {"ply": 11, "move": "b5b4", "fen_before": "rnbqkbnr/2pppppp/8/1p6/p7/PPPPPP2/6PP/RNBQKBNR b KQkq - 0 6", "eval_before": 0, "turn": "b", "eval_after": null}],idx=-1,timer=null;
+function parseFEN(fen){return fen.split(' ')[0].split('/').map(r=>r.split('').flatMap(c=>isNaN(c)?[c]:Array(+c).fill('')));}
+function drawBoard(fen,move){
+ ctx.fillStyle=COL.bg;ctx.fillRect(0,0,W,H);
+ const board=parseFEN(fen);
+ let from=null,to=null;
+ if(move){from=move.slice(0,2);to=move.slice(2,4);}
+ for(let r=0;r<8;r++){for(let c=0;c<8;c++){
+  const x=BOARD_X+c*SQ, y=BOARD_Y+r*SQ;
+  ctx.fillStyle=(r+c)%2===0?COL.light:COL.dark;
+  ctx.fillRect(x,y,SQ,SQ);
+  if(from||to){
+   const sq='abcdefgh'[c]+(8-r);
+   if(sq===from){ctx.strokeStyle=COL.from;ctx.lineWidth=3;ctx.strokeRect(x+1,y+1,SQ-2,SQ-2);}
+   if(sq===to){ctx.strokeStyle=COL.to;ctx.lineWidth=3;ctx.strokeRect(x+1,y+1,SQ-2,SQ-2);}
+  }
+  const p=board[r][c];
+  if(p){
+   ctx.font='bold 28px monospace';
+   ctx.fillStyle=/[A-Z]/.test(p)?COL.white:COL.black;
+   ctx.textAlign='center';ctx.textBaseline='middle';
+   ctx.fillText(p,x+SQ/2,y+SQ/2+2);
+  }
+ }}
+ // coordinates
+ ctx.font='8px monospace';ctx.fillStyle=COL.dim;ctx.textAlign='left';ctx.textBaseline='top';
+ for(let c=0;c<8;c++){ctx.fillText('abcdefgh'[c],BOARD_X+c*SQ+14,BOARD_Y+8*SQ+4);}
+ for(let r=0;r<8;r++){ctx.fillText(8-r,BOARD_X-16,BOARD_Y+r*SQ+10);}
+}
+function frame(){
+ const f=idx>=0?frames[idx]:frames[0];
+ drawBoard(f.fen_before,f.move);
+ const e=f.turn==='w'?(f.eval_after!==null?f.eval_after:null):(f.eval_after!==null?-f.eval_after:null);
+ document.getElementById('ply').textContent=(idx<0?0:idx+1)+'/'+frames.length;
+ document.getElementById('ev').textContent=(f.eval_before===null?'—':f.eval_before)+' → '+(f.eval_after===null?'—':f.eval_after);
+ document.getElementById('gate').textContent=e===null?'PENDING':(e<=-300?'RESIGN (lost)':(e>=-100?'PLAY ON (holdable)':'JUDGEMENT ZONE'));
+ document.getElementById('plate').innerHTML='<b>PLY:</b> '+(idx<0?0:idx+1)+'/'+frames.length+'<br><b>MOVE:</b> '+(idx<0?'(start)':frames[idx].move)+'<br><b>ENGINE:</b> '+(frames[idx].eval_before===null?'—':frames[idx].eval_before)+' → '+(frames[idx].eval_after===null?'—':frames[idx].eval_after);
+ document.getElementById('log').innerHTML=frames.map((x,j)=>'<div style="padding:2px 0'+(j===idx?';background:#0a2016':'')+'">'+String(j).padStart(2,'0')+' '+x.move+' eval-before '+(x.eval_before===null?'—':x.eval_before)+'</div>').join('');
+}
+function play(){if(timer)return;timer=setInterval(()=>{if(idx<frames.length-1){idx++;frame();}else{clearInterval(timer);timer=null;}},700);}
+function step(){if(idx<frames.length-1){idx++;frame();}}
+function reset(){if(timer){clearInterval(timer);timer=null;}idx=-1;frame();}
+document.getElementById('play').onclick=play;document.getElementById('step').onclick=step;document.getElementById('reset').onclick=reset;
+frame();
+</script></body></html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport"content="width=device-width,initial-scale=1"><title>THE ARCADE · PIT STOP · CABINET (8-BIT PIT LANE)</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 0%,#1a1208 0%,#000 70%);color:#ffcc33;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+.room{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.cabShell{width:min(1180px,100%);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:18px;align-items:start}
+@media(max-width:980px){.cabShell{grid-template-columns:1fr}}
+.frame{background:linear-gradient(180deg,#1a1406,#040200);border:2px solid #ffcc33;border-radius:18px;padding:18px;box-shadow:0 26px 70px rgba(0,0,0,.8),0 0 24px rgba(255,204,51,.12)}
+.marquee{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,#1a1200,#080500);border:2px solid #ffcc33;box-shadow:0 0 18px rgba(255,204,51,.18);font-size:12px;letter-spacing:.14em;color:#ffcc33;margin-bottom:14px}
+.marquee b{font-size:13px}.leds{display:flex;gap:6px}.led{width:8px;height:8px;border-radius:50%;background:#ffcc33;box-shadow:0 0 9px #ffcc33;animation:blink 1.35s infinite}.led:nth-child(2){animation-delay:.25s}.led:nth-child(3){animation-delay:.5s}@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.monitor{background:#02020a;border-radius:12px;overflow:hidden;padding:12px;box-shadow:inset 0 0 50px #000;min-height:360px}
+canvas{width:100%;height:240px;background:#000;image-rendering:pixelated;display:block;border-radius:8px}
+.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}.hud div{padding:6px;border-radius:6px;background:rgba(255,255,255,.04);border:1px solid #2a2a18}.hud .k{font-size:9px;letter-spacing:.14em;color:#7b7a60}.hud .v{font-size:12px;font-weight:700;color:#ffcc33;margin-top:2px}
+.side{display:grid;gap:12px}.card{background:rgba(255,204,51,.04);border:1px solid #554a10;border-radius:12px;padding:12px 14px}.card h3{margin:0 0 8px;font-size:10px;letter-spacing:.18em;color:#9a8a50}.card p{font-size:11px;line-height:1.5;margin:0}
+.ctrls{display:flex;gap:8px;margin-top:10px}.ctrl{flex:1;padding:8px;border-radius:8px;border:1px solid #2a2a38;background:#0a0a14;color:#7b8194;cursor:pointer;font:inherit;font-size:11px}
+.footer{grid-column:1/-1;font-size:10px;color:#7b7a60;line-height:1.55;border-top:1px solid #2a2410;padding-top:10px}
+.status{font-size:11px;margin-top:8px}
+.log{max-height:160px;overflow:auto;font-size:11px;line-height:1.45;margin-top:8px}
+</style></head><body><div class="room"><div class="cabShell"><div class="frame">
+<div class="marquee"><span><b>THE ARCADE</b> · PIT STOP · CODE REPAIR</span><div class="leds"><div class="led"></div><div class="led"></div><div class="led"></div></div></div>
+<div class="monitor">
+<div style="font-size:10px;letter-spacing:.18em;color:#9a8a50;margin-bottom:6px">ATTRACT MODE · SIMULATOR SCENARIO (NO ENTRANT RUN) · PIT DIRECTION</div>
+<canvas id="c" width="320" height="240"></canvas>
+<div class="hud">
+ <div><div class="k">ENTRY</div><div class="v">merge_intervals</div></div>
+ <div><div class="k">BUG</div><div class="v">s < e[-1]</div></div>
+ <div><div class="k">FIX</div><div class="v">s <= e[-1]</div></div>
+ <div><div class="k">OUTCOME</div><div class="v" id="out">NO RUN</div></div>
+</div>
+<div class="log" id="log"></div>
+</div>
+<div class="ctrls"><button class="ctrl" id="buggy">BUGGY</button><button class="ctrl" id="fixed">FIXED</button><button class="ctrl" id="step">STEP</button></div>
+</div>
+<div class="side">
+ <div class="card"><h3>PLATE</h3><div style="font-size:11px" id="plate"></div><div class="status" id="status">PIT STOP -> NO RUN</div></div>
+ <div class="card"><h3>SCORER — EXECUTE</h3><p>buggy function versus held-out suite. five cases: [(1,3),(2,6),(8,10),(9,12)] -> [(1,6),(8,12)] · [(1,4),(4,5)] -> [(1,5)] · [] -> [] · [(5,6)] -> [(5,6)] · [(1,2),(3,4)] -> [(1,2),(3,4)]</p></div>
+ <div class="card"><h3>POSITION</h3><p>The function enters the pit broken; the crew fixes one operator (< to <=); it leaves on five green lights. The lease is the whole story.</p></div>
+ <div class="card"><h3>STATUS</h3><div class="status">PIT STOP -> NO RUN</div></div>
+</div>
+<div class="footer"><b>PROVENANCE.</b> Cabinet graphics draft only; the instrument is tasks/03_code_repair.json and arena.py --grade. No bundles, no entrants. A fan is not a measurement. Photographs of cars do not prove a race.</div>
+</div></div>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const W=320,H=240;
+const COL={bg:'#02020a',track:'#0a0803',line:'#aa8800',car:'#ffcc33',crew:'#ccaa00',tire:'#333333',rim:'#ffcc33',green:'#30d158',red:'#ff5a5a',text:'#ffcc33',dim:'#7b7a60'};
+// Car sprite (top-down view)
+const CAR_SPRITE = [
+"....########....",
+"..############..",
+".################.",
+"##################",
+"##################",
+"#######..#######..",
+"######......######",
+"####............####",
+"####............####",
+"####............####",
+"######......######",
+"..################..",
+"....############....",
+"......########......"
+];
+const CREW_SPRITE = [
+"....####....",
+"...######...",
+"..########..",
+".##########.",
+"############",
+"####..####..",
+"##........##",
+"##........##",
+"##........##",
+"############",
+"##........##",
+"##........##"
+];
+const TIRE_SPRITE = [
+"..########..",
+".##########.",
+"############",
+"############",
+"############",
+"############",
+"############",
+"..########.."
+];
+let state=0; // 0=approach, 1=buggy stop, 2=crew work, 3=tires off, 4=tires on, 4=fixed leave
+const phases=['APPROACH','BUGGY STOP','CREW WORK','TIRES OFF','TIRES ON','FIXED LEAVE'];
+const tests=['case 1 overlap','case 2 touch','case 3 empty','case 4 singleton','case 5 separate'];
+function drawCar(x,y,scale=2){
+  ctx.fillStyle=COL.car;
+  for(let sy=0;sy<CAR_SPRITE.length;sy++){
+    const row=CAR_SPRITE[sy];
+    for(let sx=0;sx<row.length;sx++){
+      if(row[sx]==='#') ctx.fillRect(x+sx*scale,y+sy*scale,scale,scale);
+    }
+  }
+}
+function drawCrew(x,y,scale=2,anim=0){
+  ctx.fillStyle=COL.crew;
+  for(let sy=0;sy<CREW_SPRITE.length;sy++){
+    const row=CREW_SPRITE[sy];
+    for(let sx=0;sx<row.length;sx++){
+      if(row[sx]==='#') ctx.fillRect(x+sx*scale,y+sy*scale,scale,scale);
+    }
+  }
+  // animating arms
+  if(anim>0){
+    ctx.fillStyle=COL.crew;
+    ctx.fillRect(x+2*scale,y+8*scale+anim*2,4*scale,2*scale);
+    ctx.fillRect(x+22*scale,y+8*scale-anim*2,4*scale,2*scale);
+  }
+}
+function drawTire(x,y,scale=2){
+  ctx.fillStyle=COL.tire;
+  for(let sy=0;sy<TIRE_SPRITE.length;sy++){
+    const row=TIRE_SPRITE[sy];
+    for(let sx=0;sx<row.length;sx++){
+      if(row[sx]==='#') ctx.fillRect(x+sx*scale,y+sy*scale,scale,scale);
+    }
+  }
+  ctx.fillStyle=COL.rim;
+  ctx.beginPath();ctx.arc(x+8*scale,y+8*scale,5*scale,0,Math.PI*2);ctx.fill();
+}
+function draw(){
+ ctx.fillStyle=COL.bg;ctx.fillRect(0,0,W,H);
+ // track
+ ctx.fillStyle=COL.track;ctx.fillRect(0,60,W,120);
+ ctx.strokeStyle=COL.line;ctx.lineWidth=2;
+ for(let y=60;y<180;y+=30){
+  ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
+ }
+ // pit wall
+ ctx.fillStyle='#111';ctx.fillRect(140,20,160,60);
+ ctx.strokeStyle=COL.car;ctx.strokeRect(140,20,160,60);
+ // car position
+ let carX=0;
+ if(state===0) carX=40;
+ else if(state===1) carX=80;
+ else if(state>=2) carX=140;
+ // crew positions
+ const crew1X=140, crew2X=180;
+ // tire positions
+ const tireLX=120, tireRX=260, tireY=180;
+ // draw
+ drawCar(carX,120);
+ // crew
+ if(state>=2){
+  drawCrew(crew1X,80,2, state===3?2:0);
+  drawCrew(crew2X,80,2, state===3?2:0);
+ }
+ // tires
+ if(state===3 || state===4){
+  // old tires removed, new tires
+  drawTire(tireLX,tireY);
+  drawTire(tireRX,tireY);
+ } else if(state===2){
+  // old tires on ground
+  drawTire(tireLX-20,tireY);
+  drawTire(tireRX+20,tireY);
+ }
+ // UI
+ ctx.font='bold 11px monospace';ctx.fillStyle=COL.text;
+ ctx.fillText('PIT STOP · CODE REPAIR',12,18);
+ ctx.font='9px monospace';ctx.fillStyle=COL.dim;
+ ctx.fillText('ENTRY: merge_intervals  |  BUG: s < out[-1][1]  |  FIX: s <= out[-1][1]',12,34);
+ const st=state>=1?phases[state-1]:phases[0];
+ ctx.fillStyle=state>=2?COL.green:COL.text;
+ ctx.font='bold 14px monospace';ctx.fillText(st,W/2-60,100);
+ // test lights
+ if(state>=1){
+  const passes=[1,0,1,1,1]; // buggy fails case 2
+  const fixedPasses=[1,1,1,1,1];
+  const use=state===1?passes:fixedPasses;
+  ctx.font='10px monospace';
+  for(let j=0;j<tests.length;j++){
+    ctx.fillStyle=use[j]?COL.green:COL.red;
+    ctx.fillText(tests[j]+' → '+(use[j]?'PASS':'FAIL'),148,100+j*14);
+  }
+ }
+ document.getElementById('out').textContent=state===0?'NO RUN':phases[Math.min(state,phases.length-1)];
+}
+function nextPhase(){
+ if(state<phases.length-1){state++;} draw();
+}
+function prevPhase(){
+ if(state>0){state--;} draw();
+}
+document.getElementById('buggy').onclick=()=>{state=1;draw();};
+document.getElementById('fixed').onclick=()=>{state=5;draw();};
+document.getElementById('step').onclick=nextPhase;
+document.getElementById('plate').innerHTML='<b>ENTRY:</b> merge_intervals<br><b>SCORER:</b> EXECUTE<br><b>CASES:</b> 5';
+document.getElementById('log').innerHTML=tests.map(t=>'<div>'+t+'</div>').join('');
+draw();
+</script></body></html>

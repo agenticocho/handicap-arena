@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport"content="width=device-width,initial-scale=1"><title>THE ARCADE · LIGHTS OUT · CABINET (8-BIT GRID)</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 0%,#0a0a1a 0%,#000 70%);color:#4ee08a;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+.room{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.cabShell{width:min(1180px,100%);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:18px;align-items:start}
+@media(max-width:980px){.cabShell{grid-template-columns:1fr}}
+.frame{background:linear-gradient(180deg,#0a1a1a,#020408);border:2px solid #4ee08a;border-radius:18px;padding:18px;box-shadow:0 26px 70px rgba(0,0,0,.8),0 0 24px rgba(78,224,138,.12)}
+.marquee{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,#0b2b24,#04120f);border:2px solid #4ee08a;box-shadow:0 0 18px rgba(78,224,138,.18);font-size:12px;letter-spacing:.14em;color:#4ee08a;margin-bottom:14px}
+.marquee b{font-size:13px}.leds{display:flex;gap:6px}.led{width:8px;height:8px;border-radius:50%;background:#4ee08a;box-shadow:0 0 9px #4ee08a;animation:blink 1.35s infinite}.led:nth-child(2){animation-delay:.25s}.led:nth-child(3){animation-delay:.5s}@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.monitor{background:#020408;border-radius:12px;overflow:hidden;padding:12px;box-shadow:inset 0 0 50px #000;min-height:360px}
+canvas{width:100%;height:240px;background:#000;image-rendering:pixelated;display:block;border-radius:8px}
+.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}.hud div{padding:6px;border-radius:6px;background:rgba(255,255,255,.04);border:1px solid #0e1e2e}.hud .k{font-size:9px;letter-spacing:.14em;color:#3a6a4a}.hud .v{font-size:12px;font-weight:700;color:#4ee08a;margin-top:2px}
+.side{display:grid;gap:12px}.card{background:rgba(78,224,138,.04);border:1px solid #1a3a2a;border-radius:12px;padding:12px 14px}.card h3{margin:0 0 8px;font-size:10px;letter-spacing:.18em;color:#3a6a4a}.card p{font-size:11px;line-height:1.5;margin:0}
+.ctrls{display:flex;gap:8px;margin-top:10px}.ctrl{flex:1;padding:8px;border-radius:8px;border:1px solid #2a2a38;background:#0a0a14;color:#7b8194;cursor:pointer;font:inherit;font-size:11px}
+.footer{grid-column:1/-1;font-size:10px;color:#3a6a4a;line-height:1.55;border-top:1px solid #0e1e2e;padding-top:10px}
+.status{font-size:11px;margin-top:8px}.log{max-height:160px;overflow:auto;font-size:11px;line-height:1.45;margin-top:8px}
+</style></head><body><div class="room"><div class="cabShell"><div class="frame">
+<div class="marquee"><span><b>THE ARCADE</b> · LIGHTS OUT · ATTRACT MODE</span><div class="leds"><div class="led"></div><div class="led"></div><div class="led"></div></div></div>
+<div class="monitor">
+<div style="font-size:10px;letter-spacing:.18em;color:#3a6a4a;margin-bottom:6px">ATTRACT MODE · SIMULATOR SCENARIO (NO ENTRANT RUN) · 4×4 GRID, 16 LIGHTS</div>
+<canvas id="c" width="320" height="240"></canvas>
+<div class="hud">
+ <div><div class="k">STATE</div><div class="v" id="state">—</div></div>
+ <div><div class="k">MOVE</div><div class="v" id="move">—</div></div>
+ <div><div class="k">SOLVED</div><div class="v" id="solved">NO</div></div>
+ <div><div class="k">STATUS</div><div class="v" id="out">NO RUN</div></div>
+</div>
+<div class="log" id="log"></div>
+<div id="act" style="display:none">(start) tick 0</div>
+<div id="counts" style="display:none">fired 0</div>
+<div id="plate" style="display:none">CITIES SURVIVING: 16 / 16  STEP: 0 / 6</div>
+<div id="sd" style="display:none">lightsout.py 18 controls</div>
+<div id="ld" style="display:none">4x4 grid, 16 lights</div>
+<div id="reset" style="display:none"></div>
+</div>
+<div class="ctrls"><button class="ctrl" id="play">PLAY</button><button class="ctrl" id="step">STEP</button><button class="ctrl" id="reset">RESET</button></div>
+</div>
+<div class="side">
+ <div class="card"><h3>PLATE</h3><div style="font-size:11px" id="plateText">CITIES SURVIVING: 16 / 16  STEP: 0 / 6</div><div class="status" id="status">LIGHTS OUT -> NO RUN</div></div>
+ <div class="card"><h3>SCORER — VERIFIED</h3><p>toggle self + orthogonal neighbors; goal all-zeros; any valid solution counts (null space 4 → 16 solutions). Scorer applies toggles, checks all-zeros. No string-match.</p></div>
+ <div class="card"><h3>POSITION</h3><p>A 4×4 grid of lights. Pressing a light toggles it and its neighbors. Find any sequence that turns them all off. The null space means 16 distinct solutions for every solvable board.</p></div>
+ <div class="card"><h3>STATUS</h3><div class="status">LIGHTS OUT -> NO RUN</div></div>
+</div>
+<div class="footer"><b>PROVENANCE.</b> Cabinet graphics draft only. Instrument: lightsout.py (18 controls). No bundles. A drawing is not a result: the figure names its inputs.</div>
+</div></div>
+<script>
+const FRAMES=[{"ply": 0, "token": "0", "action": 0, "outcome": "applied", "state": "0111110110101101", "target": "0000000000000000"}, {"ply": 1, "token": "5", "action": 5, "outcome": "applied", "state": "0011001111101101", "target": "0000000000000000"}, {"ply": 2, "token": "10", "action": 10, "outcome": "applied", "state": "0011000110011111", "target": "0000000000000000"}, {"ply": 3, "token": "15", "action": 15, "outcome": "applied", "state": "0011000110001100", "target": "0000000000000000"}, {"ply": 4, "token": "3", "action": 3, "outcome": "applied", "state": "0000000010001100", "target": "0000000000000000"}, {"ply": 5, "token": "12", "action": 12, "outcome": "applied", "state": "0000000000000000", "target": "0000000000000000"}];
+const c=document.getElementById('c'),ctx=c && typeof c.getContext==='function' ? c.getContext('2d') : null;
+const W=320,H=240;
+const CELL=48,OX=64,OY=32;
+let idx=-1,timer=null,animT=0,playing=false,last=0;
+function playLoop(ts){ if(!playing) return; if(!last || ts-last>700){ if(idx<FRAMES.length-1){idx++;frame();} else { playing=false; return; } last=ts; } if(typeof requestAnimationFrame==='function') requestAnimationFrame(playLoop); }
+function drawGrid(state,flashPos){ if(!ctx) return;
+ ctx.fillStyle='#0a0a1a';ctx.fillRect(0,0,W,H);
+ // grid
+ for(let r=0;r<4;r++){for(let c=0;c<4;c++){
+   const x=OX+c*CELL, y=OY+r*CELL;
+   const bit=state[r*4+c];
+   // cell bg
+   ctx.fillStyle=bit==='1'?'#ffcc33':'#1a1a2e';
+   ctx.fillRect(x+2,y+2,CELL-4,CELL-4);
+   // border
+   ctx.strokeStyle='#3a3a5a';ctx.lineWidth=1;ctx.strokeRect(x+2,y+2,CELL-4,CELL-4);
+   // glow
+   if(bit==='1'){
+     ctx.fillStyle='rgba(255,204,51,0.3)';
+     ctx.fillRect(x+4,y+4,CELL-8,CELL-8);
+   }
+   if(flashPos===r*4+c){
+     ctx.fillStyle='rgba(255,255,255,0.6)';
+     ctx.fillRect(x+2,y+2,CELL-4,CELL-4);
+   }
+ }}
+ // labels
+ ctx.font='10px monospace';ctx.fillStyle='#3a6a9a';ctx.textAlign='left';
+ for(let i=0;i<4;i++){
+   ctx.fillText('ABCD'[i],OX+i*CELL+18,OY-8);
+   ctx.fillText(i+1,OX-14,OY+i*CELL+28);
+ }
+ // title
+ ctx.font='bold 11px monospace';ctx.fillStyle='#4ee08a';ctx.textAlign='left';
+ ctx.fillText('LIGHTS OUT · 4×4 · ATTRACT MODE',12,16);
+ ctx.font='9px monospace';ctx.fillStyle='#3a6a9a';
+ ctx.fillText('Press a light: it and its neighbors toggle. Goal: all off.',12,32);
+ // state readout
+ const onCount=state.split('1').length-1;
+ ctx.font='10px monospace';ctx.fillStyle=onCount===0?'#30d158':'#ffb02e';
+ ctx.fillText('Lights on: '+onCount+' / 16',12,H-12);
+}
+function updateReadout(){
+ const f=idx>=0?FRAMES[idx]:null;
+ const actVal=f?'tick '+f.ply+' '+f.action+' -> '+f.outcome : '(start) tick 0';
+ const plateVal='CITIES SURVIVING: '+(f? (16-(f.state.split('1').length-1)) : 16)+' / 16  STEP: '+(idx<0?0:idx+1)+' / '+FRAMES.length;
+ document.getElementById('act').textContent=actVal;
+ document.getElementById('plate').textContent=plateVal;
+ document.getElementById('plateText').textContent=plateVal;
+ document.getElementById('state').textContent=f?f.state:'0000000000000000';
+ document.getElementById('move').textContent=f?f.action:'—';
+ document.getElementById('solved').textContent=f&&f.state==='0000000000000000'?'YES':'NO';
+ document.getElementById('out').textContent=f?f.outcome:'NO RUN';
+ document.getElementById('counts').textContent='fired '+(idx<0?0:idx+1);
+ document.getElementById('sd').textContent='lightsout.py 18 controls';
+ document.getElementById('ld').textContent='4x4 grid, 16 lights';
+ document.getElementById('log').innerHTML=FRAMES.map((x,j)=>'<div style="padding:2px 0'+(j===idx?';background:#0a2016':'')+'">tick '+x.ply+' '+x.action+' -> '+x.outcome+' state '+x.state+'</div>').join('');
+}
+function frame(){
+ const f=idx>=0?FRAMES[idx]:null;
+ const state=f?f.state:'0000000000000000';
+ const flashPos=f?f.action:null;
+ drawGrid(state,flashPos);
+ updateReadout();
+}
+function play(){ if(playing) return; playing=true; last=0; if(typeof requestAnimationFrame==='function') requestAnimationFrame(playLoop); else { timer=setInterval(()=>{if(idx<FRAMES.length-1){idx++;frame();}else pause();},700); } }
+function pause(){ playing=false; if(timer){clearInterval(timer);timer=null;} }
+function step(){ pause(); if(idx<FRAMES.length-1){idx++;frame();} }
+function reset(){ pause(); idx=-1; frame(); }
+document.getElementById('play').onclick=play;
+document.getElementById('step').onclick=step;
+document.getElementById('reset').onclick=reset;
+frame();
+// rAF loop for subtle animation
+(function loop(){ animT++; if(animT%60===0){} if (typeof requestAnimationFrame === 'function') requestAnimationFrame(loop);})();
+</script></body></html>
