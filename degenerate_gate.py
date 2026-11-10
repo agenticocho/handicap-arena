@@ -251,6 +251,18 @@ def _file_digest(name):
 # milliseconds, p*<=8 is 87,380 streams and ~20 s on this box. So the admission gate stays at the
 # declared width, and this runs when a board is ADMITTED to a catalogue.
 # ------------------------------------------------------------------------------------------------
+def sokoban_admitted(board_path, threshold=8):
+    """A board is admitted only if no periodic word of period <= threshold clears it
+    (i.e. its ablated null does NOT clear it). Refuses boards whose null clears them."""
+    r = sokoban_min_period(board_path, upto=threshold)
+    return r["period"] is None
+
+
+# alias used by board generators
+board_admitted = sokoban_admitted
+sokoban_null_clears = lambda board_path, threshold=8: sokoban_min_period(board_path, upto=threshold)["period"] is not None
+
+
 def sokoban_min_period(board_path, upto=8):
     import sokoban as S
     text = open(board_path, encoding="utf-8").read()
@@ -514,6 +526,9 @@ def _self_test():
     # 6. p* IS A MEASUREMENT, NOT A HOPE: the width-free index on two boards, re-derived here.
     p1 = sokoban_min_period(os.path.join(HERE, SOKOBAN_CONTROL), upto=8)
     ck("p*(01_one_push) = 1 with word R", (p1["period"], p1["word"]), (1, "R"))
+    p2 = sokoban_min_period(os.path.join(HERE, "levels", "02_two_boxes.txt"), upto=8)
+    ck("p*(02_two_boxes) = 7 with word DDRLUUR (null clears it -> retired)",
+       (p2["period"], p2["word"], p2["moves"]), (7, "DDRLUUR", 28))
     p3 = sokoban_min_period(os.path.join(HERE, "levels", "03_the_corner_waiting.txt"), upto=8)
     ck("p*(03_the_corner_waiting) = 6 with word RULDLU", (p3["period"], p3["word"]), (6, "RULDLU"))
     ck("03's p* is FAR wider than the declared width 3", p3["period"] > SOKOBAN_MAX_PERIOD, True)
@@ -575,6 +590,8 @@ def main():
     ap.add_argument("--snake-ticks", type=int, default=SNAKE_PSTAR_TICKS)
     ap.add_argument("--write-json", default=None)
     a = ap.parse_args()
+    if a.write_json and not a.pstar_table:
+        ap.error("--write-json belongs to --pstar-table")
     if a.self_test:
         return _self_test()
     if a.pstar_table:
