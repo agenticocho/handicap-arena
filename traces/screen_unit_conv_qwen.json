@@ -1,0 +1,190 @@
+{
+  "unit_conv": {
+    "n": 30,
+    "correct": 0,
+    "malformed": 30,
+    "wrong": 0,
+    "details": [
+      {
+        "text": "Convert 5 minutes to seconds. Answer in seconds.",
+        "expected": "300",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 4 minutes to seconds. Answer in seconds.",
+        "expected": "240",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 8 minutes to seconds. Answer in seconds.",
+        "expected": "480",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 5 minutes to seconds. Answer in seconds.",
+        "expected": "300",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 11 minutes to seconds. Answer in seconds.",
+        "expected": "660",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 13 minutes to seconds. Answer in seconds.",
+        "expected": "780",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 1 minutes to seconds. Answer in seconds.",
+        "expected": "60",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 5 minutes to seconds. Answer in seconds.",
+        "expected": "300",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 10 minutes to seconds. Answer in seconds.",
+        "expected": "600",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 16 minutes to seconds. Answer in seconds.",
+        "expected": "960",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 3 minutes to seconds. Answer in seconds.",
+        "expected": "180",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 9 minutes to seconds. Answer in seconds.",
+        "expected": "540",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 5 minutes to seconds. Answer in seconds.",
+        "expected": "300",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 8 minutes to seconds. Answer in seconds.",
+        "expected": "480",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 1 minutes to seconds. Answer in seconds.",
+        "expected": "60",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 15 minutes to seconds. Answer in seconds.",
+        "expected": "900",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 12 minutes to seconds. Answer in seconds.",
+        "expected": "720",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 7 minutes to seconds. Answer in seconds.",
+        "expected": "420",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 5 minutes to seconds. Answer in seconds.",
+        "expected": "300",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 7 minutes to seconds. Answer in seconds.",
+        "expected": "420",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 9 minutes to seconds. Answer in seconds.",
+        "expected": "540",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 15 minutes to seconds. Answer in seconds.",
+        "expected": "900",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 2 minutes to seconds. Answer in seconds.",
+        "expected": "120",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 3 minutes to seconds. Answer in seconds.",
+        "expected": "180",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 4 minutes to seconds. Answer in seconds.",
+        "expected": "240",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 14 minutes to seconds. Answer in seconds.",
+        "expected": "840",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 3 minutes to seconds. Answer in seconds.",
+        "expected": "180",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 1 minutes to seconds. Answer in seconds.",
+        "expected": "60",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 9 minutes to seconds. Answer in seconds.",
+        "expected": "540",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 5 minutes to seconds. Answer in seconds.",
+        "expected": "300",
+        "got": null,
+        "verdict": "malformed"
+      }
+    ]
+  }
+}

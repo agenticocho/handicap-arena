@@ -1,0 +1,190 @@
+{
+  "trap": {
+    "n": 30,
+    "correct": 1,
+    "malformed": 0,
+    "wrong": 29,
+    "details": [
+      {
+        "text": "A bat and a ball cost $2.4 together. The bat costs $2 more than the ball. How much does the ball cost?",
+        "expected": "0.2",
+        "got": "$0.20",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A bat and a ball cost $5.2 together. The bat costs $5 more than the ball. How much does the ball cost?",
+        "expected": "0.1",
+        "got": "$0.10",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A bat and a ball cost $1.2 together. The bat costs $1 more than the ball. How much does the ball cost?",
+        "expected": "0.1",
+        "got": "$0.05",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A bat and a ball cost $1.2 together. The bat costs $1 more than the ball. How much does the ball cost?",
+        "expected": "0.1",
+        "got": "$0.05",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A bat and a ball cost $1.6 together. The bat costs $1.5 more than the ball. How much does the ball cost?",
+        "expected": "0.05",
+        "got": "$0.05",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A bat and a ball cost $3 together. The bat costs $2 more than the ball. How much does the ball cost?",
+        "expected": "0.5",
+        "got": "$0.50",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A bat and a ball cost $5.5 together. The bat costs $5 more than the ball. How much does the ball cost?",
+        "expected": "0.25",
+        "got": "$0.25",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A bat and a ball cost $5.1 together. The bat costs $5 more than the ball. How much does the ball cost?",
+        "expected": "0.05",
+        "got": "$0.05",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A bat and a ball cost $1.4 together. The bat costs $1 more than the ball. How much does the ball cost?",
+        "expected": "0.2",
+        "got": "$0.20",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A bat and a ball cost $5.4 together. The bat costs $5 more than the ball. How much does the ball cost?",
+        "expected": "0.2",
+        "got": "$0.20",
+        "verdict": "wrong"
+      },
+      {
+        "text": "If 5 machines make 5 widgets in 5 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "5",
+        "got": "5 minutes",
+        "verdict": "wrong"
+      },
+      {
+        "text": "If 5 machines make 5 widgets in 5 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "5",
+        "got": "5 minutes",
+        "verdict": "wrong"
+      },
+      {
+        "text": "If 5 machines make 5 widgets in 5 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "5",
+        "got": "5 minutes",
+        "verdict": "wrong"
+      },
+      {
+        "text": "If 5 machines make 5 widgets in 5 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "5",
+        "got": "5 minutes",
+        "verdict": "wrong"
+      },
+      {
+        "text": "If 5 machines make 5 widgets in 5 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "5",
+        "got": "5 minutes",
+        "verdict": "wrong"
+      },
+      {
+        "text": "If 5 machines make 5 widgets in 5 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "5",
+        "got": "5 minutes",
+        "verdict": "wrong"
+      },
+      {
+        "text": "If 5 machines make 5 widgets in 5 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "5",
+        "got": "5 minutes",
+        "verdict": "wrong"
+      },
+      {
+        "text": "If 5 machines make 5 widgets in 5 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "5",
+        "got": "5 minutes",
+        "verdict": "wrong"
+      },
+      {
+        "text": "If 5 machines make 5 widgets in 5 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "5",
+        "got": "5 minutes",
+        "verdict": "wrong"
+      },
+      {
+        "text": "If 5 machines make 5 widgets in 5 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "5",
+        "got": "5 minutes",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 10 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "9",
+        "got": "9 days",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 12 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "11",
+        "got": "11 days",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 24 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "23",
+        "got": "23 days",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 30 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "29",
+        "got": "29 days",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 48 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "47",
+        "got": "47",
+        "verdict": "correct"
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 60 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "59",
+        "got": "59 days",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 7 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "6",
+        "got": "6 days",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 15 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "14",
+        "got": "14 days",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 20 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "19",
+        "got": "19 days",
+        "verdict": "wrong"
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 36 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "35",
+        "got": "35 days",
+        "verdict": "wrong"
+      }
+    ]
+  }
+}

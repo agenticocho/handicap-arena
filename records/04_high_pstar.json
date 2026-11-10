@@ -1,0 +1,27 @@
+{
+  "board": "04_high_pstar",
+  "file": "levels/04_high_pstar.txt",
+  "p_star": null,
+  "p_star_search_bound": 10,
+  "p_star_streams_scanned": 1398100,
+  "witness": null,
+  "solvable": true,
+  "optimal_moves": 14,
+  "gate_verdict": "PASS",
+  "gate_width": 3,
+  "streams_evaluated": 84,
+  "n_control_hits": 45,
+  "control_hits": ["R", "DR", "LR", "RD"],
+  "model_run": {
+    "model": "ornith9b",
+    "budget": 5,
+    "solved": false,
+    "moves": 0,
+    "pushes": 0,
+    "blocked": 0,
+    "malformed": 5,
+    "trace_file": "traces/sokoban_04_high_pstar_ornith9b.json",
+    "status": "withdrawn: budget 5 < registered 40"
+  },
+  "note": "Board with p* > 10 (no periodic word of period <= 10 clears it). Gate passes (control fires, no hits). Model run: all 5 turns malformed (deliberation without commitment), no fixed cycle exploited. Board is solvable in 14 moves (BFS verified)."
+}

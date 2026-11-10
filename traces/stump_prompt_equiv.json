@@ -1,0 +1,25 @@
+{
+  "model": "smol3b",
+  "question": "Alice has 9 apples. She buys 11 more, then gives away 7. How many does she have?",
+  "with_format_instruction": {
+    "prompt": "Answer this Stump question. Output JSON only: {\"answer\": \"...\"}. Question: Alice has 9 apples. She buys 11 more, then gives away 7. How many does she have?",
+    "content": "{\"answer\": \"13\"}",
+    "reasoning_tokens": 141,
+    "finish": "stop",
+    "secs": 9.919
+  },
+  "bare_question": {
+    "prompt": "Alice has 9 apples. She buys 11 more, then gives away 7. How many does she have?",
+    "content": "{\n  \"step-by-step\": [\n    {\n      \"step\": \"Alice starts with 9 apples.\",\n      \"result\": 9\n    },\n    {\n      \"step\": \"She buys 11 more apples.\",\n      \"operation\": \"Addition\",\n      \"numbers\": [9, 11],\n      \"result\": 20\n    },\n    {\n      \"step\": \"She gives away 7 apples.\",\n      \"operation\": \"Subtraction\",\n      \"numbers\": [20, 7],\n      \"result\": 13\n    },\n    {\n      \"step\": \"Calculate the final number of apples.\",\n      \"result\": 13\n    }\n  ]\n}",
+    "reasoning_tokens": 447,
+    "finish": "stop",
+    "secs": 22.592
+  },
+  "bare_question_no_response_format": {
+    "prompt": "Alice has 9 apples. She buys 11 more, then gives away 7. How many does she have?",
+    "content": "\n\nAlice starts with 9 apples. She buys 11 more, so she has:\n\n$$\n9 + 11 = 20\n$$\n\nThen she gives away 7 apples:\n\n$$\n20 - 7 = 13\n$$\n\n**Answer:** Alice has $\\boxed{13}$ apples.",
+    "reasoning_tokens": 365,
+    "finish": "stop",
+    "secs": 8.425
+  }
+}

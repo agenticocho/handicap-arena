@@ -1,0 +1,187 @@
+{
+  "game": "crossword",
+  "source": "generated",
+  "crate": "CROSSWORD_CRATE_2026-11-06_12x14-two-arms.json",
+  "crate_digest": "5d9b8c8401e942b56add338d5289d913e1a00642791ae3856cca98c102155f38",
+  "crate_seed": 11,
+  "word_list_size": 7807,
+  "words_sha256": "8e299e32d3b90006df8c75c0300faeee2970611b98b034ed973f014cd2043b23",
+  "grid_group": "g01",
+  "arms": [
+    "published",
+    "permuted"
+  ],
+  "row_set_digest": "c6f94aa43eb62c368ef77bb899b75d7f806437294085f7e901e8fcca310ed209",
+  "frozen_rows": 2,
+  "slots": 10,
+  "grid_sha256": "393e01c45223d5c8fa5c66fb43ccb393a43a5e951f91889d0d6e8f02854f5e8c",
+  "ceiling": {
+    "clue_resolved": 3,
+    "slots": 10,
+    "resolvable_target": 3,
+    "clue_rule": "definition: a slot counts as resolved when its terse definition fits exactly one declared word",
+    "ambiguous": [
+      {
+        "id": "A1",
+        "kind": "definition",
+        "n_candidates": 10,
+        "candidates": [
+          "CIGAR",
+          "CIGARET",
+          "CIGARS",
+          "FAG",
+          "FAGS",
+          "INHALE"
+        ]
+      },
+      {
+        "id": "D2",
+        "kind": "definition",
+        "n_candidates": 5,
+        "candidates": [
+          "BOA",
+          "BOAS",
+          "MUFFLER",
+          "STOLE",
+          "STOLES"
+        ]
+      },
+      {
+        "id": "A3",
+        "kind": "definition",
+        "n_candidates": 8,
+        "candidates": [
+          "ALTO",
+          "ALTOS",
+          "BASSI",
+          "BASSO",
+          "BASSOS",
+          "SOPRANO"
+        ]
+      },
+      {
+        "id": "A4",
+        "kind": "definition",
+        "n_candidates": 6,
+        "candidates": [
+          "EXPORT",
+          "EXPORTS",
+          "MASONRY",
+          "POTTERY",
+          "ROOFING",
+          "TANNING"
+        ]
+      },
+      {
+        "id": "D3",
+        "kind": "definition",
+        "n_candidates": 10,
+        "candidates": [
+          "AMAZE",
+          "AMAZED",
+          "AMAZES",
+          "AMAZING",
+          "ASTOUND",
+          "BOGGLE"
+        ]
+      },
+      {
+        "id": "A6",
+        "kind": "definition",
+        "n_candidates": 4,
+        "candidates": [
+          "LEVEE",
+          "LEVEES",
+          "QUAY",
+          "QUAYS"
+        ]
+      },
+      {
+        "id": "A7",
+        "kind": "definition",
+        "n_candidates": 8,
+        "candidates": [
+          "BOSSED",
+          "BOSSING",
+          "EMBOSS",
+          "STAMPED",
+          "WOW",
+          "WOWED"
+        ]
+      }
+    ]
+  },
+  "floor": {
+    "verdict": "WINNABLE",
+    "states_expanded": 11,
+    "solution": [],
+    "assignments": {
+      "D1": "DROPOUT",
+      "A1": "PUFFED",
+      "A2": "RAWNESS",
+      "D2": "STOLES",
+      "A3": "BASSO",
+      "A4": "POTTERY",
+      "A5": "GATE",
+      "D3": "AMAZES",
+      "A6": "QUAYS",
+      "A7": "BOSSING"
+    },
+    "fills": 1,
+    "exhausted": true
+  },
+  "unique_fill": true,
+  "null": {
+    "empty_grid_null": {
+      "description": "no-op that submits nothing; empty grid fills nothing and scores 0",
+      "correct_slots": 0,
+      "filled_slots": 0,
+      "malformed": 0,
+      "wrong": 0
+    },
+    "action_ablated_null": {
+      "description": "no-op that submits nothing (action ablation)",
+      "correct_slots": 0,
+      "filled_slots": 0,
+      "malformed": 0,
+      "wrong": 0
+    },
+    "handhold_ceiling": {
+      "description": "submits only clues solvable from the clue alone (sound subset)",
+      "slots": [
+        "D1",
+        "A5"
+      ],
+      "unsound_excluded": [
+        "A2"
+      ],
+      "unique_in_pool_slots": [
+        "D1",
+        "A2",
+        "A5"
+      ],
+      "correct_slots": 2,
+      "total_slots": 10
+    }
+  },
+  "handhold_ceiling": 2,
+  "ablated_null": 0,
+  "model_score": 4,
+  "model_score_detail": {
+    "correct": 4,
+    "wrong": 6,
+    "malformed": 0,
+    "total": 10
+  },
+  "header": [
+    2,
+    0,
+    4
+  ],
+  "header_labels": [
+    "handhold ceiling",
+    "ablated null",
+    "model score"
+  ],
+  "notes": "CPU only, no model card. Empty-grid null is trivially dominated (scores 0), confirming 4/10 is a real gap."
+}

@@ -1,0 +1,16 @@
+{
+  "board": "levels/04_the_long_road.txt",
+  "board_sha256": "ba8cfaa2fa476fdb2372d0f8d38829ae92c7944bd455bdebada6e12f19ce7d82",
+  "p_star": null,
+  "p_star_search_bound": 8,
+  "p_star_note": "no periodic word of period <= 8 clears this board",
+  "p_star_streams_scanned": 87380,
+  "optimal_moves": 14,
+  "solution": "DLLLULDURRRDRU",
+  "pushes": 7,
+  "gate": "PASS",
+  "gate_class": "periodic words of period <= 3 over sorted(sokoban.ACTIONS) = U D L R, repeated to the cap 40",
+  "gate_streams_evaluated": 84,
+  "gate_control_hits": 45,
+  "gate_hits": 0
+}

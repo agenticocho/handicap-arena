@@ -1,0 +1,190 @@
+{
+  "order_ops": {
+    "n": 30,
+    "correct": 0,
+    "malformed": 30,
+    "wrong": 0,
+    "details": [
+      {
+        "text": "What is -6 + (-9 * -1)?",
+        "expected": "3",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (-2 + -5) * -6?",
+        "expected": "42",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (-7 + -3) * -2?",
+        "expected": "20",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is 8 * (-3 + 8)?",
+        "expected": "40",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (-2 - 5) + 9?",
+        "expected": "2",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (-1 - -5) + -3?",
+        "expected": "1",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is 5 * (8 + -6)?",
+        "expected": "10",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (2 - -4) + 2?",
+        "expected": "8",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is -3 + (-1 * -7)?",
+        "expected": "4",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (1 + -8) * -2?",
+        "expected": "14",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is -3 + (9 * 1)?",
+        "expected": "6",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is 6 + (3 * 5)?",
+        "expected": "21",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (-1 - -5) + -2?",
+        "expected": "2",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is 9 * (4 + 9)?",
+        "expected": "117",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is -7 + (-8 * -6)?",
+        "expected": "41",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is -4 * (4 + -7)?",
+        "expected": "12",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (3 - 5) + 7?",
+        "expected": "5",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (8 - -9) + -6?",
+        "expected": "11",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (7 + -4) * 7?",
+        "expected": "21",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is -5 + (6 * 8)?",
+        "expected": "43",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is -1 + (7 * 4)?",
+        "expected": "27",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is 2 * (5 + 7)?",
+        "expected": "24",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (-6 + -2) * -2?",
+        "expected": "16",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (-8 + -2) * -7?",
+        "expected": "70",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is 9 + (9 * 6)?",
+        "expected": "63",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is -2 * (-3 + -3)?",
+        "expected": "12",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is -7 * (-2 + -4)?",
+        "expected": "42",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is 6 * (6 + -3)?",
+        "expected": "18",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (3 - -1) + 5?",
+        "expected": "9",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is 4 + (8 * 6)?",
+        "expected": "52",
+        "got": null,
+        "verdict": "malformed"
+      }
+    ]
+  }
+}

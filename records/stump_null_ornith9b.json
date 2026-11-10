@@ -1,0 +1,110 @@
+{
+  "game": "stump",
+  "grammar": "illposed-v1",
+  "grammar_digest": "e0a456b34c5964b5b6709e754c1dd597b622bb4f8bea510c77d1996f0a7b2c83",
+  "row_set_digest": "8c8008d34a4bc6918508e545db4897010f071b3ae8d08e41b50451d95888ca5a",
+  "frozen_row_file": "records/stump_frozen_row_illposed-v1.json",
+  "frozen_rows": 30,
+  "A": 41,
+  "n": 30,
+  "model": "ornith9b",
+  "constant_input_ceiling": 15,
+  "ablated_null": 15,
+  "model_score": 26,
+  "null": {
+    "constant_input_ceiling": 15,
+    "constant_input_variants": [
+      {
+        "name": "constant_insufficient",
+        "answer": "INSUFFICIENT",
+        "correct": 15,
+        "well_posed": {
+          "correct": 0,
+          "total": 15
+        },
+        "ill_posed": {
+          "correct": 15,
+          "total": 15
+        },
+        "profile": {
+          "correct": 15,
+          "refused": 15,
+          "parametric": 0,
+          "confabulated": 0,
+          "malformed": 0
+        }
+      },
+      {
+        "name": "constant_zero",
+        "answer": "0",
+        "correct": 0,
+        "well_posed": {
+          "correct": 0,
+          "total": 15
+        },
+        "ill_posed": {
+          "correct": 0,
+          "total": 15
+        },
+        "profile": {
+          "correct": 0,
+          "refused": 0,
+          "parametric": 0,
+          "confabulated": 15,
+          "malformed": 0
+        }
+      },
+      {
+        "name": "constant_parametric",
+        "answer": "INSUFFICIENT: X - 3",
+        "correct": 15,
+        "well_posed": {
+          "correct": 0,
+          "total": 15
+        },
+        "ill_posed": {
+          "correct": 15,
+          "total": 15
+        },
+        "profile": {
+          "correct": 15,
+          "refused": 0,
+          "parametric": 15,
+          "confabulated": 0,
+          "malformed": 0
+        }
+      }
+    ],
+    "ablated_null": 15,
+    "ablated_null_variant": "constant_insufficient",
+    "model_score": 26
+  },
+  "model_score_detail": {
+    "correct": 26,
+    "total": 30,
+    "profile": {
+      "correct": 26,
+      "refused": 4,
+      "parametric": 7,
+      "confabulated": 0,
+      "malformed": 3
+    }
+  },
+  "profile": {
+    "correct": 26,
+    "refused": 4,
+    "parametric": 7,
+    "confabulated": 0,
+    "malformed": 3
+  },
+  "header": [
+    15,
+    15,
+    26
+  ],
+  "header_labels": [
+    "constant-input ceiling",
+    "ablated null",
+    "model score"
+  ]
+}

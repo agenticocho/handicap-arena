@@ -1,0 +1,28 @@
+{
+  "board": "levels/04_high_pstar.txt",
+  "p_star": null,
+  "p_star_search_bound": 11,
+  "p_star_streams_scanned": 5592404,
+  "p_star_note": "no periodic word of period <= 11 clears this board",
+  "witness": null,
+  "supersedes": null,
+  "completes": {
+    "record": "records/04_high_pstar.json",
+    "p_star": null,
+    "p_star_search_bound": 10,
+    "p_star_streams_scanned": 1398100,
+    "rule": "Ruling 712 \u2014 a bounded negative is indexed by its bound. The bound-10 null stays true; this row completes it and does not supersede it. Never quote a p_star value without its search_bound."
+  },
+  "provenance": {
+    "command": "python3 degenerate_gate.py --event sokoban --board levels/04_high_pstar.txt --max-period 11 --json --write-json records/04_high_pstar_pstar11.json",
+    "note": "--write-json produced NO file; this record was transcribed by hand from the process stdout. Watch for that flag not writing.",
+    "captured_at": "2026-11-08T17:20:35.857378+00:00",
+    "stdout": {
+      "period": null,
+      "word": null,
+      "streams_scanned": 5592404,
+      "note": "no periodic word of period <= 11 clears this board",
+      "board": "levels/04_high_pstar.txt"
+    }
+  }
+}

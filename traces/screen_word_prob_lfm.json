@@ -1,0 +1,190 @@
+{
+  "word_prob": {
+    "n": 30,
+    "correct": 18,
+    "malformed": 0,
+    "wrong": 12,
+    "details": [
+      {
+        "text": "Alice has 15 apples. She buys 18 more, then gives away 30. How many does she have?",
+        "expected": "3",
+        "got": "3",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 15 apples. She buys 17 more, then gives away 28. How many does she have?",
+        "expected": "4",
+        "got": "4",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 19 apples. She buys 7 more, then gives away 6. How many does she have?",
+        "expected": "20",
+        "got": "8",
+        "verdict": "wrong"
+      },
+      {
+        "text": "Alice has 17 apples. She buys 16 more, then gives away 12. How many does she have?",
+        "expected": "21",
+        "got": "9",
+        "verdict": "wrong"
+      },
+      {
+        "text": "Alice has 4 apples. She buys 15 more, then gives away 10. How many does she have?",
+        "expected": "9",
+        "got": "9",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 5 apples. She buys 3 more, then gives away 5. How many does she have?",
+        "expected": "3",
+        "got": "2",
+        "verdict": "wrong"
+      },
+      {
+        "text": "Alice has 2 apples. She buys 20 more, then gives away 13. How many does she have?",
+        "expected": "9",
+        "got": "9",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 15 apples. She buys 20 more, then gives away 11. How many does she have?",
+        "expected": "24",
+        "got": "24",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 20 apples. She buys 1 more, then gives away 17. How many does she have?",
+        "expected": "4",
+        "got": "2",
+        "verdict": "wrong"
+      },
+      {
+        "text": "Alice has 3 apples. She buys 2 more, then gives away 1. How many does she have?",
+        "expected": "4",
+        "got": "4",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 7 apples. She buys 8 more, then gives away 10. How many does she have?",
+        "expected": "5",
+        "got": "6",
+        "verdict": "wrong"
+      },
+      {
+        "text": "Alice has 1 apples. She buys 15 more, then gives away 6. How many does she have?",
+        "expected": "10",
+        "got": "10",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 15 apples. She buys 19 more, then gives away 13. How many does she have?",
+        "expected": "21",
+        "got": "14",
+        "verdict": "wrong"
+      },
+      {
+        "text": "Alice has 17 apples. She buys 8 more, then gives away 21. How many does she have?",
+        "expected": "4",
+        "got": "4",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 10 apples. She buys 16 more, then gives away 1. How many does she have?",
+        "expected": "25",
+        "got": "25",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 3 apples. She buys 15 more, then gives away 9. How many does she have?",
+        "expected": "9",
+        "got": "9",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 14 apples. She buys 18 more, then gives away 30. How many does she have?",
+        "expected": "2",
+        "got": "2",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 3 apples. She buys 9 more, then gives away 6. How many does she have?",
+        "expected": "6",
+        "got": "6",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 8 apples. She buys 17 more, then gives away 10. How many does she have?",
+        "expected": "15",
+        "got": "5",
+        "verdict": "wrong"
+      },
+      {
+        "text": "Alice has 1 apples. She buys 3 more, then gives away 3. How many does she have?",
+        "expected": "1",
+        "got": "1",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 4 apples. She buys 13 more, then gives away 4. How many does she have?",
+        "expected": "13",
+        "got": "9",
+        "verdict": "wrong"
+      },
+      {
+        "text": "Alice has 10 apples. She buys 13 more, then gives away 3. How many does she have?",
+        "expected": "20",
+        "got": "26",
+        "verdict": "wrong"
+      },
+      {
+        "text": "Alice has 1 apples. She buys 1 more, then gives away 1. How many does she have?",
+        "expected": "1",
+        "got": "1",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 7 apples. She buys 2 more, then gives away 8. How many does she have?",
+        "expected": "1",
+        "got": "6",
+        "verdict": "wrong"
+      },
+      {
+        "text": "Alice has 13 apples. She buys 13 more, then gives away 14. How many does she have?",
+        "expected": "12",
+        "got": "2",
+        "verdict": "wrong"
+      },
+      {
+        "text": "Alice has 3 apples. She buys 19 more, then gives away 21. How many does she have?",
+        "expected": "1",
+        "got": "1",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 7 apples. She buys 9 more, then gives away 6. How many does she have?",
+        "expected": "10",
+        "got": "10",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 3 apples. She buys 10 more, then gives away 6. How many does she have?",
+        "expected": "7",
+        "got": "7",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 1 apples. She buys 14 more, then gives away 13. How many does she have?",
+        "expected": "2",
+        "got": "2",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 4 apples. She buys 5 more, then gives away 4. How many does she have?",
+        "expected": "5",
+        "got": "2",
+        "verdict": "wrong"
+      }
+    ]
+  }
+}

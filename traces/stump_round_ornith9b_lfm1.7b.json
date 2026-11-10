@@ -1,0 +1,533 @@
+{
+  "task": "STUMP-1",
+  "run_type": "match",
+  "label": "STUMP \u2014 word-problem grammar, measures multi-step arithmetic",
+  "spec_version": "2026-11-05.3",
+  "note": "WORKED EXAMPLE shape; model-generated arithmetic questions.",
+  "grammar": {
+    "id": "word_prob-v1",
+    "rule": "Q(a, b, c) = 'Alice has a apples. She buys b more, then gives away c. How many does she have?' with a, b in 1..20, c in 1..(a+b); answer = a + b - c (non-negative)",
+    "answer_form": "^(?:0|[1-9][0-9]?)$",
+    "answer_form_note": "canonical: bare decimal digits, no sign, no spaces, no prose, no units; range 0..99",
+    "A_basis": "distinct values of a + b - c for a,b in 1..20, c in 1..(a+b) = 40 distinct answers (0..39)",
+    "computes_not_looks_up": true,
+    "identity": "Alice has 2 apples. She buys 3 more, then gives away 1. How many does she have? = 4",
+    "identity_value": 4,
+    "identity_malformed": "four",
+    "digest": "46e0df29eb093270e367d8ed558c13e3913679a5c5c61ee6396aeb79209330e1"
+  },
+  "params": {
+    "n": 5,
+    "A": 40,
+    "tolerance": 0.01,
+    "p_ref": 0.9,
+    "question_space_size": 8400,
+    "distinct_answers": 40,
+    "ceiling": {
+      "P_coin_wins": 6.423708496093744e-05,
+      "tie_at_zero_limit": 4.9999999999999945e-06,
+      "recomputed_from": {
+        "n": 5,
+        "A": 40,
+        "p": 0.9
+      },
+      "formula": "P(X>Y) + 0.5 P(X=Y), X~Bin(n,1/A), Y~Bin(n,p)"
+    },
+    "A_is_free_n_is_paid": "A is checked at admission, zero inference; n costs 2n answers per round"
+  },
+  "panel": [
+    {
+      "id": "panel-1",
+      "ref": "PLACEHOLDER",
+      "note": "digest-pinned before the run; never edited mid-run"
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "freeze": {
+        "grammar_digest": "46e0df29eb093270e367d8ed558c13e3913679a5c5c61ee6396aeb79209330e1",
+        "questions_committed_at": "2026-11-06T22:53:21Z",
+        "question_sets_digest": "b63cd57d0c9c45abf374652fe20b00854c574e813e59f7c783f77c36bbdf6c4f",
+        "answers_committed_at": "2026-11-06T22:59:28Z",
+        "answers_digest": "bc4229006e949c87706aa2cec2680d8074f051867dbf19917307394948ea022a",
+        "rule": "both question sets are hashed and exchanged before either side's answers are revealed"
+      },
+      "questions": {
+        "A": [
+          {
+            "qid": "A-1",
+            "side": "A",
+            "text": "Alice has 5 apples. She buys 8 more, then gives away 10. How many does she have?",
+            "template": "word_prob(a,b,c): a,b in 1..20, c in 1..(a+b), answer = a+b-c",
+            "A": 40,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "3",
+            "asker_answer_sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+            "admissible": true,
+            "inadmissible_reason": null,
+            "fallback": false
+          },
+          {
+            "qid": "A-2",
+            "side": "A",
+            "text": "Alice has 5 apples. She buys 8 more, then gives away 3. How many does she have?",
+            "template": "word_prob(a,b,c): a,b in 1..20, c in 1..(a+b), answer = a+b-c",
+            "A": 40,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "10",
+            "asker_answer_sha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5",
+            "admissible": true,
+            "inadmissible_reason": null,
+            "fallback": false
+          },
+          {
+            "qid": "A-3",
+            "side": "A",
+            "text": "Alice has 15 apples. She buys 7 more, then gives away 9. How many does she have?",
+            "template": "word_prob(a,b,c): a,b in 1..20, c in 1..(a+b), answer = a+b-c",
+            "A": 40,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "13",
+            "asker_answer_sha256": "3fdba35f04dc8c462986c992bcf875546257113072a909c162f7e470e581e278",
+            "admissible": true,
+            "inadmissible_reason": null,
+            "fallback": false
+          },
+          {
+            "qid": "A-4",
+            "side": "A",
+            "text": "Alice has 5 apples. She buys 8 more, then gives away 4. How many does she have?",
+            "template": "word_prob(a,b,c): a,b in 1..20, c in 1..(a+b), answer = a+b-c",
+            "A": 40,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "9",
+            "asker_answer_sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+            "admissible": true,
+            "inadmissible_reason": null,
+            "fallback": false
+          },
+          {
+            "qid": "A-5",
+            "side": "A",
+            "text": "Alice has 15 apples. She buys 8 more, then gives away 12. How many does she have?",
+            "template": "word_prob(a,b,c): a,b in 1..20, c in 1..(a+b), answer = a+b-c",
+            "A": 40,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "11",
+            "asker_answer_sha256": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8",
+            "admissible": true,
+            "inadmissible_reason": null,
+            "fallback": false
+          }
+        ],
+        "B": [
+          {
+            "qid": "B-1",
+            "side": "B",
+            "text": "Alice has 10 apples. She buys 5 more, then gives away 3. How many does she have?",
+            "template": "word_prob(a,b,c): a,b in 1..20, c in 1..(a+b), answer = a+b-c",
+            "A": 40,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "12",
+            "asker_answer_sha256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918",
+            "admissible": true,
+            "inadmissible_reason": null,
+            "fallback": false
+          },
+          {
+            "qid": "B-2",
+            "side": "B",
+            "text": "Alice has 10 apples. She buys 5 more, then gives away 4. How many does she have?",
+            "template": "word_prob(a,b,c): a,b in 1..20, c in 1..(a+b), answer = a+b-c",
+            "A": 40,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "11",
+            "asker_answer_sha256": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8",
+            "admissible": true,
+            "inadmissible_reason": null,
+            "fallback": false
+          },
+          {
+            "qid": "B-3",
+            "side": "B",
+            "text": "Alice has 5 apples. She buys 3 more, then gives away 2. How many does she have?",
+            "template": "word_prob(a,b,c): a,b in 1..20, c in 1..(a+b), answer = a+b-c",
+            "A": 40,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "6",
+            "asker_answer_sha256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+            "admissible": true,
+            "inadmissible_reason": null,
+            "fallback": false
+          },
+          {
+            "qid": "B-4",
+            "side": "B",
+            "text": "Alice has 17 apples. She buys 12 more, then gives away 15. How many does she have?",
+            "template": "word_prob(a,b,c): a,b in 1..20, c in 1..(a+b), answer = a+b-c",
+            "A": 40,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "14",
+            "asker_answer_sha256": "8527a891e224136950ff32ca212b45bc93f69fbb801c3b1ebedac52775f99e61",
+            "admissible": true,
+            "inadmissible_reason": null,
+            "fallback": true
+          },
+          {
+            "qid": "B-5",
+            "side": "B",
+            "text": "Alice has 8 apples. She buys 16 more, then gives away 24. How many does she have?",
+            "template": "word_prob(a,b,c): a,b in 1..20, c in 1..(a+b), answer = a+b-c",
+            "A": 40,
+            "A_source": "recomputed by the oracle from the grammar: A_basis",
+            "asker_answer": "0",
+            "asker_answer_sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+            "admissible": true,
+            "inadmissible_reason": null,
+            "fallback": true
+          }
+        ]
+      },
+      "answers": {
+        "lfm1.7b": {
+          "A-1": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0,
+            "timeout": false
+          },
+          "A-2": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0,
+            "timeout": false
+          },
+          "A-3": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0,
+            "timeout": false
+          },
+          "A-4": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0,
+            "timeout": false
+          },
+          "A-5": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0,
+            "timeout": false
+          },
+          "B-1": {
+            "attempts": 0,
+            "malformed": 0,
+            "wrong": 0
+          },
+          "B-2": {
+            "attempts": 0,
+            "malformed": 0,
+            "wrong": 0
+          },
+          "B-3": {
+            "attempts": 0,
+            "malformed": 0,
+            "wrong": 0
+          },
+          "B-4": {
+            "attempts": 0,
+            "malformed": 0,
+            "wrong": 0
+          },
+          "B-5": {
+            "attempts": 0,
+            "malformed": 0,
+            "wrong": 0
+          }
+        },
+        "ornith9b": {
+          "B-1": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0,
+            "timeout": false
+          },
+          "B-2": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0,
+            "timeout": false
+          },
+          "B-3": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0,
+            "timeout": false
+          },
+          "B-4": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0,
+            "timeout": false
+          },
+          "B-5": {
+            "attempts": 1,
+            "malformed": 0,
+            "wrong": 0,
+            "timeout": false
+          },
+          "A-1": {
+            "attempts": 0,
+            "malformed": 0,
+            "wrong": 0
+          },
+          "A-2": {
+            "attempts": 0,
+            "malformed": 0,
+            "wrong": 0
+          },
+          "A-3": {
+            "attempts": 0,
+            "malformed": 0,
+            "wrong": 0
+          },
+          "A-4": {
+            "attempts": 0,
+            "malformed": 0,
+            "wrong": 0
+          },
+          "A-5": {
+            "attempts": 0,
+            "malformed": 0,
+            "wrong": 0
+          }
+        }
+      },
+      "counters_rule": "malformed is over attempts; wrong is over well-formed attempts; the two never merge",
+      "result": {
+        "correct": {
+          "A": 5,
+          "B": 5
+        },
+        "winner": "DRAW",
+        "items_graded_per_side": 5,
+        "items_graded_total": 10,
+        "null": {
+          "P_coin_wins": 6.423708496093744e-05,
+          "cell": {
+            "n": 5,
+            "A": 40,
+            "p": 0.9
+          }
+        },
+        "note": "a row with no null is not a result",
+        "tiebreak": {
+          "rounds": 3,
+          "winner": "DRAW"
+        }
+      }
+    }
+  ],
+  "model_a": "ornith9b",
+  "model_b": "lfm1.7b",
+  "grammar_digest": "46e0df29eb093270e367d8ed558c13e3913679a5c5c61ee6396aeb79209330e1",
+  "rows": [
+    {
+      "arm": "A",
+      "question": "Alice has 5 apples. She buys 8 more, then gives away 10. How many does she have?",
+      "type": "math",
+      "model_a_answer": "3",
+      "model_b_answer": "3",
+      "oracle_verdict": "correct",
+      "secs": 0.327,
+      "gen_tokens": 7,
+      "budget_hit": false,
+      "error": null,
+      "fallback": false,
+      "timeout": false,
+      "grammar_digest": "46e0df29eb093270e367d8ed558c13e3913679a5c5c61ee6396aeb79209330e1",
+      "A": 40,
+      "n": 5,
+      "qid": "A-1"
+    },
+    {
+      "arm": "A",
+      "question": "Alice has 5 apples. She buys 8 more, then gives away 3. How many does she have?",
+      "type": "math",
+      "model_a_answer": "10",
+      "model_b_answer": "10",
+      "oracle_verdict": "correct",
+      "secs": 0.322,
+      "gen_tokens": 7,
+      "budget_hit": false,
+      "error": null,
+      "fallback": false,
+      "timeout": false,
+      "grammar_digest": "46e0df29eb093270e367d8ed558c13e3913679a5c5c61ee6396aeb79209330e1",
+      "A": 40,
+      "n": 5,
+      "qid": "A-2"
+    },
+    {
+      "arm": "A",
+      "question": "Alice has 15 apples. She buys 7 more, then gives away 9. How many does she have?",
+      "type": "math",
+      "model_a_answer": "13",
+      "model_b_answer": "13",
+      "oracle_verdict": "correct",
+      "secs": 0.336,
+      "gen_tokens": 7,
+      "budget_hit": false,
+      "error": null,
+      "fallback": false,
+      "timeout": false,
+      "grammar_digest": "46e0df29eb093270e367d8ed558c13e3913679a5c5c61ee6396aeb79209330e1",
+      "A": 40,
+      "n": 5,
+      "qid": "A-3"
+    },
+    {
+      "arm": "A",
+      "question": "Alice has 5 apples. She buys 8 more, then gives away 4. How many does she have?",
+      "type": "math",
+      "model_a_answer": "9",
+      "model_b_answer": "9",
+      "oracle_verdict": "correct",
+      "secs": 0.328,
+      "gen_tokens": 7,
+      "budget_hit": false,
+      "error": null,
+      "fallback": false,
+      "timeout": false,
+      "grammar_digest": "46e0df29eb093270e367d8ed558c13e3913679a5c5c61ee6396aeb79209330e1",
+      "A": 40,
+      "n": 5,
+      "qid": "A-4"
+    },
+    {
+      "arm": "A",
+      "question": "Alice has 15 apples. She buys 8 more, then gives away 12. How many does she have?",
+      "type": "math",
+      "model_a_answer": "11",
+      "model_b_answer": "11",
+      "oracle_verdict": "correct",
+      "secs": 0.314,
+      "gen_tokens": 7,
+      "budget_hit": false,
+      "error": null,
+      "fallback": false,
+      "timeout": false,
+      "grammar_digest": "46e0df29eb093270e367d8ed558c13e3913679a5c5c61ee6396aeb79209330e1",
+      "A": 40,
+      "n": 5,
+      "qid": "A-5"
+    },
+    {
+      "arm": "B",
+      "question": "Alice has 10 apples. She buys 5 more, then gives away 3. How many does she have?",
+      "type": "math",
+      "model_a_answer": "12",
+      "model_b_answer": "12",
+      "oracle_verdict": "correct",
+      "secs": 8.077,
+      "gen_tokens": 58,
+      "budget_hit": false,
+      "error": null,
+      "fallback": false,
+      "timeout": false,
+      "grammar_digest": "46e0df29eb093270e367d8ed558c13e3913679a5c5c61ee6396aeb79209330e1",
+      "A": 40,
+      "n": 5,
+      "qid": "B-1"
+    },
+    {
+      "arm": "B",
+      "question": "Alice has 10 apples. She buys 5 more, then gives away 4. How many does she have?",
+      "type": "math",
+      "model_a_answer": "11",
+      "model_b_answer": "11",
+      "oracle_verdict": "correct",
+      "secs": 18.167,
+      "gen_tokens": 61,
+      "budget_hit": false,
+      "error": null,
+      "fallback": false,
+      "timeout": false,
+      "grammar_digest": "46e0df29eb093270e367d8ed558c13e3913679a5c5c61ee6396aeb79209330e1",
+      "A": 40,
+      "n": 5,
+      "qid": "B-2"
+    },
+    {
+      "arm": "B",
+      "question": "Alice has 5 apples. She buys 3 more, then gives away 2. How many does she have?",
+      "type": "math",
+      "model_a_answer": "6",
+      "model_b_answer": "6",
+      "oracle_verdict": "correct",
+      "secs": 13.242,
+      "gen_tokens": 51,
+      "budget_hit": false,
+      "error": null,
+      "fallback": false,
+      "timeout": false,
+      "grammar_digest": "46e0df29eb093270e367d8ed558c13e3913679a5c5c61ee6396aeb79209330e1",
+      "A": 40,
+      "n": 5,
+      "qid": "B-3"
+    },
+    {
+      "arm": "B",
+      "question": "Alice has 17 apples. She buys 12 more, then gives away 15. How many does she have?",
+      "type": "math",
+      "model_a_answer": "14",
+      "model_b_answer": "14",
+      "oracle_verdict": "correct",
+      "secs": 19.0,
+      "gen_tokens": 65,
+      "budget_hit": false,
+      "error": null,
+      "fallback": true,
+      "timeout": false,
+      "grammar_digest": "46e0df29eb093270e367d8ed558c13e3913679a5c5c61ee6396aeb79209330e1",
+      "A": 40,
+      "n": 5,
+      "qid": "B-4"
+    },
+    {
+      "arm": "B",
+      "question": "Alice has 8 apples. She buys 16 more, then gives away 24. How many does she have?",
+      "type": "math",
+      "model_a_answer": "0",
+      "model_b_answer": "0",
+      "oracle_verdict": "correct",
+      "secs": 23.154,
+      "gen_tokens": 60,
+      "budget_hit": false,
+      "error": null,
+      "fallback": true,
+      "timeout": false,
+      "grammar_digest": "46e0df29eb093270e367d8ed558c13e3913679a5c5c61ee6396aeb79209330e1",
+      "A": 40,
+      "n": 5,
+      "qid": "B-5"
+    }
+  ],
+  "gen_a": {
+    "secs": 66.27585649490356,
+    "gen_tokens": 844,
+    "budget_hits": 0,
+    "attempts": 5,
+    "timeouts": 0
+  },
+  "gen_b": {
+    "secs": 38.41142535209656,
+    "gen_tokens": 1075,
+    "budget_hits": 0,
+    "attempts": 25,
+    "timeouts": 0
+  },
+  "secs_total": 366.391
+}

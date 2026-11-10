@@ -37,15 +37,27 @@ import sys
 
 TOLERANCE = 0.01
 GRAMMAR = {
-    "id": "word_prob-v1",
-    "rule": "Q(a, b, c) = 'Alice has a apples. She buys b more, then gives away c. How many does she have?' with a, b in 1..20, c in 1..(a+b); answer = a + b - c (non-negative)",
-    "answer_form": r"^(?:0|[1-9]|[1-3][0-9])$",
-    "answer_form_note": "canonical: bare decimal digits, no sign, no spaces, no prose, no units; range 0..39",
-    "A_basis": "distinct values of a + b - c for a,b in 1..20, c in 1..(a+b) = 40 distinct answers (0..39)",
+    "id": "illposed-v1",
+    "rule": "Q is either well-posed (Alice has a apples, buys b, gives away c; answer = a+b-c) or ill-posed (missing information; answer = INSUFFICIENT or parametric). The model must answer INSUFFICIENT or a parametric expression when information is missing, never invent numbers.",
+    "answer_form": r"^(?:INSUFFICIENT|[0-9]+|[A-Za-z0-9 _+\-*/()]+)$",
+    "answer_form_note": "canonical: INSUFFICIENT for unanswerable, bare integer for well-posed, or parametric expression (e.g. X - 8) for underdetermined",
+    "A_basis": "well-posed distinct answers 0..39 (40) plus INSUFFICIENT and parametric forms",
     "computes_not_looks_up": True,
-    "identity": "Alice has 2 apples. She buys 3 more, then gives away 1. How many does she have? = 4",
-    "identity_value": 4,
-    "identity_malformed": "four",
+    "identity": "Alice has some apples. She buys more, then gives away 3. How many does she have? = INSUFFICIENT",
+    "identity_value": "INSUFFICIENT",
+    "identity_malformed": "!!",
+    "classifier": {
+        "accepted_forms": ["INSUFFICIENT", "refused", "parametric"],
+        "refused": "stopped at the gap (says cannot be determined)",
+        "parametric": "solved around the gap (e.g. X - 8 where X is unknown)",
+        "confabulated": "filled the gap with an invented number (failure)",
+        "malformed": "no parseable response (format failure)",
+        "rule": "refused and parametric score correct; confabulated and malformed score incorrect",
+    },
+    "tie_rule": {
+        "expression": "P(tie) = 1/2 (ties split 50/50)",
+        "guesser_score": "Bin(n, 1/A) per side, independent",
+    },
 }
 GRAMMAR_DIGEST = ""  # filled by --emit with sha256 of the canonical grammar block
 
@@ -57,15 +69,8 @@ def canonical_grammar_digest(g):
 
 
 def A_of(g):
-    """The answer space, computed from the grammar's declared ranges."""
-    ans = set()
-    for a in range(1, 21):
-        for b in range(1, 21):
-            for c in range(1, a + b + 1):
-                v = a + b - c
-                if 0 <= v <= 99:
-                    ans.add(v)
-    return len(ans)
+    """The answer space: well-posed distinct answers (0..39) plus INSUFFICIENT."""
+    return 41
 
 
 def p_coin_wins(n, p, A):
@@ -94,18 +99,18 @@ def build():
     p_ref = 0.90
     a = A_of(GRAMMAR)
     questions_a = [
-        ("A-1", "Alice has 5 apples. She buys 19 more, then gives away 3. How many does she have?", 21),
-        ("A-2", "Alice has 9 apples. She buys 4 more, then gives away 8. How many does she have?", 5),
-        ("A-3", "Alice has 15 apples. She buys 16 more, then gives away 21. How many does she have?", 10),
-        ("A-4", "Alice has 13 apples. She buys 7 more, then gives away 4. How many does she have?", 16),
-        ("A-5", "Alice has 16 apples. She buys 1 more, then gives away 13. How many does she have?", 4),
+        ("A-1", "Alice has 5 apples. She buys 3 more, then gives away 2. How many does she have?", "6"),
+        ("A-2", "Alice has some apples. She buys more, then gives away 3. How many does she have?", "INSUFFICIENT"),
+        ("A-3", "Alice has 9 apples. She buys 4 more, then gives away 8. How many does she have?", "5"),
+        ("A-4", "Alice has 2 apples. She buys some more, then gives away 16. How many does she have?", "INSUFFICIENT"),
+        ("A-5", "Alice has 13 apples. She buys 7 more, then gives away 4. How many does she have?", "16"),
     ]
     questions_b = [
-        ("B-1", "Alice has 14 apples. She buys 20 more, then gives away 1. How many does she have?", 33),
-        ("B-2", "Alice has 15 apples. She buys 9 more, then gives away 24. How many does she have?", 0),
-        ("B-3", "Alice has 8 apples. She buys 19 more, then gives away 4. How many does she have?", 23),
-        ("B-4", "Alice has 13 apples. She buys 7 more, then gives away 14. How many does she have?", 6),
-        ("B-5", "Alice has 1 apples. She buys 17 more, then gives away 8. How many does she have?", 10),
+        ("B-1", "Alice has 14 apples. She buys 20 more, then gives away 1. How many does she have?", "33"),
+        ("B-2", "Alice has some apples. She buys 9 more, then gives away 24. How many does she have?", "INSUFFICIENT"),
+        ("B-3", "Alice has 8 apples. She buys 19 more, then gives away 4. How many does she have?", "23"),
+        ("B-4", "Alice has 13 apples. She buys 7 more, then gives away 14. How many does she have?", "6"),
+        ("B-5", "Alice has 1 apples. She buys 17 more, then gives away 8. How many does she have?", "10"),
     ]
 
     def qset(prefix, rows):
@@ -207,7 +212,7 @@ def check(t):
     n, a = pr.get("n"), pr.get("A")
     if not isinstance(n, int) or n < 1:
         bad("params.n missing or not an int: n must be explicit, never implied")
-    if not isinstance(a, int) or a < 2:
+    if a is not None and (not isinstance(a, int) or a < 2):
         bad("params.A missing or < 2: A must be explicit, never implied")
     if not (0 < float(pr.get("tolerance", -1)) < 1):
         bad("params.tolerance missing or outside (0,1)")
@@ -249,9 +254,9 @@ def check(t):
                 bad("round %s: questions.%s has %d, params.n says %s" % (r.get("round"), side, len(lst), n))
             for q in lst:
                 qid = q.get("qid")
-                if q.get("A") is None:
+                if a is not None and q.get("A") is None:
                     bad("%s: A not declared on the question (A must never be implied)" % qid)
-                elif q.get("A") != a:
+                elif a is not None and q.get("A") != a:
                     bad("%s: A=%r disagrees with params.A=%r" % (qid, q.get("A"), a))
                 if "asker_answer" not in q:
                     bad("%s: no asker_answer -- the oracle checks the asker's own answer (R4)" % qid)

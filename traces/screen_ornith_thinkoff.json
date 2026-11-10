@@ -1,0 +1,754 @@
+{
+  "order_ops": {
+    "n": 30,
+    "correct": 0,
+    "malformed": 30,
+    "wrong": 0,
+    "details": [
+      {
+        "text": "What is -6 + (-9 * -1)?",
+        "expected": "3",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (-2 + -5) * -6?",
+        "expected": "42",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (-7 + -3) * -2?",
+        "expected": "20",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is 8 * (-3 + 8)?",
+        "expected": "40",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (-2 - 5) + 9?",
+        "expected": "2",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (-1 - -5) + -3?",
+        "expected": "1",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is 5 * (8 + -6)?",
+        "expected": "10",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (2 - -4) + 2?",
+        "expected": "8",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is -3 + (-1 * -7)?",
+        "expected": "4",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (1 + -8) * -2?",
+        "expected": "14",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is -3 + (9 * 1)?",
+        "expected": "6",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is 6 + (3 * 5)?",
+        "expected": "21",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (-1 - -5) + -2?",
+        "expected": "2",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is 9 * (4 + 9)?",
+        "expected": "117",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is -7 + (-8 * -6)?",
+        "expected": "41",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is -4 * (4 + -7)?",
+        "expected": "12",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (3 - 5) + 7?",
+        "expected": "5",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (8 - -9) + -6?",
+        "expected": "11",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (7 + -4) * 7?",
+        "expected": "21",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is -5 + (6 * 8)?",
+        "expected": "43",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is -1 + (7 * 4)?",
+        "expected": "27",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is 2 * (5 + 7)?",
+        "expected": "24",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (-6 + -2) * -2?",
+        "expected": "16",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (-8 + -2) * -7?",
+        "expected": "70",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is 9 + (9 * 6)?",
+        "expected": "63",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is -2 * (-3 + -3)?",
+        "expected": "12",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is -7 * (-2 + -4)?",
+        "expected": "42",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is 6 * (6 + -3)?",
+        "expected": "18",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is (3 - -1) + 5?",
+        "expected": "9",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What is 4 + (8 * 6)?",
+        "expected": "52",
+        "got": null,
+        "verdict": "malformed"
+      }
+    ]
+  },
+  "unit_conv": {
+    "n": 30,
+    "correct": 0,
+    "malformed": 30,
+    "wrong": 0,
+    "details": [
+      {
+        "text": "Convert 5 minutes to seconds. Answer in seconds.",
+        "expected": "300",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 4 minutes to seconds. Answer in seconds.",
+        "expected": "240",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 8 minutes to seconds. Answer in seconds.",
+        "expected": "480",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 5 minutes to seconds. Answer in seconds.",
+        "expected": "300",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 11 minutes to seconds. Answer in seconds.",
+        "expected": "660",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 13 minutes to seconds. Answer in seconds.",
+        "expected": "780",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 1 minutes to seconds. Answer in seconds.",
+        "expected": "60",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 5 minutes to seconds. Answer in seconds.",
+        "expected": "300",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 10 minutes to seconds. Answer in seconds.",
+        "expected": "600",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 16 minutes to seconds. Answer in seconds.",
+        "expected": "960",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 3 minutes to seconds. Answer in seconds.",
+        "expected": "180",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 9 minutes to seconds. Answer in seconds.",
+        "expected": "540",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 5 minutes to seconds. Answer in seconds.",
+        "expected": "300",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 8 minutes to seconds. Answer in seconds.",
+        "expected": "480",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 1 minutes to seconds. Answer in seconds.",
+        "expected": "60",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 15 minutes to seconds. Answer in seconds.",
+        "expected": "900",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 12 minutes to seconds. Answer in seconds.",
+        "expected": "720",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 7 minutes to seconds. Answer in seconds.",
+        "expected": "420",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 5 minutes to seconds. Answer in seconds.",
+        "expected": "300",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 7 minutes to seconds. Answer in seconds.",
+        "expected": "420",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 9 minutes to seconds. Answer in seconds.",
+        "expected": "540",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 15 minutes to seconds. Answer in seconds.",
+        "expected": "900",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 2 minutes to seconds. Answer in seconds.",
+        "expected": "120",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 3 minutes to seconds. Answer in seconds.",
+        "expected": "180",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 4 minutes to seconds. Answer in seconds.",
+        "expected": "240",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 14 minutes to seconds. Answer in seconds.",
+        "expected": "840",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 3 minutes to seconds. Answer in seconds.",
+        "expected": "180",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 1 minutes to seconds. Answer in seconds.",
+        "expected": "60",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 9 minutes to seconds. Answer in seconds.",
+        "expected": "540",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Convert 5 minutes to seconds. Answer in seconds.",
+        "expected": "300",
+        "got": null,
+        "verdict": "malformed"
+      }
+    ]
+  },
+  "word_prob": {
+    "n": 30,
+    "correct": 0,
+    "malformed": 30,
+    "wrong": 0,
+    "details": [
+      {
+        "text": "Alice has 15 apples. She buys 18 more, then gives away 30. How many does she have?",
+        "expected": "3",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 15 apples. She buys 17 more, then gives away 28. How many does she have?",
+        "expected": "4",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 19 apples. She buys 7 more, then gives away 6. How many does she have?",
+        "expected": "20",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 17 apples. She buys 16 more, then gives away 12. How many does she have?",
+        "expected": "21",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 4 apples. She buys 15 more, then gives away 10. How many does she have?",
+        "expected": "9",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 5 apples. She buys 3 more, then gives away 5. How many does she have?",
+        "expected": "3",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 2 apples. She buys 20 more, then gives away 13. How many does she have?",
+        "expected": "9",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 15 apples. She buys 20 more, then gives away 11. How many does she have?",
+        "expected": "24",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 20 apples. She buys 1 more, then gives away 17. How many does she have?",
+        "expected": "4",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 3 apples. She buys 2 more, then gives away 1. How many does she have?",
+        "expected": "4",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 7 apples. She buys 8 more, then gives away 10. How many does she have?",
+        "expected": "5",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 1 apples. She buys 15 more, then gives away 6. How many does she have?",
+        "expected": "10",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 15 apples. She buys 19 more, then gives away 13. How many does she have?",
+        "expected": "21",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 17 apples. She buys 8 more, then gives away 21. How many does she have?",
+        "expected": "4",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 10 apples. She buys 16 more, then gives away 1. How many does she have?",
+        "expected": "25",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 3 apples. She buys 15 more, then gives away 9. How many does she have?",
+        "expected": "9",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 14 apples. She buys 18 more, then gives away 30. How many does she have?",
+        "expected": "2",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 3 apples. She buys 9 more, then gives away 6. How many does she have?",
+        "expected": "6",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 8 apples. She buys 17 more, then gives away 10. How many does she have?",
+        "expected": "15",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 1 apples. She buys 3 more, then gives away 3. How many does she have?",
+        "expected": "1",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 4 apples. She buys 13 more, then gives away 4. How many does she have?",
+        "expected": "13",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 10 apples. She buys 13 more, then gives away 3. How many does she have?",
+        "expected": "20",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 1 apples. She buys 1 more, then gives away 1. How many does she have?",
+        "expected": "1",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 7 apples. She buys 2 more, then gives away 8. How many does she have?",
+        "expected": "1",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 13 apples. She buys 13 more, then gives away 14. How many does she have?",
+        "expected": "12",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 3 apples. She buys 19 more, then gives away 21. How many does she have?",
+        "expected": "1",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 7 apples. She buys 9 more, then gives away 6. How many does she have?",
+        "expected": "10",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 3 apples. She buys 10 more, then gives away 6. How many does she have?",
+        "expected": "7",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 1 apples. She buys 14 more, then gives away 13. How many does she have?",
+        "expected": "2",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 4 apples. She buys 5 more, then gives away 4. How many does she have?",
+        "expected": "5",
+        "got": null,
+        "verdict": "malformed"
+      }
+    ]
+  },
+  "date_arith": {
+    "n": 30,
+    "correct": 0,
+    "malformed": 30,
+    "wrong": 0,
+    "details": [
+      {
+        "text": "What day of the month is 11 days after May 10?",
+        "expected": "21",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 11 days after November 6?",
+        "expected": "17",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 14 days after April 5?",
+        "expected": "19",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 3 days after April 6?",
+        "expected": "9",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 14 days after February 18?",
+        "expected": "3",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 1 days after April 10?",
+        "expected": "11",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 14 days after July 5?",
+        "expected": "19",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 1 days after November 20?",
+        "expected": "21",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 2 days after May 5?",
+        "expected": "7",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 12 days after May 15?",
+        "expected": "27",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 13 days after July 5?",
+        "expected": "18",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 14 days after May 12?",
+        "expected": "26",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 15 days after April 16?",
+        "expected": "1",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 7 days after September 19?",
+        "expected": "26",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 15 days after November 12?",
+        "expected": "27",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 11 days after July 11?",
+        "expected": "22",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 14 days after February 12?",
+        "expected": "26",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 12 days after October 9?",
+        "expected": "21",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 10 days after August 18?",
+        "expected": "28",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 8 days after December 5?",
+        "expected": "13",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 9 days after November 15?",
+        "expected": "24",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 4 days after March 10?",
+        "expected": "14",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 6 days after March 17?",
+        "expected": "23",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 8 days after May 12?",
+        "expected": "20",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 5 days after May 20?",
+        "expected": "25",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 10 days after July 5?",
+        "expected": "15",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 4 days after August 18?",
+        "expected": "22",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 15 days after October 8?",
+        "expected": "23",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 3 days after April 12?",
+        "expected": "15",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 11 days after February 14?",
+        "expected": "25",
+        "got": null,
+        "verdict": "malformed"
+      }
+    ]
+  }
+}

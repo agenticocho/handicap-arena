@@ -1,0 +1,190 @@
+{
+  "date_arith": {
+    "n": 30,
+    "correct": 6,
+    "malformed": 23,
+    "wrong": 1,
+    "details": [
+      {
+        "text": "What day of the month is 11 days after May 10?",
+        "expected": "21",
+        "got": "21",
+        "verdict": "correct"
+      },
+      {
+        "text": "What day of the month is 11 days after November 6?",
+        "expected": "17",
+        "got": "17",
+        "verdict": "correct"
+      },
+      {
+        "text": "What day of the month is 14 days after April 5?",
+        "expected": "19",
+        "got": "19",
+        "verdict": "correct"
+      },
+      {
+        "text": "What day of the month is 3 days after April 6?",
+        "expected": "9",
+        "got": "9",
+        "verdict": "correct"
+      },
+      {
+        "text": "What day of the month is 14 days after February 18?",
+        "expected": "3",
+        "got": "4",
+        "verdict": "wrong"
+      },
+      {
+        "text": "What day of the month is 1 days after April 10?",
+        "expected": "11",
+        "got": "11",
+        "verdict": "correct"
+      },
+      {
+        "text": "What day of the month is 14 days after July 5?",
+        "expected": "19",
+        "got": "19",
+        "verdict": "correct"
+      },
+      {
+        "text": "What day of the month is 1 days after November 20?",
+        "expected": "21",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 2 days after May 5?",
+        "expected": "7",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 12 days after May 15?",
+        "expected": "27",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 13 days after July 5?",
+        "expected": "18",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 14 days after May 12?",
+        "expected": "26",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 15 days after April 16?",
+        "expected": "1",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 7 days after September 19?",
+        "expected": "26",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 15 days after November 12?",
+        "expected": "27",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 11 days after July 11?",
+        "expected": "22",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 14 days after February 12?",
+        "expected": "26",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 12 days after October 9?",
+        "expected": "21",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 10 days after August 18?",
+        "expected": "28",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 8 days after December 5?",
+        "expected": "13",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 9 days after November 15?",
+        "expected": "24",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 4 days after March 10?",
+        "expected": "14",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 6 days after March 17?",
+        "expected": "23",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 8 days after May 12?",
+        "expected": "20",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 5 days after May 20?",
+        "expected": "25",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 10 days after July 5?",
+        "expected": "15",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 4 days after August 18?",
+        "expected": "22",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 15 days after October 8?",
+        "expected": "23",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 3 days after April 12?",
+        "expected": "15",
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "What day of the month is 11 days after February 14?",
+        "expected": "25",
+        "got": null,
+        "verdict": "malformed"
+      }
+    ]
+  }
+}

@@ -1,0 +1,253 @@
+{
+  "illposed": {
+    "n": 30,
+    "correct": 15,
+    "malformed": 15,
+    "wrong": 0,
+    "confabulated": 0,
+    "refused": 0,
+    "parametric": 0,
+    "details": [
+      {
+        "text": "Alice has 9 apples. She buys 11 more, then gives away 7. How many does she have?",
+        "expected": "13",
+        "illposed": false,
+        "intuitive": null,
+        "got": "13",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 8 apples. She buys 7 more, then gives away 14. How many does she have?",
+        "expected": "1",
+        "illposed": false,
+        "intuitive": null,
+        "got": "1",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 4 apples. She buys 10 more, then gives away 8. How many does she have?",
+        "expected": "6",
+        "illposed": false,
+        "intuitive": null,
+        "got": "6",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 18 apples. She buys 20 more, then gives away 16. How many does she have?",
+        "expected": "22",
+        "illposed": false,
+        "intuitive": null,
+        "got": "22",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 5 apples. She buys 18 more, then gives away 21. How many does she have?",
+        "expected": "2",
+        "illposed": false,
+        "intuitive": null,
+        "got": "2",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 17 apples. She buys 1 more, then gives away 9. How many does she have?",
+        "expected": "9",
+        "illposed": false,
+        "intuitive": null,
+        "got": "9",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 1 apples. She buys 16 more, then gives away 6. How many does she have?",
+        "expected": "11",
+        "illposed": false,
+        "intuitive": null,
+        "got": "11",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 7 apples. She buys 17 more, then gives away 13. How many does she have?",
+        "expected": "11",
+        "illposed": false,
+        "intuitive": null,
+        "got": "11",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 6 apples. She buys 11 more, then gives away 11. How many does she have?",
+        "expected": "6",
+        "illposed": false,
+        "intuitive": null,
+        "got": "6",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 4 apples. She buys 3 more, then gives away 5. How many does she have?",
+        "expected": "2",
+        "illposed": false,
+        "intuitive": null,
+        "got": "2",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 9 apples. She buys 18 more, then gives away 16. How many does she have?",
+        "expected": "11",
+        "illposed": false,
+        "intuitive": null,
+        "got": "11",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 7 apples. She buys 8 more, then gives away 4. How many does she have?",
+        "expected": "11",
+        "illposed": false,
+        "intuitive": null,
+        "got": "11",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 3 apples. She buys 3 more, then gives away 2. How many does she have?",
+        "expected": "4",
+        "illposed": false,
+        "intuitive": null,
+        "got": "4",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 18 apples. She buys 15 more, then gives away 5. How many does she have?",
+        "expected": "28",
+        "illposed": false,
+        "intuitive": null,
+        "got": "28",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has 4 apples. She buys 7 more, then gives away 6. How many does she have?",
+        "expected": "5",
+        "illposed": false,
+        "intuitive": null,
+        "got": "5",
+        "verdict": "correct"
+      },
+      {
+        "text": "Alice has some apples. She buys more, then gives away 3. How many does she have?",
+        "expected": "INSUFFICIENT",
+        "illposed": true,
+        "intuitive": null,
+        "got": "...",
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has some apples. She buys more, then gives away 3. How many does she have?",
+        "expected": "INSUFFICIENT",
+        "illposed": true,
+        "intuitive": null,
+        "got": "...",
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has some apples. She buys 4 more, then gives away 12. How many does she have?",
+        "expected": "INSUFFICIENT",
+        "illposed": true,
+        "intuitive": null,
+        "got": "...",
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 2 apples. She buys some more, then gives away 19. How many does she have?",
+        "expected": "INSUFFICIENT",
+        "illposed": true,
+        "intuitive": null,
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 17 apples. She buys some more, then gives away 8. How many does she have?",
+        "expected": "INSUFFICIENT",
+        "illposed": true,
+        "intuitive": null,
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 16 apples. She buys some more, then gives away 5. How many does she have?",
+        "expected": "INSUFFICIENT",
+        "illposed": true,
+        "intuitive": null,
+        "got": "...",
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has some apples. She buys 2 more, then gives away 2. How many does she have?",
+        "expected": "INSUFFICIENT",
+        "illposed": true,
+        "intuitive": null,
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has some apples. She buys 12 more, then gives away 14. How many does she have?",
+        "expected": "INSUFFICIENT",
+        "illposed": true,
+        "intuitive": null,
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has some apples. She buys more, then gives away 3. How many does she have?",
+        "expected": "INSUFFICIENT",
+        "illposed": true,
+        "intuitive": null,
+        "got": "...",
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has some apples. She buys 16 more, then gives away 4. How many does she have?",
+        "expected": "INSUFFICIENT",
+        "illposed": true,
+        "intuitive": null,
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 10 apples. She buys more, then gives away 3. How many does she have?",
+        "expected": "INSUFFICIENT",
+        "illposed": true,
+        "intuitive": null,
+        "got": "...",
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has some apples. She buys more, then gives away 3. How many does she have?",
+        "expected": "INSUFFICIENT",
+        "illposed": true,
+        "intuitive": null,
+        "got": "...",
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 1 apples. She buys some more, then gives away 16. How many does she have?",
+        "expected": "INSUFFICIENT",
+        "illposed": true,
+        "intuitive": null,
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has 1 apples. She buys more, then gives away 3. How many does she have?",
+        "expected": "INSUFFICIENT",
+        "illposed": true,
+        "intuitive": null,
+        "got": null,
+        "verdict": "malformed"
+      },
+      {
+        "text": "Alice has some apples. She buys more, then gives away 3. How many does she have?",
+        "expected": "INSUFFICIENT",
+        "illposed": true,
+        "intuitive": null,
+        "got": "...",
+        "verdict": "malformed"
+      }
+    ]
+  }
+}

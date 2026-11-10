@@ -1,0 +1,40 @@
+{
+  "board": "levels/02_two_boxes.txt",
+  "board_sha256": "7549657f1768607cefab6d892b1756b1cabf23f51144a7679d76f331b38a57d7",
+  "retired": true,
+  "retirement_reason": "action-ablated null passes: fixed cycle DDRLUUR clears the board in 28 moves (p* = 7) against a 12-move optimum",
+  "p_star": 7,
+  "p_star_witness": "DDRLUUR",
+  "p_star_null_moves": 28,
+  "p_star_search_bound": 8,
+  "p_star_streams_scanned": 639,
+  "optimal_moves": 12,
+  "solution": "RRRRDLLLDRRR",
+  "alt_solution": "DDRRRRULLURR",
+  "pushes": 5,
+  "gate": "PASS",
+  "gate_class": "periodic words of period <= 3 over sorted(sokoban.ACTIONS) = U D L R, repeated to the cap 40",
+  "gate_streams_evaluated": 84,
+  "gate_control_hits": 45,
+  "gate_hits": 0,
+  "null": {
+    "constant_input_ceiling": 0,
+    "constant_input_streams": 84,
+    "constant_input_solvers": 0,
+    "ablated_null": 28,
+    "ablated_null_word": "DDRLUUR",
+    "ablated_null_period": 7,
+    "model_score": null
+  },
+  "header": [
+    0,
+    28,
+    null
+  ],
+  "header_labels": [
+    "constant-input ceiling",
+    "ablated null (the cycle)",
+    "model score"
+  ],
+  "model_row_published": false
+}

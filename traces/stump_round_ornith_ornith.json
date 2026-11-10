@@ -1,0 +1,163 @@
+{
+  "game": "stump",
+  "model_a": "ornith9b",
+  "model_b": "ornith9b",
+  "grammar_digest": "ca77400f53ce2e80ff3e7d0c72ba7ac519bede7fa19f91adf4b974e43802a1f7",
+  "A": 10,
+  "n": 3,
+  "questions_per_side": 3,
+  "a_correct_on_b_questions": 2,
+  "b_correct_on_a_questions": 2,
+  "winner": "tie",
+  "a_questions": [
+    {
+      "type": "math",
+      "question": "What is the value of 2 + 2 * 3?",
+      "expression": "2 + 2 * 3",
+      "answer": "8",
+      "_computed": "8"
+    },
+    {
+      "type": "code",
+      "question": "What is printed by the following Python snippet?",
+      "code": "print(5 ** 2)",
+      "answer": "25",
+      "_computed": "25"
+    },
+    {
+      "type": "fact",
+      "question": "What is the capital of France?",
+      "key": "capital of france",
+      "answer": "Paris",
+      "_computed": "Paris"
+    }
+  ],
+  "b_questions": [
+    {
+      "type": "math",
+      "question": "What is the value of 2 + 2 * 3?",
+      "expression": "2 + 2 * 3",
+      "answer": "8",
+      "_computed": "8"
+    },
+    {
+      "type": "code",
+      "question": "What is printed by the following Python snippet?",
+      "code": "print(5 ** 2)",
+      "answer": "25",
+      "_computed": "25"
+    },
+    {
+      "type": "fact",
+      "question": "What is the capital of France?",
+      "key": "capital of france",
+      "answer": "Paris",
+      "_computed": "Paris"
+    }
+  ],
+  "gen_a": {
+    "secs": 21.255051851272583,
+    "gen_tokens": 294,
+    "budget_hits": 0,
+    "attempts": 1
+  },
+  "gen_b": {
+    "secs": 17.999305963516235,
+    "gen_tokens": 294,
+    "budget_hits": 0,
+    "attempts": 1
+  },
+  "rows": [
+    {
+      "arm": "A",
+      "question": "What is the value of 2 + 2 * 3?",
+      "type": "math",
+      "model_a_answer": "8",
+      "model_b_answer": "8",
+      "oracle_verdict": "correct",
+      "secs": 4.445,
+      "gen_tokens": 67,
+      "budget_hit": false,
+      "error": null,
+      "grammar_digest": "ca77400f53ce2e80ff3e7d0c72ba7ac519bede7fa19f91adf4b974e43802a1f7",
+      "A": 10,
+      "n": 3
+    },
+    {
+      "arm": "A",
+      "question": "What is printed by the following Python snippet?",
+      "type": "code",
+      "model_a_answer": "25",
+      "model_b_answer": "Nothing is printed, as no Python code snippet was provided in the question.",
+      "oracle_verdict": "incorrect",
+      "secs": 27.462,
+      "gen_tokens": 392,
+      "budget_hit": false,
+      "error": null,
+      "grammar_digest": "ca77400f53ce2e80ff3e7d0c72ba7ac519bede7fa19f91adf4b974e43802a1f7",
+      "A": 10,
+      "n": 3
+    },
+    {
+      "arm": "A",
+      "question": "What is the capital of France?",
+      "type": "fact",
+      "model_a_answer": "Paris",
+      "model_b_answer": "Paris",
+      "oracle_verdict": "correct",
+      "secs": 2.883,
+      "gen_tokens": 30,
+      "budget_hit": false,
+      "error": null,
+      "grammar_digest": "ca77400f53ce2e80ff3e7d0c72ba7ac519bede7fa19f91adf4b974e43802a1f7",
+      "A": 10,
+      "n": 3
+    },
+    {
+      "arm": "B",
+      "question": "What is the value of 2 + 2 * 3?",
+      "type": "math",
+      "model_a_answer": "8",
+      "model_b_answer": "8",
+      "oracle_verdict": "correct",
+      "secs": 4.266,
+      "gen_tokens": 67,
+      "budget_hit": false,
+      "error": null,
+      "grammar_digest": "ca77400f53ce2e80ff3e7d0c72ba7ac519bede7fa19f91adf4b974e43802a1f7",
+      "A": 10,
+      "n": 3
+    },
+    {
+      "arm": "B",
+      "question": "What is printed by the following Python snippet?",
+      "type": "code",
+      "model_a_answer": "Nothing is printed, as no Python code snippet was provided in the question.",
+      "model_b_answer": "25",
+      "oracle_verdict": "incorrect",
+      "secs": 27.647,
+      "gen_tokens": 392,
+      "budget_hit": false,
+      "error": null,
+      "grammar_digest": "ca77400f53ce2e80ff3e7d0c72ba7ac519bede7fa19f91adf4b974e43802a1f7",
+      "A": 10,
+      "n": 3
+    },
+    {
+      "arm": "B",
+      "question": "What is the capital of France?",
+      "type": "fact",
+      "model_a_answer": "Paris",
+      "model_b_answer": "Paris",
+      "oracle_verdict": "correct",
+      "secs": 1.937,
+      "gen_tokens": 30,
+      "budget_hit": false,
+      "error": null,
+      "grammar_digest": "ca77400f53ce2e80ff3e7d0c72ba7ac519bede7fa19f91adf4b974e43802a1f7",
+      "A": 10,
+      "n": 3
+    }
+  ],
+  "secs_total": 108.172
+}

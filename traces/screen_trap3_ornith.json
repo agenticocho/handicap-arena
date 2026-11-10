@@ -1,0 +1,250 @@
+{
+  "trap": {
+    "n": 30,
+    "correct": 30,
+    "malformed": 0,
+    "wrong": 0,
+    "details": [
+      {
+        "text": "A bat and a ball cost 35 cents together. The bat costs 3 cents more than the ball. How many cents does the ball cost?",
+        "expected": "16",
+        "intuitive": "32",
+        "got": "16",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A bat and a ball cost 48 cents together. The bat costs 10 cents more than the ball. How many cents does the ball cost?",
+        "expected": "19",
+        "intuitive": "38",
+        "got": "19",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A bat and a ball cost 34 cents together. The bat costs 20 cents more than the ball. How many cents does the ball cost?",
+        "expected": "7",
+        "intuitive": "14",
+        "got": "7",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A bat and a ball cost 68 cents together. The bat costs 50 cents more than the ball. How many cents does the ball cost?",
+        "expected": "9",
+        "intuitive": "18",
+        "got": "9",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A bat and a ball cost 41 cents together. The bat costs 25 cents more than the ball. How many cents does the ball cost?",
+        "expected": "8",
+        "intuitive": "16",
+        "got": "8",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A bat and a ball cost 44 cents together. The bat costs 20 cents more than the ball. How many cents does the ball cost?",
+        "expected": "12",
+        "intuitive": "24",
+        "got": "12",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A bat and a ball cost 39 cents together. The bat costs 5 cents more than the ball. How many cents does the ball cost?",
+        "expected": "17",
+        "intuitive": "34",
+        "got": "17",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A bat and a ball cost 70 cents together. The bat costs 50 cents more than the ball. How many cents does the ball cost?",
+        "expected": "10",
+        "intuitive": "20",
+        "got": "10",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A bat and a ball cost 72 cents together. The bat costs 50 cents more than the ball. How many cents does the ball cost?",
+        "expected": "11",
+        "intuitive": "22",
+        "got": "11",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A bat and a ball cost 11 cents together. The bat costs 5 cents more than the ball. How many cents does the ball cost?",
+        "expected": "3",
+        "intuitive": "6",
+        "got": "3",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "If 3 machines make 3 widgets in 3 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "3",
+        "intuitive": "100",
+        "got": "3",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "If 4 machines make 4 widgets in 4 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "4",
+        "intuitive": "100",
+        "got": "4",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "If 5 machines make 5 widgets in 5 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "5",
+        "intuitive": "100",
+        "got": "5",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "If 6 machines make 6 widgets in 6 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "6",
+        "intuitive": "100",
+        "got": "6",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "If 7 machines make 7 widgets in 7 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "7",
+        "intuitive": "100",
+        "got": "7",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "If 8 machines make 8 widgets in 8 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "8",
+        "intuitive": "100",
+        "got": "8",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "If 9 machines make 9 widgets in 9 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "9",
+        "intuitive": "100",
+        "got": "9",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "If 10 machines make 10 widgets in 10 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "10",
+        "intuitive": "100",
+        "got": "10",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "If 12 machines make 12 widgets in 12 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "12",
+        "intuitive": "100",
+        "got": "12",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "If 15 machines make 15 widgets in 15 minutes, how long would it take 100 machines to make 100 widgets?",
+        "expected": "15",
+        "intuitive": "100",
+        "got": "15",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 7 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "6",
+        "intuitive": "3",
+        "got": "6",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 10 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "9",
+        "intuitive": "5",
+        "got": "9",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 12 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "11",
+        "intuitive": "6",
+        "got": "11",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 14 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "13",
+        "intuitive": "7",
+        "got": "13",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 18 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "17",
+        "intuitive": "9",
+        "got": "17",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 24 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "23",
+        "intuitive": "12",
+        "got": "23",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 30 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "29",
+        "intuitive": "15",
+        "got": "29",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 40 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "39",
+        "intuitive": "20",
+        "got": "39",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 48 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "47",
+        "intuitive": "24",
+        "got": "47",
+        "verdict": "correct",
+        "trap_hit": false
+      },
+      {
+        "text": "A lily pad doubles in size every day. If it takes 60 days to cover the entire lake, how many days to cover half the lake?",
+        "expected": "59",
+        "intuitive": "30",
+        "got": "59",
+        "verdict": "correct",
+        "trap_hit": false
+      }
+    ]
+  }
+}
